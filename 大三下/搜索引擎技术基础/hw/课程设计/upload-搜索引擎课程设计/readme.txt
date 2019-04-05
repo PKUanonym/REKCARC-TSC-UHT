@@ -1,0 +1,3 @@
+preprocess是对爬取网页进行预处理的代码
+TaiqiangSearch是基于Lucene的搜索引擎
+crawler是基于Heritrix3.3的爬虫配置文件

@@ -1,0 +1,1 @@
+*** Error: no legal Main class named 'Main' was found

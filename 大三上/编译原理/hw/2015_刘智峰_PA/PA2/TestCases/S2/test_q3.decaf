@@ -1,0 +1,22 @@
+class A{
+	int f(){
+		return 1;
+	}
+}
+
+class B extends A{
+	int g(){
+		return 2;
+	}
+}
+
+
+class Main {
+    static void main() {
+    	int a;
+			a = numinstances(A);
+			a = numinstances(B);
+			a = numinstances(Main);
+    }
+}
+

@@ -1,0 +1,22 @@
+class Main {
+		static bool f(){
+			return true;
+		}
+    static void main() {
+    	int a;
+    	int b;
+    	bool x;
+    	bool y;
+    	a = 0;
+    	b = 0;
+    	
+			do a>0 : b=a++; ||| x : {int c;
+				int d;
+				f();
+				do a>0 : b=a++; ||| b>0 : a=b++; od
+				break;
+			} ||| x||y||x&&!y : x = y && b>0 || f();
+			||| f():a=a+b; od
+    }
+}
+

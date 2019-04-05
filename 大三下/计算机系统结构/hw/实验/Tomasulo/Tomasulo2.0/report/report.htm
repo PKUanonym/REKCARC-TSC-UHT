@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<!-- saved from url=(0037)file:///E:/vimwiki/html/CA_EXP_2.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>CA_EXP_2</title>
+		
+		<script>var root_path = '';</script>
+		<script type="text/x-mathjax-config;executed=true">
+			MathJax.Hub.Register.LoadHook("[MathJax]/jax/output/SVG/fonts/TeX/Main/Regular/GreekAndCoptic.js",function () {
+				  var FONTS = MathJax.OutputJax.SVG.FONTDATA.FONTS;
+				  FONTS['MathJax_Main'][0x394] = [716,0,833,46,786,'51 0Q46 4 46 7Q46 9 215 357T388 709Q391 716 416 716Q439 716 444 709Q447 705 616 357T786 7Q786 4 781 0H51ZM507 344L384 596L137 92L383 91H630Q630 93 507 344'];
+			});
+
+			MathJax.Hub.Config({
+			  config: ["TeX-AMS-MML_SVG.js"],
+			  jax: ["input/TeX","input/MathML","output/SVG"],
+			  extensions: ["tex2jax.js","mml2jax.js","MathMenu.js","MathZoom.js"],
+				tex2jax:{
+					processEscapes: true
+				},
+			  TeX: {
+				extensions: ["AMSmath.js","AMSsymbols.js","noErrors.js","noUndefined.js"]
+			  },
+			  menuSettings: {
+				zoom: "Click",
+				mpContext: true,
+				mpMouse: true
+			  },
+			  errorSettings: { message: ["[Math Error]"] }
+			});
+		</script>
+		<link rel="Stylesheet" type="text/css" href="./report_files/pdf.css">
+		<script type="text/javascript" src="./report_files/MathJax.js"></script>
+	<style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Hover_Arrow {position: absolute; width: 15px; height: 11px; cursor: pointer}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 2px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 2px 2em; background: transparent}
+.MathJax_MenuTitle {background-color: #CCCCCC; margin: -1px -1px 1px -1px; text-align: center; font-style: italic; font-size: 80%; color: #444444; padding: 2px 0; overflow: hidden}
+.MathJax_MenuArrow {position: absolute; right: .5em; color: #666666}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuRadioCheck {position: absolute; left: 1em}
+.MathJax_MenuLabel {padding: 2px 2em 4px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #CCCCCC; margin: 4px 1px 0px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: Highlight; color: HighlightText}
+.MathJax_Menu_Close {position: absolute; width: 31px; height: 31px; top: -15px; left: -15px}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style></head>
+	<body><div id="MathJax_Message" style="display: none;"></div>
+		<div id="all">
+			<div id="main">
+				
+<h1 id="toc_1">TOMASULO 调度算法</h1>
+<p>
+</p><center>计05  许欣然  2010011358</center>
+<center>计05  莫  愁  2010011359</center>
+<center>计05  李百恩  2010080054</center>
+<p></p>
+
+<h2 id="toc_1.1">实验原理</h2>
+<p>
+	Tomasulo 算法以硬件方式实现了寄存器重命名，允许指令乱序执行，这是提高流水线的吞吐率和效率的一种有效方式。该算法首先出现在 IBM360/91 处理机的浮点处理部件中，后广泛应用于现代处理器设计中。
+</p>
+
+<p>
+	假设浮点处理部件结构如下图所示。浮点处理部件从取指单元接收指令，存入浮点操作队列。浮点操作队列每拍最多发射1条指令给浮点加法器或浮点乘除法器。 浮点处理部件包含一个浮点加法器和一个浮点乘除法器。浮点加法器为两段流水线，输入端有三个保留站A1、A2、A3，浮点乘除法器为六段流水线，输入端有两个保留站M1，M2。当任意一个保留站中的两个源操作数到齐后，如果对应的操作部件空闲，可以把两个操作数立即送到浮点操作部件中执行。Load Buffer和Store Buffer各缓存三条访存操作。
+</p>
+
+<p>
+<img src="./report_files/CA_EXP2_1.png">
+</p>
+
+<h2 id="toc_1.2">实验要求</h2>
+<p>
+设计实现 Tomasulo 算法模拟器，要求：
+</p>
+<ul>
+<li>
+Tomasulo 算法模拟器能够执行浮点加、减、乘、除运算及 LOAD 和 STORE 操作。为简化起见，我们在下表中给出了各种操作的具体描述。
+
+</li></ul>
+
+<table>
+<tbody><tr>
+<th>
+指令格式
+</th>
+<th>
+指令说明
+</th>
+<th>
+指令执行周期
+</th>
+<th>
+保留站/缓冲队列项数
+</th>
+</tr>
+<tr>
+<td>
+ADDD F1,F2,F3
+</td>
+<td>
+F1,F2,F3为浮点寄存器，寄存器至少支持F0~F10
+</td>
+<td>
+2个周期
+</td>
+<td>
+3
+</td>
+</tr>
+<tr>
+<td>
+SUBD F1,F2,F3
+</td>
+<td>
+同上
+</td>
+<td>
+2个周期
+</td>
+<td>
+3
+</td>
+</tr>
+<tr>
+<td>
+MULD F1,F2,F3
+</td>
+<td>
+同上
+</td>
+<td>
+10个周期
+</td>
+<td>
+2
+</td>
+</tr>
+<tr>
+<td>
+DIVD F1,F2,F3
+</td>
+<td>
+同上
+</td>
+<td>
+40个周期
+</td>
+<td>
+2
+</td>
+</tr>
+<tr>
+<td>
+LD F1,ADDR
+</td>
+<td>
+F1为寄存器，ADDR 为地址，0&lt;=ADDR&lt;4096
+</td>
+<td>
+2个周期
+</td>
+<td>
+3
+</td>
+</tr>
+<tr>
+<td>
+ST F1,ADDR
+</td>
+<td>
+同上
+</td>
+<td>
+2个周期
+</td>
+<td>
+3
+</td>
+</tr>
+</tbody></table>
+
+<ul>
+<li>
+能够单步执行，实时显示算法的运行状况，包括各条指令的运行状态、各寄存器以及内存的值、保留站（Reservation Stations）状态、Load Buffer 和 Store Buffer 缓存的值等。
+
+</li><li>
+程序执行完毕后，能够显示指令执行周期数等信息。
+
+</li><li>
+为了简化设计，建议模拟器提供编辑内存值功能，以便实现数据输入；浮点除法可不做除0判断。
+
+</li><li>
+能够以文本方式输入指令序列。
+
+</li></ul>
+
+<h2 id="toc_1.3">实现内容</h2>
+<ul>
+<li>
+实现了 Tomasulo 算法模拟器，能够运行要求的指令操作，且有很大的定制性。
+
+</li><li>
+能够单步运行，依据要求实时的显示算法的运行情况。
+
+</li><li>
+显示执行周期数、当前时间等信息
+
+</li><li>
+提供编辑内存值的功能
+
+</li><li>
+允许以文本方式输入指令序列
+
+</li></ul>
+
+<h2 id="toc_1.4">实验环境</h2>
+<ul>
+<li>
+平台：全平台
+
+</li><li>
+语言：Javascript
+
+</li><li>
+软件需求：Chrome浏览器 version 26
+
+</li><li>
+库需求：Jquery、JqueryUI（基于Javascript，已包含在thridJS文件夹内）
+
+</li></ul>
+
+<h2 id="toc_1.5">实验设计思路</h2>
+<h3 id="toc_1.5.1">后端</h3>
+<p>
+与计算机硬件的模块化类似，后端采取了类似的模块化设计。
+将所要实现的系统的每个功能部件都抽象成一个模块，再将这些功能部件组成一个执行 Tomasulo 调度算法的流水线系统。
+</p>
+
+<p>
+由于采用了松耦合模块化设计，基于JS的对象机制，我们允许系统的多样性，通过system变量的配置可以实现
+不同结构的 Tomasulo 调度算法的模拟。目前允许配置的内容有（位于<code>index.html</code>的<code>init(program)</code>函数中）：
+</p>
+<ul>
+<li>
+寄存器类型（以前缀区分，根据课程只写了浮点寄存器）
+
+</li><li>
+每类寄存器的个数
+
+</li><li>
+（运算器、保留站）类型与个数
+
+</li><li>
+指令集的运算内容、对应的保留站种类、运算时间、参数个数及结构
+
+</li><li>
+系统内存大小及Buffer的写入策略
+
+</li></ul>
+
+<p>
+以下是配置的简略说明：
+</p>
+<pre>var System = {};
+System.memory = new Memory(4096);		//设置内存大小
+System.registerFile = new RegisterFile(11, 'F');	//设置11个浮点寄存器
+System.commonDataBus = new CommonDataBus();			//初始化数据通路
+System.reservationStations = {						//初始化保留站
+	ADD_1: new ReservationStation('ADD_1'),
+	...
+	STORE_1: new Buffer('STORE_1', System.memory),
+};
+System.instructionTypes = {		//初始化指令集：名字，运算时间，目标地址，参数种类，运算内容，对应保留站
+	'ADDD': new InstructionType('ADDD', 2, 0,
+			[InstructionType.PARAMETER_TYPE_REGISTER,
+			 InstructionType.PARAMETER_TYPE_REGISTER,
+			 InstructionType.PARAMETER_TYPE_REGISTER],
+			function(p) { return p[1] + p[2]; },
+			[System.reservationStations['ADD_1'],
+			 System.reservationStations['ADD_2'],
+			 System.reservationStations['ADD_3']]),
+
+...
+	'ST': new InstructionType('ST', 2, 1,
+		  [InstructionType.PARAMETER_TYPE_REGISTER,
+		   InstructionType.PARAMETER_TYPE_ADDRESS],
+		  function(p) { this.memory.store(p[1], p[0]); return p[0]; },
+		  [System.reservationStations['STORE_1'],
+		   System.reservationStations['STORE_2'],
+		   System.reservationStations['STORE_3']])
+};
+
+return new Main(program, System);
+</pre>
+
+<p>
+通过main.js中的<code>step</code>函数完成一部的计算，具体设计见后。
+</p>
+
+<h3 id="toc_1.5.2">前端</h3>
+<p>
+根据前台<code>System</code>变量的设置，在网页上呈现对应的数据。同时利用<code>step</code>函数来完成一步、多步等控制。具体实现请参见<code>index.html</code>内部设置。
+</p>
+
+<h2 id="toc_1.6">具体实现</h2>
+<p>
+根据 Tomasulo 算法的基本思想，我们设计了以下7个具有独立功能的模块，数据传递关系图如下：
+</p>
+
+<p>
+<img src="./report_files/CA_EXP2_7.png">
+</p>
+
+<h3 id="toc_1.6.1">InstructionType：指令类型</h3>
+<p>
+该模块相当于是指令类型的一个抽象类，包含了一条指令本身的性质，如：指令名称，执行时间，参数类型，结果类型，计算方法，以及该指令所使用的保留站类型。使用时，可以根据不同参数构造出不同指令，再在此基础上，解析每一具体指令，得到该指令类型，再根据构造该类型的指令基本信息执行之，从而完成Tomasulo调度算法的实现。
+</p>
+<pre>/* calculate: (args, memory) */
+	function InstructionType(name, cycles, destParameter, parameters, calculate, stations) {
+		this.name = name;
+		this.cycles = cycles;
+		this.parameters = parameters;
+		this.destParameter = destParameter;
+		this.calculate = calculate;
+		this.stations = stations;
+	}
+</pre>
+<h3 id="toc_1.6.2">Instruction：指令模块</h3>
+<p>
+该模块完成了对每条具体的指令的一个抽象。包含有该条指令的基本状态信息，如：指令id（第几条指令），指令类型，指令是否执行完，还需要多少周期完成，指令所带参数等。
+</p>
+<pre>function Instruction(type, parameters) {
+		this.id = ++id;
+		this.type = type;
+		this.time = type.cycles;
+		this.parameters = parameters;
+		this.issueTime = -1;
+		this.executeTime = -1;
+		this.writeBackTime = -1;
+	}
+</pre>
+
+<h3 id="toc_1.6.3">ReservationStation：保留站模块</h3>
+<p>
+	该模块是对保留站的一个抽象，记录了保留站的名称，状态，标识，流入该保留站的指令与参数等。需要特别说明的是：与教材中介绍的不同，我们不是仅仅使用是否为busy来标志保留站状态的，而是按照指令执行的不同情况，为保留站的状态设置了以下4种可能的取值：<code>STATE_IDLE</code>，<code>STATE_ISSUE</code>，<code>STATE_EXECUTE</code>和<code>STATE_WRITE_BACK</code>。除<code>IDLE</code>外的所有状态都属于教材中所定义的<code>busy = yes</code>的情况，这样做并不会改变算法本质，反而由于这一分类更为细致的状态标识而使得算法在具体实现时更为快捷、高效。
+</p>
+<pre>function ReservationStation(name) {
+		this.name = name;
+		this.state = ReservationStation.STATE_IDLE;
+		this.parameters = null;
+		this.tags = null;
+		this.instruction = null;
+	}
+</pre>
+
+<h3 id="toc_1.6.4">Buffer：load/store缓冲器模块</h3>
+<p>
+	load缓冲器和store缓冲器中存放的是读/写memory的数据或地址。如教材中所述，load/store缓冲器的行为均与保留站类似，所以此处我们也不做特别区分。之所以特别提出这样一个模块，为的是方便日后若想添加额外功能或者需要与保留站做区分时的扩展。这里的<code>Buffer</code>直接套用了<code>ReservationStation</code>。
+</p>
+<pre>function Buffer(_, memory) {
+		ReservationStation.apply(this, arguments);
+		this.memory = memory;
+		return this;
+	}
+</pre>
+
+<h3 id="toc_1.6.5">CommonDataBus：公共数据总线模块</h3>
+<p>
+保留站和寄存器通过CommonDataBus，来注册未完成与已完成的结果，从而实现寄存器的换名与回填。
+</p>
+<pre>function CommonDataBus() {
+		this._busy = {};
+		this._result = {};
+	}
+</pre>
+<p>
+包含有以下5个功能函数：
+</p>
+<pre>CommonDataBus.prototype.getBusy = function(type, name)
+CommonDataBus.prototype.setBusy = function(type, name, instruction)
+CommonDataBus.prototype.getResult = function(station)
+CommonDataBus.prototype.setResult = function(station, value)
+CommonDataBus.prototype.clearResult = function()
+</pre>
+<h3 id="toc_1.6.6">RegisterFile：寄存器组模块。</h3>
+<p>
+通过该模块，我们可以在系统初始化时指定寄存器组中寄存器的个数与名称。默认初始化所有寄存器的值都为1。
+</p>
+<pre>function RegisterFile(count, prefix) {
+		this.registers = new Array(count);
+		for (var i = 0; i &lt; this.registers.length; ++i) {
+			this.registers[i] = 1;
+		}
+		this.count = count;
+		this.prefix = prefix.toUpperCase();
+	}
+</pre>
+
+<h3 id="toc_1.6.7">Memory：内存模块。</h3>
+<p>
+可以自定义内存大小。默认内存初始值为每一内存单元的编号。实际执行时可以在UI界面上自行设置。
+</p>
+<pre>function Memory(size) {
+		this.data = new Array(size);
+		this.size = size;
+		for (var i = 0; i &lt; this.data.length; ++i) {
+			this.data[i] = i;
+		}
+	}
+</pre>
+
+<h3 id="toc_1.6.8">main.js：封装成系统。</h3>
+<p>
+	利用上述7个模块，将其封装成一个系统执行Tomasulo动态调度算法的流水线系统。可以在index.html中使用new Main(program, System) 实现一个这样的系统的实例，其中，program参数描述的是要执行的顺序指令集，System是包含了上述7个功能模块每种的个数与每个实际部件初始化参数的系统描述变量。
+</p>
+<pre>function Main(program, system) {
+		Instruction.resetID();
+		this.system = system;
+		this.system.clock = 0;
+
+		/* parse program */
+		program = program.toUpperCase()
+		                 .replace(/[\s,]+/g, ',')
+		                 .replace(/^,|,$/g, '');
+
+		var tokens = program.split(',');
+		var instructions = [];
+
+		for (var i = 0; i &lt; tokens.length;) {
+			var instructionType = this.system.instructionTypes[tokens[i++]];
+			var params = [];
+			for (var j = 0; j &lt; instructionType.parameters.length; ++j, ++i) {
+				switch (instructionType.parameters[j]) {
+				case InstructionType.PARAMETER_TYPE_REGISTER:
+					params.push(tokens[i]);
+					break;
+				case InstructionType.PARAMETER_TYPE_ADDRESS:
+					params.push(parseInt(tokens[i], 10));
+					break;
+				}
+			}
+			instructions.push(new Instruction(instructionType, params));
+		}
+
+		this.instructions = instructions;
+		this.issuedInstructions = 0;
+	}
+</pre>
+
+<p>
+该模块包含有两个函数接口：
+</p>
+<h4 id="toc_1.6.8.1">step()</h4>
+<p>
+若 step() 函数返回true，表示所有指令队列中的指令都执行完成。
+这是在Tomasulo调度算法下，每个时钟周期流水线执行时所调用到的函数，共分为ISSUE，EXECUTE，WRITEBACK三个阶段。
+</p>
+
+<h5 id="toc_1.6.8.1.1">ISSUE 阶段</h5>
+<p>
+	如果指令队列非空，且队列头部指令所需求的保留站有空闲的，就将该条指令取出送入这个空闲的保留站中。 具体判断流程就是遍历检查所有符合指令类型的保留站（或load/store缓冲器），一旦发现有state为IDLE的保留站，就可以在这个时钟周期派送指令队列头部的指令了。
+</p>
+<h5 id="toc_1.6.8.1.2">EXECUTE 阶段</h5>
+<p>
+	遍历所有保留站，根据保留站的state参数区分其在该时钟周期所要进行的动作。如上面ReservationStation模块中的介绍，如果保留站状态是STATE_EXECUTE，说明该保留站中的指令尚未执行完成，那么就根据其所对应的InstructionType，将instruction的executeTime减1，表示模拟这一指令在这一时钟周期是在执行；如果executeTime减至0，说明这一时钟周期该指令刚好执行完成，那么在本周期内就将该保留站的state标记为STATE_WRITE_BACK，以便下一时钟周期即可写回。
+</p>
+
+<h5 id="toc_1.6.8.1.3">WRITEBACK 阶段</h5>
+<p>
+如果保留站是STATE_WRITE_BACK状态，那么根据这条instruction的各项参数，利用commonDataBus的getBusy() 函数获得总线上完成计算的数据，将运行结果写入所有指向这一保留站的保留站或寄存器组或缓冲器。利用缓冲站内的行号来从软件的角度解决 WAW 的冲突问题。
+</p>
+
+<h5 id="toc_1.6.8.1.4">结尾阶段</h5>
+<p>
+检查所有保留站，看是否有处于STATE_ISSUE的保留站所有参数都准备就绪，如果有的话就将其state置为STATE_EXECUTE，以便在下一时钟周期开始时即可执行之。
+</p>
+
+<h4 id="toc_1.6.8.2">run()</h4>
+<p>
+连续执行，直至step() 返回true，也就是执行直至指令队列为空。
+</p>
+
+<h2 id="toc_1.7">实验结果</h2>
+<h3 id="toc_1.7.1">初始界面（屏幕分辨率不同可能有所不同）</h3>
+<p>
+<img src="./report_files/CA_EXP2_2.png">
+</p>
+
+<h3 id="toc_1.7.2">程序编辑界面</h3>
+<p>
+<img src="./report_files/CA_EXP2_3.png">
+</p>
+
+<h3 id="toc_1.7.3">内存编辑界面</h3>
+<p>
+<img src="./report_files/CA_EXP2_4.png">
+</p>
+
+<h3 id="toc_1.7.4">运行结果界面</h3>
+<p>
+<img src="./report_files/CA_EXP2_5.png">
+</p>
+
+<h3 id="toc_1.7.5">收起内存面板界面</h3>
+<p>
+<img src="./report_files/CA_EXP2_6.png">
+</p>
+
+<h2 id="toc_1.8">实验感想</h2>
+<p>
+	当然，因为同时涉及到模拟器的前后端，我们在具体实现时也遇到了一些问题，具体的问题与解决方案如下：
+</p>
+<h3 id="toc_1.8.1">Problem1</h3>
+<blockquote>
+前端在加入了内存显示之后，每次单步执行界面都会因为更新内存显示值而消耗太多时间（约2s）。
+</blockquote>
+
+<p>
+弃用jquery库，使用原生js。速度明显变快。通过改用特殊的事件监听方式，大幅度减少内存的使用程度。但在reset时仍需要略长的时间。
+</p>
+
+<h3 id="toc_1.8.2">Problem2</h3>
+<blockquote>
+设计交互方式为每个内存单元都可以通过点击弹出对话框的方式更改该内存单元的值，但是这样需要为每个内存单元（index.html中设定为4096个）都一一注册click事件，同样在每次刷新显示时过于耗时。
+</blockquote>
+
+<p>
+不对每个内存单元注册事件，而改为对其父节点，即整片内存空间的显示元素注册一个click事件，然后根据点击的位置计算具体是点击的哪个内存单元，这也就是用户想要修改的内存单元咯。
+</p>
+
+<h3 id="toc_1.8.3">Problem3</h3>
+<blockquote>
+教材中所述“保留站设置在运算部件入口，浮点加法器的入口处共有3个加法保留站”，据此意思应该是一个运算部件对应多个保留站。但这样显然当保留站中参数都准备就绪时仍会存在结构冲突，所以实现时，我们默认是一个计算部件对应一个保留站的。
+</blockquote>
+	
+<h3 id="toc_1.8.4">Problem4</h3>
+<blockquote>
+<code>WAW冲突</code>。因为Tomasulo算法是乱序执行乱序完成的，所以可能存在这种情况：同一时钟周期内，两条指令都刚好执行完成，那么在下一时钟周期，hold它们的保留站就都处于STATE_WRITE_BACK状态，而它们刚好要写回的是同一寄存器。这就存在了一个WAW冲突。
+</blockquote>
+
+<p>
+在Instruction中加入了指令行号（Instruction.id字段），据此，选择后id最大的写入寄存器。但这只是我们利用软件所进行的Tomasulo算法的模拟，查阅资料得知，在实际硬件实现时，是每条instruction在获得保留站时，就在寄存器组里将该指令的目的寄存器做了一个指向该保留站输出结果的标记，这样，因为Tomasulo算法是顺序流出指令的，所以最后流出的指令最后修改了寄存器的引用，WAW冲突得以解决。
+</p>
+
+<h3 id="toc_1.8.5">Problem5</h3>
+<p>
+教材中所述的算法，保留站中的源擦作数标记的是寄存器号，而寄存器组中对应的寄存器又指向了寄存器状态表中该寄存器的位置，这个位置记录的才是该寄存器值的来源保留站。在我们的实现中，为了显示更为直观，去掉了中间过程，将保留站中的源直接指向了来源保留站。
+</p>
+
+<h2 id="toc_1.9">附录</h2>
+<pre>│
+│  index.html	（页面入口，前台及后台设置）
+│
+├─css	（样式表）
+│  │  font-awesome.min.css		（字体）
+│  │  jquery-ui-1.10.3.custom.min.css	（对话框库）
+│  │  style.css	（页面样式）
+│  │
+│  └─images	（第三方图片）
+│
+├─font	（字体）
+│
+├─js	（后台实现）
+│      buffer.js
+│      common_data_bus.js
+│      instruction.js
+│      instruction_type.js
+│      main.js
+│      memory.js
+│      register_file.js
+│      reservation_station.js
+│
+└─thirdJS	（第三方库）
+</pre>
+
+			</div>
+		</div>
+	
+
+
+
+</body></html>

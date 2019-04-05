@@ -1,0 +1,39 @@
+class Main {   
+    static void main() {
+    		int i;
+    		
+    		i = 0;
+				repeat{
+					i = i+1;
+					Print(i,"\n");
+				}until(i+1>=10-3+2+3-4);
+				Print(i,"\n\n");
+    		
+				i = 0;
+				repeat{
+					i = i+1;
+					if(i > 8){
+						break;
+					}
+					if(i>5){
+						continue;
+					}
+					Print(i,"\n");
+				}until(i>=10);
+				Print(i,"\n\n");
+
+				i = 0;
+				repeat{
+					i = i+1;
+					if(i > 8){
+						break;
+					}
+					if(i>5){
+						continue;
+					}
+					Print(i,"\n");
+				}until(i>0);
+				Print(i,"\n\n");
+
+    }
+}

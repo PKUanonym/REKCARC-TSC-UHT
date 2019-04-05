@@ -1,0 +1,42 @@
+GLOBAL SCOPE:
+    (1,1) -> class Main
+    (21,1) -> class A
+    (27,1) -> class B : A
+    (33,1) -> class C : B
+    (39,1) -> class D : A
+    (45,1) -> class E : C
+    CLASS SCOPE OF 'Main':
+        (2,17) -> static function main : void
+        FORMAL SCOPE OF 'main':
+            LOCAL SCOPE:
+                (3,12) -> variable a : class : A
+                (4,12) -> variable b : class : B
+                (5,12) -> variable c : class : C
+                (6,12) -> variable d : class : D
+                (7,12) -> variable e : class : E
+                (9,12) -> variable o : class : A
+    CLASS SCOPE OF 'A':
+        (22,10) -> function a : class : A->void
+        FORMAL SCOPE OF 'a':
+            (22,10) -> variable @this : class : A
+            LOCAL SCOPE:
+    CLASS SCOPE OF 'B':
+        (28,10) -> function a : class : B->void
+        FORMAL SCOPE OF 'a':
+            (28,10) -> variable @this : class : B
+            LOCAL SCOPE:
+    CLASS SCOPE OF 'C':
+        (34,10) -> function a : class : C->void
+        FORMAL SCOPE OF 'a':
+            (34,10) -> variable @this : class : C
+            LOCAL SCOPE:
+    CLASS SCOPE OF 'D':
+        (40,10) -> function a : class : D->void
+        FORMAL SCOPE OF 'a':
+            (40,10) -> variable @this : class : D
+            LOCAL SCOPE:
+    CLASS SCOPE OF 'E':
+        (46,10) -> function a : class : E->void
+        FORMAL SCOPE OF 'a':
+            (46,10) -> variable @this : class : E
+            LOCAL SCOPE:

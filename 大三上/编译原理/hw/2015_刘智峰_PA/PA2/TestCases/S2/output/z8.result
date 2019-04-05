@@ -1,0 +1,22 @@
+*** Error at (9,9): undeclared variable 'c'
+*** Error at (10,11): incompatible operands: bool = int
+*** Error at (11,11): incompatible operands: string = bool
+*** Error at (12,15): incompatible operands: int + string
+*** Error at (13,15): incompatible operands: int - bool
+*** Error at (14,9): undeclared variable 'c'
+*** Error at (14,13): undeclared variable 'c'
+*** Error at (15,15): incompatible operands: bool / bool
+*** Error at (16,15): incompatible operands: int % bool
+*** Error at (17,13): incompatible operand: ! int
+*** Error at (18,15): incompatible operands: bool && int
+*** Error at (19,18): undeclared variable 'c'
+*** Error at (20,9): undeclared variable 'Main'
+*** Error at (21,13): undeclared variable 'Main'
+*** Error at (22,15): incompatible operands: int > bool
+*** Error at (23,15): incompatible operands: int >= bool
+*** Error at (24,15): incompatible operands: int < bool
+*** Error at (25,15): incompatible operands: bool <= bool
+*** Error at (26,15): incompatible operands: int != bool
+*** Error at (27,15): incompatible operands: int == bool
+*** Error at (28,16): test expression must have bool type
+*** Error at (29,15): test expression must have bool type

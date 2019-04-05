@@ -1,0 +1,17 @@
+n=12;
+H=hilb(n);%hilbert矩阵
+x=ones(n,1);
+b=H*x;
+L=chol(H);%Cholsky分解
+answer=L\(L.'\b);
+%disp(answer);
+r=b-H*answer;
+delta=answer-x;
+disp(norm(r,inf));%r的无穷范数
+disp(norm(delta,inf));%Δx的无穷范数
+b1=b+ones(12,1)*1e-7;%加上10^-7扰动
+answer1=L\(L.'\b1);
+r1=b1-H*answer1;
+delta1=answer1-x;
+disp(norm(r1,inf));
+disp(norm(delta1,inf));

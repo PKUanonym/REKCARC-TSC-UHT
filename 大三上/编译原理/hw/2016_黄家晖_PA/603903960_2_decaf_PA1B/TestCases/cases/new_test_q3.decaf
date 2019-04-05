@@ -1,0 +1,35 @@
+class Main {
+    static int main() {
+    		int i;
+    		int a;
+    		int b;
+    		int c;
+    		a = 0;
+    		b = 1;
+    		c = 2;
+    		
+   			switch(a+b){
+   				case 1:
+   					i = 1 + 2;
+   					a = i + 3;
+   					break;
+   				case 2:
+   				case 3:
+   				case 4: 
+   					a = b + 3;
+   					c = a + b;
+   					break;
+   				case 5:
+   				default:
+   					a = b+c;
+   					switch(a){
+   						case 1:
+   						case 2:
+   							a = b + c;
+   						default:
+   							c = a+b;
+   					}
+   			}
+        return 0;    
+    }
+}

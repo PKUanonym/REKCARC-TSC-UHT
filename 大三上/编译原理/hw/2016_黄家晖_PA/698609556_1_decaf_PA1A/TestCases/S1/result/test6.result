@@ -1,0 +1,102 @@
+program
+    class Main <empty>
+        static func main voidtype
+            formals
+            stmtblock
+                vardef b classtype Base
+                vardef s1 classtype Sub1
+                vardef s2 classtype Sub2
+                vardef s3 classtype Sub3
+                vardef s4 classtype Sub4
+                assign
+                    varref b
+                    newobj Base
+                assign
+                    varref s1
+                    newobj Sub1
+                assign
+                    varref s2
+                    newobj Sub2
+                assign
+                    varref s3
+                    newobj Sub3
+                assign
+                    varref s4
+                    newobj Sub4
+                call printType
+                    <empty>
+                    varref b
+                call printType
+                    <empty>
+                    varref s1
+                call printType
+                    <empty>
+                    varref s2
+                call printType
+                    <empty>
+                    varref s3
+                call printType
+                    <empty>
+                    varref s4
+                assign
+                    varref b
+                    varref s4
+                call printType
+                    <empty>
+                    varref b
+                assign
+                    varref s1
+                    classcast
+                        Sub1
+                        varref b
+                call printType
+                    <empty>
+                    varref s1
+        static func printType voidtype
+            formals
+                vardef base classtype Base
+            stmtblock
+                if
+                    instanceof
+                        varref base
+                        Sub4
+                    stmtblock
+                        print
+                            stringconst "Sub4\n"
+                else
+                    if
+                        instanceof
+                            varref base
+                            Sub3
+                        stmtblock
+                            print
+                                stringconst "Sub3\n"
+                    else
+                        if
+                            instanceof
+                                varref base
+                                Sub2
+                            stmtblock
+                                print
+                                    stringconst "Sub2\n"
+                        else
+                            if
+                                instanceof
+                                    varref base
+                                    Sub1
+                                stmtblock
+                                    print
+                                        stringconst "Sub1\n"
+                            else
+                                if
+                                    instanceof
+                                        varref base
+                                        Base
+                                    stmtblock
+                                        print
+                                            stringconst "Base\n"
+    class Base <empty>
+    class Sub1 Base
+    class Sub2 Base
+    class Sub3 Sub1
+    class Sub4 Sub3

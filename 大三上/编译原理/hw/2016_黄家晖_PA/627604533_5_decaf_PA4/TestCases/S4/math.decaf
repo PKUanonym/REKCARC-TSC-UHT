@@ -1,0 +1,58 @@
+class Math {
+    static int abs(int a) {
+        if (a >= 0) {
+            return a;
+        } else {
+            return -a;
+        }
+    }
+    
+    static int pow(int a, int b) {
+        int i;
+        int result;
+        result = 1;
+        for (i = 0; i < b; i = i + 1) {
+            result = result * a;
+        }
+        return result;
+    }
+    
+    static int log(int a) {
+        if (a < 1) {
+            return -1;
+        }
+        int result;
+        result = 0;
+        while (a > 1) {
+            result = result + 1;
+            a = a / 2;
+        }
+        return result;
+    }
+    
+    static int max(int a, int b) {
+        if (a > b) {
+            return a;
+        } else {
+            return b;
+        }
+    }
+    
+    static int min(int a, int b) {
+        if (a < b) {
+            return a;
+        } else {
+            return b;
+        }
+    }
+}
+
+class Main {   
+    static void main() {
+        Print(Math.abs(-1), "\n");
+        Print(Math.pow(2, 3), "\n");
+        Print(Math.log(16), "\n");
+        Print(Math.max(1, 2), "\n");
+        Print(Math.min(1, 2), "\n");
+    }
+}

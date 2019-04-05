@@ -1,0 +1,21 @@
+i=0;
+w=0.8;
+a=hilb(10);
+b=[1,1/2,1/3,1/4,1/5,1/6,1/7,1/8,1/9,1/10]';
+answer=[1,0,0,0,0,0,0,0,0,0].';
+d=diag(diag(a));
+l=d-tril(a);
+u=d-triu(a);
+d0=inv(d);
+B=(d-w*l)\((1-w)*d+w*u);
+f=(d-w*l)\(w*b);
+x0=zeros(10,1);
+x=B*x0+f;
+while norm(x-x0,inf)>=1e-4
+    x0=x;
+    x=B*x0+f;
+    i=i+1;
+    disp(x);%每一步得到的解
+    disp(i);%迭代次数
+end
+disp(norm(x-answer,inf));%误差的无穷范数

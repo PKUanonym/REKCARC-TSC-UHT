@@ -1,0 +1,212 @@
+<html lang="zh-CN">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>Tomasulo</title>
+		<link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8">
+		<link rel="stylesheet" href="css/jquery-ui-1.10.3.custom.min.css" type="text/css" media="screen" charset="utf-8">
+		<link rel="stylesheet" href="css/font-awesome.min.css" type="text/css" media="screen" charset="utf-8">
+		<script language="javascript" type="text/javascript" src="thirdJS/jquery-1.9.1.min.js"></script>
+		<script language="javascript" type="text/javascript" src="thirdJS/bootstrap.min.js"></script>
+		<script language="javascript" type="text/javascript" src="thirdJS/jquery-ui-1.10.3.custom.min.js"></script>
+		<link href="css/bootstrap.css" rel="stylesheet">
+		
+	</head>
+	<body>
+
+		<header role="banner">
+     
+            <nav role="navigation" class="navbar navbar-inverse navbar-static-top">
+              <div class="container">
+                <div class="navbar-header">
+                  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                  </button>
+                  <a class="navbar-brand"> Tomasulo </a>
+                </div>
+                <div class="navbar-collapse collapse">
+                  <ul class="nav navbar-nav">
+                    <!-- <li><a href="index.html"> 文件上传 </a></li> -->
+                    <li class="active"><a href="index.html"> 工作区域 </a></li>
+                    <!-- <li><a href="index.html">Details</a></li> -->
+                  </ul>
+                </div><!--/.nav-collapse -->
+              </div><!--/.container -->
+            </nav>
+         
+        </header>
+<table><tr><td style="width:100%;height:8px;font-size:14px;border:0"></td></tr></table>
+
+<div class="container-fluid">
+
+	<div class="row">
+
+		<div id="dialog" title="编辑指令">
+			<textarea id="inst-edit-input"></textarea>
+			<table><tr><td style="width:100%;height:10px;font-size:14px;border:0"></td></tr></table>
+			<button type="button" class="btn btn-info" id="inst-submit">确认</button>
+		</div>
+
+		<div id="dialog2" title="memory-edit">
+			<input id="mem-addr" type="text" value="1" disabled="disabled" />
+			<input id="mem-val" type="text" value="12" />
+			<button id="mem-submit"> 修改 </button>
+		</div>
+
+		<div class="col-md-5">
+			<div class="alert alert-info" role="alert">
+				<strong>指令队列</strong>（共<span id="total-inst"></span>条）
+				<span class="right">
+					<h5>
+					<a href="#" id="action-inst-edit">
+					<i class="icon-edit"></i>&nbsp;编辑指令</a>
+					</h5>
+				</span>
+				
+			</div>
+				<ol id="instruction-show" class="list">
+					<li class="instruction title">
+						<span class="inst-linenum">行号</span>
+						<span class="instruction-detail">指令</span>
+						<span class="issue-time">读取时刻</span>
+						<span class="exec-time">完成时刻</span>
+						<span class="writeback-time">写回时刻</span>
+					</li>
+				</ol>
+		</div>
+
+		<div class="col-md-2">
+			<div class="row">
+				<div class="col-sm-1"></div>
+      			<div class="col-sm-9">
+					<button class="btn btn-default btn-block" type="button">
+  					&nbsp;&nbsp;周期&nbsp;&nbsp; <span class="badge"><span id="global-clock" class="clock">&nbsp;&nbsp;0&nbsp;&nbsp;</span></span>
+					</button>
+				
+				</div>
+				<div class="col-sm-1"></div>
+				<div class="col-sm-12">
+					<table><tr><td style="width:100%;height:10px;font-size:14px;border:0"></td></tr></table>
+				</div>
+				<div class="col-sm-1"></div>
+				<div class="col-sm-9">
+				<button class="btn btn-default btn-block" type="button">
+  					&nbsp;&nbsp;&nbsp;PC&nbsp;&nbsp;&nbsp; <span class="badge"><span id="cur-pc">&nbsp;&nbsp;0&nbsp;&nbsp;</span></span>
+					</button>
+				</div>		
+
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<table><tr><td style="width:100%;height:18px;font-size:8px;border:0"></td></tr></table>
+				</div>
+			</div>
+
+			<div class="row">
+      			<div class="col-sm-2"></div><div class="col-sm-8"><button id="action-step" type="button" class="btn btn-sm btn-primary btn-block">&nbsp;&nbsp;单步&nbsp;&nbsp; </button></div><div class="col-sm-2"></div>
+      			<div class="col-sm-12"><table><tr><td style="width:100%;height:10px;font-size:8px;border:0"></td></tr></table></div>
+      			<div class="col-sm-2"></div><div class="col-sm-8"><button id="action-multistep" type="button" class="btn btn-block btn-sm btn-primary">多步</button></div><div class="col-sm-2"></div>
+      			<div class="col-sm-12"><table><tr><td style="width:100%;height:10px;font-size:8px;border:0"></td></tr></table></div>
+				<div class="col-sm-2"></div><div class="col-sm-8"><button id="action-run" type="button" class="btn  btn-sm  btn-block btn-primary">&nbsp;&nbsp;运行&nbsp;&nbsp;</button></div><div class="col-sm-2"></div>
+				<div class="col-sm-12"><table><tr><td style="width:100%;height:10px;font-size:8px;border:0"></td></tr></table></div>
+				
+				<div class="col-sm-2"></div><div class="col-sm-8"><button id="action-stop" type="button" class="btn btn-sm btn-block btn-primary">&nbsp;&nbsp;暂停&nbsp;&nbsp; </button></div><div class="col-sm-2"></div>
+				<div class="col-sm-12"><table><tr><td style="width:100%;height:10px;font-size:8px;border:0"></td></tr></table></div>
+				<div class="col-sm-2"></div><div class="col-sm-8"><button id="action-end" type="button" class="btn btn-sm  btn-block btn-primary">&nbsp;&nbsp;结果&nbsp;&nbsp;</button></div><div class="col-sm-2"></div>
+				<div class="col-sm-12"><table><tr><td style="width:100%;height:10px;font-size:8px;border:0"></td></tr></table></div>
+				<div class="col-sm-2"></div><div class="col-sm-8"><button id="action-restart" type="button" class="btn btn-block btn-sm btn-primary">清除</button></div><div class="col-sm-2"></div>
+				
+			</div>
+		</div>
+
+		<div class="col-md-5">
+			<div class="alert alert-info" role="alert"><strong>
+			保留站</strong>（包含 Load Buffer 和 Store Buffer）
+			</div>	
+				<ol id="reservation-stations" class="list">
+					<li class="station title">
+					<span class="name"> 名称</span>
+					<span class="time-remaining"> 剩余周期</span>
+					<span class="instruction-number"> 指令行号</span>
+					<span class="state"> 状态 </span>
+					<span class="p1"> 输出 </span>
+					<span class="p2"> 输入1 </span>
+					<span class="p3"> 输入2 </span>
+					</li>
+				</ol>
+
+		</div>
+	</div>
+	<table><tr><td style="width:100%;height:26px;font-size:14px;border:0"></td></tr></table>
+	<div class="row">
+		<div class="col-md-6">
+			<div class="alert alert-info" role="alert"><strong>
+			浮点寄存器</strong>
+			</div>
+			<div class="registers">
+				<div class="registers-type">
+					<ol class="registers-file list" id="float-registers" opacity="0.5">
+					</ol>
+				</div>
+			</div>
+		</div>	
+
+		<div class="col-md-6">
+			
+				<div class="alert alert-info" role="alert"><strong>内存</strong>（可进行内存数值查询与修改操作）</div>
+				<table><tr><td style="width:100%;height:6px;font-size:14px;border:0"></td></tr></table>
+
+				<div class="jumbotron">
+
+  					<div class="row">
+  						
+      					<div class="col-sm-2">
+      						<h5>内存序号</h5>
+      					</div>
+	  					<div class="col-sm-6">
+      						<input type="text" class="form-control" placeholder="请输入内存序号">
+      					</div>
+	   					<div class="col-sm-2">
+      						<button type="submit" class="btn btn-info">查询</button>
+      					</div>
+
+				
+					</div>
+					<table><tr><td style="width:100%;height:10px;font-size:14px;border:0"></td></tr></table>
+					<div class="row">
+      					<div class="col-sm-2">
+      						<h5>内存数值</h5>
+      					</div>
+	  					<div class="col-sm-6">
+      						<input type="text" class="form-control">
+      					</div>
+      					<div class="col-sm-2">
+      						<button type="submit" class="btn btn-info">修改</button>
+      					</div>
+					</div>
+<!-- 				<div class="pane-memory">
+					<div id="memory-show">
+					</div>
+				</div> -->
+			</div>		
+	</div>
+	
+</div>
+<footer class="container">
+  <hr>
+  <p class="text-center">&copy; 2017 Tomasulo Group</p>
+</footer>
+<table><tr><td style="width:100%;height:18px;font-size:8px;border:0"></td></tr></table>
+	</body>
+		<script src="js/instruction_type.js"></script>
+		<script src="js/common_data_bus.js"></script>
+		<script src="js/instruction.js"></script>
+		<script src="js/memory.js"></script>
+		<script src="js/register_file.js"></script>
+		<script src="js/reservation_station.js"></script>
+		<script src="js/buffer.js"></script>
+		<script src="js/main.js"></script>
+		<script src="js/index.js"></script>
+	</html>
+

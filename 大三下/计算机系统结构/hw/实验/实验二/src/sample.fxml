@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.input.KeyCodeCombination?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="886.0" prefWidth="1237.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainSceneController">
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu text="文件(_F)">
+            <items>
+              <MenuItem onAction="#exitClicked" text="退出">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="Q" control="ANY" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
+            </items>
+          </Menu>
+            <Menu fx:id="changeMenu" text="更改(_C)">
+              <items>
+                  <MenuItem mnemonicParsing="false" onAction="#registerChangeClicked" text="寄存器" />
+                <MenuItem mnemonicParsing="false" onAction="#memoryChangeClicked" text="内存" />
+              </items>
+            </Menu>
+          <Menu text="帮助(_H)">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#aboutClicked" text="关于" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <bottom>
+      <HBox prefHeight="33.0" prefWidth="1098.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="hintTextLabel" contentDisplay="TOP" nodeOrientation="LEFT_TO_RIGHT" prefHeight="39.0" prefWidth="1099.0" text="欢迎使用！">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <padding>
+                  <Insets left="20.0" right="20.0" />
+               </padding>
+            </Label>
+         </children>
+      </HBox>
+   </bottom>
+   <left>
+      <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="120.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="clockLabel" contentDisplay="TOP" graphicTextGap="6.0" text="执行周期">
+               <VBox.margin>
+                  <Insets bottom="4.0" left="10.0" right="10.0" top="18.0" />
+               </VBox.margin>
+            </Label>
+            <Label fx:id="clockTimeLabel" text="0">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Button fx:id="inputButton" alignment="CENTER" contentDisplay="TOP" graphicTextGap="10.0" mnemonicParsing="false" onAction="#inputClicked" text="输入指令">
+               <VBox.margin>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </Button>
+            <MenuButton fx:id="sampleButton" contentDisplay="TOP" graphicTextGap="10.0" mnemonicParsing="false" popupSide="RIGHT" text="示例" textOverrun="CLIP">
+               <VBox.margin>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets bottom="10.0" left="6.0" right="6.0" top="10.0" />
+               </padding>
+            </MenuButton>
+            <Button fx:id="startButton" contentDisplay="TOP" graphicTextGap="10.0" mnemonicParsing="false" onAction="#startClicked" text="开始模拟">
+               <VBox.margin>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </Button>
+            <Button fx:id="stepButton" contentDisplay="TOP" graphicTextGap="10.0" mnemonicParsing="false" onAction="#stepClicked" text="单步执行">
+               <VBox.margin>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </Button>
+             <MenuButton fx:id="continueButton" contentDisplay="TOP" graphicTextGap="10.0" mnemonicParsing="false" popupSide="RIGHT" text="连续" textOverrun="CLIP">
+                 <VBox.margin>
+                     <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                 </VBox.margin>
+                 <padding>
+                     <Insets bottom="10.0" left="6.0" right="6.0" top="10.0" />
+                 </padding>
+             </MenuButton>
+            <Button fx:id="tailButton" contentDisplay="TOP" graphicTextGap="10.0" mnemonicParsing="false" onAction="#tailClicked" text="自动执行">
+               <VBox.margin>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </Button>
+         </children>
+      </VBox>
+   </left>
+   <center>
+      <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="所有指令">
+               <font>
+                  <Font size="20.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+            </Label>
+            <TableView fx:id="codeTableView" prefHeight="300.0" prefWidth="200.0">
+              <columns>
+                  <TableColumn editable="false" prefWidth="75.0" sortable="false" text="指令编号">
+                      <cellValueFactory><PropertyValueFactory property="id" /></cellValueFactory>
+                  </TableColumn>
+                <TableColumn editable="false" minWidth="80.0" prefWidth="135.0" sortable="false" text="指令内容">
+                    <cellValueFactory><PropertyValueFactory property="content" /></cellValueFactory>
+                </TableColumn>
+                <TableColumn editable="false" minWidth="0.0" prefWidth="98.0" sortable="false" text="运行状态">
+                     <columns>
+                        <TableColumn editable="false" prefWidth="40.0" sortable="false" text="发射指令">
+                            <cellValueFactory><PropertyValueFactory property="st1" /></cellValueFactory>
+                        </TableColumn>
+                        <TableColumn editable="false" prefWidth="40.0" sortable="false" text="执行完毕">
+                            <cellValueFactory><PropertyValueFactory property="st2" /></cellValueFactory>
+                        </TableColumn>
+                        <TableColumn editable="false" prefWidth="40.0" sortable="false" text="写回结果">
+                            <cellValueFactory><PropertyValueFactory property="st3" /></cellValueFactory>
+                        </TableColumn>
+                     </columns>
+                  </TableColumn>
+              </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+               <VBox.margin>
+                  <Insets left="40.0" right="40.0" />
+               </VBox.margin>
+            </TableView>
+            <Label text="运算部件保留站">
+               <font>
+                  <Font size="20.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </VBox.margin></Label>
+            <TableView fx:id="rsTableView" prefHeight="250.0" prefWidth="200.0">
+               <columns>
+                  <TableColumn editable="false" prefWidth="75.0" sortable="false" text="名称">
+                      <cellValueFactory><PropertyValueFactory property="name" /></cellValueFactory>
+                  </TableColumn>
+                  <TableColumn editable="false" prefWidth="135.0" sortable="false" text="Busy">
+                      <cellValueFactory><PropertyValueFactory property="busy" /></cellValueFactory>
+                  </TableColumn>
+                  <TableColumn editable="false" minWidth="0.0" prefWidth="98.0" sortable="false" text="Op">
+                      <cellValueFactory><PropertyValueFactory property="op" /></cellValueFactory>
+                  </TableColumn>
+                  <TableColumn editable="false" prefWidth="75.0" sortable="false" text="Vj">
+                      <cellValueFactory><PropertyValueFactory property="vj" /></cellValueFactory>
+                  </TableColumn>
+                  <TableColumn editable="false" prefWidth="135.0" sortable="false" text="Vk">
+                      <cellValueFactory><PropertyValueFactory property="vk" /></cellValueFactory>
+                  </TableColumn>
+                  <TableColumn editable="false" minWidth="0.0" prefWidth="98.0" sortable="false" text="Qj">
+                      <cellValueFactory><PropertyValueFactory property="qj" /></cellValueFactory>
+                  </TableColumn>
+                  <TableColumn editable="false" prefWidth="135.0" sortable="false" text="Qk">
+                      <cellValueFactory><PropertyValueFactory property="qk" /></cellValueFactory>
+                  </TableColumn>
+               </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+               <VBox.margin>
+                  <Insets left="40.0" right="40.0" />
+               </VBox.margin>
+            </TableView>
+            <Label text="Load-Store队列">
+               <font>
+                  <Font size="20.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+            </Label>
+            <TableView fx:id="lsQueueTableView" prefHeight="200.0" prefWidth="200.0">
+              <columns>
+                <TableColumn editable="false" prefWidth="147.0" sortable="false" text="队列排序">
+                    <cellValueFactory><PropertyValueFactory property="id" /></cellValueFactory>
+                </TableColumn>
+                <TableColumn editable="false" minWidth="0.0" prefWidth="132.0" sortable="false" text="保留站名称">
+                    <cellValueFactory><PropertyValueFactory property="rsName" /></cellValueFactory>
+                </TableColumn>
+                  <TableColumn editable="false" prefWidth="75.0" sortable="false" text="Op">
+                      <cellValueFactory><PropertyValueFactory property="op" /></cellValueFactory>
+                  </TableColumn>
+                  <TableColumn editable="false" prefWidth="75.0" sortable="false" text="Vj">
+                      <cellValueFactory><PropertyValueFactory property="vj" /></cellValueFactory>
+                  </TableColumn>
+                  <TableColumn editable="false" prefWidth="75.0" sortable="false" text="Qj">
+                      <cellValueFactory><PropertyValueFactory property="qj" /></cellValueFactory>
+                  </TableColumn>
+                  <TableColumn editable="false" prefWidth="75.0" sortable="false" text="地址偏移">
+                      <cellValueFactory><PropertyValueFactory property="address" /></cellValueFactory>
+                  </TableColumn>
+              </columns>
+               <VBox.margin>
+                  <Insets left="40.0" right="40.0" />
+               </VBox.margin>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+            </TableView>
+         </children>
+      </VBox>
+   </center>
+   <right>
+      <VBox alignment="TOP_CENTER" prefWidth="500.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox alignment="TOP_CENTER">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <children>
+                  <VBox alignment="TOP_CENTER">
+                     <children>
+                        <Label text="浮点寄存器">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <TableView fx:id="fpRegTableView" prefHeight="500.0" prefWidth="200.0">
+                          <columns>
+                            <TableColumn editable="false" prefWidth="75.0" sortable="false" text="名称">
+                                <cellValueFactory><PropertyValueFactory property="name" /></cellValueFactory>
+                            </TableColumn>
+                            <TableColumn editable="false" prefWidth="75.0" sortable="false" text="值">
+                                <cellValueFactory><PropertyValueFactory property="value" /></cellValueFactory>
+                            </TableColumn>
+                              <TableColumn editable="false" prefWidth="75.0" sortable="false" text="Qi">
+                                  <cellValueFactory><PropertyValueFactory property="rs" /></cellValueFactory>
+                              </TableColumn>
+                          </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                     </children>
+                     <padding>
+                        <Insets right="20.0" />
+                     </padding>
+                  </VBox>
+                  <VBox alignment="TOP_CENTER">
+                     <children>
+                        <Label text="整数寄存器">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <TableView fx:id="cpuRegTableView" prefHeight="500.0" prefWidth="200.0">
+                          <columns>
+                            <TableColumn editable="false" prefWidth="75.0" sortable="false" text="名称">
+                                <cellValueFactory><PropertyValueFactory property="name" /></cellValueFactory>
+                            </TableColumn>
+                            <TableColumn editable="false" prefWidth="75.0" sortable="false" text="值">
+                                <cellValueFactory><PropertyValueFactory property="value" /></cellValueFactory>
+                            </TableColumn>
+                          </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                     </children>
+                     <padding>
+                        <Insets left="20.0" />
+                     </padding>
+                  </VBox>
+               </children>
+            </HBox>
+            <Label text="内存">
+               <font>
+                  <Font size="20.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+            </Label>
+            <TableView fx:id="memTableView" prefHeight="250.0" prefWidth="200.0">
+               <columns>
+                  <TableColumn prefWidth="75.0" text="偏移">
+                      <cellValueFactory><PropertyValueFactory property="offset" /></cellValueFactory>
+                  </TableColumn>
+                  <TableColumn prefWidth="75.0" text="值">
+                      <cellValueFactory><PropertyValueFactory property="value" /></cellValueFactory>
+                  </TableColumn>
+               </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+               <VBox.margin>
+                  <Insets left="30.0" right="30.0" />
+               </VBox.margin>
+            </TableView>
+         </children>
+         <BorderPane.margin>
+            <Insets right="25.0" />
+         </BorderPane.margin>
+      </VBox>
+   </right>
+</BorderPane>

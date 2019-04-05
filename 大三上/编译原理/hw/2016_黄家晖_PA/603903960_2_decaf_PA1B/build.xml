@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	Ant build file for Decaf Compiler.
+	author: Zhang Duo
+	date:   Aug 23, 2007
+	DCST, Tsinghua University
+	-->
+<project name="decaf" default="pack">
+
+	<!-- 设置各种属性 -->
+	<property name="src.dir" value="src" />
+	<property name="result.dir" value="result" />
+	<property name="bin.dir" value="${result.dir}/bin" />
+	<property name="doc.dir" value="${result.dir}/doc" />
+	<property name="jflex.jar" value="tools/jflex/JFlex.jar" />
+
+	<target name="prepare" description="Preparing...">
+		<mkdir dir="${bin.dir}" />
+		<mkdir dir="${doc.dir}" />
+	</target>
+
+	<!-- 生成Lex结果 -->
+	<target name="jflex" description="Running JFlex...">
+		<java jar="${jflex.jar}" fork="true" maxmemory="128m" failonerror="true">
+			<sysproperty key="file.encoding" value="UTF-8" />
+			<arg value="${src.dir}/decaf/frontend/Lexer.l" />
+		</java>
+		<delete file="${src.dir}/decaf/frontend/Lexer.java~" />
+	</target>
+
+	<!-- 编译 -->
+	<target name="compile" depends="prepare, jflex" description="Compiling all...">
+		<javac includeantruntime="false" srcdir="${src.dir}" destdir="${bin.dir}" encoding="UTF8" debug="on" optimize="off" />
+	</target>
+
+	<!-- 打包 -->
+	<target name="pack" depends="compile" description="Packaging...">
+		<jar destfile="${result.dir}/decaf.jar">
+			<fileset dir="${basedir}" includes="src/**" />
+			<fileset dir="${bin.dir}" />
+			<manifest>
+				<attribute name="Signature-Version" value="3.141592" />
+				<attribute name="Main-Class" value="decaf.Driver" />
+			</manifest>
+		</jar>
+	</target>
+
+	<!-- 生成JavaDoc -->
+	<target name="javadoc" depends="compile">
+		<javadoc access="private" encoding="UTF8" author="false" classpath="." destdir="${doc.dir}" doctitle="Decaf Compiler Documentation" nodeprecated="true" nodeprecatedlist="true" packagenames="*" sourcepath="${basedir}/src" use="true" version="false">
+			<link href="." />
+		</javadoc>
+	</target>
+
+	<target name="clean" description="Clean...">
+		<delete dir="${result.dir}" />
+	</target>
+</project>

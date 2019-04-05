@@ -1,0 +1,268 @@
+body{
+	font-family: "微软雅黑";
+	margin: 0;
+	padding: 0;
+	background: #FfFfFf;
+}
+span.right{
+	float:right;
+	color: #ffffff;
+}
+a {
+	text-decoration: none;
+	color: #888;
+	transition: color ease-in 0.3s;
+}	
+a:hover {
+	color: black;
+}
+	
+span.right i{
+
+}
+.mine{
+	margin-top:10px; 
+	margin-bottom:6px
+	width: 25%;
+	display: inline-block;
+
+}
+.top-wrap {
+	position: absolute;
+	top: 0;
+	left: 150px;
+	right: 0;
+	bottom: 300px;
+	overflow-y: hidden; 
+}
+.left-wrap{
+	position: absolute;
+	width: 150px;
+	height: 100%;
+	z-index: 10;
+	border-right: 2px solid #666;
+}
+.center-wrap{
+	position: absolute;
+	left: 0;
+	right: 500px;
+	height: 100%;
+	overflow-y: auto; 
+}
+.bottom-wrap{
+	left: 150px;
+	right: 0;
+	bottom: 0;
+	/* top: 500px; */
+	height: 370px;
+	overflow-y: hidden; 
+}
+.right-wrap{
+	position: absolute;
+	width: 500px;
+	height: 100%;
+	right: 0;
+	border-left: 2px solid #666;
+	overflow-x: hidden; 
+	overflow-y: auto; 
+}
+.timeline{
+	margin-left: 10px;
+}
+.list{
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}	
+.list li{
+	border-bottom: 1px solid #ffffff;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	height: 27px;
+	padding: 5px 5px 5px 5px;
+	position: relative;
+	overflow: hidden;
+	color: #666;
+	font-size: 1.2rem;
+}
+
+.pane-instruction{
+	width: 500px;
+}
+.pane-reservation{
+	width: 600px;
+}
+.pane-registers{
+	width: 150px;
+	overflow-x: hidden;
+	overflow-y: auto;
+	
+}
+.pane-memory{
+	position: absolute;
+	top: 72px;
+	bottom: 0;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+.station .parameter{
+	margin-left: 10px;
+	display: inline-block;
+	padding-left: 0;
+	padding-right: 0;
+	margin: 0px;
+}
+li.title{
+	background: #2965a8;
+	font-weight: bold;
+	color: white;
+}
+li:nth-child(even){
+	background: #f0f1f1;
+}
+li span{
+	/*border-right: 1px solid #2965a8*/
+	padding-right: 5px;
+	margin: 0px;
+	display: inline-block;
+	height: 28px;
+	vertical-align: top;
+}
+.station .p1,
+.station .p2,
+.station .p3{
+	width: 66px;
+	display: inline-block;
+	text-align: center;
+}
+.station .name{
+	width: 60px;
+	display: inline-block;
+	text-align: center;
+}
+.station .time-remaining{
+	width: 70px;
+	display: inline-block;
+	text-align: center;
+}
+.station .operation{
+	width: 70px;
+	display: inline-block;
+	text-align: center;
+}
+.station .instruction-number{
+	width: 70px;
+	display: inline-block;
+	text-align: center;
+}
+.instruction .inst-linenum{
+	width: 40px;
+	display: inline-block;
+	text-align: center;
+	margin-right: 10px;
+}
+.instruction .instruction-detail{
+	width: 150px;
+	text-align: left;
+	display: inline-block;
+}
+.instruction .issue-time,
+.instruction .exec-time,
+.instruction .writeback-time {
+	width: 80px;
+	margin-left: 10px;
+	text-align: center;
+	display: inline-block;
+}
+.station .state{
+	width: 70px;
+	display: inline-block;
+	text-align: center;
+}
+.insturction .inst-linenum{
+	width: 60px;
+	display: inline-block;
+	text-align: center;
+}
+
+.explain{
+	font-weight: bold;
+	color: #666;
+	font-size: 0.8rem;
+	padding: 3px 0;
+	text-align: center;
+	border: none;
+	border-bottom: 1px solid;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #E6E6E6), color-stop(1, #DDD));
+	background: -webkit-linear-gradient(top, #E6E6E6 0%, #DDD 100%);
+	background: linear-gradient(top, #E6E6E6 0%, #DDD 100%);
+	-webkit-box-shadow: inset 2px 2px 2px #AAA;
+	box-shadow: inset 0 1px 0 #EEE;
+	border-color: #CCC;
+	text-shadow: 0 1px 0 #F3F3F3;
+}	
+.pane-clock{
+	padding: 10px;
+	font-size: 2em;
+}
+.memory{
+	border: 1px solid #CCC;
+	width: 50px;
+	height: 50px;
+	margin: 5px;
+	padding: 5px;
+	float:left;
+	border-radius: 5px;
+	background-color: #F7FCFF;
+}
+.memory .addr{
+	color: #CCC;
+	display: block;
+	width: 40px;
+	text-align: center;
+}
+.memory .value{
+	color: #444;
+	width: 40px;
+	display: block;
+	text-align: center;
+}
+.register .name{
+	padding-left: 10px;
+	width: 40px;
+	display: inline-block;
+}
+.register .value{
+	padding-left: 10px;
+	width: 80px;
+	text-align: right;
+	display: inline-block;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	font-family: "consolas";
+	border: none;
+}
+.registers .type-name{
+	width: 100%;
+	text-align: center;
+	color: #A44;
+}
+#dialog textarea{
+	width: 426px;
+	height: 250px;
+	resize: none;
+	border:0;  
+	padding-top:6px;
+	padding-left:12px;
+    background-color:#e3f6ff;  
+    /*scrollbar-arrow-color:yellow;  
+    scrollbar-base-color:lightsalmon;  
+    overflow: hidden;*/  
+    color: #666464;  
+}
+#dialog input{
+	width: 500px;
+	height: 350px;
+	resize: none;
+}

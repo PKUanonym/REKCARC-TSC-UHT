@@ -1,0 +1,35 @@
+class Main {
+    static void main() {
+
+        if  true : {
+        	Print("branch1\n");
+        } ||| true : {
+        	Print("branch2\n");
+        } ||| true : {
+        	Print("branch3\n");
+        } fi 
+
+
+       	if  false : {
+        	Print("branch1\n");
+        } ||| true : {
+        	Print("branch2\n");
+        } ||| false : {
+        	Print("branch3\n");
+        } ||| true : {
+        	Print("branch4\n");
+        } fi
+        
+        if  false : {
+        	Print("branch1\n");
+        } ||| false : {
+        	Print("branch2\n");
+        } ||| true : {
+        	Print("branch3\n");
+        } ||| true : {
+        	Print("branch4\n");
+        } fi        
+
+        
+    }
+}

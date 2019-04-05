@@ -1,0 +1,43 @@
+program
+    class Father <empty>
+        vardef field inttype
+        func method voidtype
+            formals
+                vardef f inttype
+            stmtblock
+                if
+                    and
+                        gtr
+                            varref f
+                            intconst 0
+                        les
+                            varref f
+                            intconst 10
+                    stmtblock
+                        assign
+                            varref f
+                            sub
+                                varref f
+                                intconst 3
+                        return
+                            call method
+                                <empty>
+                                varref f
+    class Child Father
+        func start voidtype
+            formals
+            stmtblock
+                vardef p classtype Father
+                assign
+                    varref p
+                    this
+                assign
+                    varref field
+                        varref p
+                    intconst 5
+                assign
+                    varref p
+                    null
+                print
+                    varref field
+                        this

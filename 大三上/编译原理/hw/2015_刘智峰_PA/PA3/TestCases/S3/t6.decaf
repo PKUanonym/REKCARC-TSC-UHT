@@ -1,0 +1,19 @@
+class Main {
+
+    static int Binky(int a, int[] b, int[] c) {
+        return b[c[0]];
+    }
+
+    static void main() {
+        int[] c;
+        int [][]d;
+
+        d = new int[][5];
+        d[0] = new int[12];
+        c = new int[10];
+        c[0] = 4 + 5 * 3 / 4 % 2;
+        d[0][c[0]] = 55;
+
+        Print(c[0], " ", 2 * Binky(100, d[0], c));
+    }
+}

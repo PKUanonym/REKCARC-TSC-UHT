@@ -1,0 +1,53 @@
+class Main {
+    static void main() {
+			class A a;
+			class B b;
+			class C c;
+			class D d;
+			class E e;
+			int i;
+			string j;
+			
+			class A o;
+			o = i << j;
+			o = a << i;
+			o = a << d;
+			o = d << a;
+			o = c << e;
+			o = e << c;
+			o = b << c << d;
+			o = e << b << a;
+			o = e << ( b << a );
+    }
+}
+
+class A {
+    void a() {
+
+    }
+}
+
+class B extends A{
+    void a() {
+
+    }
+}
+
+class C extends B{
+    void a() {
+
+    }
+}
+
+class D{
+    void a() {
+
+    }
+}
+
+class E extends D{
+    void a() {
+
+    }
+}
+

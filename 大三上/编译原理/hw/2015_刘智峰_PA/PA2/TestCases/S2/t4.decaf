@@ -1,0 +1,31 @@
+class Main {
+
+    int a;
+    string[] b;
+
+    int[] tester(int d) {
+        b = new string[1];
+        return new int[d];
+    }
+    
+    void start() {
+        int a;
+        bool b;
+        int[] d;
+        a = 1;
+        while (a < 5) {
+            if (a % 2 == 0) {
+                d = tester(a);
+                break;
+            }
+            Print("Loop ", a, "\n");
+            a = a + 1;
+        }
+        d[0] = 0;
+        Print(d[d[0]], "\n", d.length(), "\n");
+    }
+
+    static void main() {
+        new Main().start();
+    }
+}

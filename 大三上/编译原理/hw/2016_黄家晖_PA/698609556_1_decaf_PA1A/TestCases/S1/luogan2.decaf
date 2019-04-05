@@ -1,0 +1,60 @@
+class Class1 extends Base
+{
+	class Base x;
+}
+
+class Main {
+    static int main() {
+    		int a;
+    		int b;
+    		int c;
+    		a = 0;
+    		b = 1;
+    		c = 2;
+			class Class1 aa;
+			class Class2 bb;
+			class Base cc;
+			int dd;
+			dd = (a+1>3?a?(aa << bb) << (aa.x <<(cc << bb.x)):bb:cc).getNum();
+			
+    		
+   			repeat{
+   				if (a>c) continue;
+   				a = a - b;
+   				c = a + b;
+   				while(a > b){
+   					a = a*3;
+   					b = b*4;
+					
+   					if (a/4 == 0)
+   						continue;
+					switch (a+b+c)
+					{
+					case 0:
+					case 1:
+						repeat
+							a = a+1;
+						until(a==1?a?b:c:b+c);
+						break;
+					
+					}
+   				}
+   			}until(a>b);
+        
+        return 0;    
+    }
+}
+
+class Base
+{
+	int num;
+	int getNum()
+	{
+		return num;
+	}
+}
+
+class Class2 extends Base
+{
+	class Base y;
+}

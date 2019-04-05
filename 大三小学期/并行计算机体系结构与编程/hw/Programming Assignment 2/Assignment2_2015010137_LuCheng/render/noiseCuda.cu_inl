@@ -1,0 +1,20 @@
+
+// included by fastRenderer.cu
+
+__device__ __inline__ float2
+cudaVec2CellNoise(float3 location, int index)
+{
+    int integer_of_x = static_cast<int>( location.x );
+    int integer_of_y = static_cast<int>( location.y );
+    int integer_of_z = static_cast<int>( location.z );
+    int hash = cuConstNoiseXPermutationTable[ (integer_of_x*index) & 0xFF ];
+    hash = cuConstNoiseXPermutationTable[ ( hash + integer_of_y ) & 0xFF ];
+    hash = cuConstNoiseXPermutationTable[ ( hash + integer_of_z ) & 0xFF ];
+    float x_result = cuConstNoise1DValueTable[ hash ];
+    hash = cuConstNoiseYPermutationTable[ integer_of_x & 0xFF ];
+    hash = cuConstNoiseYPermutationTable[ ( hash + integer_of_y ) & 0xFF ];
+    hash = cuConstNoiseYPermutationTable[ ( hash + integer_of_z ) & 0xFF ];
+    float y_result = cuConstNoise1DValueTable[ hash ];
+
+    return make_float2(x_result, y_result);
+}

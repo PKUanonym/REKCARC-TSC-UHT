@@ -1,0 +1,46 @@
+GLOBAL SCOPE:
+    (3,1) -> class Main
+    (10,1) -> class NQueues
+    CLASS SCOPE OF 'Main':
+        (5,17) -> static function main : void
+        FORMAL SCOPE OF 'main':
+            LOCAL SCOPE:
+    CLASS SCOPE OF 'NQueues':
+        (11,9) -> variable N : int
+        (12,11) -> variable col : int[]
+        (13,11) -> variable row : int[]
+        (14,11) -> variable di1 : int[]
+        (15,11) -> variable di2 : int[]
+        (18,19) -> function init : class : NQueues->int->class : NQueues
+        (29,10) -> function solve : class : NQueues->void
+        (34,11) -> function clearArray : class : NQueues->int[]->int[]
+        (45,10) -> function printBoard : class : NQueues->int[]->int->void
+        (65,10) -> function try : class : NQueues->int->int[]->int[]->int[]->int[]->void
+        FORMAL SCOPE OF 'init':
+            (18,19) -> variable @this : class : NQueues
+            (18,28) -> variable @n : int
+            LOCAL SCOPE:
+        FORMAL SCOPE OF 'solve':
+            (29,10) -> variable @this : class : NQueues
+            LOCAL SCOPE:
+        FORMAL SCOPE OF 'clearArray':
+            (34,11) -> variable @this : class : NQueues
+            (34,28) -> variable @a : int[]
+            LOCAL SCOPE:
+                (35,13) -> variable i : int
+        FORMAL SCOPE OF 'printBoard':
+            (45,10) -> variable @this : class : NQueues
+            (45,27) -> variable @col : int[]
+            (45,36) -> variable @N : int
+            LOCAL SCOPE:
+                (46,13) -> variable i : int
+        FORMAL SCOPE OF 'try':
+            (65,10) -> variable @this : class : NQueues
+            (65,18) -> variable @c : int
+            (65,27) -> variable @row : int[]
+            (65,38) -> variable @col : int[]
+            (65,49) -> variable @diag1 : int[]
+            (65,62) -> variable @diag2 : int[]
+            LOCAL SCOPE:
+                (66,13) -> variable N : int
+                (67,13) -> variable r : int

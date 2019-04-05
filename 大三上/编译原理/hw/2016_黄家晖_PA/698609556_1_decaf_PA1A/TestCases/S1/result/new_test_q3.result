@@ -1,0 +1,79 @@
+program
+    class Main <empty>
+        static func main inttype
+            formals
+            stmtblock
+                vardef i inttype
+                vardef a inttype
+                vardef b inttype
+                vardef c inttype
+                assign
+                    varref a
+                    intconst 0
+                assign
+                    varref b
+                    intconst 1
+                assign
+                    varref c
+                    intconst 2
+                switch
+                    add
+                        varref a
+                        varref b
+                    case:
+                        intconst 1
+                        assign
+                            varref i
+                            add
+                                intconst 1
+                                intconst 2
+                        assign
+                            varref a
+                            add
+                                varref i
+                                intconst 3
+                        break
+                    case:
+                        intconst 2
+                    case:
+                        intconst 3
+                    case:
+                        intconst 4
+                        assign
+                            varref a
+                            add
+                                varref b
+                                intconst 3
+                        assign
+                            varref c
+                            add
+                                varref a
+                                varref b
+                        break
+                    case:
+                        intconst 5
+                    default:
+                    assign
+                        varref a
+                        add
+                            varref b
+                            varref c
+                    switch
+                        varref a
+                        case:
+                            intconst 1
+                        case:
+                            intconst 2
+                            assign
+                                varref a
+                                add
+                                    varref b
+                                    varref c
+                        default:
+                        assign
+                            varref c
+                            add
+                                varref a
+                                varref b
+                return
+                    intconst 0

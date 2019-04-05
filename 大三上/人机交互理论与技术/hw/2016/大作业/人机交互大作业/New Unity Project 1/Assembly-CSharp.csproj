@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.20506</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <RootNamespace></RootNamespace>
+    <ProjectGuid>{FC9411EB-1B12-4154-0219-EEA7CBD09863}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <AssemblyName>Assembly-CSharp</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <BaseDirectory>Assets</BaseDirectory>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Temp\bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_5_0;UNITY_5_5;UNITY_5;UNITY_64;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_GENERICS;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_PLAYMODE_TESTS_RUNNER;ENABLE_SCRIPTING_NEW_CSHARP_COMPILER;UNITY_STANDALONE_OSX;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_GAMECENTER;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_VIDEO;ENABLE_VR;ENABLE_CLUSTERINPUT;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_OSX;UNITY_TEAM_LICENSE;CROSS_PLATFORM_INPUT</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>0169</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Temp\bin\Release\</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>0169</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.XML" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="UnityEngine">
+      <HintPath>/Applications/Unity.app/Contents/Managed/UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor">
+      <HintPath>/Applications/Unity.app/Contents/Managed/UnityEditor.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+     <Compile Include="Assets\VRSampleScenes\Scripts\Common\SessionData.cs" />
+     <Compile Include="Assets\VRSampleScenes\Scripts\Examples\ExampleInteractiveItem.cs" />
+     <Compile Include="Assets\VRSampleScenes\Scripts\Examples\ExampleRenderScale.cs" />
+     <Compile Include="Assets\VRSampleScenes\Scripts\Examples\ExampleRotation.cs" />
+     <Compile Include="Assets\VRSampleScenes\Scripts\Examples\ExampleTouchpad.cs" />
+     <Compile Include="Assets\VRSampleScenes\Scripts\Flyer\Asteroid.cs" />
+     <Compile Include="Assets\VRSampleScenes\Scripts\Flyer\AsteroidExplosion.cs" />
+     <Compile Include="Assets\VRSampleScenes\Scripts\Flyer\EnvironmentController.cs" />
+     <Compile Include="Assets\VRSampleScenes\Scripts\Flyer\ExplosionPhysicsForce.cs" />
+     <Compile Include="Assets\VRSampleScenes\Scripts\Flyer\FlyerAlignmentChecker.cs" />
+     <Compile Include="Assets\VRSampleScenes\Scripts\Flyer\FlyerGameController.cs" />
+     <Compile Include="Assets\VRSampleScenes\Scripts\Flyer\FlyerHealthController.cs" />
+     <Compile Include="Assets\VRSampleScenes\Scripts\Flyer\FlyerLaser.cs" />
+     <Compile Include="Assets\VRSampleScenes\Scripts\Flyer\FlyerLaserController.cs" />
+     <Compile Include="Assets\VRSampleScenes\Scripts\Flyer\FlyerMovementController.cs" />
+     <Compile Include="Assets\VRSampleScenes\Scripts\Flyer\ParticleSystemMultiplier.cs" />
+     <Compile Include="Assets\VRSampleScenes\Scripts\Flyer\Ring.cs" />
+     <Compile Include="Assets\VRSampleScenes\Scripts\Flyer\UIController.cs" />
+     <Compile Include="Assets\VRSampleScenes\Scripts\Intro\IntroManager.cs" />
+     <Compile Include="Assets\VRSampleScenes\Scripts\Maze\AICharacterControl.cs" />
+     <Compile Include="Assets\VRSampleScenes\Scripts\Maze\AgentTrail.cs" />
+     <Compile Include="Assets\VRSampleScenes\Scripts\Maze\CameraOrbit.cs" />
+     <Compile Include="Assets\VRSampleScenes\Scripts\Maze\DestinationMarker.cs" />
+     <Compile Include="Assets\VRSampleScenes\Scripts\Maze\ExitArea.cs" />
+     <Compile Include="Assets\VRSampleScenes\Scripts\Maze\MazeGameController.cs" />
+     <Compile Include="Assets\VRSampleScenes\Scripts\Maze\MazeTargetSetting.cs" />
+     <Compile Include="Assets\VRSampleScenes\Scripts\Maze\Player.cs" />
+     <Compile Include="Assets\VRSampleScenes\Scripts\Maze\SwitchButton.cs" />
+     <Compile Include="Assets\VRSampleScenes\Scripts\Maze\ThirdPersonCharacter.cs" />
+     <Compile Include="Assets\VRSampleScenes\Scripts\Maze\Turret.cs" />
+     <Compile Include="Assets\VRSampleScenes\Scripts\Menu\MenuAnimator.cs" />
+     <Compile Include="Assets\VRSampleScenes\Scripts\Menu\MenuButton.cs" />
+     <Compile Include="Assets\VRSampleScenes\Scripts\Menu\MenuItemPopout.cs" />
+     <Compile Include="Assets\VRSampleScenes\Scripts\Menu\MenuSelectorMover.cs" />
+     <Compile Include="Assets\VRSampleScenes\Scripts\ShootingGallery\ShootingGalleryController.cs" />
+     <Compile Include="Assets\VRSampleScenes\Scripts\ShootingGallery\ShootingGalleryGun.cs" />
+     <Compile Include="Assets\VRSampleScenes\Scripts\ShootingGallery\ShootingGalleryScore.cs" />
+     <Compile Include="Assets\VRSampleScenes\Scripts\ShootingGallery\ShootingTarget.cs" />
+     <Compile Include="Assets\VRSampleScenes\Scripts\ShootingGallery\UIController.cs" />
+     <Compile Include="Assets\VRSampleScenes\Scripts\Utils\GUIArrows.cs" />
+     <Compile Include="Assets\VRSampleScenes\Scripts\Utils\InputWarnings.cs" />
+     <Compile Include="Assets\VRSampleScenes\Scripts\Utils\ObjectPool.cs" />
+     <Compile Include="Assets\VRSampleScenes\Scripts\Utils\PlatformDependentText.cs" />
+     <Compile Include="Assets\VRSampleScenes\Scripts\Utils\Reticle.cs" />
+     <Compile Include="Assets\VRSampleScenes\Scripts\Utils\ReturnToMainMenu.cs" />
+     <Compile Include="Assets\VRSampleScenes\Scripts\Utils\SelectionRadial.cs" />
+     <Compile Include="Assets\VRSampleScenes\Scripts\Utils\SelectionSlider.cs" />
+     <Compile Include="Assets\VRSampleScenes\Scripts\Utils\UIFader.cs" />
+     <Compile Include="Assets\VRSampleScenes\Scripts\Utils\UIMovement.cs" />
+     <Compile Include="Assets\VRSampleScenes\Scripts\Utils\UITint.cs" />
+     <Compile Include="Assets\VRSampleScenes\Scripts\Utils\VRCameraFade.cs" />
+     <Compile Include="Assets\VRSampleScenes\Scripts\Utils\VRCameraUI.cs" />
+     <Compile Include="Assets\VRStandardAssets\Scripts\VRDeviceManager.cs" />
+     <Compile Include="Assets\VRStandardAssets\Scripts\VREyeRaycaster.cs" />
+     <Compile Include="Assets\VRStandardAssets\Scripts\VRFPSCounter.cs" />
+     <Compile Include="Assets\VRStandardAssets\Scripts\VRInput.cs" />
+     <Compile Include="Assets\VRStandardAssets\Scripts\VRInteractiveItem.cs" />
+     <Compile Include="Assets\VRStandardAssets\Scripts\VRTrackingReset.cs" />
+     <None Include="Assets\VRSampleScenes\Shaders\UnlitTransparentParam.shader" />
+     <None Include="Assets\Plugins\Android\Assets\OSIG_Readme.txt" />
+     <None Include="Assets\VRSampleScenes\Shaders\UIOverlay.shader" />
+     <None Include="Assets\VRSampleScenes\Shaders\PriorityParticleAlpha.shader" />
+     <None Include="Assets\VRSampleScenes\Shaders\SlidingUV.shader" />
+     <None Include="Assets\NewSurfaceShader.shader" />
+     <None Include="Assets\VRSampleScenes\Shaders\SeparableAlpha.shader" />
+     <None Include="Assets\VRSampleScenes\Fonts\LICENSE.txt" />
+ <Reference Include="UnityEngine.Purchasing">
+ <HintPath>/Applications/Unity.app/Contents/UnityExtensions/Unity/UnityPurchasing/UnityEngine.Purchasing.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.Analytics">
+ <HintPath>/Applications/Unity.app/Contents/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.PlaymodeTestsRunner">
+ <HintPath>/Applications/Unity.app/Contents/UnityExtensions/Unity/PlaymodeTestsRunner/UnityEngine.PlaymodeTestsRunner.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.Networking">
+ <HintPath>/Applications/Unity.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.UI">
+ <HintPath>/Applications/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.Advertisements">
+ <HintPath>/Applications/Unity.app/Contents/UnityExtensions/Unity/Advertisements/UnityEngine.Advertisements.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.HoloLens">
+ <HintPath>/Applications/Unity.app/Contents/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.VR">
+ <HintPath>/Applications/Unity.app/Contents/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
+ </Reference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  
+</Project>

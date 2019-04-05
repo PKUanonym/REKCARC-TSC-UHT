@@ -1,0 +1,54 @@
+program
+    class Base <empty>
+        vardef a inttype
+    class Sub1 Base
+    class Sub2 Base
+    class Main <empty>
+        static func main inttype
+            formals
+            stmtblock
+                vardef a classtype Base
+                vardef b classtype Base
+                vardef s1 classtype Sub1
+                vardef s2 classtype Sub2
+                vardef i inttype
+                assign
+                    varref b
+                    newobj Base
+                assign
+                    varref s1
+                    newobj Sub1
+                assign
+                    varref s2
+                    newobj Sub2
+                assign
+                    varref i
+                    intconst 0
+                assign
+                    varref a
+                    pclone
+                        varref s2
+                        varref s1
+                assign
+                    varref a
+                    pclone
+                        pclone
+                            pclone
+                                varref a
+                                varref b
+                            varref s1
+                        varref s2
+                assign
+                    varref a
+                    conditional-expression
+                        equ
+                            varref i
+                            intconst 1
+                        pclone
+                            varref a
+                            varref b
+                        pclone
+                            varref b
+                            varref s1
+                return
+                    intconst 0

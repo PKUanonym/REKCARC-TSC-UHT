@@ -1,0 +1,84 @@
+class TreeNode{
+	class TreeNode left;
+	class TreeNode right;
+	string val;
+	
+	void init(class TreeNode l, class TreeNode r, string v){
+		left = l;
+		right = r;
+		val = v;
+	}
+	
+	void print(){
+		Print(val,"\n");
+	}
+	class TreeNode getleft(){
+		return left;
+	}
+	class TreeNode getright(){
+		return right;
+	}
+}
+
+
+class Main {
+	static class TreeNode lowestCommonAncestor(class TreeNode root, class TreeNode p, class TreeNode q,class TreeNode NULL) {  
+		if(root == NULL)  {
+			return NULL;  
+		}
+			
+		if(root == p || root == q)  
+			return root;  
+		class TreeNode left; 
+		class TreeNode right;
+		left = lowestCommonAncestor(root.getleft(), p, q,NULL);  
+		right = lowestCommonAncestor(root.getright(), p, q,NULL);  
+       
+		if(left == NULL && right == NULL)  
+			return null;  
+		if(left != NULL && right != NULL)  
+			return root;  
+		return left != NULL ? left : right;  
+	}  
+
+	static void main() {
+		class TreeNode A;
+		class TreeNode B;
+		class TreeNode C;
+		class TreeNode D;
+		class TreeNode E;
+		class TreeNode F;
+		class TreeNode G;
+		class TreeNode H;
+		class TreeNode NULL;
+		class TreeNode common;
+		NULL = new TreeNode();
+		A = new TreeNode();
+		B = new TreeNode();
+		C = new TreeNode();
+		D = new TreeNode();
+		E = new TreeNode();
+		F = new TreeNode();
+		G = new TreeNode();
+		H = new TreeNode();
+		A.init(B,C,"A");
+		B.init(E,D,"B");
+		C.init(F,G,"C");
+		D.init(H,NULL,"D");
+		E.init(NULL,NULL,"E");
+		F.init(NULL,NULL,"F");
+		G.init(NULL,NULL,"G");
+		H.init(NULL,NULL,"H");			
+		
+		common = lowestCommonAncestor(A,B,D,NULL);
+		common.print();
+		common = lowestCommonAncestor(A,C,D,NULL);
+		common.print();
+		common = lowestCommonAncestor(A,G,F,NULL);
+		common.print();
+		common = lowestCommonAncestor(A,H,E,NULL);
+		common.print();
+		common = lowestCommonAncestor(A,H,G,NULL);
+		common.print();
+	}
+}

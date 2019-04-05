@@ -1,0 +1,39 @@
+class Main {
+    static void main() {
+				int a;
+				int b;
+				int c;
+				a = 3;
+				b = 2;
+				c = 1;
+				
+        do  a>=0 : {
+        	a = a-1;
+        	Print("branch1\n");
+        } ||| b>=0 : {
+        	b = b-1;
+        	Print("branch2\n");
+        } ||| c>=0 : {
+        	c = c-1;
+        	Print("branch3\n");
+        } od   
+        
+        Print("\n");
+        a = 3;
+				b = 2;
+				c = 1;
+
+        do  a>=0 : {
+        	a = a-1;
+        	Print("branch1\n");
+        } ||| b>=0 : {
+        	b = b-1;
+        	Print("branch2\n");
+        	if( b == 1) break;
+        } ||| c>=0 : {
+        	c = c-1;
+        	Print("branch3\n");
+        } od   				
+        
+    }
+}

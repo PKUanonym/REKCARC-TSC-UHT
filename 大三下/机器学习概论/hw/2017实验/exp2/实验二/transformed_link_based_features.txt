@@ -1,0 +1,440 @@
+These features are the transformed link-based features used in:
+
+Carlos Castillo, Debora Donato, Aristides Gionis,
+Vanessa Murdock, Fabrizio Silvestri:
+"Know your Neighbors: Web Spam Detection using the Web Topology".
+To appear in ACM SIGIR, 2007.
+(Was DELIS technical report DELIS-TR-0458, 2006.)
+http://www.dcc.uchile.cl/~ccastill/papers/cdgms_2006_know_your_neighbors.pdf
+
+Note: when computing these features, we used a few conventions
+to avoid null values:
+
+	log(x) = -50 if x<=0
+	x/0    = 1   if x==0
+	x/0    = 0   if x!=0
+
+The list of homepages is here:
+http://www.yr-bcn.es/webspam/datasets/uk2006-features/uk-2006-05.hostid_homepagedocid_ndocs.txt.gz
+
+The list of pages with maximum pagerank for each host is here:
+http://www.yr-bcn.es/webspam/datasets/uk2006-features/uk-2006-05.hostid_maxprdocid_pr.txt.gz
+
+In both cases, the second field is a document-id in this list:
+http://nexus.law.dsi.unimi.it/webdata/uk-2006-05/uk-2006-05.urls.gz
+
+======================================================================
+
+log_indegree_hp
+Log of indegree of home page (=hp) of the host
+
+log_indegree_mp
+Log of indegree of page with maximum pagerank (=mp) of the host
+
+log_outdegree_hp
+Log of outdegree of hp
+
+log_outdegree_mp
+Log of outdegree of mp
+
+reciprocity_hp
+Edge-reciprocity (fraction of out-links that are in-links) of hp
+
+reciprocity_mp
+Edge-reciprocity (fraction of out-links that are in-links) of mp
+
+log_assortativity_hp
+Log of assortativity (my degree divided by average degree of neighbors) of hp
+
+log_assortativity_mp
+Log of assortativity (my degree divided by average degree of neighbors) of mp
+
+log_avgin_of_out_hp
+Log of average indegree of outneighbors of hp
+
+log_avgin_of_out_mp
+Log of average indegree of outneighbors of mp
+
+log(avgin_of_out_hp*outdegree_hp)
+Log of sum of the indegree of outneighbors of hp
+
+log(avgin_of_out_mp*outdegree_mp)
+Log of sum of the indegree of outneighbors of mp
+
+log_avgout_of_in_hp
+Log of average outdegree of inneighbors of hp
+
+log_avgout_of_in_mp
+Log of average outdegree of inneighbors of mp
+
+log(avgout_of_in_hp*indegree_hp)
+Log of the sum of the outdegree of inneighbors of hp
+
+log(avgout_of_in_mp*indegree_mp)
+Log of the sum of the outdegree of inneighbors of mp
+
+eq_hp,mp
+Is the homepage the same as the page with max. pagerank? 0=no/1=yes
+
+log_pagerank_hp
+Log of pagerank of hp
+
+log_pagerank_mp
+Log of pagerank of mp
+
+log(indegree_hp/pagerank_hp)
+Log of indegree/pagerank of hp
+
+log(indegree_mp/pagerank_mp)
+Log of indegree/pagerank of mp
+
+log(outdegree_hp/pagerank_hp)
+Log of outdegree/pagerank of hp
+
+log(outdegree_mp/pagerank_mp)
+Log of outdegree/pagerank of mp
+
+log_prsigma_hp
+Log of st. dev of PageRank of inneighbors of hp
+
+log_prsigma_mp
+Log of st. dev of PageRank of inneighbors of mp
+
+log(prsigma_hp/pagerank_hp)
+Log of st. dev of PageRank of inneighbors / pagerank of hp
+
+log(prsigma_mp/pagerank_mp)
+Log of st. dev of PageRank of inneighbors / pagerank of mp
+
+pagerank_mp/pagerank_hp
+PageRank of mp divided by PageRank of hp
+
+log_trustrank_hp
+Log of TrustRank (using 3,800 trusted nodes from ODP) of hp
+
+log_trustrank_mp
+Log of TrustRank (using 3,800 trusted nodes from ODP) of mp
+
+log(trustrank_hp/pagerank_hp)
+Log of TrustRank/PageRank of hp
+
+log(trustrank_mp/pagerank_mp)
+Log of TrustRank/PageRank of mp
+
+log(trustrank_hp/indegree_hp)
+Log of TrustRank/indegree of hp
+
+log(trustrank_mp/indegree_mp)
+Log of TrustRank/indegree of mp
+
+trustrank_mp/trustrank_hp
+TrustRank of hp divided by TrustRank of mp
+
+log_siteneighbors_1_hp
+Log of number of different supporters (different sites) at distance 1 from hp
+
+log_siteneighbors_2_hp
+Log of number of different supporters (different sites) at distance 2 from hp
+
+log_siteneighbors_3_hp
+Log of number of different supporters (different sites) at distance 3 from hp
+
+log_siteneighbors_4_hp
+Log of number of different supporters (different sites) at distance 4 from hp
+
+log_siteneighbors_1_mp
+Log of number of different supporters (different sites) at distance 1 from mp
+
+log_siteneighbors_2_mp
+Log of number of different supporters (different sites) at distance 2 from mp
+
+log_siteneighbors_3_mp
+Log of number of different supporters (different sites) at distance 3 from mp
+
+log_siteneighbors_4_mp
+Log of number of different supporters (different sites) at distance 4 from mp
+
+log(siteneighbors_1_hp/pagerank_hp)
+Log of number of different supporters (different sites) at distance 1 from hp divided by PageRank
+
+log(siteneighbors_2_hp/pagerank_hp)
+Log of number of different supporters (different sites) at distance 2 from hp divided by PageRank
+
+log(siteneighbors_3_hp/pagerank_hp)
+Log of number of different supporters (different sites) at distance 3 from hp divided by PageRank
+
+log(siteneighbors_4_hp/pagerank_hp)
+Log of number of different supporters (different sites) at distance 4 from hp divided by PageRank
+
+log(siteneighbors_1_mp/pagerank_mp)
+Log of number of different supporters (different sites) at distance 1 from mp divided by PageRank
+
+log(siteneighbors_2_mp/pagerank_mp)
+Log of number of different supporters (different sites) at distance 2 from mp divided by PageRank
+
+log(siteneighbors_3_mp/pagerank_mp)
+Log of number of different supporters (different sites) at distance 3 from mp divided by PageRank
+
+log(siteneighbors_4_mp/pagerank_mp)
+Log of number of different supporters (different sites) at distance 4 from mp divided by PageRank
+
+log(siteneighbors_4_hp/siteneighbors_3_hp)
+Log of number of different supporters (different sites) at distance 4 from hp divided by number of different supporters (different sites) at distance 3 from hp
+
+log(siteneighbors_4_mp/siteneighbors_3_mp)
+Log of number of different supporters (different sites) at distance 4 from mp divided by number of different supporters (different sites) at distance 3 from mp
+
+log(siteneighbors_3_hp/siteneighbors_2_hp)
+Log of number of different supporters (different sites) at distance 3 from hp divided by number of different supporters (different sites) at distance 2 from hp
+
+log(siteneighbors_3_mp/siteneighbors_2_mp)
+Log of number of different supporters (different sites) at distance 3 from mp divided by number of different supporters (different sites) at distance 2 from mp
+
+log(siteneighbors_2_hp/siteneighbors_1_hp)
+Log of number of different supporters (different sites) at distance 2 from hp divided by number of different supporters (different sites) at distance 1 from hp
+
+log(siteneighbors_2_mp/siteneighbors_1_mp)
+Log of number of different supporters (different sites) at distance 2 from mp divided by number of different supporters (different sites) at distance 1 from mp
+
+log(min(siteneighbors_2_hp/siteneighbors_1_hp,siteneighbors_3_hp/siteneighbors_2_hp,siteneighbors_4_hp/siteneighbors_3_hp))
+Log of minimum change in the number of supporters (different sites) at distance i over distance i-1, for i=2..4, hp
+
+log(min(siteneighbors_2_mp/siteneighbors_1_mp,siteneighbors_3_mp/siteneighbors_2_mp,siteneighbors_4_mp/siteneighbors_3_mp))
+Log of minimum change in the number of supporters (different sites) at distance i over distance i-1, for i=2..4, mp
+
+log(max(siteneighbors_2_hp/siteneighbors_1_hp,siteneighbors_3_hp/siteneighbors_2_hp,siteneighbors_4_hp/siteneighbors_3_hp))
+Log of maximum change in the number of supporters (different sites) at distance i over distance i-1, for i=2..4, hp
+
+log(max(siteneighbors_2_mp/siteneighbors_1_mp,siteneighbors_3_mp/siteneighbors_2_mp,siteneighbors_4_mp/siteneighbors_3_mp))
+Log of maximum change in the number of supporters (different sites) at distance i over distance i-1, for i=2..4, mp
+
+log(avg(siteneighbors_2_hp/siteneighbors_1_hp,siteneighbors_3_hp/siteneighbors_2_hp,siteneighbors_4_hp/siteneighbors_3_hp))
+Log of average change in the number of supporters (different sites) at distance i over distance i-1, for i=2..4, hp
+
+log(avg(siteneighbors_2_mp/siteneighbors_1_mp,siteneighbors_3_mp/siteneighbors_2_mp,siteneighbors_4_mp/siteneighbors_3_mp))
+Log of average change in the number of supporters (different sites) at distance i over distance i-1, for i=2..4, mp
+
+log((siteneighbors_4_hp-siteneighbors_3_hp)/pagerank_hp)
+Log of supporters at distance exactly 4 (different sites) divided by PageRank, hp
+
+log((siteneighbors_4_mp-siteneighbors_3_mp)/pagerank_mp)
+Log of supporters at distance exactly 4 (different sites) divided by PageRank, mp
+
+log((siteneighbors_3_hp-siteneighbors_2_hp)/pagerank_hp)
+Log of supporters at distance exactly 3 (different sites) divided by PageRank, hp
+
+log((siteneighbors_3_mp-siteneighbors_2_mp)/pagerank_mp)
+Log of supporters at distance exactly 3 (different sites) divided by PageRank, mp
+
+log((siteneighbors_2_hp-siteneighbors_1_hp)/pagerank_hp)
+Log of supporters at distance exactly 2 (different sites) divided by PageRank, hp
+
+log((siteneighbors_2_mp-siteneighbors_1_mp)/pagerank_mp)
+Log of supporters at distance exactly 2 (different sites) divided by PageRank, mp
+
+siteneighbors_1_hp/siteneighbors_1_mp
+Supporters at distance 1 (different sites) of hp over mp
+
+siteneighbors_2_hp/siteneighbors_2_mp
+Supporters at distance 2 (different sites) of hp over mp
+
+siteneighbors_3_hp/siteneighbors_3_mp
+Supporters at distance 3 (different sites) of hp over mp
+
+siteneighbors_4_hp/siteneighbors_4_mp
+Supporters at distance 4 (different sites) of hp over mp
+
+log_neighbors_2_hp
+Log of supporters at distance 2, hp (note: supporters at distance 1 is indegree)
+
+log_neighbors_3_hp
+Log of supporters at distance 3, hp
+
+log_neighbors_4_hp
+Log of supporters at distance 4, hp
+
+log_neighbors_2_mp
+Log of supporters at distance 2, mp
+
+log_neighbors_3_mp
+Log of supporters at distance 3, mp
+
+log_neighbors_4_mp
+Log of supporters at distance 4, mp
+
+log(neighbors_2_hp/pagerank_hp)
+Log of supporters at distance 2 divided by PageRank, hp
+
+log(neighbors_3_hp/pagerank_hp)
+Log of supporters at distance 3 divided by PageRank, hp
+
+log(neighbors_4_hp/pagerank_hp)
+Log of supporters at distance 4 divided by PageRank, hp
+
+log(neighbors_2_mp/pagerank_mp)
+Log of supporters at distance 2 divided by PageRank, mp
+
+log(neighbors_3_mp/pagerank_mp)
+Log of supporters at distance 3 divided by PageRank, mp
+
+log(neighbors_4_mp/pagerank_mp)
+Log of supporters at distance 4 divided by PageRank, mp
+
+log(neighbors_4_hp/neighbors_3_hp)
+Log of supporters at distance 4 divided by supporters at distance 3, hp
+
+log(neighbors_4_mp/neighbors_3_mp)
+Log of supporters at distance 4 divided by supporters at distance 3, mp
+
+log(neighbors_3_hp/neighbors_2_hp)
+Log of supporters at distance 3 divided by supporters at distance 2, hp
+
+log(neighbors_3_mp/neighbors_2_mp)
+Log of supporters at distance 3 divided by supporters at distance 2, mp
+
+log(neighbors_2_hp/indegree_hp)
+Log of supporters at distance 2 divided by supporters at distance 1, hp
+
+log(neighbors_2_mp/indegree_mp)
+Log of supporters at distance 2 divided by supporters at distance 1, mp
+
+log(min(neighbors_2_hp/indegree_hp,neighbors_3_hp/neighbors_2_hp,neighbors_4_hp/neighbors_3_hp))
+Log of minimum change of number of supporters at distance i over supporters at distance i-1, i=2..4, hp
+
+log(min(neighbors_2_mp/indegree_mp,neighbors_3_mp/neighbors_2_mp,neighbors_4_mp/neighbors_3_mp))
+Log of minimum change of number of supporters at distance i over supporters at distance i-1, i=2..4, mp
+
+log(max(neighbors_2_hp/indegree_hp,neighbors_3_hp/neighbors_2_hp,neighbors_4_hp/neighbors_3_hp))
+Log of maximum change of number of supporters at distance i over supporters at distance i-1, i=2..4, hp
+
+log(max(neighbors_2_mp/indegree_mp,neighbors_3_mp/neighbors_2_mp,neighbors_4_mp/neighbors_3_mp))
+Log of maximum change of number of supporters at distance i over supporters at distance i-1, i=2..4, mp
+
+log(avg(neighbors_2_hp/indegree_hp,neighbors_3_hp/neighbors_2_hp,neighbors_4_hp/neighbors_3_hp))
+Log of average change of number of supporters at distance i over supporters at distance i-1, i=2..4, hp
+
+log(avg(neighbors_2_mp/indegree_mp,neighbors_3_mp/neighbors_2_mp,neighbors_4_mp/neighbors_3_mp))
+Log of average change of number of supporters at distance i over supporters at distance i-1, i=2..4, mp
+
+log((neighbors_4_hp-neighbors_3_hp)/pagerank_hp)
+Log of number of supporters at distance exactly 4 over pagerank, hp
+
+log((neighbors_4_mp-neighbors_3_mp)/pagerank_mp)
+Log of number of supporters at distance exactly 4 over pagerank, mp
+
+log((neighbors_3_hp-neighbors_2_hp)/pagerank_hp)
+Log of number of supporters at distance exactly 3 over pagerank, hp
+
+log((neighbors_3_mp-neighbors_2_mp)/pagerank_mp)
+Log of number of supporters at distance exactly 3 over pagerank, mp
+
+log((neighbors_2_hp-indegree_hp)/pagerank_hp)
+Log of number of supporters at distance exactly 2 over pagerank, hp
+
+log((neighbors_2_mp-indegree_mp)/pagerank_mp)
+Log of number of supporters at distance exactly 2 over pagerank, mp
+
+neighbors_2_hp/neighbors_2_mp
+Supporters at 2 in hp divided by supporters at 2 in mp
+
+neighbors_3_hp/neighbors_3_mp
+Supporters at 3 in hp divided by supporters at 4 in mp
+
+neighbors_4_hp/neighbors_4_mp
+Supporters at 3 in hp divided by supporters at 4 in mp
+
+log_truncatedpagerank_1_hp
+Log of TruncatedPageRank with T=1, hp
+
+log_truncatedpagerank_2_hp
+Log of TruncatedPageRank with T=2, hp
+
+log_truncatedpagerank_3_hp
+Log of TruncatedPageRank with T=3, hp
+
+log_truncatedpagerank_4_hp
+Log of TruncatedPageRank with T=4, hp
+
+log_truncatedpagerank_1_mp
+Log of TruncatedPageRank with T=1, mp
+
+log_truncatedpagerank_2_mp
+Log of TruncatedPageRank with T=2, mp
+
+log_truncatedpagerank_3_mp
+Log of TruncatedPageRank with T=3, mp
+
+log_truncatedpagerank_4_mp
+Log of TruncatedPageRank with T=4, mp
+
+log(truncatedpagerank_1_hp/pagerank_hp)
+Log of TruncatedPageRank with T=1 divided by PageRank, hp
+
+log(truncatedpagerank_2_hp/pagerank_hp)
+Log of TruncatedPageRank with T=2 divided by PageRank, hp
+
+log(truncatedpagerank_3_hp/pagerank_hp)
+Log of TruncatedPageRank with T=3 divided by PageRank, hp
+
+log(truncatedpagerank_4_hp/pagerank_hp)
+Log of TruncatedPageRank with T=4 divided by PageRank, hp
+
+log(truncatedpagerank_1_mp/pagerank_mp)
+Log of TruncatedPageRank with T=1 divided by PageRank, mp
+
+log(truncatedpagerank_2_mp/pagerank_mp)
+Log of TruncatedPageRank with T=2 divided by PageRank, mp
+
+log(truncatedpagerank_3_mp/pagerank_mp)
+Log of TruncatedPageRank with T=3 divided by PageRank, mp
+
+log(truncatedpagerank_4_mp/pagerank_mp)
+Log of TruncatedPageRank with T=4 divided by PageRank, mp
+
+truncatedpagerank_4_hp/truncatedpagerank_3_hp
+Log of TruncatedPageRank with T=4 divided by TruncatedPageRank with T=3, hp
+
+truncatedpagerank_4_mp/truncatedpagerank_3_mp
+Log of TruncatedPageRank with T=4 divided by TruncatedPageRank with T=3, mp
+
+truncatedpagerank_3_hp/truncatedpagerank_2_hp
+Log of TruncatedPageRank with T=3 divided by TruncatedPageRank with T=3, hp
+
+truncatedpagerank_3_mp/truncatedpagerank_2_mp
+Log of TruncatedPageRank with T=3 divided by TruncatedPageRank with T=3, mp
+
+truncatedpagerank_2_hp/truncatedpagerank_1_hp
+Log of TruncatedPageRank with T=2 divided by TruncatedPageRank with T=3, hp
+
+truncatedpagerank_2_mp/truncatedpagerank_1_mp
+Log of TruncatedPageRank with T=2 divided by TruncatedPageRank with T=3, mp
+
+log(min(truncatedpagerank_2_hp/truncatedpagerank_1_hp,truncatedpagerank_3_hp/truncatedpagerank_2_hp,truncatedpagerank_4_hp/truncatedpagerank_3_hp))
+Log of minimum of TruncatedPageRank with T=i over TruncatedPageRank with T=i-1, i=2..4, hp
+
+log(min(truncatedpagerank_2_mp/truncatedpagerank_1_mp,truncatedpagerank_3_mp/truncatedpagerank_2_mp,truncatedpagerank_4_mp/truncatedpagerank_3_mp))
+Log of minimum of TruncatedPageRank with T=i over TruncatedPageRank with T=i-1, i=2..4, mp
+
+log(max(truncatedpagerank_2_hp/truncatedpagerank_1_hp,truncatedpagerank_3_hp/truncatedpagerank_2_hp,truncatedpagerank_4_hp/truncatedpagerank_3_hp))
+Log of maximum of TruncatedPageRank with T=i over TruncatedPageRank with T=i-1, i=2..4, hp
+
+log(max(truncatedpagerank_2_mp/truncatedpagerank_1_mp,truncatedpagerank_3_mp/truncatedpagerank_2_mp,truncatedpagerank_4_mp/truncatedpagerank_3_mp))
+Log of maximum of TruncatedPageRank with T=i over TruncatedPageRank with T=i-1, i=2..4, mp
+
+log(avg(truncatedpagerank_2_hp/truncatedpagerank_1_hp,truncatedpagerank_3_hp/truncatedpagerank_2_hp,truncatedpagerank_4_hp/truncatedpagerank_3_hp))
+Log of average of TruncatedPageRank with T=i over TruncatedPageRank with T=i-1, i=2..4, hp
+
+log(avg(truncatedpagerank_2_mp/truncatedpagerank_1_mp,truncatedpagerank_3_mp/truncatedpagerank_2_mp,truncatedpagerank_4_mp/truncatedpagerank_3_mp))
+Log of average of TruncatedPageRank with T=i over TruncatedPageRank with T=i-1, i=2..4, mp
+
+truncatedpagerank_1_mp/truncatedpagerank_1_hp
+TruncatedPageRank with T=1 in hp, divided by TruncatedPageRank with T=1 in mp
+
+truncatedpagerank_2_mp/truncatedpagerank_2_hp
+TruncatedPageRank with T=2 in hp, divided by TruncatedPageRank with T=2 in mp
+
+truncatedpagerank_3_mp/truncatedpagerank_3_hp
+TruncatedPageRank with T=3 in hp, divided by TruncatedPageRank with T=3 in mp
+
+truncatedpagerank_4_mp/truncatedpagerank_4_hp
+TruncatedPageRank with T=4 in hp, divided by TruncatedPageRank with T=4 in mp

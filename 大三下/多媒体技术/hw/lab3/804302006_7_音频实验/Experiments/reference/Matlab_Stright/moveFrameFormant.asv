@@ -1,0 +1,19 @@
+function adjustedSpecFrame = moveFrameFormant(srcframe,srcformant,tgtformant,percentage)
+                                                                    87
+%找出应当移动的程度
+
+%找出共振峰、两侧谷的位置
+[peak,peakLeft,peakRight]=findSpecPeak(frame);
+
+leftPart = srcframe(1:srcformant);
+rightPart = srcframe(srcformant+1:length(srcframe));
+
+newformant = int16(srcformant + (tgtformant-srcformant)* percentage);
+
+
+
+newleftPart = resample(leftPart,newformant,srcformant);
+
+newrightPart = resample (rightPart,length(srcframe)-
+
+return; 

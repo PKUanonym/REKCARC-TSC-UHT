@@ -1,0 +1,19 @@
+class Main {
+    static int main() {
+    		int a;
+    		int b;
+    		int c;
+    		a = 0;
+    		b = 1;
+    		c = 2;
+    		
+   			repeat{
+   				if (a>c) c = a;
+   				a = c - b;
+   				repeat a = b + 1;
+   				until(a > c);
+   			}until(a>b);
+        
+        return 0;    
+    }
+}

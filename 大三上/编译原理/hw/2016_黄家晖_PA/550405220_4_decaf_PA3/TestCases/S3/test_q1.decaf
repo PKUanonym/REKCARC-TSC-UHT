@@ -1,0 +1,26 @@
+class Main {   
+    static int max(int a, int b) {
+        return a > b ? a : b;
+    }
+    
+    static int min(int a, int b) {
+        return a < b ? a : b;
+    }
+    
+    static void main() {
+    		int a;
+    		int b;
+    		int c;
+    		a = 1;
+    		b = 2;
+    		c = 3;
+    		a = b+3>=c?b+c:b-c;
+        Print(a, "\n");
+				a = b+3<c?b+c:b-c;
+        Print(a, "\n");
+        Print(min(1234,123),"\n");
+        Print(min(335,456),"\n");
+        Print(max(22,33),"\n");
+        Print(max(34,13),"\n");
+    }
+}

@@ -1,0 +1,347 @@
+class rndModule {
+
+    int seed;
+
+    void Init(int seedVal) {
+        seed = seedVal;
+    }
+
+    int Random() {
+        seed = (15625 * (seed % 10000) + 22221) % 65536;
+        return seed;
+    }
+
+    int RndInt(int max) {
+        return (Random() % max);
+    }
+}
+
+class Deck {
+
+    int current;
+    int[] cards;
+    class rndModule rnd;
+
+    void Init(class rndModule rnd) {
+        cards = new int[52];
+        this.rnd = rnd;
+    }
+
+    void Shuffle() {
+        for (current = 1; current <= 52; current = current + 1) {
+            cards[current-1] = current % 13;
+        }
+        current = current - 1;
+        while (current > 0) {
+            int r;
+            int temp;
+            r = rnd.RndInt(current);
+            current = current - 1;
+            temp = cards[current];
+            cards[current] = cards[r];
+            cards[r] = temp;
+        }
+    }
+
+    int GetCard() {
+        int result;
+        if (current >= 52)
+            return 0;
+        result = cards[current];
+        current = current + 1;
+        return result;
+    }
+}
+
+class BJDeck {
+
+    class Deck[] decks;
+    int numdealt;
+    class rndModule rnd;
+
+    void Init(class rndModule rnd) {
+        int i;
+        decks = new class Deck[8];
+        for (i = 0; i < 8; i = i + 1) {
+            decks[i] = new Deck();
+            decks[i].Init(rnd);
+        }
+        this.rnd = rnd;
+    }
+
+    int DealCard() {
+        int c;
+        c = 0;
+        if (numdealt >= 8*52) return 11;
+        while (c == 0) {
+          int d;
+          d = rnd.RndInt(8);
+          c = decks[d].GetCard();
+        }
+        if (c > 10)
+            c = 10;
+        else if (c == 1)
+            c = 11;
+        numdealt = numdealt + 1;
+        return c;
+    }
+
+    void Shuffle() {
+        int i;
+
+        Print("Shuffling...");
+        for (i = 0; i < 8; i = i + 1)
+            decks[i].Shuffle();
+
+        numdealt = 0;
+        Print("done.\n");
+    }
+
+    int NumCardsRemaining()
+    {
+        return 8*52 - numdealt;
+    }
+}
+
+class Player {
+    int total;
+    int aces;
+    int numcards;
+    int bet;
+    int money;
+    string name;
+
+    void Init(int num) {
+        money = 1000;
+        Print("What is the name of player #", num, "? ");
+        name = ReadLine();
+    }
+
+    void Hit(class BJDeck deck) {
+        int card;
+        card = deck.DealCard();
+        Print(name, " was dealt a ", card, ".\n");
+        total = total + card;
+        numcards = numcards + 1;
+        if (card == 11)
+            aces = aces + 1;
+        while ((total > 21) && (aces > 0)) {
+            total = total - 10;
+            aces = aces - 1;
+        }
+    }
+
+    bool DoubleDown(class BJDeck deck) {
+        int result;
+        if ((total != 10) && (total != 11))
+            return false;
+        if (GetYesOrNo("Would you like to double down?")) {
+            bet = bet * 2;
+            Hit(deck);
+            Print(name, ", your total is ", total, ".\n");
+            return true;
+        } else 
+            return false;
+    }
+
+    void TakeTurn(class BJDeck deck) {
+        bool stillGoing;
+
+        Print("\n", name, "'s turn.\n");
+        total = 0;
+        aces = 0;
+        numcards = 0;
+        Hit(deck);
+        Hit(deck);
+        if (!DoubleDown(deck)) {
+            stillGoing = true;
+            while (total <= 21 && stillGoing) {
+                Print(name, ", your total is ", total, ".\n");
+                stillGoing = GetYesOrNo("Would you like a hit?");
+                if (stillGoing)
+                    Hit(deck);
+            }
+        }
+        if (total > 21)
+            Print(name, " busts with the big ", total, "!\n");
+        else
+            Print(name, " stays at ", total, ".\n");
+    }
+
+    bool HasMoney() {
+        return money > 0;
+    }
+
+    void PrintMoney() {
+        Print(name, ", you have $", money, ".\n");
+    }
+
+    void PlaceBet() {
+        bet = 0;
+        PrintMoney();
+        while ((bet <= 0) || (bet > money)) {
+            Print("How much would you like to bet? ");
+            bet = ReadInteger();
+        }
+    }
+
+    int GetTotal() {
+        return total;
+    }
+
+    void Resolve(int dealer) {
+        int win;
+        int lose;
+        win = 0;
+        lose = 0;
+        if ((total == 21) && (numcards == 2))
+            win = 2;
+        else if (total > 21)
+            lose = 1;
+        else if (dealer > 21)
+            win = 1;
+        else if (total > dealer)
+            win = 1;
+        else if (dealer > total)
+            lose = 1;
+        if (win >= 1)
+            Print(name, ", you won $", bet, ".\n");
+        else if (lose >= 1)
+            Print(name, ", you lost $", bet, ".\n");
+        else
+            Print(name, ", you push!\n");
+        win = win * bet;
+        lose = lose * bet;
+        money = money + win - lose;
+    }
+    bool GetYesOrNo(string prompt) {
+        Print(prompt, " (0=No/1=Yes) ");
+        return ReadInteger() != 0;
+    }
+}
+
+class Dealer extends Player {
+
+    void Init(int id) {
+        string s;
+        total = 0;
+        aces = 0;
+        numcards = 0;
+        s = "Dealer";   //jdz need to examine why two steps are needed
+        name = s;
+    }
+
+    void TakeTurn(class BJDeck deck) {
+        Print("\n", name, "'s turn.\n");
+        while (total <= 16) {
+            Hit(deck);
+        }
+        if (total > 21)
+            Print(name, " busts with the big ", total, "!\n");
+        else
+            Print(name, " stays at ", total, ".\n");
+    }
+}
+
+
+
+class House {
+    class Player[] players;
+    class Dealer dealer;
+    class BJDeck deck;
+
+    void SetupGame() {
+        Print("\nWelcome to CS143 BlackJack!\n");
+        Print("---------------------------\n");
+        class rndModule rnd;
+        rnd = new rndModule();
+        Print("Please enter a random number seed: ");
+        rnd.Init(ReadInteger());
+ 
+        deck = new BJDeck();
+        dealer = new Dealer();
+        deck.Init(rnd);
+        deck.Shuffle();
+    }
+
+    void SetupPlayers() {
+        int i;
+        int numPlayers;
+        Print("How many players do we have today? ");
+        numPlayers = ReadInteger();
+        players = new class Player[numPlayers];
+        for (i = 0; i < players.length(); i = i + 1) {
+            players[i] = new Player();
+            players[i].Init(i+1);
+        }
+    }
+
+    void TakeAllBets() {
+        int i;
+        Print("\nFirst, let's take bets.\n");
+        for (i = 0; i < players.length(); i = i + 1)
+            if (players[i].HasMoney())
+                players[i].PlaceBet();
+    }
+
+    void TakeAllTurns() {
+        int i;
+        for (i = 0; i < players.length(); i = i + 1)
+            if (players[i].HasMoney())
+                players[i].TakeTurn(deck);
+    }
+
+    void ResolveAllPlayers() {
+        int i;
+
+        Print("\nTime to resolve bets.\n");
+        for (i = 0; i < players.length(); i = i + 1)
+            if (players[i].HasMoney())
+                players[i].Resolve(dealer.GetTotal());
+    }
+
+    void PrintAllMoney() {
+        int i;
+
+        for (i = 0; i < players.length(); i = i + 1)
+            players[i].PrintMoney();
+
+    }
+
+    void PlayOneGame() {
+        if (deck.NumCardsRemaining() < 26)
+            deck.Shuffle();
+        TakeAllBets();
+        Print("\nDealer starts. ");
+        dealer.Init(0);
+        dealer.Hit(deck);
+        TakeAllTurns();
+        dealer.TakeTurn(deck);
+        ResolveAllPlayers();
+    }
+
+}
+
+class Main {
+    static void main() {
+        bool keepPlaying;
+        keepPlaying = true;
+        class House house;
+        house = new House();
+        house.SetupGame();
+        house.SetupPlayers();
+        while (keepPlaying) {
+            house.PlayOneGame();
+            keepPlaying = GetYesOrNo("\nDo you want to play another hand?");
+        }
+        house.PrintAllMoney();
+        Print("Thank you for playing...come again soon.\n");
+        Print("\nCS143 BlackJack Copyright (c) 1999 by Peter Mork.\n");
+        Print("(2001 mods by jdz)\n");
+    }
+    
+    static bool GetYesOrNo(string prompt) {
+        Print(prompt, " (0=No/1=Yes) ");
+        return ReadInteger() != 0;
+    }
+}

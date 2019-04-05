@@ -1,0 +1,23 @@
+
+
+__device__ __inline__ float3
+lookupColor(float coord) {
+
+    float scaledCoord = coord * (COLOR_MAP_SIZE-1);
+
+    // using short type rather than int type since 16-bit integer math
+    // is faster than 32-bit integrer math on NVIDIA GPUs
+    short maxValue = COLOR_MAP_SIZE-1;
+    short intCoord = static_cast<short>(scaledCoord);
+    short base = (intCoord < maxValue) ? intCoord : maxValue;  // min
+
+    // linearly interpolate between values in the table based on the
+    // value of coord
+    float weight = scaledCoord - static_cast<float>(base);
+    float oneMinusWeight = 1.f - weight;
+
+    float r = (oneMinusWeight * cuConstColorRamp[base][0]) + (weight * cuConstColorRamp[base+1][0]);
+    float g = (oneMinusWeight * cuConstColorRamp[base][1]) + (weight * cuConstColorRamp[base+1][1]);
+    float b = (oneMinusWeight * cuConstColorRamp[base][2]) + (weight * cuConstColorRamp[base+1][2]);
+    return make_float3(r, g, b);
+}

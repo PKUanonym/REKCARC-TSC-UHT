@@ -1,0 +1,40 @@
+GLOBAL SCOPE:
+    (5,1) -> class Animal
+    (22,1) -> class Cow : Animal
+    (33,1) -> class Main
+    CLASS SCOPE OF 'Animal':
+        (6,9) -> variable height : int
+        (7,18) -> variable mother : class : Animal
+        (8,10) -> function InitAnimal : class : Animal->int->class : Animal->void
+        (13,9) -> function GetHeight : class : Animal->int
+        (17,18) -> function GetMom : class : Animal->class : Animal
+        FORMAL SCOPE OF 'InitAnimal':
+            (8,10) -> variable @this : class : Animal
+            (8,25) -> variable @h : int
+            (8,41) -> variable @mom : class : Animal
+            LOCAL SCOPE:
+        FORMAL SCOPE OF 'GetHeight':
+            (13,9) -> variable @this : class : Animal
+            LOCAL SCOPE:
+        FORMAL SCOPE OF 'GetMom':
+            (17,18) -> variable @this : class : Animal
+            LOCAL SCOPE:
+    CLASS SCOPE OF 'Cow':
+        (23,10) -> variable isSpotted : bool
+        (24,10) -> function InitCow : class : Cow->int->class : Animal->bool->void
+        (28,10) -> function IsSpottedCow : class : Cow->bool
+        FORMAL SCOPE OF 'InitCow':
+            (24,10) -> variable @this : class : Cow
+            (24,22) -> variable @h : int
+            (24,38) -> variable @m : class : Animal
+            (24,46) -> variable @spot : bool
+            LOCAL SCOPE:
+        FORMAL SCOPE OF 'IsSpottedCow':
+            (28,10) -> variable @this : class : Cow
+            LOCAL SCOPE:
+    CLASS SCOPE OF 'Main':
+        (34,17) -> static function main : void
+        FORMAL SCOPE OF 'main':
+            LOCAL SCOPE:
+                (35,19) -> variable betsy : class : Cow
+                (36,22) -> variable b : class : Animal

@@ -1,0 +1,37 @@
+\documentclass{ctexart}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+\usepackage{ifthen}
+\usepackage{syntonly}
+\usepackage[colorlinks, CJKbookmarks=true, linkcolor=red]{hyperref}
+\pagestyle{plain}
+\usepackage[raggedright]{titlesec}
+\newtheorem{性质}{性质}
+\newtheorem{定理}{定理}
+\newtheorem{推论}{推论}
+\begin{document}
+已知$P(x=1|\omega_1)=p,P(x=1|\omega_2)=1-p,P(\omega_1)=P(\omega_2)=0.5$
+
+所以$P(x=1)=P(x=1|\omega_1)P(\omega_1)+P(x=1|\omega_2)P(\omega_2)=0.5$，那么对于任何一个$d$维向量$x$，就有$P(x)=\frac{1}{2^d}$
+
+我想算一下$P(\omega_1|x)$（不要问我算这个干嘛）
+
+贝叶斯一下，$P(\omega_1|x)=\frac{P(x|\omega_1)P(\omega_1)}{P(x)}$
+
+然后我用$\frac{1}{d}\sum\limits_{i=1}^d x_i$来估计$p$，就有$dp$个$1$，$d(1-p)$个$0$。
+
+$P(x=1|\omega_1)=p$，自然有$P(x=0|\omega_1)=1-p$。
+
+所以$P(x|\omega_1)=p^{dp}(1-p)^{d(1-p)}$
+
+而$P(\omega_1)=\frac{1}{2},P(x)=\frac{1}{2^d}$。
+
+所以就算出$P(\omega_1|x)=\frac{1}{2}[2p^p(1-p)^{1-p}]^d$。
+
+注意到$d$趋于无穷，所以只要底数大于$1$概率就炸掉了。
+
+我随便令$p=0.9$
+\end{document}

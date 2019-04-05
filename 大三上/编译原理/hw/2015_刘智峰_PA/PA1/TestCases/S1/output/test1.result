@@ -1,0 +1,42 @@
+program
+    class Main <empty>
+        vardef field booltype
+        vardef another classtype Main
+        func foo arrtype inttype
+            formals
+                vardef y inttype
+            stmtblock
+                vardef q arrtype inttype
+                vardef i inttype
+                assign
+                    varref q
+                    newarray inttype
+                        varref y
+                assign
+                    varref i
+                    intconst 0
+                while
+                    les
+                        varref i
+                        varref y
+                    stmtblock
+                        assign
+                            arrref
+                                varref q
+                                varref i
+                            varref i
+                        assign
+                            varref i
+                            add
+                                varref i
+                                intconst 1
+                return
+                    varref q
+        static func main inttype
+            formals
+            stmtblock
+                return
+                    call length
+                        call foo
+                            this
+                            intconst 5

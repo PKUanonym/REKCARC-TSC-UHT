@@ -1,0 +1,28 @@
+class Main {
+    int div;
+    
+    static void main() {
+        Print(add(1));
+        Print(Main.add(1, new Main()));
+        new Main().length();
+        int[] a;
+        a = new int[true];
+        a.length(1);
+        int b;
+        b = 1;
+        b.length();
+        Main.sub(1, 2);
+        mul(1, 2);
+        Main.mul(1, 2);
+        new Main().mul();
+        new Main().div();
+    }
+    
+    static int add(int a, int b) {
+        return a + b;
+    }
+    
+    int sub(int a, int b) {
+        return a - b;
+    }
+}

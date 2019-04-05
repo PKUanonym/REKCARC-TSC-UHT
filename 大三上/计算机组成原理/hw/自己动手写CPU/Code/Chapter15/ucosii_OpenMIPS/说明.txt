@@ -1,0 +1,8 @@
+本目录下是可以下载到DE2上的flash的ucosii文件，make可以得到OS.bin、ucosii.asm文件，各文件说明如下：
+
+（1）OS.bin是可以下载到flash中的二进制文件，包含BootLoader部分，注意：在烧制flash之前，需要先erase
+整个flash，然后再write
+
+（2）ucosii.asm是对应的反汇编文件，不含BootLoader部分。
+
+编译需要的BootLoader位于BootLoader_DE2目录下。

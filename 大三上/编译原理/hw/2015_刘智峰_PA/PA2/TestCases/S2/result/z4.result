@@ -1,0 +1,1 @@
+*** Error at (22,13): can not use this in static function

@@ -1,0 +1,163 @@
+#include <stdio.h>
+char s[310];
+char opt[15] = {'+','-','*','/','^','&','|','%','<','>','='};
+char opt2[51] = {'<','<','>','>','<','=','>','=','=','=','!','=','&','&','|','|','+','=','-','=','*','=','/','=','%','=','&','=','|','=','^','='};
+int main()
+{
+    int i,j,k;
+    short t,o,inc,que;
+    while(gets(s+1)>0)
+    {
+        t = 0; inc = 0; que = 0;
+        for(i=1;s[i];i++)
+        {
+            if(s[i] == '"' || s[i] == '\'') t ^= 1;
+             
+            if(t || s[i] == '"' || s[i] == '\'') { printf("%c",s[i]); continue;}
+             
+            if(s[i] == '{') if(s[i-1] != ' ') printf(" ");
+            if(s[i] == ',' || s[i] == ';') if(s[i+1] != ' ')
+            {
+                printf("%c ",s[i]);
+                continue;
+            }
+             
+            if(s[i] == ' ')
+            {
+                o = 0;
+                
+                if(s[i-1] == '{') o = 1;
+                if(s[i-1] == '+' && s[i-2] == '+') o = 1;
+                if(s[i-1] == '-' && s[i-2] == '-') o = 1;
+                if(s[i-1] == '!') o = 1;
+                if(s[i-1] == '~') o = 1;
+                if(s[i-1] == '(') o = 1;
+                
+                for(;s[i+1] == ' ';i++);
+                
+                if(s[i+1] == ',') o = 1;
+                if(s[i+1] == ';') o = 1;
+                if(s[i+1] == '+' && s[i+2] == '+') o = 1;
+                if(s[i+1] == '-' && s[i+2] == '-') o = 1;
+                if(s[i+1] == '!') o = 1;
+                if(s[i+1] == '~') o = 1;
+                if(s[i+1] == ')') o = 1;
+                
+                if(!o) printf(" ");
+                continue;
+            }
+             
+            if(s[i-6] == 'i' && s[i-5] == 'n' && s[i-4] == 'c' && s[i-3] == 'l' && s[i-2] == 'u' && s[i-1] == 'd' && s[i] == 'e')
+            {
+                printf("e"); inc = 1;
+                if(s[i+1] != ' ') printf(" ");
+                continue;
+            }
+            
+            if(inc) { printf("%c",s[i]); continue;}
+             
+            if(s[i] == '?' || (s[i] == ':' && que))
+            {
+                if(s[i] == '?') que = 1;
+                else que = 0;
+                if(s[i-1] != ' ') printf(" ");
+                printf("%c",s[i]);
+                if(s[i+1] != ' ') printf(" ");
+                continue;
+            }
+             
+            if(s[i-2] == 'f' && s[i-1] == 'o' && s[i] == 'r')
+            {
+                printf("r");
+                if(s[i+1] != ' ') printf(" ");
+                continue;
+            }
+             
+            if(s[i-4] == 'w' && s[i-3] == 'h' && s[i-2] == 'i' && s[i-1] == 'l' && s[i] == 'e')
+            {
+                printf("e");
+                if(s[i+1] != ' ') printf(" ");
+                continue;
+            }
+             
+            if(s[i-1] == 'i' && s[i] == 'f')
+            {
+                printf("f");
+                if(s[i+1] != ' ') printf(" ");
+                continue;
+            }
+             
+            if(s[i] == '-')
+            {
+                for(j = i-1 ; j == ' ' ; j--);
+                
+                for(k=0;opt[k];k++) if(s[j] == opt[k]) break;
+                if(opt[k]||s[j]=='?'||s[j]==':'||s[j]==',') { printf("-"); continue;}
+                
+                if(s[j] == 'e')
+                for(j--; j>='0' && j<='9';j--);
+                for(k=0;opt[k];k++) if(s[j] == opt[k]) break;
+                if(opt[k]||s[j]==' ') { printf("-"); continue;}
+            }
+             
+            if(s[i] == '<' && s[i+1] == '<' && s[i+2] == '=')
+            {
+                if(s[i-1] != ' ') printf(" ");
+                printf("<<=");
+                if(s[i+3] != ' ') printf(" ");
+                i+=2;
+                continue;
+            }
+             
+            if(s[i] == '>' && s[i+1] == '>' && s[i+2] == '=')
+            {
+                if(s[i-1] != ' ') printf(" ");
+                printf(">>=");
+                if(s[i+3] != ' ') printf(" ");
+                i+=2;
+                continue;
+            }
+             
+            for(j=0;opt2[j];j+=2)
+            {
+                if(s[i] == opt2[j] && s[i+1] == opt2[j+1])
+                {
+                    if(s[i-1] != ' ') printf(" ");
+                    printf("%c%c",s[i],s[i+1]);
+                    if(s[i+2] != ' ') printf(" ");
+                    i++;
+                    break;
+                }
+            }
+            if(opt2[j]) continue;
+             
+            if(s[i] == '&' || s[i] == '*')
+            {
+                for(j=i-1;s[j] == ' ';j--);
+                for(k=0;opt[k];k++) if(s[j] == opt[k]) break;
+                if(opt[k]||s[j]==','||s[j]=='?'||s[j]==':'||(s[j-2]=='t'&&s[j-3]=='s')) if(s[i-1] != ' ')
+                {
+                    if(s[i-1] != ',' && s[i-1] != ':' && s[i-1] != '?') printf(" ");
+                    printf("%c",s[i]);
+                    continue;
+                }
+            }
+             
+            for(j=0;opt[j];j++)
+            {
+                if(s[i-1] != opt[j] && s[i] == opt[j] && s[i+1] != opt[j])
+                {
+                    if(s[i-1] != ' ') printf(" ");
+                    printf("%c",s[i]);
+                    if(s[i+1] != ' ') printf(" ");
+                    break;
+                }
+            }
+            if(opt[j]) continue;
+            
+            printf("%c",s[i]);
+        }
+        printf("\n");
+    }
+    return 0;
+}

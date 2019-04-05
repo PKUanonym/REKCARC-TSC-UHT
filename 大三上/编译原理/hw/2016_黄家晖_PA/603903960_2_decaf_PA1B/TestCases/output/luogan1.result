@@ -1,0 +1,89 @@
+program
+    class Main <empty>
+        static func main inttype
+            formals
+            stmtblock
+                vardef a inttype
+                vardef b inttype
+                vardef c inttype
+                assign
+                    varref a
+                    intconst 0
+                assign
+                    varref b
+                    intconst 1
+                assign
+                    varref c
+                    intconst 2
+                repeat
+                    gtr
+                        varref a
+                        varref b
+                    stmtblock
+                        if
+                            gtr
+                                varref a
+                                varref c
+                            continue
+                        assign
+                            varref a
+                            sub
+                                varref a
+                                varref b
+                        assign
+                            varref c
+                            add
+                                varref a
+                                varref b
+                        while
+                            gtr
+                                varref a
+                                varref b
+                            stmtblock
+                                assign
+                                    varref a
+                                    mul
+                                        varref a
+                                        intconst 3
+                                assign
+                                    varref b
+                                    mul
+                                        varref b
+                                        intconst 4
+                                if
+                                    equ
+                                        div
+                                            varref a
+                                            intconst 4
+                                        intconst 0
+                                    continue
+                                switch
+                                    add
+                                        add
+                                            varref a
+                                            varref b
+                                        varref c
+                                    case:
+                                        intconst 0
+                                    case:
+                                        intconst 1
+                                        repeat
+                                            conditional-expression
+                                                equ
+                                                    varref a
+                                                    intconst 1
+                                                conditional-expression
+                                                    varref a
+                                                    varref b
+                                                    varref c
+                                                add
+                                                    varref b
+                                                    varref c
+                                            assign
+                                                varref a
+                                                add
+                                                    varref a
+                                                    intconst 1
+                                        break
+                return
+                    intconst 0

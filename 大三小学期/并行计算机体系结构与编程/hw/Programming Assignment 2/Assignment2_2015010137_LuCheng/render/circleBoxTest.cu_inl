@@ -1,0 +1,43 @@
+
+
+__device__ __inline__ int
+circleInBoxConservative(
+    float circleX, float circleY, float circleRadius,
+    float boxL, float boxR, float boxT, float boxB)
+{
+
+    // expand box by circle radius.  Test if circle center is in the
+    // expanded box.
+
+    if ( circleX >= (boxL - circleRadius) &&
+         circleX <= (boxR + circleRadius) &&
+         circleY >= (boxB - circleRadius) &&
+         circleY <= (boxT + circleRadius) ) {
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
+__device__ __inline__ int
+circleInBox(
+    float circleX, float circleY, float circleRadius,
+    float boxL, float boxR, float boxT, float boxB)
+{
+
+    // clamp circle center to box (finds the closest point on the box)
+    float closestX = (circleX > boxL) ? ((circleX < boxR) ? circleX : boxR) : boxL;
+    float closestY = (circleY > boxB) ? ((circleY < boxT) ? circleY : boxT) : boxB;
+
+    // is circle radius less than the distance to the closest point on
+    // the box?
+    float distX = closestX - circleX;
+    float distY = closestY - circleY;
+
+    if ( ((distX*distX) + (distY*distY)) <= (circleRadius*circleRadius) ) {
+        return 1;
+    } else {
+        return 0;
+    }
+}
+

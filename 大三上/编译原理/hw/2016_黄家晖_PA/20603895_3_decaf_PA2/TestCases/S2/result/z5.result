@@ -1,0 +1,3 @@
+*** Error at (7,9): can not reference a non-static field 'i' from static method 'main'
+*** Error at (9,24): can not reference a non-static field 'i' from static method 'main'
+*** Error at (13,24): can not reference a non-static field 'i' from static method 'main'

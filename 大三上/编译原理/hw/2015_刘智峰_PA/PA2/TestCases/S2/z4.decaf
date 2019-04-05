@@ -1,0 +1,24 @@
+class Main {
+    bool field;
+
+    class Main another;
+
+    int[] foo(int y) {
+        int[] q;
+        int i;
+
+        q = new int[y];
+        i = 0;
+        while (i < y) {
+            q[i] = i;
+            i = i + 1;
+        }
+
+        return q;
+    }
+
+    static void main() {
+		int l;
+        l = this.foo(5).length();    
+    }
+}

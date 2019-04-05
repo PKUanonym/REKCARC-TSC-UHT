@@ -1,0 +1,50 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{fontspec, xunicode, xltxtra}
+\usepackage{xeCJK}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{multirow}
+\newfontfamily\courier{Courier}
+\lstset{
+  numbers=left,                   % where to put the line-numbers
+  numberstyle=\tiny \courier,  % the style that is used for the line-numbers
+  basicstyle=\courier,
+  numbersep=2em,                  % how far the line-numbers are from the code
+  breaklines=true,                % sets automatic line breaking
+  breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
+}
+
+\setCJKmainfont[BoldFont={Adobe Heiti Std R}, ItalicFont={Adobe Kaiti Std}]{Adobe Song Std L}
+\setCJKmonofont{Courier}
+
+\title{编译原理PA2作业报告}
+\author{黄家晖 2014011330}
+\date{}
+\begin{document}
+\maketitle
+
+PA2主要实现静态语义检查，包括符号表的建立和类型的检查，为decaf编译器增加新的语法特性。
+
+\section{新增加的数据结构和函数}
+\begin{enumerate}
+\item 在Error中新增加了错误类型，包括Continue语句不在循环体内的错误、选择三元运算符的算子不符合要求的错误、Case的标签不是整形常量错误等；
+\item 在BuildSym的Visitor类中添加访问repeat语句和switch, case语句的符号表建立方法，对于switch来说，其作用域直接和外层相同（根据new\_test\_q3.decaf文件
+的标准输出推断可知），而对于repeat语句，作用域为本地的新建作用域（参照C的语言规范）；
+\item 在TypeCheck的Visitor类中添加三元运算符的语义检查、continue的语义检查以及二元运算符\texttt{<<}的语义检查。
+
+\end{enumerate}
+
+\section{遇到的问题和解决方法}
+
+对于建立符号表的过程，注意到实验文档中给出repeat的参考文法是\texttt{repeat Stmt* until (BoolExpr)}，而只有Block才能关联本地作用域，
+因此采取一个巧妙的做法，在建立repeat抽象语法树的时候就将\texttt{Stmt*}放在\texttt{Block}当中，实际上为AST嵌套了一层\texttt{Block}节点，
+这样以来，repeat内的所有语句也能像if那样被看做一个单独的Scope进行处理了。
+
+对于类型检查的过程，逻辑比较复杂的是三元运算符部分，代码中我尽量使用已经定义好的函数。首先判断条件语句是否为Bool型，如果不是则报错，但
+不影响三元运算符语法节点的属性文法；接着看\texttt{?}后面的选择语句，如果二者是\texttt{compatible}的（这个函数考虑了更多的情况），且
+都不是错误类型，那么返回左边的属性，如果有一个是错误类型，属性文法就整体为错误；如果二者不能\texttt{compatible}，那么输出报错，属性文法为错误。
+
+另外对二元运算符\texttt{<<}计算最小公共父类采用最简单的$O(n^2)$进行查找，详情请参见函数\texttt{TypeCheck.getMinCommonAncestor()}。
+
+
+\end{document}

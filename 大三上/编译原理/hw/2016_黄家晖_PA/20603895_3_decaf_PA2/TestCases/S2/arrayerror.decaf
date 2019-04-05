@@ -1,0 +1,16 @@
+class Main {
+    int[] a;
+    static void main() {
+        
+    }
+    
+    void func() {
+        a = new int[-1]; // valid
+        a = new int["123"];
+        int a;
+        a.length();
+        a[1] = 2;
+        this.a.length(0);
+        a = this.a[false];
+    }
+}

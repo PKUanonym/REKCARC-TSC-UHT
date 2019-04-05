@@ -1,0 +1,31 @@
+// Computing Fibonacci Sequence
+
+class Main {
+
+    // the main entry
+    static void main() {
+        int i;
+        class Fibonacci F;
+
+        F = new Fibonacci();    // creates a new Fibonacci object
+        i = 0;                  // for i from 0 to 9, prints F_i
+        while (i < 10) {
+            Print (F.get(i), "\n");
+            i = i + 1;
+        }
+
+        i = ReadInteger();            // reads a number from the console
+        Print (F.get(i), "\n");       // prints F_i!
+    }
+}
+
+class Fibonacci {
+
+    // gets F_i
+    int get(int index) {
+        if (index < 2) {
+            return 1;
+        }
+        return get(index - 1) + get(index - 2);
+    }
+}

@@ -1,0 +1,35 @@
+class Main {
+	int c;
+    static void main() {
+        int c;
+				c = 0;
+				for(c = 1; c < 5 ; c=c+1){
+        	if(c == 2)
+        		continue;
+					while(c<10){
+	        	continue;
+	        	c = c+ 1;
+	        }
+        }
+        repeat{
+        	if(c > 2)
+        		continue;
+        	c = c + 1;
+        }until(c<3);
+        if(c < 3){
+					continue;        
+        }
+        c = 100;
+        continue;
+        switch(c){
+        case 0:
+        	continue;
+        case 1:
+        	repeat{
+        		if(c > 2)
+        			continue;
+        		c = c + 1;
+       		}until(c<3);
+        }
+    }
+}

@@ -1,0 +1,53 @@
+class Main {
+    static void main() {
+        class Base b;
+        class Sub1 s1;
+        class Sub2 s2;
+        class Sub3 s3;
+        class Sub4 s4;
+        
+        b = new Base();
+        s1 = new Sub1();
+        s2 = new Sub2();
+        s3 = new Sub3();
+        s4 = new Sub4();
+        printType(b);
+        printType(s1);
+        printType(s2);
+        printType(s3);
+        printType(s4);
+        b = s4;
+        printType(b);
+        s1 = (class Sub1)b;
+        printType(s1);
+    }
+    
+    static void printType(class Base base) {
+        if (instanceof(base, Sub4)) {
+            Print("Sub4\n");
+        } else if (instanceof(base, Sub3)) {
+            Print("Sub3\n");
+        } else if (instanceof(base, Sub2)) {
+            Print("Sub2\n");
+        } else if (instanceof(base, Sub1)) {
+            Print("Sub1\n");
+        } else if (instanceof(base, Base)) {
+            Print("Base\n");
+        }
+    }
+}
+
+class Base {
+}
+
+class Sub1 extends Base {
+}
+
+class Sub2 extends Base {
+}
+
+class Sub3 extends Sub1 {
+}
+
+class Sub4 extends Sub3 {
+}

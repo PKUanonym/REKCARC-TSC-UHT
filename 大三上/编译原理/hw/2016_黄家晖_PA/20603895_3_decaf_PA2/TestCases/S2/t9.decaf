@@ -1,0 +1,11 @@
+class Main {
+    int a;
+    static void main() {
+    }
+}
+
+class A extends Main {
+    void func() {
+        a = new Main().a; // no error
+    }
+}

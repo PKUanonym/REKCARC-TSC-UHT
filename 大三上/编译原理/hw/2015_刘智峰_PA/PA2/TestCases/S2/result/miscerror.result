@@ -1,0 +1,5 @@
+*** Error at (3,15): incompatible argument 1: class : Main given, int/bool/string expected
+*** Error at (5,13): 'break' is only allowed inside a loop
+*** Error at (6,15): int is not a class type
+*** Error at (8,25): bool is not a class type
+*** Error at (9,9): incompatible return: int given, void expected

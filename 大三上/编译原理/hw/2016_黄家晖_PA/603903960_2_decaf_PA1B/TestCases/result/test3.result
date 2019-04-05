@@ -1,0 +1,47 @@
+program
+    class MultipleFormals <empty>
+        func foo inttype
+            formals
+                vardef x inttype
+                vardef y inttype
+                vardef z inttype
+            stmtblock
+                return
+                    div
+                        add
+                            add
+                                varref x
+                                varref y
+                            varref z
+                        intconst 3
+        func method inttype
+            formals
+            stmtblock
+                vardef x inttype
+                vardef y inttype
+                vardef z inttype
+                assign
+                    varref x
+                    intconst 3
+                assign
+                    varref y
+                    add
+                        varref x
+                        mul
+                            varref x
+                            varref x
+                assign
+                    varref z
+                    mod
+                        sub
+                            varref x
+                            div
+                                varref y
+                                varref x
+                        varref y
+                return
+                    call foo
+                        <empty>
+                        varref x
+                        varref y
+                        varref z

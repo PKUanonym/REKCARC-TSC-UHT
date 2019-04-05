@@ -1,0 +1,71 @@
+program
+    class Main <empty>
+        vardef i inttype
+        static func main voidtype
+            formals
+            stmtblock
+                vardef h classtype Hoo
+                assign
+                    varref i
+                    intconst 4
+                assign
+                    varref h
+                    newobj Goo
+                call printNumbers
+                    varref h
+                    varref i
+                print
+                    instanceof
+                        varref h
+                        Goo
+                vardef g classtype Goo
+                assign
+                    varref g
+                    classcast
+                        Goo
+                        varref h
+                call printNumbers
+                    varref g
+                    varref i
+    class Hoo <empty>
+        func printNumbers inttype
+            formals
+                vardef n inttype
+            stmtblock
+                vardef i inttype
+                if
+                    les
+                        intconst 10
+                        varref n
+                    stmtblock
+                        assign
+                            varref n
+                            intconst 10
+                assign
+                    varref i
+                    intconst 0
+                while
+                    les
+                        varref i
+                        varref n
+                    stmtblock
+                        print
+                            varref i
+                        assign
+                            varref i
+                            mul
+                                varref i
+                                intconst 2
+                print
+                    stringconst "\n"
+                return
+                    varref i
+    class Goo Hoo
+        func printNumbers inttype
+            formals
+                vardef n inttype
+            stmtblock
+                print
+                    varref n
+                return
+                    intconst 1

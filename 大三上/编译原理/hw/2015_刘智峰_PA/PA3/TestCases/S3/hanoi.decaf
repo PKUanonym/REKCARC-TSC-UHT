@@ -1,0 +1,31 @@
+class Hanoi {
+int totNrStep;
+
+	void init() {
+		totNrStep = 0;
+	}
+
+	void move(int n, string from, string to, string temp) {
+		 int k;
+		 if (n == 0)
+		 		return;
+
+		 move(n - 1, from, temp, to);
+		 k = totNrStep;
+		 Print("#", k++, ": move ", n, " from ", from, " to ",to, "\n");
+		 totNrStep = k;
+		 move(n - 1, temp, to, from);
+	}
+}
+
+class Main {
+	static void main() {
+		int n;
+		n = 5;
+		Print ("number of disks is ",n,"\n");
+		class Hanoi hanoi;
+		hanoi = new Hanoi();
+		hanoi.init();
+		hanoi.move(n, "A", "C", "B");
+	}
+}

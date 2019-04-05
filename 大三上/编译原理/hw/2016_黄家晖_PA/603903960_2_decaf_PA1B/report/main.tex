@@ -1,0 +1,46 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{fontspec, xunicode, xltxtra}
+\usepackage{xeCJK}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{multirow}
+\newfontfamily\courier{Courier}
+\lstset{
+  numbers=left,                   % where to put the line-numbers
+  numberstyle=\tiny \courier,  % the style that is used for the line-numbers
+  basicstyle=\courier,
+  numbersep=2em,                  % how far the line-numbers are from the code
+  breaklines=true,                % sets automatic line breaking
+  breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
+}
+
+\setCJKmainfont[BoldFont={Adobe Heiti Std R}, ItalicFont={Adobe Kaiti Std}]{Adobe Song Std L}
+\setCJKmonofont{Courier}
+
+\title{编译原理PA1-B作业报告}
+\author{黄家晖 2014011330}
+\date{}
+\begin{document}
+\maketitle
+
+PA1-B的要求是构造Decaf语言的LL(1)文法，利用自顶向下的方法对语法进行解析，从而代替PA1-A中使用Byacc产生的Praser.y文件。
+
+\section{新增加的数据结构和函数}
+\begin{enumerate}
+\item 在Tree中增加了一些数据结构，增加的部分和PA1-A相同，不再赘述；
+\item 在Paser中增加了CASE, CONTINUE, DEFAULT, REPEAT, SWITCH, UNTIL, PCLONE的常量定义，使得文法分析器能够引用正确的语义值；
+\item 修改了StmtListParse和StmtParse函数，为其增加了相应的lookahead token以及对于token需要进行的规约操作；
+\item 增加了OperCEParse和OperPCloneParse函数，负责识别条件运算符``?''和``<<''运算符；
+\item 增加了ExprCE(T)Parse和ExprPClone(T)Parse函数，能够对消除左递归的算符树进行解析；
+\item 增加了ContinueStmtParse，SwitchStmtParse，CaseStmtListParse，CaseStmtParse，DefaultStmtParse，RepeatStmtParse函数，实现对Case语句和Repeat语句的解析。
+\end{enumerate}
+
+\section{遇到的问题和解决方法}
+
+我认为此次实验除了某些地方的细节需要注意之外，比较复杂的地方仍然在于三元操作符\texttt{?:}的解析。课堂上老师并没有对LL(1)文法的结合性与优先级做出说明，实际上LL(1)文法在自顶向下分析的时候语义树都是使用最左推导得出的左结合。但是经过学习原有\texttt{Parser.y}源代码可以得知，可以通过语法规则的层次划分（即化为Expr1, Expr2, ...优先级层层递增）来解决优先级问题，每层中通过抽象语法树建立时的逻辑确定相同优先级运算符的左右结合性。
+
+具体地，在解决\texttt{?:}问题的时候，可以将\texttt{? Expr :}看成一个运算符赋给其优先级和结合性，既可以轻松解决问题，这种思路参考了以下网站：
+
+http://stackoverflow.com/questions/13681293/how-can-i-incorporate-ternary-operators-into-a-precedence-climbing-algorithm
+
+\end{document}

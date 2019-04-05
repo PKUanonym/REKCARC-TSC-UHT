@@ -1,0 +1,69 @@
+program
+    class Main <empty>
+        static func main inttype
+            formals
+            stmtblock
+                vardef i inttype
+                vardef a inttype
+                vardef b inttype
+                vardef c inttype
+                assign
+                    varref a
+                    intconst 0
+                assign
+                    varref b
+                    intconst 1
+                assign
+                    varref c
+                    intconst 2
+                switch
+                    add
+                        varref a
+                        varref b
+                switch
+                    varref i
+                    default:
+                    assign
+                        varref c
+                        intconst 3
+                switch
+                    varref c
+                    case:
+                        intconst 0
+                        break
+                repeat
+                    les
+                        varref a
+                        varref b
+                repeat
+                    gtr
+                        varref a
+                        varref b
+                    stmtblock
+                repeat
+                    equ
+                        varref a
+                        varref b
+                    assign
+                        varref c
+                        add
+                            varref a
+                            varref b
+                    assign
+                        varref b
+                        varref a
+                repeat
+                    equ
+                        varref a
+                        varref b
+                    stmtblock
+                        assign
+                            varref c
+                            add
+                                varref a
+                                varref b
+                        assign
+                            varref b
+                            varref a
+                return
+                    intconst 0

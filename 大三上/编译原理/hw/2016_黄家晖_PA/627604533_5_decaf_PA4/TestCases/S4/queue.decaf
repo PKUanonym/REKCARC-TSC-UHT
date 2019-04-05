@@ -1,0 +1,79 @@
+class QueueItem {
+    int data;
+    class QueueItem next;
+    class QueueItem prev;
+  
+    void Init(int data, class QueueItem next, class QueueItem prev) {
+        this.data = data;
+        this.next = next;
+        next.prev = this;
+        this.prev = prev;
+        prev.next = this;
+    }
+    int GetData() {
+        return this.data;
+    }
+    class QueueItem GetNext() {
+        return next;
+    }
+    class QueueItem GetPrev() {
+        return prev;
+    }
+    void SetNext(class QueueItem n) {
+        next = n;
+    }
+    void SetPrev(class QueueItem p) {
+        prev = p;
+    }
+}
+
+class Queue {
+    int sp;
+    class QueueItem head;
+  
+    void Init() {
+        this.head = new QueueItem();
+        this.head.Init(0, this.head, this.head);
+    }
+    void EnQueue(int i) {
+        class QueueItem temp;
+        temp = new QueueItem();
+        temp.Init(i, this.head.GetNext(), this.head);
+    }
+    int DeQueue() {
+        int val;
+        if (this.head.GetPrev() == this.head) {
+            Print("Queue Is Empty");
+            return 0;
+        } else {
+            class QueueItem temp;
+            temp = this.head.GetPrev();
+            val = temp.GetData();
+            temp.GetPrev().SetNext(temp.GetNext());
+            temp.GetNext().SetPrev(temp.GetPrev());
+        }
+        return val;
+    }
+}
+
+class Main {
+    static void main() {
+        class Queue q;
+        int i;
+        q = new Queue();
+        q.Init();
+        for (i = 0; i < 10; i = i + 1)
+            q.EnQueue(i);
+
+        for (i = 0; i < 4; i = i + 1)
+            Print(q.DeQueue(), " ");
+        Print("\n");
+
+        for (i = 0; i < 10; i = i + 1)
+            q.EnQueue(i);
+        for (i = 0; i < 17; i = i + 1)
+            Print(q.DeQueue(), " ");
+        Print("\n");
+    }
+}
+

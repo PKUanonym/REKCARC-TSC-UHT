@@ -1,0 +1,29 @@
+function adjustedSpec = moveFormant(src,tgt,percentage)
+
+%找出应当移动的程度
+srcformant=markformant(src);
+tgtformant=markformant(tgt);
+
+len_x0=length(srcformant(1,:));
+len_x1=length(tgtformant(1,:));
+
+%调整大小为一样大
+
+
+%开始循环
+
+%两个共振峰矩阵的最大值:
+maxsrc=max(max(srcformant));
+maxtgt=max(max(tgtformant));
+
+for i=1:len_x0
+    %formant position of current source frame
+    [value,possrc]=max(srcformant(:,i));
+    
+    
+end
+
+
+adjustedSpec = [];
+
+return; 

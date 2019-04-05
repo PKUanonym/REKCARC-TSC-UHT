@@ -1,0 +1,90 @@
+10,12d9
+< import decaf.tree.Tree.GuardedDOStmt;
+< import decaf.tree.Tree.GuardedES;
+< import decaf.tree.Tree.GuardedIFStmt;
+25d21
+< import decaf.error.DifferentTypeError;
+85c81
+< 		else if(expr.tag == Tree.NOT){
+---
+> 		else{
+93,136d88
+< 		else if(expr.tag == Tree.POSTINC || expr.tag == Tree.PREINC){  //decaf_pa2 ++
+< 			if (expr.expr.type.equal(BaseType.ERROR)
+< 					|| expr.expr.type.equal(BaseType.INT)) {
+< 				expr.type = expr.expr.type;
+< 			} else {
+< 				issueError(new IncompatUnOpError(expr.getLocation(), "++",
+< 						expr.expr.type.toString()));
+< 				expr.type = BaseType.ERROR;
+< 			}
+< 		}
+< 		else if(expr.tag == Tree.POSTDEC || expr.tag == Tree.PREDEC){  //decaf_pa2 --
+< 			if (expr.expr.type.equal(BaseType.ERROR)
+< 					|| expr.expr.type.equal(BaseType.INT)) {
+< 				expr.type = expr.expr.type;
+< 			} else {
+< 				issueError(new IncompatUnOpError(expr.getLocation(), "--",
+< 						expr.expr.type.toString()));
+< 				expr.type = BaseType.ERROR;
+< 			}
+< 		}
+< 	}
+< 	
+< 	// decaf_pa2 A?B:C
+< 	@Override
+< 	public void visitQuestionAndColon(Tree.QuestionAndColon questionAndColon){
+< 		checkTestExpr(questionAndColon.left);
+< 		questionAndColon.middle.accept(this);
+< 		questionAndColon.right.accept(this);
+< 		Type middleType = questionAndColon.middle.type;
+< 		Type rightType = questionAndColon.right.type;
+< 		if(middleType.equal(BaseType.ERROR) || rightType.equal(BaseType.ERROR)){ // 后面两个表达式类型本省出错
+< 			questionAndColon.type = BaseType.ERROR;
+< 			return;
+< 		}
+< 		else{
+< 			if(middleType.equal(rightType)){ //两表达式类型一致
+< 				questionAndColon.type = middleType;
+< 			}
+< 			else{
+< 				issueError(new DifferentTypeError(questionAndColon.loc, 
+< 					middleType.toString() , rightType.toString()));
+< 				questionAndColon.type = BaseType.ERROR;
+< 			}
+< 		}
+356,365d306
+< 	//decaf_pa2 numinstances 仿造visitTypeTest
+< 	public void visitNumTest(Tree.NumTest numinstancesExpr) {
+< 		Class c = table.lookupClass(numinstancesExpr.numinstance);
+< 		numinstancesExpr.type = BaseType.INT;  // 在这不定义的话会出现空指针 由计33的郭志芃同学提示
+< 		if (c == null) {
+< 			issueError(new ClassNotFoundError(numinstancesExpr.getLocation(),
+< 					numinstancesExpr.numinstance));
+< 		}
+< 	}
+< 	
+591,613d531
+< 	//decaf_pa2 GuardedIFStmt
+< 	@Override
+< 	public void visitGuardedES(GuardedES guardedES) {
+< 		guardedES.expr.accept(this);
+< 		guardedES.tree.accept(this);
+< 	}
+< 	
+< 	@Override
+< 	public void visitGuardedIFStmt(GuardedIFStmt guardedIFStmt) {
+< 		for(Tree.GuardedES i : guardedIFStmt.guardedES){
+< 			i.accept(this);
+< 		}
+< 	}
+< 	
+< 	@Override
+< 	public void visitGuardedDOStmt(GuardedDOStmt guardedDOStmt) {
+< 		for(Tree.GuardedES i : guardedDOStmt.guardedES){
+< 			breaks.add(i); // 参照visitwhile
+< 			i.accept(this);
+< 			breaks.pop();
+< 		}
+< 	}
+< 	

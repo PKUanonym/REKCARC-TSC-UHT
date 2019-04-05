@@ -1,0 +1,56 @@
+program
+    class Main <empty>
+        static func main inttype
+            formals
+            stmtblock
+                assign
+                    varref a
+                    postinc
+                        varref i
+                assign
+                    varref a
+                    postdec
+                        varref i
+                assign
+                    varref a
+                    preinc
+                        varref i
+                assign
+                    varref a
+                    predec
+                        varref i
+                assign
+                    varref i
+                    add
+                        postinc
+                            varref a
+                        varref b
+                assign
+                    varref i
+                    add
+                        varref a
+                        preinc
+                            varref b
+                assign
+                    varref i
+                    add
+                        varref a
+                        div
+                            mul
+                                postinc
+                                    varref a
+                                preinc
+                                    varref b
+                            intconst 1
+                assign
+                    varref i
+                    sub
+                        add
+                            varref a
+                            not
+                                preinc
+                                    varref b
+                        preinc
+                            varref a
+                return
+                    intconst 0

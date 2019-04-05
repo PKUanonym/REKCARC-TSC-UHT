@@ -1,0 +1,21 @@
+GLOBAL SCOPE:
+    (1,1) -> class Cow
+    (15,1) -> class Main
+    CLASS SCOPE OF 'Cow':
+        (2,9) -> variable height : int
+        (3,9) -> variable weight : int
+        (5,10) -> function Init : class : Cow->int->int->void
+        (10,10) -> function Moo : class : Cow->void
+        FORMAL SCOPE OF 'Init':
+            (5,10) -> variable @this : class : Cow
+            (5,19) -> variable @w : int
+            (5,26) -> variable @h : int
+            LOCAL SCOPE:
+        FORMAL SCOPE OF 'Moo':
+            (10,10) -> variable @this : class : Cow
+            LOCAL SCOPE:
+    CLASS SCOPE OF 'Main':
+        (16,17) -> static function main : void
+        FORMAL SCOPE OF 'main':
+            LOCAL SCOPE:
+                (17,19) -> variable betsy : class : Cow

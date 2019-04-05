@@ -1,0 +1,28 @@
+class Main {   
+    static void main() {
+				int line;
+				int a;
+				int b;
+				
+				a = 4;
+				b = 1;
+				line = 9;
+				do a > 0:{
+					Print(" ");
+					a = a - 1;
+				}||| b > 0 : {
+					Print("#");
+					b = b - 1;
+				} ||| line > 0 : {
+					Print("\n");
+					line = line - 1;
+					if(line >= 5){	
+						a = line-5;
+						b = 2*(10-line) - 1;
+					}else{
+						a = 5 - line;
+						b = 2*line-1;
+					}
+				} od
+    }
+}

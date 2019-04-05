@@ -1,0 +1,5 @@
+*** Error at (5,9): can not reference a non-static field 'a' from static method 'main'
+*** Error at (6,9): can not use this in static function
+*** Error at (7,14): cannot access field 'a' from 'class : Main'
+*** Error at (8,9): can not reference a non-static field 'func' from static method 'main'
+*** Error at (12,20): field 'b' of 'class : Test' not accessible here

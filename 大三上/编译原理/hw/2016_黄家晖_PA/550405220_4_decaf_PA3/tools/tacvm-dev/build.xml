@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	Ant build file for TAC Virtual Machine.
+	author: Zhang Duo
+	date:   Oct 4, 2007
+	DCST, Tsinghua University
+-->
+
+<project name="TAC Virtual Machine" default="4 pack">
+	<!-- 设置各种属性 -->
+	<property name="src.dir" value="src" />
+	<property name="result.dir" value="result" />
+	<property name="bin.dir" value="${result.dir}/bin" />
+	<property name="jflex.jar" value="tools/jflex/JFlex.jar" />
+	<condition property="byacc" value="tools/byacc/byacc.exe">
+		<or>
+			<os family="windows" arch="x86" />
+			<os family="windows" arch="amd64" />
+		</or>
+	</condition>
+	<condition property="byacc" value="${basedir}/tools/byacc/byacc.linux">
+		<or>
+			<os family="unix" arch="x86" />
+			<os family="unix" arch="i386" />
+			<os family="unix" arch="i486" />
+			<os family="unix" arch="i586" />
+			<os family="unix" arch="i686" />
+		</or>
+	</condition>
+	<condition property="byacc" value="${basedir}/tools/byacc/byacc.linux.amd64">
+		<or>
+			<os family="unix" arch="amd64" />
+		</or>
+	</condition>
+	<condition property="byacc" value="${basedir}/tools/byacc/byacc.mac">
+		<or>
+			<os family="mac" />
+		</or>
+	</condition>
+
+	<!-- 生成Lex和YACC结果 -->
+	<target name="1 jflex" description="Run JFlex...">
+		<java jar="${jflex.jar}" fork="true" maxmemory="128m" failonerror="true">
+			<sysproperty key="file.encoding" value="UTF-8" />
+			<arg value="${src.dir}/decaf/tacvm/parser/Lexer.l" />
+		</java>
+		<delete file="${src.dir}/decaf/tacvm/parser/Lexer.java~" />
+	</target>
+	<target name="2 byacc" description="Run BYACC/J...">
+		<chmod file="${byacc}" perm="+rx" />
+		<!-- for unix -->
+		<exec dir="${src.dir}/decaf/tacvm/parser" executable="${byacc}" failonerror="true">
+			<arg line="-v -J Parser.y" />
+		</exec>
+		<move file="${src.dir}/decaf/tacvm/parser/y" tofile="${src.dir}/decaf/tacvm/parser/Parser.output" />
+	</target>
+
+	<!-- 编译 -->
+	<target name="3 compile" depends="1 jflex,2 byacc" description="Compile All...">
+		<mkdir dir="${bin.dir}" />
+		<javac srcdir="${src.dir}" destdir="${bin.dir}" encoding="UTF8" debug="off" optimize="on" />
+	</target>
+
+	<!-- 打包 -->
+	<target name="4 pack" depends="3 compile" description="Prepare package...">
+		<jar destfile="${result.dir}/tac.jar">
+			<fileset dir="${bin.dir}" />
+			<manifest>
+				<attribute name="Signature-Version" value="3.14159" />
+				<attribute name="Main-Class" value="decaf.tacvm.TacVM" />
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="clean" description="Clean...">
+		<delete dir="${result.dir}" />
+	</target>
+</project>

@@ -1,0 +1,24 @@
+GLOBAL SCOPE:
+    (1,1) -> class Computer
+    (10,1) -> class Mac : Computer
+    (17,1) -> class Main
+    CLASS SCOPE OF 'Computer':
+        (2,9) -> variable cpu : int
+        (3,10) -> function Crash : class : Computer->int->void
+        FORMAL SCOPE OF 'Crash':
+            (3,10) -> variable @this : class : Computer
+            (3,20) -> variable @numTimes : int
+            LOCAL SCOPE:
+                (4,13) -> variable i : int
+    CLASS SCOPE OF 'Mac':
+        (11,9) -> variable mouse : int
+        (12,10) -> function Crash : class : Mac->int->void
+        FORMAL SCOPE OF 'Crash':
+            (12,10) -> variable @this : class : Mac
+            (12,20) -> variable @numTimes : int
+            LOCAL SCOPE:
+    CLASS SCOPE OF 'Main':
+        (18,17) -> static function main : void
+        FORMAL SCOPE OF 'main':
+            LOCAL SCOPE:
+                (19,19) -> variable powerbook : class : Mac

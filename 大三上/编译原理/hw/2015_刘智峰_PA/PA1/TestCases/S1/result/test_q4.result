@@ -1,0 +1,58 @@
+program
+    class Main <empty>
+        static func main inttype
+            formals
+            stmtblock
+                if
+                    gtr
+                        varref i
+                        intconst 3
+                    stmtblock
+                guardedif
+                    guardedstmt
+                        gtr
+                            varref i
+                            intconst 4
+                        stmtblock
+                            assign
+                                varref i
+                                intconst 1
+                            assign
+                                varref i
+                                add
+                                    varref a
+                                    varref b
+                guardedif
+                    guardedstmt
+                        gtr
+                            varref i
+                            intconst 4
+                        stmtblock
+                            assign
+                                varref i
+                                intconst 1
+                            assign
+                                varref i
+                                add
+                                    varref a
+                                    varref b
+                    guardedstmt
+                        gtr
+                            varref i
+                            intconst 4
+                        assign
+                            varref a
+                            intconst 2
+                    guardedstmt
+                        gtr
+                            varref a
+                            intconst 4
+                        if
+                            gtr
+                                varref a
+                                varref b
+                            assign
+                                varref q
+                                intconst 3
+                return
+                    intconst 0

@@ -1,0 +1,25 @@
+GLOBAL SCOPE:
+    (1,1) -> class Main
+    (40,1) -> class Base
+    (43,1) -> class Sub1 : Base
+    (46,1) -> class Sub2 : Base
+    (49,1) -> class Sub3 : Sub1
+    (52,1) -> class Sub4 : Sub3
+    CLASS SCOPE OF 'Main':
+        (2,17) -> static function main : void
+        (25,17) -> static function printType : class : Base->void
+        FORMAL SCOPE OF 'main':
+            LOCAL SCOPE:
+                (3,20) -> variable b : class : Base
+                (4,20) -> variable s1 : class : Sub1
+                (5,20) -> variable s2 : class : Sub2
+                (6,20) -> variable s3 : class : Sub3
+                (7,20) -> variable s4 : class : Sub4
+        FORMAL SCOPE OF 'printType':
+            (25,38) -> variable @base : class : Base
+            LOCAL SCOPE:
+    CLASS SCOPE OF 'Base':
+    CLASS SCOPE OF 'Sub1':
+    CLASS SCOPE OF 'Sub2':
+    CLASS SCOPE OF 'Sub3':
+    CLASS SCOPE OF 'Sub4':

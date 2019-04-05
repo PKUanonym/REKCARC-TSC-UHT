@@ -1,0 +1,28 @@
+class Father {
+    int field;
+
+    int method(int f) {
+        if (f > 0 && f < 10) {
+            f = f - 3;
+            return method(f);
+        }
+		return f;
+    }
+}
+
+class Child extends Father {
+    void start() {
+        class Father p;
+
+        p = this;
+        p.field = 5;
+        p = null;
+
+        Print(this.field);
+    }
+}
+
+class Main {
+	static void main() {
+	}
+}

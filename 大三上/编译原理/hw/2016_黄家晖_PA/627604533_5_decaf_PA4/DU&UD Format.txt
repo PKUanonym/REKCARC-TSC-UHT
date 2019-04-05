@@ -1,0 +1,76 @@
+以下是UD和DU链输出文件参考样式，可以参考也可以不参考。
+可以利用BasicBlock.java的printTo输出，首先先给每个tac从前往后给一个编号，然后在定义点或引用点的那行tac代码前后，分别输出其编号和其引用点或定义点的编号，
+具体例子如下.
+
+DU链的输出：
+FUNCTION _Stack.Push : 
+	BASIC BLOCK 0 : 
+54		_T27 = *(_T1 + 8) [ 70 56 ]             //编号为54的tac指令是一个定义点，其后空格在方括号中包括了引用这个定义点定义变量的tac的编号，这里_T27在第70和56条tac代码处被引用
+55		_T28 = *(_T1 + 4) [ 69 57 60 ]          //编号55的tac指令，定义了_T28，_T28在编号为69 57 60的tac指令中被引用
+56		_T29 = *(_T27 - 4) [ 57 ]
+57		_T30 = (_T28 < _T29) [ 58 ]
+58	END BY BEQZ, if _T30 = 
+		0 : goto 2; 1 : goto 1
+	BASIC BLOCK 1 : 
+59		_T31 = 0 [ 60 ]
+60		_T32 = (_T28 < _T31) [ 61 ]
+61	END BY BEQZ, if _T32 = 
+		0 : goto 3; 1 : goto 2
+	BASIC BLOCK 2 : 
+63		_T33 = "Decaf runtime error: Array subscript out of bounds\n" [ 64 ]
+64		parm _T33
+65		call _PrintString
+66		call _Halt
+	END BY BRANCH, goto 3
+	BASIC BLOCK 3 : 
+68		_T34 = 4 [ 69 ]
+69		_T35 = (_T28 * _T34) [ 70 ]
+70		_T36 = (_T27 + _T35) [ 71 ]
+71		_T37 = *(_T36 + 0) [ ]
+72		_T38 = 4 [ 73 ]
+73		_T39 = (_T28 * _T38) [ 74 ]
+74		_T40 = (_T27 + _T39) [ 75 ]
+75		*(_T40 + 0) = _T2
+76		_T41 = *(_T1 + 4) [ ]
+77		_T42 = *(_T1 + 4) [ 79 ]
+78		_T43 = 1 [ 79 ]
+79		_T44 = (_T42 + _T43) [ 80 ]
+80		*(_T1 + 4) = _T44
+	END BY RETURN, void result
+
+
+UD链的输出：
+FUNCTION _Stack.Push : 
+	BASIC BLOCK 0 : 
+54		_T27 = *(_T1 + 8) [ ]
+55		_T28 = *(_T1 + 4) [ ]
+56		_T29 = *(_T27 - 4) [ 54 ]         //编号为56的tac指令引用了_T27变量，该变量的定义点为第54号tac指令
+57		_T30 = (_T28 < _T29) [ 55 ] [ 56 ]    //编号57的tac指令引用了_T28和_T29，依据出现顺序输出_T28和_T29的UD链。
+58	END BY BEQZ, if _T30 = 
+		0 : goto 2; 1 : goto 1
+	BASIC BLOCK 1 : 
+59		_T31 = 0 
+60		_T32 = (_T28 < _T31) [ 55 ] [ 59 ]
+61	END BY BEQZ, if _T32 = 
+		0 : goto 3; 1 : goto 2
+	BASIC BLOCK 2 : 
+63		_T33 = "Decaf runtime error: Array subscript out of bounds\n" [ 64 ]
+64		parm _T33 [ 63 ]
+65		call _PrintString
+66		call _Halt
+	END BY BRANCH, goto 3
+	BASIC BLOCK 3 : 
+68		_T34 = 4 
+69		_T35 = (_T28 * _T34) [ 55 ] [ 68 ]
+70		_T36 = (_T27 + _T35) [ 54 ] [ 69 ]
+71		_T37 = *(_T36 + 0) [ 70 ]
+72		_T38 = 4
+73		_T39 = (_T28 * _T38) [ 55 ] [ 72 ]
+74		_T40 = (_T27 + _T39) [ 54 ] [ 73 ]
+75		*(_T40 + 0) = _T2 [ 74 ] [ ]
+76		_T41 = *(_T1 + 4) [ ]
+77		_T42 = *(_T1 + 4) [ ]
+78		_T43 = 1 [ ]
+79		_T44 = (_T42 + _T43) [ 77 ] [ 78 ]
+80		*(_T1 + 4) = _T44 [ ] [ 79 ]
+	END BY RETURN, void result

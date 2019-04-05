@@ -1,0 +1,4 @@
+*** Error at (21,10): overriding method 'func' doesn't match the type signature in class 'A'
+*** Error at (24,13): overriding method 'func1' doesn't match the type signature in class 'A'
+*** Error at (27,13): overriding method 'func2' doesn't match the type signature in class 'A'
+*** Error at (37,1): illegal class inheritance (should be a cyclic)

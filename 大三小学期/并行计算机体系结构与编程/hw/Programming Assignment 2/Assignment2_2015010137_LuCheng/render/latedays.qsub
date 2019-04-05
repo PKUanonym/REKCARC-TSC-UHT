@@ -1,0 +1,34 @@
+#!/bin/sh
+
+#
+# Limit wall-clock time of job to 6 minutes to avoid hogging the
+# queue. A full-credit implementation of the assignment 2 render is fully
+# graded in no more than about 2 minutes, so there's likely not a
+# good reason to increase it much more. It is courteous to your fellow
+# students to avoid taking up a lot of time on the cluster.
+#
+
+#PBS -lwalltime=0:6:00
+
+#
+# Ask for a specific number of lateday's 14 nodes for this job.  #
+#
+# You should only need 1 node for the standard assignment 2.
+#
+
+#PBS -l nodes=1:ppn=24
+
+#
+# This job should be submitted to the Tesla queue, to ensure it runs
+# on dedicated, on a machine with a Tesla K40.
+#
+
+#PBS -q tesla
+
+#
+# Submit the job.  No need to modify this.
+#
+
+cd $PBS_O_WORKDIR
+pbsdsh -u $PBS_O_WORKDIR/harness.sh
+

@@ -1,0 +1,43 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{fontspec, xunicode, xltxtra}
+\usepackage{xeCJK}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{multirow}
+\newfontfamily\courier{Courier}
+\lstset{
+  numbers=left,                   % where to put the line-numbers
+  numberstyle=\tiny \courier,  % the style that is used for the line-numbers
+  basicstyle=\courier,
+  numbersep=2em,                  % how far the line-numbers are from the code
+  breaklines=true,                % sets automatic line breaking
+  breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
+}
+
+\setCJKmainfont[BoldFont={Adobe Heiti Std R}, ItalicFont={Adobe Kaiti Std}]{Adobe Song Std L}
+\setCJKmonofont{Courier}
+
+\title{编译原理PA3作业报告}
+\author{黄家晖 2014011330}
+\date{}
+\begin{document}
+\maketitle
+
+PA3利用Visitor模式对AST进行访问，利用部分静态语义信息生成TAC代码。
+这种代码非常接近汇编代码，在此部分需要实现汇编语言的相关逻辑，增加新的语法特性。
+
+\section{新增加的数据结构和函数}
+\begin{enumerate}
+\item 为了实现switch和case语句和\texttt{?:}操作符，需要为TranslatorPass2中遍历到相应节点时增加相应汇编语言生成。switch使用的逻辑是先经过若干个if条件判断应该前往哪一个分支，再在下面依次定义这些分支；而三元运算符使用的逻辑是先做条件判断，根据条件的真假跳转到不同的标签继续执行。
+\item 为了实现\texttt{<<}操作符，为Class类增加CopyFuncLabel存储拷贝构造函数的Label信息，同时在VTable中存储对应的Class信息，将整个VTable的偏移量加4，第三个位置放置一个伪非静态的拷贝构造函数。
+\item 为了实现repeat语句和对应的continue语句，新加入栈，存储当前所在循环的开始点，每次遇到continue语句就跳转到这个开始点继续执行。
+\item 为了实现运行时检查的
+
+\end{enumerate}
+
+\section{遇到的问题和解决方法}
+
+本次PA耗时比较长的是\texttt{<<}操作符的实现
+
+
+\end{document}

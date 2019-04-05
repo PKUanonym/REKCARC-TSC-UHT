@@ -1,0 +1,31 @@
+class Base {
+	int a;
+}
+
+class Sub1 extends Base{
+}
+
+class Sub2 extends Base{
+}
+
+class Main {
+    static int main() {
+    		class Base a;
+   			class Base b;
+        class Sub1 s1;
+        class Sub2 s2;
+        
+        int i;
+        
+        b = new Base();
+        s1 = new Sub1();
+        s2 = new Sub2();
+				i = 0;
+				
+				a = s2 << s1;
+				a = a << b << s1 << s2;
+				a = i == 1? a<<b : b<<s1;
+				
+        return 0;    
+    }
+}

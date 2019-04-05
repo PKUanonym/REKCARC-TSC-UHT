@@ -1,0 +1,35 @@
+class Main {
+    static void main() {
+        class Base b;
+				int i;
+        
+        for(i = 0 ; i < 10 ; i=i+1){
+        		b = new Base();
+        }
+        Print(numinstances(Base), "\n");
+       
+        for(i = 0 ; i < 11 ; i=i+1){
+        		b = new Sub1();
+        }
+        Print(numinstances(Sub1), "\n");
+       
+        for(i = 0 ; i < 12 ; i=i+1){
+        		b = new Sub2();
+        }
+        Print(numinstances(Sub2), "\n");
+				Print("\n");
+				
+				Print(numinstances(Base), "\n");
+				Print(numinstances(Sub1), "\n");
+				Print(numinstances(Sub2), "\n");
+    }
+}
+
+class Base {
+}
+
+class Sub1 extends Base {
+}
+
+class Sub2 extends Base {
+}

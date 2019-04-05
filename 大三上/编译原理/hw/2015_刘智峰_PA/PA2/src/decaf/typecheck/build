@@ -1,0 +1,41 @@
+7d6
+< import decaf.tree.Tree.GuardedDOStmt;
+123,124c122
+< 			} else if ((sym.getScope().isFormalScope() || sym.getScope()
+< 					.isLocalScope())) {
+---
+> 			} else if ((sym.getScope().isFormalScope() && table.getCurrentScope().isLocalScope() && ((LocalScope)table.getCurrentScope()).isCombinedtoFormal() )) {
+154c152,159
+< 		funcDef.body.accept(this);
+---
+> 
+> 		funcDef.body.associatedScope = new LocalScope(funcDef.body);
+> 		funcDef.body.associatedScope.setCombinedtoFormal(true);
+> 		table.open(funcDef.body.associatedScope);
+> 		for (Tree s : funcDef.body.block) {
+> 			s.accept(this);
+> 		}
+> 		table.close();
+230,251d234
+< 	//decaf_pa2 串行语句
+< 	@Override
+< 	public void visitGuardedES(Tree.GuardedES guardedES) {
+< 		if(guardedES.tree != null){
+< 			guardedES.tree.accept(this);
+< 		}
+< 	};
+< 	
+< 	@Override
+< 	public void visitGuardedIFStmt(Tree.GuardedIFStmt guardedIFStmt) {
+< 		for(Tree.GuardedES i : guardedIFStmt.guardedES){
+< 			i.accept(this);
+< 		}
+< 	};
+< 	
+< 	@Override
+< 	public void visitGuardedDOStmt(GuardedDOStmt guardedDOStmt) {
+< 		for(Tree.GuardedES i : guardedDOStmt.guardedES){
+< 			i.accept(this);
+< 		}
+< 	}
+< 	

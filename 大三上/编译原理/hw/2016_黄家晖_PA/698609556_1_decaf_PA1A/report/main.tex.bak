@@ -1,0 +1,51 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{fontspec, xunicode, xltxtra}
+\usepackage{xeCJK}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{multirow}
+\newfontfamily\courier{Courier}
+\lstset{
+  numbers=left,                   % where to put the line-numbers
+  numberstyle=\tiny \courier,  % the style that is used for the line-numbers
+  basicstyle=\courier,
+  numbersep=2em,                  % how far the line-numbers are from the code
+  breaklines=true,                % sets automatic line breaking
+  breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
+}
+
+\setCJKmainfont[BoldFont={Adobe Heiti Std R}, ItalicFont={Adobe Kaiti Std}]{Adobe Song Std L}
+\setCJKmonofont{Courier}
+
+\title{编译原理PA1作业报告}
+\author{黄家晖 2014011330}
+\date{}
+\begin{document}
+\maketitle
+
+PA1的要求是修改原有编译器的框架，为编译器增加新的语法特性，最终输出正确的抽象语法分析树。
+本次的作业涉及到了框架代码的阅读和JFlex/byacc工具的使用，整体较为简单。
+
+\section{新增加的数据结构和函数}
+\begin{enumerate}
+\item 在Tree中增加Ternary语法节点，代表三元运算符，实现condition expression的功能，包含三个子节点：left、middle和right。
+\item 在Tree中修改Binary语法节点，加入\texttt{<<}二元运算符，与其他二元运算符并列。
+\item 在Tree中增加Case语法节点，代表\texttt{switch}语法块中的一个\texttt{case}语句，其中包含了一个Expr节点（代表\texttt{case}之后的常量）以及一些Tree节点（代表目标命中之后执行的语句列表）。
+\item 在Tree中增加Switch语法节点，代表整个\texttt{switch}语句块，其中包含了一些Case语法节点以及一些Tree节点（代表\texttt{default}情况下需要执行的语句列表）。
+\item 在Tree中增加Repeat语法节点，代表\texttt{repeat...until}语句块，其子节点包括了一个Expr节点（代表\texttt{until}之后的逻辑语句）和一些Tree节点（代表repeat之后需要执行的语句列表）。这里需要注意repeat的规则与C和JAVA的风格不太一致，根据PA1给出的参考语法，reapeat之后可以是不加大括号的连续语句，这与if是不同的。
+\item 在Tree中增加Continue语法节点，实现同Break语法节点，是叶子节点。
+\item 修改了SemValue语义值类，添加了成员变量\texttt{caselist}和\texttt{casedef}，为了实现Lexer和Parser的交互添加了一些临时变量，用于存储case语句。
+\item 为Tree和SemValue增加相应的\texttt{visit()}和\texttt{toString()}函数，使得程序风格统一，使用diagnose调试时更方便。
+\end{enumerate}
+
+\section{遇到的问题和解决方法}
+
+实现三元操作符\texttt{?:}的时候，在简单添加了parser生成式之后，byacc报告Shift/Reduce冲突，同时程序不能够正确识别形如\texttt{a?b:c?d:e}的表达式。为此，需要告知byacc三元表达式的右结合性，具体来说需要在适当位置加入\texttt{\%right ':'  '?'}语句。
+
+为了更清楚地了解byacc解决Shift（入栈）/Reduce（规约）冲突的办法，我在网上进行了相关搜索：
+
+http://stackoverflow.com/questions/17904706/why-does-my-ternary-operator-cause-a-shift-reduce-conflict
+
+上述网站中清楚地阐明了解决冲突的办法：
+即当找到符合条件的产生式之后，为了确定是否进行规约，需要比较产生式和下一个符号的优先级，而产生式的优先级与产生式右端的最后一个终结符相同，当定义%left或是%right之后（部分情况针对特定表达式需要加入%prec），实际上就能根据结合性和定义位置
+\end{document}

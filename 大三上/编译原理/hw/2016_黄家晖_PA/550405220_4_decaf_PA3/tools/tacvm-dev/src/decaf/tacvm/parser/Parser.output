@@ -1,0 +1,1286 @@
+   0  $accept : Program $end
+
+   1  Program : VTables Funcs
+
+   2  VTables : VTables VTable
+   3          | VTable
+
+   4  VTable : VTABLE '(' IDENT ')' '{' IDENT IDENT Entrys '}'
+   5         | VTABLE '(' IDENT ')' '{' EMPTY IDENT Entrys '}'
+
+   6  Entrys : Entrys ENTRY ';'
+   7         |
+
+   8  Funcs : Funcs Func
+   9        | Func
+
+  10  Func : FuncHeader Tacs '}'
+
+  11  $$1 :
+
+  12  FuncHeader : FUNC '(' ENTRY ')' $$1 '{' MEMO '\'' Params '\'' ENTRY ':'
+
+  13  $$2 :
+
+  14  FuncHeader : FUNC '(' IDENT ')' $$2 '{' MEMO '\'' '\'' IDENT ':'
+
+  15  Params : Params TEMP ':' INT_CONST
+  16         |
+
+  17  Tacs : Tacs Tac
+  18       |
+
+  19  Tac : TEMP '=' '(' TEMP '+' TEMP ')'
+  20      | TEMP '=' '(' TEMP '-' TEMP ')'
+  21      | TEMP '=' '(' TEMP '*' TEMP ')'
+  22      | TEMP '=' '(' TEMP '/' TEMP ')'
+  23      | TEMP '=' '(' TEMP '%' TEMP ')'
+  24      | TEMP '=' '(' TEMP LAND TEMP ')'
+  25      | TEMP '=' '(' TEMP LOR TEMP ')'
+  26      | TEMP '=' '(' TEMP '>' TEMP ')'
+  27      | TEMP '=' '(' TEMP GEQ TEMP ')'
+  28      | TEMP '=' '(' TEMP EQU TEMP ')'
+  29      | TEMP '=' '(' TEMP NEQ TEMP ')'
+  30      | TEMP '=' '(' TEMP LEQ TEMP ')'
+  31      | TEMP '=' '(' TEMP '<' TEMP ')'
+  32      | TEMP '=' '!' TEMP
+  33      | TEMP '=' '-' TEMP
+  34      | TEMP '=' TEMP
+  35      | TEMP '=' INT_CONST
+  36      | TEMP '=' STRING_CONST
+  37      | TEMP '=' '*' '(' TEMP '+' INT_CONST ')'
+  38      | TEMP '=' '*' '(' TEMP '-' INT_CONST ')'
+  39      | '*' '(' TEMP '+' INT_CONST ')' '=' TEMP
+  40      | '*' '(' TEMP '-' INT_CONST ')' '=' TEMP
+  41      | TEMP '=' CALL TEMP
+  42      | CALL TEMP
+  43      | TEMP '=' CALL IDENT
+  44      | TEMP '=' CALL ENTRY
+  45      | CALL IDENT
+  46      | CALL ENTRY
+  47      | TEMP '=' VTBL '<' IDENT '>'
+  48      | BRANCH LABEL
+  49      | IF '(' TEMP EQU INT_CONST ')' BRANCH LABEL
+  50      | IF '(' TEMP NEQ INT_CONST ')' BRANCH LABEL
+  51      | PARM TEMP
+  52      | RETURN TEMP
+  53      | RETURN EMPTY
+  54      | LABEL ':'
+
+state 0
+	$accept : . Program $end  (0)
+
+	VTABLE  shift 1
+	.  error
+
+	Program  goto 2
+	VTables  goto 3
+	VTable  goto 4
+
+
+state 1
+	VTable : VTABLE . '(' IDENT ')' '{' IDENT IDENT Entrys '}'  (4)
+	VTable : VTABLE . '(' IDENT ')' '{' EMPTY IDENT Entrys '}'  (5)
+
+	'('  shift 5
+	.  error
+
+
+state 2
+	$accept : Program . $end  (0)
+
+	$end  accept
+
+
+state 3
+	Program : VTables . Funcs  (1)
+	VTables : VTables . VTable  (2)
+
+	VTABLE  shift 1
+	FUNC  shift 6
+	.  error
+
+	Funcs  goto 7
+	VTable  goto 8
+	Func  goto 9
+	FuncHeader  goto 10
+
+
+state 4
+	VTables : VTable .  (3)
+
+	.  reduce 3
+
+
+state 5
+	VTable : VTABLE '(' . IDENT ')' '{' IDENT IDENT Entrys '}'  (4)
+	VTable : VTABLE '(' . IDENT ')' '{' EMPTY IDENT Entrys '}'  (5)
+
+	IDENT  shift 11
+	.  error
+
+
+state 6
+	FuncHeader : FUNC . '(' ENTRY ')' $$1 '{' MEMO '\'' Params '\'' ENTRY ':'  (12)
+	FuncHeader : FUNC . '(' IDENT ')' $$2 '{' MEMO '\'' '\'' IDENT ':'  (14)
+
+	'('  shift 12
+	.  error
+
+
+state 7
+	Program : VTables Funcs .  (1)
+	Funcs : Funcs . Func  (8)
+
+	FUNC  shift 6
+	$end  reduce 1
+
+	Func  goto 13
+	FuncHeader  goto 10
+
+
+state 8
+	VTables : VTables VTable .  (2)
+
+	.  reduce 2
+
+
+state 9
+	Funcs : Func .  (9)
+
+	.  reduce 9
+
+
+state 10
+	Func : FuncHeader . Tacs '}'  (10)
+	Tacs : .  (18)
+
+	.  reduce 18
+
+	Tacs  goto 14
+
+
+state 11
+	VTable : VTABLE '(' IDENT . ')' '{' IDENT IDENT Entrys '}'  (4)
+	VTable : VTABLE '(' IDENT . ')' '{' EMPTY IDENT Entrys '}'  (5)
+
+	')'  shift 15
+	.  error
+
+
+state 12
+	FuncHeader : FUNC '(' . ENTRY ')' $$1 '{' MEMO '\'' Params '\'' ENTRY ':'  (12)
+	FuncHeader : FUNC '(' . IDENT ')' $$2 '{' MEMO '\'' '\'' IDENT ':'  (14)
+
+	ENTRY  shift 16
+	IDENT  shift 17
+	.  error
+
+
+state 13
+	Funcs : Funcs Func .  (8)
+
+	.  reduce 8
+
+
+state 14
+	Func : FuncHeader Tacs . '}'  (10)
+	Tacs : Tacs . Tac  (17)
+
+	BRANCH  shift 18
+	PARM  shift 19
+	CALL  shift 20
+	RETURN  shift 21
+	IF  shift 22
+	LABEL  shift 23
+	TEMP  shift 24
+	'}'  shift 25
+	'*'  shift 26
+	.  error
+
+	Tac  goto 27
+
+
+state 15
+	VTable : VTABLE '(' IDENT ')' . '{' IDENT IDENT Entrys '}'  (4)
+	VTable : VTABLE '(' IDENT ')' . '{' EMPTY IDENT Entrys '}'  (5)
+
+	'{'  shift 28
+	.  error
+
+
+state 16
+	FuncHeader : FUNC '(' ENTRY . ')' $$1 '{' MEMO '\'' Params '\'' ENTRY ':'  (12)
+
+	')'  shift 29
+	.  error
+
+
+state 17
+	FuncHeader : FUNC '(' IDENT . ')' $$2 '{' MEMO '\'' '\'' IDENT ':'  (14)
+
+	')'  shift 30
+	.  error
+
+
+state 18
+	Tac : BRANCH . LABEL  (48)
+
+	LABEL  shift 31
+	.  error
+
+
+state 19
+	Tac : PARM . TEMP  (51)
+
+	TEMP  shift 32
+	.  error
+
+
+state 20
+	Tac : CALL . TEMP  (42)
+	Tac : CALL . IDENT  (45)
+	Tac : CALL . ENTRY  (46)
+
+	TEMP  shift 33
+	ENTRY  shift 34
+	IDENT  shift 35
+	.  error
+
+
+state 21
+	Tac : RETURN . TEMP  (52)
+	Tac : RETURN . EMPTY  (53)
+
+	EMPTY  shift 36
+	TEMP  shift 37
+	.  error
+
+
+state 22
+	Tac : IF . '(' TEMP EQU INT_CONST ')' BRANCH LABEL  (49)
+	Tac : IF . '(' TEMP NEQ INT_CONST ')' BRANCH LABEL  (50)
+
+	'('  shift 38
+	.  error
+
+
+state 23
+	Tac : LABEL . ':'  (54)
+
+	':'  shift 39
+	.  error
+
+
+state 24
+	Tac : TEMP . '=' '(' TEMP '+' TEMP ')'  (19)
+	Tac : TEMP . '=' '(' TEMP '-' TEMP ')'  (20)
+	Tac : TEMP . '=' '(' TEMP '*' TEMP ')'  (21)
+	Tac : TEMP . '=' '(' TEMP '/' TEMP ')'  (22)
+	Tac : TEMP . '=' '(' TEMP '%' TEMP ')'  (23)
+	Tac : TEMP . '=' '(' TEMP LAND TEMP ')'  (24)
+	Tac : TEMP . '=' '(' TEMP LOR TEMP ')'  (25)
+	Tac : TEMP . '=' '(' TEMP '>' TEMP ')'  (26)
+	Tac : TEMP . '=' '(' TEMP GEQ TEMP ')'  (27)
+	Tac : TEMP . '=' '(' TEMP EQU TEMP ')'  (28)
+	Tac : TEMP . '=' '(' TEMP NEQ TEMP ')'  (29)
+	Tac : TEMP . '=' '(' TEMP LEQ TEMP ')'  (30)
+	Tac : TEMP . '=' '(' TEMP '<' TEMP ')'  (31)
+	Tac : TEMP . '=' '!' TEMP  (32)
+	Tac : TEMP . '=' '-' TEMP  (33)
+	Tac : TEMP . '=' TEMP  (34)
+	Tac : TEMP . '=' INT_CONST  (35)
+	Tac : TEMP . '=' STRING_CONST  (36)
+	Tac : TEMP . '=' '*' '(' TEMP '+' INT_CONST ')'  (37)
+	Tac : TEMP . '=' '*' '(' TEMP '-' INT_CONST ')'  (38)
+	Tac : TEMP . '=' CALL TEMP  (41)
+	Tac : TEMP . '=' CALL IDENT  (43)
+	Tac : TEMP . '=' CALL ENTRY  (44)
+	Tac : TEMP . '=' VTBL '<' IDENT '>'  (47)
+
+	'='  shift 40
+	.  error
+
+
+state 25
+	Func : FuncHeader Tacs '}' .  (10)
+
+	.  reduce 10
+
+
+state 26
+	Tac : '*' . '(' TEMP '+' INT_CONST ')' '=' TEMP  (39)
+	Tac : '*' . '(' TEMP '-' INT_CONST ')' '=' TEMP  (40)
+
+	'('  shift 41
+	.  error
+
+
+state 27
+	Tacs : Tacs Tac .  (17)
+
+	.  reduce 17
+
+
+state 28
+	VTable : VTABLE '(' IDENT ')' '{' . IDENT IDENT Entrys '}'  (4)
+	VTable : VTABLE '(' IDENT ')' '{' . EMPTY IDENT Entrys '}'  (5)
+
+	EMPTY  shift 42
+	IDENT  shift 43
+	.  error
+
+
+state 29
+	FuncHeader : FUNC '(' ENTRY ')' . $$1 '{' MEMO '\'' Params '\'' ENTRY ':'  (12)
+	$$1 : .  (11)
+
+	.  reduce 11
+
+	$$1  goto 44
+
+
+state 30
+	FuncHeader : FUNC '(' IDENT ')' . $$2 '{' MEMO '\'' '\'' IDENT ':'  (14)
+	$$2 : .  (13)
+
+	.  reduce 13
+
+	$$2  goto 45
+
+
+state 31
+	Tac : BRANCH LABEL .  (48)
+
+	.  reduce 48
+
+
+state 32
+	Tac : PARM TEMP .  (51)
+
+	.  reduce 51
+
+
+state 33
+	Tac : CALL TEMP .  (42)
+
+	.  reduce 42
+
+
+state 34
+	Tac : CALL ENTRY .  (46)
+
+	.  reduce 46
+
+
+state 35
+	Tac : CALL IDENT .  (45)
+
+	.  reduce 45
+
+
+state 36
+	Tac : RETURN EMPTY .  (53)
+
+	.  reduce 53
+
+
+state 37
+	Tac : RETURN TEMP .  (52)
+
+	.  reduce 52
+
+
+state 38
+	Tac : IF '(' . TEMP EQU INT_CONST ')' BRANCH LABEL  (49)
+	Tac : IF '(' . TEMP NEQ INT_CONST ')' BRANCH LABEL  (50)
+
+	TEMP  shift 46
+	.  error
+
+
+state 39
+	Tac : LABEL ':' .  (54)
+
+	.  reduce 54
+
+
+state 40
+	Tac : TEMP '=' . '(' TEMP '+' TEMP ')'  (19)
+	Tac : TEMP '=' . '(' TEMP '-' TEMP ')'  (20)
+	Tac : TEMP '=' . '(' TEMP '*' TEMP ')'  (21)
+	Tac : TEMP '=' . '(' TEMP '/' TEMP ')'  (22)
+	Tac : TEMP '=' . '(' TEMP '%' TEMP ')'  (23)
+	Tac : TEMP '=' . '(' TEMP LAND TEMP ')'  (24)
+	Tac : TEMP '=' . '(' TEMP LOR TEMP ')'  (25)
+	Tac : TEMP '=' . '(' TEMP '>' TEMP ')'  (26)
+	Tac : TEMP '=' . '(' TEMP GEQ TEMP ')'  (27)
+	Tac : TEMP '=' . '(' TEMP EQU TEMP ')'  (28)
+	Tac : TEMP '=' . '(' TEMP NEQ TEMP ')'  (29)
+	Tac : TEMP '=' . '(' TEMP LEQ TEMP ')'  (30)
+	Tac : TEMP '=' . '(' TEMP '<' TEMP ')'  (31)
+	Tac : TEMP '=' . '!' TEMP  (32)
+	Tac : TEMP '=' . '-' TEMP  (33)
+	Tac : TEMP '=' . TEMP  (34)
+	Tac : TEMP '=' . INT_CONST  (35)
+	Tac : TEMP '=' . STRING_CONST  (36)
+	Tac : TEMP '=' . '*' '(' TEMP '+' INT_CONST ')'  (37)
+	Tac : TEMP '=' . '*' '(' TEMP '-' INT_CONST ')'  (38)
+	Tac : TEMP '=' . CALL TEMP  (41)
+	Tac : TEMP '=' . CALL IDENT  (43)
+	Tac : TEMP '=' . CALL ENTRY  (44)
+	Tac : TEMP '=' . VTBL '<' IDENT '>'  (47)
+
+	CALL  shift 47
+	TEMP  shift 48
+	INT_CONST  shift 49
+	STRING_CONST  shift 50
+	VTBL  shift 51
+	'('  shift 52
+	'-'  shift 53
+	'*'  shift 54
+	'!'  shift 55
+	.  error
+
+
+state 41
+	Tac : '*' '(' . TEMP '+' INT_CONST ')' '=' TEMP  (39)
+	Tac : '*' '(' . TEMP '-' INT_CONST ')' '=' TEMP  (40)
+
+	TEMP  shift 56
+	.  error
+
+
+state 42
+	VTable : VTABLE '(' IDENT ')' '{' EMPTY . IDENT Entrys '}'  (5)
+
+	IDENT  shift 57
+	.  error
+
+
+state 43
+	VTable : VTABLE '(' IDENT ')' '{' IDENT . IDENT Entrys '}'  (4)
+
+	IDENT  shift 58
+	.  error
+
+
+state 44
+	FuncHeader : FUNC '(' ENTRY ')' $$1 . '{' MEMO '\'' Params '\'' ENTRY ':'  (12)
+
+	'{'  shift 59
+	.  error
+
+
+state 45
+	FuncHeader : FUNC '(' IDENT ')' $$2 . '{' MEMO '\'' '\'' IDENT ':'  (14)
+
+	'{'  shift 60
+	.  error
+
+
+state 46
+	Tac : IF '(' TEMP . EQU INT_CONST ')' BRANCH LABEL  (49)
+	Tac : IF '(' TEMP . NEQ INT_CONST ')' BRANCH LABEL  (50)
+
+	EQU  shift 61
+	NEQ  shift 62
+	.  error
+
+
+state 47
+	Tac : TEMP '=' CALL . TEMP  (41)
+	Tac : TEMP '=' CALL . IDENT  (43)
+	Tac : TEMP '=' CALL . ENTRY  (44)
+
+	TEMP  shift 63
+	ENTRY  shift 64
+	IDENT  shift 65
+	.  error
+
+
+state 48
+	Tac : TEMP '=' TEMP .  (34)
+
+	.  reduce 34
+
+
+state 49
+	Tac : TEMP '=' INT_CONST .  (35)
+
+	.  reduce 35
+
+
+state 50
+	Tac : TEMP '=' STRING_CONST .  (36)
+
+	.  reduce 36
+
+
+state 51
+	Tac : TEMP '=' VTBL . '<' IDENT '>'  (47)
+
+	'<'  shift 66
+	.  error
+
+
+state 52
+	Tac : TEMP '=' '(' . TEMP '+' TEMP ')'  (19)
+	Tac : TEMP '=' '(' . TEMP '-' TEMP ')'  (20)
+	Tac : TEMP '=' '(' . TEMP '*' TEMP ')'  (21)
+	Tac : TEMP '=' '(' . TEMP '/' TEMP ')'  (22)
+	Tac : TEMP '=' '(' . TEMP '%' TEMP ')'  (23)
+	Tac : TEMP '=' '(' . TEMP LAND TEMP ')'  (24)
+	Tac : TEMP '=' '(' . TEMP LOR TEMP ')'  (25)
+	Tac : TEMP '=' '(' . TEMP '>' TEMP ')'  (26)
+	Tac : TEMP '=' '(' . TEMP GEQ TEMP ')'  (27)
+	Tac : TEMP '=' '(' . TEMP EQU TEMP ')'  (28)
+	Tac : TEMP '=' '(' . TEMP NEQ TEMP ')'  (29)
+	Tac : TEMP '=' '(' . TEMP LEQ TEMP ')'  (30)
+	Tac : TEMP '=' '(' . TEMP '<' TEMP ')'  (31)
+
+	TEMP  shift 67
+	.  error
+
+
+state 53
+	Tac : TEMP '=' '-' . TEMP  (33)
+
+	TEMP  shift 68
+	.  error
+
+
+state 54
+	Tac : TEMP '=' '*' . '(' TEMP '+' INT_CONST ')'  (37)
+	Tac : TEMP '=' '*' . '(' TEMP '-' INT_CONST ')'  (38)
+
+	'('  shift 69
+	.  error
+
+
+state 55
+	Tac : TEMP '=' '!' . TEMP  (32)
+
+	TEMP  shift 70
+	.  error
+
+
+state 56
+	Tac : '*' '(' TEMP . '+' INT_CONST ')' '=' TEMP  (39)
+	Tac : '*' '(' TEMP . '-' INT_CONST ')' '=' TEMP  (40)
+
+	'+'  shift 71
+	'-'  shift 72
+	.  error
+
+
+state 57
+	VTable : VTABLE '(' IDENT ')' '{' EMPTY IDENT . Entrys '}'  (5)
+	Entrys : .  (7)
+
+	.  reduce 7
+
+	Entrys  goto 73
+
+
+state 58
+	VTable : VTABLE '(' IDENT ')' '{' IDENT IDENT . Entrys '}'  (4)
+	Entrys : .  (7)
+
+	.  reduce 7
+
+	Entrys  goto 74
+
+
+state 59
+	FuncHeader : FUNC '(' ENTRY ')' $$1 '{' . MEMO '\'' Params '\'' ENTRY ':'  (12)
+
+	MEMO  shift 75
+	.  error
+
+
+state 60
+	FuncHeader : FUNC '(' IDENT ')' $$2 '{' . MEMO '\'' '\'' IDENT ':'  (14)
+
+	MEMO  shift 76
+	.  error
+
+
+state 61
+	Tac : IF '(' TEMP EQU . INT_CONST ')' BRANCH LABEL  (49)
+
+	INT_CONST  shift 77
+	.  error
+
+
+state 62
+	Tac : IF '(' TEMP NEQ . INT_CONST ')' BRANCH LABEL  (50)
+
+	INT_CONST  shift 78
+	.  error
+
+
+state 63
+	Tac : TEMP '=' CALL TEMP .  (41)
+
+	.  reduce 41
+
+
+state 64
+	Tac : TEMP '=' CALL ENTRY .  (44)
+
+	.  reduce 44
+
+
+state 65
+	Tac : TEMP '=' CALL IDENT .  (43)
+
+	.  reduce 43
+
+
+state 66
+	Tac : TEMP '=' VTBL '<' . IDENT '>'  (47)
+
+	IDENT  shift 79
+	.  error
+
+
+state 67
+	Tac : TEMP '=' '(' TEMP . '+' TEMP ')'  (19)
+	Tac : TEMP '=' '(' TEMP . '-' TEMP ')'  (20)
+	Tac : TEMP '=' '(' TEMP . '*' TEMP ')'  (21)
+	Tac : TEMP '=' '(' TEMP . '/' TEMP ')'  (22)
+	Tac : TEMP '=' '(' TEMP . '%' TEMP ')'  (23)
+	Tac : TEMP '=' '(' TEMP . LAND TEMP ')'  (24)
+	Tac : TEMP '=' '(' TEMP . LOR TEMP ')'  (25)
+	Tac : TEMP '=' '(' TEMP . '>' TEMP ')'  (26)
+	Tac : TEMP '=' '(' TEMP . GEQ TEMP ')'  (27)
+	Tac : TEMP '=' '(' TEMP . EQU TEMP ')'  (28)
+	Tac : TEMP '=' '(' TEMP . NEQ TEMP ')'  (29)
+	Tac : TEMP '=' '(' TEMP . LEQ TEMP ')'  (30)
+	Tac : TEMP '=' '(' TEMP . '<' TEMP ')'  (31)
+
+	EQU  shift 80
+	NEQ  shift 81
+	GEQ  shift 82
+	LEQ  shift 83
+	LAND  shift 84
+	LOR  shift 85
+	'+'  shift 86
+	'-'  shift 87
+	'*'  shift 88
+	'/'  shift 89
+	'%'  shift 90
+	'>'  shift 91
+	'<'  shift 92
+	.  error
+
+
+state 68
+	Tac : TEMP '=' '-' TEMP .  (33)
+
+	.  reduce 33
+
+
+state 69
+	Tac : TEMP '=' '*' '(' . TEMP '+' INT_CONST ')'  (37)
+	Tac : TEMP '=' '*' '(' . TEMP '-' INT_CONST ')'  (38)
+
+	TEMP  shift 93
+	.  error
+
+
+state 70
+	Tac : TEMP '=' '!' TEMP .  (32)
+
+	.  reduce 32
+
+
+state 71
+	Tac : '*' '(' TEMP '+' . INT_CONST ')' '=' TEMP  (39)
+
+	INT_CONST  shift 94
+	.  error
+
+
+state 72
+	Tac : '*' '(' TEMP '-' . INT_CONST ')' '=' TEMP  (40)
+
+	INT_CONST  shift 95
+	.  error
+
+
+state 73
+	VTable : VTABLE '(' IDENT ')' '{' EMPTY IDENT Entrys . '}'  (5)
+	Entrys : Entrys . ENTRY ';'  (6)
+
+	ENTRY  shift 96
+	'}'  shift 97
+	.  error
+
+
+state 74
+	VTable : VTABLE '(' IDENT ')' '{' IDENT IDENT Entrys . '}'  (4)
+	Entrys : Entrys . ENTRY ';'  (6)
+
+	ENTRY  shift 96
+	'}'  shift 98
+	.  error
+
+
+state 75
+	FuncHeader : FUNC '(' ENTRY ')' $$1 '{' MEMO . '\'' Params '\'' ENTRY ':'  (12)
+
+	'\''  shift 99
+	.  error
+
+
+state 76
+	FuncHeader : FUNC '(' IDENT ')' $$2 '{' MEMO . '\'' '\'' IDENT ':'  (14)
+
+	'\''  shift 100
+	.  error
+
+
+state 77
+	Tac : IF '(' TEMP EQU INT_CONST . ')' BRANCH LABEL  (49)
+
+	')'  shift 101
+	.  error
+
+
+state 78
+	Tac : IF '(' TEMP NEQ INT_CONST . ')' BRANCH LABEL  (50)
+
+	')'  shift 102
+	.  error
+
+
+state 79
+	Tac : TEMP '=' VTBL '<' IDENT . '>'  (47)
+
+	'>'  shift 103
+	.  error
+
+
+state 80
+	Tac : TEMP '=' '(' TEMP EQU . TEMP ')'  (28)
+
+	TEMP  shift 104
+	.  error
+
+
+state 81
+	Tac : TEMP '=' '(' TEMP NEQ . TEMP ')'  (29)
+
+	TEMP  shift 105
+	.  error
+
+
+state 82
+	Tac : TEMP '=' '(' TEMP GEQ . TEMP ')'  (27)
+
+	TEMP  shift 106
+	.  error
+
+
+state 83
+	Tac : TEMP '=' '(' TEMP LEQ . TEMP ')'  (30)
+
+	TEMP  shift 107
+	.  error
+
+
+state 84
+	Tac : TEMP '=' '(' TEMP LAND . TEMP ')'  (24)
+
+	TEMP  shift 108
+	.  error
+
+
+state 85
+	Tac : TEMP '=' '(' TEMP LOR . TEMP ')'  (25)
+
+	TEMP  shift 109
+	.  error
+
+
+state 86
+	Tac : TEMP '=' '(' TEMP '+' . TEMP ')'  (19)
+
+	TEMP  shift 110
+	.  error
+
+
+state 87
+	Tac : TEMP '=' '(' TEMP '-' . TEMP ')'  (20)
+
+	TEMP  shift 111
+	.  error
+
+
+state 88
+	Tac : TEMP '=' '(' TEMP '*' . TEMP ')'  (21)
+
+	TEMP  shift 112
+	.  error
+
+
+state 89
+	Tac : TEMP '=' '(' TEMP '/' . TEMP ')'  (22)
+
+	TEMP  shift 113
+	.  error
+
+
+state 90
+	Tac : TEMP '=' '(' TEMP '%' . TEMP ')'  (23)
+
+	TEMP  shift 114
+	.  error
+
+
+state 91
+	Tac : TEMP '=' '(' TEMP '>' . TEMP ')'  (26)
+
+	TEMP  shift 115
+	.  error
+
+
+state 92
+	Tac : TEMP '=' '(' TEMP '<' . TEMP ')'  (31)
+
+	TEMP  shift 116
+	.  error
+
+
+state 93
+	Tac : TEMP '=' '*' '(' TEMP . '+' INT_CONST ')'  (37)
+	Tac : TEMP '=' '*' '(' TEMP . '-' INT_CONST ')'  (38)
+
+	'+'  shift 117
+	'-'  shift 118
+	.  error
+
+
+state 94
+	Tac : '*' '(' TEMP '+' INT_CONST . ')' '=' TEMP  (39)
+
+	')'  shift 119
+	.  error
+
+
+state 95
+	Tac : '*' '(' TEMP '-' INT_CONST . ')' '=' TEMP  (40)
+
+	')'  shift 120
+	.  error
+
+
+state 96
+	Entrys : Entrys ENTRY . ';'  (6)
+
+	';'  shift 121
+	.  error
+
+
+state 97
+	VTable : VTABLE '(' IDENT ')' '{' EMPTY IDENT Entrys '}' .  (5)
+
+	.  reduce 5
+
+
+state 98
+	VTable : VTABLE '(' IDENT ')' '{' IDENT IDENT Entrys '}' .  (4)
+
+	.  reduce 4
+
+
+state 99
+	FuncHeader : FUNC '(' ENTRY ')' $$1 '{' MEMO '\'' . Params '\'' ENTRY ':'  (12)
+	Params : .  (16)
+
+	.  reduce 16
+
+	Params  goto 122
+
+
+state 100
+	FuncHeader : FUNC '(' IDENT ')' $$2 '{' MEMO '\'' . '\'' IDENT ':'  (14)
+
+	'\''  shift 123
+	.  error
+
+
+state 101
+	Tac : IF '(' TEMP EQU INT_CONST ')' . BRANCH LABEL  (49)
+
+	BRANCH  shift 124
+	.  error
+
+
+state 102
+	Tac : IF '(' TEMP NEQ INT_CONST ')' . BRANCH LABEL  (50)
+
+	BRANCH  shift 125
+	.  error
+
+
+state 103
+	Tac : TEMP '=' VTBL '<' IDENT '>' .  (47)
+
+	.  reduce 47
+
+
+state 104
+	Tac : TEMP '=' '(' TEMP EQU TEMP . ')'  (28)
+
+	')'  shift 126
+	.  error
+
+
+state 105
+	Tac : TEMP '=' '(' TEMP NEQ TEMP . ')'  (29)
+
+	')'  shift 127
+	.  error
+
+
+state 106
+	Tac : TEMP '=' '(' TEMP GEQ TEMP . ')'  (27)
+
+	')'  shift 128
+	.  error
+
+
+state 107
+	Tac : TEMP '=' '(' TEMP LEQ TEMP . ')'  (30)
+
+	')'  shift 129
+	.  error
+
+
+state 108
+	Tac : TEMP '=' '(' TEMP LAND TEMP . ')'  (24)
+
+	')'  shift 130
+	.  error
+
+
+state 109
+	Tac : TEMP '=' '(' TEMP LOR TEMP . ')'  (25)
+
+	')'  shift 131
+	.  error
+
+
+state 110
+	Tac : TEMP '=' '(' TEMP '+' TEMP . ')'  (19)
+
+	')'  shift 132
+	.  error
+
+
+state 111
+	Tac : TEMP '=' '(' TEMP '-' TEMP . ')'  (20)
+
+	')'  shift 133
+	.  error
+
+
+state 112
+	Tac : TEMP '=' '(' TEMP '*' TEMP . ')'  (21)
+
+	')'  shift 134
+	.  error
+
+
+state 113
+	Tac : TEMP '=' '(' TEMP '/' TEMP . ')'  (22)
+
+	')'  shift 135
+	.  error
+
+
+state 114
+	Tac : TEMP '=' '(' TEMP '%' TEMP . ')'  (23)
+
+	')'  shift 136
+	.  error
+
+
+state 115
+	Tac : TEMP '=' '(' TEMP '>' TEMP . ')'  (26)
+
+	')'  shift 137
+	.  error
+
+
+state 116
+	Tac : TEMP '=' '(' TEMP '<' TEMP . ')'  (31)
+
+	')'  shift 138
+	.  error
+
+
+state 117
+	Tac : TEMP '=' '*' '(' TEMP '+' . INT_CONST ')'  (37)
+
+	INT_CONST  shift 139
+	.  error
+
+
+state 118
+	Tac : TEMP '=' '*' '(' TEMP '-' . INT_CONST ')'  (38)
+
+	INT_CONST  shift 140
+	.  error
+
+
+state 119
+	Tac : '*' '(' TEMP '+' INT_CONST ')' . '=' TEMP  (39)
+
+	'='  shift 141
+	.  error
+
+
+state 120
+	Tac : '*' '(' TEMP '-' INT_CONST ')' . '=' TEMP  (40)
+
+	'='  shift 142
+	.  error
+
+
+state 121
+	Entrys : Entrys ENTRY ';' .  (6)
+
+	.  reduce 6
+
+
+state 122
+	FuncHeader : FUNC '(' ENTRY ')' $$1 '{' MEMO '\'' Params . '\'' ENTRY ':'  (12)
+	Params : Params . TEMP ':' INT_CONST  (15)
+
+	TEMP  shift 143
+	'\''  shift 144
+	.  error
+
+
+state 123
+	FuncHeader : FUNC '(' IDENT ')' $$2 '{' MEMO '\'' '\'' . IDENT ':'  (14)
+
+	IDENT  shift 145
+	.  error
+
+
+state 124
+	Tac : IF '(' TEMP EQU INT_CONST ')' BRANCH . LABEL  (49)
+
+	LABEL  shift 146
+	.  error
+
+
+state 125
+	Tac : IF '(' TEMP NEQ INT_CONST ')' BRANCH . LABEL  (50)
+
+	LABEL  shift 147
+	.  error
+
+
+state 126
+	Tac : TEMP '=' '(' TEMP EQU TEMP ')' .  (28)
+
+	.  reduce 28
+
+
+state 127
+	Tac : TEMP '=' '(' TEMP NEQ TEMP ')' .  (29)
+
+	.  reduce 29
+
+
+state 128
+	Tac : TEMP '=' '(' TEMP GEQ TEMP ')' .  (27)
+
+	.  reduce 27
+
+
+state 129
+	Tac : TEMP '=' '(' TEMP LEQ TEMP ')' .  (30)
+
+	.  reduce 30
+
+
+state 130
+	Tac : TEMP '=' '(' TEMP LAND TEMP ')' .  (24)
+
+	.  reduce 24
+
+
+state 131
+	Tac : TEMP '=' '(' TEMP LOR TEMP ')' .  (25)
+
+	.  reduce 25
+
+
+state 132
+	Tac : TEMP '=' '(' TEMP '+' TEMP ')' .  (19)
+
+	.  reduce 19
+
+
+state 133
+	Tac : TEMP '=' '(' TEMP '-' TEMP ')' .  (20)
+
+	.  reduce 20
+
+
+state 134
+	Tac : TEMP '=' '(' TEMP '*' TEMP ')' .  (21)
+
+	.  reduce 21
+
+
+state 135
+	Tac : TEMP '=' '(' TEMP '/' TEMP ')' .  (22)
+
+	.  reduce 22
+
+
+state 136
+	Tac : TEMP '=' '(' TEMP '%' TEMP ')' .  (23)
+
+	.  reduce 23
+
+
+state 137
+	Tac : TEMP '=' '(' TEMP '>' TEMP ')' .  (26)
+
+	.  reduce 26
+
+
+state 138
+	Tac : TEMP '=' '(' TEMP '<' TEMP ')' .  (31)
+
+	.  reduce 31
+
+
+state 139
+	Tac : TEMP '=' '*' '(' TEMP '+' INT_CONST . ')'  (37)
+
+	')'  shift 148
+	.  error
+
+
+state 140
+	Tac : TEMP '=' '*' '(' TEMP '-' INT_CONST . ')'  (38)
+
+	')'  shift 149
+	.  error
+
+
+state 141
+	Tac : '*' '(' TEMP '+' INT_CONST ')' '=' . TEMP  (39)
+
+	TEMP  shift 150
+	.  error
+
+
+state 142
+	Tac : '*' '(' TEMP '-' INT_CONST ')' '=' . TEMP  (40)
+
+	TEMP  shift 151
+	.  error
+
+
+state 143
+	Params : Params TEMP . ':' INT_CONST  (15)
+
+	':'  shift 152
+	.  error
+
+
+state 144
+	FuncHeader : FUNC '(' ENTRY ')' $$1 '{' MEMO '\'' Params '\'' . ENTRY ':'  (12)
+
+	ENTRY  shift 153
+	.  error
+
+
+state 145
+	FuncHeader : FUNC '(' IDENT ')' $$2 '{' MEMO '\'' '\'' IDENT . ':'  (14)
+
+	':'  shift 154
+	.  error
+
+
+state 146
+	Tac : IF '(' TEMP EQU INT_CONST ')' BRANCH LABEL .  (49)
+
+	.  reduce 49
+
+
+state 147
+	Tac : IF '(' TEMP NEQ INT_CONST ')' BRANCH LABEL .  (50)
+
+	.  reduce 50
+
+
+state 148
+	Tac : TEMP '=' '*' '(' TEMP '+' INT_CONST ')' .  (37)
+
+	.  reduce 37
+
+
+state 149
+	Tac : TEMP '=' '*' '(' TEMP '-' INT_CONST ')' .  (38)
+
+	.  reduce 38
+
+
+state 150
+	Tac : '*' '(' TEMP '+' INT_CONST ')' '=' TEMP .  (39)
+
+	.  reduce 39
+
+
+state 151
+	Tac : '*' '(' TEMP '-' INT_CONST ')' '=' TEMP .  (40)
+
+	.  reduce 40
+
+
+state 152
+	Params : Params TEMP ':' . INT_CONST  (15)
+
+	INT_CONST  shift 155
+	.  error
+
+
+state 153
+	FuncHeader : FUNC '(' ENTRY ')' $$1 '{' MEMO '\'' Params '\'' ENTRY . ':'  (12)
+
+	':'  shift 156
+	.  error
+
+
+state 154
+	FuncHeader : FUNC '(' IDENT ')' $$2 '{' MEMO '\'' '\'' IDENT ':' .  (14)
+
+	.  reduce 14
+
+
+state 155
+	Params : Params TEMP ':' INT_CONST .  (15)
+
+	.  reduce 15
+
+
+state 156
+	FuncHeader : FUNC '(' ENTRY ')' $$1 '{' MEMO '\'' Params '\'' ENTRY ':' .  (12)
+
+	.  reduce 12
+
+
+40 terminals, 13 nonterminals
+55 grammar rules, 157 states

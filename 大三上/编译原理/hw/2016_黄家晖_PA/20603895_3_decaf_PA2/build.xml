@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	Ant build file for Decaf Compiler.
+	author: Zhang Duo
+	date:   Aug 23, 2007
+	DCST, Tsinghua University
+	-->
+<project name="decaf" default="4 pack">
+
+	<!-- 设置各种属性 -->
+	<property name="src.dir" value="src" />
+	<property name="result.dir" value="result" />
+	<property name="bin.dir" value="${result.dir}/bin" />
+	<property name="doc.dir" value="${result.dir}/doc" />
+	<property name="jflex.jar" value="tools/jflex/JFlex.jar" />
+	<condition property="byacc" value="tools/byacc/byacc.exe">
+		<or>
+			<os family="windows" arch="x86" />
+			<os family="windows" arch="amd64" />
+		</or>
+	</condition>
+	<condition property="byacc" value="${basedir}/tools/byacc/byacc.linux">
+		<or>
+			<os family="unix" arch="x86" />
+			<os family="unix" arch="i386" />
+			<os family="unix" arch="i486" />
+			<os family="unix" arch="i586" />
+			<os family="unix" arch="i686" />
+		</or>
+	</condition>
+	<condition property="byacc" value="${basedir}/tools/byacc/byacc.linux.amd64">
+		<or>
+			<os family="unix" arch="amd64" />
+		</or>
+	</condition>
+	<condition property="byacc" value="${basedir}/tools/byacc/byacc.mac">
+		<or>
+			<os family="mac" />
+		</or>
+	</condition>
+
+	<target name="prepare" description="Preparing...">
+		<mkdir dir="${bin.dir}" />
+		<mkdir dir="${doc.dir}" />
+	</target>
+
+	<!-- 生成Lex和YACC结果 -->
+	<target name="1 jflex" description="Running JFlex...">
+		<java jar="${jflex.jar}" fork="true" maxmemory="128m" failonerror="true">
+			<sysproperty key="file.encoding" value="UTF-8" />
+			<arg value="${src.dir}/decaf/frontend/Lexer.l" />
+		</java>
+		<delete file="${src.dir}/decaf/frontend/Lexer.java~" />
+	</target>
+
+	<target name="2 byacc" description="Running BYACC/J...">
+		<chmod file="${byacc}" perm="+rx" />
+		<!-- for unix -->
+		<exec dir="${src.dir}/decaf/frontend" executable="${byacc}" failonerror="true">
+			<arg line="-v -J Parser.y" />
+		</exec>
+		<move file="${src.dir}/decaf/frontend/y" tofile="${src.dir}/decaf/frontend/Parser.output" />
+	</target>
+
+	<!-- 编译 -->
+	<target name="3 compile" depends="prepare,1 jflex,2 byacc" description="Compiling all...">
+		<javac srcdir="${src.dir}" destdir="${bin.dir}" encoding="UTF8" debug="on" optimize="off" />
+	</target>
+
+	<!-- 打包 -->
+	<target name="4 pack" depends="3 compile" description="Packaging...">
+		<jar destfile="${result.dir}/decaf.jar">
+			<fileset dir="${basedir}" includes="src/**" />
+			<fileset dir="${bin.dir}" />
+			<manifest>
+				<attribute name="Signature-Version" value="3.141592" />
+				<attribute name="Main-Class" value="decaf.Driver" />
+			</manifest>
+		</jar>
+	</target>
+
+	<!-- 生成JavaDoc -->
+	<target name="5 javadoc" depends="3 compile">
+		<javadoc access="private" encoding="UTF8" author="false" classpath="." destdir="${doc.dir}" doctitle="Decaf Compiler Documentation" nodeprecated="true" nodeprecatedlist="true" packagenames="*" sourcepath="${basedir}/src" use="true" version="false">
+			<link href="." />
+		</javadoc>
+	</target>
+
+	<target name="clean" description="Clean...">
+		<delete dir="${result.dir}" />
+	</target>
+</project>

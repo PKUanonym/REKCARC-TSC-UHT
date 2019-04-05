@@ -1,0 +1,13 @@
+GLOBAL SCOPE:
+    (1,1) -> class Main
+    CLASS SCOPE OF 'Main':
+        (2,17) -> static function main : void
+        (12,16) -> static function test : int->int->int
+        FORMAL SCOPE OF 'main':
+            LOCAL SCOPE:
+                (3,13) -> variable c : int
+                (4,16) -> variable s : string
+        FORMAL SCOPE OF 'test':
+            (12,25) -> variable @a : int
+            (12,32) -> variable @b : int
+            LOCAL SCOPE:

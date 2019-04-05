@@ -1,0 +1,61 @@
+GLOBAL SCOPE:
+    (1,1) -> class QueueItem
+    (30,1) -> class Queue
+    (59,1) -> class Main
+    CLASS SCOPE OF 'QueueItem':
+        (2,9) -> variable data : int
+        (3,21) -> variable next : class : QueueItem
+        (4,21) -> variable prev : class : QueueItem
+        (6,10) -> function Init : class : QueueItem->int->class : QueueItem->class : QueueItem->void
+        (13,9) -> function GetData : class : QueueItem->int
+        (16,21) -> function GetNext : class : QueueItem->class : QueueItem
+        (19,21) -> function GetPrev : class : QueueItem->class : QueueItem
+        (22,10) -> function SetNext : class : QueueItem->class : QueueItem->void
+        (25,10) -> function SetPrev : class : QueueItem->class : QueueItem->void
+        FORMAL SCOPE OF 'Init':
+            (6,10) -> variable @this : class : QueueItem
+            (6,19) -> variable @data : int
+            (6,41) -> variable @next : class : QueueItem
+            (6,63) -> variable @prev : class : QueueItem
+            LOCAL SCOPE:
+        FORMAL SCOPE OF 'GetData':
+            (13,9) -> variable @this : class : QueueItem
+            LOCAL SCOPE:
+        FORMAL SCOPE OF 'GetNext':
+            (16,21) -> variable @this : class : QueueItem
+            LOCAL SCOPE:
+        FORMAL SCOPE OF 'GetPrev':
+            (19,21) -> variable @this : class : QueueItem
+            LOCAL SCOPE:
+        FORMAL SCOPE OF 'SetNext':
+            (22,10) -> variable @this : class : QueueItem
+            (22,34) -> variable @n : class : QueueItem
+            LOCAL SCOPE:
+        FORMAL SCOPE OF 'SetPrev':
+            (25,10) -> variable @this : class : QueueItem
+            (25,34) -> variable @p : class : QueueItem
+            LOCAL SCOPE:
+    CLASS SCOPE OF 'Queue':
+        (31,9) -> variable sp : int
+        (32,21) -> variable head : class : QueueItem
+        (34,10) -> function Init : class : Queue->void
+        (38,10) -> function EnQueue : class : Queue->int->void
+        (43,9) -> function DeQueue : class : Queue->int
+        FORMAL SCOPE OF 'Init':
+            (34,10) -> variable @this : class : Queue
+            LOCAL SCOPE:
+        FORMAL SCOPE OF 'EnQueue':
+            (38,10) -> variable @this : class : Queue
+            (38,22) -> variable @i : int
+            LOCAL SCOPE:
+                (39,25) -> variable temp : class : QueueItem
+        FORMAL SCOPE OF 'DeQueue':
+            (43,9) -> variable @this : class : Queue
+            LOCAL SCOPE:
+                (44,13) -> variable val : int
+    CLASS SCOPE OF 'Main':
+        (60,17) -> static function main : void
+        FORMAL SCOPE OF 'main':
+            LOCAL SCOPE:
+                (61,21) -> variable q : class : Queue
+                (62,13) -> variable i : int

@@ -1,0 +1,60 @@
+program
+    class Main <empty>
+        static func main inttype
+            formals
+            stmtblock
+                vardef i inttype
+                vardef a inttype
+                vardef b inttype
+                vardef c inttype
+                assign
+                    varref a
+                    intconst 0
+                assign
+                    varref b
+                    intconst 1
+                assign
+                    varref c
+                    intconst 2
+                assign
+                    varref i
+                    conditional-expression
+                        varref a
+                        varref b
+                        varref c
+                assign
+                    varref i
+                    conditional-expression
+                        varref a
+                        conditional-expression
+                            varref b
+                            conditional-expression
+                                varref d
+                                varref e
+                                varref f
+                            varref g
+                        varref h
+                assign
+                    varref i
+                    conditional-expression
+                        or
+                            not
+                                varref a
+                            varref b
+                        equ
+                            varref c
+                            varref d
+                        add
+                            varref e
+                            varref f
+                assign
+                    varref i
+                    conditional-expression
+                        varref a
+                        varref b
+                        conditional-expression
+                            varref c
+                            varref d
+                            varref e
+                return
+                    intconst 0

@@ -1,0 +1,47 @@
+\documentclass{ctexart}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+\usepackage{ifthen}
+\usepackage{syntonly}
+\usepackage[colorlinks, CJKbookmarks=true, linkcolor=red]{hyperref}
+\pagestyle{plain}
+\usepackage[raggedright]{titlesec}
+\newtheorem{性质}{性质}
+\newtheorem{定理}{定理}
+\newtheorem{推论}{推论}
+\begin{document}
+\title{作业}
+\author{计算机科学与技术系52班 杨定澄 \and 学号：2015011274 \and E-mail:892431401@qq.com}
+\date{}
+\maketitle
+我们设$\theta=\{x_{l1},x_{u1},x_{l2},x_{u2}\}$，就有
+\begin{align*}
+&P(x,y)=
+\begin{cases}
+\frac{1}{(x_{u1}-x_{l1})(x_{u2}-x_{l2})} & x_{l1} \le x \le x_{u1},x_{l2} \le y \le x_{u2} \\
+0 & \textrm{otherwise} \\
+\end{cases}
+\\
+&P(\theta|D^0)=\frac{1}{(x_{u1}-x_{l1})(x_{u2}-x_{l2})},\textrm{由数学归纳法可知}\\
+&P(\theta|D^n)\propto	P(x_n|\theta)P(\theta|D^{n-1})\propto (\frac{1}{(x_{u1}-x_{l1})(x_{u2}-x_{l2})})^{n}\propto ((x_{u1}-x_{l1})(x_{u2}-x_{l2}))^{-n}\\
+&P(x|D^n)=\int P(x|\theta)P(\theta|D^n) d\theta \propto \int \int \int \int ((x_{u1}-x_{l1})(x_{u2}-x_{l2}))^{-(n+1)}dx_{l1}dx_{u1}dx_{l2}dx_{u2}\\
+\end{align*}
+
+由于概率之和必定等于$1$，故比例系数完全可以反推出来，所以不做讨论。
+
+接下来要做的是求解四重积分，这是非常麻烦的。观察到$(x_{l1},x_{u1})$与$(x_{l2},x_{u2})$可以分开考虑，我们的问题就变成求解下面的定积分：
+\begin{align*}
+&\int_{-6}^a\int_{b}^6(y-x)^{-(n+1)}dxdy \\
+=& \int_{-6}^a \frac{-1}{n}(y-x)^{-n}\Big|_b^6 dx\\
+=& \frac{1}{n}\int_{-6}^a [(b-x)^{-n}-(6-x)^{-n}]dx\\
+=& \frac{1}{n(n-1)}[(b-x)^{-(n-1)}-(6-x)^{-(n-1)}]\Big|_{-6}^a\\
+=& \frac{1}{n(n-1)}[(b-a)^{1-n}-(b+6)^{1-n}-(6-a)^{1-n}+12^{1-n}]
+\end{align*}
+
+至此，我们就能很容易的算出$P(x|D^n)$，每读入一组数据就画一个函数图像即可。
+
+编译运行bayes.py，可以得到2.png,3.png,直到10.png，分别代表$n=2,3,\cdots,10$时的函数图像。
+\end{document}

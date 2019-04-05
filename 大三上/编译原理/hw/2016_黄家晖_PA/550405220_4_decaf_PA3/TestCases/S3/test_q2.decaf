@@ -1,0 +1,218 @@
+class A {
+	int a;
+	int a1;
+	void setA(int i, int j){
+		a = i;
+		a1 = j;
+	}
+	void printA(){
+		Print(" a=",a," a1=",a1," ");	
+	}
+	void fun(){
+		Print("A");
+		printA();
+		Print("\n");
+	}
+}
+
+class B extends A{
+	int b;
+	int b1;
+	void setB(int i, int j){
+		b = i;
+		b1 = j;
+	}
+	void printB(){
+		Print(" b=",b," b1=",b1," ");	
+	}
+	void fun(){
+		Print("B");
+		printA();
+		printB();
+		Print("\n");
+	}
+}
+class C extends A{
+	int c;
+	int c1;
+	void setC(int i, int j){
+		c = i;
+		c1 = j;
+	}
+	void printC(){
+		Print(" c=",c," c1=",c1," ");	
+	}
+	void fun(){
+		Print("C");
+		printA();
+		printC();
+		Print("\n");
+	}
+}
+class D extends B{
+	int d;
+	int d1;
+	void setD(int i, int j){
+		d = i;
+		d1 = j;
+	}
+	void printD(){
+		Print(" d=",d," d1=",d1," ");	
+	}
+	void fun(){
+		Print("D");
+		printA();
+		printB();
+		printD();
+		Print("\n");
+	}
+}
+class E extends C{
+	int e;
+	int e1;
+	void setE(int i, int j){
+		e = i;
+		e1 = j;
+	}
+	void printE(){
+		Print(" e=",e," e1=",e1," ");	
+	}
+	void fun(){
+		Print("E");
+		printA();
+		printC();
+		printE();
+		Print("\n");
+	}
+}
+class F extends E{
+	int f;
+	int f1;
+	void setF(int i, int j){
+		f = i;
+		f1 = j;
+	}
+	void printF(){
+		Print(" f=",f," f1=",f1," ");	
+	}
+	void fun(){
+		Print("F");
+		printA();
+		printC();
+		printE();
+		printF();
+		Print("\n");
+	}
+}
+
+class G extends C {
+	int g;
+	void setG(int i){
+		g = i;
+	}
+	void printG(){
+		Print(" g=",g);	
+	}
+	void fun(){
+		Print("G");
+		printA();
+		printC();
+		printG();
+		Print("\n");
+	}
+}
+
+
+class Main {
+
+		static void test(class A a, class A b){
+			class A c;
+			c = a<<b;
+			c.fun();		
+		}
+
+    static void main() {
+    		class A a;
+    		class A a1;
+    		class B b;
+    		class C c;
+    		class D d;
+    		class E e;
+    		class F f;
+    		class G g;
+    		
+    		a = new A();
+    		b = new B();
+    		c = new C();
+    		d = new D();
+    		e = new E();
+    		f = new F();
+    		g = new G();
+    		a.setA(10,11);
+    		b.setA(20,21);
+    		b.setB(22,23);
+				c.setA(30,31);
+				c.setC(32,33);
+				d.setA(40,41);
+    		d.setB(42,43);
+				d.setD(44,45);
+				e.setA(50,51);
+				e.setC(52,53);
+				e.setE(54,55);
+				f.setA(60,61);
+				f.setC(62,63);
+				f.setE(64,65);
+				f.setF(66,67);
+     		g.setA(70,71);
+     		g.setC(72,73);
+     		g.setG(74);
+    		
+    		test(a,b);
+    		test(b,a);
+    		test(b,c);
+    		test(c,b);
+    		test(b,e);
+    		test(e,b);
+    		test(a,f);
+    		test(f,a);
+    		test(e,f);
+    		test(f,e);
+    		test(d,b);
+    		test(b,d);
+    		test(d,b);
+    		test(d,f);
+    		test(f,d);
+    		test(f,g);
+    		test(g,f);
+    		
+    		Print("other test\n");
+    		a = f<<e<<d;
+    		a.fun();
+
+    		a = b<<c;
+    		a1 = c<<b;
+    		b.fun();
+    		c.fun();
+    		a.fun();
+    		a1.fun();
+    		b.setA(987,345);
+    		c.setA(789,333);
+    		b.fun();
+    		c.fun();
+    		a.fun();
+    		a1.fun();
+
+    		a = d<<b;
+    		if(instanceof(a,B) == true)
+    			Print("good");
+    		a = g<<f;
+    		if(instanceof(a,C) == true)
+    			Print("good1");
+    		a = f<<g;
+    		if(instanceof(a,C) == true)
+    			Print("good2");
+    		a = d<<g;
+    		if(instanceof(a,A) == true)
+    			Print("good3");
+    }
+}

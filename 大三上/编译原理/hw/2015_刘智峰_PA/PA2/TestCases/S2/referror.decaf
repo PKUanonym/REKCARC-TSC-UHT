@@ -1,0 +1,18 @@
+class Main {
+    int a;
+    
+    static void main() {
+        a = 1;
+        this.a = 1;
+        Main.a = 1;
+        func();
+    }
+    
+    void func() {
+        new Test().b = 1;
+    }
+}
+
+class Test extends Main {
+    int b;
+}

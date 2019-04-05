@@ -1,0 +1,49 @@
+//
+// Classes with inheritance
+//
+
+class Animal {
+    int height;
+    class Animal mother;
+    void InitAnimal(int h, class Animal mom) {
+        this.height = h;
+        mother = mom;
+    }
+
+    int GetHeight() {	
+        return height;
+    }
+
+    class Animal GetMom() {
+        return this.mother;
+    }
+}
+
+class Cow extends Animal {
+    bool isSpotted;
+    void InitCow(int h, class Animal m, bool spot) {
+        isSpotted = spot;
+        InitAnimal(h,m);
+    }
+    bool IsSpottedCow () {
+        return isSpotted;
+    }
+}
+
+class Main {
+    static void main() {
+        class Cow betsy;
+        class Animal b;
+        betsy = new Cow();
+  
+        betsy.InitCow(5, null, true);
+        b = betsy;
+        b.GetMom();
+        Print(instanceof(b, Cow));
+        betsy = (class Cow)b;
+        Print("spots: ",betsy.IsSpottedCow(), "    height: ", b.GetHeight());
+    }
+}
+      
+
+

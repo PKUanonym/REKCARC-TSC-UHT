@@ -1,0 +1,22 @@
+GLOBAL SCOPE:
+    (1,1) -> class MultipleFormals
+    (20,1) -> class Main
+    CLASS SCOPE OF 'MultipleFormals':
+        (3,9) -> function foo : class : MultipleFormals->int->int->int->int
+        (7,9) -> function method : class : MultipleFormals->int
+        FORMAL SCOPE OF 'foo':
+            (3,9) -> variable @this : class : MultipleFormals
+            (3,17) -> variable @x : int
+            (3,24) -> variable @y : int
+            (3,31) -> variable @z : int
+            LOCAL SCOPE:
+        FORMAL SCOPE OF 'method':
+            (7,9) -> variable @this : class : MultipleFormals
+            LOCAL SCOPE:
+                (8,13) -> variable x : int
+                (9,13) -> variable y : int
+                (10,13) -> variable z : int
+    CLASS SCOPE OF 'Main':
+        (21,14) -> static function main : void
+        FORMAL SCOPE OF 'main':
+            LOCAL SCOPE:

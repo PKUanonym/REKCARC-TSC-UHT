@@ -1,0 +1,2 @@
+*** Error at (4,10): incompatible operands: string = int
+*** Error at (8,5): incompatible operands: int = string

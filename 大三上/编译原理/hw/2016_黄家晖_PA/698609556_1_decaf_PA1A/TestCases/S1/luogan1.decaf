@@ -1,0 +1,34 @@
+class Main {
+    static int main() {
+    		int a;
+    		int b;
+    		int c;
+    		a = 0;
+    		b = 1;
+    		c = 2;
+    		
+   			repeat{
+   				if (a>c) continue;
+   				a = a - b;
+   				c = a + b;
+   				while(a > b){
+   					a = a*3;
+   					b = b*4;
+   					if (a/4 == 0)
+   						continue;
+					switch (a+b+c)
+					{
+					case 0:
+					case 1:
+						repeat
+							a = a+1;
+						until(a==1?a?b:c:b+c);
+						break;
+					
+					}
+   				}
+   			}until(a>b);
+        
+        return 0;    
+    }
+}

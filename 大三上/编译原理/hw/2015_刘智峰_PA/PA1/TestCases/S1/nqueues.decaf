@@ -1,0 +1,90 @@
+// a program to solve the N-queens problem (from Cornell CS412 website)
+
+class Main {
+
+    static void main() {
+        new NQueue().init(8).solve();
+    }
+}
+
+class NQueues {
+    int N;
+    int[] col;
+    int[] row;
+    int[] di1;
+    int[] di2;
+
+
+    class NQueues init(int n) {
+        N = n;
+        col = clearArray(new int[N]);
+        row = clearArray(new int[N]);
+        di1 = clearArray(new int[N]);
+        di2 = clearArray(new int[N]);
+
+        return this;
+    }
+
+
+    void solve() {
+        try(0, col, row, di1, di2);
+    }
+
+
+    int[] clearArray(int[] a) {
+        int i;
+        i = a.length() - 1;
+        while (i >= 0) {
+            a[i] = 0;
+        }
+
+        return a;
+    }
+
+
+    void printBoard(int[] col, int N) {
+        int i;
+
+        i = 0;
+        while (i < N) {
+            int j;
+            j = 0;
+            while (j < N) {
+                if (col[i] == j) {
+                    Print(1);
+                } else {
+                    Print(0);
+                }
+            }
+            Print("\n");
+            i = i + 1;
+        }
+    }
+
+
+    void try(int c, int[] row, int[] col, int[] diag1, int[] diag2) {
+        int N;
+        int r;
+
+        N = col.length();
+        r = 0;
+
+        if (c == N) {
+            printBoard(col, N);
+        } else {
+            while (r < N) {
+                if (row[r] == 0 && diag1[r+c] == 0 && diag2[r+(N-1)-c] == 0) {
+                    row[r] = 1;
+                    diag1[r+c] = 1;
+                    diag2[r+(N-1)-c] = 1;
+                    col[c] = r;
+                    try(c+1, row, col, diag1, diag2);
+                    row[r] = 0;
+                    diag1[r+c] = 0;
+                    diag2[r+(N-1)-c] = 0;
+                }
+                r = r + 1;
+            }
+        }
+    }
+}

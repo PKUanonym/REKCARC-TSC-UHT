@@ -1,0 +1,89 @@
+#include "sysinclude.h"
+#include <iostream>
+#include <bitset>
+#include <list>
+using namespace std;
+extern void ipv6_fwd_DiscardPkt(char *pBuffer, int type);
+extern void ipv6_fwd_SendtoLower(char *pBuffer, int length, ipv6_addr *nexthop);
+extern void getIpv6Address(ipv6_addr *pAddr);
+extern void ipv6_fwd_LocalRcv(char *pBuffer, int length);
+
+list<stud_ipv6_route_msg> rv6;
+
+void stud_ipv6_Route_Init()
+{
+	rv6.clear();
+	return;
+}
+
+void stud_ipv6_route_add(stud_ipv6_route_msg *proute)
+{
+	rv6.push_back(*proute);
+	return;
+}
+
+int stud_ipv6_fwd_deal(char *pBuffer, int length)
+{	
+	ipv6_addr temp;
+	ipv6_addr* pAddr = &temp;
+	getIpv6Address(pAddr);
+
+	
+	unsigned int* mypAddr = (unsigned int *) pAddr;
+	unsigned int* destpAddr = (unsigned int *) (pBuffer+24);
+	UINT8 *ttl = (UINT8 *) (pBuffer + 7);
+	if (*ttl < 100)
+	{
+		ipv6_fwd_DiscardPkt(pBuffer, STUD_IPV6_FORWARD_TEST_HOPLIMIT_ERROR);
+		return -1;
+	}
+	bitset<128> myIP;
+	bitset<128> destIP;
+      
+	destIP = bitset<128>(destpAddr[0]) << 96 | bitset<128>(destpAddr[1]) << 64 | bitset<128> (destpAddr[2]) << 32 | bitset<128> (destpAddr[3]);
+	myIP = bitset<128>(mypAddr[0]) << 96 | bitset<128>(mypAddr[1]) << 64 | bitset<128> (mypAddr[2]) << 32 | bitset<128> (mypAddr[3]);
+
+	
+	if (destIP == myIP)
+	{
+		ipv6_fwd_LocalRcv(pBuffer, length);
+		return 0;
+	}
+
+
+	int MAXLEN = 0; list<stud_ipv6_route_msg>::iterator pos = rv6.end();
+	for (list<stud_ipv6_route_msg>::iterator iter = rv6.begin(); iter != rv6.end(); ++iter)
+	{
+		
+		if (iter->masklen < MAXLEN) continue;
+		
+		unsigned int *routeAddr = (unsigned int *)&(iter->dest);
+		bitset<128> nipA((unsigned long)routeAddr[0]); bitset<128> nipB((unsigned long)routeAddr[1]); bitset<128> nipC((unsigned long)routeAddr[2]); bitset<128> nipD((unsigned long)routeAddr[3]);
+		bitset<128> nextIP = nipA << 96 | nipB << 64 | nipC << 32 | nipD;
+		
+		int j = 0;
+		for (j = 0; j < iter->masklen; ++j)
+		{
+			if (nextIP[j] != destIP[j]) break;
+		}
+		if (j == iter->masklen)
+		{
+			MAXLEN = iter->masklen; 
+                  pos = iter;
+		}
+	}
+	if (pos == rv6.end())
+	{
+		ipv6_fwd_DiscardPkt(pBuffer, STUD_IPV6_FORWARD_TEST_NOROUTE);
+		return -1;
+	}
+	*ttl -= 1;
+	if (*ttl == 1)
+	{
+		ipv6_fwd_SendtoLower(pBuffer, length, &(((IPv6Head *)(pBuffer))->destAddr));
+		return 0;
+	}
+	if (*ttl > 1)
+		ipv6_fwd_SendtoLower(pBuffer, length, &(pos->nexthop));
+	return 0;
+}

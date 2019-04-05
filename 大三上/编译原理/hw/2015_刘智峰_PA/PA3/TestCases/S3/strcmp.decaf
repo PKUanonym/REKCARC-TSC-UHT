@@ -1,0 +1,22 @@
+class Main {
+
+	static string compareString (string a, string b) {
+		if (a == b)
+			return "Equal";
+		else if (a != b)
+			return "Unequal";
+		else
+			return "The impossible happens!";
+	}
+
+	static void printCompareString (string a, string b) {
+		Print("\"", a, "\" and \"", b, "\": ", compareString(a, b), "\n");
+	}
+
+	static void main () {
+		printCompareString("Jobs", "Gates");
+		printCompareString("case sensitive", "CASE SENSITIVE");
+		printCompareString("Hello", "Hello");
+	}
+
+}
