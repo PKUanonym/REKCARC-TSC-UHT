@@ -1,5 +1,11 @@
 # 清华大学计算机系课程攻略
 
+[![](https://img.shields.io/github/watchers/PKUanonym/REKCARC-TSC-UHT.svg?style=flat)](https://github.com/PKUanonym/REKCARC-TSC-UHT/watchers)
+[![](https://img.shields.io/github/stars/PKUanonym/REKCARC-TSC-UHT.svg?style=flat)](https://github.com/PKUanonym/REKCARC-TSC-UHT/stargazers)
+[![](https://img.shields.io/github/forks/PKUanonym/REKCARC-TSC-UHT.svg?style=flat)](https://github.com/PKUanonym/REKCARC-TSC-UHT/network/members)
+[![](https://img.shields.io/github/issues-pr-closed-raw/PKUanonym/REKCARC-TSC-UHT.svg?style=flat)](https://github.com/PKUanonym/REKCARC-TSC-UHT/issues)
+![](https://img.shields.io/github/repo-size/PKUanonym/REKCARC-TSC-UHT.svg?style=flat)
+
 受[浙江大学相关项目](https://github.com/QSCTech/zju-icicles)启发，创立了本项目。
 
 由于本仓库未启用`git-lfs`，因此请不要上传单个超过100M的文件，否则commit无效。
