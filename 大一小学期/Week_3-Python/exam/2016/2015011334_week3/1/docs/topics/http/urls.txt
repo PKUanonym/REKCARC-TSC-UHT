@@ -1,0 +1,843 @@
+==============
+URL dispatcher
+==============
+
+A clean, elegant URL scheme is an important detail in a high-quality Web
+application. Django lets you design URLs however you want, with no framework
+limitations.
+
+There's no ``.php`` or ``.cgi`` required, and certainly none of that
+``0,2097,1-1-1928,00`` nonsense.
+
+See `Cool URIs don't change`_, by World Wide Web creator Tim Berners-Lee, for
+excellent arguments on why URLs should be clean and usable.
+
+.. _Cool URIs don't change: http://www.w3.org/Provider/Style/URI
+
+Overview
+========
+
+To design URLs for an app, you create a Python module informally called a
+**URLconf** (URL configuration). This module is pure Python code and is a
+simple mapping between URL patterns (simple regular expressions) to Python
+functions (your views).
+
+This mapping can be as short or as long as needed. It can reference other
+mappings. And, because it's pure Python code, it can be constructed
+dynamically.
+
+Django also provides a way to translate URLs according to the active
+language. See the :ref:`internationalization documentation
+<url-internationalization>` for more information.
+
+.. _how-django-processes-a-request:
+
+How Django processes a request
+==============================
+
+When a user requests a page from your Django-powered site, this is the
+algorithm the system follows to determine which Python code to execute:
+
+1. Django determines the root URLconf module to use. Ordinarily,
+   this is the value of the :setting:`ROOT_URLCONF` setting, but if the incoming
+   ``HttpRequest`` object has a :attr:`~django.http.HttpRequest.urlconf`
+   attribute (set by middleware), its value will be used in place of the
+   :setting:`ROOT_URLCONF` setting.
+
+2. Django loads that Python module and looks for the variable
+   ``urlpatterns``. This should be a Python list of :func:`django.conf.urls.url`
+   instances.
+
+3. Django runs through each URL pattern, in order, and stops at the first
+   one that matches the requested URL.
+
+4. Once one of the regexes matches, Django imports and calls the given view,
+   which is a simple Python function (or a :doc:`class-based view
+   </topics/class-based-views/index>`). The view gets passed the following
+   arguments:
+
+   * An instance of :class:`~django.http.HttpRequest`.
+   * If the matched regular expression returned no named groups, then the
+     matches from the regular expression are provided as positional arguments.
+   * The keyword arguments are made up of any named groups matched by the
+     regular expression, overridden by any arguments specified in the optional
+     ``kwargs`` argument to :func:`django.conf.urls.url`.
+
+5. If no regex matches, or if an exception is raised during any
+   point in this process, Django invokes an appropriate
+   error-handling view. See `Error handling`_ below.
+
+Example
+=======
+
+Here's a sample URLconf::
+
+    from django.conf.urls import url
+
+    from . import views
+
+    urlpatterns = [
+        url(r'^articles/2003/$', views.special_case_2003),
+        url(r'^articles/([0-9]{4})/$', views.year_archive),
+        url(r'^articles/([0-9]{4})/([0-9]{2})/$', views.month_archive),
+        url(r'^articles/([0-9]{4})/([0-9]{2})/([0-9]+)/$', views.article_detail),
+    ]
+
+Notes:
+
+* To capture a value from the URL, just put parenthesis around it.
+
+* There's no need to add a leading slash, because every URL has that. For
+  example, it's ``^articles``, not ``^/articles``.
+
+* The ``'r'`` in front of each regular expression string is optional but
+  recommended. It tells Python that a string is "raw" -- that nothing in
+  the string should be escaped. See `Dive Into Python's explanation`_.
+
+Example requests:
+
+* A request to ``/articles/2005/03/`` would match the third entry in the
+  list. Django would call the function
+  ``views.month_archive(request, '2005', '03')``.
+
+* ``/articles/2005/3/`` would not match any URL patterns, because the
+  third entry in the list requires two digits for the month.
+
+* ``/articles/2003/`` would match the first pattern in the list, not the
+  second one, because the patterns are tested in order, and the first one
+  is the first test to pass. Feel free to exploit the ordering to insert
+  special cases like this. Here, Django would call the function
+  ``views.special_case_2003(request)``
+
+* ``/articles/2003`` would not match any of these patterns, because each
+  pattern requires that the URL end with a slash.
+
+* ``/articles/2003/03/03/`` would match the final pattern. Django would call
+  the function ``views.article_detail(request, '2003', '03', '03')``.
+
+.. _Dive Into Python's explanation: http://www.diveintopython.net/regular_expressions/street_addresses.html#re.matching.2.3
+
+Named groups
+============
+
+The above example used simple, *non-named* regular-expression groups (via
+parenthesis) to capture bits of the URL and pass them as *positional* arguments
+to a view. In more advanced usage, it's possible to use *named*
+regular-expression groups to capture URL bits and pass them as *keyword*
+arguments to a view.
+
+In Python regular expressions, the syntax for named regular-expression groups
+is ``(?P<name>pattern)``, where ``name`` is the name of the group and
+``pattern`` is some pattern to match.
+
+Here's the above example URLconf, rewritten to use named groups::
+
+    from django.conf.urls import url
+
+    from . import views
+
+    urlpatterns = [
+        url(r'^articles/2003/$', views.special_case_2003),
+        url(r'^articles/(?P<year>[0-9]{4})/$', views.year_archive),
+        url(r'^articles/(?P<year>[0-9]{4})/(?P<month>[0-9]{2})/$', views.month_archive),
+        url(r'^articles/(?P<year>[0-9]{4})/(?P<month>[0-9]{2})/(?P<day>[0-9]{2})/$', views.article_detail),
+    ]
+
+This accomplishes exactly the same thing as the previous example, with one
+subtle difference: The captured values are passed to view functions as keyword
+arguments rather than positional arguments. For example:
+
+* A request to ``/articles/2005/03/`` would call the function
+  ``views.month_archive(request, year='2005', month='03')``, instead
+  of ``views.month_archive(request, '2005', '03')``.
+
+* A request to ``/articles/2003/03/03/`` would call the function
+  ``views.article_detail(request, year='2003', month='03', day='03')``.
+
+In practice, this means your URLconfs are slightly more explicit and less prone
+to argument-order bugs -- and you can reorder the arguments in your views'
+function definitions. Of course, these benefits come at the cost of brevity;
+some developers find the named-group syntax ugly and too verbose.
+
+The matching/grouping algorithm
+-------------------------------
+
+Here's the algorithm the URLconf parser follows, with respect to named groups
+vs. non-named groups in a regular expression:
+
+1. If there are any named arguments, it will use those, ignoring non-named
+   arguments.
+
+2. Otherwise, it will pass all non-named arguments as positional arguments.
+
+In both cases, any extra keyword arguments that have been given as per `Passing
+extra options to view functions`_ (below) will also be passed to the view.
+
+What the URLconf searches against
+=================================
+
+The URLconf searches against the requested URL, as a normal Python string. This
+does not include GET or POST parameters, or the domain name.
+
+For example, in a request to ``https://www.example.com/myapp/``, the URLconf
+will look for ``myapp/``.
+
+In a request to ``https://www.example.com/myapp/?page=3``, the URLconf will look
+for ``myapp/``.
+
+The URLconf doesn't look at the request method. In other words, all request
+methods -- ``POST``, ``GET``, ``HEAD``, etc. -- will be routed to the same
+function for the same URL.
+
+Captured arguments are always strings
+=====================================
+
+Each captured argument is sent to the view as a plain Python string, regardless
+of what sort of match the regular expression makes. For example, in this
+URLconf line::
+
+    url(r'^articles/(?P<year>[0-9]{4})/$', views.year_archive),
+
+...the ``year`` argument passed to ``views.year_archive()`` will be a string,
+ not an integer, even though the ``[0-9]{4}`` will only match integer strings.
+
+Specifying defaults for view arguments
+======================================
+
+A convenient trick is to specify default parameters for your views' arguments.
+Here's an example URLconf and view::
+
+    # URLconf
+    from django.conf.urls import url
+
+    from . import views
+
+    urlpatterns = [
+        url(r'^blog/$', views.page),
+        url(r'^blog/page(?P<num>[0-9]+)/$', views.page),
+    ]
+
+    # View (in blog/views.py)
+    def page(request, num="1"):
+        # Output the appropriate page of blog entries, according to num.
+        ...
+
+In the above example, both URL patterns point to the same view --
+``views.page`` -- but the first pattern doesn't capture anything from the
+URL. If the first pattern matches, the ``page()`` function will use its
+default argument for ``num``, ``"1"``. If the second pattern matches,
+``page()`` will use whatever ``num`` value was captured by the regex.
+
+Performance
+===========
+
+Each regular expression in a ``urlpatterns`` is compiled the first time it's
+accessed. This makes the system blazingly fast.
+
+Syntax of the ``urlpatterns`` variable
+======================================
+
+``urlpatterns`` should be a Python list of :func:`~django.conf.urls.url`
+instances.
+
+Error handling
+==============
+
+When Django can't find a regex matching the requested URL, or when an
+exception is raised, Django will invoke an error-handling view.
+
+The views to use for these cases are specified by four variables. Their
+default values should suffice for most projects, but further customization is
+possible by overriding their default values.
+
+See the documentation on :ref:`customizing error views
+<customizing-error-views>` for the full details.
+
+Such values can be set in your root URLconf. Setting these variables in any
+other URLconf will have no effect.
+
+Values must be callables, or strings representing the full Python import path
+to the view that should be called to handle the error condition at hand.
+
+The variables are:
+
+* ``handler400`` -- See :data:`django.conf.urls.handler400`.
+* ``handler403`` -- See :data:`django.conf.urls.handler403`.
+* ``handler404`` -- See :data:`django.conf.urls.handler404`.
+* ``handler500`` -- See :data:`django.conf.urls.handler500`.
+
+.. _including-other-urlconfs:
+
+Including other URLconfs
+========================
+
+At any point, your ``urlpatterns`` can "include" other URLconf modules. This
+essentially "roots" a set of URLs below other ones.
+
+For example, here's an excerpt of the URLconf for the `Django website`_
+itself. It includes a number of other URLconfs::
+
+    from django.conf.urls import include, url
+
+    urlpatterns = [
+        # ... snip ...
+        url(r'^community/', include('django_website.aggregator.urls')),
+        url(r'^contact/', include('django_website.contact.urls')),
+        # ... snip ...
+    ]
+
+Note that the regular expressions in this example don't have a ``$``
+(end-of-string match character) but do include a trailing slash. Whenever
+Django encounters ``include()`` (:func:`django.conf.urls.include()`), it chops
+off whatever part of the URL matched up to that point and sends the remaining
+string to the included URLconf for further processing.
+
+Another possibility is to include additional URL patterns by using a list of
+:func:`~django.conf.urls.url` instances. For example, consider this URLconf::
+
+    from django.conf.urls import include, url
+
+    from apps.main import views as main_views
+    from credit import views as credit_views
+
+    extra_patterns = [
+        url(r'^reports/$', credit_views.report),
+        url(r'^reports/(?P<id>[0-9]+)/$', credit_views.report),
+        url(r'^charge/$', credit_views.charge),
+    ]
+
+    urlpatterns = [
+        url(r'^$', main_views.homepage),
+        url(r'^help/', include('apps.help.urls')),
+        url(r'^credit/', include(extra_patterns)),
+    ]
+
+In this example, the ``/credit/reports/`` URL will be handled by the
+``credit_views.report()`` Django view.
+
+This can be used to remove redundancy from URLconfs where a single pattern
+prefix is used repeatedly. For example, consider this URLconf::
+
+    from django.conf.urls import url
+    from . import views
+
+    urlpatterns = [
+        url(r'^(?P<page_slug>[\w-]+)-(?P<page_id>\w+)/history/$', views.history),
+        url(r'^(?P<page_slug>[\w-]+)-(?P<page_id>\w+)/edit/$', views.edit),
+        url(r'^(?P<page_slug>[\w-]+)-(?P<page_id>\w+)/discuss/$', views.discuss),
+        url(r'^(?P<page_slug>[\w-]+)-(?P<page_id>\w+)/permissions/$', views.permissions),
+    ]
+
+We can improve this by stating the common path prefix only once and grouping
+the suffixes that differ::
+
+    from django.conf.urls import include, url
+    from . import views
+
+    urlpatterns = [
+        url(r'^(?P<page_slug>[\w-]+)-(?P<page_id>\w+)/', include([
+            url(r'^history/$', views.history),
+            url(r'^edit/$', views.edit),
+            url(r'^discuss/$', views.discuss),
+            url(r'^permissions/$', views.permissions),
+        ])),
+    ]
+
+.. _`Django website`: https://www.djangoproject.com/
+
+Captured parameters
+-------------------
+
+An included URLconf receives any captured parameters from parent URLconfs, so
+the following example is valid::
+
+    # In settings/urls/main.py
+    from django.conf.urls import include, url
+
+    urlpatterns = [
+        url(r'^(?P<username>\w+)/blog/', include('foo.urls.blog')),
+    ]
+
+    # In foo/urls/blog.py
+    from django.conf.urls import url
+    from . import views
+
+    urlpatterns = [
+        url(r'^$', views.blog.index),
+        url(r'^archive/$', views.blog.archive),
+    ]
+
+In the above example, the captured ``"username"`` variable is passed to the
+included URLconf, as expected.
+
+Nested arguments
+================
+
+Regular expressions allow nested arguments, and Django will resolve them and
+pass them to the view. When reversing, Django will try to fill in all outer
+captured arguments, ignoring any nested captured arguments. Consider the
+following URL patterns which optionally take a page argument::
+
+    from django.conf.urls import url
+
+    urlpatterns = [
+        url(r'blog/(page-(\d+)/)?$', blog_articles),                  # bad
+        url(r'comments/(?:page-(?P<page_number>\d+)/)?$', comments),  # good
+    ]
+
+Both patterns use nested arguments and will resolve: for example,
+``blog/page-2/`` will result in a match to ``blog_articles`` with two
+positional arguments: ``page-2/`` and ``2``. The second pattern for
+``comments`` will match ``comments/page-2/`` with keyword argument
+``page_number`` set to 2. The outer argument in this case is a non-capturing
+argument ``(?:...)``.
+
+The ``blog_articles`` view needs the outermost captured argument to be reversed,
+``page-2/`` or no arguments in this case, while ``comments`` can be reversed
+with either no arguments or a value for ``page_number``.
+
+Nested captured arguments create a strong coupling between the view arguments
+and the URL as illustrated by ``blog_articles``: the view receives part of the
+URL (``page-2/``) instead of only the value the view is interested in. This
+coupling is even more pronounced when reversing, since to reverse the view we
+need to pass the piece of URL instead of the page number.
+
+As a rule of thumb, only capture the values the view needs to work with and
+use non-capturing arguments when the regular expression needs an argument but
+the view ignores it.
+
+.. _views-extra-options:
+
+Passing extra options to view functions
+=======================================
+
+URLconfs have a hook that lets you pass extra arguments to your view functions,
+as a Python dictionary.
+
+The :func:`django.conf.urls.url` function can take an optional third argument
+which should be a dictionary of extra keyword arguments to pass to the view
+function.
+
+For example::
+
+    from django.conf.urls import url
+    from . import views
+
+    urlpatterns = [
+        url(r'^blog/(?P<year>[0-9]{4})/$', views.year_archive, {'foo': 'bar'}),
+    ]
+
+In this example, for a request to ``/blog/2005/``, Django will call
+``views.year_archive(request, year='2005', foo='bar')``.
+
+This technique is used in the
+:doc:`syndication framework </ref/contrib/syndication>` to pass metadata and
+options to views.
+
+.. admonition:: Dealing with conflicts
+
+    It's possible to have a URL pattern which captures named keyword arguments,
+    and also passes arguments with the same names in its dictionary of extra
+    arguments. When this happens, the arguments in the dictionary will be used
+    instead of the arguments captured in the URL.
+
+Passing extra options to ``include()``
+--------------------------------------
+
+Similarly, you can pass extra options to :func:`~django.conf.urls.include`.
+When you pass extra options to ``include()``, *each* line in the included
+URLconf will be passed the extra options.
+
+For example, these two URLconf sets are functionally identical:
+
+Set one::
+
+    # main.py
+    from django.conf.urls import include, url
+
+    urlpatterns = [
+        url(r'^blog/', include('inner'), {'blogid': 3}),
+    ]
+
+    # inner.py
+    from django.conf.urls import url
+    from mysite import views
+
+    urlpatterns = [
+        url(r'^archive/$', views.archive),
+        url(r'^about/$', views.about),
+    ]
+
+Set two::
+
+    # main.py
+    from django.conf.urls import include, url
+    from mysite import views
+
+    urlpatterns = [
+        url(r'^blog/', include('inner')),
+    ]
+
+    # inner.py
+    from django.conf.urls import url
+
+    urlpatterns = [
+        url(r'^archive/$', views.archive, {'blogid': 3}),
+        url(r'^about/$', views.about, {'blogid': 3}),
+    ]
+
+Note that extra options will *always* be passed to *every* line in the included
+URLconf, regardless of whether the line's view actually accepts those options
+as valid. For this reason, this technique is only useful if you're certain that
+every view in the included URLconf accepts the extra options you're passing.
+
+Reverse resolution of URLs
+==========================
+
+A common need when working on a Django project is the possibility to obtain URLs
+in their final forms either for embedding in generated content (views and assets
+URLs, URLs shown to the user, etc.) or for handling of the navigation flow on
+the server side (redirections, etc.)
+
+It is strongly desirable to avoid hard-coding these URLs (a laborious,
+non-scalable and error-prone strategy). Equally dangerous is devising ad-hoc
+mechanisms to generate URLs that are parallel to the design described by the
+URLconf, which can result in the production of URLs that become stale over time.
+
+In other words, what's needed is a DRY mechanism. Among other advantages it
+would allow evolution of the URL design without having to go over all the
+project source code to search and replace outdated URLs.
+
+The primary piece of information we have available to get a URL is an
+identification (e.g. the name) of the view in charge of handling it. Other
+pieces of information that necessarily must participate in the lookup of the
+right URL are the types (positional, keyword) and values of the view arguments.
+
+Django provides a solution such that the URL mapper is the only repository of
+the URL design. You feed it with your URLconf and then it can be used in both
+directions:
+
+* Starting with a URL requested by the user/browser, it calls the right Django
+  view providing any arguments it might need with their values as extracted from
+  the URL.
+
+* Starting with the identification of the corresponding Django view plus the
+  values of arguments that would be passed to it, obtain the associated URL.
+
+The first one is the usage we've been discussing in the previous sections. The
+second one is what is known as *reverse resolution of URLs*, *reverse URL
+matching*, *reverse URL lookup*, or simply *URL reversing*.
+
+Django provides tools for performing URL reversing that match the different
+layers where URLs are needed:
+
+* In templates: Using the :ttag:`url` template tag.
+
+* In Python code: Using the :func:`~django.urls.reverse` function.
+
+* In higher level code related to handling of URLs of Django model instances:
+  The :meth:`~django.db.models.Model.get_absolute_url` method.
+
+Examples
+--------
+
+Consider again this URLconf entry::
+
+    from django.conf.urls import url
+
+    from . import views
+
+    urlpatterns = [
+        #...
+        url(r'^articles/([0-9]{4})/$', views.year_archive, name='news-year-archive'),
+        #...
+    ]
+
+According to this design, the URL for the archive corresponding to year *nnnn*
+is ``/articles/nnnn/``.
+
+You can obtain these in template code by using:
+
+.. code-block:: html+django
+
+    <a href="{% url 'news-year-archive' 2012 %}">2012 Archive</a>
+    {# Or with the year in a template context variable: #}
+    <ul>
+    {% for yearvar in year_list %}
+    <li><a href="{% url 'news-year-archive' yearvar %}">{{ yearvar }} Archive</a></li>
+    {% endfor %}
+    </ul>
+
+Or in Python code::
+
+    from django.urls import reverse
+    from django.http import HttpResponseRedirect
+
+    def redirect_to_year(request):
+        # ...
+        year = 2006
+        # ...
+        return HttpResponseRedirect(reverse('news-year-archive', args=(year,)))
+
+If, for some reason, it was decided that the URLs where content for yearly
+article archives are published at should be changed then you would only need to
+change the entry in the URLconf.
+
+In some scenarios where views are of a generic nature, a many-to-one
+relationship might exist between URLs and views. For these cases the view name
+isn't a good enough identifier for it when comes the time of reversing
+URLs. Read the next section to know about the solution Django provides for this.
+
+.. _naming-url-patterns:
+
+Naming URL patterns
+===================
+
+In order to perform URL reversing, you'll need to use **named URL patterns**
+as done in the examples above. The string used for the URL name can contain any
+characters you like. You are not restricted to valid Python names.
+
+When you name your URL patterns, make sure you use names that are unlikely
+to clash with any other application's choice of names. If you call your URL
+pattern ``comment``, and another application does the same thing, there's
+no guarantee which URL will be inserted into your template when you use
+this name.
+
+Putting a prefix on your URL names, perhaps derived from the application
+name, will decrease the chances of collision. We recommend something like
+``myapp-comment`` instead of ``comment``.
+
+.. _topics-http-defining-url-namespaces:
+
+URL namespaces
+==============
+
+Introduction
+------------
+
+URL namespaces allow you to uniquely reverse :ref:`named URL patterns
+<naming-url-patterns>` even if different applications use the same URL names.
+It's a good practice for third-party apps to always use namespaced URLs (as we
+did in the tutorial). Similarly, it also allows you to reverse URLs if multiple
+instances of an application are deployed. In other words, since multiple
+instances of a single application will share named URLs, namespaces provide a
+way to tell these named URLs apart.
+
+Django applications that make proper use of URL namespacing can be deployed more
+than once for a particular site. For example :mod:`django.contrib.admin` has an
+:class:`~django.contrib.admin.AdminSite` class which allows you to easily
+:ref:`deploy more than one instance of the admin <multiple-admin-sites>`.
+In a later example, we'll discuss the idea of deploying the polls application
+from the tutorial in two different locations so we can serve the same
+functionality to two different audiences (authors and publishers).
+
+A URL namespace comes in two parts, both of which are strings:
+
+.. glossary::
+
+  application namespace
+    This describes the name of the application that is being deployed. Every
+    instance of a single application will have the same application namespace.
+    For example, Django's admin application has the somewhat predictable
+    application namespace of ``'admin'``.
+
+  instance namespace
+    This identifies a specific instance of an application. Instance namespaces
+    should be unique across your entire project. However, an instance namespace
+    can be the same as the application namespace. This is used to specify a
+    default instance of an application. For example, the default Django admin
+    instance has an instance namespace of ``'admin'``.
+
+Namespaced URLs are specified using the ``':'`` operator. For example, the main
+index page of the admin application is referenced using ``'admin:index'``. This
+indicates a namespace of ``'admin'``, and a named URL of ``'index'``.
+
+Namespaces can also be nested. The named URL ``'sports:polls:index'`` would
+look for a pattern named ``'index'`` in the namespace ``'polls'`` that is itself
+defined within the top-level namespace ``'sports'``.
+
+.. _topics-http-reversing-url-namespaces:
+
+Reversing namespaced URLs
+-------------------------
+
+When given a namespaced URL (e.g. ``'polls:index'``) to resolve, Django splits
+the fully qualified name into parts and then tries the following lookup:
+
+1. First, Django looks for a matching :term:`application namespace` (in this
+   example, ``'polls'``). This will yield a list of instances of that
+   application.
+
+2. If there is a current application defined, Django finds and returns the URL
+   resolver for that instance. The current application can be specified with
+   the ``current_app`` argument to the :func:`~django.urls.reverse()`
+   function.
+
+   The :ttag:`url` template tag uses the namespace of the currently resolved
+   view as the current application in a
+   :class:`~django.template.RequestContext`. You can override this default by
+   setting the current application on the :attr:`request.current_app
+   <django.http.HttpRequest.current_app>` attribute.
+
+   .. versionchanged:: 1.9
+
+      Previously, the :ttag:`url` template tag did not use the namespace of the
+      currently resolved view and you had to set the ``current_app`` attribute
+      on the request.
+
+3. If there is no current application. Django looks for a default
+   application instance. The default application instance is the instance
+   that has an :term:`instance namespace` matching the :term:`application
+   namespace` (in this example, an instance of ``polls`` called ``'polls'``).
+
+4. If there is no default application instance, Django will pick the last
+   deployed instance of the application, whatever its instance name may be.
+
+5. If the provided namespace doesn't match an :term:`application namespace` in
+   step 1, Django will attempt a direct lookup of the namespace as an
+   :term:`instance namespace`.
+
+If there are nested namespaces, these steps are repeated for each part of the
+namespace until only the view name is unresolved. The view name will then be
+resolved into a URL in the namespace that has been found.
+
+Example
+~~~~~~~
+
+To show this resolution strategy in action, consider an example of two instances
+of the ``polls`` application from the tutorial: one called ``'author-polls'``
+and one called ``'publisher-polls'``. Assume we have enhanced that application
+so that it takes the instance namespace into consideration when creating and
+displaying polls.
+
+.. snippet::
+    :filename: urls.py
+
+    from django.conf.urls import include, url
+
+    urlpatterns = [
+        url(r'^author-polls/', include('polls.urls', namespace='author-polls')),
+        url(r'^publisher-polls/', include('polls.urls', namespace='publisher-polls')),
+    ]
+
+.. snippet::
+    :filename: polls/urls.py
+
+    from django.conf.urls import url
+
+    from . import views
+
+    app_name = 'polls'
+    urlpatterns = [
+        url(r'^$', views.IndexView.as_view(), name='index'),
+        url(r'^(?P<pk>\d+)/$', views.DetailView.as_view(), name='detail'),
+        ...
+    ]
+
+Using this setup, the following lookups are possible:
+
+* If one of the instances is current - say, if we were rendering the detail page
+  in the instance ``'author-polls'`` - ``'polls:index'`` will resolve to the
+  index page of the ``'author-polls'`` instance; i.e. both of the following will
+  result in ``"/author-polls/"``.
+
+  In the method of a class-based view::
+
+    reverse('polls:index', current_app=self.request.resolver_match.namespace)
+
+  and in the template:
+
+  .. code-block:: html+django
+
+    {% url 'polls:index' %}
+
+* If there is no current instance - say, if we were rendering a page
+  somewhere else on the site - ``'polls:index'`` will resolve to the last
+  registered instance of ``polls``. Since there is no default instance
+  (instance namespace of ``'polls'``), the last instance of ``polls`` that is
+  registered will be used. This would be ``'publisher-polls'`` since it's
+  declared last in the ``urlpatterns``.
+
+* ``'author-polls:index'`` will always resolve to the index page of the instance
+  ``'author-polls'`` (and likewise for ``'publisher-polls'``) .
+
+If there were also a default instance - i.e., an instance named ``'polls'`` -
+the only change from above would be in the case where there is no current
+instance (the second item in the list above). In this case ``'polls:index'``
+would resolve to the index page of the default instance instead of the instance
+declared last in ``urlpatterns``.
+
+.. _namespaces-and-include:
+
+URL namespaces and included URLconfs
+------------------------------------
+
+Application namespaces of included URLconfs can be specified in two ways.
+
+Firstly, you can set an ``app_name`` attribute in the included URLconf module,
+at the same level as the ``urlpatterns`` attribute. You have to pass the actual
+module, or a string reference to the module, to
+:func:`~django.conf.urls.include`, not the list of ``urlpatterns`` itself.
+
+.. snippet::
+    :filename: polls/urls.py
+
+    from django.conf.urls import url
+
+    from . import views
+
+    app_name = 'polls'
+    urlpatterns = [
+        url(r'^$', views.IndexView.as_view(), name='index'),
+        url(r'^(?P<pk>\d+)/$', views.DetailView.as_view(), name='detail'),
+        ...
+    ]
+
+.. snippet::
+    :filename: urls.py
+
+    from django.conf.urls import include, url
+
+    urlpatterns = [
+        url(r'^polls/', include('polls.urls')),
+    ]
+
+The URLs defined in ``polls.urls`` will have an application namespace ``polls``.
+
+Secondly, you can include an object that contains embedded namespace data. If
+you ``include()`` a list of :func:`~django.conf.urls.url` instances,
+the URLs contained in that object will be added to the global namespace.
+However, you can also ``include()`` a 2-tuple containing::
+
+    (<list of url() instances>, <application namespace>)
+
+For example::
+
+    from django.conf.urls import include, url
+
+    from . import views
+
+    polls_patterns = ([
+        url(r'^$', views.IndexView.as_view(), name='index'),
+        url(r'^(?P<pk>\d+)/$', views.DetailView.as_view(), name='detail'),
+    ], 'polls')
+
+    urlpatterns = [
+        url(r'^polls/', include(polls_patterns)),
+    ]
+
+This will include the nominated URL patterns into the given application
+namespace.
+
+The instance namespace can be specified using the ``namespace`` argument to
+:func:`~django.conf.urls.include`. If the instance namespace is not specified,
+it will default to the included URLconf's application namespace. This means
+it will also be the default instance for that namespace.
+
+.. versionchanged:: 1.9
+
+    In previous versions, you had to specify both the application namespace
+    and the instance namespace in a single place, either by passing them as
+    parameters to :func:`~django.conf.urls.include` or by including a 3-tuple
+    containing
+    ``(<list of url() instances>, <application namespace>, <instance namespace>)``.

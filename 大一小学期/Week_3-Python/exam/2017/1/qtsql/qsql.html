@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qsql.qdoc -->
+  <title>QSql Namespace | Qt SQL 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtsql-index.html">Qt SQL</a></td><td >QSql Namespace</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#types">Types</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">QSql Namespace</h1>
+<!-- $$$QSql-brief -->
+<p>The <a href="qsql.html">QSql</a> namespace contains miscellaneous identifiers used throughout the Qt SQL module. <a href="#details">More...</a></p>
+<!-- @@@QSql -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign">   <span class="preprocessor">#include &lt;QSql&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> qmake:</td><td class="memItemRight bottomAlign"> QT += sql</td></tr></table></div><ul>
+</ul>
+<a name="types"></a>
+<h2 id="types">Types</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="qsql.html#Location-enum">Location</a></b> { BeforeFirstRow, AfterLastRow }</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="qsql.html#NumericalPrecisionPolicy-enum">NumericalPrecisionPolicy</a></b> { LowPrecisionInt32, LowPrecisionInt64, LowPrecisionDouble, HighPrecision }</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> flags </td><td class="memItemRight bottomAlign"><b><a href="qsql.html#ParamTypeFlag-enum">ParamType</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="qsql.html#ParamTypeFlag-enum">ParamTypeFlag</a></b> { In, Out, InOut, Binary }</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="qsql.html#TableType-enum">TableType</a></b> { Tables, SystemTables, Views, AllTables }</td></tr>
+</table></div>
+<a name="details"></a>
+<!-- $$$QSql-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="qsql.html">QSql</a> namespace contains miscellaneous identifiers used throughout the Qt SQL module.</p>
+</div>
+<p><b>See also </b><a href="qtsql-index.html">Qt SQL</a>.</p>
+<!-- @@@QSql -->
+<div class="types">
+<h2>Type Documentation</h2>
+<!-- $$$Location$$$BeforeFirstRow$$$AfterLastRow -->
+<h3 class="fn" id="Location-enum"><a name="Location-enum"></a>enum QSql::<span class="name">Location</span></h3>
+<p>This enum type describes special SQL navigation locations:</p>
+<div class="table"><table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td class="topAlign"><code>QSql::BeforeFirstRow</code></td><td class="topAlign tblval"><code>-1</code></td><td class="topAlign">Before the first record.</td></tr>
+<tr><td class="topAlign"><code>QSql::AfterLastRow</code></td><td class="topAlign tblval"><code>-2</code></td><td class="topAlign">After the last record.</td></tr>
+</table></div>
+<p><b>See also </b><a href="qsqlquery.html#at">QSqlQuery::at</a>().</p>
+<!-- @@@Location -->
+<!-- $$$NumericalPrecisionPolicy$$$LowPrecisionInt32$$$LowPrecisionInt64$$$LowPrecisionDouble$$$HighPrecision -->
+<h3 class="fn" id="NumericalPrecisionPolicy-enum"><a name="NumericalPrecisionPolicy-enum"></a>enum QSql::<span class="name">NumericalPrecisionPolicy</span></h3>
+<p>Numerical values in a database can have precisions greater than their corresponding C++ types. This enum lists the policies for representing such values in the application.</p>
+<div class="table"><table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td class="topAlign"><code>QSql::LowPrecisionInt32</code></td><td class="topAlign tblval"><code>0x01</code></td><td class="topAlign">Force 32bit integer values. In case of floating point numbers, the fractional part is silently discarded.</td></tr>
+<tr><td class="topAlign"><code>QSql::LowPrecisionInt64</code></td><td class="topAlign tblval"><code>0x02</code></td><td class="topAlign">Force 64bit integer values. In case of floating point numbers, the fractional part is silently discarded.</td></tr>
+<tr><td class="topAlign"><code>QSql::LowPrecisionDouble</code></td><td class="topAlign tblval"><code>0x04</code></td><td class="topAlign">Force <code>double</code> values. This is the default policy.</td></tr>
+<tr><td class="topAlign"><code>QSql::HighPrecision</code></td><td class="topAlign tblval"><code>0</code></td><td class="topAlign">Strings will be used to preserve precision.</td></tr>
+</table></div>
+<p>Note: The actual behaviour if an overflow occurs is driver specific. The Oracle database just returns an error in this case.</p>
+<!-- @@@NumericalPrecisionPolicy -->
+<!-- $$$ParamTypeFlag$$$In$$$Out$$$InOut$$$Binary -->
+<h3 class="flags" id="ParamTypeFlag-enum"><a name="ParamTypeFlag-enum"></a>enum QSql::<span class="name">ParamTypeFlag</span><br/>flags QSql::<span class="name">ParamType</span></h3>
+<p>This enum is used to specify the type of a bind parameter.</p>
+<div class="table"><table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td class="topAlign"><code>QSql::In</code></td><td class="topAlign tblval"><code>0x00000001</code></td><td class="topAlign">The bind parameter is used to put data into the database.</td></tr>
+<tr><td class="topAlign"><code>QSql::Out</code></td><td class="topAlign tblval"><code>0x00000002</code></td><td class="topAlign">The bind parameter is used to receive data from the database.</td></tr>
+<tr><td class="topAlign"><code>QSql::InOut</code></td><td class="topAlign tblval"><code>In | Out</code></td><td class="topAlign">The bind parameter is used to put data into the database; it will be overwritten with output data on executing a query.</td></tr>
+<tr><td class="topAlign"><code>QSql::Binary</code></td><td class="topAlign tblval"><code>0x00000004</code></td><td class="topAlign">This must be OR'd with one of the other flags if you want to indicate that the data being transferred is raw binary data.</td></tr>
+</table></div>
+<p>The ParamType type is a typedef for <a href="../qtcore/qflags.html">QFlags</a>&lt;ParamTypeFlag&gt;. It stores an OR combination of ParamTypeFlag values.</p>
+<!-- @@@ParamTypeFlag -->
+<!-- $$$TableType$$$Tables$$$SystemTables$$$Views$$$AllTables -->
+<h3 class="fn" id="TableType-enum"><a name="TableType-enum"></a>enum QSql::<span class="name">TableType</span></h3>
+<p>This enum type describes types of SQL tables.</p>
+<div class="table"><table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td class="topAlign"><code>QSql::Tables</code></td><td class="topAlign tblval"><code>0x01</code></td><td class="topAlign">All the tables visible to the user.</td></tr>
+<tr><td class="topAlign"><code>QSql::SystemTables</code></td><td class="topAlign tblval"><code>0x02</code></td><td class="topAlign">Internal tables used by the database.</td></tr>
+<tr><td class="topAlign"><code>QSql::Views</code></td><td class="topAlign tblval"><code>0x04</code></td><td class="topAlign">All the views visible to the user.</td></tr>
+<tr><td class="topAlign"><code>QSql::AllTables</code></td><td class="topAlign tblval"><code>0xff</code></td><td class="topAlign">All of the above.</td></tr>
+</table></div>
+<!-- @@@TableType -->
+</div>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- fortuneclient.qdoc -->
+  <title>Fortune Client Example | Qt Network 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtnetwork-index.html">Qt Network</a></td><td >Fortune Client Example</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar"><div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">Fortune Client Example</h1>
+<span class="subtitle"></span>
+<!-- $$$fortuneclient-description -->
+<div class="descr"> <a name="details"></a>
+<p>This example uses <a href="qtcpsocket.html">QTcpSocket</a>, and is intended to be run alongside the <a href="qtnetwork-fortuneserver-example.html">Fortune Server</a> example or the <a href="qtnetwork-threadedfortuneserver-example.html">Threaded Fortune Server</a> example.</p>
+<p class="centerAlign"><img src="images/fortuneclient-example.png" alt="Screenshot of the Fortune Client example" /></p><p>This example uses a simple <a href="../qtcore/qdatastream.html">QDataStream</a>-based data transfer protocol to request a line of text from a fortune server (from the <a href="qtnetwork-fortuneserver-example.html">Fortune Server</a> example). The client requests a fortune by simply connecting to the server. The server then responds with a 16-bit (quint16) integer containing the length of the fortune text, followed by a <a href="../qtcore/qstring.html">QString</a>.</p>
+<p><a href="qtcpsocket.html">QTcpSocket</a> supports two general approaches to network programming:</p>
+<ul>
+<li><i>The asynchronous (non-blocking) approach.</i> Operations are scheduled and performed when control returns to Qt's event loop. When the operation is finished, <a href="qtcpsocket.html">QTcpSocket</a> emits a signal. For example, <a href="qabstractsocket.html#connectToHost">QTcpSocket::connectToHost</a>() returns immediately, and when the connection has been established, <a href="qtcpsocket.html">QTcpSocket</a> emits <a href="qabstractsocket.html#connected">connected()</a>.</li>
+<li><i>The synchronous (blocking) approach.</i> In non-GUI and multithreaded applications, you can call the <code>waitFor..&#x2e;()</code> functions (e.g&#x2e;, <a href="qabstractsocket.html#waitForConnected">QTcpSocket::waitForConnected</a>()) to suspend the calling thread until the operation has completed, instead of connecting to signals.</li>
+</ul>
+<p>In this example, we will demonstrate the asynchronous approach. The <a href="qtnetwork-blockingfortuneclient-example.html">Blocking Fortune Client Example</a> illustrates the synchronous approach.</p>
+<p>Our class contains some data and a few private slots:</p>
+<pre class="cpp">
+
+  <span class="keyword">class</span> Client : <span class="keyword">public</span> <span class="type">QDialog</span>
+  {
+      Q_OBJECT
+
+  <span class="keyword">public</span>:
+      <span class="keyword">explicit</span> Client(<span class="type">QWidget</span> <span class="operator">*</span>parent <span class="operator">=</span> Q_NULLPTR);
+
+  <span class="keyword">private</span> <span class="keyword">slots</span>:
+      <span class="type">void</span> requestNewFortune();
+      <span class="type">void</span> readFortune();
+      <span class="type">void</span> displayError(<span class="type"><a href="qabstractsocket.html">QAbstractSocket</a></span><span class="operator">::</span>SocketError socketError);
+      <span class="type">void</span> enableGetFortuneButton();
+      <span class="type">void</span> sessionOpened();
+
+  <span class="keyword">private</span>:
+      <span class="type">QComboBox</span> <span class="operator">*</span>hostCombo;
+      <span class="type">QLineEdit</span> <span class="operator">*</span>portLineEdit;
+      <span class="type">QLabel</span> <span class="operator">*</span>statusLabel;
+      <span class="type">QPushButton</span> <span class="operator">*</span>getFortuneButton;
+
+      <span class="type"><a href="qtcpsocket.html">QTcpSocket</a></span> <span class="operator">*</span>tcpSocket;
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> currentFortune;
+      <span class="type"><a href="../qtcore/qtglobal.html#quint16-typedef">quint16</a></span> blockSize;
+
+      <span class="type"><a href="qnetworksession.html">QNetworkSession</a></span> <span class="operator">*</span>networkSession;
+  };
+
+</pre>
+<p>Other than the widgets that make up the GUI, the data members include a <a href="qtcpsocket.html">QTcpSocket</a> pointer, a copy of the fortune text currently displayed, and the size of the packet we are currently reading (more on this later).</p>
+<p>The socket is initialized in the Client constructor. We'll pass the main widget as parent, so that we won't have to worry about deleting the socket:</p>
+<pre class="cpp">
+
+  Client<span class="operator">::</span>Client(<span class="type">QWidget</span> <span class="operator">*</span>parent)
+      : <span class="type">QDialog</span>(parent)
+      <span class="operator">,</span> hostCombo(<span class="keyword">new</span> <span class="type">QComboBox</span>)
+      <span class="operator">,</span> portLineEdit(<span class="keyword">new</span> <span class="type">QLineEdit</span>)
+      <span class="operator">,</span> getFortuneButton(<span class="keyword">new</span> <span class="type">QPushButton</span>(tr(<span class="string">&quot;Get Fortune&quot;</span>)))
+      <span class="operator">,</span> tcpSocket(<span class="keyword">new</span> <span class="type"><a href="qtcpsocket.html">QTcpSocket</a></span>(<span class="keyword">this</span>))
+      <span class="operator">,</span> blockSize(<span class="number">0</span>)
+      <span class="operator">,</span> networkSession(Q_NULLPTR)
+  {
+      setWindowFlags(windowFlags() <span class="operator">&amp;</span> <span class="operator">~</span><span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>WindowContextHelpButtonHint);
+      ...
+      <span class="operator">,</span> tcpSocket(<span class="keyword">new</span> <span class="type"><a href="qtcpsocket.html">QTcpSocket</a></span>(<span class="keyword">this</span>))
+
+</pre>
+<p>The only <a href="qtcpsocket.html">QTcpSocket</a> signals we need in this example are <a href="../qtcore/qiodevice.html#readyRead">QTcpSocket::readyRead</a>(), signifying that data has been received, and <a href="qabstractsocket.html#error">QTcpSocket::error</a>(), which we will use to catch any connection errors:</p>
+<pre class="qml">
+
+      ...
+      connect(tcpSocket<span class="operator">,</span> <span class="operator">&amp;</span><span class="type"><a href="../qtcore/qiodevice.html">QIODevice</a></span><span class="operator">::</span>readyRead<span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> <span class="operator">&amp;</span>Client<span class="operator">::</span>readFortune);
+      <span class="keyword">typedef</span> <span class="type">void</span> (<span class="type"><a href="qabstractsocket.html">QAbstractSocket</a></span><span class="operator">::</span><span class="operator">*</span><span class="type">QAbstractSocketErrorSignal</span>)(<span class="type"><a href="qabstractsocket.html">QAbstractSocket</a></span><span class="operator">::</span>SocketError);
+      connect(tcpSocket<span class="operator">,</span> <span class="keyword">static_cast</span><span class="operator">&lt;</span><span class="type">QAbstractSocketErrorSignal</span><span class="operator">&gt;</span>(<span class="operator">&amp;</span><span class="type"><a href="qabstractsocket.html">QAbstractSocket</a></span><span class="operator">::</span>error)<span class="operator">,</span>
+      ...
+  }
+
+</pre>
+<p>Clicking the <b>Get Fortune</b> button will invoke the <code>requestNewFortune()</code> slot:</p>
+<pre class="cpp">
+
+  <span class="type">void</span> Client<span class="operator">::</span>requestNewFortune()
+  {
+      getFortuneButton<span class="operator">-</span><span class="operator">&gt;</span>setEnabled(<span class="keyword">false</span>);
+      blockSize <span class="operator">=</span> <span class="number">0</span>;
+      tcpSocket<span class="operator">-</span><span class="operator">&gt;</span>abort();
+      tcpSocket<span class="operator">-</span><span class="operator">&gt;</span>connectToHost(hostCombo<span class="operator">-</span><span class="operator">&gt;</span>currentText()<span class="operator">,</span>
+                               portLineEdit<span class="operator">-</span><span class="operator">&gt;</span>text()<span class="operator">.</span>toInt());
+  }
+
+</pre>
+<p>In this slot, we initialize <code>blockSize</code> to 0, preparing to read a new block of data. Because we allow the user to click <b>Get Fortune</b> before the previous connection finished closing, we start off by aborting the previous connection by calling <a href="qabstractsocket.html#abort">QTcpSocket::abort</a>(). (On an unconnected socket, this function does nothing.) We then proceed to connecting to the fortune server by calling <a href="qabstractsocket.html#connectToHost">QTcpSocket::connectToHost</a>(), passing the hostname and port from the user interface as arguments.</p>
+<p>As a result of calling <a href="qabstractsocket.html#connectToHost">connectToHost()</a>, one of two things can happen:</p>
+<ul>
+<li><i>The connection is established.</i> In this case, the server will send us a fortune. <a href="qtcpsocket.html">QTcpSocket</a> will emit <a href="../qtcore/qiodevice.html#readyRead">readyRead()</a> every time it receives a block of data.</li>
+<li><i>An error occurs.</i> We need to inform the user if the connection failed or was broken. In this case, <a href="qtcpsocket.html">QTcpSocket</a> will emit <a href="qabstractsocket.html#error">error()</a>, and <code>Client::displayError()</code> will be called.</li>
+</ul>
+<p>Let's go through the <a href="qabstractsocket.html#error">error()</a> case first:</p>
+<pre class="cpp">
+
+  <span class="type">void</span> Client<span class="operator">::</span>displayError(<span class="type"><a href="qabstractsocket.html">QAbstractSocket</a></span><span class="operator">::</span>SocketError socketError)
+  {
+      <span class="keyword">switch</span> (socketError) {
+      <span class="keyword">case</span> <span class="type"><a href="qabstractsocket.html">QAbstractSocket</a></span><span class="operator">::</span>RemoteHostClosedError:
+          <span class="keyword">break</span>;
+      <span class="keyword">case</span> <span class="type"><a href="qabstractsocket.html">QAbstractSocket</a></span><span class="operator">::</span>HostNotFoundError:
+          <span class="type">QMessageBox</span><span class="operator">::</span>information(<span class="keyword">this</span><span class="operator">,</span> tr(<span class="string">&quot;Fortune Client&quot;</span>)<span class="operator">,</span>
+                                   tr(<span class="string">&quot;The host was not found. Please check the &quot;</span>
+                                      <span class="string">&quot;host name and port settings.&quot;</span>));
+          <span class="keyword">break</span>;
+      <span class="keyword">case</span> <span class="type"><a href="qabstractsocket.html">QAbstractSocket</a></span><span class="operator">::</span>ConnectionRefusedError:
+          <span class="type">QMessageBox</span><span class="operator">::</span>information(<span class="keyword">this</span><span class="operator">,</span> tr(<span class="string">&quot;Fortune Client&quot;</span>)<span class="operator">,</span>
+                                   tr(<span class="string">&quot;The connection was refused by the peer. &quot;</span>
+                                      <span class="string">&quot;Make sure the fortune server is running, &quot;</span>
+                                      <span class="string">&quot;and check that the host name and port &quot;</span>
+                                      <span class="string">&quot;settings are correct.&quot;</span>));
+          <span class="keyword">break</span>;
+      <span class="keyword">default</span>:
+          <span class="type">QMessageBox</span><span class="operator">::</span>information(<span class="keyword">this</span><span class="operator">,</span> tr(<span class="string">&quot;Fortune Client&quot;</span>)<span class="operator">,</span>
+                                   tr(<span class="string">&quot;The following error occurred: %1.&quot;</span>)
+                                   <span class="operator">.</span>arg(tcpSocket<span class="operator">-</span><span class="operator">&gt;</span>errorString()));
+      }
+
+      getFortuneButton<span class="operator">-</span><span class="operator">&gt;</span>setEnabled(<span class="keyword">true</span>);
+  }
+
+</pre>
+<p>We pop up all errors in a dialog using QMessageBox::information(). <a href="qabstractsocket.html#SocketError-enum">QTcpSocket::RemoteHostClosedError</a> is silently ignored, because the fortune server protocol ends with the server closing the connection.</p>
+<p>Now for the <a href="../qtcore/qiodevice.html#readyRead">readyRead()</a> alternative. This signal is connected to <code>Client::readFortune()</code>:</p>
+<pre class="cpp">
+
+  <span class="type">void</span> Client<span class="operator">::</span>readFortune()
+  {
+      <span class="type"><a href="../qtcore/qdatastream.html">QDataStream</a></span> in(tcpSocket);
+      in<span class="operator">.</span>setVersion(<span class="type"><a href="../qtcore/qdatastream.html">QDataStream</a></span><span class="operator">::</span>Qt_4_0);
+
+      <span class="keyword">if</span> (blockSize <span class="operator">=</span><span class="operator">=</span> <span class="number">0</span>) {
+          <span class="keyword">if</span> (tcpSocket<span class="operator">-</span><span class="operator">&gt;</span>bytesAvailable() <span class="operator">&lt;</span> (<span class="type">int</span>)<span class="keyword">sizeof</span>(<span class="type"><a href="../qtcore/qtglobal.html#quint16-typedef">quint16</a></span>))
+              <span class="keyword">return</span>;
+
+          in <span class="operator">&gt;</span><span class="operator">&gt;</span> blockSize;
+      }
+
+      <span class="keyword">if</span> (tcpSocket<span class="operator">-</span><span class="operator">&gt;</span>bytesAvailable() <span class="operator">&lt;</span> blockSize)
+          <span class="keyword">return</span>;
+
+</pre>
+<p>The protocol is based on <a href="../qtcore/qdatastream.html">QDataStream</a>, so we start by creating a stream object, passing the socket to <a href="../qtcore/qdatastream.html">QDataStream</a>'s constructor. We then explicitly set the protocol version of the stream to <a href="../qtcore/qdatastream.html#Version-enum">QDataStream::Qt_4_0</a> to ensure that we're using the same version as the fortune server, no matter which version of Qt the client and server use.</p>
+<p>Now, TCP is based on sending a stream of data, so we cannot expect to get the entire fortune in one go. Especially on a slow network, the data can be received in several small fragments. <a href="qtcpsocket.html">QTcpSocket</a> buffers up all incoming data and emits <a href="../qtcore/qiodevice.html#readyRead">readyRead()</a> for every new block that arrives, and it is our job to ensure that we have received all the data we need before we start parsing. The server's response starts with the size of the packet, so first we need to ensure that we can read the size, then we will wait until <a href="qtcpsocket.html">QTcpSocket</a> has received the full packet.</p>
+<pre class="cpp">
+
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> nextFortune;
+      in <span class="operator">&gt;</span><span class="operator">&gt;</span> nextFortune;
+
+      <span class="keyword">if</span> (nextFortune <span class="operator">=</span><span class="operator">=</span> currentFortune) {
+          <span class="type"><a href="../qtcore/qtimer.html">QTimer</a></span><span class="operator">::</span>singleShot(<span class="number">0</span><span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> <span class="operator">&amp;</span>Client<span class="operator">::</span>requestNewFortune);
+          <span class="keyword">return</span>;
+      }
+
+      currentFortune <span class="operator">=</span> nextFortune;
+      statusLabel<span class="operator">-</span><span class="operator">&gt;</span>setText(currentFortune);
+      getFortuneButton<span class="operator">-</span><span class="operator">&gt;</span>setEnabled(<span class="keyword">true</span>);
+  }
+
+</pre>
+<p>We proceed by using <a href="../qtcore/qdatastream.html">QDataStream</a>'s streaming operator to read the fortune from the socket into a <a href="../qtcore/qstring.html">QString</a>. Once read, we can call QLabel::setText() to display the fortune.</p>
+<p>Files:</p>
+<ul>
+<li><a href="qtnetwork-fortuneclient-client-cpp.html">fortuneclient/client.cpp</a></li>
+<li><a href="qtnetwork-fortuneclient-client-h.html">fortuneclient/client.h</a></li>
+<li><a href="qtnetwork-fortuneclient-main-cpp.html">fortuneclient/main.cpp</a></li>
+<li><a href="qtnetwork-fortuneclient-fortuneclient-pro.html">fortuneclient/fortuneclient.pro</a></li>
+</ul>
+</div>
+<p><b>See also </b><a href="qtnetwork-fortuneserver-example.html">Fortune Server Example</a> and <a href="qtnetwork-blockingfortuneclient-example.html">Blocking Fortune Client Example</a>.</p>
+<!-- @@@fortuneclient -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

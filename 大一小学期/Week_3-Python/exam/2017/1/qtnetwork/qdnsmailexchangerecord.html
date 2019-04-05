@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qdnslookup.cpp -->
+  <title>QDnsMailExchangeRecord Class | Qt Network 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtnetwork-index.html">Qt Network</a></td><td ><a href="qtnetwork-module.html">C++ Classes</a></td><td >QDnsMailExchangeRecord</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">QDnsMailExchangeRecord Class</h1>
+<!-- $$$QDnsMailExchangeRecord-brief -->
+<p>The <a href="qdnsmailexchangerecord.html">QDnsMailExchangeRecord</a> class stores information about a DNS MX record. <a href="#details">More...</a></p>
+<!-- @@@QDnsMailExchangeRecord -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign">   <span class="preprocessor">#include &lt;QDnsMailExchangeRecord&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> qmake:</td><td class="memItemRight bottomAlign"> QT += network</td></tr></table></div><ul>
+<li><a href="qdnsmailexchangerecord-members.html">List of all members, including inherited members</a></li>
+</ul>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qdnsmailexchangerecord.html#QDnsMailExchangeRecord">QDnsMailExchangeRecord</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qdnsmailexchangerecord.html#QDnsMailExchangeRecord-1">QDnsMailExchangeRecord</a></b>(const QDnsMailExchangeRecord &amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qdnsmailexchangerecord.html#dtor.QDnsMailExchangeRecord">~QDnsMailExchangeRecord</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qdnsmailexchangerecord.html#exchange">exchange</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qdnsmailexchangerecord.html#name">name</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> quint16 </td><td class="memItemRight bottomAlign"><b><a href="qdnsmailexchangerecord.html#preference">preference</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qdnsmailexchangerecord.html#swap">swap</a></b>(QDnsMailExchangeRecord &amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> quint32 </td><td class="memItemRight bottomAlign"><b><a href="qdnsmailexchangerecord.html#timeToLive">timeToLive</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QDnsMailExchangeRecord &amp;</td><td class="memItemRight bottomAlign"><b><a href="qdnsmailexchangerecord.html#operator-eq">operator=</a></b>(QDnsMailExchangeRecord &amp;&amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QDnsMailExchangeRecord &amp;</td><td class="memItemRight bottomAlign"><b><a href="qdnsmailexchangerecord.html#operator-eq-1">operator=</a></b>(const QDnsMailExchangeRecord &amp;<i>other</i>)</td></tr>
+</table></div>
+<a name="details"></a>
+<!-- $$$QDnsMailExchangeRecord-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="qdnsmailexchangerecord.html">QDnsMailExchangeRecord</a> class stores information about a DNS MX record.</p>
+<p>When performing a lookup on a service, zero or more records will be returned. Each record is represented by a <a href="qdnsmailexchangerecord.html">QDnsMailExchangeRecord</a> instance.</p>
+<p>The meaning of the fields is defined in <a href="http://www.rfc-editor.org/rfc/rfc1035.txt">RFC 1035</a>.</p>
+</div>
+<p><b>See also </b><a href="qdnslookup.html">QDnsLookup</a>.</p>
+<!-- @@@QDnsMailExchangeRecord -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$QDnsMailExchangeRecord[overload1]$$$QDnsMailExchangeRecord -->
+<h3 class="fn" id="QDnsMailExchangeRecord"><a name="QDnsMailExchangeRecord"></a>QDnsMailExchangeRecord::<span class="name">QDnsMailExchangeRecord</span>()</h3>
+<p>Constructs an empty mail exchange record object.</p>
+<!-- @@@QDnsMailExchangeRecord -->
+<!-- $$$QDnsMailExchangeRecord$$$QDnsMailExchangeRecordconstQDnsMailExchangeRecord& -->
+<h3 class="fn" id="QDnsMailExchangeRecord-1"><a name="QDnsMailExchangeRecord-1"></a>QDnsMailExchangeRecord::<span class="name">QDnsMailExchangeRecord</span>(const <span class="type"><a href="qdnsmailexchangerecord.html#QDnsMailExchangeRecord">QDnsMailExchangeRecord</a></span> &amp;<i>other</i>)</h3>
+<p>Constructs a copy of <i>other</i>.</p>
+<!-- @@@QDnsMailExchangeRecord -->
+<!-- $$$~QDnsMailExchangeRecord[overload1]$$$~QDnsMailExchangeRecord -->
+<h3 class="fn" id="dtor.QDnsMailExchangeRecord"><a name="dtor.QDnsMailExchangeRecord"></a>QDnsMailExchangeRecord::<span class="name">~QDnsMailExchangeRecord</span>()</h3>
+<p>Destroys a mail exchange record.</p>
+<!-- @@@~QDnsMailExchangeRecord -->
+<!-- $$$exchange[overload1]$$$exchange -->
+<h3 class="fn" id="exchange"><a name="exchange"></a><span class="type"><a href="../qtcore/qstring.html">QString</a></span> QDnsMailExchangeRecord::<span class="name">exchange</span>() const</h3>
+<p>Returns the domain name of the mail exchange for this record.</p>
+<!-- @@@exchange -->
+<!-- $$$name[overload1]$$$name -->
+<h3 class="fn" id="name"><a name="name"></a><span class="type"><a href="../qtcore/qstring.html">QString</a></span> QDnsMailExchangeRecord::<span class="name">name</span>() const</h3>
+<p>Returns the name for this record.</p>
+<!-- @@@name -->
+<!-- $$$preference[overload1]$$$preference -->
+<h3 class="fn" id="preference"><a name="preference"></a><span class="type"><a href="../qtcore/qtglobal.html#quint16-typedef">quint16</a></span> QDnsMailExchangeRecord::<span class="name">preference</span>() const</h3>
+<p>Returns the preference for this record.</p>
+<!-- @@@preference -->
+<!-- $$$swap[overload1]$$$swapQDnsMailExchangeRecord& -->
+<h3 class="fn" id="swap"><a name="swap"></a><span class="type">void</span> QDnsMailExchangeRecord::<span class="name">swap</span>(<span class="type"><a href="qdnsmailexchangerecord.html#QDnsMailExchangeRecord">QDnsMailExchangeRecord</a></span> &amp;<i>other</i>)</h3>
+<p>Swaps this mail exchange record with <i>other</i>. This function is very fast and never fails.</p>
+<!-- @@@swap -->
+<!-- $$$timeToLive[overload1]$$$timeToLive -->
+<h3 class="fn" id="timeToLive"><a name="timeToLive"></a><span class="type"><a href="../qtcore/qtglobal.html#quint32-typedef">quint32</a></span> QDnsMailExchangeRecord::<span class="name">timeToLive</span>() const</h3>
+<p>Returns the duration in seconds for which this record is valid.</p>
+<!-- @@@timeToLive -->
+<!-- $$$operator=[overload1]$$$operator=QDnsMailExchangeRecord&& -->
+<h3 class="fn" id="operator-eq"><a name="operator-eq"></a><span class="type"><a href="qdnsmailexchangerecord.html#QDnsMailExchangeRecord">QDnsMailExchangeRecord</a></span> &amp;QDnsMailExchangeRecord::<span class="name">operator=</span>(<span class="type"><a href="qdnsmailexchangerecord.html#QDnsMailExchangeRecord">QDnsMailExchangeRecord</a></span> &amp;&amp;<i>other</i>)</h3>
+<p>Move-assignment operator.</p><!-- @@@operator= -->
+<!-- $$$operator=$$$operator=constQDnsMailExchangeRecord& -->
+<h3 class="fn" id="operator-eq-1"><a name="operator-eq-1"></a><span class="type"><a href="qdnsmailexchangerecord.html#QDnsMailExchangeRecord">QDnsMailExchangeRecord</a></span> &amp;QDnsMailExchangeRecord::<span class="name">operator=</span>(const <span class="type"><a href="qdnsmailexchangerecord.html#QDnsMailExchangeRecord">QDnsMailExchangeRecord</a></span> &amp;<i>other</i>)</h3>
+<p>Assigns the data of the <i>other</i> object to this record object, and returns a reference to it.</p>
+<!-- @@@operator= -->
+</div>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

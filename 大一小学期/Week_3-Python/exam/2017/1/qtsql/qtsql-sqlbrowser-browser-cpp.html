@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>browser.cpp Example File | Qt SQL 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtsql-index.html">Qt SQL</a></td><td ><a href="qtsql-sqlbrowser-example.html">SQL Browser</a></td><td >browser.cpp Example File</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar"><div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">browser.cpp Example File</h1>
+<span class="subtitle">sqlbrowser/browser.cpp</span>
+<!-- $$$sqlbrowser/browser.cpp-description -->
+<div class="descr"> <a name="details"></a>
+<pre class="cpp">
+
+  <span class="comment">/****************************************************************************
+  **
+  ** Copyright (C) 2015 The Qt Company Ltd.
+  ** Contact: http://www.qt.io/licensing/
+  **
+  ** This file is part of the demonstration applications of the Qt Toolkit.
+  **
+  ** $QT_BEGIN_LICENSE:LGPL21$
+  ** Commercial License Usage
+  ** Licensees holding valid commercial Qt licenses may use this file in
+  ** accordance with the commercial license agreement provided with the
+  ** Software or, alternatively, in accordance with the terms contained in
+  ** a written agreement between you and The Qt Company. For licensing terms
+  ** and conditions see http://www.qt.io/terms-conditions. For further
+  ** information use the contact form at http://www.qt.io/contact-us.
+  **
+  ** GNU Lesser General Public License Usage
+  ** Alternatively, this file may be used under the terms of the GNU Lesser
+  ** General Public License version 2.1 or version 3 as published by the Free
+  ** Software Foundation and appearing in the file LICENSE.LGPLv21 and
+  ** LICENSE.LGPLv3 included in the packaging of this file. Please review the
+  ** following information to ensure the GNU Lesser General Public License
+  ** requirements will be met: https://www.gnu.org/licenses/lgpl.html and
+  ** http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
+  **
+  ** As a special exception, The Qt Company gives you certain additional
+  ** rights. These rights are described in The Qt Company LGPL Exception
+  ** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
+  **
+  ** $QT_END_LICENSE$
+  **
+  ****************************************************************************/</span>
+
+  <span class="preprocessor">#include &quot;browser.h&quot;</span>
+  <span class="preprocessor">#include &quot;qsqlconnectiondialog.h&quot;</span>
+
+  <span class="preprocessor">#include &lt;QtWidgets&gt;</span>
+  <span class="preprocessor">#include &lt;QtSql&gt;</span>
+
+  Browser<span class="operator">::</span>Browser(<span class="type"><a href="../qtwidgets/qwidget.html">QWidget</a></span> <span class="operator">*</span>parent)
+      : <span class="type"><a href="../qtwidgets/qwidget.html">QWidget</a></span>(parent)
+  {
+      setupUi(<span class="keyword">this</span>);
+
+      table<span class="operator">-</span><span class="operator">&gt;</span>addAction(insertRowAction);
+      table<span class="operator">-</span><span class="operator">&gt;</span>addAction(deleteRowAction);
+      table<span class="operator">-</span><span class="operator">&gt;</span>addAction(fieldStrategyAction);
+      table<span class="operator">-</span><span class="operator">&gt;</span>addAction(rowStrategyAction);
+      table<span class="operator">-</span><span class="operator">&gt;</span>addAction(manualStrategyAction);
+      table<span class="operator">-</span><span class="operator">&gt;</span>addAction(submitAction);
+      table<span class="operator">-</span><span class="operator">&gt;</span>addAction(revertAction);
+      table<span class="operator">-</span><span class="operator">&gt;</span>addAction(selectAction);
+
+      <span class="keyword">if</span> (<span class="type"><a href="qsqldatabase.html">QSqlDatabase</a></span><span class="operator">::</span>drivers()<span class="operator">.</span>isEmpty())
+          <span class="type"><a href="../qtwidgets/qmessagebox.html">QMessageBox</a></span><span class="operator">::</span>information(<span class="keyword">this</span><span class="operator">,</span> tr(<span class="string">&quot;No database drivers found&quot;</span>)<span class="operator">,</span>
+                                   tr(<span class="string">&quot;This demo requires at least one Qt database driver. &quot;</span>
+                                      <span class="string">&quot;Please check the documentation how to build the &quot;</span>
+                                      <span class="string">&quot;Qt SQL plugins.&quot;</span>));
+
+      <span class="keyword">emit</span> statusMessage(tr(<span class="string">&quot;Ready.&quot;</span>));
+  }
+
+  Browser<span class="operator">::</span><span class="operator">~</span>Browser()
+  {
+  }
+
+  <span class="type">void</span> Browser<span class="operator">::</span>exec()
+  {
+      <span class="type"><a href="qsqlquerymodel.html">QSqlQueryModel</a></span> <span class="operator">*</span>model <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="qsqlquerymodel.html">QSqlQueryModel</a></span>(table);
+      model<span class="operator">-</span><span class="operator">&gt;</span>setQuery(<span class="type"><a href="qsqlquery.html">QSqlQuery</a></span>(sqlEdit<span class="operator">-</span><span class="operator">&gt;</span>toPlainText()<span class="operator">,</span> connectionWidget<span class="operator">-</span><span class="operator">&gt;</span>currentDatabase()));
+      table<span class="operator">-</span><span class="operator">&gt;</span>setModel(model);
+
+      <span class="keyword">if</span> (model<span class="operator">-</span><span class="operator">&gt;</span>lastError()<span class="operator">.</span>type() <span class="operator">!</span><span class="operator">=</span> <span class="type"><a href="qsqlerror.html">QSqlError</a></span><span class="operator">::</span>NoError)
+          <span class="keyword">emit</span> statusMessage(model<span class="operator">-</span><span class="operator">&gt;</span>lastError()<span class="operator">.</span>text());
+      <span class="keyword">else</span> <span class="keyword">if</span> (model<span class="operator">-</span><span class="operator">&gt;</span>query()<span class="operator">.</span>isSelect())
+          <span class="keyword">emit</span> statusMessage(tr(<span class="string">&quot;Query OK.&quot;</span>));
+      <span class="keyword">else</span>
+          <span class="keyword">emit</span> statusMessage(tr(<span class="string">&quot;Query OK, number of affected rows: %1&quot;</span>)<span class="operator">.</span>arg(
+                             model<span class="operator">-</span><span class="operator">&gt;</span>query()<span class="operator">.</span>numRowsAffected()));
+
+      updateActions();
+  }
+
+  <span class="type"><a href="qsqlerror.html">QSqlError</a></span> Browser<span class="operator">::</span>addConnection(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>driver<span class="operator">,</span> <span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>dbName<span class="operator">,</span> <span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>host<span class="operator">,</span>
+                              <span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>user<span class="operator">,</span> <span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>passwd<span class="operator">,</span> <span class="type">int</span> port)
+  {
+      <span class="keyword">static</span> <span class="type">int</span> cCount <span class="operator">=</span> <span class="number">0</span>;
+
+      <span class="type"><a href="qsqlerror.html">QSqlError</a></span> err;
+      <span class="type"><a href="qsqldatabase.html">QSqlDatabase</a></span> db <span class="operator">=</span> <span class="type"><a href="qsqldatabase.html">QSqlDatabase</a></span><span class="operator">::</span>addDatabase(driver<span class="operator">,</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span>(<span class="string">&quot;Browser%1&quot;</span>)<span class="operator">.</span>arg(<span class="operator">+</span><span class="operator">+</span>cCount));
+      db<span class="operator">.</span>setDatabaseName(dbName);
+      db<span class="operator">.</span>setHostName(host);
+      db<span class="operator">.</span>setPort(port);
+      <span class="keyword">if</span> (<span class="operator">!</span>db<span class="operator">.</span>open(user<span class="operator">,</span> passwd)) {
+          err <span class="operator">=</span> db<span class="operator">.</span>lastError();
+          db <span class="operator">=</span> <span class="type"><a href="qsqldatabase.html">QSqlDatabase</a></span>();
+          <span class="type"><a href="qsqldatabase.html">QSqlDatabase</a></span><span class="operator">::</span>removeDatabase(<span class="type"><a href="../qtcore/qstring.html">QString</a></span>(<span class="string">&quot;Browser%1&quot;</span>)<span class="operator">.</span>arg(cCount));
+      }
+      connectionWidget<span class="operator">-</span><span class="operator">&gt;</span>refresh();
+
+      <span class="keyword">return</span> err;
+  }
+
+  <span class="type">void</span> Browser<span class="operator">::</span>addConnection()
+  {
+      <span class="type">QSqlConnectionDialog</span> dialog(<span class="keyword">this</span>);
+      <span class="keyword">if</span> (dialog<span class="operator">.</span>exec() <span class="operator">!</span><span class="operator">=</span> <span class="type"><a href="../qtwidgets/qdialog.html">QDialog</a></span><span class="operator">::</span>Accepted)
+          <span class="keyword">return</span>;
+
+      <span class="keyword">if</span> (dialog<span class="operator">.</span>useInMemoryDatabase()) {
+          <span class="type"><a href="qsqldatabase.html">QSqlDatabase</a></span><span class="operator">::</span>database(<span class="string">&quot;in_mem_db&quot;</span><span class="operator">,</span> <span class="keyword">false</span>)<span class="operator">.</span>close();
+          <span class="type"><a href="qsqldatabase.html">QSqlDatabase</a></span><span class="operator">::</span>removeDatabase(<span class="string">&quot;in_mem_db&quot;</span>);
+          <span class="type"><a href="qsqldatabase.html">QSqlDatabase</a></span> db <span class="operator">=</span> <span class="type"><a href="qsqldatabase.html">QSqlDatabase</a></span><span class="operator">::</span>addDatabase(<span class="string">&quot;QSQLITE&quot;</span><span class="operator">,</span> <span class="string">&quot;in_mem_db&quot;</span>);
+          db<span class="operator">.</span>setDatabaseName(<span class="string">&quot;:memory:&quot;</span>);
+          <span class="keyword">if</span> (<span class="operator">!</span>db<span class="operator">.</span>open())
+              <span class="type"><a href="../qtwidgets/qmessagebox.html">QMessageBox</a></span><span class="operator">::</span>warning(<span class="keyword">this</span><span class="operator">,</span> tr(<span class="string">&quot;Unable to open database&quot;</span>)<span class="operator">,</span> tr(<span class="string">&quot;An error occurred while &quot;</span>
+                                                                           <span class="string">&quot;opening the connection: &quot;</span>) <span class="operator">+</span> db<span class="operator">.</span>lastError()<span class="operator">.</span>text());
+          <span class="type"><a href="qsqlquery.html">QSqlQuery</a></span> q(<span class="string">&quot;&quot;</span><span class="operator">,</span> db);
+          q<span class="operator">.</span>exec(<span class="string">&quot;drop table Movies&quot;</span>);
+          q<span class="operator">.</span>exec(<span class="string">&quot;drop table Names&quot;</span>);
+          q<span class="operator">.</span>exec(<span class="string">&quot;create table Movies (id integer primary key, Title varchar, Director varchar, Rating number)&quot;</span>);
+          q<span class="operator">.</span>exec(<span class="string">&quot;insert into Movies values (0, 'Metropolis', 'Fritz Lang', '8.4')&quot;</span>);
+          q<span class="operator">.</span>exec(<span class="string">&quot;insert into Movies values (1, 'Nosferatu, eine Symphonie des Grauens', 'F.W. Murnau', '8.1')&quot;</span>);
+          q<span class="operator">.</span>exec(<span class="string">&quot;insert into Movies values (2, 'Bis ans Ende der Welt', 'Wim Wenders', '6.5')&quot;</span>);
+          q<span class="operator">.</span>exec(<span class="string">&quot;insert into Movies values (3, 'Hardware', 'Richard Stanley', '5.2')&quot;</span>);
+          q<span class="operator">.</span>exec(<span class="string">&quot;insert into Movies values (4, 'Mitchell', 'Andrew V. McLaglen', '2.1')&quot;</span>);
+          q<span class="operator">.</span>exec(<span class="string">&quot;create table Names (id integer primary key, Firstname varchar, Lastname varchar, City varchar)&quot;</span>);
+          q<span class="operator">.</span>exec(<span class="string">&quot;insert into Names values (0, 'Sala', 'Palmer', 'Morristown')&quot;</span>);
+          q<span class="operator">.</span>exec(<span class="string">&quot;insert into Names values (1, 'Christopher', 'Walker', 'Morristown')&quot;</span>);
+          q<span class="operator">.</span>exec(<span class="string">&quot;insert into Names values (2, 'Donald', 'Duck', 'Andeby')&quot;</span>);
+          q<span class="operator">.</span>exec(<span class="string">&quot;insert into Names values (3, 'Buck', 'Rogers', 'Paris')&quot;</span>);
+          q<span class="operator">.</span>exec(<span class="string">&quot;insert into Names values (4, 'Sherlock', 'Holmes', 'London')&quot;</span>);
+          connectionWidget<span class="operator">-</span><span class="operator">&gt;</span>refresh();
+      } <span class="keyword">else</span> {
+          <span class="type"><a href="qsqlerror.html">QSqlError</a></span> err <span class="operator">=</span> addConnection(dialog<span class="operator">.</span>driverName()<span class="operator">,</span> dialog<span class="operator">.</span>databaseName()<span class="operator">,</span> dialog<span class="operator">.</span>hostName()<span class="operator">,</span>
+                             dialog<span class="operator">.</span>userName()<span class="operator">,</span> dialog<span class="operator">.</span>password()<span class="operator">,</span> dialog<span class="operator">.</span>port());
+          <span class="keyword">if</span> (err<span class="operator">.</span>type() <span class="operator">!</span><span class="operator">=</span> <span class="type"><a href="qsqlerror.html">QSqlError</a></span><span class="operator">::</span>NoError)
+              <span class="type"><a href="../qtwidgets/qmessagebox.html">QMessageBox</a></span><span class="operator">::</span>warning(<span class="keyword">this</span><span class="operator">,</span> tr(<span class="string">&quot;Unable to open database&quot;</span>)<span class="operator">,</span> tr(<span class="string">&quot;An error occurred while &quot;</span>
+                                         <span class="string">&quot;opening the connection: &quot;</span>) <span class="operator">+</span> err<span class="operator">.</span>text());
+      }
+  }
+
+  <span class="type">void</span> Browser<span class="operator">::</span>showTable(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>t)
+  {
+      <span class="type"><a href="qsqltablemodel.html">QSqlTableModel</a></span> <span class="operator">*</span>model <span class="operator">=</span> <span class="keyword">new</span> CustomModel(table<span class="operator">,</span> connectionWidget<span class="operator">-</span><span class="operator">&gt;</span>currentDatabase());
+      model<span class="operator">-</span><span class="operator">&gt;</span>setEditStrategy(<span class="type"><a href="qsqltablemodel.html">QSqlTableModel</a></span><span class="operator">::</span>OnRowChange);
+      model<span class="operator">-</span><span class="operator">&gt;</span>setTable(connectionWidget<span class="operator">-</span><span class="operator">&gt;</span>currentDatabase()<span class="operator">.</span>driver()<span class="operator">-</span><span class="operator">&gt;</span>escapeIdentifier(t<span class="operator">,</span> <span class="type"><a href="qsqldriver.html">QSqlDriver</a></span><span class="operator">::</span>TableName));
+      model<span class="operator">-</span><span class="operator">&gt;</span>select();
+      <span class="keyword">if</span> (model<span class="operator">-</span><span class="operator">&gt;</span>lastError()<span class="operator">.</span>type() <span class="operator">!</span><span class="operator">=</span> <span class="type"><a href="qsqlerror.html">QSqlError</a></span><span class="operator">::</span>NoError)
+          <span class="keyword">emit</span> statusMessage(model<span class="operator">-</span><span class="operator">&gt;</span>lastError()<span class="operator">.</span>text());
+      table<span class="operator">-</span><span class="operator">&gt;</span>setModel(model);
+      table<span class="operator">-</span><span class="operator">&gt;</span>setEditTriggers(<span class="type"><a href="../qtwidgets/qabstractitemview.html">QAbstractItemView</a></span><span class="operator">::</span>DoubleClicked<span class="operator">|</span><span class="type"><a href="../qtwidgets/qabstractitemview.html">QAbstractItemView</a></span><span class="operator">::</span>EditKeyPressed);
+
+      connect(table<span class="operator">-</span><span class="operator">&gt;</span>selectionModel()<span class="operator">,</span> SIGNAL(currentRowChanged(<span class="type"><a href="../qtcore/qmodelindex.html">QModelIndex</a></span><span class="operator">,</span><span class="type"><a href="../qtcore/qmodelindex.html">QModelIndex</a></span>))<span class="operator">,</span>
+              <span class="keyword">this</span><span class="operator">,</span> SLOT(currentChanged()));
+      updateActions();
+  }
+
+  <span class="type">void</span> Browser<span class="operator">::</span>showMetaData(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>t)
+  {
+      <span class="type"><a href="qsqlrecord.html">QSqlRecord</a></span> rec <span class="operator">=</span> connectionWidget<span class="operator">-</span><span class="operator">&gt;</span>currentDatabase()<span class="operator">.</span>record(t);
+      <span class="type">QStandardItemModel</span> <span class="operator">*</span>model <span class="operator">=</span> <span class="keyword">new</span> <span class="type">QStandardItemModel</span>(table);
+
+      model<span class="operator">-</span><span class="operator">&gt;</span>insertRows(<span class="number">0</span><span class="operator">,</span> rec<span class="operator">.</span>count());
+      model<span class="operator">-</span><span class="operator">&gt;</span>insertColumns(<span class="number">0</span><span class="operator">,</span> <span class="number">7</span>);
+
+      model<span class="operator">-</span><span class="operator">&gt;</span>setHeaderData(<span class="number">0</span><span class="operator">,</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Horizontal<span class="operator">,</span> <span class="string">&quot;Fieldname&quot;</span>);
+      model<span class="operator">-</span><span class="operator">&gt;</span>setHeaderData(<span class="number">1</span><span class="operator">,</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Horizontal<span class="operator">,</span> <span class="string">&quot;Type&quot;</span>);
+      model<span class="operator">-</span><span class="operator">&gt;</span>setHeaderData(<span class="number">2</span><span class="operator">,</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Horizontal<span class="operator">,</span> <span class="string">&quot;Length&quot;</span>);
+      model<span class="operator">-</span><span class="operator">&gt;</span>setHeaderData(<span class="number">3</span><span class="operator">,</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Horizontal<span class="operator">,</span> <span class="string">&quot;Precision&quot;</span>);
+      model<span class="operator">-</span><span class="operator">&gt;</span>setHeaderData(<span class="number">4</span><span class="operator">,</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Horizontal<span class="operator">,</span> <span class="string">&quot;Required&quot;</span>);
+      model<span class="operator">-</span><span class="operator">&gt;</span>setHeaderData(<span class="number">5</span><span class="operator">,</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Horizontal<span class="operator">,</span> <span class="string">&quot;AutoValue&quot;</span>);
+      model<span class="operator">-</span><span class="operator">&gt;</span>setHeaderData(<span class="number">6</span><span class="operator">,</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Horizontal<span class="operator">,</span> <span class="string">&quot;DefaultValue&quot;</span>);
+
+      <span class="keyword">for</span> (<span class="type">int</span> i <span class="operator">=</span> <span class="number">0</span>; i <span class="operator">&lt;</span> rec<span class="operator">.</span>count(); <span class="operator">+</span><span class="operator">+</span>i) {
+          <span class="type"><a href="qsqlfield.html">QSqlField</a></span> fld <span class="operator">=</span> rec<span class="operator">.</span>field(i);
+          model<span class="operator">-</span><span class="operator">&gt;</span>setData(model<span class="operator">-</span><span class="operator">&gt;</span>index(i<span class="operator">,</span> <span class="number">0</span>)<span class="operator">,</span> fld<span class="operator">.</span>name());
+          model<span class="operator">-</span><span class="operator">&gt;</span>setData(model<span class="operator">-</span><span class="operator">&gt;</span>index(i<span class="operator">,</span> <span class="number">1</span>)<span class="operator">,</span> fld<span class="operator">.</span>typeID() <span class="operator">=</span><span class="operator">=</span> <span class="operator">-</span><span class="number">1</span>
+                  <span class="operator">?</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span>(<span class="type"><a href="../qtcore/qmetatype.html">QMetaType</a></span><span class="operator">::</span>typeName(fld<span class="operator">.</span>type()))
+                  : <span class="type"><a href="../qtcore/qstring.html">QString</a></span>(<span class="string">&quot;%1 (%2)&quot;</span>)<span class="operator">.</span>arg(<span class="type"><a href="../qtcore/qmetatype.html">QMetaType</a></span><span class="operator">::</span>typeName(fld<span class="operator">.</span>type()))<span class="operator">.</span>arg(fld<span class="operator">.</span>typeID()));
+          model<span class="operator">-</span><span class="operator">&gt;</span>setData(model<span class="operator">-</span><span class="operator">&gt;</span>index(i<span class="operator">,</span> <span class="number">2</span>)<span class="operator">,</span> fld<span class="operator">.</span>length());
+          model<span class="operator">-</span><span class="operator">&gt;</span>setData(model<span class="operator">-</span><span class="operator">&gt;</span>index(i<span class="operator">,</span> <span class="number">3</span>)<span class="operator">,</span> fld<span class="operator">.</span>precision());
+          model<span class="operator">-</span><span class="operator">&gt;</span>setData(model<span class="operator">-</span><span class="operator">&gt;</span>index(i<span class="operator">,</span> <span class="number">4</span>)<span class="operator">,</span> fld<span class="operator">.</span>requiredStatus() <span class="operator">=</span><span class="operator">=</span> <span class="operator">-</span><span class="number">1</span> <span class="operator">?</span> <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span>(<span class="string">&quot;?&quot;</span>)
+                  : <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span>(bool(fld<span class="operator">.</span>requiredStatus())));
+          model<span class="operator">-</span><span class="operator">&gt;</span>setData(model<span class="operator">-</span><span class="operator">&gt;</span>index(i<span class="operator">,</span> <span class="number">5</span>)<span class="operator">,</span> fld<span class="operator">.</span>isAutoValue());
+          model<span class="operator">-</span><span class="operator">&gt;</span>setData(model<span class="operator">-</span><span class="operator">&gt;</span>index(i<span class="operator">,</span> <span class="number">6</span>)<span class="operator">,</span> fld<span class="operator">.</span>defaultValue());
+      }
+
+      table<span class="operator">-</span><span class="operator">&gt;</span>setModel(model);
+      table<span class="operator">-</span><span class="operator">&gt;</span>setEditTriggers(<span class="type"><a href="../qtwidgets/qabstractitemview.html">QAbstractItemView</a></span><span class="operator">::</span>NoEditTriggers);
+
+      updateActions();
+  }
+
+  <span class="type">void</span> Browser<span class="operator">::</span>insertRow()
+  {
+      <span class="type"><a href="qsqltablemodel.html">QSqlTableModel</a></span> <span class="operator">*</span>model <span class="operator">=</span> qobject_cast<span class="operator">&lt;</span><span class="type"><a href="qsqltablemodel.html">QSqlTableModel</a></span> <span class="operator">*</span><span class="operator">&gt;</span>(table<span class="operator">-</span><span class="operator">&gt;</span>model());
+      <span class="keyword">if</span> (<span class="operator">!</span>model)
+          <span class="keyword">return</span>;
+
+      <span class="type"><a href="../qtcore/qmodelindex.html">QModelIndex</a></span> insertIndex <span class="operator">=</span> table<span class="operator">-</span><span class="operator">&gt;</span>currentIndex();
+      <span class="type">int</span> row <span class="operator">=</span> insertIndex<span class="operator">.</span>row() <span class="operator">=</span><span class="operator">=</span> <span class="operator">-</span><span class="number">1</span> <span class="operator">?</span> <span class="number">0</span> : insertIndex<span class="operator">.</span>row();
+      model<span class="operator">-</span><span class="operator">&gt;</span>insertRow(row);
+      insertIndex <span class="operator">=</span> model<span class="operator">-</span><span class="operator">&gt;</span>index(row<span class="operator">,</span> <span class="number">0</span>);
+      table<span class="operator">-</span><span class="operator">&gt;</span>setCurrentIndex(insertIndex);
+      table<span class="operator">-</span><span class="operator">&gt;</span>edit(insertIndex);
+  }
+
+  <span class="type">void</span> Browser<span class="operator">::</span>deleteRow()
+  {
+      <span class="type"><a href="qsqltablemodel.html">QSqlTableModel</a></span> <span class="operator">*</span>model <span class="operator">=</span> qobject_cast<span class="operator">&lt;</span><span class="type"><a href="qsqltablemodel.html">QSqlTableModel</a></span> <span class="operator">*</span><span class="operator">&gt;</span>(table<span class="operator">-</span><span class="operator">&gt;</span>model());
+      <span class="keyword">if</span> (<span class="operator">!</span>model)
+          <span class="keyword">return</span>;
+
+      <span class="type"><a href="../qtcore/qmodelindex.html#QModelIndexList-typedef">QModelIndexList</a></span> currentSelection <span class="operator">=</span> table<span class="operator">-</span><span class="operator">&gt;</span>selectionModel()<span class="operator">-</span><span class="operator">&gt;</span>selectedIndexes();
+      <span class="keyword">for</span> (<span class="type">int</span> i <span class="operator">=</span> <span class="number">0</span>; i <span class="operator">&lt;</span> currentSelection<span class="operator">.</span>count(); <span class="operator">+</span><span class="operator">+</span>i) {
+          <span class="keyword">if</span> (currentSelection<span class="operator">.</span>at(i)<span class="operator">.</span>column() <span class="operator">!</span><span class="operator">=</span> <span class="number">0</span>)
+              <span class="keyword">continue</span>;
+          model<span class="operator">-</span><span class="operator">&gt;</span>removeRow(currentSelection<span class="operator">.</span>at(i)<span class="operator">.</span>row());
+      }
+
+      updateActions();
+  }
+
+  <span class="type">void</span> Browser<span class="operator">::</span>updateActions()
+  {
+      <span class="type"><a href="qsqltablemodel.html">QSqlTableModel</a></span> <span class="operator">*</span> tm <span class="operator">=</span> qobject_cast<span class="operator">&lt;</span><span class="type"><a href="qsqltablemodel.html">QSqlTableModel</a></span> <span class="operator">*</span><span class="operator">&gt;</span>(table<span class="operator">-</span><span class="operator">&gt;</span>model());
+      bool enableIns <span class="operator">=</span> tm;
+      bool enableDel <span class="operator">=</span> enableIns <span class="operator">&amp;</span><span class="operator">&amp;</span> table<span class="operator">-</span><span class="operator">&gt;</span>currentIndex()<span class="operator">.</span>isValid();
+
+      insertRowAction<span class="operator">-</span><span class="operator">&gt;</span>setEnabled(enableIns);
+      deleteRowAction<span class="operator">-</span><span class="operator">&gt;</span>setEnabled(enableDel);
+
+      fieldStrategyAction<span class="operator">-</span><span class="operator">&gt;</span>setEnabled(tm);
+      rowStrategyAction<span class="operator">-</span><span class="operator">&gt;</span>setEnabled(tm);
+      manualStrategyAction<span class="operator">-</span><span class="operator">&gt;</span>setEnabled(tm);
+      submitAction<span class="operator">-</span><span class="operator">&gt;</span>setEnabled(tm);
+      revertAction<span class="operator">-</span><span class="operator">&gt;</span>setEnabled(tm);
+      selectAction<span class="operator">-</span><span class="operator">&gt;</span>setEnabled(tm);
+
+      <span class="keyword">if</span> (tm) {
+          <span class="type"><a href="qsqltablemodel.html">QSqlTableModel</a></span><span class="operator">::</span>EditStrategy es <span class="operator">=</span> tm<span class="operator">-</span><span class="operator">&gt;</span>editStrategy();
+          fieldStrategyAction<span class="operator">-</span><span class="operator">&gt;</span>setChecked(es <span class="operator">=</span><span class="operator">=</span> <span class="type"><a href="qsqltablemodel.html">QSqlTableModel</a></span><span class="operator">::</span>OnFieldChange);
+          rowStrategyAction<span class="operator">-</span><span class="operator">&gt;</span>setChecked(es <span class="operator">=</span><span class="operator">=</span> <span class="type"><a href="qsqltablemodel.html">QSqlTableModel</a></span><span class="operator">::</span>OnRowChange);
+          manualStrategyAction<span class="operator">-</span><span class="operator">&gt;</span>setChecked(es <span class="operator">=</span><span class="operator">=</span> <span class="type"><a href="qsqltablemodel.html">QSqlTableModel</a></span><span class="operator">::</span>OnManualSubmit);
+      }
+  }
+
+  <span class="type">void</span> Browser<span class="operator">::</span>about()
+  {
+      <span class="type"><a href="../qtwidgets/qmessagebox.html">QMessageBox</a></span><span class="operator">::</span>about(<span class="keyword">this</span><span class="operator">,</span> tr(<span class="string">&quot;About&quot;</span>)<span class="operator">,</span> tr(<span class="string">&quot;The SQL Browser demonstration &quot;</span>
+          <span class="string">&quot;shows how a data browser can be used to visualize the results of SQL&quot;</span>
+                                               <span class="string">&quot;statements on a live database&quot;</span>));
+  }
+
+  <span class="type">void</span> Browser<span class="operator">::</span>on_fieldStrategyAction_triggered()
+  {
+      <span class="type"><a href="qsqltablemodel.html">QSqlTableModel</a></span> <span class="operator">*</span> tm <span class="operator">=</span> qobject_cast<span class="operator">&lt;</span><span class="type"><a href="qsqltablemodel.html">QSqlTableModel</a></span> <span class="operator">*</span><span class="operator">&gt;</span>(table<span class="operator">-</span><span class="operator">&gt;</span>model());
+      <span class="keyword">if</span> (tm)
+          tm<span class="operator">-</span><span class="operator">&gt;</span>setEditStrategy(<span class="type"><a href="qsqltablemodel.html">QSqlTableModel</a></span><span class="operator">::</span>OnFieldChange);
+  }
+
+  <span class="type">void</span> Browser<span class="operator">::</span>on_rowStrategyAction_triggered()
+  {
+      <span class="type"><a href="qsqltablemodel.html">QSqlTableModel</a></span> <span class="operator">*</span> tm <span class="operator">=</span> qobject_cast<span class="operator">&lt;</span><span class="type"><a href="qsqltablemodel.html">QSqlTableModel</a></span> <span class="operator">*</span><span class="operator">&gt;</span>(table<span class="operator">-</span><span class="operator">&gt;</span>model());
+      <span class="keyword">if</span> (tm)
+          tm<span class="operator">-</span><span class="operator">&gt;</span>setEditStrategy(<span class="type"><a href="qsqltablemodel.html">QSqlTableModel</a></span><span class="operator">::</span>OnRowChange);
+  }
+
+  <span class="type">void</span> Browser<span class="operator">::</span>on_manualStrategyAction_triggered()
+  {
+      <span class="type"><a href="qsqltablemodel.html">QSqlTableModel</a></span> <span class="operator">*</span> tm <span class="operator">=</span> qobject_cast<span class="operator">&lt;</span><span class="type"><a href="qsqltablemodel.html">QSqlTableModel</a></span> <span class="operator">*</span><span class="operator">&gt;</span>(table<span class="operator">-</span><span class="operator">&gt;</span>model());
+      <span class="keyword">if</span> (tm)
+          tm<span class="operator">-</span><span class="operator">&gt;</span>setEditStrategy(<span class="type"><a href="qsqltablemodel.html">QSqlTableModel</a></span><span class="operator">::</span>OnManualSubmit);
+  }
+
+  <span class="type">void</span> Browser<span class="operator">::</span>on_submitAction_triggered()
+  {
+      <span class="type"><a href="qsqltablemodel.html">QSqlTableModel</a></span> <span class="operator">*</span> tm <span class="operator">=</span> qobject_cast<span class="operator">&lt;</span><span class="type"><a href="qsqltablemodel.html">QSqlTableModel</a></span> <span class="operator">*</span><span class="operator">&gt;</span>(table<span class="operator">-</span><span class="operator">&gt;</span>model());
+      <span class="keyword">if</span> (tm)
+          tm<span class="operator">-</span><span class="operator">&gt;</span>submitAll();
+  }
+
+  <span class="type">void</span> Browser<span class="operator">::</span>on_revertAction_triggered()
+  {
+      <span class="type"><a href="qsqltablemodel.html">QSqlTableModel</a></span> <span class="operator">*</span> tm <span class="operator">=</span> qobject_cast<span class="operator">&lt;</span><span class="type"><a href="qsqltablemodel.html">QSqlTableModel</a></span> <span class="operator">*</span><span class="operator">&gt;</span>(table<span class="operator">-</span><span class="operator">&gt;</span>model());
+      <span class="keyword">if</span> (tm)
+          tm<span class="operator">-</span><span class="operator">&gt;</span>revertAll();
+  }
+
+  <span class="type">void</span> Browser<span class="operator">::</span>on_selectAction_triggered()
+  {
+      <span class="type"><a href="qsqltablemodel.html">QSqlTableModel</a></span> <span class="operator">*</span> tm <span class="operator">=</span> qobject_cast<span class="operator">&lt;</span><span class="type"><a href="qsqltablemodel.html">QSqlTableModel</a></span> <span class="operator">*</span><span class="operator">&gt;</span>(table<span class="operator">-</span><span class="operator">&gt;</span>model());
+      <span class="keyword">if</span> (tm)
+          tm<span class="operator">-</span><span class="operator">&gt;</span>select();
+  }
+
+</pre>
+</div>
+<!-- @@@sqlbrowser/browser.cpp -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

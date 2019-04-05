@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qmaskgenerator.cpp -->
+  <title>QMaskGenerator Class | Qt WebSockets 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtwebsockets-index.html">Qt WebSockets</a></td><td ><a href="qtwebsockets-module.html">C++ Classes</a></td><td >QMaskGenerator</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">QMaskGenerator Class</h1>
+<!-- $$$QMaskGenerator-brief -->
+<p>The <a href="qmaskgenerator.html">QMaskGenerator</a> class provides an abstract base for custom 32-bit mask generators. <a href="#details">More...</a></p>
+<!-- @@@QMaskGenerator -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign">   <span class="preprocessor">#include &lt;QMaskGenerator&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> qmake:</td><td class="memItemRight bottomAlign"> QT += websockets</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Since:</td><td class="memItemRight bottomAlign">  Qt 5.3</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Inherits:</td><td class="memItemRight bottomAlign"> <a href="../qtcore/qobject.html">QObject</a></td></tr></table></div><ul>
+<li><a href="qmaskgenerator-members.html">List of all members, including inherited members</a></li>
+</ul>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qmaskgenerator.html#QMaskGenerator">QMaskGenerator</a></b>(QObject *<i>parent</i> = Q_NULLPTR)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual </td><td class="memItemRight bottomAlign"><b><a href="qmaskgenerator.html#dtor.QMaskGenerator">~QMaskGenerator</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual quint32 </td><td class="memItemRight bottomAlign"><b><a href="qmaskgenerator.html#nextMask">nextMask</a></b>() = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="qmaskgenerator.html#seed">seed</a></b>() = 0</td></tr>
+</table></div>
+<ul>
+<li class="fn">31 public functions inherited from <a href="../qtcore/qobject.html#public-functions">QObject</a></li>
+</ul>
+<h3>Additional Inherited Members</h3>
+<ul>
+<li class="fn">1 property inherited from <a href="../qtcore/qobject.html#properties">QObject</a></li>
+<li class="fn">1 public slot inherited from <a href="../qtcore/qobject.html#public-slots">QObject</a></li>
+<li class="fn">2 signals inherited from <a href="../qtcore/qobject.html#signals">QObject</a></li>
+<li class="fn">1 public variable inherited from <a href="../qtcore/qobject.html#public-variables">QObject</a></li>
+<li class="fn">10 static public members inherited from <a href="../qtcore/qobject.html#static-public-members">QObject</a></li>
+<li class="fn">9 protected functions inherited from <a href="../qtcore/qobject.html#protected-functions">QObject</a></li>
+<li class="fn">2 protected variables inherited from <a href="../qtcore/qobject.html#protected-variables">QObject</a></li>
+</ul>
+<a name="details"></a>
+<!-- $$$QMaskGenerator-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="qmaskgenerator.html">QMaskGenerator</a> class provides an abstract base for custom 32-bit mask generators.</p>
+<p>The WebSockets specification as outlined in <a href="http://tools.ietf.org/html/rfc6455">RFC 6455</a> requires that all communication from client to server be masked. This is to prevent malicious scripts from attacking badly behaving proxies. For more information about the importance of good masking, see <a href="http://w2spconf.com/2011/papers/websocket.pdf">&quot;Talking to Yourself for Fun and Profit&quot; by Lin-Shung Huang et al</a>. By default <a href="qwebsocket.html">QWebSocket</a> uses the cryptographically insecure <a href="../qtcore/qtglobal.html#qrand">qrand</a>() function. The best measure against attacks mentioned in the document above, is to use <a href="qwebsocket.html">QWebSocket</a> over a secure connection (<i>wss://</i>). In general, always be careful to not have 3rd party script access to a <a href="qwebsocket.html">QWebSocket</a> in your application.</p>
+</div>
+<!-- @@@QMaskGenerator -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$QMaskGenerator[overload1]$$$QMaskGeneratorQObject* -->
+<h3 class="fn" id="QMaskGenerator"><a name="QMaskGenerator"></a>QMaskGenerator::<span class="name">QMaskGenerator</span>(<span class="type"><a href="../qtcore/qobject.html#QObject">QObject</a></span> *<i>parent</i> = Q_NULLPTR)</h3>
+<p>Creates a new <a href="qmaskgenerator.html">QMaskGenerator</a> object with the given optional <a href="../qtcore/qobject.html">QObject</a> <i>parent</i>.</p>
+<!-- @@@QMaskGenerator -->
+<!-- $$$~QMaskGenerator[overload1]$$$~QMaskGenerator -->
+<h3 class="fn" id="dtor.QMaskGenerator"><a name="dtor.QMaskGenerator"></a><code>[virtual] </code>QMaskGenerator::<span class="name">~QMaskGenerator</span>()</h3>
+<p>Destroys the <a href="qmaskgenerator.html">QMaskGenerator</a> object.</p>
+<!-- @@@~QMaskGenerator -->
+<!-- $$$nextMask[overload1]$$$nextMask -->
+<h3 class="fn" id="nextMask"><a name="nextMask"></a><code>[pure virtual] </code><span class="type"><a href="../qtcore/qtglobal.html#quint32-typedef">quint32</a></span> QMaskGenerator::<span class="name">nextMask</span>()</h3>
+<p>Returns a new random 32-bit mask. The randomness depends on the RNG used to created the mask.</p>
+<!-- @@@nextMask -->
+<!-- $$$seed[overload1]$$$seed -->
+<h3 class="fn" id="seed"><a name="seed"></a><code>[pure virtual] </code><span class="type">bool</span> QMaskGenerator::<span class="name">seed</span>()</h3>
+<p>Initializes the <a href="qmaskgenerator.html">QMaskGenerator</a> by seeding the randomizer. When seed() is not called, it depends on the specific implementation of a subclass if a default seed is used or no seed is used at all. Returns <i>true</i> if seeding succeeds, otherwise false.</p>
+<!-- @@@seed -->
+</div>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

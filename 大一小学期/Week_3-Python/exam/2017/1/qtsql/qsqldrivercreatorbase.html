@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qsqldatabase.cpp -->
+  <title>QSqlDriverCreatorBase Class | Qt SQL 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtsql-index.html">Qt SQL</a></td><td ><a href="qtsql-module.html">C++ Classes</a></td><td >QSqlDriverCreatorBase</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">QSqlDriverCreatorBase Class</h1>
+<!-- $$$QSqlDriverCreatorBase-brief -->
+<p>The <a href="qsqldrivercreatorbase.html">QSqlDriverCreatorBase</a> class is the base class for SQL driver factories. <a href="#details">More...</a></p>
+<!-- @@@QSqlDriverCreatorBase -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign">   <span class="preprocessor">#include &lt;QSqlDriverCreatorBase&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> qmake:</td><td class="memItemRight bottomAlign"> QT += sql</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Inherited By:</td><td class="memItemRight bottomAlign"> <p><a href="qsqldrivercreator.html">QSqlDriverCreator</a></p>
+</td></tr></table></div><ul>
+<li><a href="qsqldrivercreatorbase-members.html">List of all members, including inherited members</a></li>
+</ul>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> virtual </td><td class="memItemRight bottomAlign"><b><a href="qsqldrivercreatorbase.html#dtor.QSqlDriverCreatorBase">~QSqlDriverCreatorBase</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QSqlDriver *</td><td class="memItemRight bottomAlign"><b><a href="qsqldrivercreatorbase.html#createObject">createObject</a></b>() const = 0</td></tr>
+</table></div>
+<a name="details"></a>
+<!-- $$$QSqlDriverCreatorBase-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="qsqldrivercreatorbase.html">QSqlDriverCreatorBase</a> class is the base class for SQL driver factories.</p>
+<p>Reimplement <a href="qsqldrivercreatorbase.html#createObject">createObject</a>() to return an instance of the specific <a href="qsqldriver.html">QSqlDriver</a> subclass that you want to provide.</p>
+<p>See <a href="qsqldatabase.html#registerSqlDriver">QSqlDatabase::registerSqlDriver</a>() for details.</p>
+</div>
+<p><b>See also </b><a href="qsqldrivercreator.html">QSqlDriverCreator</a>.</p>
+<!-- @@@QSqlDriverCreatorBase -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$~QSqlDriverCreatorBase[overload1]$$$~QSqlDriverCreatorBase -->
+<h3 class="fn" id="dtor.QSqlDriverCreatorBase"><a name="dtor.QSqlDriverCreatorBase"></a><code>[virtual] </code>QSqlDriverCreatorBase::<span class="name">~QSqlDriverCreatorBase</span>()</h3>
+<p>Destroys the SQL driver creator object.</p>
+<!-- @@@~QSqlDriverCreatorBase -->
+<!-- $$$createObject[overload1]$$$createObject -->
+<h3 class="fn" id="createObject"><a name="createObject"></a><code>[pure virtual] </code><span class="type"><a href="qsqldriver.html">QSqlDriver</a></span> *QSqlDriverCreatorBase::<span class="name">createObject</span>() const</h3>
+<p>Reimplement this function to returns a new instance of a <a href="qsqldriver.html">QSqlDriver</a> subclass.</p>
+<!-- @@@createObject -->
+</div>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

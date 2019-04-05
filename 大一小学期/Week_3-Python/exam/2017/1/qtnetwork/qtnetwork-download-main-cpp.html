@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>main.cpp Example File | Qt Network 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtnetwork-index.html">Qt Network</a></td><td ><a href="qtnetwork-download-example.html">Network Download Example</a></td><td >main.cpp Example File</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar"><div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">main.cpp Example File</h1>
+<span class="subtitle">download/main.cpp</span>
+<!-- $$$download/main.cpp-description -->
+<div class="descr"> <a name="details"></a>
+<pre class="cpp">
+
+  <span class="comment">/****************************************************************************
+  **
+  ** Copyright (C) 2015 The Qt Company Ltd.
+  ** Contact: http://www.qt.io/licensing/
+  **
+  ** This file is part of the examples of the Qt Toolkit.
+  **
+  ** $QT_BEGIN_LICENSE:BSD$
+  ** You may use this file under the terms of the BSD license as follows:
+  **
+  ** &quot;Redistribution and use in source and binary forms, with or without
+  ** modification, are permitted provided that the following conditions are
+  ** met:
+  **   * Redistributions of source code must retain the above copyright
+  **     notice, this list of conditions and the following disclaimer.
+  **   * Redistributions in binary form must reproduce the above copyright
+  **     notice, this list of conditions and the following disclaimer in
+  **     the documentation and/or other materials provided with the
+  **     distribution.
+  **   * Neither the name of The Qt Company Ltd nor the names of its
+  **     contributors may be used to endorse or promote products derived
+  **     from this software without specific prior written permission.
+  **
+  **
+  ** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  ** &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  ** LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  ** A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  ** OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  ** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  ** LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  ** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  ** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  ** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.&quot;
+  **
+  ** $QT_END_LICENSE$
+  **
+  ****************************************************************************/</span>
+
+  <span class="preprocessor">#include &lt;QCoreApplication&gt;</span>
+  <span class="preprocessor">#include &lt;QFile&gt;</span>
+  <span class="preprocessor">#include &lt;QFileInfo&gt;</span>
+  <span class="preprocessor">#include &lt;QList&gt;</span>
+  <span class="preprocessor">#include &lt;QNetworkAccessManager&gt;</span>
+  <span class="preprocessor">#include &lt;QNetworkRequest&gt;</span>
+  <span class="preprocessor">#include &lt;QNetworkReply&gt;</span>
+  <span class="preprocessor">#include &lt;QSslError&gt;</span>
+  <span class="preprocessor">#include &lt;QStringList&gt;</span>
+  <span class="preprocessor">#include &lt;QTimer&gt;</span>
+  <span class="preprocessor">#include &lt;QUrl&gt;</span>
+
+  <span class="preprocessor">#include &lt;stdio.h&gt;</span>
+
+  <span class="keyword">class</span> <span class="type"><a href="qsslerror.html">QSslError</a></span>;
+
+  QT_USE_NAMESPACE
+
+  <span class="keyword">class</span> DownloadManager: <span class="keyword">public</span> <span class="type"><a href="../qtcore/qobject.html">QObject</a></span>
+  {
+      Q_OBJECT
+      <span class="type"><a href="qnetworkaccessmanager.html">QNetworkAccessManager</a></span> manager;
+      <span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span><span class="type"><a href="qnetworkreply.html">QNetworkReply</a></span> <span class="operator">*</span><span class="operator">&gt;</span> currentDownloads;
+
+  <span class="keyword">public</span>:
+      DownloadManager();
+      <span class="type">void</span> doDownload(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qurl.html">QUrl</a></span> <span class="operator">&amp;</span>url);
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> saveFileName(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qurl.html">QUrl</a></span> <span class="operator">&amp;</span>url);
+      bool saveToDisk(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>filename<span class="operator">,</span> <span class="type"><a href="../qtcore/qiodevice.html">QIODevice</a></span> <span class="operator">*</span>data);
+
+  <span class="keyword">public</span> <span class="keyword">slots</span>:
+      <span class="type">void</span> execute();
+      <span class="type">void</span> downloadFinished(<span class="type"><a href="qnetworkreply.html">QNetworkReply</a></span> <span class="operator">*</span>reply);
+      <span class="type">void</span> sslErrors(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span><span class="type"><a href="qsslerror.html">QSslError</a></span><span class="operator">&gt;</span> <span class="operator">&amp;</span>errors);
+  };
+
+  DownloadManager<span class="operator">::</span>DownloadManager()
+  {
+      connect(<span class="operator">&amp;</span>manager<span class="operator">,</span> SIGNAL(finished(<span class="type"><a href="qnetworkreply.html">QNetworkReply</a></span><span class="operator">*</span>))<span class="operator">,</span>
+              SLOT(downloadFinished(<span class="type"><a href="qnetworkreply.html">QNetworkReply</a></span><span class="operator">*</span>)));
+  }
+
+  <span class="type">void</span> DownloadManager<span class="operator">::</span>doDownload(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qurl.html">QUrl</a></span> <span class="operator">&amp;</span>url)
+  {
+      <span class="type"><a href="qnetworkrequest.html">QNetworkRequest</a></span> request(url);
+      <span class="type"><a href="qnetworkreply.html">QNetworkReply</a></span> <span class="operator">*</span>reply <span class="operator">=</span> manager<span class="operator">.</span>get(request);
+
+  <span class="preprocessor">#ifndef QT_NO_SSL</span>
+      connect(reply<span class="operator">,</span> SIGNAL(sslErrors(<span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span><span class="type"><a href="qsslerror.html">QSslError</a></span><span class="operator">&gt;</span>))<span class="operator">,</span> SLOT(sslErrors(<span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span><span class="type"><a href="qsslerror.html">QSslError</a></span><span class="operator">&gt;</span>)));
+  <span class="preprocessor">#endif</span>
+
+      currentDownloads<span class="operator">.</span>append(reply);
+  }
+
+  <span class="type"><a href="../qtcore/qstring.html">QString</a></span> DownloadManager<span class="operator">::</span>saveFileName(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qurl.html">QUrl</a></span> <span class="operator">&amp;</span>url)
+  {
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> path <span class="operator">=</span> url<span class="operator">.</span>path();
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> basename <span class="operator">=</span> <span class="type"><a href="../qtcore/qfileinfo.html">QFileInfo</a></span>(path)<span class="operator">.</span>fileName();
+
+      <span class="keyword">if</span> (basename<span class="operator">.</span>isEmpty())
+          basename <span class="operator">=</span> <span class="string">&quot;download&quot;</span>;
+
+      <span class="keyword">if</span> (<span class="type"><a href="../qtcore/qfile.html">QFile</a></span><span class="operator">::</span>exists(basename)) {
+          <span class="comment">// already exists, don't overwrite</span>
+          <span class="type">int</span> i <span class="operator">=</span> <span class="number">0</span>;
+          basename <span class="operator">+</span><span class="operator">=</span> <span class="char">'.'</span>;
+          <span class="keyword">while</span> (<span class="type"><a href="../qtcore/qfile.html">QFile</a></span><span class="operator">::</span>exists(basename <span class="operator">+</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span><span class="operator">::</span>number(i)))
+              <span class="operator">+</span><span class="operator">+</span>i;
+
+          basename <span class="operator">+</span><span class="operator">=</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span><span class="operator">::</span>number(i);
+      }
+
+      <span class="keyword">return</span> basename;
+  }
+
+  bool DownloadManager<span class="operator">::</span>saveToDisk(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>filename<span class="operator">,</span> <span class="type"><a href="../qtcore/qiodevice.html">QIODevice</a></span> <span class="operator">*</span>data)
+  {
+      <span class="type"><a href="../qtcore/qfile.html">QFile</a></span> file(filename);
+      <span class="keyword">if</span> (<span class="operator">!</span>file<span class="operator">.</span>open(<span class="type"><a href="../qtcore/qiodevice.html">QIODevice</a></span><span class="operator">::</span>WriteOnly)) {
+          fprintf(stderr<span class="operator">,</span> <span class="string">&quot;Could not open %s for writing: %s\n&quot;</span><span class="operator">,</span>
+                  <a href="../qtcore/qtglobal.html#qPrintable">qPrintable</a>(filename)<span class="operator">,</span>
+                  <a href="../qtcore/qtglobal.html#qPrintable">qPrintable</a>(file<span class="operator">.</span>errorString()));
+          <span class="keyword">return</span> <span class="keyword">false</span>;
+      }
+
+      file<span class="operator">.</span>write(data<span class="operator">-</span><span class="operator">&gt;</span>readAll());
+      file<span class="operator">.</span>close();
+
+      <span class="keyword">return</span> <span class="keyword">true</span>;
+  }
+
+  <span class="type">void</span> DownloadManager<span class="operator">::</span>execute()
+  {
+      <span class="type"><a href="../qtcore/qstringlist.html">QStringList</a></span> args <span class="operator">=</span> <span class="type"><a href="../qtcore/qcoreapplication.html">QCoreApplication</a></span><span class="operator">::</span>instance()<span class="operator">-</span><span class="operator">&gt;</span>arguments();
+      args<span class="operator">.</span>takeFirst();           <span class="comment">// skip the first argument, which is the program's name</span>
+      <span class="keyword">if</span> (args<span class="operator">.</span>isEmpty()) {
+          printf(<span class="string">&quot;Qt Download example - downloads all URLs in parallel\n&quot;</span>
+                 <span class="string">&quot;Usage: download url1 [url2... urlN]\n&quot;</span>
+                 <span class="string">&quot;\n&quot;</span>
+                 <span class="string">&quot;Downloads the URLs passed in the command-line to the local directory\n&quot;</span>
+                 <span class="string">&quot;If the target file already exists, a .0, .1, .2, etc. is appended to\n&quot;</span>
+                 <span class="string">&quot;differentiate.\n&quot;</span>);
+          <span class="type"><a href="../qtcore/qcoreapplication.html">QCoreApplication</a></span><span class="operator">::</span>instance()<span class="operator">-</span><span class="operator">&gt;</span>quit();
+          <span class="keyword">return</span>;
+      }
+
+      foreach (<span class="type"><a href="../qtcore/qstring.html">QString</a></span> arg<span class="operator">,</span> args) {
+          <span class="type"><a href="../qtcore/qurl.html">QUrl</a></span> url <span class="operator">=</span> <span class="type"><a href="../qtcore/qurl.html">QUrl</a></span><span class="operator">::</span>fromEncoded(arg<span class="operator">.</span>toLocal8Bit());
+          doDownload(url);
+      }
+  }
+
+  <span class="type">void</span> DownloadManager<span class="operator">::</span>sslErrors(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span><span class="type"><a href="qsslerror.html">QSslError</a></span><span class="operator">&gt;</span> <span class="operator">&amp;</span>sslErrors)
+  {
+  <span class="preprocessor">#ifndef QT_NO_SSL</span>
+      foreach (<span class="keyword">const</span> <span class="type"><a href="qsslerror.html">QSslError</a></span> <span class="operator">&amp;</span>error<span class="operator">,</span> sslErrors)
+          fprintf(stderr<span class="operator">,</span> <span class="string">&quot;SSL error: %s\n&quot;</span><span class="operator">,</span> <a href="../qtcore/qtglobal.html#qPrintable">qPrintable</a>(error<span class="operator">.</span>errorString()));
+  <span class="preprocessor">#else</span>
+      Q_UNUSED(sslErrors);
+  <span class="preprocessor">#endif</span>
+  }
+
+  <span class="type">void</span> DownloadManager<span class="operator">::</span>downloadFinished(<span class="type"><a href="qnetworkreply.html">QNetworkReply</a></span> <span class="operator">*</span>reply)
+  {
+      <span class="type"><a href="../qtcore/qurl.html">QUrl</a></span> url <span class="operator">=</span> reply<span class="operator">-</span><span class="operator">&gt;</span>url();
+      <span class="keyword">if</span> (reply<span class="operator">-</span><span class="operator">&gt;</span>error()) {
+          fprintf(stderr<span class="operator">,</span> <span class="string">&quot;Download of %s failed: %s\n&quot;</span><span class="operator">,</span>
+                  url<span class="operator">.</span>toEncoded()<span class="operator">.</span>constData()<span class="operator">,</span>
+                  <a href="../qtcore/qtglobal.html#qPrintable">qPrintable</a>(reply<span class="operator">-</span><span class="operator">&gt;</span>errorString()));
+      } <span class="keyword">else</span> {
+          <span class="type"><a href="../qtcore/qstring.html">QString</a></span> filename <span class="operator">=</span> saveFileName(url);
+          <span class="keyword">if</span> (saveToDisk(filename<span class="operator">,</span> reply))
+              printf(<span class="string">&quot;Download of %s succeeded (saved to %s)\n&quot;</span><span class="operator">,</span>
+                     url<span class="operator">.</span>toEncoded()<span class="operator">.</span>constData()<span class="operator">,</span> <a href="../qtcore/qtglobal.html#qPrintable">qPrintable</a>(filename));
+      }
+
+      currentDownloads<span class="operator">.</span>removeAll(reply);
+      reply<span class="operator">-</span><span class="operator">&gt;</span>deleteLater();
+
+      <span class="keyword">if</span> (currentDownloads<span class="operator">.</span>isEmpty())
+          <span class="comment">// all downloads finished</span>
+          <span class="type"><a href="../qtcore/qcoreapplication.html">QCoreApplication</a></span><span class="operator">::</span>instance()<span class="operator">-</span><span class="operator">&gt;</span>quit();
+  }
+
+  <span class="type">int</span> main(<span class="type">int</span> argc<span class="operator">,</span> <span class="type">char</span> <span class="operator">*</span><span class="operator">*</span>argv)
+  {
+      <span class="type"><a href="../qtcore/qcoreapplication.html">QCoreApplication</a></span> app(argc<span class="operator">,</span> argv);
+
+      DownloadManager manager;
+      <span class="type"><a href="../qtcore/qtimer.html">QTimer</a></span><span class="operator">::</span>singleShot(<span class="number">0</span><span class="operator">,</span> <span class="operator">&amp;</span>manager<span class="operator">,</span> SLOT(execute()));
+
+      app<span class="operator">.</span>exec();
+  }
+
+  <span class="preprocessor">#include &quot;main.moc&quot;</span>
+
+</pre>
+</div>
+<!-- @@@download/main.cpp -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

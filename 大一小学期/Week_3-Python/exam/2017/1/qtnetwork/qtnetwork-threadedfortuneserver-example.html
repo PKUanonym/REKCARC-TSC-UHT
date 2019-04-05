@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- threadedfortuneserver.qdoc -->
+  <title>Threaded Fortune Server Example | Qt Network 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtnetwork-index.html">Qt Network</a></td><td >Threaded Fortune Server Example</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar"><div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">Threaded Fortune Server Example</h1>
+<span class="subtitle"></span>
+<!-- $$$threadedfortuneserver-description -->
+<div class="descr"> <a name="details"></a>
+<p class="centerAlign"><img src="images/threadedfortuneserver-example.png" alt="" /></p><p>The implementation of this example is similar to that of the <a href="qtnetwork-fortuneserver-example.html">Fortune Server</a> example, but here we will implement a subclass of <a href="qtcpserver.html">QTcpServer</a> that starts each connection in a different thread.</p>
+<p>For this we need two classes: FortuneServer, a <a href="qtcpserver.html">QTcpServer</a> subclass, and FortuneThread, which inherits <a href="../qtcore/qthread.html">QThread</a>.</p>
+<pre class="cpp">
+
+  <span class="keyword">class</span> FortuneServer : <span class="keyword">public</span> <span class="type"><a href="qtcpserver.html">QTcpServer</a></span>
+  {
+      Q_OBJECT
+
+  <span class="keyword">public</span>:
+      FortuneServer(<span class="type"><a href="../qtcore/qobject.html">QObject</a></span> <span class="operator">*</span>parent <span class="operator">=</span> <span class="number">0</span>);
+
+  <span class="keyword">protected</span>:
+      <span class="type">void</span> incomingConnection(qintptr socketDescriptor) Q_DECL_OVERRIDE;
+
+  <span class="keyword">private</span>:
+      <span class="type"><a href="../qtcore/qstringlist.html">QStringList</a></span> fortunes;
+  };
+
+</pre>
+<p>FortuneServer inherits <a href="qtcpserver.html">QTcpServer</a> and reimplements <a href="qtcpserver.html#incomingConnection">QTcpServer::incomingConnection</a>(). We also use it for storing the list of random fortunes.</p>
+<pre class="cpp">
+
+  FortuneServer<span class="operator">::</span>FortuneServer(<span class="type"><a href="../qtcore/qobject.html">QObject</a></span> <span class="operator">*</span>parent)
+      : <span class="type"><a href="qtcpserver.html">QTcpServer</a></span>(parent)
+  {
+      fortunes <span class="operator">&lt;</span><span class="operator">&lt;</span> tr(<span class="string">&quot;You've been leading a dog's life. Stay off the furniture.&quot;</span>)
+               <span class="operator">&lt;</span><span class="operator">&lt;</span> tr(<span class="string">&quot;You've got to think about tomorrow.&quot;</span>)
+               <span class="operator">&lt;</span><span class="operator">&lt;</span> tr(<span class="string">&quot;You will be surprised by a loud noise.&quot;</span>)
+               <span class="operator">&lt;</span><span class="operator">&lt;</span> tr(<span class="string">&quot;You will feel hungry again in another hour.&quot;</span>)
+               <span class="operator">&lt;</span><span class="operator">&lt;</span> tr(<span class="string">&quot;You might have mail.&quot;</span>)
+               <span class="operator">&lt;</span><span class="operator">&lt;</span> tr(<span class="string">&quot;You cannot kill time without injuring eternity.&quot;</span>)
+               <span class="operator">&lt;</span><span class="operator">&lt;</span> tr(<span class="string">&quot;Computers are not intelligent. They only think they are.&quot;</span>);
+  }
+
+</pre>
+<p>We use FortuneServer's constructor to simply generate the list of fortunes.</p>
+<pre class="cpp">
+
+  <span class="type">void</span> FortuneServer<span class="operator">::</span>incomingConnection(qintptr socketDescriptor)
+  {
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> fortune <span class="operator">=</span> fortunes<span class="operator">.</span>at(qrand() <span class="operator">%</span> fortunes<span class="operator">.</span>size());
+      FortuneThread <span class="operator">*</span>thread <span class="operator">=</span> <span class="keyword">new</span> FortuneThread(socketDescriptor<span class="operator">,</span> fortune<span class="operator">,</span> <span class="keyword">this</span>);
+      connect(thread<span class="operator">,</span> SIGNAL(finished())<span class="operator">,</span> thread<span class="operator">,</span> SLOT(deleteLater()));
+      thread<span class="operator">-</span><span class="operator">&gt;</span>start();
+  }
+
+</pre>
+<p>Our implementation of <a href="qtcpserver.html#incomingConnection">QTcpServer::incomingConnection</a>() creates a FortuneThread object, passing the incoming socket descriptor and a random fortune to FortuneThread's constructor. By connecting FortuneThread's finished() signal to <a href="../qtcore/qobject.html#deleteLater">QObject::deleteLater</a>(), we ensure that the thread gets deleted once it has finished. We can then call <a href="../qtcore/qthread.html#start">QThread::start</a>(), which starts the thread.</p>
+<pre class="cpp">
+
+  <span class="keyword">class</span> FortuneThread : <span class="keyword">public</span> <span class="type"><a href="../qtcore/qthread.html">QThread</a></span>
+  {
+      Q_OBJECT
+
+  <span class="keyword">public</span>:
+      FortuneThread(<span class="type">int</span> socketDescriptor<span class="operator">,</span> <span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>fortune<span class="operator">,</span> <span class="type"><a href="../qtcore/qobject.html">QObject</a></span> <span class="operator">*</span>parent);
+
+      <span class="type">void</span> run() Q_DECL_OVERRIDE;
+
+  <span class="keyword">signals</span>:
+      <span class="type">void</span> error(<span class="type"><a href="qtcpsocket.html">QTcpSocket</a></span><span class="operator">::</span>SocketError socketError);
+
+  <span class="keyword">private</span>:
+      <span class="type">int</span> socketDescriptor;
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> text;
+  };
+
+</pre>
+<p>Moving on to the FortuneThread class, this is a <a href="../qtcore/qthread.html">QThread</a> subclass whose job is to write the fortune to the connected socket. The class reimplements <a href="../qtcore/qthread.html#run">QThread::run</a>(), and it has a signal for reporting errors.</p>
+<pre class="cpp">
+
+  FortuneThread<span class="operator">::</span>FortuneThread(<span class="type">int</span> socketDescriptor<span class="operator">,</span> <span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>fortune<span class="operator">,</span> <span class="type"><a href="../qtcore/qobject.html">QObject</a></span> <span class="operator">*</span>parent)
+      : <span class="type"><a href="../qtcore/qthread.html">QThread</a></span>(parent)<span class="operator">,</span> socketDescriptor(socketDescriptor)<span class="operator">,</span> text(fortune)
+  {
+  }
+
+</pre>
+<p>FortuneThread's constructor simply stores the socket descriptor and fortune text, so that they are available for run() later on.</p>
+<pre class="cpp">
+
+  <span class="type">void</span> FortuneThread<span class="operator">::</span>run()
+  {
+      <span class="type"><a href="qtcpsocket.html">QTcpSocket</a></span> tcpSocket;
+
+</pre>
+<p>The first thing our run() function does is to create a <a href="qtcpsocket.html">QTcpSocket</a> object on the stack. What's worth noticing is that we are creating this object inside the thread, which automatically associates the socket to the thread's event loop. This ensures that Qt will not try to deliver events to our socket from the main thread while we are accessing it from FortuneThread::run().</p>
+<pre class="cpp">
+
+      <span class="keyword">if</span> (<span class="operator">!</span>tcpSocket<span class="operator">.</span>setSocketDescriptor(socketDescriptor)) {
+          <span class="keyword">emit</span> error(tcpSocket<span class="operator">.</span>error());
+          <span class="keyword">return</span>;
+      }
+
+</pre>
+<p>The socket is initialized by calling <a href="qabstractsocket.html#setSocketDescriptor">QTcpSocket::setSocketDescriptor</a>(), passing our socket descriptor as an argument. We expect this to succeed, but just to be sure, (although unlikely, the system may run out of resources,) we catch the return value and report any error.</p>
+<pre class="cpp">
+
+      <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> block;
+      <span class="type"><a href="../qtcore/qdatastream.html">QDataStream</a></span> out(<span class="operator">&amp;</span>block<span class="operator">,</span> <span class="type"><a href="../qtcore/qiodevice.html">QIODevice</a></span><span class="operator">::</span>WriteOnly);
+      out<span class="operator">.</span>setVersion(<span class="type"><a href="../qtcore/qdatastream.html">QDataStream</a></span><span class="operator">::</span>Qt_4_0);
+      out <span class="operator">&lt;</span><span class="operator">&lt;</span> (<span class="type"><a href="../qtcore/qtglobal.html#quint16-typedef">quint16</a></span>)<span class="number">0</span>;
+      out <span class="operator">&lt;</span><span class="operator">&lt;</span> text;
+      out<span class="operator">.</span>device()<span class="operator">-</span><span class="operator">&gt;</span>seek(<span class="number">0</span>);
+      out <span class="operator">&lt;</span><span class="operator">&lt;</span> (<span class="type"><a href="../qtcore/qtglobal.html#quint16-typedef">quint16</a></span>)(block<span class="operator">.</span>size() <span class="operator">-</span> <span class="keyword">sizeof</span>(<span class="type"><a href="../qtcore/qtglobal.html#quint16-typedef">quint16</a></span>));
+
+</pre>
+<p>As with the <a href="qtnetwork-fortuneserver-example.html">Fortune Server</a> example, we encode the fortune into a <a href="../qtcore/qbytearray.html">QByteArray</a> using <a href="../qtcore/qdatastream.html">QDataStream</a>.</p>
+<pre class="cpp">
+
+      tcpSocket<span class="operator">.</span>write(block);
+      tcpSocket<span class="operator">.</span>disconnectFromHost();
+      tcpSocket<span class="operator">.</span>waitForDisconnected();
+  }
+
+</pre>
+<p>But unlike the previous example, we finish off by calling <a href="qabstractsocket.html#waitForDisconnected">QTcpSocket::waitForDisconnected</a>(), which blocks the calling thread until the socket has disconnected. Because we are running in a separate thread, the GUI will remain responsive.</p>
+<p>Files:</p>
+<ul>
+<li><a href="qtnetwork-threadedfortuneserver-dialog-cpp.html">threadedfortuneserver/dialog.cpp</a></li>
+<li><a href="qtnetwork-threadedfortuneserver-dialog-h.html">threadedfortuneserver/dialog.h</a></li>
+<li><a href="qtnetwork-threadedfortuneserver-fortuneserver-cpp.html">threadedfortuneserver/fortuneserver.cpp</a></li>
+<li><a href="qtnetwork-threadedfortuneserver-fortuneserver-h.html">threadedfortuneserver/fortuneserver.h</a></li>
+<li><a href="qtnetwork-threadedfortuneserver-fortunethread-cpp.html">threadedfortuneserver/fortunethread.cpp</a></li>
+<li><a href="qtnetwork-threadedfortuneserver-fortunethread-h.html">threadedfortuneserver/fortunethread.h</a></li>
+<li><a href="qtnetwork-threadedfortuneserver-main-cpp.html">threadedfortuneserver/main.cpp</a></li>
+<li><a href="qtnetwork-threadedfortuneserver-threadedfortuneserver-pro.html">threadedfortuneserver/threadedfortuneserver.pro</a></li>
+</ul>
+</div>
+<p><b>See also </b><a href="qtnetwork-fortuneserver-example.html">Fortune Server Example</a>, <a href="qtnetwork-fortuneclient-example.html">Fortune Client Example</a>, and <a href="qtnetwork-blockingfortuneclient-example.html">Blocking Fortune Client Example</a>.</p>
+<!-- @@@threadedfortuneserver -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

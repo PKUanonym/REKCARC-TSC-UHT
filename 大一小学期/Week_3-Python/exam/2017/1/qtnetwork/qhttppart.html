@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qhttpmultipart.cpp -->
+  <title>QHttpPart Class | Qt Network 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtnetwork-index.html">Qt Network</a></td><td ><a href="qtnetwork-module.html">C++ Classes</a></td><td >QHttpPart</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">QHttpPart Class</h1>
+<!-- $$$QHttpPart-brief -->
+<p>The <a href="qhttppart.html">QHttpPart</a> class holds a body part to be used inside a HTTP multipart MIME message. <a href="#details">More...</a></p>
+<!-- @@@QHttpPart -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign">   <span class="preprocessor">#include &lt;QHttpPart&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> qmake:</td><td class="memItemRight bottomAlign"> QT += network</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Since:</td><td class="memItemRight bottomAlign">  Qt 4.8</td></tr></table></div><ul>
+<li><a href="qhttppart-members.html">List of all members, including inherited members</a></li>
+</ul>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qhttppart.html#QHttpPart">QHttpPart</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qhttppart.html#QHttpPart-1">QHttpPart</a></b>(const QHttpPart &amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qhttppart.html#dtor.QHttpPart">~QHttpPart</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qhttppart.html#setBody">setBody</a></b>(const QByteArray &amp;<i>body</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qhttppart.html#setBodyDevice">setBodyDevice</a></b>(QIODevice *<i>device</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qhttppart.html#setHeader">setHeader</a></b>(QNetworkRequest::KnownHeaders <i>header</i>, const QVariant &amp;<i>value</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qhttppart.html#setRawHeader">setRawHeader</a></b>(const QByteArray &amp;<i>headerName</i>, const QByteArray &amp;<i>headerValue</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qhttppart.html#swap">swap</a></b>(QHttpPart &amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qhttppart.html#operator-not-eq">operator!=</a></b>(const QHttpPart &amp;<i>other</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QHttpPart &amp;</td><td class="memItemRight bottomAlign"><b><a href="qhttppart.html#operator-eq">operator=</a></b>(QHttpPart &amp;&amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QHttpPart &amp;</td><td class="memItemRight bottomAlign"><b><a href="qhttppart.html#operator-eq-1">operator=</a></b>(const QHttpPart &amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qhttppart.html#operator-eq-eq">operator==</a></b>(const QHttpPart &amp;<i>other</i>) const</td></tr>
+</table></div>
+<a name="details"></a>
+<!-- $$$QHttpPart-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="qhttppart.html">QHttpPart</a> class holds a body part to be used inside a HTTP multipart MIME message.</p>
+<p>The <a href="qhttppart.html">QHttpPart</a> class holds a body part to be used inside a HTTP multipart MIME message (which is represented by the <a href="qhttpmultipart.html">QHttpMultiPart</a> class). A <a href="qhttppart.html">QHttpPart</a> consists of a header block and a data block, which are separated by each other by two consecutive new lines. An example for one part would be:</p>
+<pre class="cpp">
+
+  Content<span class="operator">-</span>Type: text<span class="operator">/</span>plain
+  Content<span class="operator">-</span>Disposition: form<span class="operator">-</span>data; name<span class="operator">=</span><span class="string">&quot;text&quot;</span>
+
+  here goes the body
+
+</pre>
+<p>For setting headers, use <a href="qhttppart.html#setHeader">setHeader</a>() and <a href="qhttppart.html#setRawHeader">setRawHeader</a>(), which behave exactly like <a href="qnetworkrequest.html#setHeader">QNetworkRequest::setHeader</a>() and <a href="qnetworkrequest.html#setRawHeader">QNetworkRequest::setRawHeader</a>().</p>
+<p>For reading small pieces of data, use <a href="qhttppart.html#setBody">setBody</a>(); for larger data blocks like e.g&#x2e; images, use <a href="qhttppart.html#setBodyDevice">setBodyDevice</a>(). The latter method saves memory by not copying the data internally, but reading directly from the device. This means that the device must be opened and readable at the moment when the multipart message containing the body part is sent on the network via <a href="qnetworkaccessmanager.html#post">QNetworkAccessManager::post</a>().</p>
+<p>To construct a <a href="qhttppart.html">QHttpPart</a> with a small body, consider the following snippet (this produces the data shown in the example above):</p>
+<pre class="cpp">
+
+  <span class="type"><a href="qhttppart.html#QHttpPart">QHttpPart</a></span> textPart;
+  textPart<span class="operator">.</span>setHeader(<span class="type"><a href="qnetworkrequest.html">QNetworkRequest</a></span><span class="operator">::</span>ContentTypeHeader<span class="operator">,</span> <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span>(<span class="string">&quot;text/plain&quot;</span>));
+  textPart<span class="operator">.</span>setHeader(<span class="type"><a href="qnetworkrequest.html">QNetworkRequest</a></span><span class="operator">::</span>ContentDispositionHeader<span class="operator">,</span> <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span>(<span class="string">&quot;form-data; name=\&quot;text\&quot;&quot;</span>));
+  textPart<span class="operator">.</span>setBody(<span class="string">&quot;here goes the body&quot;</span>);
+
+</pre>
+<p>To construct a <a href="qhttppart.html">QHttpPart</a> reading from a device (e.g&#x2e; a file), the following can be applied:</p>
+<pre class="cpp">
+
+  <span class="type"><a href="qhttppart.html#QHttpPart">QHttpPart</a></span> imagePart;
+  imagePart<span class="operator">.</span>setHeader(<span class="type"><a href="qnetworkrequest.html">QNetworkRequest</a></span><span class="operator">::</span>ContentTypeHeader<span class="operator">,</span> <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span>(<span class="string">&quot;image/jpeg&quot;</span>));
+  imagePart<span class="operator">.</span>setHeader(<span class="type"><a href="qnetworkrequest.html">QNetworkRequest</a></span><span class="operator">::</span>ContentDispositionHeader<span class="operator">,</span> <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span>(<span class="string">&quot;form-data; name=\&quot;image\&quot;&quot;</span>));
+  imagePart<span class="operator">.</span>setRawHeader(<span class="string">&quot;Content-ID&quot;</span><span class="operator">,</span> <span class="string">&quot;my@content.id&quot;</span>); <span class="comment">// add any headers you like via setRawHeader()</span>
+  <span class="type"><a href="../qtcore/qfile.html">QFile</a></span> <span class="operator">*</span>file <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtcore/qfile.html">QFile</a></span>(<span class="string">&quot;image.jpg&quot;</span>);
+  file<span class="operator">-</span><span class="operator">&gt;</span>open(<span class="type"><a href="../qtcore/qiodevice.html">QIODevice</a></span><span class="operator">::</span>ReadOnly);
+  imagePart<span class="operator">.</span>setBodyDevice(file);
+
+</pre>
+<p>Be aware that <a href="qhttppart.html">QHttpPart</a> does not take ownership of the device when set, so it is the developer's responsibility to destroy it when it is not needed anymore. A good idea might be to set the multipart message as parent object for the device, as documented at the documentation for <a href="qhttpmultipart.html">QHttpMultiPart</a>.</p>
+</div>
+<p><b>See also </b><a href="qhttpmultipart.html">QHttpMultiPart</a> and <a href="qnetworkaccessmanager.html">QNetworkAccessManager</a>.</p>
+<!-- @@@QHttpPart -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$QHttpPart[overload1]$$$QHttpPart -->
+<h3 class="fn" id="QHttpPart"><a name="QHttpPart"></a>QHttpPart::<span class="name">QHttpPart</span>()</h3>
+<p>Constructs an empty <a href="qhttppart.html">QHttpPart</a> object.</p>
+<!-- @@@QHttpPart -->
+<!-- $$$QHttpPart$$$QHttpPartconstQHttpPart& -->
+<h3 class="fn" id="QHttpPart-1"><a name="QHttpPart-1"></a>QHttpPart::<span class="name">QHttpPart</span>(const <span class="type"><a href="qhttppart.html#QHttpPart">QHttpPart</a></span> &amp;<i>other</i>)</h3>
+<p>Creates a copy of <i>other</i>.</p>
+<!-- @@@QHttpPart -->
+<!-- $$$~QHttpPart[overload1]$$$~QHttpPart -->
+<h3 class="fn" id="dtor.QHttpPart"><a name="dtor.QHttpPart"></a>QHttpPart::<span class="name">~QHttpPart</span>()</h3>
+<p>Destroys this <a href="qhttppart.html">QHttpPart</a>.</p>
+<!-- @@@~QHttpPart -->
+<!-- $$$setBody[overload1]$$$setBodyconstQByteArray& -->
+<h3 class="fn" id="setBody"><a name="setBody"></a><span class="type">void</span> QHttpPart::<span class="name">setBody</span>(const <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> &amp;<i>body</i>)</h3>
+<p>Sets the body of this MIME part to <i>body</i>. The body set with this method will be used unless the device is set via <a href="qhttppart.html#setBodyDevice">setBodyDevice</a>(). For a large amount of data (e.g&#x2e; an image), use <a href="qhttppart.html#setBodyDevice">setBodyDevice</a>(), which will not copy the data internally.</p>
+<p><b>See also </b><a href="qhttppart.html#setBodyDevice">setBodyDevice</a>().</p>
+<!-- @@@setBody -->
+<!-- $$$setBodyDevice[overload1]$$$setBodyDeviceQIODevice* -->
+<h3 class="fn" id="setBodyDevice"><a name="setBodyDevice"></a><span class="type">void</span> QHttpPart::<span class="name">setBodyDevice</span>(<span class="type"><a href="../qtcore/qiodevice.html">QIODevice</a></span> *<i>device</i>)</h3>
+<p>Sets the device to read the content from to <i>device</i>. For large amounts of data this method should be preferred over <a href="qhttppart.html#setBody">setBody</a>(), because the content is not copied when using this method, but read directly from the device. <i>device</i> must be open and readable. <a href="qhttppart.html">QHttpPart</a> does not take ownership of <i>device</i>, i.e&#x2e; the device must be closed and destroyed if necessary. if <i>device</i> is sequential (e.g&#x2e; sockets, but not files), <a href="qnetworkaccessmanager.html#post">QNetworkAccessManager::post</a>() should be called after <i>device</i> has emitted finished(). For unsetting the device and using data set via <a href="qhttppart.html#setBody">setBody</a>(), use &quot;setBodyDevice(0)&quot;.</p>
+<p><b>See also </b><a href="qhttppart.html#setBody">setBody</a>() and <a href="qnetworkaccessmanager.html#post">QNetworkAccessManager::post</a>().</p>
+<!-- @@@setBodyDevice -->
+<!-- $$$setHeader[overload1]$$$setHeaderQNetworkRequest::KnownHeadersconstQVariant& -->
+<h3 class="fn" id="setHeader"><a name="setHeader"></a><span class="type">void</span> QHttpPart::<span class="name">setHeader</span>(<span class="type"><a href="qnetworkrequest.html#KnownHeaders-enum">QNetworkRequest::KnownHeaders</a></span> <i>header</i>, const <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span> &amp;<i>value</i>)</h3>
+<p>Sets the value of the known header <i>header</i> to be <i>value</i>, overriding any previously set headers.</p>
+<p><b>See also </b><a href="qnetworkrequest.html#KnownHeaders-enum">QNetworkRequest::KnownHeaders</a>, <a href="qhttppart.html#setRawHeader">setRawHeader</a>(), and <a href="qnetworkrequest.html#setHeader">QNetworkRequest::setHeader</a>().</p>
+<!-- @@@setHeader -->
+<!-- $$$setRawHeader[overload1]$$$setRawHeaderconstQByteArray&constQByteArray& -->
+<h3 class="fn" id="setRawHeader"><a name="setRawHeader"></a><span class="type">void</span> QHttpPart::<span class="name">setRawHeader</span>(const <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> &amp;<i>headerName</i>, const <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> &amp;<i>headerValue</i>)</h3>
+<p>Sets the header <i>headerName</i> to be of value <i>headerValue</i>. If <i>headerName</i> corresponds to a known header (see <a href="qnetworkrequest.html#KnownHeaders-enum">QNetworkRequest::KnownHeaders</a>), the raw format will be parsed and the corresponding &quot;cooked&quot; header will be set as well.</p>
+<p><b>Note: </b>Setting the same header twice overrides the previous setting. To accomplish the behaviour of multiple HTTP headers of the same name, you should concatenate the two values, separating them with a comma (&quot;,&quot;) and set one single raw header.</p><p><b>See also </b><a href="qnetworkrequest.html#KnownHeaders-enum">QNetworkRequest::KnownHeaders</a>, <a href="qhttppart.html#setHeader">setHeader</a>(), and <a href="qnetworkrequest.html#setRawHeader">QNetworkRequest::setRawHeader</a>().</p>
+<!-- @@@setRawHeader -->
+<!-- $$$swap[overload1]$$$swapQHttpPart& -->
+<h3 class="fn" id="swap"><a name="swap"></a><span class="type">void</span> QHttpPart::<span class="name">swap</span>(<span class="type"><a href="qhttppart.html#QHttpPart">QHttpPart</a></span> &amp;<i>other</i>)</h3>
+<p>Swaps this HTTP part with <i>other</i>. This function is very fast and never fails.</p>
+<p>This function was introduced in  Qt 5.0.</p>
+<!-- @@@swap -->
+<!-- $$$operator!=[overload1]$$$operator!=constQHttpPart& -->
+<h3 class="fn" id="operator-not-eq"><a name="operator-not-eq"></a><span class="type">bool</span> QHttpPart::<span class="name">operator!=</span>(const <span class="type"><a href="qhttppart.html#QHttpPart">QHttpPart</a></span> &amp;<i>other</i>) const</h3>
+<p>Returns <code>true</code> if this object is not the same as <i>other</i>.</p>
+<p><b>See also </b><a href="qhttppart.html#operator-eq-eq">operator==</a>().</p>
+<!-- @@@operator!= -->
+<!-- $$$operator=[overload1]$$$operator=QHttpPart&& -->
+<h3 class="fn" id="operator-eq"><a name="operator-eq"></a><span class="type"><a href="qhttppart.html#QHttpPart">QHttpPart</a></span> &amp;QHttpPart::<span class="name">operator=</span>(<span class="type"><a href="qhttppart.html#QHttpPart">QHttpPart</a></span> &amp;&amp;<i>other</i>)</h3>
+<p>Move-assignment operator.</p><!-- @@@operator= -->
+<!-- $$$operator=$$$operator=constQHttpPart& -->
+<h3 class="fn" id="operator-eq-1"><a name="operator-eq-1"></a><span class="type"><a href="qhttppart.html#QHttpPart">QHttpPart</a></span> &amp;QHttpPart::<span class="name">operator=</span>(const <span class="type"><a href="qhttppart.html#QHttpPart">QHttpPart</a></span> &amp;<i>other</i>)</h3>
+<p>Creates a copy of <i>other</i>.</p>
+<!-- @@@operator= -->
+<!-- $$$operator==[overload1]$$$operator==constQHttpPart& -->
+<h3 class="fn" id="operator-eq-eq"><a name="operator-eq-eq"></a><span class="type">bool</span> QHttpPart::<span class="name">operator==</span>(const <span class="type"><a href="qhttppart.html#QHttpPart">QHttpPart</a></span> &amp;<i>other</i>) const</h3>
+<p>Returns <code>true</code> if this object is the same as <i>other</i> (i.e&#x2e;, if they have the same headers and body).</p>
+<p><b>See also </b><a href="qhttppart.html#operator-not-eq">operator!=</a>().</p>
+<!-- @@@operator== -->
+</div>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

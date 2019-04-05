@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>view.cpp Example File | Qt SQL 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtsql-index.html">Qt SQL</a></td><td ><a href="qtsql-drilldown-example.html">Drill Down Example</a></td><td >view.cpp Example File</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar"><div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">view.cpp Example File</h1>
+<span class="subtitle">drilldown/view.cpp</span>
+<!-- $$$drilldown/view.cpp-description -->
+<div class="descr"> <a name="details"></a>
+<pre class="cpp">
+
+  <span class="comment">/****************************************************************************
+  **
+  ** Copyright (C) 2015 The Qt Company Ltd.
+  ** Contact: http://www.qt.io/licensing/
+  **
+  ** This file is part of the examples of the Qt Toolkit.
+  **
+  ** $QT_BEGIN_LICENSE:BSD$
+  ** You may use this file under the terms of the BSD license as follows:
+  **
+  ** &quot;Redistribution and use in source and binary forms, with or without
+  ** modification, are permitted provided that the following conditions are
+  ** met:
+  **   * Redistributions of source code must retain the above copyright
+  **     notice, this list of conditions and the following disclaimer.
+  **   * Redistributions in binary form must reproduce the above copyright
+  **     notice, this list of conditions and the following disclaimer in
+  **     the documentation and/or other materials provided with the
+  **     distribution.
+  **   * Neither the name of The Qt Company Ltd nor the names of its
+  **     contributors may be used to endorse or promote products derived
+  **     from this software without specific prior written permission.
+  **
+  **
+  ** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  ** &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  ** LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  ** A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  ** OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  ** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  ** LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  ** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  ** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  ** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.&quot;
+  **
+  ** $QT_END_LICENSE$
+  **
+  ****************************************************************************/</span>
+
+  <span class="preprocessor">#include &quot;informationwindow.h&quot;</span>
+  <span class="preprocessor">#include &quot;imageitem.h&quot;</span>
+  <span class="preprocessor">#include &quot;view.h&quot;</span>
+
+  View<span class="operator">::</span>View(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>items<span class="operator">,</span> <span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>images<span class="operator">,</span> <span class="type"><a href="../qtwidgets/qwidget.html">QWidget</a></span> <span class="operator">*</span>parent)
+      : <span class="type"><a href="../qtwidgets/qgraphicsview.html">QGraphicsView</a></span>(parent)
+  {
+      itemTable <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="qsqlrelationaltablemodel.html">QSqlRelationalTableModel</a></span>(<span class="keyword">this</span>);
+      itemTable<span class="operator">-</span><span class="operator">&gt;</span>setTable(items);
+      itemTable<span class="operator">-</span><span class="operator">&gt;</span>setRelation(<span class="number">1</span><span class="operator">,</span> <span class="type"><a href="qsqlrelation.html">QSqlRelation</a></span>(images<span class="operator">,</span> <span class="string">&quot;itemid&quot;</span><span class="operator">,</span> <span class="string">&quot;file&quot;</span>));
+      itemTable<span class="operator">-</span><span class="operator">&gt;</span>select();
+
+      scene <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qgraphicsscene.html">QGraphicsScene</a></span>(<span class="keyword">this</span>);
+      scene<span class="operator">-</span><span class="operator">&gt;</span>setSceneRect(<span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">465</span><span class="operator">,</span> <span class="number">365</span>);
+      setScene(scene);
+
+      addItems();
+
+      setMinimumSize(<span class="number">470</span><span class="operator">,</span> <span class="number">370</span>);
+      setMaximumSize(<span class="number">470</span><span class="operator">,</span> <span class="number">370</span>);
+
+      <span class="type">QLinearGradient</span> gradient(<span class="type"><a href="../qtcore/qpointf.html">QPointF</a></span>(<span class="number">0</span><span class="operator">,</span> <span class="number">0</span>)<span class="operator">,</span> <span class="type"><a href="../qtcore/qpointf.html">QPointF</a></span>(<span class="number">0</span><span class="operator">,</span> <span class="number">370</span>));
+      gradient<span class="operator">.</span>setColorAt(<span class="number">0</span><span class="operator">,</span> <span class="type">QColor</span>(<span class="string">&quot;#868482&quot;</span>));
+      gradient<span class="operator">.</span>setColorAt(<span class="number">1</span><span class="operator">,</span> <span class="type">QColor</span>(<span class="string">&quot;#5d5b59&quot;</span>));
+      setBackgroundBrush(gradient);
+  }
+
+  <span class="type">void</span> View<span class="operator">::</span>addItems()
+  {
+      <span class="type">int</span> itemCount <span class="operator">=</span> itemTable<span class="operator">-</span><span class="operator">&gt;</span>rowCount();
+
+      <span class="type">int</span> imageOffset <span class="operator">=</span> <span class="number">150</span>;
+      <span class="type">int</span> leftMargin <span class="operator">=</span> <span class="number">70</span>;
+      <span class="type">int</span> topMargin <span class="operator">=</span> <span class="number">40</span>;
+
+      <span class="keyword">for</span> (<span class="type">int</span> i <span class="operator">=</span> <span class="number">0</span>; i <span class="operator">&lt;</span> itemCount; i<span class="operator">+</span><span class="operator">+</span>) {
+          ImageItem <span class="operator">*</span>image;
+          <span class="type"><a href="../qtwidgets/qgraphicstextitem.html">QGraphicsTextItem</a></span> <span class="operator">*</span>label;
+          <span class="type"><a href="qsqlrecord.html">QSqlRecord</a></span> record <span class="operator">=</span> itemTable<span class="operator">-</span><span class="operator">&gt;</span>record(i);
+
+          <span class="type">int</span> id <span class="operator">=</span> record<span class="operator">.</span>value(<span class="string">&quot;id&quot;</span>)<span class="operator">.</span>toInt();
+          <span class="type"><a href="../qtcore/qstring.html">QString</a></span> file <span class="operator">=</span> record<span class="operator">.</span>value(<span class="string">&quot;file&quot;</span>)<span class="operator">.</span>toString();
+          <span class="type"><a href="../qtcore/qstring.html">QString</a></span> item <span class="operator">=</span> record<span class="operator">.</span>value(<span class="string">&quot;itemtype&quot;</span>)<span class="operator">.</span>toString();
+
+          <span class="type">int</span> columnOffset <span class="operator">=</span> ((i <span class="operator">%</span> <span class="number">2</span>) <span class="operator">*</span> <span class="number">37</span>);
+          <span class="type">int</span> x <span class="operator">=</span> ((i <span class="operator">%</span> <span class="number">2</span>) <span class="operator">*</span> imageOffset) <span class="operator">+</span> leftMargin <span class="operator">+</span> columnOffset;
+          <span class="type">int</span> y <span class="operator">=</span> ((i <span class="operator">/</span> <span class="number">2</span>) <span class="operator">*</span> imageOffset) <span class="operator">+</span> topMargin;
+
+          image <span class="operator">=</span> <span class="keyword">new</span> ImageItem(id<span class="operator">,</span> <span class="type">QPixmap</span>(<span class="string">&quot;:/&quot;</span> <span class="operator">+</span> file));
+          image<span class="operator">-</span><span class="operator">&gt;</span>setData(<span class="number">0</span><span class="operator">,</span> i);
+          image<span class="operator">-</span><span class="operator">&gt;</span>setPos(x<span class="operator">,</span> y);
+          scene<span class="operator">-</span><span class="operator">&gt;</span>addItem(image);
+
+          label <span class="operator">=</span> scene<span class="operator">-</span><span class="operator">&gt;</span>addText(item);
+          label<span class="operator">-</span><span class="operator">&gt;</span>setDefaultTextColor(<span class="type">QColor</span>(<span class="string">&quot;#d7d6d5&quot;</span>));
+          <span class="type"><a href="../qtcore/qpointf.html">QPointF</a></span> labelOffset((<span class="number">120</span> <span class="operator">-</span> label<span class="operator">-</span><span class="operator">&gt;</span>boundingRect()<span class="operator">.</span>width()) <span class="operator">/</span> <span class="number">2</span><span class="operator">,</span> <span class="number">120.0</span>);
+          label<span class="operator">-</span><span class="operator">&gt;</span>setPos(<span class="type"><a href="../qtcore/qpointf.html">QPointF</a></span>(x<span class="operator">,</span> y) <span class="operator">+</span> labelOffset);
+      }
+  }
+
+  <span class="type">void</span> View<span class="operator">::</span>mouseReleaseEvent(<span class="type">QMouseEvent</span> <span class="operator">*</span>event)
+  {
+      <span class="keyword">if</span> (<span class="type"><a href="../qtwidgets/qgraphicsitem.html">QGraphicsItem</a></span> <span class="operator">*</span>item <span class="operator">=</span> itemAt(event<span class="operator">-</span><span class="operator">&gt;</span>pos())) {
+          <span class="keyword">if</span> (ImageItem <span class="operator">*</span>image <span class="operator">=</span> qgraphicsitem_cast<span class="operator">&lt;</span>ImageItem <span class="operator">*</span><span class="operator">&gt;</span>(item))
+              showInformation(image);
+      }
+      <span class="type"><a href="../qtwidgets/qgraphicsview.html">QGraphicsView</a></span><span class="operator">::</span>mouseReleaseEvent(event);
+  }
+
+  <span class="type">void</span> View<span class="operator">::</span>showInformation(ImageItem <span class="operator">*</span>image)
+  {
+      <span class="type">int</span> id <span class="operator">=</span> image<span class="operator">-</span><span class="operator">&gt;</span>id();
+      <span class="keyword">if</span> (id <span class="operator">&lt;</span> <span class="number">0</span> <span class="operator">|</span><span class="operator">|</span> id <span class="operator">&gt;</span><span class="operator">=</span> itemTable<span class="operator">-</span><span class="operator">&gt;</span>rowCount())
+          <span class="keyword">return</span>;
+
+      InformationWindow <span class="operator">*</span>window <span class="operator">=</span> findWindow(id);
+      <span class="keyword">if</span> (window <span class="operator">&amp;</span><span class="operator">&amp;</span> window<span class="operator">-</span><span class="operator">&gt;</span>isVisible()) {
+          window<span class="operator">-</span><span class="operator">&gt;</span>raise();
+          window<span class="operator">-</span><span class="operator">&gt;</span>activateWindow();
+      } <span class="keyword">else</span> <span class="keyword">if</span> (window <span class="operator">&amp;</span><span class="operator">&amp;</span> <span class="operator">!</span>window<span class="operator">-</span><span class="operator">&gt;</span>isVisible()) {
+          window<span class="operator">-</span><span class="operator">&gt;</span>show();
+      } <span class="keyword">else</span> {
+          InformationWindow <span class="operator">*</span>window;
+          window <span class="operator">=</span> <span class="keyword">new</span> InformationWindow(id<span class="operator">,</span> itemTable<span class="operator">,</span> <span class="keyword">this</span>);
+
+          connect(window<span class="operator">,</span> SIGNAL(imageChanged(<span class="type">int</span><span class="operator">,</span><span class="type"><a href="../qtcore/qstring.html">QString</a></span>))<span class="operator">,</span>
+                  <span class="keyword">this</span><span class="operator">,</span> SLOT(updateImage(<span class="type">int</span><span class="operator">,</span><span class="type"><a href="../qtcore/qstring.html">QString</a></span>)));
+
+          window<span class="operator">-</span><span class="operator">&gt;</span>move(pos() <span class="operator">+</span> <span class="type"><a href="../qtcore/qpoint.html">QPoint</a></span>(<span class="number">20</span><span class="operator">,</span> <span class="number">40</span>));
+          window<span class="operator">-</span><span class="operator">&gt;</span>show();
+          informationWindows<span class="operator">.</span>append(window);
+      }
+  }
+
+  <span class="type">void</span> View<span class="operator">::</span>updateImage(<span class="type">int</span> id<span class="operator">,</span> <span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>fileName)
+  {
+      <span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span><span class="type"><a href="../qtwidgets/qgraphicsitem.html">QGraphicsItem</a></span> <span class="operator">*</span><span class="operator">&gt;</span> items <span class="operator">=</span> scene<span class="operator">-</span><span class="operator">&gt;</span>items();
+
+      <span class="keyword">while</span>(<span class="operator">!</span>items<span class="operator">.</span>empty()) {
+          <span class="type"><a href="../qtwidgets/qgraphicsitem.html">QGraphicsItem</a></span> <span class="operator">*</span>item <span class="operator">=</span> items<span class="operator">.</span>takeFirst();
+
+          <span class="keyword">if</span> (ImageItem <span class="operator">*</span>image <span class="operator">=</span> qgraphicsitem_cast<span class="operator">&lt;</span>ImageItem <span class="operator">*</span><span class="operator">&gt;</span>(item)) {
+              <span class="keyword">if</span> (image<span class="operator">-</span><span class="operator">&gt;</span>id() <span class="operator">=</span><span class="operator">=</span> id){
+                  image<span class="operator">-</span><span class="operator">&gt;</span>setPixmap(<span class="type">QPixmap</span>(<span class="string">&quot;:/&quot;</span> <span class="operator">+</span>fileName));
+                  image<span class="operator">-</span><span class="operator">&gt;</span>adjust();
+                  <span class="keyword">break</span>;
+              }
+          }
+      }
+  }
+
+  InformationWindow<span class="operator">*</span> View<span class="operator">::</span>findWindow(<span class="type">int</span> id)
+  {
+      <span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span>InformationWindow<span class="operator">*</span><span class="operator">&gt;</span><span class="operator">::</span>iterator i<span class="operator">,</span> beginning<span class="operator">,</span> end;
+
+      beginning <span class="operator">=</span> informationWindows<span class="operator">.</span>begin();
+      end <span class="operator">=</span> informationWindows<span class="operator">.</span>end();
+
+      <span class="keyword">for</span> (i <span class="operator">=</span> beginning; i <span class="operator">!</span><span class="operator">=</span> end; <span class="operator">+</span><span class="operator">+</span>i) {
+          InformationWindow <span class="operator">*</span>window <span class="operator">=</span> (<span class="operator">*</span>i);
+          <span class="keyword">if</span> (window <span class="operator">&amp;</span><span class="operator">&amp;</span> (window<span class="operator">-</span><span class="operator">&gt;</span>id() <span class="operator">=</span><span class="operator">=</span> id))
+              <span class="keyword">return</span> window;
+      }
+      <span class="keyword">return</span> <span class="number">0</span>;
+  }
+
+</pre>
+</div>
+<!-- @@@drilldown/view.cpp -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

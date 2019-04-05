@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qwebsocketcorsauthenticator.cpp -->
+  <title>QWebSocketCorsAuthenticator Class | Qt WebSockets 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtwebsockets-index.html">Qt WebSockets</a></td><td ><a href="qtwebsockets-module.html">C++ Classes</a></td><td >QWebSocketCorsAuthenticator</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">QWebSocketCorsAuthenticator Class</h1>
+<!-- $$$QWebSocketCorsAuthenticator-brief -->
+<p>The <a href="qwebsocketcorsauthenticator.html">QWebSocketCorsAuthenticator</a> class provides an authenticator object for Cross Origin Requests (CORS). <a href="#details">More...</a></p>
+<!-- @@@QWebSocketCorsAuthenticator -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign">   <span class="preprocessor">#include &lt;QWebSocketCorsAuthenticator&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> qmake:</td><td class="memItemRight bottomAlign"> QT += websockets</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Since:</td><td class="memItemRight bottomAlign">  Qt 5.3</td></tr></table></div><ul>
+<li><a href="qwebsocketcorsauthenticator-members.html">List of all members, including inherited members</a></li>
+</ul>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwebsocketcorsauthenticator.html#QWebSocketCorsAuthenticator">QWebSocketCorsAuthenticator</a></b>(const QString &amp;<i>origin</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwebsocketcorsauthenticator.html#QWebSocketCorsAuthenticator-1">QWebSocketCorsAuthenticator</a></b>(const QWebSocketCorsAuthenticator &amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwebsocketcorsauthenticator.html#QWebSocketCorsAuthenticator-2">QWebSocketCorsAuthenticator</a></b>(QWebSocketCorsAuthenticator &amp;&amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwebsocketcorsauthenticator.html#dtor.QWebSocketCorsAuthenticator">~QWebSocketCorsAuthenticator</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qwebsocketcorsauthenticator.html#allowed">allowed</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwebsocketcorsauthenticator.html#origin">origin</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebsocketcorsauthenticator.html#setAllowed">setAllowed</a></b>(bool <i>allowed</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebsocketcorsauthenticator.html#swap">swap</a></b>(QWebSocketCorsAuthenticator &amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QWebSocketCorsAuthenticator &amp;</td><td class="memItemRight bottomAlign"><b><a href="qwebsocketcorsauthenticator.html#operator-eq">operator=</a></b>(QWebSocketCorsAuthenticator &amp;&amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QWebSocketCorsAuthenticator &amp;</td><td class="memItemRight bottomAlign"><b><a href="qwebsocketcorsauthenticator.html#operator-eq-1">operator=</a></b>(const QWebSocketCorsAuthenticator &amp;<i>other</i>)</td></tr>
+</table></div>
+<a name="details"></a>
+<!-- $$$QWebSocketCorsAuthenticator-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="qwebsocketcorsauthenticator.html">QWebSocketCorsAuthenticator</a> class provides an authenticator object for Cross Origin Requests (CORS).</p>
+<p>The <a href="qwebsocketcorsauthenticator.html">QWebSocketCorsAuthenticator</a> class is used in the <a href="qwebsocketserver.html#originAuthenticationRequired">originAuthenticationRequired()</a> signal. The class provides a way to pass back the required information to the <a href="qwebsocketserver.html">QWebSocketServer</a>. It provides applications with fine-grained control over which origin URLs are allowed and which aren't. By default, every origin is accepted. To get fine-grained control, an application connects the <a href="qwebsocketserver.html#originAuthenticationRequired">originAuthenticationRequired()</a> signal to a slot. When the origin (<a href="qwebsocketcorsauthenticator.html#origin">QWebSocketCorsAuthenticator::origin</a>()) is accepted, it calls <a href="qwebsocketcorsauthenticator.html#setAllowed">QWebSocketCorsAuthenticator::setAllowed</a>(true)</p>
+<p><b>Note: </b>Checking on the origin does not make much sense when the server is accessed via a non-browser client, as that client can set whatever origin header it likes. In case of a browser client, the server SHOULD check the validity of the origin.</p></div>
+<p><b>See also </b><a href="http://tools.ietf.org/html/rfc6455#section-10">WebSocket Security Considerations</a> and <a href="qwebsocketserver.html">QWebSocketServer</a>.</p>
+<!-- @@@QWebSocketCorsAuthenticator -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$QWebSocketCorsAuthenticator[overload1]$$$QWebSocketCorsAuthenticatorconstQString& -->
+<h3 class="fn" id="QWebSocketCorsAuthenticator"><a name="QWebSocketCorsAuthenticator"></a>QWebSocketCorsAuthenticator::<span class="name">QWebSocketCorsAuthenticator</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>origin</i>)</h3>
+<p>Constructs a new QCorsAuthencator object with the given <i>origin</i>.</p>
+<p><b>Note: </b>By default, <a href="qwebsocketcorsauthenticator.html#allowed">allowed</a>() returns true. This means that per default every origin is accepted.</p><!-- @@@QWebSocketCorsAuthenticator -->
+<!-- $$$QWebSocketCorsAuthenticator$$$QWebSocketCorsAuthenticatorconstQWebSocketCorsAuthenticator& -->
+<h3 class="fn" id="QWebSocketCorsAuthenticator-1"><a name="QWebSocketCorsAuthenticator-1"></a>QWebSocketCorsAuthenticator::<span class="name">QWebSocketCorsAuthenticator</span>(const <span class="type"><a href="qwebsocketcorsauthenticator.html#QWebSocketCorsAuthenticator">QWebSocketCorsAuthenticator</a></span> &amp;<i>other</i>)</h3>
+<p>Constructs a copy of <i>other</i>.</p>
+<!-- @@@QWebSocketCorsAuthenticator -->
+<!-- $$$QWebSocketCorsAuthenticator$$$QWebSocketCorsAuthenticatorQWebSocketCorsAuthenticator&& -->
+<h3 class="fn" id="QWebSocketCorsAuthenticator-2"><a name="QWebSocketCorsAuthenticator-2"></a>QWebSocketCorsAuthenticator::<span class="name">QWebSocketCorsAuthenticator</span>(<span class="type"><a href="qwebsocketcorsauthenticator.html#QWebSocketCorsAuthenticator">QWebSocketCorsAuthenticator</a></span> &amp;&amp;<i>other</i>)</h3>
+<p>Move-constructs a <a href="qwebsocketcorsauthenticator.html">QWebSocketCorsAuthenticator</a>, making it point at the same object <i>other</i> was pointing to.</p>
+<!-- @@@QWebSocketCorsAuthenticator -->
+<!-- $$$~QWebSocketCorsAuthenticator[overload1]$$$~QWebSocketCorsAuthenticator -->
+<h3 class="fn" id="dtor.QWebSocketCorsAuthenticator"><a name="dtor.QWebSocketCorsAuthenticator"></a>QWebSocketCorsAuthenticator::<span class="name">~QWebSocketCorsAuthenticator</span>()</h3>
+<p>Destroys the object.</p>
+<!-- @@@~QWebSocketCorsAuthenticator -->
+<!-- $$$allowed[overload1]$$$allowed -->
+<h3 class="fn" id="allowed"><a name="allowed"></a><span class="type">bool</span> QWebSocketCorsAuthenticator::<span class="name">allowed</span>() const</h3>
+<p>Returns true if the origin is allowed, otherwise returns false.</p>
+<p><b>Note: </b>By default, all origins are accepted.</p><p><b>See also </b><a href="qwebsocketcorsauthenticator.html#setAllowed">setAllowed</a>().</p>
+<!-- @@@allowed -->
+<!-- $$$origin[overload1]$$$origin -->
+<h3 class="fn" id="origin"><a name="origin"></a><span class="type"><a href="../qtcore/qstring.html">QString</a></span> QWebSocketCorsAuthenticator::<span class="name">origin</span>() const</h3>
+<p>Returns the origin this autenticator is handling about.</p>
+<!-- @@@origin -->
+<!-- $$$setAllowed[overload1]$$$setAllowedbool -->
+<h3 class="fn" id="setAllowed"><a name="setAllowed"></a><span class="type">void</span> QWebSocketCorsAuthenticator::<span class="name">setAllowed</span>(<span class="type">bool</span> <i>allowed</i>)</h3>
+<p>Allows or disallows the origin. Setting <i>allowed</i> to true, will accept the connection request for the given origin.</p>
+<p>Setting <i>allowed</i> to false, will reject the connection request.</p>
+<p><b>Note: </b>By default, all origins are accepted.</p><p><b>See also </b><a href="qwebsocketcorsauthenticator.html#allowed">allowed</a>().</p>
+<!-- @@@setAllowed -->
+<!-- $$$swap[overload1]$$$swapQWebSocketCorsAuthenticator& -->
+<h3 class="fn" id="swap"><a name="swap"></a><span class="type">void</span> QWebSocketCorsAuthenticator::<span class="name">swap</span>(<span class="type"><a href="qwebsocketcorsauthenticator.html#QWebSocketCorsAuthenticator">QWebSocketCorsAuthenticator</a></span> &amp;<i>other</i>)</h3>
+<p>Swaps <i>other</i> with this authenticator.</p>
+<p>This operation is very fast and never fails.</p>
+<!-- @@@swap -->
+<!-- $$$operator=[overload1]$$$operator=QWebSocketCorsAuthenticator&& -->
+<h3 class="fn" id="operator-eq"><a name="operator-eq"></a><span class="type"><a href="qwebsocketcorsauthenticator.html#QWebSocketCorsAuthenticator">QWebSocketCorsAuthenticator</a></span> &amp;QWebSocketCorsAuthenticator::<span class="name">operator=</span>(<span class="type"><a href="qwebsocketcorsauthenticator.html#QWebSocketCorsAuthenticator">QWebSocketCorsAuthenticator</a></span> &amp;&amp;<i>other</i>)</h3>
+<p>Move-assigns <i>other</i> to this instance.</p>
+<!-- @@@operator= -->
+<!-- $$$operator=$$$operator=constQWebSocketCorsAuthenticator& -->
+<h3 class="fn" id="operator-eq-1"><a name="operator-eq-1"></a><span class="type"><a href="qwebsocketcorsauthenticator.html#QWebSocketCorsAuthenticator">QWebSocketCorsAuthenticator</a></span> &amp;QWebSocketCorsAuthenticator::<span class="name">operator=</span>(const <span class="type"><a href="qwebsocketcorsauthenticator.html#QWebSocketCorsAuthenticator">QWebSocketCorsAuthenticator</a></span> &amp;<i>other</i>)</h3>
+<p>Assigns <i>other</i> to this authenticator object.</p>
+<!-- @@@operator= -->
+</div>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

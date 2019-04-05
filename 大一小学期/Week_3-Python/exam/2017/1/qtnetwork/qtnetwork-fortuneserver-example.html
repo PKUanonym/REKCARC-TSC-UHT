@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- fortuneserver.qdoc -->
+  <title>Fortune Server Example | Qt Network 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtnetwork-index.html">Qt Network</a></td><td >Fortune Server Example</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar"><div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">Fortune Server Example</h1>
+<span class="subtitle"></span>
+<!-- $$$fortuneserver-description -->
+<div class="descr"> <a name="details"></a>
+<p>This example is intended to be run alongside the <a href="qtnetwork-fortuneclient-example.html">Fortune Client</a> example or the <a href="qtnetwork-blockingfortuneclient-example.html">Blocking Fortune Client Example</a>.</p>
+<p class="centerAlign"><img src="images/fortuneserver-example.png" alt="Screenshot of the Fortune Server example" /></p><p>It uses <a href="qtcpserver.html">QTcpServer</a> to accept incoming TCP connections, and a simple <a href="../qtcore/qdatastream.html">QDataStream</a> based data transfer protocol to write a fortune to the connecting client (from the <a href="qtnetwork-fortuneclient-example.html">Fortune Client</a> example), before closing the connection.</p>
+<pre class="cpp">
+
+  <span class="keyword">class</span> Server : <span class="keyword">public</span> <span class="type">QDialog</span>
+  {
+      Q_OBJECT
+
+  <span class="keyword">public</span>:
+      <span class="keyword">explicit</span> Server(<span class="type">QWidget</span> <span class="operator">*</span>parent <span class="operator">=</span> Q_NULLPTR);
+
+  <span class="keyword">private</span> <span class="keyword">slots</span>:
+      <span class="type">void</span> sessionOpened();
+      <span class="type">void</span> sendFortune();
+
+  <span class="keyword">private</span>:
+      <span class="type">QLabel</span> <span class="operator">*</span>statusLabel;
+      <span class="type"><a href="qtcpserver.html">QTcpServer</a></span> <span class="operator">*</span>tcpServer;
+      <span class="type"><a href="../qtcore/qstringlist.html">QStringList</a></span> fortunes;
+      <span class="type"><a href="qnetworksession.html">QNetworkSession</a></span> <span class="operator">*</span>networkSession;
+  };
+
+</pre>
+<p>The server is implemented using a simple class with only one slot, for handling incoming connections.</p>
+<pre class="cpp">
+
+      tcpServer <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="qtcpserver.html">QTcpServer</a></span>(<span class="keyword">this</span>);
+      <span class="keyword">if</span> (<span class="operator">!</span>tcpServer<span class="operator">-</span><span class="operator">&gt;</span>listen()) {
+          <span class="type">QMessageBox</span><span class="operator">::</span>critical(<span class="keyword">this</span><span class="operator">,</span> tr(<span class="string">&quot;Fortune Server&quot;</span>)<span class="operator">,</span>
+                                tr(<span class="string">&quot;Unable to start the server: %1.&quot;</span>)
+                                <span class="operator">.</span>arg(tcpServer<span class="operator">-</span><span class="operator">&gt;</span>errorString()));
+          close();
+          <span class="keyword">return</span>;
+      }
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> ipAddress;
+      <span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span><span class="type"><a href="qhostaddress.html">QHostAddress</a></span><span class="operator">&gt;</span> ipAddressesList <span class="operator">=</span> <span class="type"><a href="qnetworkinterface.html">QNetworkInterface</a></span><span class="operator">::</span>allAddresses();
+      <span class="comment">// use the first non-localhost IPv4 address</span>
+      <span class="keyword">for</span> (<span class="type">int</span> i <span class="operator">=</span> <span class="number">0</span>; i <span class="operator">&lt;</span> ipAddressesList<span class="operator">.</span>size(); <span class="operator">+</span><span class="operator">+</span>i) {
+          <span class="keyword">if</span> (ipAddressesList<span class="operator">.</span>at(i) <span class="operator">!</span><span class="operator">=</span> <span class="type"><a href="qhostaddress.html">QHostAddress</a></span><span class="operator">::</span>LocalHost <span class="operator">&amp;</span><span class="operator">&amp;</span>
+              ipAddressesList<span class="operator">.</span>at(i)<span class="operator">.</span>toIPv4Address()) {
+              ipAddress <span class="operator">=</span> ipAddressesList<span class="operator">.</span>at(i)<span class="operator">.</span>toString();
+              <span class="keyword">break</span>;
+          }
+      }
+      <span class="comment">// if we did not find one, use IPv4 localhost</span>
+      <span class="keyword">if</span> (ipAddress<span class="operator">.</span>isEmpty())
+          ipAddress <span class="operator">=</span> <span class="type"><a href="qhostaddress.html">QHostAddress</a></span>(<span class="type"><a href="qhostaddress.html">QHostAddress</a></span><span class="operator">::</span>LocalHost)<span class="operator">.</span>toString();
+      statusLabel<span class="operator">-</span><span class="operator">&gt;</span>setText(tr(<span class="string">&quot;The server is running on\n\nIP: %1\nport: %2\n\n&quot;</span>
+                              <span class="string">&quot;Run the Fortune Client example now.&quot;</span>)
+                           <span class="operator">.</span>arg(ipAddress)<span class="operator">.</span>arg(tcpServer<span class="operator">-</span><span class="operator">&gt;</span>serverPort()));
+
+</pre>
+<p>In its constructor, our Server object calls <a href="qtcpserver.html#listen">QTcpServer::listen</a>() to set up a <a href="qtcpserver.html">QTcpServer</a> to listen on all addresses, on an arbitrary port. In then displays the port <a href="qtcpserver.html">QTcpServer</a> picked in a label, so that user knows which port the fortune client should connect to.</p>
+<pre class="cpp">
+
+      fortunes <span class="operator">&lt;</span><span class="operator">&lt;</span> tr(<span class="string">&quot;You've been leading a dog's life. Stay off the furniture.&quot;</span>)
+               <span class="operator">&lt;</span><span class="operator">&lt;</span> tr(<span class="string">&quot;You've got to think about tomorrow.&quot;</span>)
+               <span class="operator">&lt;</span><span class="operator">&lt;</span> tr(<span class="string">&quot;You will be surprised by a loud noise.&quot;</span>)
+               <span class="operator">&lt;</span><span class="operator">&lt;</span> tr(<span class="string">&quot;You will feel hungry again in another hour.&quot;</span>)
+               <span class="operator">&lt;</span><span class="operator">&lt;</span> tr(<span class="string">&quot;You might have mail.&quot;</span>)
+               <span class="operator">&lt;</span><span class="operator">&lt;</span> tr(<span class="string">&quot;You cannot kill time without injuring eternity.&quot;</span>)
+               <span class="operator">&lt;</span><span class="operator">&lt;</span> tr(<span class="string">&quot;Computers are not intelligent. They only think they are.&quot;</span>);
+
+</pre>
+<p>Our server generates a list of random fortunes that it can send to connecting clients.</p>
+<pre class="cpp">
+
+      connect(tcpServer<span class="operator">,</span> <span class="operator">&amp;</span><span class="type"><a href="qtcpserver.html">QTcpServer</a></span><span class="operator">::</span>newConnection<span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> <span class="operator">&amp;</span>Server<span class="operator">::</span>sendFortune);
+
+</pre>
+<p>When a client connects to our server, <a href="qtcpserver.html">QTcpServer</a> will emit <a href="qtcpserver.html#newConnection">QTcpServer::newConnection</a>(). In turn, this will invoke our sendFortune() slot:</p>
+<pre class="cpp">
+
+  <span class="type">void</span> Server<span class="operator">::</span>sendFortune()
+  {
+      <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> block;
+      <span class="type"><a href="../qtcore/qdatastream.html">QDataStream</a></span> out(<span class="operator">&amp;</span>block<span class="operator">,</span> <span class="type"><a href="../qtcore/qiodevice.html">QIODevice</a></span><span class="operator">::</span>WriteOnly);
+      out<span class="operator">.</span>setVersion(<span class="type"><a href="../qtcore/qdatastream.html">QDataStream</a></span><span class="operator">::</span>Qt_4_0);
+
+</pre>
+<p>The purpose of this slot is to select a random line from our list of fortunes, encode it into a <a href="../qtcore/qbytearray.html">QByteArray</a> using <a href="../qtcore/qdatastream.html">QDataStream</a>, and then write it to the connecting socket. This is a common way to transfer binary data using <a href="qtcpsocket.html">QTcpSocket</a>. First we create a <a href="../qtcore/qbytearray.html">QByteArray</a> and a <a href="../qtcore/qdatastream.html">QDataStream</a> object, passing the bytearray to <a href="../qtcore/qdatastream.html">QDataStream</a>'s constructor. We then explicitly set the protocol version of <a href="../qtcore/qdatastream.html">QDataStream</a> to <a href="../qtcore/qdatastream.html#Version-enum">QDataStream::Qt_4_0</a> to ensure that we can communicate with clients from future versions of Qt. (See <a href="../qtcore/qdatastream.html#setVersion">QDataStream::setVersion</a>().)</p>
+<pre class="cpp">
+
+      out <span class="operator">&lt;</span><span class="operator">&lt;</span> (<span class="type"><a href="../qtcore/qtglobal.html#quint16-typedef">quint16</a></span>)<span class="number">0</span>;
+      out <span class="operator">&lt;</span><span class="operator">&lt;</span> fortunes<span class="operator">.</span>at(qrand() <span class="operator">%</span> fortunes<span class="operator">.</span>size());
+      out<span class="operator">.</span>device()<span class="operator">-</span><span class="operator">&gt;</span>seek(<span class="number">0</span>);
+      out <span class="operator">&lt;</span><span class="operator">&lt;</span> (<span class="type"><a href="../qtcore/qtglobal.html#quint16-typedef">quint16</a></span>)(block<span class="operator">.</span>size() <span class="operator">-</span> <span class="keyword">sizeof</span>(<span class="type"><a href="../qtcore/qtglobal.html#quint16-typedef">quint16</a></span>));
+
+</pre>
+<p>At the start of our <a href="../qtcore/qbytearray.html">QByteArray</a>, we reserve space for a 16 bit integer that will contain the total size of the data block we are sending. We continue by streaming in a random fortune. Then we seek back to the beginning of the <a href="../qtcore/qbytearray.html">QByteArray</a>, and overwrite the reserved 16 bit integer value with the total size of the array. By doing this, we provide a way for clients to verify how much data they can expect before reading the whole packet.</p>
+<pre class="cpp">
+
+      <span class="type"><a href="qtcpsocket.html">QTcpSocket</a></span> <span class="operator">*</span>clientConnection <span class="operator">=</span> tcpServer<span class="operator">-</span><span class="operator">&gt;</span>nextPendingConnection();
+      connect(clientConnection<span class="operator">,</span> <span class="operator">&amp;</span><span class="type"><a href="qabstractsocket.html">QAbstractSocket</a></span><span class="operator">::</span>disconnected<span class="operator">,</span>
+              clientConnection<span class="operator">,</span> <span class="operator">&amp;</span><span class="type"><a href="../qtcore/qobject.html">QObject</a></span><span class="operator">::</span>deleteLater);
+
+</pre>
+<p>We then call <a href="qtcpserver.html#nextPendingConnection">QTcpServer::nextPendingConnection</a>(), which returns the <a href="qtcpsocket.html">QTcpSocket</a> representing the server side of the connection. By connecting <a href="qabstractsocket.html#disconnected">QTcpSocket::disconnected</a>() to <a href="../qtcore/qobject.html#deleteLater">QObject::deleteLater</a>(), we ensure that the socket will be deleted after disconnecting.</p>
+<pre class="cpp">
+
+      clientConnection<span class="operator">-</span><span class="operator">&gt;</span>write(block);
+      clientConnection<span class="operator">-</span><span class="operator">&gt;</span>disconnectFromHost();
+  }
+
+</pre>
+<p>The encoded fortune is written using <a href="../qtcore/qiodevice.html#write-2">QTcpSocket::write</a>(), and we finally call <a href="qabstractsocket.html#disconnectFromHost">QTcpSocket::disconnectFromHost</a>(), which will close the connection after <a href="qtcpsocket.html">QTcpSocket</a> has finished writing the fortune to the network. Because <a href="qtcpsocket.html">QTcpSocket</a> works asynchronously, the data will be written after this function returns, and control goes back to Qt's event loop. The socket will then close, which in turn will cause <a href="../qtcore/qobject.html#deleteLater">QObject::deleteLater</a>() to delete it.</p>
+<p>Files:</p>
+<ul>
+<li><a href="qtnetwork-fortuneserver-server-cpp.html">fortuneserver/server.cpp</a></li>
+<li><a href="qtnetwork-fortuneserver-server-h.html">fortuneserver/server.h</a></li>
+<li><a href="qtnetwork-fortuneserver-main-cpp.html">fortuneserver/main.cpp</a></li>
+<li><a href="qtnetwork-fortuneserver-fortuneserver-pro.html">fortuneserver/fortuneserver.pro</a></li>
+</ul>
+</div>
+<p><b>See also </b><a href="qtnetwork-fortuneclient-example.html">Fortune Client Example</a> and <a href="qtnetwork-threadedfortuneserver-example.html">Threaded Fortune Server Example</a>.</p>
+<!-- @@@fortuneserver -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

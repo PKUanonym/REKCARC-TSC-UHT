@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qscriptextensionplugin.cpp -->
+  <title>QScriptExtensionPlugin Class | Qt Script</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtscript-index.html">Qt Script</a></td><td ><a href="qtscript-module.html">C++ Classes</a></td><td >QScriptExtensionPlugin</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#reimplemented-public-functions">Reimplemented Public Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">QScriptExtensionPlugin Class</h1>
+<!-- $$$QScriptExtensionPlugin-brief -->
+<p>The <a href="qscriptextensionplugin.html">QScriptExtensionPlugin</a> class provides an abstract base for custom QScript extension plugins. <a href="#details">More...</a></p>
+<!-- @@@QScriptExtensionPlugin -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign">   <span class="preprocessor">#include &lt;QScriptExtensionPlugin&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> qmake:</td><td class="memItemRight bottomAlign"> QT += script</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Since:</td><td class="memItemRight bottomAlign">  Qt 4.3</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Inherits:</td><td class="memItemRight bottomAlign"> <a href="../qtcore/qobject.html">QObject</a> and QScriptExtensionInterface</td></tr></table></div><ul>
+<li><a href="qscriptextensionplugin-members.html">List of all members, including inherited members</a></li>
+</ul>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qscriptextensionplugin.html#QScriptExtensionPlugin">QScriptExtensionPlugin</a></b>(QObject *<i>parent</i> = Q_NULLPTR)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qscriptextensionplugin.html#dtor.QScriptExtensionPlugin">~QScriptExtensionPlugin</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QScriptValue </td><td class="memItemRight bottomAlign"><b><a href="qscriptextensionplugin.html#setupPackage">setupPackage</a></b>(const QString &amp;<i>key</i>, QScriptEngine *<i>engine</i>) const</td></tr>
+</table></div>
+<a name="reimplemented-public-functions"></a>
+<h2 id="reimplemented-public-functions">Reimplemented Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="qscriptextensionplugin.html#initialize">initialize</a></b>(const QString &amp;<i>key</i>, QScriptEngine *<i>engine</i>) = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QStringList </td><td class="memItemRight bottomAlign"><b><a href="qscriptextensionplugin.html#keys">keys</a></b>() const = 0</td></tr>
+</table></div>
+<ul>
+<li class="fn">31 public functions inherited from <a href="../qtcore/qobject.html#public-functions">QObject</a></li>
+<li class="fn">1 public function inherited from <a href="qscriptextensioninterface.html#public-functions">QScriptExtensionInterface</a></li>
+</ul>
+<h3>Additional Inherited Members</h3>
+<ul>
+<li class="fn">1 property inherited from <a href="../qtcore/qobject.html#properties">QObject</a></li>
+<li class="fn">1 public slot inherited from <a href="../qtcore/qobject.html#public-slots">QObject</a></li>
+<li class="fn">2 signals inherited from <a href="../qtcore/qobject.html#signals">QObject</a></li>
+<li class="fn">1 public variable inherited from <a href="../qtcore/qobject.html#public-variables">QObject</a></li>
+<li class="fn">10 static public members inherited from <a href="../qtcore/qobject.html#static-public-members">QObject</a></li>
+<li class="fn">9 protected functions inherited from <a href="../qtcore/qobject.html#protected-functions">QObject</a></li>
+<li class="fn">2 protected variables inherited from <a href="../qtcore/qobject.html#protected-variables">QObject</a></li>
+</ul>
+<a name="details"></a>
+<!-- $$$QScriptExtensionPlugin-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="qscriptextensionplugin.html">QScriptExtensionPlugin</a> class provides an abstract base for custom QScript extension plugins.</p>
+<p><a href="qscriptextensionplugin.html">QScriptExtensionPlugin</a> is a plugin interface that makes it possible to offer extensions that can be loaded dynamically into applications using the <a href="qscriptengine.html">QScriptEngine</a> class.</p>
+<p>Writing a script extension plugin is achieved by subclassing this base class, reimplementing the pure virtual <a href="qscriptextensionplugin.html#keys">keys</a>() and <a href="qscriptextensionplugin.html#initialize">initialize</a>() functions, and exporting the class using the <a href="../qtcore/qtplugin.html#Q_PLUGIN_METADATA">Q_PLUGIN_METADATA</a>() macro. See <a href="../qtdoc/plugins-howto.html">How to Create Qt Plugins</a> for details.</p>
+</div>
+<p><b>See also </b><a href="qscriptengine.html#importExtension">QScriptEngine::importExtension</a>() and <a href="qtscriptextensions.html">Creating Qt Script Extensions</a>.</p>
+<!-- @@@QScriptExtensionPlugin -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$QScriptExtensionPlugin[overload1]$$$QScriptExtensionPluginQObject* -->
+<h3 class="fn" id="QScriptExtensionPlugin"><a name="QScriptExtensionPlugin"></a>QScriptExtensionPlugin::<span class="name">QScriptExtensionPlugin</span>(<span class="type"><a href="../qtcore/qobject.html#QObject">QObject</a></span> *<i>parent</i> = Q_NULLPTR)</h3>
+<p>Constructs a script extension plugin with the given <i>parent</i>.</p>
+<p>Note that this constructor is invoked automatically by the <a href="../qtcore/qtplugin.html#Q_PLUGIN_METADATA">Q_PLUGIN_METADATA</a>() macro, so there is no need for calling it explicitly.</p>
+<!-- @@@QScriptExtensionPlugin -->
+<!-- $$$~QScriptExtensionPlugin[overload1]$$$~QScriptExtensionPlugin -->
+<h3 class="fn" id="dtor.QScriptExtensionPlugin"><a name="dtor.QScriptExtensionPlugin"></a>QScriptExtensionPlugin::<span class="name">~QScriptExtensionPlugin</span>()</h3>
+<p>Destroys the script extension plugin.</p>
+<p>Note that Qt destroys a plugin automatically when it is no longer used, so there is no need for calling the destructor explicitly.</p>
+<!-- @@@~QScriptExtensionPlugin -->
+<!-- $$$initialize[overload1]$$$initializeconstQString&QScriptEngine* -->
+<h3 class="fn" id="initialize"><a name="initialize"></a><code>[pure virtual] </code><span class="type">void</span> QScriptExtensionPlugin::<span class="name">initialize</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>key</i>, <span class="type"><a href="qscriptengine.html">QScriptEngine</a></span> *<i>engine</i>)</h3>
+<p>Initializes the extension specified by <i>key</i> in the given <i>engine</i>. The key must come from the set of <a href="qscriptextensionplugin.html#keys">keys</a>().</p>
+<p><b>See also </b><a href="qscriptextensionplugin.html#keys">keys</a>().</p>
+<!-- @@@initialize -->
+<!-- $$$keys[overload1]$$$keys -->
+<h3 class="fn" id="keys"><a name="keys"></a><code>[pure virtual] </code><span class="type"><a href="../qtcore/qstringlist.html">QStringList</a></span> QScriptExtensionPlugin::<span class="name">keys</span>() const</h3>
+<p>Returns the list of keys this plugin supports.</p>
+<p>These keys are usually the names of the &quot;modules&quot; or &quot;packages&quot; that are implemented in the plugin (e.g&#x2e; <code>com.mycompany.MyProduct</code>).</p>
+<p><b>See also </b><a href="qscriptextensionplugin.html#initialize">initialize</a>().</p>
+<!-- @@@keys -->
+<!-- $$$setupPackage[overload1]$$$setupPackageconstQString&QScriptEngine* -->
+<h3 class="fn" id="setupPackage"><a name="setupPackage"></a><span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> QScriptExtensionPlugin::<span class="name">setupPackage</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>key</i>, <span class="type"><a href="qscriptengine.html">QScriptEngine</a></span> *<i>engine</i>) const</h3>
+<p>This function is provided for convenience when reimplementing <a href="qscriptextensionplugin.html#initialize">initialize</a>(). It splits the given <i>key</i> on <code>'.'</code> (dot), and ensures that there's a corresponding path of objects in the environment of the given <i>engine</i>, creating new objects to complete the path if necessary. E.g&#x2e; if the key is &quot;com.trolltech&quot;, after the call to setupPackage() the script expression <code>com.trolltech</code> will evaluate to an object. More specifically, the engine's Global Object will have a property called &quot;com&quot;, which in turn has a property called &quot;trolltech&quot;.</p>
+<p>Use this function to avoid global namespace pollution when installing your extensions in the engine.</p>
+<p><b>See also </b><a href="qscriptextensionplugin.html#initialize">initialize</a>().</p>
+<!-- @@@setupPackage -->
+</div>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

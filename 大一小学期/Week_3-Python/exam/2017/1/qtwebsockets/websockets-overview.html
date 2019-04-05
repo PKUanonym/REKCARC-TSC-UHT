@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- overview.qdoc -->
+  <title>Qt WebSockets Overview | Qt WebSockets 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtwebsockets-index.html">Qt WebSockets</a></td><td >Qt WebSockets Overview</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#how-does-it-work">How does it Work?</a></li>
+<li class="level1"><a href="#typical-use-cases">Typical Use Cases</a></li>
+<li class="level1"><a href="#role-of-qt-websockets">Role of Qt WebSockets</a></li>
+<li class="level2"><a href="#qt-websockets-with-cloud-services">Qt WebSockets with Cloud Services</a></li>
+<li class="level2"><a href="#related-information">Related Information</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">Qt WebSockets Overview</h1>
+<span class="subtitle"></span>
+<!-- $$$websockets-overview.html-description -->
+<div class="descr"> <a name="details"></a>
+<p>Qt WebSockets enables you to build WebSocket-aware applications. It provides an implementation for the WebSocket protocol, which is offered by IETF (Internet Engineering Task Force) as a better alternative for bidirectional communication using the existing web infrastructure.</p>
+<p>Historically, web applications that needed bidirectional communication or push notifications had to use one of the HTTP-based solutions available. These solutions employed different techniques such as polling, long-polling, and streaming, to overcome the limitations of HTTP protocol, which is not designed for such use cases. As a result, high network latency, unnecessary data exchange, and stale or old data. The WebSocket offering by IETF helps to overcome these problems to a large extent.</p>
+<a name="how-does-it-work"></a>
+<h2 id="how-does-it-work">How does it Work?</h2>
+<p class="centerAlign"><img src="images/websockets-pictorial-representation.jpg" alt="" /></p><p>As you can see in the pictorial representation, WebSocket-based solution consists of a client-side and server-side. The native client-side support for WebSocket is available on most of the popular web browsers such as Google Chrome, Internet Explorer, Safari, and so on. The server-side support for WebSocket makes it a complete solution, enabling bidirectional communication. Any browser with native WebSocket support should let you run a simple HTML and JavaScript-based client application using the HTML5 WebSocket API.</p>
+<p>A WebSocket connection begins with a initial HTTP-compatible handshake, which ensures backwards compatibility so that the WebSocket connections can share the default HTTP (80) and HTTPS (443) ports. On successful handshake, the connection is open for data exchange, until one of the two entities end the connection.</p>
+<p>The WebSocket protocol uses <code>ws</code>: and <code>wss</code>: URL schemes to represent unsecure and secure WebSocket requests, respectively. During the initial handshake, if a proxy server is detected, the protocol tries to set up a tunnel by issuing an <code>HTTP CONNECT</code> statement to the proxy. The tunnel approach to handle proxies is used irrespective of the request type, although it is proved to work better with TLS (Transport Layer Security) in secure connections.</p>
+<a name="typical-use-cases"></a>
+<h2 id="typical-use-cases">Typical Use Cases</h2>
+<p>WebSocket suits best for scenarios where,</p>
+<ul>
+<li>data presented must be up-to-date,</li>
+<li>low network latency and minimal data exchange is crucial.</li>
+</ul>
+<p>A few example applications where we struggle to achieve these using the traditional approach are, instant messaging, online gaming, online stock trading, and so on.</p>
+<a name="role-of-qt-websockets"></a>
+<h2 id="role-of-qt-websockets">Role of Qt WebSockets</h2>
+<p>The Qt WebSockets module provides APIs to develop WebSocket-based server and client applications. An example of where these APIs can be used is a server application that provides stock data, and a client application that registers for push notification when there is a change in price of a few stocks.</p>
+<p>The module provides both C++ and QML versions of the API, so you can choose the alternative that suits your need.</p>
+<a name="qt-websockets-with-cloud-services"></a>
+<h3 >Qt WebSockets with Cloud Services</h3>
+<p>The client application usually depends on an external service for data. Most of these service providers do not support WebSocket yet, so you end up developing a WebSocket-aware server application to bridge the gap. You can run the server on an enterprise WebSocket gateway service such as a cloud service, avoiding the hassle of maintaining the necessary infrastructure required to host such a service.</p>
+<p>Most of the cloud Services provide a Platform as a service (PaaS) backend, which enables deploying and running an instance of your server application on the cloud. The client applications can connect to the running server using a WebSocket URL and receive data.</p>
+<a name="related-information"></a>
+<h3 >Related Information</h3>
+<ul>
+<li><a href="http://tools.ietf.org/html/rfc6455">RFC 6455</a></li>
+</ul>
+</div>
+<!-- @@@websockets-overview.html -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

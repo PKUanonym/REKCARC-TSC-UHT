@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>peerwireclient.h Example File | Qt Network 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtnetwork-index.html">Qt Network</a></td><td ><a href="qtnetwork-torrent-example.html">Torrent Example</a></td><td >peerwireclient.h Example File</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar"><div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">peerwireclient.h Example File</h1>
+<span class="subtitle">torrent/peerwireclient.h</span>
+<!-- $$$torrent/peerwireclient.h-description -->
+<div class="descr"> <a name="details"></a>
+<pre class="cpp">
+
+  <span class="comment">/****************************************************************************
+  **
+  ** Copyright (C) 2015 The Qt Company Ltd.
+  ** Contact: http://www.qt.io/licensing/
+  **
+  ** This file is part of the examples of the Qt Toolkit.
+  **
+  ** $QT_BEGIN_LICENSE:BSD$
+  ** You may use this file under the terms of the BSD license as follows:
+  **
+  ** &quot;Redistribution and use in source and binary forms, with or without
+  ** modification, are permitted provided that the following conditions are
+  ** met:
+  **   * Redistributions of source code must retain the above copyright
+  **     notice, this list of conditions and the following disclaimer.
+  **   * Redistributions in binary form must reproduce the above copyright
+  **     notice, this list of conditions and the following disclaimer in
+  **     the documentation and/or other materials provided with the
+  **     distribution.
+  **   * Neither the name of The Qt Company Ltd nor the names of its
+  **     contributors may be used to endorse or promote products derived
+  **     from this software without specific prior written permission.
+  **
+  **
+  ** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  ** &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  ** LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  ** A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  ** OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  ** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  ** LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  ** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  ** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  ** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.&quot;
+  **
+  ** $QT_END_LICENSE$
+  **
+  ****************************************************************************/</span>
+
+  <span class="preprocessor">#ifndef PEERWIRECLIENT_H</span>
+  <span class="preprocessor">#define PEERWIRECLIENT_H</span>
+
+  <span class="preprocessor">#include &lt;QBitArray&gt;</span>
+  <span class="preprocessor">#include &lt;QList&gt;</span>
+  <span class="preprocessor">#include &lt;QTcpSocket&gt;</span>
+
+  <span class="keyword">class</span> <span class="type"><a href="qhostaddress.html">QHostAddress</a></span>;
+  <span class="keyword">class</span> <span class="type"><a href="../qtcore/qtimerevent.html">QTimerEvent</a></span>;
+
+  <span class="keyword">class</span> TorrentPeer;
+
+  <span class="keyword">struct</span> TorrentBlock
+  {
+      <span class="keyword">inline</span> TorrentBlock(<span class="type">int</span> p<span class="operator">,</span> <span class="type">int</span> o<span class="operator">,</span> <span class="type">int</span> l)
+          : pieceIndex(p)<span class="operator">,</span> offset(o)<span class="operator">,</span> length(l)
+      {
+      }
+      <span class="keyword">inline</span> bool <span class="keyword">operator</span><span class="operator">=</span><span class="operator">=</span>(<span class="keyword">const</span> TorrentBlock <span class="operator">&amp;</span>other) <span class="keyword">const</span>
+      {
+          <span class="keyword">return</span> pieceIndex <span class="operator">=</span><span class="operator">=</span> other<span class="operator">.</span>pieceIndex
+                  <span class="operator">&amp;</span><span class="operator">&amp;</span> offset <span class="operator">=</span><span class="operator">=</span> other<span class="operator">.</span>offset
+                  <span class="operator">&amp;</span><span class="operator">&amp;</span> length <span class="operator">=</span><span class="operator">=</span> other<span class="operator">.</span>length;
+      }
+
+      <span class="type">int</span> pieceIndex;
+      <span class="type">int</span> offset;
+      <span class="type">int</span> length;
+  };
+
+  <span class="keyword">class</span> PeerWireClient : <span class="keyword">public</span> <span class="type"><a href="qtcpsocket.html">QTcpSocket</a></span>
+  {
+      Q_OBJECT
+
+  <span class="keyword">public</span>:
+      <span class="keyword">enum</span> PeerWireStateFlag {
+          ChokingPeer <span class="operator">=</span> <span class="number">0x1</span><span class="operator">,</span>
+          InterestedInPeer <span class="operator">=</span> <span class="number">0x2</span><span class="operator">,</span>
+          ChokedByPeer <span class="operator">=</span> <span class="number">0x4</span><span class="operator">,</span>
+          PeerIsInterested <span class="operator">=</span> <span class="number">0x8</span>
+      };
+      Q_DECLARE_FLAGS(PeerWireState<span class="operator">,</span> PeerWireStateFlag)
+
+      <span class="keyword">explicit</span> PeerWireClient(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> <span class="operator">&amp;</span>peerId<span class="operator">,</span> <span class="type"><a href="../qtcore/qobject.html">QObject</a></span> <span class="operator">*</span>parent <span class="operator">=</span> <span class="number">0</span>);
+      <span class="type">void</span> initialize(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> <span class="operator">&amp;</span>infoHash<span class="operator">,</span> <span class="type">int</span> pieceCount);
+
+      <span class="type">void</span> setPeer(TorrentPeer <span class="operator">*</span>peer);
+      TorrentPeer <span class="operator">*</span>peer() <span class="keyword">const</span>;
+
+      <span class="comment">// State</span>
+      <span class="keyword">inline</span> PeerWireState peerWireState() <span class="keyword">const</span> { <span class="keyword">return</span> pwState; }
+      <span class="type"><a href="../qtcore/qbitarray.html">QBitArray</a></span> availablePieces() <span class="keyword">const</span>;
+      <span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span>TorrentBlock<span class="operator">&gt;</span> incomingBlocks() <span class="keyword">const</span>;
+
+      <span class="comment">// Protocol</span>
+      <span class="type">void</span> chokePeer();
+      <span class="type">void</span> unchokePeer();
+      <span class="type">void</span> sendInterested();
+      <span class="type">void</span> sendKeepAlive();
+      <span class="type">void</span> sendNotInterested();
+      <span class="type">void</span> sendPieceNotification(<span class="type">int</span> piece);
+      <span class="type">void</span> sendPieceList(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qbitarray.html">QBitArray</a></span> <span class="operator">&amp;</span>bitField);
+      <span class="type">void</span> requestBlock(<span class="type">int</span> piece<span class="operator">,</span> <span class="type">int</span> offset<span class="operator">,</span> <span class="type">int</span> length);
+      <span class="type">void</span> cancelRequest(<span class="type">int</span> piece<span class="operator">,</span> <span class="type">int</span> offset<span class="operator">,</span> <span class="type">int</span> length);
+      <span class="type">void</span> sendBlock(<span class="type">int</span> piece<span class="operator">,</span> <span class="type">int</span> offset<span class="operator">,</span> <span class="keyword">const</span> <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> <span class="operator">&amp;</span>data);
+
+      <span class="comment">// Rate control</span>
+      <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> writeToSocket(<span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> bytes);
+      <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> readFromSocket(<span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> bytes);
+      <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> downloadSpeed() <span class="keyword">const</span>;
+      <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> uploadSpeed() <span class="keyword">const</span>;
+
+      bool canTransferMore() <span class="keyword">const</span>;
+      <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> bytesAvailable() <span class="keyword">const</span> Q_DECL_OVERRIDE { <span class="keyword">return</span> incomingBuffer<span class="operator">.</span>size() <span class="operator">+</span> <span class="type"><a href="qtcpsocket.html">QTcpSocket</a></span><span class="operator">::</span>bytesAvailable(); }
+      <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> socketBytesAvailable() <span class="keyword">const</span> { <span class="keyword">return</span> socket<span class="operator">.</span>bytesAvailable(); }
+      <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> socketBytesToWrite() <span class="keyword">const</span> { <span class="keyword">return</span> socket<span class="operator">.</span>bytesToWrite(); }
+
+      <span class="type">void</span> setReadBufferSize(<span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> size) Q_DECL_OVERRIDE;
+
+      <span class="type">void</span> connectToHost(<span class="keyword">const</span> <span class="type"><a href="qhostaddress.html">QHostAddress</a></span> <span class="operator">&amp;</span>address<span class="operator">,</span>
+                         <span class="type"><a href="../qtcore/qtglobal.html#quint16-typedef">quint16</a></span> port<span class="operator">,</span> OpenMode openMode <span class="operator">=</span> ReadWrite) Q_DECL_OVERRIDE;
+      <span class="type">void</span> diconnectFromHost();
+
+  <span class="keyword">signals</span>:
+      <span class="type">void</span> infoHashReceived(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> <span class="operator">&amp;</span>infoHash);
+      <span class="type">void</span> readyToTransfer();
+
+      <span class="type">void</span> choked();
+      <span class="type">void</span> unchoked();
+      <span class="type">void</span> interested();
+      <span class="type">void</span> notInterested();
+
+      <span class="type">void</span> piecesAvailable(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qbitarray.html">QBitArray</a></span> <span class="operator">&amp;</span>pieces);
+      <span class="type">void</span> blockRequested(<span class="type">int</span> pieceIndex<span class="operator">,</span> <span class="type">int</span> begin<span class="operator">,</span> <span class="type">int</span> length);
+      <span class="type">void</span> blockReceived(<span class="type">int</span> pieceIndex<span class="operator">,</span> <span class="type">int</span> begin<span class="operator">,</span> <span class="keyword">const</span> <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> <span class="operator">&amp;</span>data);
+
+      <span class="type">void</span> bytesReceived(<span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> size);
+
+  <span class="keyword">protected</span>:
+      <span class="type">void</span> timerEvent(<span class="type"><a href="../qtcore/qtimerevent.html">QTimerEvent</a></span> <span class="operator">*</span>event) Q_DECL_OVERRIDE;
+
+      <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> readData(<span class="type">char</span> <span class="operator">*</span>data<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> maxlen) Q_DECL_OVERRIDE;
+      <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> readLineData(<span class="type">char</span> <span class="operator">*</span>data<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> maxlen) Q_DECL_OVERRIDE;
+      <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> writeData(<span class="keyword">const</span> <span class="type">char</span> <span class="operator">*</span>data<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> len) Q_DECL_OVERRIDE;
+
+  <span class="keyword">private</span> <span class="keyword">slots</span>:
+      <span class="type">void</span> sendHandShake();
+      <span class="type">void</span> processIncomingData();
+      <span class="type">void</span> socketStateChanged(<span class="type"><a href="qabstractsocket.html">QAbstractSocket</a></span><span class="operator">::</span>SocketState state);
+
+  <span class="keyword">private</span>:
+      <span class="comment">// Data waiting to be read/written</span>
+      <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> incomingBuffer;
+      <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> outgoingBuffer;
+
+      <span class="keyword">struct</span> BlockInfo {
+          <span class="type">int</span> pieceIndex;
+          <span class="type">int</span> offset;
+          <span class="type">int</span> length;
+          <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> block;
+      };
+      <span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span>BlockInfo<span class="operator">&gt;</span> pendingBlocks;
+      <span class="type">int</span> pendingBlockSizes;
+      <span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span>TorrentBlock<span class="operator">&gt;</span> incoming;
+
+      <span class="keyword">enum</span> PacketType {
+          ChokePacket <span class="operator">=</span> <span class="number">0</span><span class="operator">,</span>
+          UnchokePacket <span class="operator">=</span> <span class="number">1</span><span class="operator">,</span>
+          InterestedPacket <span class="operator">=</span> <span class="number">2</span><span class="operator">,</span>
+          NotInterestedPacket <span class="operator">=</span> <span class="number">3</span><span class="operator">,</span>
+          HavePacket <span class="operator">=</span> <span class="number">4</span><span class="operator">,</span>
+          BitFieldPacket <span class="operator">=</span> <span class="number">5</span><span class="operator">,</span>
+          RequestPacket <span class="operator">=</span> <span class="number">6</span><span class="operator">,</span>
+          PiecePacket <span class="operator">=</span> <span class="number">7</span><span class="operator">,</span>
+          CancelPacket <span class="operator">=</span> <span class="number">8</span>
+      };
+
+      <span class="comment">// State</span>
+      PeerWireState pwState;
+      bool receivedHandShake;
+      bool gotPeerId;
+      bool sentHandShake;
+      <span class="type">int</span> nextPacketLength;
+
+      <span class="comment">// Upload/download speed records</span>
+      <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> uploadSpeedData<span class="operator">[</span><span class="number">8</span><span class="operator">]</span>;
+      <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> downloadSpeedData<span class="operator">[</span><span class="number">8</span><span class="operator">]</span>;
+      <span class="type">int</span> transferSpeedTimer;
+
+      <span class="comment">// Timeout handling</span>
+      <span class="type">int</span> timeoutTimer;
+      <span class="type">int</span> pendingRequestTimer;
+      bool invalidateTimeout;
+      <span class="type">int</span> keepAliveTimer;
+
+      <span class="comment">// Checksum, peer ID and set of available pieces</span>
+      <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> infoHash;
+      <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> peerIdString;
+      <span class="type"><a href="../qtcore/qbitarray.html">QBitArray</a></span> peerPieces;
+      TorrentPeer <span class="operator">*</span>torrentPeer;
+
+      <span class="type"><a href="qtcpsocket.html">QTcpSocket</a></span> socket;
+  };
+
+  Q_DECLARE_OPERATORS_FOR_FLAGS(PeerWireClient<span class="operator">::</span>PeerWireState)
+
+  <span class="preprocessor">#endif</span>
+
+</pre>
+</div>
+<!-- @@@torrent/peerwireclient.h -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

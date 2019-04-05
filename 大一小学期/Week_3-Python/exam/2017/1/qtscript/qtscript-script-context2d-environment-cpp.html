@@ -1,0 +1,613 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>environment.cpp Example File | Qt Script</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtscript-index.html">Qt Script</a></td><td ><a href="qtscript-script-context2d-example.html">Context2D Example</a></td><td >environment.cpp Example File</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar"><div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">environment.cpp Example File</h1>
+<span class="subtitle">script/context2d/environment.cpp</span>
+<!-- $$$script/context2d/environment.cpp-description -->
+<div class="descr"> <a name="details"></a>
+<pre class="cpp">
+
+  <span class="comment">/****************************************************************************
+  **
+  ** Copyright (C) 2015 The Qt Company Ltd.
+  ** Contact: http://www.qt.io/licensing/
+  **
+  ** This file is part of the examples of the Qt Toolkit.
+  **
+  ** $QT_BEGIN_LICENSE:BSD$
+  ** You may use this file under the terms of the BSD license as follows:
+  **
+  ** &quot;Redistribution and use in source and binary forms, with or without
+  ** modification, are permitted provided that the following conditions are
+  ** met:
+  **   * Redistributions of source code must retain the above copyright
+  **     notice, this list of conditions and the following disclaimer.
+  **   * Redistributions in binary form must reproduce the above copyright
+  **     notice, this list of conditions and the following disclaimer in
+  **     the documentation and/or other materials provided with the
+  **     distribution.
+  **   * Neither the name of The Qt Company Ltd nor the names of its
+  **     contributors may be used to endorse or promote products derived
+  **     from this software without specific prior written permission.
+  **
+  **
+  ** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  ** &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  ** LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  ** A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  ** OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  ** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  ** LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  ** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  ** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  ** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.&quot;
+  **
+  ** $QT_END_LICENSE$
+  **
+  ****************************************************************************/</span>
+
+  <span class="preprocessor">#include &quot;environment.h&quot;</span>
+  <span class="preprocessor">#include &quot;qcontext2dcanvas.h&quot;</span>
+  <span class="preprocessor">#include &quot;context2d.h&quot;</span>
+  <span class="preprocessor">#include &lt;QScriptValueIterator&gt;</span>
+  <span class="preprocessor">#include &lt;QDateTime&gt;</span>
+
+  <span class="keyword">struct</span> FakeDomEvent
+  {
+      <span class="keyword">enum</span> KeyCodes  {
+          DOM_VK_UNDEFINED            <span class="operator">=</span> <span class="number">0x0</span><span class="operator">,</span>
+          DOM_VK_RIGHT_ALT            <span class="operator">=</span> <span class="number">0x12</span><span class="operator">,</span>
+          DOM_VK_LEFT_ALT             <span class="operator">=</span> <span class="number">0x12</span><span class="operator">,</span>
+          DOM_VK_LEFT_CONTROL         <span class="operator">=</span> <span class="number">0x11</span><span class="operator">,</span>
+          DOM_VK_RIGHT_CONTROL        <span class="operator">=</span> <span class="number">0x11</span><span class="operator">,</span>
+          DOM_VK_LEFT_SHIFT           <span class="operator">=</span> <span class="number">0x10</span><span class="operator">,</span>
+          DOM_VK_RIGHT_SHIFT          <span class="operator">=</span> <span class="number">0x10</span><span class="operator">,</span>
+          DOM_VK_META                 <span class="operator">=</span> <span class="number">0x9D</span><span class="operator">,</span>
+          DOM_VK_BACK_SPACE           <span class="operator">=</span> <span class="number">0x08</span><span class="operator">,</span>
+          DOM_VK_CAPS_LOCK            <span class="operator">=</span> <span class="number">0x14</span><span class="operator">,</span>
+          DOM_VK_DELETE               <span class="operator">=</span> <span class="number">0x7F</span><span class="operator">,</span>
+          DOM_VK_END                  <span class="operator">=</span> <span class="number">0x23</span><span class="operator">,</span>
+          DOM_VK_ENTER                <span class="operator">=</span> <span class="number">0x0D</span><span class="operator">,</span>
+          DOM_VK_ESCAPE               <span class="operator">=</span> <span class="number">0x1B</span><span class="operator">,</span>
+          DOM_VK_HOME                 <span class="operator">=</span> <span class="number">0x24</span><span class="operator">,</span>
+          DOM_VK_NUM_LOCK             <span class="operator">=</span> <span class="number">0x90</span><span class="operator">,</span>
+          DOM_VK_PAUSE                <span class="operator">=</span> <span class="number">0x13</span><span class="operator">,</span>
+          DOM_VK_PRINTSCREEN          <span class="operator">=</span> <span class="number">0x9A</span><span class="operator">,</span>
+          DOM_VK_SCROLL_LOCK          <span class="operator">=</span> <span class="number">0x91</span><span class="operator">,</span>
+          DOM_VK_SPACE                <span class="operator">=</span> <span class="number">0x20</span><span class="operator">,</span>
+          DOM_VK_TAB                  <span class="operator">=</span> <span class="number">0x09</span><span class="operator">,</span>
+          DOM_VK_LEFT                 <span class="operator">=</span> <span class="number">0x25</span><span class="operator">,</span>
+          DOM_VK_RIGHT                <span class="operator">=</span> <span class="number">0x27</span><span class="operator">,</span>
+          DOM_VK_UP                   <span class="operator">=</span> <span class="number">0x26</span><span class="operator">,</span>
+          DOM_VK_DOWN                 <span class="operator">=</span> <span class="number">0x28</span><span class="operator">,</span>
+          DOM_VK_PAGE_DOWN            <span class="operator">=</span> <span class="number">0x22</span><span class="operator">,</span>
+          DOM_VK_PAGE_UP              <span class="operator">=</span> <span class="number">0x21</span><span class="operator">,</span>
+          DOM_VK_F1                   <span class="operator">=</span> <span class="number">0x70</span><span class="operator">,</span>
+          DOM_VK_F2                   <span class="operator">=</span> <span class="number">0x71</span><span class="operator">,</span>
+          DOM_VK_F3                   <span class="operator">=</span> <span class="number">0x72</span><span class="operator">,</span>
+          DOM_VK_F4                   <span class="operator">=</span> <span class="number">0x73</span><span class="operator">,</span>
+          DOM_VK_F5                   <span class="operator">=</span> <span class="number">0x74</span><span class="operator">,</span>
+          DOM_VK_F6                   <span class="operator">=</span> <span class="number">0x75</span><span class="operator">,</span>
+          DOM_VK_F7                   <span class="operator">=</span> <span class="number">0x76</span><span class="operator">,</span>
+          DOM_VK_F8                   <span class="operator">=</span> <span class="number">0x77</span><span class="operator">,</span>
+          DOM_VK_F9                   <span class="operator">=</span> <span class="number">0x78</span><span class="operator">,</span>
+          DOM_VK_F10                  <span class="operator">=</span> <span class="number">0x79</span><span class="operator">,</span>
+          DOM_VK_F11                  <span class="operator">=</span> <span class="number">0x7A</span><span class="operator">,</span>
+          DOM_VK_F12                  <span class="operator">=</span> <span class="number">0x7B</span><span class="operator">,</span>
+          DOM_VK_F13                  <span class="operator">=</span> <span class="number">0xF000</span><span class="operator">,</span>
+          DOM_VK_F14                  <span class="operator">=</span> <span class="number">0xF001</span><span class="operator">,</span>
+          DOM_VK_F15                  <span class="operator">=</span> <span class="number">0xF002</span><span class="operator">,</span>
+          DOM_VK_F16                  <span class="operator">=</span> <span class="number">0xF003</span><span class="operator">,</span>
+          DOM_VK_F17                  <span class="operator">=</span> <span class="number">0xF004</span><span class="operator">,</span>
+          DOM_VK_F18                  <span class="operator">=</span> <span class="number">0xF005</span><span class="operator">,</span>
+          DOM_VK_F19                  <span class="operator">=</span> <span class="number">0xF006</span><span class="operator">,</span>
+          DOM_VK_F20                  <span class="operator">=</span> <span class="number">0xF007</span><span class="operator">,</span>
+          DOM_VK_F21                  <span class="operator">=</span> <span class="number">0xF008</span><span class="operator">,</span>
+          DOM_VK_F22                  <span class="operator">=</span> <span class="number">0xF009</span><span class="operator">,</span>
+          DOM_VK_F23                  <span class="operator">=</span> <span class="number">0xF00A</span><span class="operator">,</span>
+          DOM_VK_F24                  <span class="operator">=</span> <span class="number">0xF00B</span>
+      };
+
+      <span class="keyword">static</span> <span class="type">int</span> qtToDomKey(<span class="type">int</span> keyCode);
+  };
+
+  <span class="type">int</span> FakeDomEvent<span class="operator">::</span>qtToDomKey(<span class="type">int</span> keyCode)
+  {
+      <span class="keyword">switch</span> (keyCode) {
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Key_Backspace:
+          <span class="keyword">return</span>  DOM_VK_BACK_SPACE;
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Key_Enter:
+          <span class="keyword">return</span>  DOM_VK_ENTER;
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Key_Return:
+          <span class="keyword">return</span>  DOM_VK_ENTER;
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Key_NumLock:
+          <span class="keyword">return</span>  DOM_VK_NUM_LOCK;
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Key_Alt:
+          <span class="keyword">return</span>  DOM_VK_RIGHT_ALT;
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Key_Control:
+          <span class="keyword">return</span>  DOM_VK_LEFT_CONTROL;
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Key_Shift:
+          <span class="keyword">return</span>  DOM_VK_LEFT_SHIFT;
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Key_Meta:
+          <span class="keyword">return</span>  DOM_VK_META;
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Key_CapsLock:
+          <span class="keyword">return</span>  DOM_VK_CAPS_LOCK;
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Key_Delete:
+          <span class="keyword">return</span>  DOM_VK_DELETE;
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Key_End:
+          <span class="keyword">return</span>  DOM_VK_END;
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Key_Escape:
+          <span class="keyword">return</span>  DOM_VK_ESCAPE;
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Key_Home:
+          <span class="keyword">return</span>  DOM_VK_HOME;
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Key_Pause:
+          <span class="keyword">return</span>  DOM_VK_PAUSE;
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Key_Print:
+          <span class="keyword">return</span>  DOM_VK_PRINTSCREEN;
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Key_ScrollLock:
+          <span class="keyword">return</span>  DOM_VK_SCROLL_LOCK;
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Key_Left:
+          <span class="keyword">return</span>  DOM_VK_LEFT;
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Key_Right:
+          <span class="keyword">return</span>  DOM_VK_RIGHT;
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Key_Up:
+          <span class="keyword">return</span>  DOM_VK_UP;
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Key_Down:
+          <span class="keyword">return</span>  DOM_VK_DOWN;
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Key_PageDown:
+          <span class="keyword">return</span>  DOM_VK_PAGE_DOWN;
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Key_PageUp:
+          <span class="keyword">return</span>  DOM_VK_PAGE_UP;
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Key_F1:
+          <span class="keyword">return</span>  DOM_VK_F1;
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Key_F2:
+          <span class="keyword">return</span>  DOM_VK_F2;
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Key_F3:
+          <span class="keyword">return</span>  DOM_VK_F3;
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Key_F4:
+          <span class="keyword">return</span>  DOM_VK_F4;
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Key_F5:
+          <span class="keyword">return</span>  DOM_VK_F5;
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Key_F6:
+          <span class="keyword">return</span>  DOM_VK_F6;
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Key_F7:
+          <span class="keyword">return</span>  DOM_VK_F7;
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Key_F8:
+          <span class="keyword">return</span>  DOM_VK_F8;
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Key_F9:
+          <span class="keyword">return</span>  DOM_VK_F9;
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Key_F10:
+          <span class="keyword">return</span>  DOM_VK_F10;
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Key_F11:
+          <span class="keyword">return</span>  DOM_VK_F11;
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Key_F12:
+          <span class="keyword">return</span>  DOM_VK_F12;
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Key_F13:
+          <span class="keyword">return</span>  DOM_VK_F13;
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Key_F14:
+          <span class="keyword">return</span>  DOM_VK_F14;
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Key_F15:
+          <span class="keyword">return</span>  DOM_VK_F15;
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Key_F16:
+          <span class="keyword">return</span>  DOM_VK_F16;
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Key_F17:
+          <span class="keyword">return</span>  DOM_VK_F17;
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Key_F18:
+          <span class="keyword">return</span>  DOM_VK_F18;
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Key_F19:
+          <span class="keyword">return</span>  DOM_VK_F19;
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Key_F20:
+          <span class="keyword">return</span>  DOM_VK_F20;
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Key_F21:
+          <span class="keyword">return</span>  DOM_VK_F21;
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Key_F22:
+          <span class="keyword">return</span>  DOM_VK_F22;
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Key_F23:
+          <span class="keyword">return</span>  DOM_VK_F23;
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Key_F24:
+          <span class="keyword">return</span>  DOM_VK_F24;
+      }
+      <span class="keyword">return</span> keyCode;
+  }
+
+  Environment<span class="operator">::</span>Environment(<span class="type"><a href="../qtcore/qobject.html">QObject</a></span> <span class="operator">*</span>parent)
+      : <span class="type"><a href="../qtcore/qobject.html">QObject</a></span>(parent)
+  {
+      m_engine <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="qscriptengine.html">QScriptEngine</a></span>(<span class="keyword">this</span>);
+
+      m_document <span class="operator">=</span> m_engine<span class="operator">-</span><span class="operator">&gt;</span>newQObject(
+          <span class="keyword">new</span> Document(<span class="keyword">this</span>)<span class="operator">,</span> <span class="type"><a href="qscriptengine.html">QScriptEngine</a></span><span class="operator">::</span><span class="type">QtOwnership</span><span class="operator">,</span>
+          <span class="type"><a href="qscriptengine.html">QScriptEngine</a></span><span class="operator">::</span>ExcludeSuperClassContents);
+
+      CanvasGradientPrototype<span class="operator">::</span>setup(m_engine);
+
+      m_originalGlobalObject <span class="operator">=</span> m_engine<span class="operator">-</span><span class="operator">&gt;</span>globalObject();
+      reset();
+  }
+
+  Environment<span class="operator">::</span><span class="operator">~</span>Environment()
+  {
+  }
+
+  <span class="type"><a href="qscriptengine.html">QScriptEngine</a></span> <span class="operator">*</span>Environment<span class="operator">::</span>engine() <span class="keyword">const</span>
+  {
+      <span class="keyword">return</span> m_engine;
+  }
+
+  <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> Environment<span class="operator">::</span>document() <span class="keyword">const</span>
+  {
+      <span class="keyword">return</span> m_document;
+  }
+
+  <span class="type">int</span> Environment<span class="operator">::</span>setTimeout(<span class="keyword">const</span> <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> <span class="operator">&amp;</span>expression<span class="operator">,</span> <span class="type">int</span> delay)
+  {
+      <span class="keyword">if</span> (expression<span class="operator">.</span>isString() <span class="operator">|</span><span class="operator">|</span> expression<span class="operator">.</span>isFunction()) {
+          <span class="type">int</span> timerId <span class="operator">=</span> startTimer(delay);
+          m_timeoutHash<span class="operator">.</span>insert(timerId<span class="operator">,</span> expression);
+          <span class="keyword">return</span> timerId;
+      }
+      <span class="keyword">return</span> <span class="operator">-</span><span class="number">1</span>;
+  }
+
+  <span class="type">void</span> Environment<span class="operator">::</span>clearTimeout(<span class="type">int</span> timerId)
+  {
+      killTimer(timerId);
+      m_timeoutHash<span class="operator">.</span>remove(timerId);
+  }
+
+  <span class="type">int</span> Environment<span class="operator">::</span>setInterval(<span class="keyword">const</span> <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> <span class="operator">&amp;</span>expression<span class="operator">,</span> <span class="type">int</span> delay)
+  {
+      <span class="keyword">if</span> (expression<span class="operator">.</span>isString() <span class="operator">|</span><span class="operator">|</span> expression<span class="operator">.</span>isFunction()) {
+          <span class="type">int</span> timerId <span class="operator">=</span> startTimer(delay);
+          m_intervalHash<span class="operator">.</span>insert(timerId<span class="operator">,</span> expression);
+          <span class="keyword">return</span> timerId;
+      }
+      <span class="keyword">return</span> <span class="operator">-</span><span class="number">1</span>;
+  }
+
+  <span class="type">void</span> Environment<span class="operator">::</span>clearInterval(<span class="type">int</span> timerId)
+  {
+      killTimer(timerId);
+      m_intervalHash<span class="operator">.</span>remove(timerId);
+  }
+
+  <span class="type">void</span> Environment<span class="operator">::</span>timerEvent(<span class="type"><a href="../qtcore/qtimerevent.html">QTimerEvent</a></span> <span class="operator">*</span>event)
+  {
+      <span class="type">int</span> id <span class="operator">=</span> event<span class="operator">-</span><span class="operator">&gt;</span>timerId();
+      <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> expression <span class="operator">=</span> m_intervalHash<span class="operator">.</span>value(id);
+      <span class="keyword">if</span> (<span class="operator">!</span>expression<span class="operator">.</span>isValid()) {
+          expression <span class="operator">=</span> m_timeoutHash<span class="operator">.</span>value(id);
+          <span class="keyword">if</span> (expression<span class="operator">.</span>isValid())
+              killTimer(id);
+      }
+      <span class="keyword">if</span> (expression<span class="operator">.</span>isString()) {
+          evaluate(expression<span class="operator">.</span>toString());
+      } <span class="keyword">else</span> <span class="keyword">if</span> (expression<span class="operator">.</span>isFunction()) {
+          expression<span class="operator">.</span>call();
+      }
+      maybeEmitScriptError();
+  }
+
+  <span class="type">void</span> Environment<span class="operator">::</span>addCanvas(QContext2DCanvas <span class="operator">*</span>canvas)
+  {
+      m_canvases<span class="operator">.</span>append(canvas);
+  }
+
+  QContext2DCanvas <span class="operator">*</span>Environment<span class="operator">::</span>canvasByName(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>name) <span class="keyword">const</span>
+  {
+      <span class="keyword">for</span> (<span class="type">int</span> i <span class="operator">=</span> <span class="number">0</span>; i <span class="operator">&lt;</span> m_canvases<span class="operator">.</span>size(); <span class="operator">+</span><span class="operator">+</span>i) {
+          QContext2DCanvas <span class="operator">*</span>canvas <span class="operator">=</span> m_canvases<span class="operator">.</span>at(i);
+          <span class="keyword">if</span> (canvas<span class="operator">-</span><span class="operator">&gt;</span>objectName() <span class="operator">=</span><span class="operator">=</span> name)
+              <span class="keyword">return</span> canvas;
+      }
+      <span class="keyword">return</span> <span class="number">0</span>;
+  }
+
+  <span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span>QContext2DCanvas<span class="operator">*</span><span class="operator">&gt;</span> Environment<span class="operator">::</span>canvases() <span class="keyword">const</span>
+  {
+      <span class="keyword">return</span> m_canvases;
+  }
+
+  <span class="type">void</span> Environment<span class="operator">::</span>reset()
+  {
+      <span class="keyword">if</span> (m_engine<span class="operator">-</span><span class="operator">&gt;</span>isEvaluating())
+          m_engine<span class="operator">-</span><span class="operator">&gt;</span>abortEvaluation();
+
+      {
+          <span class="type"><a href="../qtcore/qhash.html">QHash</a></span><span class="operator">&lt;</span><span class="type">int</span><span class="operator">,</span> <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span><span class="operator">&gt;</span><span class="operator">::</span>const_iterator it;
+          <span class="keyword">for</span> (it <span class="operator">=</span> m_intervalHash<span class="operator">.</span>constBegin(); it <span class="operator">!</span><span class="operator">=</span> m_intervalHash<span class="operator">.</span>constEnd(); <span class="operator">+</span><span class="operator">+</span>it)
+              killTimer(it<span class="operator">.</span>key());
+          m_intervalHash<span class="operator">.</span>clear();
+          <span class="keyword">for</span> (it <span class="operator">=</span> m_timeoutHash<span class="operator">.</span>constBegin(); it <span class="operator">!</span><span class="operator">=</span> m_timeoutHash<span class="operator">.</span>constEnd(); <span class="operator">+</span><span class="operator">+</span>it)
+              killTimer(it<span class="operator">.</span>key());
+          m_timeoutHash<span class="operator">.</span>clear();
+      }
+
+      <span class="keyword">for</span> (<span class="type">int</span> i <span class="operator">=</span> <span class="number">0</span>; i <span class="operator">&lt;</span> m_canvases<span class="operator">.</span>size(); <span class="operator">+</span><span class="operator">+</span>i)
+          m_canvases<span class="operator">.</span>at(i)<span class="operator">-</span><span class="operator">&gt;</span>reset();
+
+      <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> self <span class="operator">=</span> m_engine<span class="operator">-</span><span class="operator">&gt;</span>newQObject(
+          <span class="keyword">this</span><span class="operator">,</span> <span class="type"><a href="qscriptengine.html">QScriptEngine</a></span><span class="operator">::</span><span class="type">QtOwnership</span><span class="operator">,</span>
+          <span class="type"><a href="qscriptengine.html">QScriptEngine</a></span><span class="operator">::</span>ExcludeSuperClassContents);
+
+      {
+          <span class="type"><a href="qscriptvalueiterator.html">QScriptValueIterator</a></span> it(m_originalGlobalObject);
+          <span class="keyword">while</span> (it<span class="operator">.</span>hasNext()) {
+              it<span class="operator">.</span>next();
+              self<span class="operator">.</span>setProperty(it<span class="operator">.</span>scriptName()<span class="operator">,</span> it<span class="operator">.</span>value()<span class="operator">,</span> it<span class="operator">.</span>flags());
+          }
+      }
+
+      self<span class="operator">.</span>setProperty(<span class="string">&quot;self&quot;</span><span class="operator">,</span> self);
+      self<span class="operator">.</span>setProperty(<span class="string">&quot;window&quot;</span><span class="operator">,</span> self);
+
+      <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> navigator <span class="operator">=</span> m_engine<span class="operator">-</span><span class="operator">&gt;</span>newObject();
+      navigator<span class="operator">.</span>setProperty(<span class="string">&quot;appCodeName&quot;</span><span class="operator">,</span> <span class="string">&quot;context2d&quot;</span>);
+      navigator<span class="operator">.</span>setProperty(<span class="string">&quot;appMinorVersion&quot;</span><span class="operator">,</span> <span class="number">1</span>);
+      navigator<span class="operator">.</span>setProperty(<span class="string">&quot;appVersion&quot;</span><span class="operator">,</span> <span class="number">1</span>);
+      navigator<span class="operator">.</span>setProperty(<span class="string">&quot;browserLanguage&quot;</span><span class="operator">,</span> <span class="string">&quot;en_US&quot;</span>);
+      navigator<span class="operator">.</span>setProperty(<span class="string">&quot;cookieEnabled&quot;</span><span class="operator">,</span> <span class="keyword">false</span>);
+      navigator<span class="operator">.</span>setProperty(<span class="string">&quot;cpuClass&quot;</span><span class="operator">,</span> <span class="string">&quot;i686&quot;</span>);
+      navigator<span class="operator">.</span>setProperty(<span class="string">&quot;onLine&quot;</span><span class="operator">,</span> <span class="keyword">false</span>);
+      navigator<span class="operator">.</span>setProperty(<span class="string">&quot;platform&quot;</span><span class="operator">,</span> <span class="string">&quot;bogus OS&quot;</span>);
+      navigator<span class="operator">.</span>setProperty(<span class="string">&quot;systemLanguage&quot;</span><span class="operator">,</span> <span class="string">&quot;en_US&quot;</span>);
+      navigator<span class="operator">.</span>setProperty(<span class="string">&quot;userAgent&quot;</span><span class="operator">,</span> <span class="string">&quot;Context2D/1.1&quot;</span>);
+      navigator<span class="operator">.</span>setProperty(<span class="string">&quot;userLanguage&quot;</span><span class="operator">,</span> <span class="string">&quot;en_US&quot;</span>);
+      self<span class="operator">.</span>setProperty(<span class="string">&quot;navigator&quot;</span><span class="operator">,</span> navigator);
+
+      m_engine<span class="operator">-</span><span class="operator">&gt;</span>setGlobalObject(self);
+
+      m_engine<span class="operator">-</span><span class="operator">&gt;</span>collectGarbage();
+  }
+
+  <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> Environment<span class="operator">::</span>evaluate(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>code<span class="operator">,</span> <span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>fileName)
+  {
+      <span class="keyword">return</span> m_engine<span class="operator">-</span><span class="operator">&gt;</span>evaluate(code<span class="operator">,</span> fileName);
+  }
+
+  bool Environment<span class="operator">::</span>hasIntervalTimers() <span class="keyword">const</span>
+  {
+      <span class="keyword">return</span> <span class="operator">!</span>m_intervalHash<span class="operator">.</span>isEmpty();
+  }
+
+  <span class="comment">// This is used by the Context2D Qt Script benchmark.</span>
+  <span class="type">void</span> Environment<span class="operator">::</span>triggerTimers()
+  {
+      <span class="keyword">for</span> (<span class="type">int</span> x <span class="operator">=</span> <span class="number">0</span>; x <span class="operator">&lt;</span> <span class="number">2</span>; <span class="operator">+</span><span class="operator">+</span>x) {
+          <span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span><span class="type">int</span><span class="operator">&gt;</span> timerIds <span class="operator">=</span> x <span class="operator">?</span> m_intervalHash<span class="operator">.</span>keys() : m_timeoutHash<span class="operator">.</span>keys();
+          <span class="keyword">for</span> (<span class="type">int</span> i <span class="operator">=</span> <span class="number">0</span>; i <span class="operator">&lt;</span> timerIds<span class="operator">.</span>size(); <span class="operator">+</span><span class="operator">+</span>i) {
+              <span class="type"><a href="../qtcore/qtimerevent.html">QTimerEvent</a></span> fakeEvent(timerIds<span class="operator">.</span>at(i));
+              timerEvent(<span class="operator">&amp;</span>fakeEvent);
+          }
+      }
+  }
+
+  <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> Environment<span class="operator">::</span>toWrapper(<span class="type"><a href="../qtcore/qobject.html">QObject</a></span> <span class="operator">*</span>object)
+  {
+      <span class="keyword">return</span> m_engine<span class="operator">-</span><span class="operator">&gt;</span>newQObject(object<span class="operator">,</span> <span class="type"><a href="qscriptengine.html">QScriptEngine</a></span><span class="operator">::</span><span class="type">QtOwnership</span><span class="operator">,</span>
+                                  <span class="type"><a href="qscriptengine.html">QScriptEngine</a></span><span class="operator">::</span>PreferExistingWrapperObject
+                                  <span class="operator">|</span> <span class="type"><a href="qscriptengine.html">QScriptEngine</a></span><span class="operator">::</span>ExcludeSuperClassContents);
+  }
+
+  <span class="type">void</span> Environment<span class="operator">::</span>handleEvent(QContext2DCanvas <span class="operator">*</span>canvas<span class="operator">,</span> <span class="type">QMouseEvent</span> <span class="operator">*</span>e)
+  {
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> type;
+      <span class="keyword">switch</span> (e<span class="operator">-</span><span class="operator">&gt;</span>type()) {
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qevent.html">QEvent</a></span><span class="operator">::</span>MouseButtonPress:
+          type <span class="operator">=</span> <span class="string">&quot;mousedown&quot;</span>; <span class="keyword">break</span>;
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qevent.html">QEvent</a></span><span class="operator">::</span>MouseButtonRelease:
+          type <span class="operator">=</span> <span class="string">&quot;mouseup&quot;</span>; <span class="keyword">break</span>;
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qevent.html">QEvent</a></span><span class="operator">::</span>MouseMove:
+          type <span class="operator">=</span> <span class="string">&quot;mousemove&quot;</span>; <span class="keyword">break</span>;
+      <span class="keyword">default</span>: <span class="keyword">break</span>;
+      }
+      <span class="keyword">if</span> (type<span class="operator">.</span>isEmpty())
+          <span class="keyword">return</span>;
+
+      <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> handlerObject;
+      <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> handler <span class="operator">=</span> eventHandler(canvas<span class="operator">,</span> type<span class="operator">,</span> <span class="operator">&amp;</span>handlerObject);
+      <span class="keyword">if</span> (<span class="operator">!</span>handler<span class="operator">.</span>isFunction())
+          <span class="keyword">return</span>;
+
+      <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> scriptEvent <span class="operator">=</span> newFakeDomEvent(type<span class="operator">,</span> toWrapper(canvas));
+      <span class="comment">// MouseEvent</span>
+      scriptEvent<span class="operator">.</span>setProperty(<span class="string">&quot;screenX&quot;</span><span class="operator">,</span> e<span class="operator">-</span><span class="operator">&gt;</span>globalX()<span class="operator">,</span> <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span><span class="operator">::</span>ReadOnly);
+      scriptEvent<span class="operator">.</span>setProperty(<span class="string">&quot;screenY&quot;</span><span class="operator">,</span> e<span class="operator">-</span><span class="operator">&gt;</span>globalY()<span class="operator">,</span> <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span><span class="operator">::</span>ReadOnly);
+      scriptEvent<span class="operator">.</span>setProperty(<span class="string">&quot;clientX&quot;</span><span class="operator">,</span> e<span class="operator">-</span><span class="operator">&gt;</span>x()<span class="operator">,</span> <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span><span class="operator">::</span>ReadOnly);
+      scriptEvent<span class="operator">.</span>setProperty(<span class="string">&quot;clientY&quot;</span><span class="operator">,</span> e<span class="operator">-</span><span class="operator">&gt;</span>y()<span class="operator">,</span> <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span><span class="operator">::</span>ReadOnly);
+      scriptEvent<span class="operator">.</span>setProperty(<span class="string">&quot;layerX&quot;</span><span class="operator">,</span> e<span class="operator">-</span><span class="operator">&gt;</span>x()<span class="operator">,</span> <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span><span class="operator">::</span>ReadOnly);
+      scriptEvent<span class="operator">.</span>setProperty(<span class="string">&quot;layerY&quot;</span><span class="operator">,</span> e<span class="operator">-</span><span class="operator">&gt;</span>y()<span class="operator">,</span> <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span><span class="operator">::</span>ReadOnly);
+      scriptEvent<span class="operator">.</span>setProperty(<span class="string">&quot;pageX&quot;</span><span class="operator">,</span> e<span class="operator">-</span><span class="operator">&gt;</span>x()<span class="operator">,</span> <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span><span class="operator">::</span>ReadOnly);
+      scriptEvent<span class="operator">.</span>setProperty(<span class="string">&quot;pageY&quot;</span><span class="operator">,</span> e<span class="operator">-</span><span class="operator">&gt;</span>y()<span class="operator">,</span> <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span><span class="operator">::</span>ReadOnly);
+      scriptEvent<span class="operator">.</span>setProperty(<span class="string">&quot;altKey&quot;</span><span class="operator">,</span> (e<span class="operator">-</span><span class="operator">&gt;</span>modifiers() <span class="operator">&amp;</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>AltModifier) <span class="operator">!</span><span class="operator">=</span> <span class="number">0</span><span class="operator">,</span>
+                              <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span><span class="operator">::</span>ReadOnly);
+      scriptEvent<span class="operator">.</span>setProperty(<span class="string">&quot;ctrlKey&quot;</span><span class="operator">,</span> (e<span class="operator">-</span><span class="operator">&gt;</span>modifiers() <span class="operator">&amp;</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>ControlModifier) <span class="operator">!</span><span class="operator">=</span> <span class="number">0</span><span class="operator">,</span>
+                              <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span><span class="operator">::</span>ReadOnly);
+      scriptEvent<span class="operator">.</span>setProperty(<span class="string">&quot;metaKey&quot;</span><span class="operator">,</span> (e<span class="operator">-</span><span class="operator">&gt;</span>modifiers() <span class="operator">&amp;</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>MetaModifier) <span class="operator">!</span><span class="operator">=</span> <span class="number">0</span><span class="operator">,</span>
+                              <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span><span class="operator">::</span>ReadOnly);
+      scriptEvent<span class="operator">.</span>setProperty(<span class="string">&quot;shiftKey&quot;</span><span class="operator">,</span> (e<span class="operator">-</span><span class="operator">&gt;</span>modifiers() <span class="operator">&amp;</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>ShiftModifier) <span class="operator">!</span><span class="operator">=</span> <span class="number">0</span><span class="operator">,</span>
+                              <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span><span class="operator">::</span>ReadOnly);
+      <span class="type">int</span> button <span class="operator">=</span> <span class="number">0</span>;
+      <span class="keyword">if</span> (e<span class="operator">-</span><span class="operator">&gt;</span>button() <span class="operator">=</span><span class="operator">=</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>RightButton)
+          button <span class="operator">=</span> <span class="number">2</span>;
+      <span class="keyword">else</span> <span class="keyword">if</span> (e<span class="operator">-</span><span class="operator">&gt;</span>button() <span class="operator">=</span><span class="operator">=</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>MidButton)
+          button <span class="operator">=</span> <span class="number">1</span>;
+      scriptEvent<span class="operator">.</span>setProperty(<span class="string">&quot;button&quot;</span><span class="operator">,</span> button);
+      scriptEvent<span class="operator">.</span>setProperty(<span class="string">&quot;relatedTarget&quot;</span><span class="operator">,</span> m_engine<span class="operator">-</span><span class="operator">&gt;</span>nullValue()<span class="operator">,</span>
+                              <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span><span class="operator">::</span>ReadOnly);
+      handler<span class="operator">.</span>call(handlerObject<span class="operator">,</span> <span class="type">QScriptValueList</span>() <span class="operator">&lt;</span><span class="operator">&lt;</span> scriptEvent);
+      maybeEmitScriptError();
+  }
+
+  <span class="type">void</span> Environment<span class="operator">::</span>handleEvent(QContext2DCanvas <span class="operator">*</span>canvas<span class="operator">,</span> <span class="type">QKeyEvent</span> <span class="operator">*</span>e)
+  {
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> type;
+      <span class="keyword">switch</span> (e<span class="operator">-</span><span class="operator">&gt;</span>type()) {
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qevent.html">QEvent</a></span><span class="operator">::</span>KeyPress:
+          type <span class="operator">=</span> <span class="string">&quot;keydown&quot;</span>; <span class="keyword">break</span>;
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qevent.html">QEvent</a></span><span class="operator">::</span>KeyRelease:
+          type <span class="operator">=</span> <span class="string">&quot;keyup&quot;</span>; <span class="keyword">break</span>;
+      <span class="keyword">default</span>: <span class="keyword">break</span>;
+      }
+      <span class="keyword">if</span> (type<span class="operator">.</span>isEmpty())
+          <span class="keyword">return</span>;
+
+      <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> handlerObject;
+      <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> handler <span class="operator">=</span> eventHandler(canvas<span class="operator">,</span> type<span class="operator">,</span> <span class="operator">&amp;</span>handlerObject);
+      <span class="keyword">if</span> (<span class="operator">!</span>handler<span class="operator">.</span>isFunction())
+          <span class="keyword">return</span>;
+
+      <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> scriptEvent <span class="operator">=</span> newFakeDomEvent(type<span class="operator">,</span> toWrapper(canvas));
+      <span class="comment">// KeyEvent</span>
+      scriptEvent<span class="operator">.</span>setProperty(<span class="string">&quot;isChar&quot;</span><span class="operator">,</span> <span class="operator">!</span>e<span class="operator">-</span><span class="operator">&gt;</span>text()<span class="operator">.</span>isEmpty());
+      scriptEvent<span class="operator">.</span>setProperty(<span class="string">&quot;charCode&quot;</span><span class="operator">,</span> e<span class="operator">-</span><span class="operator">&gt;</span>text());
+      scriptEvent<span class="operator">.</span>setProperty(<span class="string">&quot;keyCode&quot;</span><span class="operator">,</span> FakeDomEvent<span class="operator">::</span>qtToDomKey(e<span class="operator">-</span><span class="operator">&gt;</span>key()));
+      scriptEvent<span class="operator">.</span>setProperty(<span class="string">&quot;which&quot;</span><span class="operator">,</span> e<span class="operator">-</span><span class="operator">&gt;</span>key());
+
+      handler<span class="operator">.</span>call(handlerObject<span class="operator">,</span> <span class="type">QScriptValueList</span>() <span class="operator">&lt;</span><span class="operator">&lt;</span> scriptEvent);
+      maybeEmitScriptError();
+  }
+
+  <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> Environment<span class="operator">::</span>eventHandler(QContext2DCanvas <span class="operator">*</span>canvas<span class="operator">,</span> <span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>type<span class="operator">,</span>
+                                         <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> <span class="operator">*</span>who)
+  {
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> handlerName <span class="operator">=</span> <span class="string">&quot;on&quot;</span> <span class="operator">+</span> type;
+      <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> obj <span class="operator">=</span> toWrapper(canvas);
+      <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> handler <span class="operator">=</span> obj<span class="operator">.</span>property(handlerName);
+      <span class="keyword">if</span> (<span class="operator">!</span>handler<span class="operator">.</span>isValid()) {
+          obj <span class="operator">=</span> m_document;
+          handler <span class="operator">=</span> obj<span class="operator">.</span>property(handlerName);
+      }
+      <span class="keyword">if</span> (who <span class="operator">&amp;</span><span class="operator">&amp;</span> handler<span class="operator">.</span>isFunction())
+          <span class="operator">*</span>who <span class="operator">=</span> obj;
+      <span class="keyword">return</span> handler;
+  }
+
+  <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> Environment<span class="operator">::</span>newFakeDomEvent(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>type<span class="operator">,</span> <span class="keyword">const</span> <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> <span class="operator">&amp;</span>target)
+  {
+      <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> e <span class="operator">=</span> m_engine<span class="operator">-</span><span class="operator">&gt;</span>newObject();
+      <span class="comment">// Event</span>
+      e<span class="operator">.</span>setProperty(<span class="string">&quot;type&quot;</span><span class="operator">,</span> type<span class="operator">,</span> <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span><span class="operator">::</span>ReadOnly);
+      e<span class="operator">.</span>setProperty(<span class="string">&quot;bubbles&quot;</span><span class="operator">,</span> <span class="keyword">true</span><span class="operator">,</span> <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span><span class="operator">::</span>ReadOnly);
+      e<span class="operator">.</span>setProperty(<span class="string">&quot;cancelable&quot;</span><span class="operator">,</span> <span class="keyword">false</span><span class="operator">,</span> <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span><span class="operator">::</span>ReadOnly);
+      e<span class="operator">.</span>setProperty(<span class="string">&quot;target&quot;</span><span class="operator">,</span> target<span class="operator">,</span> <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span><span class="operator">::</span>ReadOnly);
+      e<span class="operator">.</span>setProperty(<span class="string">&quot;currentTarget&quot;</span><span class="operator">,</span> target<span class="operator">,</span> <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span><span class="operator">::</span>ReadOnly);
+      e<span class="operator">.</span>setProperty(<span class="string">&quot;eventPhase&quot;</span><span class="operator">,</span> <span class="number">3</span>); <span class="comment">// bubbling</span>
+      e<span class="operator">.</span>setProperty(<span class="string">&quot;timeStamp&quot;</span><span class="operator">,</span> <span class="type"><a href="../qtcore/qdatetime.html">QDateTime</a></span><span class="operator">::</span>currentDateTime()<span class="operator">.</span>toTime_t());
+      <span class="comment">// UIEvent</span>
+      e<span class="operator">.</span>setProperty(<span class="string">&quot;detail&quot;</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span><span class="operator">::</span>ReadOnly);
+      e<span class="operator">.</span>setProperty(<span class="string">&quot;view&quot;</span><span class="operator">,</span> m_engine<span class="operator">-</span><span class="operator">&gt;</span>globalObject()<span class="operator">,</span> <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span><span class="operator">::</span>ReadOnly);
+      <span class="keyword">return</span> e;
+  }
+
+  <span class="type">void</span> Environment<span class="operator">::</span>maybeEmitScriptError()
+  {
+      <span class="keyword">if</span> (m_engine<span class="operator">-</span><span class="operator">&gt;</span>hasUncaughtException())
+          <span class="keyword">emit</span> scriptError(m_engine<span class="operator">-</span><span class="operator">&gt;</span>uncaughtException());
+  }
+
+  Document<span class="operator">::</span>Document(Environment <span class="operator">*</span>env)
+      : <span class="type"><a href="../qtcore/qobject.html">QObject</a></span>(env)
+  {
+  }
+
+  Document<span class="operator">::</span><span class="operator">~</span>Document()
+  {
+  }
+
+  <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> Document<span class="operator">::</span>getElementById(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>id) <span class="keyword">const</span>
+  {
+      Environment <span class="operator">*</span>env <span class="operator">=</span> qobject_cast<span class="operator">&lt;</span>Environment<span class="operator">*</span><span class="operator">&gt;</span>(parent());
+      QContext2DCanvas <span class="operator">*</span>canvas <span class="operator">=</span> env<span class="operator">-</span><span class="operator">&gt;</span>canvasByName(id);
+      <span class="keyword">if</span> (<span class="operator">!</span>canvas)
+          <span class="keyword">return</span> <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span>();
+      <span class="keyword">return</span> env<span class="operator">-</span><span class="operator">&gt;</span>toWrapper(canvas);
+  }
+
+  <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> Document<span class="operator">::</span>getElementsByTagName(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>name) <span class="keyword">const</span>
+  {
+      <span class="keyword">if</span> (name <span class="operator">!</span><span class="operator">=</span> <span class="string">&quot;canvas&quot;</span>)
+          <span class="keyword">return</span> <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span>();
+      Environment <span class="operator">*</span>env <span class="operator">=</span> qobject_cast<span class="operator">&lt;</span>Environment<span class="operator">*</span><span class="operator">&gt;</span>(parent());
+      <span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span>QContext2DCanvas<span class="operator">*</span><span class="operator">&gt;</span> list <span class="operator">=</span> env<span class="operator">-</span><span class="operator">&gt;</span>canvases();
+      <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> result <span class="operator">=</span> env<span class="operator">-</span><span class="operator">&gt;</span>engine()<span class="operator">-</span><span class="operator">&gt;</span>newArray(list<span class="operator">.</span>size());
+      <span class="keyword">for</span> (<span class="type">int</span> i <span class="operator">=</span> <span class="number">0</span>; i <span class="operator">&lt;</span> list<span class="operator">.</span>size(); <span class="operator">+</span><span class="operator">+</span>i)
+          result<span class="operator">.</span>setProperty(i<span class="operator">,</span> env<span class="operator">-</span><span class="operator">&gt;</span>toWrapper(list<span class="operator">.</span>at(i)));
+      <span class="keyword">return</span> result;
+  }
+
+  <span class="type">void</span> Document<span class="operator">::</span>addEventListener(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>type<span class="operator">,</span> <span class="keyword">const</span> <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> <span class="operator">&amp;</span>listener<span class="operator">,</span>
+                                  bool useCapture)
+  {
+      Q_UNUSED(useCapture);
+      <span class="keyword">if</span> (listener<span class="operator">.</span>isFunction()) {
+          Environment <span class="operator">*</span>env <span class="operator">=</span> qobject_cast<span class="operator">&lt;</span>Environment<span class="operator">*</span><span class="operator">&gt;</span>(parent());
+          <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> self <span class="operator">=</span> env<span class="operator">-</span><span class="operator">&gt;</span>toWrapper(<span class="keyword">this</span>);
+          self<span class="operator">.</span>setProperty(<span class="string">&quot;on&quot;</span> <span class="operator">+</span> type<span class="operator">,</span> listener);
+      }
+  }
+
+  <span class="type">QColor</span> colorFromString(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>name);
+
+  CanvasGradientPrototype<span class="operator">::</span>CanvasGradientPrototype(<span class="type"><a href="../qtcore/qobject.html">QObject</a></span> <span class="operator">*</span>parent)
+      : <span class="type"><a href="../qtcore/qobject.html">QObject</a></span>(parent)
+  {
+  }
+
+  <span class="type">void</span> CanvasGradientPrototype<span class="operator">::</span>addColorStop(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> offset<span class="operator">,</span> <span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>color)
+  {
+      CanvasGradient <span class="operator">*</span>self <span class="operator">=</span> qscriptvalue_cast<span class="operator">&lt;</span>CanvasGradient<span class="operator">*</span><span class="operator">&gt;</span>(thisObject());
+      <span class="keyword">if</span> (<span class="operator">!</span>self <span class="operator">|</span><span class="operator">|</span> (self<span class="operator">-</span><span class="operator">&gt;</span>value<span class="operator">.</span>type() <span class="operator">=</span><span class="operator">=</span> <span class="type">QGradient</span><span class="operator">::</span>NoGradient))
+          <span class="keyword">return</span>;
+      self<span class="operator">-</span><span class="operator">&gt;</span>value<span class="operator">.</span>setColorAt(offset<span class="operator">,</span> colorFromString(color));
+  }
+
+  <span class="type">void</span> CanvasGradientPrototype<span class="operator">::</span>setup(<span class="type"><a href="qscriptengine.html">QScriptEngine</a></span> <span class="operator">*</span>engine)
+  {
+      CanvasGradientPrototype <span class="operator">*</span>proto <span class="operator">=</span> <span class="keyword">new</span> CanvasGradientPrototype();
+      engine<span class="operator">-</span><span class="operator">&gt;</span>setDefaultPrototype(<a href="../qtcore/qmetatype.html#qMetaTypeId">qMetaTypeId</a><span class="operator">&lt;</span>CanvasGradient<span class="operator">&gt;</span>()<span class="operator">,</span>
+          engine<span class="operator">-</span><span class="operator">&gt;</span>newQObject(proto<span class="operator">,</span> <span class="type"><a href="qscriptengine.html">QScriptEngine</a></span><span class="operator">::</span>ScriptOwnership<span class="operator">,</span>
+                             <span class="type"><a href="qscriptengine.html">QScriptEngine</a></span><span class="operator">::</span>ExcludeSuperClassContents));
+  }
+
+</pre>
+</div>
+<!-- @@@script/context2d/environment.cpp -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

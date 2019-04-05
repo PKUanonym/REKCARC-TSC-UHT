@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qscriptclass.cpp -->
+  <title>QScriptClass Class | Qt Script</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtscript-index.html">Qt Script</a></td><td ><a href="qtscript-module.html">C++ Classes</a></td><td >QScriptClass</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-types">Public Types</a></li>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">QScriptClass Class</h1>
+<!-- $$$QScriptClass-brief -->
+<p>The <a href="qscriptclass.html">QScriptClass</a> class provides an interface for defining custom behavior of (a class of) Qt Script objects. <a href="#details">More...</a></p>
+<!-- @@@QScriptClass -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign">   <span class="preprocessor">#include &lt;QScriptClass&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> qmake:</td><td class="memItemRight bottomAlign"> QT += script</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Since:</td><td class="memItemRight bottomAlign">  Qt 4.4</td></tr></table></div><ul>
+<li><a href="qscriptclass-members.html">List of all members, including inherited members</a></li>
+</ul>
+<a name="public-types"></a>
+<h2 id="public-types">Public Types</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="qscriptclass.html#Extension-enum">Extension</a></b> { Callable, HasInstance }</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="qscriptclass.html#QueryFlag-enum">QueryFlag</a></b> { HandlesReadAccess, HandlesWriteAccess }</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> flags </td><td class="memItemRight bottomAlign"><b><a href="qscriptclass.html#QueryFlag-enum">QueryFlags</a></b></td></tr>
+</table></div>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qscriptclass.html#QScriptClass">QScriptClass</a></b>(QScriptEngine *<i>engine</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual </td><td class="memItemRight bottomAlign"><b><a href="qscriptclass.html#dtor.QScriptClass">~QScriptClass</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QScriptEngine *</td><td class="memItemRight bottomAlign"><b><a href="qscriptclass.html#engine">engine</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QVariant </td><td class="memItemRight bottomAlign"><b><a href="qscriptclass.html#extension">extension</a></b>(Extension <i>extension</i>, const QVariant &amp;<i>argument</i> = QVariant())</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QString </td><td class="memItemRight bottomAlign"><b><a href="qscriptclass.html#name">name</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QScriptClassPropertyIterator *</td><td class="memItemRight bottomAlign"><b><a href="qscriptclass.html#newIterator">newIterator</a></b>(const QScriptValue &amp;<i>object</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QScriptValue </td><td class="memItemRight bottomAlign"><b><a href="qscriptclass.html#property">property</a></b>(const QScriptValue &amp;<i>object</i>, const QScriptString &amp;<i>name</i>, uint <i>id</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QScriptValue::PropertyFlags </td><td class="memItemRight bottomAlign"><b><a href="qscriptclass.html#propertyFlags">propertyFlags</a></b>(const QScriptValue &amp;<i>object</i>, const QScriptString &amp;<i>name</i>, uint <i>id</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QScriptValue </td><td class="memItemRight bottomAlign"><b><a href="qscriptclass.html#prototype">prototype</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QueryFlags </td><td class="memItemRight bottomAlign"><b><a href="qscriptclass.html#queryProperty">queryProperty</a></b>(const QScriptValue &amp;<i>object</i>, const QScriptString &amp;<i>name</i>, QueryFlags <i>flags</i>, uint *<i>id</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="qscriptclass.html#setProperty">setProperty</a></b>(QScriptValue &amp;<i>object</i>, const QScriptString &amp;<i>name</i>, uint <i>id</i>, const QScriptValue &amp;<i>value</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="qscriptclass.html#supportsExtension">supportsExtension</a></b>(Extension <i>extension</i>) const</td></tr>
+</table></div>
+<a name="details"></a>
+<!-- $$$QScriptClass-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="qscriptclass.html">QScriptClass</a> class provides an interface for defining custom behavior of (a class of) Qt Script objects.</p>
+<p>The <a href="qscriptclass.html">QScriptClass</a> class defines an interface for handling various aspects of interaction with the Qt Script objects associated with the class. Such objects are created by calling <a href="qscriptengine.html#newObject">QScriptEngine::newObject</a>(), passing a pointer to the <a href="qscriptclass.html">QScriptClass</a> as argument.</p>
+<p>By subclassing <a href="qscriptclass.html">QScriptClass</a>, you can define precisely how access to properties of the objects that use your class is handled. This enables a fully dynamic handling of properties, e.g&#x2e; it's more powerful than <a href="qscriptengine.html#newQObject">QScriptEngine::newQObject</a>(). For example, you can use <a href="qscriptclass.html">QScriptClass</a> to implement array-type objects (i.e&#x2e; objects that handle the <code>length</code> property, and properties whose names are valid array indexes, in a special way), or to implement a &quot;live&quot; (runtime-defined) proxy to an underlying object.</p>
+<p>If you just need to handle access to a set of properties that are known at the time an object is created (i.e&#x2e; &quot;semi-statically&quot;), you might consider using <a href="qscriptvalue.html#setProperty">QScriptValue::setProperty</a>() to define getter/setter functions for the relevant properties, rather than subclassing <a href="qscriptclass.html">QScriptClass</a>.</p>
+<p>Reimplement <a href="qscriptclass.html#queryProperty">queryProperty</a>() to specify which properties are handled in a custom way by your script class (i.e&#x2e; should be <b>delegated</b> to the <a href="qscriptclass.html">QScriptClass</a>), and which properties should be handled just like normal Qt Script object properties.</p>
+<p>Reimplement <a href="qscriptclass.html#property">property</a>() and <a href="qscriptclass.html#setProperty">setProperty</a>() to perform the actual access (read or write) to the properties that your class handles. Additionally, you can reimplement <a href="qscriptclass.html#propertyFlags">propertyFlags</a>() to specify custom flags for your properties.</p>
+<p>Reimplement <a href="qscriptclass.html#newIterator">newIterator</a>() to provide an iterator for objects of your custom class. This is only necessary if objects of your class can have custom properties that you want to be reported when an object is used together with the <a href="qscriptvalueiterator.html">QScriptValueIterator</a> class, or when an object is used in a for-in enumeration statement in a script.</p>
+<p>When implementing custom classes of objects, you typically use <a href="qscriptvalue.html#setData">QScriptValue::setData</a>() to store instance-specific data as part of object initialization; the data won't be accessible from scripts directly, but you can access it in e.g&#x2e; your reimplementations of <a href="qscriptclass.html#property">property</a>() and <a href="qscriptclass.html#setProperty">setProperty</a>() (by calling <a href="qscriptvalue.html#data">QScriptValue::data</a>()) to perform custom processing.</p>
+<p>Reimplement <a href="qscriptclass.html#prototype">prototype</a>() to provide a custom prototype object for your script class.</p>
+<p>Reimplement <a href="qscriptclass.html#supportsExtension">supportsExtension</a>() and <a href="qscriptclass.html#extension">extension</a>() if your custom script class supports one or more of the extensions specified by the Extension enum.</p>
+</div>
+<p><b>See also </b><a href="qscriptclasspropertyiterator.html">QScriptClassPropertyIterator</a>, <a href="qscriptengine.html#newObject">QScriptEngine::newObject</a>(), and <a href="qtscript-index.html#defining-custom-script-classes-with-qscriptclass">Defining Custom Script Classes with QScriptClass</a>.</p>
+<!-- @@@QScriptClass -->
+<div class="types">
+<h2>Member Type Documentation</h2>
+<!-- $$$Extension$$$Callable$$$HasInstance -->
+<h3 class="fn" id="Extension-enum"><a name="Extension-enum"></a>enum QScriptClass::<span class="name">Extension</span></h3>
+<p>This enum specifies the possible extensions to a <a href="qscriptclass.html">QScriptClass</a>.</p>
+<div class="table"><table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td class="topAlign"><code>QScriptClass::Callable</code></td><td class="topAlign tblval"><code>0</code></td><td class="topAlign">Instances of this class can be called as functions.</td></tr>
+<tr><td class="topAlign"><code>QScriptClass::HasInstance</code></td><td class="topAlign tblval"><code>1</code></td><td class="topAlign">Instances of this class implement [[HasInstance]].</td></tr>
+</table></div>
+<p><b>See also </b><a href="qscriptclass.html#extension">extension</a>().</p>
+<!-- @@@Extension -->
+<!-- $$$QueryFlag$$$HandlesReadAccess$$$HandlesWriteAccess -->
+<h3 class="flags" id="QueryFlag-enum"><a name="QueryFlag-enum"></a>enum QScriptClass::<span class="name">QueryFlag</span><br/>flags QScriptClass::<span class="name">QueryFlags</span></h3>
+<p>This enum describes flags that are used to query a <a href="qscriptclass.html">QScriptClass</a> regarding how access to a property should be handled.</p>
+<div class="table"><table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td class="topAlign"><code>QScriptClass::HandlesReadAccess</code></td><td class="topAlign tblval"><code>0x01</code></td><td class="topAlign">The <a href="qscriptclass.html">QScriptClass</a> handles read access to this property.</td></tr>
+<tr><td class="topAlign"><code>QScriptClass::HandlesWriteAccess</code></td><td class="topAlign tblval"><code>0x02</code></td><td class="topAlign">The <a href="qscriptclass.html">QScriptClass</a> handles write access to this property.</td></tr>
+</table></div>
+<p>The QueryFlags type is a typedef for <a href="../qtcore/qflags.html">QFlags</a>&lt;QueryFlag&gt;. It stores an OR combination of QueryFlag values.</p>
+<p><b>See also </b><a href="qscriptclass.html#queryProperty">queryProperty</a>().</p>
+<!-- @@@QueryFlag -->
+</div>
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$QScriptClass[overload1]$$$QScriptClassQScriptEngine* -->
+<h3 class="fn" id="QScriptClass"><a name="QScriptClass"></a>QScriptClass::<span class="name">QScriptClass</span>(<span class="type"><a href="qscriptengine.html">QScriptEngine</a></span> *<i>engine</i>)</h3>
+<p>Constructs a <a href="qscriptclass.html">QScriptClass</a> object to be used in the given <i>engine</i>.</p>
+<p>The engine does not take ownership of the <a href="qscriptclass.html">QScriptClass</a> object.</p>
+<!-- @@@QScriptClass -->
+<!-- $$$~QScriptClass[overload1]$$$~QScriptClass -->
+<h3 class="fn" id="dtor.QScriptClass"><a name="dtor.QScriptClass"></a><code>[virtual] </code>QScriptClass::<span class="name">~QScriptClass</span>()</h3>
+<p>Destroys the <a href="qscriptclass.html">QScriptClass</a> object.</p>
+<p>If a <a href="qscriptclass.html">QScriptClass</a> object is deleted before the associated <a href="qscriptclass.html#engine">engine</a>(), any Qt Script objects using the <a href="qscriptclass.html">QScriptClass</a> will be &quot;demoted&quot; to normal Qt Script objects.</p>
+<!-- @@@~QScriptClass -->
+<!-- $$$engine[overload1]$$$engine -->
+<h3 class="fn" id="engine"><a name="engine"></a><span class="type"><a href="qscriptengine.html">QScriptEngine</a></span> *QScriptClass::<span class="name">engine</span>() const</h3>
+<p>Returns the engine that this <a href="qscriptclass.html">QScriptClass</a> is associated with.</p>
+<!-- @@@engine -->
+<!-- $$$extension[overload1]$$$extensionExtensionconstQVariant& -->
+<h3 class="fn" id="extension"><a name="extension"></a><code>[virtual] </code><span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span> QScriptClass::<span class="name">extension</span>(<span class="type"><a href="qscriptclass.html#Extension-enum">Extension</a></span> <i>extension</i>, const <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span> &amp;<i>argument</i> = QVariant())</h3>
+<p>This virtual function can be reimplemented in a <a href="qscriptclass.html">QScriptClass</a> subclass to provide support for extensions. The optional <i>argument</i> can be provided as input to the <i>extension</i>; the result must be returned in the form of a <a href="../qtcore/qvariant.html">QVariant</a>. You can call <a href="qscriptclass.html#supportsExtension">supportsExtension</a>() to check if an extension is supported by the <a href="qscriptclass.html">QScriptClass</a>. By default, no extensions are supported, and this function returns an invalid <a href="../qtcore/qvariant.html">QVariant</a>.</p>
+<p>If you implement the Callable extension, Qt Script will call this function when an instance of your class is called as a function (e.g&#x2e; from a script or using <a href="qscriptvalue.html#call">QScriptValue::call</a>()). The <i>argument</i> will contain a pointer to the <a href="qscriptcontext.html">QScriptContext</a> that represents the function call, and you should return a <a href="../qtcore/qvariant.html">QVariant</a> that holds the result of the function call. In the following example the sum of the arguments to the script function are added up and returned:</p>
+<pre class="cpp">
+
+  <span class="keyword">if</span> (extension <span class="operator">=</span><span class="operator">=</span> Callable) {
+      <span class="type"><a href="qscriptcontext.html">QScriptContext</a></span> <span class="operator">*</span>context <span class="operator">=</span> qvariant_cast<span class="operator">&lt;</span><span class="type"><a href="qscriptcontext.html">QScriptContext</a></span><span class="operator">*</span><span class="operator">&gt;</span>(argument);
+      <span class="type"><a href="qscriptengine.html">QScriptEngine</a></span> <span class="operator">*</span>engine <span class="operator">=</span> context<span class="operator">-</span><span class="operator">&gt;</span>engine();
+      <span class="type">double</span> sum <span class="operator">=</span> <span class="number">0</span>;
+      <span class="keyword">for</span> (<span class="type">int</span> i <span class="operator">=</span> <span class="number">0</span>; i <span class="operator">&lt;</span> context<span class="operator">-</span><span class="operator">&gt;</span>argumentCount(); <span class="operator">+</span><span class="operator">+</span>i)
+          sum <span class="operator">+</span><span class="operator">=</span> context<span class="operator">-</span><span class="operator">&gt;</span>argument(i)<span class="operator">.</span>toNumber();
+      <span class="keyword">return</span> sum;
+  }
+
+</pre>
+<p>If you implement the <a href="qscriptclass.html#Extension-enum">HasInstance</a> extension, Qt Script will call this function as part of evaluating the <code>instanceof</code> operator, as described in ECMA-262 Section 11.8&#x2e;6&#x2e; The <i>argument</i> is a QScriptValueList containing two items: The first item is the object that <a href="qscriptclass.html#Extension-enum">HasInstance</a> is being applied to (an instance of your class), and the second item can be any value. extension() should return true if the value delegates behavior to the object, false otherwise.</p>
+<p><b>See also </b><a href="qscriptclass.html#supportsExtension">supportsExtension</a>().</p>
+<!-- @@@extension -->
+<!-- $$$name[overload1]$$$name -->
+<h3 class="fn" id="name"><a name="name"></a><code>[virtual] </code><span class="type"><a href="../qtcore/qstring.html">QString</a></span> QScriptClass::<span class="name">name</span>() const</h3>
+<p>Returns the name of the script class.</p>
+<p>Qt Script uses this name to generate a default string representation of objects in case you do not provide a toString function.</p>
+<p>The default implementation returns a null string.</p>
+<!-- @@@name -->
+<!-- $$$newIterator[overload1]$$$newIteratorconstQScriptValue& -->
+<h3 class="fn" id="newIterator"><a name="newIterator"></a><code>[virtual] </code><span class="type"><a href="qscriptclasspropertyiterator.html">QScriptClassPropertyIterator</a></span> *QScriptClass::<span class="name">newIterator</span>(const <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> &amp;<i>object</i>)</h3>
+<p>Returns an iterator for traversing custom properties of the given <i>object</i>.</p>
+<p>The default implementation returns 0, meaning that there are no custom properties to traverse.</p>
+<p>Reimplement this function if objects of your script class can have one or more custom properties (e.g&#x2e; those reported to be handled by <a href="qscriptclass.html#queryProperty">queryProperty</a>()) that you want to appear when an object's properties are enumerated (e.g&#x2e; by a for-in statement in a script).</p>
+<p>Qt Script takes ownership of the new iterator object.</p>
+<p><b>See also </b><a href="qscriptvalueiterator.html">QScriptValueIterator</a>.</p>
+<!-- @@@newIterator -->
+<!-- $$$property[overload1]$$$propertyconstQScriptValue&constQScriptString&uint -->
+<h3 class="fn" id="property"><a name="property"></a><code>[virtual] </code><span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> QScriptClass::<span class="name">property</span>(const <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> &amp;<i>object</i>, const <span class="type"><a href="qscriptstring.html">QScriptString</a></span> &amp;<i>name</i>, <span class="type"><a href="../qtcore/qtglobal.html#uint-typedef">uint</a></span> <i>id</i>)</h3>
+<p>Returns the value of the property with the given <i>name</i> of the given <i>object</i>.</p>
+<p>The <i>id</i> argument is only useful if you assigned a value to it in <a href="qscriptclass.html#queryProperty">queryProperty</a>().</p>
+<p>The default implementation does nothing and returns an invalid <a href="qscriptvalue.html">QScriptValue</a>.</p>
+<p><b>See also </b><a href="qscriptclass.html#setProperty">setProperty</a>() and <a href="qscriptclass.html#propertyFlags">propertyFlags</a>().</p>
+<!-- @@@property -->
+<!-- $$$propertyFlags[overload1]$$$propertyFlagsconstQScriptValue&constQScriptString&uint -->
+<h3 class="fn" id="propertyFlags"><a name="propertyFlags"></a><code>[virtual] </code><span class="type"><a href="qscriptvalue.html#PropertyFlag-enum">QScriptValue::PropertyFlags</a></span> QScriptClass::<span class="name">propertyFlags</span>(const <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> &amp;<i>object</i>, const <span class="type"><a href="qscriptstring.html">QScriptString</a></span> &amp;<i>name</i>, <span class="type"><a href="../qtcore/qtglobal.html#uint-typedef">uint</a></span> <i>id</i>)</h3>
+<p>Returns the flags of the property with the given <i>name</i> of the given <i>object</i>.</p>
+<p>The <i>id</i> argument is only useful if you assigned a value to it in <a href="qscriptclass.html#queryProperty">queryProperty</a>().</p>
+<p>The default implementation returns 0.</p>
+<p><b>See also </b><a href="qscriptclass.html#property">property</a>().</p>
+<!-- @@@propertyFlags -->
+<!-- $$$prototype[overload1]$$$prototype -->
+<h3 class="fn" id="prototype"><a name="prototype"></a><code>[virtual] </code><span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> QScriptClass::<span class="name">prototype</span>() const</h3>
+<p>Returns the object to be used as the prototype of new instances of this class (created with <a href="qscriptengine.html#newObject">QScriptEngine::newObject</a>()).</p>
+<p>The default implementation returns an invalid <a href="qscriptvalue.html">QScriptValue</a>, meaning that the standard Object prototype will be used. Reimplement this function to provide your own custom prototype.</p>
+<p>Typically you initialize your prototype object in the constructor of your class, then return it in this function.</p>
+<p>See the &quot;Making Use of Prototype-Based Inheritance&quot; section in the Qt Script documentation for more information on how prototypes are used.</p>
+<!-- @@@prototype -->
+<!-- $$$queryProperty[overload1]$$$queryPropertyconstQScriptValue&constQScriptString&QueryFlagsuint* -->
+<h3 class="fn" id="queryProperty"><a name="queryProperty"></a><code>[virtual] </code><span class="type"><a href="qscriptclass.html#QueryFlag-enum">QueryFlags</a></span> QScriptClass::<span class="name">queryProperty</span>(const <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> &amp;<i>object</i>, const <span class="type"><a href="qscriptstring.html">QScriptString</a></span> &amp;<i>name</i>, <span class="type"><a href="qscriptclass.html#QueryFlag-enum">QueryFlags</a></span> <i>flags</i>, <span class="type"><a href="../qtcore/qtglobal.html#uint-typedef">uint</a></span> *<i>id</i>)</h3>
+<p>Queries this script class for how access to the property with the given <i>name</i> of the given <i>object</i> should be handled. The given <i>flags</i> specify the aspects of interest. This function should return a subset of <i>flags</i> to indicate which aspects of property access should be further handled by the script class.</p>
+<p>For example, if the <i>flags</i> contain <a href="qscriptclass.html#QueryFlag-enum">HandlesReadAccess</a>, and you would like your class to handle the reading of the property (through the <a href="qscriptclass.html#property">property</a>() function), the returned flags should include <a href="qscriptclass.html#QueryFlag-enum">HandlesReadAccess</a>. If the returned flags do not contain <a href="qscriptclass.html#QueryFlag-enum">HandlesReadAccess</a>, the property will be handled as a normal script object property.</p>
+<p>You can optionally use the <i>id</i> argument to store a value that will subsequently be passed on to functions such as <a href="qscriptclass.html#property">property</a>() and <a href="qscriptclass.html#setProperty">setProperty</a>().</p>
+<p>The default implementation of this function returns 0.</p>
+<p>Note: This function is only called if the given property isn't already a normal property of the object. For example, say you advertise that you want to handle read access to property <code>foo</code>, but not write access; if <code>foo</code> is then assigned a value, it will become a normal script object property, and subsequently you will no longer be queried regarding read access to <code>foo</code>.</p>
+<p><b>See also </b><a href="qscriptclass.html#property">property</a>().</p>
+<!-- @@@queryProperty -->
+<!-- $$$setProperty[overload1]$$$setPropertyQScriptValue&constQScriptString&uintconstQScriptValue& -->
+<h3 class="fn" id="setProperty"><a name="setProperty"></a><code>[virtual] </code><span class="type">void</span> QScriptClass::<span class="name">setProperty</span>(<span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> &amp;<i>object</i>, const <span class="type"><a href="qscriptstring.html">QScriptString</a></span> &amp;<i>name</i>, <span class="type"><a href="../qtcore/qtglobal.html#uint-typedef">uint</a></span> <i>id</i>, const <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> &amp;<i>value</i>)</h3>
+<p>Sets the property with the given <i>name</i> of the given <i>object</i> to the given <i>value</i>.</p>
+<p>The <i>id</i> argument is only useful if you assigned a value to it in <a href="qscriptclass.html#queryProperty">queryProperty</a>().</p>
+<p>The default implementation does nothing.</p>
+<p>An invalid <i>value</i> represents a request to remove the property.</p>
+<p><b>See also </b><a href="qscriptclass.html#property">property</a>().</p>
+<!-- @@@setProperty -->
+<!-- $$$supportsExtension[overload1]$$$supportsExtensionExtension -->
+<h3 class="fn" id="supportsExtension"><a name="supportsExtension"></a><code>[virtual] </code><span class="type">bool</span> QScriptClass::<span class="name">supportsExtension</span>(<span class="type"><a href="qscriptclass.html#Extension-enum">Extension</a></span> <i>extension</i>) const</h3>
+<p>Returns true if the <a href="qscriptclass.html">QScriptClass</a> supports the given <i>extension</i>; otherwise, false is returned. By default, no extensions are supported.</p>
+<p>Reimplement this function to indicate which extensions your custom class supports.</p>
+<p><b>See also </b><a href="qscriptclass.html#extension">extension</a>().</p>
+<!-- @@@supportsExtension -->
+</div>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qsslcipher.cpp -->
+  <title>QSslCipher Class | Qt Network 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtnetwork-index.html">Qt Network</a></td><td ><a href="qtnetwork-module.html">C++ Classes</a></td><td >QSslCipher</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">QSslCipher Class</h1>
+<!-- $$$QSslCipher-brief -->
+<p>The <a href="qsslcipher.html">QSslCipher</a> class represents an SSL cryptographic cipher. <a href="#details">More...</a></p>
+<!-- @@@QSslCipher -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign">   <span class="preprocessor">#include &lt;QSslCipher&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> qmake:</td><td class="memItemRight bottomAlign"> QT += network</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Since:</td><td class="memItemRight bottomAlign">  Qt 4.3</td></tr></table></div><ul>
+<li><a href="qsslcipher-members.html">List of all members, including inherited members</a></li>
+</ul>
+<p><b>Note:</b> All functions in this class are <a href="../qtdoc/threads-reentrancy.html">reentrant</a>.</p>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qsslcipher.html#QSslCipher">QSslCipher</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qsslcipher.html#QSslCipher-1">QSslCipher</a></b>(const QString &amp;<i>name</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qsslcipher.html#QSslCipher-2">QSslCipher</a></b>(const QString &amp;<i>name</i>, QSsl::SslProtocol <i>protocol</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qsslcipher.html#QSslCipher-3">QSslCipher</a></b>(const QSslCipher &amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qsslcipher.html#dtor.QSslCipher">~QSslCipher</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qsslcipher.html#authenticationMethod">authenticationMethod</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qsslcipher.html#encryptionMethod">encryptionMethod</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qsslcipher.html#isNull">isNull</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qsslcipher.html#keyExchangeMethod">keyExchangeMethod</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qsslcipher.html#name">name</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QSsl::SslProtocol </td><td class="memItemRight bottomAlign"><b><a href="qsslcipher.html#protocol">protocol</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qsslcipher.html#protocolString">protocolString</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="qsslcipher.html#supportedBits">supportedBits</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qsslcipher.html#swap">swap</a></b>(QSslCipher &amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="qsslcipher.html#usedBits">usedBits</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qsslcipher.html#operator-not-eq">operator!=</a></b>(const QSslCipher &amp;<i>other</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QSslCipher &amp;</td><td class="memItemRight bottomAlign"><b><a href="qsslcipher.html#operator-eq">operator=</a></b>(QSslCipher &amp;&amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QSslCipher &amp;</td><td class="memItemRight bottomAlign"><b><a href="qsslcipher.html#operator-eq-1">operator=</a></b>(const QSslCipher &amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qsslcipher.html#operator-eq-eq">operator==</a></b>(const QSslCipher &amp;<i>other</i>) const</td></tr>
+</table></div>
+<a name="details"></a>
+<!-- $$$QSslCipher-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="qsslcipher.html">QSslCipher</a> class represents an SSL cryptographic cipher.</p>
+<p><a href="qsslcipher.html">QSslCipher</a> stores information about one cryptographic cipher. It is most commonly used with <a href="qsslsocket.html">QSslSocket</a>, either for configuring which ciphers the socket can use, or for displaying the socket's ciphers to the user.</p>
+</div>
+<p><b>See also </b><a href="qsslsocket.html">QSslSocket</a> and <a href="qsslkey.html">QSslKey</a>.</p>
+<!-- @@@QSslCipher -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$QSslCipher[overload1]$$$QSslCipher -->
+<h3 class="fn" id="QSslCipher"><a name="QSslCipher"></a>QSslCipher::<span class="name">QSslCipher</span>()</h3>
+<p>Constructs an empty <a href="qsslcipher.html">QSslCipher</a> object.</p>
+<!-- @@@QSslCipher -->
+<!-- $$$QSslCipher$$$QSslCipherconstQString& -->
+<h3 class="fn" id="QSslCipher-1"><a name="QSslCipher-1"></a>QSslCipher::<span class="name">QSslCipher</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>name</i>)</h3>
+<p>Constructs a <a href="qsslcipher.html">QSslCipher</a> object for the cipher determined by <i>name</i>. The constructor accepts only supported ciphers (i.e&#x2e;, the <i>name</i> must identify a cipher in the list of ciphers returned by QSslSocket::supportedCiphers()).</p>
+<p>You can call <a href="qsslcipher.html#isNull">isNull</a>() after construction to check if <i>name</i> correctly identified a supported cipher.</p>
+<p>This function was introduced in  Qt 5.3.</p>
+<!-- @@@QSslCipher -->
+<!-- $$$QSslCipher$$$QSslCipherconstQString&QSsl::SslProtocol -->
+<h3 class="fn" id="QSslCipher-2"><a name="QSslCipher-2"></a>QSslCipher::<span class="name">QSslCipher</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>name</i>, <span class="type"><a href="qssl.html#SslProtocol-enum">QSsl::SslProtocol</a></span> <i>protocol</i>)</h3>
+<p>Constructs a <a href="qsslcipher.html">QSslCipher</a> object for the cipher determined by <i>name</i> and <i>protocol</i>. The constructor accepts only supported ciphers (i.e&#x2e;, the <i>name</i> and <i>protocol</i> must identify a cipher in the list of ciphers returned by QSslSocket::supportedCiphers()).</p>
+<p>You can call <a href="qsslcipher.html#isNull">isNull</a>() after construction to check if <i>name</i> and <i>protocol</i> correctly identified a supported cipher.</p>
+<!-- @@@QSslCipher -->
+<!-- $$$QSslCipher$$$QSslCipherconstQSslCipher& -->
+<h3 class="fn" id="QSslCipher-3"><a name="QSslCipher-3"></a>QSslCipher::<span class="name">QSslCipher</span>(const <span class="type"><a href="qsslcipher.html#QSslCipher">QSslCipher</a></span> &amp;<i>other</i>)</h3>
+<p>Constructs an identical copy of the <i>other</i> cipher.</p>
+<!-- @@@QSslCipher -->
+<!-- $$$~QSslCipher[overload1]$$$~QSslCipher -->
+<h3 class="fn" id="dtor.QSslCipher"><a name="dtor.QSslCipher"></a>QSslCipher::<span class="name">~QSslCipher</span>()</h3>
+<p>Destroys the <a href="qsslcipher.html">QSslCipher</a> object.</p>
+<!-- @@@~QSslCipher -->
+<!-- $$$authenticationMethod[overload1]$$$authenticationMethod -->
+<h3 class="fn" id="authenticationMethod"><a name="authenticationMethod"></a><span class="type"><a href="../qtcore/qstring.html">QString</a></span> QSslCipher::<span class="name">authenticationMethod</span>() const</h3>
+<p>Returns the cipher's authentication method as a <a href="../qtcore/qstring.html">QString</a>.</p>
+<!-- @@@authenticationMethod -->
+<!-- $$$encryptionMethod[overload1]$$$encryptionMethod -->
+<h3 class="fn" id="encryptionMethod"><a name="encryptionMethod"></a><span class="type"><a href="../qtcore/qstring.html">QString</a></span> QSslCipher::<span class="name">encryptionMethod</span>() const</h3>
+<p>Returns the cipher's encryption method as a <a href="../qtcore/qstring.html">QString</a>.</p>
+<!-- @@@encryptionMethod -->
+<!-- $$$isNull[overload1]$$$isNull -->
+<h3 class="fn" id="isNull"><a name="isNull"></a><span class="type">bool</span> QSslCipher::<span class="name">isNull</span>() const</h3>
+<p>Returns <code>true</code> if this is a null cipher; otherwise returns <code>false</code>.</p>
+<!-- @@@isNull -->
+<!-- $$$keyExchangeMethod[overload1]$$$keyExchangeMethod -->
+<h3 class="fn" id="keyExchangeMethod"><a name="keyExchangeMethod"></a><span class="type"><a href="../qtcore/qstring.html">QString</a></span> QSslCipher::<span class="name">keyExchangeMethod</span>() const</h3>
+<p>Returns the cipher's key exchange method as a <a href="../qtcore/qstring.html">QString</a>.</p>
+<!-- @@@keyExchangeMethod -->
+<!-- $$$name[overload1]$$$name -->
+<h3 class="fn" id="name"><a name="name"></a><span class="type"><a href="../qtcore/qstring.html">QString</a></span> QSslCipher::<span class="name">name</span>() const</h3>
+<p>Returns the name of the cipher, or an empty <a href="../qtcore/qstring.html">QString</a> if this is a null cipher.</p>
+<p><b>See also </b><a href="qsslcipher.html#isNull">isNull</a>().</p>
+<!-- @@@name -->
+<!-- $$$protocol[overload1]$$$protocol -->
+<h3 class="fn" id="protocol"><a name="protocol"></a><span class="type"><a href="qssl.html#SslProtocol-enum">QSsl::SslProtocol</a></span> QSslCipher::<span class="name">protocol</span>() const</h3>
+<p>Returns the cipher's protocol type, or <a href="qssl.html#SslProtocol-enum">QSsl::UnknownProtocol</a> if <a href="qsslcipher.html">QSslCipher</a> is unable to determine the protocol (<a href="qsslcipher.html#protocolString">protocolString</a>() may contain more information).</p>
+<p><b>See also </b><a href="qsslcipher.html#protocolString">protocolString</a>().</p>
+<!-- @@@protocol -->
+<!-- $$$protocolString[overload1]$$$protocolString -->
+<h3 class="fn" id="protocolString"><a name="protocolString"></a><span class="type"><a href="../qtcore/qstring.html">QString</a></span> QSslCipher::<span class="name">protocolString</span>() const</h3>
+<p>Returns the cipher's protocol as a <a href="../qtcore/qstring.html">QString</a>.</p>
+<p><b>See also </b><a href="qsslcipher.html#protocol">protocol</a>().</p>
+<!-- @@@protocolString -->
+<!-- $$$supportedBits[overload1]$$$supportedBits -->
+<h3 class="fn" id="supportedBits"><a name="supportedBits"></a><span class="type">int</span> QSslCipher::<span class="name">supportedBits</span>() const</h3>
+<p>Returns the number of bits supported by the cipher.</p>
+<p><b>See also </b><a href="qsslcipher.html#usedBits">usedBits</a>().</p>
+<!-- @@@supportedBits -->
+<!-- $$$swap[overload1]$$$swapQSslCipher& -->
+<h3 class="fn" id="swap"><a name="swap"></a><span class="type">void</span> QSslCipher::<span class="name">swap</span>(<span class="type"><a href="qsslcipher.html#QSslCipher">QSslCipher</a></span> &amp;<i>other</i>)</h3>
+<p>Swaps this cipher instance with <i>other</i>. This function is very fast and never fails.</p>
+<p>This function was introduced in  Qt 5.0.</p>
+<!-- @@@swap -->
+<!-- $$$usedBits[overload1]$$$usedBits -->
+<h3 class="fn" id="usedBits"><a name="usedBits"></a><span class="type">int</span> QSslCipher::<span class="name">usedBits</span>() const</h3>
+<p>Returns the number of bits used by the cipher.</p>
+<p><b>See also </b><a href="qsslcipher.html#supportedBits">supportedBits</a>().</p>
+<!-- @@@usedBits -->
+<!-- $$$operator!=[overload1]$$$operator!=constQSslCipher& -->
+<h3 class="fn" id="operator-not-eq"><a name="operator-not-eq"></a><span class="type">bool</span> QSslCipher::<span class="name">operator!=</span>(const <span class="type"><a href="qsslcipher.html#QSslCipher">QSslCipher</a></span> &amp;<i>other</i>) const</h3>
+<p>Returns <code>true</code> if this cipher is not the same as <i>other</i>; otherwise, false is returned.</p>
+<!-- @@@operator!= -->
+<!-- $$$operator=[overload1]$$$operator=QSslCipher&& -->
+<h3 class="fn" id="operator-eq"><a name="operator-eq"></a><span class="type"><a href="qsslcipher.html#QSslCipher">QSslCipher</a></span> &amp;QSslCipher::<span class="name">operator=</span>(<span class="type"><a href="qsslcipher.html#QSslCipher">QSslCipher</a></span> &amp;&amp;<i>other</i>)</h3>
+<p>Move-assignment operator.</p><!-- @@@operator= -->
+<!-- $$$operator=$$$operator=constQSslCipher& -->
+<h3 class="fn" id="operator-eq-1"><a name="operator-eq-1"></a><span class="type"><a href="qsslcipher.html#QSslCipher">QSslCipher</a></span> &amp;QSslCipher::<span class="name">operator=</span>(const <span class="type"><a href="qsslcipher.html#QSslCipher">QSslCipher</a></span> &amp;<i>other</i>)</h3>
+<p>Copies the contents of <i>other</i> into this cipher, making the two ciphers identical.</p>
+<!-- @@@operator= -->
+<!-- $$$operator==[overload1]$$$operator==constQSslCipher& -->
+<h3 class="fn" id="operator-eq-eq"><a name="operator-eq-eq"></a><span class="type">bool</span> QSslCipher::<span class="name">operator==</span>(const <span class="type"><a href="qsslcipher.html#QSslCipher">QSslCipher</a></span> &amp;<i>other</i>) const</h3>
+<p>Returns <code>true</code> if this cipher is the same as <i>other</i>; otherwise, false is returned.</p>
+<!-- @@@operator== -->
+</div>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

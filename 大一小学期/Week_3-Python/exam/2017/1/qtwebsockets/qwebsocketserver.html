@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qwebsocketserver.cpp -->
+  <title>QWebSocketServer Class | Qt WebSockets 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtwebsockets-index.html">Qt WebSockets</a></td><td ><a href="qtwebsockets-module.html">C++ Classes</a></td><td >QWebSocketServer</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-types">Public Types</a></li>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#signals">Signals</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">QWebSocketServer Class</h1>
+<!-- $$$QWebSocketServer-brief -->
+<p>Implements a WebSocket-based server. <a href="#details">More...</a></p>
+<!-- @@@QWebSocketServer -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign">   <span class="preprocessor">#include &lt;QWebSocketServer&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> qmake:</td><td class="memItemRight bottomAlign"> QT += websockets</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Since:</td><td class="memItemRight bottomAlign">  Qt 5.3</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Inherits:</td><td class="memItemRight bottomAlign"> <a href="../qtcore/qobject.html">QObject</a></td></tr></table></div><ul>
+<li><a href="qwebsocketserver-members.html">List of all members, including inherited members</a></li>
+</ul>
+<a name="public-types"></a>
+<h2 id="public-types">Public Types</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="qwebsocketserver.html#SslMode-enum">SslMode</a></b> { SecureMode, NonSecureMode }</td></tr>
+</table></div>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwebsocketserver.html#QWebSocketServer">QWebSocketServer</a></b>(const QString &amp;<i>serverName</i>, SslMode <i>secureMode</i>, QObject *<i>parent</i> = Q_NULLPTR)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual </td><td class="memItemRight bottomAlign"><b><a href="qwebsocketserver.html#dtor.QWebSocketServer">~QWebSocketServer</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebsocketserver.html#close">close</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QWebSocketProtocol::CloseCode </td><td class="memItemRight bottomAlign"><b><a href="qwebsocketserver.html#error">error</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwebsocketserver.html#errorString">errorString</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qwebsocketserver.html#hasPendingConnections">hasPendingConnections</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qwebsocketserver.html#isListening">isListening</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qwebsocketserver.html#listen">listen</a></b>(const QHostAddress &amp;<i>address</i> = QHostAddress::Any, quint16 <i>port</i> = 0)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="qwebsocketserver.html#maxPendingConnections">maxPendingConnections</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QWebSocket *</td><td class="memItemRight bottomAlign"><b><a href="qwebsocketserver.html#nextPendingConnection">nextPendingConnection</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebsocketserver.html#pauseAccepting">pauseAccepting</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QNetworkProxy </td><td class="memItemRight bottomAlign"><b><a href="qwebsocketserver.html#proxy">proxy</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebsocketserver.html#resumeAccepting">resumeAccepting</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> SslMode </td><td class="memItemRight bottomAlign"><b><a href="qwebsocketserver.html#secureMode">secureMode</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QHostAddress </td><td class="memItemRight bottomAlign"><b><a href="qwebsocketserver.html#serverAddress">serverAddress</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwebsocketserver.html#serverName">serverName</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> quint16 </td><td class="memItemRight bottomAlign"><b><a href="qwebsocketserver.html#serverPort">serverPort</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QUrl </td><td class="memItemRight bottomAlign"><b><a href="qwebsocketserver.html#serverUrl">serverUrl</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebsocketserver.html#setMaxPendingConnections">setMaxPendingConnections</a></b>(int <i>numConnections</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebsocketserver.html#setProxy">setProxy</a></b>(const QNetworkProxy &amp;<i>networkProxy</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebsocketserver.html#setServerName">setServerName</a></b>(const QString &amp;<i>serverName</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qwebsocketserver.html#setSocketDescriptor">setSocketDescriptor</a></b>(int <i>socketDescriptor</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebsocketserver.html#setSslConfiguration">setSslConfiguration</a></b>(const QSslConfiguration &amp;<i>sslConfiguration</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="qwebsocketserver.html#socketDescriptor">socketDescriptor</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QSslConfiguration </td><td class="memItemRight bottomAlign"><b><a href="qwebsocketserver.html#sslConfiguration">sslConfiguration</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QList&lt;QWebSocketProtocol::Version&gt; </td><td class="memItemRight bottomAlign"><b><a href="qwebsocketserver.html#supportedVersions">supportedVersions</a></b>() const</td></tr>
+</table></div>
+<ul>
+<li class="fn">31 public functions inherited from <a href="../qtcore/qobject.html#public-functions">QObject</a></li>
+</ul>
+<a name="signals"></a>
+<h2 id="signals">Signals</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebsocketserver.html#acceptError">acceptError</a></b>(QAbstractSocket::SocketError <i>socketError</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebsocketserver.html#closed">closed</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebsocketserver.html#newConnection">newConnection</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebsocketserver.html#originAuthenticationRequired">originAuthenticationRequired</a></b>(QWebSocketCorsAuthenticator *<i>authenticator</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebsocketserver.html#peerVerifyError">peerVerifyError</a></b>(const QSslError &amp;<i>error</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebsocketserver.html#serverError">serverError</a></b>(QWebSocketProtocol::CloseCode <i>closeCode</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebsocketserver.html#sslErrors">sslErrors</a></b>(const QList&lt;QSslError&gt; &amp;<i>errors</i>)</td></tr>
+</table></div>
+<ul>
+<li class="fn">2 signals inherited from <a href="../qtcore/qobject.html#signals">QObject</a></li>
+</ul>
+<h3>Additional Inherited Members</h3>
+<ul>
+<li class="fn">1 property inherited from <a href="../qtcore/qobject.html#properties">QObject</a></li>
+<li class="fn">1 public slot inherited from <a href="../qtcore/qobject.html#public-slots">QObject</a></li>
+<li class="fn">1 public variable inherited from <a href="../qtcore/qobject.html#public-variables">QObject</a></li>
+<li class="fn">10 static public members inherited from <a href="../qtcore/qobject.html#static-public-members">QObject</a></li>
+<li class="fn">9 protected functions inherited from <a href="../qtcore/qobject.html#protected-functions">QObject</a></li>
+<li class="fn">2 protected variables inherited from <a href="../qtcore/qobject.html#protected-variables">QObject</a></li>
+</ul>
+<a name="details"></a>
+<!-- $$$QWebSocketServer-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>Implements a WebSocket-based server.</p>
+<p>It is modeled after <a href="../qtnetwork/qtcpserver.html">QTcpServer</a>, and behaves the same. So, if you know how to use <a href="../qtnetwork/qtcpserver.html">QTcpServer</a>, you know how to use <a href="qwebsocketserver.html">QWebSocketServer</a>. This class makes it possible to accept incoming WebSocket connections. You can specify the port or have <a href="qwebsocketserver.html">QWebSocketServer</a> pick one automatically. You can listen on a specific address or on all the machine's addresses. Call <a href="qwebsocketserver.html#listen">listen</a>() to have the server listen for incoming connections.</p>
+<p>The <a href="qwebsocketserver.html#newConnection">newConnection</a>() signal is then emitted each time a client connects to the server. Call <a href="qwebsocketserver.html#nextPendingConnection">nextPendingConnection</a>() to accept the pending connection as a connected <a href="qwebsocket.html">QWebSocket</a>. The function returns a pointer to a <a href="qwebsocket.html">QWebSocket</a> in <a href="../qtnetwork/qabstractsocket.html#SocketState-enum">QAbstractSocket::ConnectedState</a> that you can use for communicating with the client.</p>
+<p>If an error occurs, <a href="qwebsocketserver.html#serverError">serverError</a>() returns the type of error, and <a href="qwebsocketserver.html#errorString">errorString</a>() can be called to get a human readable description of what happened.</p>
+<p>When listening for connections, the address and port on which the server is listening are available as <a href="qwebsocketserver.html#serverAddress">serverAddress</a>() and <a href="qwebsocketserver.html#serverPort">serverPort</a>().</p>
+<p>Calling <a href="qwebsocketserver.html#close">close</a>() makes <a href="qwebsocketserver.html">QWebSocketServer</a> stop listening for incoming connections.</p>
+<p><a href="qwebsocketserver.html">QWebSocketServer</a> currently does not support <a href="http://tools.ietf.org/html/rfc6455#page-39">WebSocket Extensions</a> and <a href="http://tools.ietf.org/html/rfc6455#page-12">WebSocket Subprotocols</a>.</p>
+<p><b>Note: </b>When working with self-signed certificates, <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=594502">Firefox bug 594502</a> prevents <a href="https://www.mozilla.org/firefox">Firefox</a> to connect to a secure WebSocket server. To work around this problem, first browse to the secure WebSocket server using HTTPS. FireFox will indicate that the certificate is invalid. From here on, the certificate can be added to the exceptions. After this, the secure WebSockets connection should work.</p><p><a href="qwebsocketserver.html">QWebSocketServer</a> only supports version 13 of the WebSocket protocol, as outlined in <a href="http://tools.ietf.org/html/rfc6455">RFC 6455</a>.</p>
+</div>
+<p><b>See also </b><a href="echoserver.html">WebSocket Server Example</a> and <a href="qwebsocket.html">QWebSocket</a>.</p>
+<!-- @@@QWebSocketServer -->
+<div class="types">
+<h2>Member Type Documentation</h2>
+<!-- $$$SslMode$$$SecureMode$$$NonSecureMode -->
+<h3 class="fn" id="SslMode-enum"><a name="SslMode-enum"></a>enum QWebSocketServer::<span class="name">SslMode</span></h3>
+<p>Indicates whether the server operates over wss (SecureMode) or ws (NonSecureMode)</p>
+<div class="table"><table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td class="topAlign"><code>QWebSocketServer::SecureMode</code></td><td class="topAlign tblval"><code>0</code></td><td class="topAlign">The server operates in secure mode (over wss)</td></tr>
+<tr><td class="topAlign"><code>QWebSocketServer::NonSecureMode</code></td><td class="topAlign tblval"><code>1</code></td><td class="topAlign">The server operates in non-secure mode (over ws)</td></tr>
+</table></div>
+<!-- @@@SslMode -->
+</div>
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$QWebSocketServer[overload1]$$$QWebSocketServerconstQString&SslModeQObject* -->
+<h3 class="fn" id="QWebSocketServer"><a name="QWebSocketServer"></a>QWebSocketServer::<span class="name">QWebSocketServer</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>serverName</i>, <span class="type"><a href="qwebsocketserver.html#SslMode-enum">SslMode</a></span> <i>secureMode</i>, <span class="type"><a href="../qtcore/qobject.html#QObject">QObject</a></span> *<i>parent</i> = Q_NULLPTR)</h3>
+<p>Constructs a new <a href="qwebsocketserver.html">QWebSocketServer</a> with the given <i>serverName</i>. The <i>serverName</i> will be used in the HTTP handshake phase to identify the server. It can be empty, in which case an empty server name will be sent to the client. The <i>secureMode</i> parameter indicates whether the server operates over wss (<a href="qwebsocketserver.html#SslMode-enum">SecureMode</a>) or over ws (<a href="qwebsocketserver.html#SslMode-enum">NonSecureMode</a>).</p>
+<p><i>parent</i> is passed to the <a href="../qtcore/qobject.html">QObject</a> constructor.</p>
+<!-- @@@QWebSocketServer -->
+<!-- $$$~QWebSocketServer[overload1]$$$~QWebSocketServer -->
+<h3 class="fn" id="dtor.QWebSocketServer"><a name="dtor.QWebSocketServer"></a><code>[virtual] </code>QWebSocketServer::<span class="name">~QWebSocketServer</span>()</h3>
+<p>Destroys the <a href="qwebsocketserver.html">QWebSocketServer</a> object. If the server is listening for connections, the socket is automatically closed. Any client <a href="qwebsocket.html">QWebSocket</a>s that are still queued are closed and deleted.</p>
+<p><b>See also </b><a href="qwebsocketserver.html#close">close</a>().</p>
+<!-- @@@~QWebSocketServer -->
+<!-- $$$acceptError[overload1]$$$acceptErrorQAbstractSocket::SocketError -->
+<h3 class="fn" id="acceptError"><a name="acceptError"></a><code>[signal] </code><span class="type">void</span> QWebSocketServer::<span class="name">acceptError</span>(<span class="type"><a href="../qtnetwork/qabstractsocket.html#SocketError-enum">QAbstractSocket::SocketError</a></span> <i>socketError</i>)</h3>
+<p>This signal is emitted when the acceptance of a new connection results in an error. The <i>socketError</i> parameter describes the type of error that occurred.</p>
+<p><b>See also </b><a href="qwebsocketserver.html#pauseAccepting">pauseAccepting</a>() and <a href="qwebsocketserver.html#resumeAccepting">resumeAccepting</a>().</p>
+<!-- @@@acceptError -->
+<!-- $$$close[overload1]$$$close -->
+<h3 class="fn" id="close"><a name="close"></a><span class="type">void</span> QWebSocketServer::<span class="name">close</span>()</h3>
+<p>Closes the server. The server will no longer listen for incoming connections.</p>
+<!-- @@@close -->
+<!-- $$$closed[overload1]$$$closed -->
+<h3 class="fn" id="closed"><a name="closed"></a><code>[signal] </code><span class="type">void</span> QWebSocketServer::<span class="name">closed</span>()</h3>
+<p>This signal is emitted when the server closed its connection.</p>
+<p><b>See also </b><a href="qwebsocketserver.html#close">close</a>().</p>
+<!-- @@@closed -->
+<!-- $$$error[overload1]$$$error -->
+<h3 class="fn" id="error"><a name="error"></a><span class="type"><a href="qwebsocketprotocol.html#CloseCode-enum">QWebSocketProtocol::CloseCode</a></span> QWebSocketServer::<span class="name">error</span>() const</h3>
+<p>Returns an error code for the last error that occurred. If no error occurred, <a href="qwebsocketprotocol.html#CloseCode-enum">QWebSocketProtocol::CloseCodeNormal</a> is returned.</p>
+<p><b>See also </b><a href="qwebsocketserver.html#errorString">errorString</a>().</p>
+<!-- @@@error -->
+<!-- $$$errorString[overload1]$$$errorString -->
+<h3 class="fn" id="errorString"><a name="errorString"></a><span class="type"><a href="../qtcore/qstring.html">QString</a></span> QWebSocketServer::<span class="name">errorString</span>() const</h3>
+<p>Returns a human readable description of the last error that occurred. If no error occurred, an empty string is returned.</p>
+<p><b>See also </b><a href="qwebsocketserver.html#serverError">serverError</a>().</p>
+<!-- @@@errorString -->
+<!-- $$$hasPendingConnections[overload1]$$$hasPendingConnections -->
+<h3 class="fn" id="hasPendingConnections"><a name="hasPendingConnections"></a><span class="type">bool</span> QWebSocketServer::<span class="name">hasPendingConnections</span>() const</h3>
+<p>Returns true if the server has pending connections; otherwise returns false.</p>
+<p><b>See also </b><a href="qwebsocketserver.html#nextPendingConnection">nextPendingConnection</a>() and <a href="qwebsocketserver.html#setMaxPendingConnections">setMaxPendingConnections</a>().</p>
+<!-- @@@hasPendingConnections -->
+<!-- $$$isListening[overload1]$$$isListening -->
+<h3 class="fn" id="isListening"><a name="isListening"></a><span class="type">bool</span> QWebSocketServer::<span class="name">isListening</span>() const</h3>
+<p>Returns true if the server is currently listening for incoming connections; otherwise returns false. If listening fails, <a href="qwebsocketserver.html#error">error</a>() will return the reason.</p>
+<p><b>See also </b><a href="qwebsocketserver.html#listen">listen</a>() and <a href="qwebsocketserver.html#error">error</a>().</p>
+<!-- @@@isListening -->
+<!-- $$$listen[overload1]$$$listenconstQHostAddress&quint16 -->
+<h3 class="fn" id="listen"><a name="listen"></a><span class="type">bool</span> QWebSocketServer::<span class="name">listen</span>(const <span class="type"><a href="../qtnetwork/qhostaddress.html">QHostAddress</a></span> &amp;<i>address</i> = QHostAddress::Any, <span class="type"><a href="../qtcore/qtglobal.html#quint16-typedef">quint16</a></span> <i>port</i> = 0)</h3>
+<p>Tells the server to listen for incoming connections on address <i>address</i> and port <i>port</i>. If <i>port</i> is 0, a port is chosen automatically. If <i>address</i> is <a href="../qtnetwork/qhostaddress.html#SpecialAddress-enum">QHostAddress::Any</a>, the server will listen on all network interfaces.</p>
+<p>Returns true on success; otherwise returns false.</p>
+<p><b>See also </b><a href="qwebsocketserver.html#isListening">isListening</a>().</p>
+<!-- @@@listen -->
+<!-- $$$maxPendingConnections[overload1]$$$maxPendingConnections -->
+<h3 class="fn" id="maxPendingConnections"><a name="maxPendingConnections"></a><span class="type">int</span> QWebSocketServer::<span class="name">maxPendingConnections</span>() const</h3>
+<p>Returns the maximum number of pending accepted connections. The default is 30.</p>
+<p><b>See also </b><a href="qwebsocketserver.html#setMaxPendingConnections">setMaxPendingConnections</a>() and <a href="qwebsocketserver.html#hasPendingConnections">hasPendingConnections</a>().</p>
+<!-- @@@maxPendingConnections -->
+<!-- $$$newConnection[overload1]$$$newConnection -->
+<h3 class="fn" id="newConnection"><a name="newConnection"></a><code>[signal] </code><span class="type">void</span> QWebSocketServer::<span class="name">newConnection</span>()</h3>
+<p>This signal is emitted every time a new connection is available.</p>
+<p><b>See also </b><a href="qwebsocketserver.html#hasPendingConnections">hasPendingConnections</a>() and <a href="qwebsocketserver.html#nextPendingConnection">nextPendingConnection</a>().</p>
+<!-- @@@newConnection -->
+<!-- $$$nextPendingConnection[overload1]$$$nextPendingConnection -->
+<h3 class="fn" id="nextPendingConnection"><a name="nextPendingConnection"></a><code>[virtual] </code><span class="type"><a href="qwebsocket.html">QWebSocket</a></span> *QWebSocketServer::<span class="name">nextPendingConnection</span>()</h3>
+<p>Returns the next pending connection as a connected <a href="qwebsocket.html">QWebSocket</a> object. <a href="qwebsocketserver.html">QWebSocketServer</a> does not take ownership of the returned <a href="qwebsocket.html">QWebSocket</a> object. It is up to the caller to delete the object explicitly when it will no longer be used, otherwise a memory leak will occur. Q_NULLPTR is returned if this function is called when there are no pending connections.</p>
+<p>Note: The returned <a href="qwebsocket.html">QWebSocket</a> object cannot be used from another thread.</p>
+<p><b>See also </b><a href="qwebsocketserver.html#hasPendingConnections">hasPendingConnections</a>().</p>
+<!-- @@@nextPendingConnection -->
+<!-- $$$originAuthenticationRequired[overload1]$$$originAuthenticationRequiredQWebSocketCorsAuthenticator* -->
+<h3 class="fn" id="originAuthenticationRequired"><a name="originAuthenticationRequired"></a><code>[signal] </code><span class="type">void</span> QWebSocketServer::<span class="name">originAuthenticationRequired</span>(<span class="type"><a href="qwebsocketcorsauthenticator.html">QWebSocketCorsAuthenticator</a></span> *<i>authenticator</i>)</h3>
+<p>This signal is emitted when a new connection is requested. The slot connected to this signal should indicate whether the origin (which can be determined by the origin() call) is allowed in the <i>authenticator</i> object (by issuing <a href="qwebsocketcorsauthenticator.html#setAllowed">setAllowed()</a>).</p>
+<p>If no slot is connected to this signal, all origins will be accepted by default.</p>
+<p><b>Note: </b>It is not possible to use a QueuedConnection to connect to this signal, as the connection will always succeed.</p><!-- @@@originAuthenticationRequired -->
+<!-- $$$pauseAccepting[overload1]$$$pauseAccepting -->
+<h3 class="fn" id="pauseAccepting"><a name="pauseAccepting"></a><span class="type">void</span> QWebSocketServer::<span class="name">pauseAccepting</span>()</h3>
+<p>Pauses incoming new connections. Queued connections will remain in queue.</p>
+<p><b>See also </b><a href="qwebsocketserver.html#resumeAccepting">resumeAccepting</a>().</p>
+<!-- @@@pauseAccepting -->
+<!-- $$$peerVerifyError[overload1]$$$peerVerifyErrorconstQSslError& -->
+<h3 class="fn" id="peerVerifyError"><a name="peerVerifyError"></a><code>[signal] </code><span class="type">void</span> QWebSocketServer::<span class="name">peerVerifyError</span>(const <span class="type"><a href="../qtnetwork/qsslerror.html">QSslError</a></span> &amp;<i>error</i>)</h3>
+<p><a href="qwebsocketserver.html">QWebSocketServer</a> can emit this signal several times during the SSL handshake, before encryption has been established, to indicate that an error has occurred while establishing the identity of the peer. The <i>error</i> is usually an indication that <a href="qwebsocketserver.html">QWebSocketServer</a> is unable to securely identify the peer.</p>
+<p>This signal provides you with an early indication when something is wrong. By connecting to this signal, you can manually choose to tear down the connection from inside the connected slot before the handshake has completed. If no action is taken, <a href="qwebsocketserver.html">QWebSocketServer</a> will proceed to emitting <a href="qwebsocketserver.html#sslErrors">QWebSocketServer::sslErrors</a>().</p>
+<p><b>See also </b><a href="qwebsocketserver.html#sslErrors">sslErrors</a>().</p>
+<!-- @@@peerVerifyError -->
+<!-- $$$proxy[overload1]$$$proxy -->
+<h3 class="fn" id="proxy"><a name="proxy"></a><span class="type"><a href="../qtnetwork/qnetworkproxy.html">QNetworkProxy</a></span> QWebSocketServer::<span class="name">proxy</span>() const</h3>
+<p>Returns the network proxy for this server. By default <a href="../qtnetwork/qnetworkproxy.html#ProxyType-enum">QNetworkProxy::DefaultProxy</a> is used.</p>
+<p><b>See also </b><a href="qwebsocketserver.html#setProxy">setProxy</a>().</p>
+<!-- @@@proxy -->
+<!-- $$$resumeAccepting[overload1]$$$resumeAccepting -->
+<h3 class="fn" id="resumeAccepting"><a name="resumeAccepting"></a><span class="type">void</span> QWebSocketServer::<span class="name">resumeAccepting</span>()</h3>
+<p>Resumes accepting new connections.</p>
+<p><b>See also </b><a href="qwebsocketserver.html#pauseAccepting">pauseAccepting</a>().</p>
+<!-- @@@resumeAccepting -->
+<!-- $$$secureMode[overload1]$$$secureMode -->
+<h3 class="fn" id="secureMode"><a name="secureMode"></a><span class="type"><a href="qwebsocketserver.html#SslMode-enum">SslMode</a></span> QWebSocketServer::<span class="name">secureMode</span>() const</h3>
+<p>Returns the secure mode the server is running in.</p>
+<p><b>See also </b><a href="qwebsocketserver.html#QWebSocketServer">QWebSocketServer</a>() and <a href="qwebsocketserver.html#SslMode-enum">SslMode</a>.</p>
+<!-- @@@secureMode -->
+<!-- $$$serverAddress[overload1]$$$serverAddress -->
+<h3 class="fn" id="serverAddress"><a name="serverAddress"></a><span class="type"><a href="../qtnetwork/qhostaddress.html">QHostAddress</a></span> QWebSocketServer::<span class="name">serverAddress</span>() const</h3>
+<p>Returns the server's address if the server is listening for connections; otherwise returns <a href="../qtnetwork/qhostaddress.html#SpecialAddress-enum">QHostAddress::Null</a>.</p>
+<p><b>See also </b><a href="qwebsocketserver.html#serverPort">serverPort</a>() and <a href="qwebsocketserver.html#listen">listen</a>().</p>
+<!-- @@@serverAddress -->
+<!-- $$$serverError[overload1]$$$serverErrorQWebSocketProtocol::CloseCode -->
+<h3 class="fn" id="serverError"><a name="serverError"></a><code>[signal] </code><span class="type">void</span> QWebSocketServer::<span class="name">serverError</span>(<span class="type"><a href="qwebsocketprotocol.html#CloseCode-enum">QWebSocketProtocol::CloseCode</a></span> <i>closeCode</i>)</h3>
+<p>This signal is emitted when an error occurs during the setup of a WebSocket connection. The <i>closeCode</i> parameter describes the type of error that occurred</p>
+<p><b>See also </b><a href="qwebsocketserver.html#errorString">errorString</a>().</p>
+<!-- @@@serverError -->
+<!-- $$$serverName[overload1]$$$serverName -->
+<h3 class="fn" id="serverName"><a name="serverName"></a><span class="type"><a href="../qtcore/qstring.html">QString</a></span> QWebSocketServer::<span class="name">serverName</span>() const</h3>
+<p>Returns the server name that is used during the http handshake phase.</p>
+<p><b>See also </b><a href="qwebsocketserver.html#setServerName">setServerName</a>().</p>
+<!-- @@@serverName -->
+<!-- $$$serverPort[overload1]$$$serverPort -->
+<h3 class="fn" id="serverPort"><a name="serverPort"></a><span class="type"><a href="../qtcore/qtglobal.html#quint16-typedef">quint16</a></span> QWebSocketServer::<span class="name">serverPort</span>() const</h3>
+<p>Returns the server's port if the server is listening for connections; otherwise returns 0.</p>
+<p><b>See also </b><a href="qwebsocketserver.html#serverAddress">serverAddress</a>() and <a href="qwebsocketserver.html#listen">listen</a>().</p>
+<!-- @@@serverPort -->
+<!-- $$$serverUrl[overload1]$$$serverUrl -->
+<h3 class="fn" id="serverUrl"><a name="serverUrl"></a><span class="type"><a href="../qtcore/qurl.html">QUrl</a></span> QWebSocketServer::<span class="name">serverUrl</span>() const</h3>
+<p>Returns a URL clients can use to connect to this server if the server is listening for connections. Otherwise an invalid URL is returned.</p>
+<p><b>See also </b><a href="qwebsocketserver.html#serverPort">serverPort</a>(), <a href="qwebsocketserver.html#serverAddress">serverAddress</a>(), and <a href="qwebsocketserver.html#listen">listen</a>().</p>
+<!-- @@@serverUrl -->
+<!-- $$$setMaxPendingConnections[overload1]$$$setMaxPendingConnectionsint -->
+<h3 class="fn" id="setMaxPendingConnections"><a name="setMaxPendingConnections"></a><span class="type">void</span> QWebSocketServer::<span class="name">setMaxPendingConnections</span>(<span class="type">int</span> <i>numConnections</i>)</h3>
+<p>Sets the maximum number of pending accepted connections to <i>numConnections</i>. <a href="qml-qtwebsockets-websocketserver.html">WebSocketServer</a> will accept no more than <i>numConnections</i> incoming connections before <a href="qwebsocketserver.html#nextPendingConnection">nextPendingConnection</a>() is called. By default, the limit is 30 pending connections.</p>
+<p><a href="qwebsocketserver.html">QWebSocketServer</a> will emit the <a href="qwebsocketserver.html#error">error</a>() signal with the <a href="qwebsocketprotocol.html#CloseCode-enum">QWebSocketProtocol::CloseCodeAbnormalDisconnection</a> close code when the maximum of connections has been reached. The WebSocket handshake will fail and the socket will be closed.</p>
+<p><b>See also </b><a href="qwebsocketserver.html#maxPendingConnections">maxPendingConnections</a>() and <a href="qwebsocketserver.html#hasPendingConnections">hasPendingConnections</a>().</p>
+<!-- @@@setMaxPendingConnections -->
+<!-- $$$setProxy[overload1]$$$setProxyconstQNetworkProxy& -->
+<h3 class="fn" id="setProxy"><a name="setProxy"></a><span class="type">void</span> QWebSocketServer::<span class="name">setProxy</span>(const <span class="type"><a href="../qtnetwork/qnetworkproxy.html">QNetworkProxy</a></span> &amp;<i>networkProxy</i>)</h3>
+<p>Sets the explicit network proxy for this server to <i>networkProxy</i>.</p>
+<p>To disable the use of a proxy, use the <a href="../qtnetwork/qnetworkproxy.html#ProxyType-enum">QNetworkProxy::NoProxy</a> proxy type:</p>
+<pre class="cpp">
+
+  server<span class="operator">-</span><span class="operator">&gt;</span>setProxy(<span class="type"><a href="../qtnetwork/qnetworkproxy.html">QNetworkProxy</a></span><span class="operator">::</span>NoProxy);
+
+</pre>
+<p><b>See also </b><a href="qwebsocketserver.html#proxy">proxy</a>().</p>
+<!-- @@@setProxy -->
+<!-- $$$setServerName[overload1]$$$setServerNameconstQString& -->
+<h3 class="fn" id="setServerName"><a name="setServerName"></a><span class="type">void</span> QWebSocketServer::<span class="name">setServerName</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>serverName</i>)</h3>
+<p>Sets the server name that will be used during the HTTP handshake phase to the given <i>serverName</i>. The <i>serverName</i> can be empty, in which case an empty server name will be sent to the client. Existing connected clients will not be notified of this change, only newly connecting clients will see this new name.</p>
+<p><b>See also </b><a href="qwebsocketserver.html#serverName">serverName</a>().</p>
+<!-- @@@setServerName -->
+<!-- $$$setSocketDescriptor[overload1]$$$setSocketDescriptorint -->
+<h3 class="fn" id="setSocketDescriptor"><a name="setSocketDescriptor"></a><span class="type">bool</span> QWebSocketServer::<span class="name">setSocketDescriptor</span>(<span class="type">int</span> <i>socketDescriptor</i>)</h3>
+<p>Sets the socket descriptor this server should use when listening for incoming connections to <i>socketDescriptor</i>.</p>
+<p>Returns true if the socket is set successfully; otherwise returns false. The socket is assumed to be in listening state.</p>
+<p><b>See also </b><a href="qwebsocketserver.html#socketDescriptor">socketDescriptor</a>() and <a href="qwebsocketserver.html#isListening">isListening</a>().</p>
+<!-- @@@setSocketDescriptor -->
+<!-- $$$setSslConfiguration[overload1]$$$setSslConfigurationconstQSslConfiguration& -->
+<h3 class="fn" id="setSslConfiguration"><a name="setSslConfiguration"></a><span class="type">void</span> QWebSocketServer::<span class="name">setSslConfiguration</span>(const <span class="type"><a href="../qtnetwork/qsslconfiguration.html">QSslConfiguration</a></span> &amp;<i>sslConfiguration</i>)</h3>
+<p>Sets the SSL configuration for the <a href="qwebsocketserver.html">QWebSocketServer</a> to <i>sslConfiguration</i>. This method has no effect if <a href="qwebsocketserver.html">QWebSocketServer</a> runs in non-secure mode (<a href="qwebsocketserver.html#SslMode-enum">QWebSocketServer::NonSecureMode</a>).</p>
+<p><b>See also </b><a href="qwebsocketserver.html#sslConfiguration">sslConfiguration</a>() and <a href="qwebsocketserver.html#SslMode-enum">SslMode</a>.</p>
+<!-- @@@setSslConfiguration -->
+<!-- $$$socketDescriptor[overload1]$$$socketDescriptor -->
+<h3 class="fn" id="socketDescriptor"><a name="socketDescriptor"></a><span class="type">int</span> QWebSocketServer::<span class="name">socketDescriptor</span>() const</h3>
+<p>Returns the native socket descriptor the server uses to listen for incoming instructions, or -1 if the server is not listening. If the server is using <a href="../qtnetwork/qnetworkproxy.html">QNetworkProxy</a>, the returned descriptor may not be usable with native socket functions.</p>
+<p><b>See also </b><a href="qwebsocketserver.html#setSocketDescriptor">setSocketDescriptor</a>() and <a href="qwebsocketserver.html#isListening">isListening</a>().</p>
+<!-- @@@socketDescriptor -->
+<!-- $$$sslConfiguration[overload1]$$$sslConfiguration -->
+<h3 class="fn" id="sslConfiguration"><a name="sslConfiguration"></a><span class="type"><a href="../qtnetwork/qsslconfiguration.html">QSslConfiguration</a></span> QWebSocketServer::<span class="name">sslConfiguration</span>() const</h3>
+<p>Returns the SSL configuration used by the <a href="qwebsocketserver.html">QWebSocketServer</a>. If the server is not running in secure mode (<a href="qwebsocketserver.html#SslMode-enum">QWebSocketServer::SecureMode</a>), this method returns <a href="../qtnetwork/qsslconfiguration.html#defaultConfiguration">QSslConfiguration::defaultConfiguration</a>().</p>
+<p><b>See also </b><a href="qwebsocketserver.html#setSslConfiguration">setSslConfiguration</a>(), <a href="qwebsocketserver.html#SslMode-enum">SslMode</a>, and <a href="../qtnetwork/qsslconfiguration.html#defaultConfiguration">QSslConfiguration::defaultConfiguration</a>().</p>
+<!-- @@@sslConfiguration -->
+<!-- $$$sslErrors[overload1]$$$sslErrorsconstQList<QSslError>& -->
+<h3 class="fn" id="sslErrors"><a name="sslErrors"></a><code>[signal] </code><span class="type">void</span> QWebSocketServer::<span class="name">sslErrors</span>(const <span class="type"><a href="../qtcore/qlist.html">QList</a></span>&lt;<span class="type"><a href="../qtnetwork/qsslerror.html">QSslError</a></span>&gt; &amp;<i>errors</i>)</h3>
+<p><a href="qwebsocketserver.html">QWebSocketServer</a> emits this signal after the SSL handshake to indicate that one or more errors have occurred while establishing the identity of the peer. The errors are usually an indication that <a href="qwebsocketserver.html">QWebSocketServer</a> is unable to securely identify the peer. Unless any action is taken, the connection will be dropped after this signal has been emitted.</p>
+<p><i>errors</i> contains one or more errors that prevent <a href="../qtnetwork/qsslsocket.html">QSslSocket</a> from verifying the identity of the peer.</p>
+<p><b>See also </b><a href="qwebsocketserver.html#peerVerifyError">peerVerifyError</a>().</p>
+<!-- @@@sslErrors -->
+<!-- $$$supportedVersions[overload1]$$$supportedVersions -->
+<h3 class="fn" id="supportedVersions"><a name="supportedVersions"></a><span class="type"><a href="../qtcore/qlist.html">QList</a></span>&lt;<span class="type"><a href="qwebsocketprotocol.html#Version-enum">QWebSocketProtocol::Version</a></span>&gt; QWebSocketServer::<span class="name">supportedVersions</span>() const</h3>
+<p>Returns a list of WebSocket versions that this server is supporting.</p>
+<!-- @@@supportedVersions -->
+</div>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

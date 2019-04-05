@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>context2d.h Example File | Qt Script</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtscript-index.html">Qt Script</a></td><td ><a href="qtscript-script-context2d-example.html">Context2D Example</a></td><td >context2d.h Example File</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar"><div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">context2d.h Example File</h1>
+<span class="subtitle">script/context2d/context2d.h</span>
+<!-- $$$script/context2d/context2d.h-description -->
+<div class="descr"> <a name="details"></a>
+<pre class="cpp">
+
+  <span class="comment">/****************************************************************************
+  **
+  ** Copyright (C) 2015 The Qt Company Ltd.
+  ** Contact: http://www.qt.io/licensing/
+  **
+  ** This file is part of the examples of the Qt Toolkit.
+  **
+  ** $QT_BEGIN_LICENSE:BSD$
+  ** You may use this file under the terms of the BSD license as follows:
+  **
+  ** &quot;Redistribution and use in source and binary forms, with or without
+  ** modification, are permitted provided that the following conditions are
+  ** met:
+  **   * Redistributions of source code must retain the above copyright
+  **     notice, this list of conditions and the following disclaimer.
+  **   * Redistributions in binary form must reproduce the above copyright
+  **     notice, this list of conditions and the following disclaimer in
+  **     the documentation and/or other materials provided with the
+  **     distribution.
+  **   * Neither the name of The Qt Company Ltd nor the names of its
+  **     contributors may be used to endorse or promote products derived
+  **     from this software without specific prior written permission.
+  **
+  **
+  ** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  ** &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  ** LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  ** A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  ** OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  ** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  ** LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  ** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  ** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  ** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.&quot;
+  **
+  ** $QT_END_LICENSE$
+  **
+  ****************************************************************************/</span>
+
+  <span class="preprocessor">#ifndef CONTEXT2D_H</span>
+  <span class="preprocessor">#define CONTEXT2D_H</span>
+
+  <span class="preprocessor">#include &quot;domimage.h&quot;</span>
+
+  <span class="preprocessor">#include &lt;QPainter&gt;</span>
+  <span class="preprocessor">#include &lt;QPainterPath&gt;</span>
+  <span class="preprocessor">#include &lt;QString&gt;</span>
+  <span class="preprocessor">#include &lt;QStack&gt;</span>
+  <span class="preprocessor">#include &lt;QMetaType&gt;</span>
+  <span class="preprocessor">#include &lt;QTimerEvent&gt;</span>
+
+  <span class="comment">// [3]</span>
+  <span class="keyword">class</span> CanvasGradient
+  {
+  <span class="keyword">public</span>:
+      CanvasGradient(<span class="keyword">const</span> <span class="type">QGradient</span> <span class="operator">&amp;</span>v)
+          : value(v) {}
+      CanvasGradient() {}
+
+      <span class="type">QGradient</span> value;
+  };
+  <span class="comment">// [3]</span>
+
+  Q_DECLARE_METATYPE(CanvasGradient)
+  Q_DECLARE_METATYPE(CanvasGradient<span class="operator">*</span>)
+
+  <span class="keyword">class</span> ImageData {
+  };
+
+  <span class="keyword">class</span> QContext2DCanvas;
+
+  <span class="keyword">class</span> Context2D : <span class="keyword">public</span> <span class="type"><a href="../qtcore/qobject.html">QObject</a></span>
+  {
+      Q_OBJECT
+      <span class="comment">// compositing</span>
+      Q_PROPERTY(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> globalAlpha READ globalAlpha WRITE setGlobalAlpha)
+      Q_PROPERTY(<span class="type"><a href="../qtcore/qstring.html">QString</a></span> globalCompositeOperation READ globalCompositeOperation WRITE setGlobalCompositeOperation)
+      Q_PROPERTY(<span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span> strokeStyle READ strokeStyle WRITE setStrokeStyle)
+      Q_PROPERTY(<span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span> fillStyle READ fillStyle WRITE setFillStyle)
+      <span class="comment">// line caps/joins</span>
+      Q_PROPERTY(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> lineWidth READ lineWidth WRITE setLineWidth)
+      Q_PROPERTY(<span class="type"><a href="../qtcore/qstring.html">QString</a></span> lineCap READ lineCap WRITE setLineCap)
+      Q_PROPERTY(<span class="type"><a href="../qtcore/qstring.html">QString</a></span> lineJoin READ lineJoin WRITE setLineJoin)
+      Q_PROPERTY(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> miterLimit READ miterLimit WRITE setMiterLimit)
+      <span class="comment">// shadows</span>
+      Q_PROPERTY(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> shadowOffsetX READ shadowOffsetX WRITE setShadowOffsetX)
+      Q_PROPERTY(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> shadowOffsetY READ shadowOffsetY WRITE setShadowOffsetY)
+      Q_PROPERTY(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> shadowBlur READ shadowBlur WRITE setShadowBlur)
+      Q_PROPERTY(<span class="type"><a href="../qtcore/qstring.html">QString</a></span> shadowColor READ shadowColor WRITE setShadowColor)
+
+  <span class="keyword">public</span>:
+      Context2D(<span class="type"><a href="../qtcore/qobject.html">QObject</a></span> <span class="operator">*</span>parent <span class="operator">=</span> <span class="number">0</span>);
+      <span class="type">void</span> setSize(<span class="type">int</span> width<span class="operator">,</span> <span class="type">int</span> height);
+      <span class="type">void</span> setSize(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qsize.html">QSize</a></span> <span class="operator">&amp;</span>size);
+      <span class="type"><a href="../qtcore/qsize.html">QSize</a></span> size() <span class="keyword">const</span>;
+
+      <span class="type">void</span> clear();
+      <span class="type">void</span> reset();
+
+      <span class="comment">// compositing</span>
+      <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> globalAlpha() <span class="keyword">const</span>; <span class="comment">// (default 1.0)</span>
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> globalCompositeOperation() <span class="keyword">const</span>; <span class="comment">// (default over)</span>
+      <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span> strokeStyle() <span class="keyword">const</span>; <span class="comment">// (default black)</span>
+      <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span> fillStyle() <span class="keyword">const</span>; <span class="comment">// (default black)</span>
+
+      <span class="type">void</span> setGlobalAlpha(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> alpha);
+      <span class="type">void</span> setGlobalCompositeOperation(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>op);
+      <span class="type">void</span> setStrokeStyle(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span> <span class="operator">&amp;</span>style);
+      <span class="type">void</span> setFillStyle(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span> <span class="operator">&amp;</span>style);
+
+      <span class="comment">// line caps/joins</span>
+      <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> lineWidth() <span class="keyword">const</span>; <span class="comment">// (default 1)</span>
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> lineCap() <span class="keyword">const</span>; <span class="comment">// &quot;butt&quot;, &quot;round&quot;, &quot;square&quot; (default &quot;butt&quot;)</span>
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> lineJoin() <span class="keyword">const</span>; <span class="comment">// &quot;round&quot;, &quot;bevel&quot;, &quot;miter&quot; (default &quot;miter&quot;)</span>
+      <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> miterLimit() <span class="keyword">const</span>; <span class="comment">// (default 10)</span>
+
+      <span class="type">void</span> setLineWidth(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> w);
+      <span class="type">void</span> setLineCap(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>s);
+      <span class="type">void</span> setLineJoin(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>s);
+      <span class="type">void</span> setMiterLimit(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> m);
+
+      <span class="comment">// shadows</span>
+      <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> shadowOffsetX() <span class="keyword">const</span>; <span class="comment">// (default 0)</span>
+      <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> shadowOffsetY() <span class="keyword">const</span>; <span class="comment">// (default 0)</span>
+      <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> shadowBlur() <span class="keyword">const</span>; <span class="comment">// (default 0)</span>
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> shadowColor() <span class="keyword">const</span>; <span class="comment">// (default black)</span>
+
+      <span class="type">void</span> setShadowOffsetX(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> x);
+      <span class="type">void</span> setShadowOffsetY(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> y);
+      <span class="type">void</span> setShadowBlur(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> b);
+      <span class="type">void</span> setShadowColor(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>str);
+
+  <span class="keyword">public</span> <span class="keyword">slots</span>:
+      <span class="type">void</span> save(); <span class="comment">// push state on state stack</span>
+      <span class="type">void</span> restore(); <span class="comment">// pop state stack and restore state</span>
+
+      <span class="type">void</span> scale(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> x<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> y);
+      <span class="type">void</span> rotate(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> angle);
+      <span class="type">void</span> translate(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> x<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> y);
+      <span class="type">void</span> transform(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> m11<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> m12<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> m21<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> m22<span class="operator">,</span>
+                     <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> dx<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> dy);
+      <span class="type">void</span> setTransform(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> m11<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> m12<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> m21<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> m22<span class="operator">,</span>
+                        <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> dx<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> dy);
+
+      CanvasGradient createLinearGradient(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> x0<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> y0<span class="operator">,</span>
+                                          <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> x1<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> y1);
+      CanvasGradient createRadialGradient(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> x0<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> y0<span class="operator">,</span>
+                                          <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> r0<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> x1<span class="operator">,</span>
+                                          <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> y1<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> r1);
+
+      <span class="comment">// rects</span>
+      <span class="type">void</span> clearRect(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> x<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> y<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> w<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> h);
+      <span class="type">void</span> fillRect(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> x<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> y<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> w<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> h);
+      <span class="type">void</span> strokeRect(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> x<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> y<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> w<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> h);
+
+      <span class="comment">// path API</span>
+      <span class="type">void</span> beginPath();
+      <span class="type">void</span> closePath();
+      <span class="type">void</span> moveTo(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> x<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> y);
+      <span class="type">void</span> lineTo(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> x<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> y);
+      <span class="type">void</span> quadraticCurveTo(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> cpx<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> cpy<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> x<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> y);
+      <span class="type">void</span> bezierCurveTo(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> cp1x<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> cp1y<span class="operator">,</span>
+                         <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> cp2x<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> cp2y<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> x<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> y);
+      <span class="type">void</span> arcTo(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> x1<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> y1<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> x2<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> y2<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> radius);
+      <span class="type">void</span> rect(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> x<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> y<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> w<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> h);
+      <span class="type">void</span> arc(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> x<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> y<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> radius<span class="operator">,</span>
+               <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> startAngle<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> endAngle<span class="operator">,</span>
+               bool anticlockwise);
+      <span class="type">void</span> fill();
+      <span class="type">void</span> stroke();
+      <span class="type">void</span> clip();
+      bool isPointInPath(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> x<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> y) <span class="keyword">const</span>;
+
+      <span class="comment">// drawing images</span>
+      <span class="type">void</span> drawImage(DomImage <span class="operator">*</span>image<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> dx<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> dy);
+      <span class="type">void</span> drawImage(DomImage <span class="operator">*</span>image<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> dx<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> dy<span class="operator">,</span>
+                     <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> dw<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> dh);
+      <span class="type">void</span> drawImage(DomImage <span class="operator">*</span>image<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> sx<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> sy<span class="operator">,</span>
+                     <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> sw<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> sh<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> dx<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> dy<span class="operator">,</span>
+                     <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> dw<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> dh);
+
+      <span class="comment">// pixel manipulation</span>
+      ImageData getImageData(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> sx<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> sy<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> sw<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> sh);
+      <span class="type">void</span> putImageData(ImageData image<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> dx<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> dy);
+
+  <span class="keyword">signals</span>:
+      <span class="type">void</span> changed(<span class="keyword">const</span> <span class="type">QImage</span> <span class="operator">&amp;</span>image);
+
+  <span class="keyword">protected</span>:
+      <span class="type">void</span> timerEvent(<span class="type"><a href="../qtcore/qtimerevent.html">QTimerEvent</a></span> <span class="operator">*</span>e);
+
+  <span class="keyword">private</span>:
+      <span class="type">void</span> beginPainting();
+      <span class="keyword">const</span> <span class="type">QImage</span> <span class="operator">&amp;</span>endPainting();
+      <span class="type">void</span> scheduleChange();
+
+      <span class="type">int</span> m_changeTimerId;
+      <span class="type">QImage</span>  m_image;
+      <span class="type">QPainter</span> m_painter;
+      <span class="type">QPainterPath</span> m_path;
+
+      <span class="keyword">enum</span> DirtyFlag {
+          DirtyTransformationMatrix <span class="operator">=</span> <span class="number">0x00001</span><span class="operator">,</span>
+          DirtyClippingRegion       <span class="operator">=</span> <span class="number">0x00002</span><span class="operator">,</span>
+          DirtyStrokeStyle          <span class="operator">=</span> <span class="number">0x00004</span><span class="operator">,</span>
+          DirtyFillStyle            <span class="operator">=</span> <span class="number">0x00008</span><span class="operator">,</span>
+          DirtyGlobalAlpha          <span class="operator">=</span> <span class="number">0x00010</span><span class="operator">,</span>
+          DirtyLineWidth            <span class="operator">=</span> <span class="number">0x00020</span><span class="operator">,</span>
+          DirtyLineCap              <span class="operator">=</span> <span class="number">0x00040</span><span class="operator">,</span>
+          DirtyLineJoin             <span class="operator">=</span> <span class="number">0x00080</span><span class="operator">,</span>
+          DirtyMiterLimit           <span class="operator">=</span> <span class="number">0x00100</span><span class="operator">,</span>
+          MDirtyPen                 <span class="operator">=</span> DirtyStrokeStyle
+                                    <span class="operator">|</span> DirtyLineWidth
+                                    <span class="operator">|</span> DirtyLineCap
+                                    <span class="operator">|</span> DirtyLineJoin
+                                    <span class="operator">|</span> DirtyMiterLimit<span class="operator">,</span>
+          DirtyShadowOffsetX        <span class="operator">=</span> <span class="number">0x00200</span><span class="operator">,</span>
+          DirtyShadowOffsetY        <span class="operator">=</span> <span class="number">0x00400</span><span class="operator">,</span>
+          DirtyShadowBlur           <span class="operator">=</span> <span class="number">0x00800</span><span class="operator">,</span>
+          DirtyShadowColor          <span class="operator">=</span> <span class="number">0x01000</span><span class="operator">,</span>
+          DirtyGlobalCompositeOperation <span class="operator">=</span> <span class="number">0x2000</span><span class="operator">,</span>
+          DirtyFont                 <span class="operator">=</span> <span class="number">0x04000</span><span class="operator">,</span>
+          DirtyTextAlign            <span class="operator">=</span> <span class="number">0x08000</span><span class="operator">,</span>
+          DirtyTextBaseline         <span class="operator">=</span> <span class="number">0x10000</span><span class="operator">,</span>
+          AllIsFullOfDirt           <span class="operator">=</span> <span class="number">0xfffff</span>
+      };
+
+      <span class="keyword">struct</span> State {
+          State() : flags(<span class="number">0</span>) {}
+          <span class="type">QMatrix</span> matrix;
+          <span class="type">QPainterPath</span> clipPath;
+          <span class="type">QBrush</span> strokeStyle;
+          <span class="type">QBrush</span> fillStyle;
+          <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> globalAlpha;
+          <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> lineWidth;
+          <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>PenCapStyle lineCap;
+          <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>PenJoinStyle lineJoin;
+          <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> miterLimit;
+          <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> shadowOffsetX;
+          <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> shadowOffsetY;
+          <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> shadowBlur;
+          <span class="type">QColor</span> shadowColor;
+          <span class="type">QPainter</span><span class="operator">::</span>CompositionMode globalCompositeOperation;
+          <span class="type">QFont</span> font;
+          <span class="type">int</span> textAlign;
+          <span class="type">int</span> textBaseline;
+          <span class="type">int</span> flags;
+      };
+      State m_state;
+      <span class="type"><a href="../qtcore/qstack.html">QStack</a></span><span class="operator">&lt;</span>State<span class="operator">&gt;</span> m_stateStack;
+  };
+
+  <span class="preprocessor">#endif</span>
+
+</pre>
+</div>
+<!-- @@@script/context2d/context2d.h -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

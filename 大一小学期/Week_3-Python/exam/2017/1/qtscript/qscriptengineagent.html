@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qscriptengineagent.cpp -->
+  <title>QScriptEngineAgent Class | Qt Script</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtscript-index.html">Qt Script</a></td><td ><a href="qtscript-module.html">C++ Classes</a></td><td >QScriptEngineAgent</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-types">Public Types</a></li>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">QScriptEngineAgent Class</h1>
+<!-- $$$QScriptEngineAgent-brief -->
+<p>The <a href="qscriptengineagent.html">QScriptEngineAgent</a> class provides an interface to report events pertaining to <a href="qscriptengine.html">QScriptEngine</a> execution. <a href="#details">More...</a></p>
+<!-- @@@QScriptEngineAgent -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign">   <span class="preprocessor">#include &lt;QScriptEngineAgent&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> qmake:</td><td class="memItemRight bottomAlign"> QT += script</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Since:</td><td class="memItemRight bottomAlign">  Qt 4.4</td></tr></table></div><ul>
+<li><a href="qscriptengineagent-members.html">List of all members, including inherited members</a></li>
+</ul>
+<a name="public-types"></a>
+<h2 id="public-types">Public Types</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="qscriptengineagent.html#Extension-enum">Extension</a></b> { DebuggerInvocationRequest }</td></tr>
+</table></div>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qscriptengineagent.html#QScriptEngineAgent">QScriptEngineAgent</a></b>(QScriptEngine *<i>engine</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual </td><td class="memItemRight bottomAlign"><b><a href="qscriptengineagent.html#dtor.QScriptEngineAgent">~QScriptEngineAgent</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="qscriptengineagent.html#contextPop">contextPop</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="qscriptengineagent.html#contextPush">contextPush</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QScriptEngine *</td><td class="memItemRight bottomAlign"><b><a href="qscriptengineagent.html#engine">engine</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="qscriptengineagent.html#exceptionCatch">exceptionCatch</a></b>(qint64 <i>scriptId</i>, const QScriptValue &amp;<i>exception</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="qscriptengineagent.html#exceptionThrow">exceptionThrow</a></b>(qint64 <i>scriptId</i>, const QScriptValue &amp;<i>exception</i>, bool <i>hasHandler</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QVariant </td><td class="memItemRight bottomAlign"><b><a href="qscriptengineagent.html#extension">extension</a></b>(Extension <i>extension</i>, const QVariant &amp;<i>argument</i> = QVariant())</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="qscriptengineagent.html#functionEntry">functionEntry</a></b>(qint64 <i>scriptId</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="qscriptengineagent.html#functionExit">functionExit</a></b>(qint64 <i>scriptId</i>, const QScriptValue &amp;<i>returnValue</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="qscriptengineagent.html#positionChange">positionChange</a></b>(qint64 <i>scriptId</i>, int <i>lineNumber</i>, int <i>columnNumber</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="qscriptengineagent.html#scriptLoad">scriptLoad</a></b>(qint64 <i>id</i>, const QString &amp;<i>program</i>, const QString &amp;<i>fileName</i>, int <i>baseLineNumber</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="qscriptengineagent.html#scriptUnload">scriptUnload</a></b>(qint64 <i>id</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="qscriptengineagent.html#supportsExtension">supportsExtension</a></b>(Extension <i>extension</i>) const</td></tr>
+</table></div>
+<a name="details"></a>
+<!-- $$$QScriptEngineAgent-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="qscriptengineagent.html">QScriptEngineAgent</a> class provides an interface to report events pertaining to <a href="qscriptengine.html">QScriptEngine</a> execution.</p>
+<p>The <a href="qscriptengineagent.html">QScriptEngineAgent</a> class is the basis of tools that monitor and/or control the execution of a <a href="qscriptengine.html">QScriptEngine</a>, such as debuggers and profilers.</p>
+<p>To process script loading and unloading events, reimplement the <a href="qscriptengineagent.html#scriptLoad">scriptLoad</a>() and <a href="qscriptengineagent.html#scriptUnload">scriptUnload</a>() functions. <a href="qscriptengineagent.html#scriptLoad">scriptLoad</a>() is called after the input to <a href="qscriptengine.html#evaluate">QScriptEngine::evaluate</a>() has been parsed, right before the given script is executed. The engine assigns each script an ID, which is available as one of the arguments to <a href="qscriptengineagent.html#scriptLoad">scriptLoad</a>(); subsequently, other event handlers can use the ID to identify a particular script. One common usage of <a href="qscriptengineagent.html#scriptLoad">scriptLoad</a>() is to retain the script text, filename and base line number (the original input to <a href="qscriptengine.html#evaluate">QScriptEngine::evaluate</a>()), so that other event handlers can e.g&#x2e; map a line number to the corresponding line of text.</p>
+<p><a href="qscriptengineagent.html#scriptUnload">scriptUnload</a>() is called when the <a href="qscriptengine.html">QScriptEngine</a> has no further use for a script; the <a href="qscriptengineagent.html">QScriptEngineAgent</a> may at this point safely discard any resources associated with the script (such as the script text). Note that after <a href="qscriptengineagent.html#scriptUnload">scriptUnload</a>() has been called, the <a href="qscriptengine.html">QScriptEngine</a> may reuse the relevant script ID for new scripts (i.e&#x2e; as argument to a subsequent call to <a href="qscriptengineagent.html#scriptLoad">scriptLoad</a>()).</p>
+<p>Evaluating the following script will result in <a href="qscriptengineagent.html#scriptUnload">scriptUnload</a>() being called immediately after evaluation has completed:</p>
+<pre class="cpp">
+
+  var a <span class="operator">=</span> Math<span class="operator">.</span>random() <span class="operator">+</span> <span class="number">2</span>;
+
+</pre>
+<p>Evaluating the following script will <b>not</b> result in a call to <a href="qscriptengineagent.html#scriptUnload">scriptUnload</a>() when evaluation has completed:</p>
+<pre class="cpp">
+
+  function cube(a) {
+      <span class="keyword">return</span> a <span class="operator">*</span> a <span class="operator">*</span> a;
+  }
+
+  var a <span class="operator">=</span> cube(<span class="number">3</span>);
+
+</pre>
+<p>The script isn't unloaded because it defines a function (<code>cube</code>) that remains in the script environment after evaluation has completed. If a subsequent script removed the <code>cube</code> function (e.g&#x2e; by setting it to <code>null</code>), <a href="qscriptengineagent.html#scriptUnload">scriptUnload</a>() would be called when the function is garbage collected. In general terms, a script isn't unloaded until the engine has determined that none of its contents is referenced.</p>
+<p>To process script function calls and returns, reimplement the <a href="qscriptengineagent.html#functionEntry">functionEntry</a>() and <a href="qscriptengineagent.html#functionExit">functionExit</a>() functions. <a href="qscriptengineagent.html#functionEntry">functionEntry</a>() is called when a script function is about to be executed; <a href="qscriptengineagent.html#functionExit">functionExit</a>() is called when a script function is about to return, either normally or due to an exception.</p>
+<p>To process individual script statements, reimplement <a href="qscriptengineagent.html#positionChange">positionChange</a>(). <a href="qscriptengineagent.html#positionChange">positionChange</a>() is called each time the engine is about to execute a new statement of a script, and thus offers the finest level of script monitoring.</p>
+<p>To process exceptions, reimplement <a href="qscriptengineagent.html#exceptionThrow">exceptionThrow</a>() and <a href="qscriptengineagent.html#exceptionCatch">exceptionCatch</a>(). <a href="qscriptengineagent.html#exceptionThrow">exceptionThrow</a>() is called when a script exception is thrown, before it has been handled. <a href="qscriptengineagent.html#exceptionCatch">exceptionCatch</a>() is called when an exception handler is present, and execution is about to be resumed at the handler code.</p>
+</div>
+<p><b>See also </b><a href="qscriptengine.html#setAgent">QScriptEngine::setAgent</a>() and <a href="qscriptcontextinfo.html">QScriptContextInfo</a>.</p>
+<!-- @@@QScriptEngineAgent -->
+<div class="types">
+<h2>Member Type Documentation</h2>
+<!-- $$$Extension$$$DebuggerInvocationRequest -->
+<h3 class="fn" id="Extension-enum"><a name="Extension-enum"></a>enum QScriptEngineAgent::<span class="name">Extension</span></h3>
+<p>This enum specifies the possible extensions to a <a href="qscriptengineagent.html">QScriptEngineAgent</a>.</p>
+<div class="table"><table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td class="topAlign"><code>QScriptEngineAgent::DebuggerInvocationRequest</code></td><td class="topAlign tblval"><code>0</code></td><td class="topAlign">The agent handles <code>debugger</code> script statements.</td></tr>
+</table></div>
+<p><b>See also </b><a href="qscriptengineagent.html#extension">extension</a>().</p>
+<!-- @@@Extension -->
+</div>
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$QScriptEngineAgent[overload1]$$$QScriptEngineAgentQScriptEngine* -->
+<h3 class="fn" id="QScriptEngineAgent"><a name="QScriptEngineAgent"></a>QScriptEngineAgent::<span class="name">QScriptEngineAgent</span>(<span class="type"><a href="qscriptengine.html">QScriptEngine</a></span> *<i>engine</i>)</h3>
+<p>Constructs a <a href="qscriptengineagent.html">QScriptEngineAgent</a> object for the given <i>engine</i>.</p>
+<p>The engine takes ownership of the agent.</p>
+<p>Call <a href="qscriptengine.html#setAgent">QScriptEngine::setAgent</a>() to make this agent the active agent.</p>
+<!-- @@@QScriptEngineAgent -->
+<!-- $$$~QScriptEngineAgent[overload1]$$$~QScriptEngineAgent -->
+<h3 class="fn" id="dtor.QScriptEngineAgent"><a name="dtor.QScriptEngineAgent"></a><code>[virtual] </code>QScriptEngineAgent::<span class="name">~QScriptEngineAgent</span>()</h3>
+<p>Destroys this <a href="qscriptengineagent.html">QScriptEngineAgent</a>.</p>
+<!-- @@@~QScriptEngineAgent -->
+<!-- $$$contextPop[overload1]$$$contextPop -->
+<h3 class="fn" id="contextPop"><a name="contextPop"></a><code>[virtual] </code><span class="type">void</span> QScriptEngineAgent::<span class="name">contextPop</span>()</h3>
+<p>This function is called when the current script context is about to be popped.</p>
+<p>The default implementation does nothing.</p>
+<p><b>See also </b><a href="qscriptengineagent.html#contextPush">contextPush</a>() and <a href="qscriptengineagent.html#functionExit">functionExit</a>().</p>
+<!-- @@@contextPop -->
+<!-- $$$contextPush[overload1]$$$contextPush -->
+<h3 class="fn" id="contextPush"><a name="contextPush"></a><code>[virtual] </code><span class="type">void</span> QScriptEngineAgent::<span class="name">contextPush</span>()</h3>
+<p>This function is called when a new script context has been pushed.</p>
+<p>The default implementation does nothing.</p>
+<p><b>See also </b><a href="qscriptengineagent.html#contextPop">contextPop</a>() and <a href="qscriptengineagent.html#functionEntry">functionEntry</a>().</p>
+<!-- @@@contextPush -->
+<!-- $$$engine[overload1]$$$engine -->
+<h3 class="fn" id="engine"><a name="engine"></a><span class="type"><a href="qscriptengine.html">QScriptEngine</a></span> *QScriptEngineAgent::<span class="name">engine</span>() const</h3>
+<p>Returns the <a href="qscriptengine.html">QScriptEngine</a> that this agent is associated with.</p>
+<!-- @@@engine -->
+<!-- $$$exceptionCatch[overload1]$$$exceptionCatchqint64constQScriptValue& -->
+<h3 class="fn" id="exceptionCatch"><a name="exceptionCatch"></a><code>[virtual] </code><span class="type">void</span> QScriptEngineAgent::<span class="name">exceptionCatch</span>(<span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> <i>scriptId</i>, const <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> &amp;<i>exception</i>)</h3>
+<p>This function is called when the given <i>exception</i> is about to be caught, in the script identified by <i>scriptId</i>.</p>
+<p>Reimplement this function if you want to handle this event.</p>
+<p>The default implementation does nothing.</p>
+<p><b>See also </b><a href="qscriptengineagent.html#exceptionThrow">exceptionThrow</a>().</p>
+<!-- @@@exceptionCatch -->
+<!-- $$$exceptionThrow[overload1]$$$exceptionThrowqint64constQScriptValue&bool -->
+<h3 class="fn" id="exceptionThrow"><a name="exceptionThrow"></a><code>[virtual] </code><span class="type">void</span> QScriptEngineAgent::<span class="name">exceptionThrow</span>(<span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> <i>scriptId</i>, const <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> &amp;<i>exception</i>, <span class="type">bool</span> <i>hasHandler</i>)</h3>
+<p>This function is called when the given <i>exception</i> has occurred in the engine, in the script identified by <i>scriptId</i>. If the exception was thrown by a native Qt Script function, <i>scriptId</i> is -1.</p>
+<p>If <i>hasHandler</i> is true, there is a <code>catch</code> or <code>finally</code> block that will handle the exception. If <i>hasHandler</i> is false, there is no handler for the exception.</p>
+<p>Reimplement this function if you want to handle this event. For example, a debugger can notify the user when an uncaught exception occurs (i.e&#x2e; <i>hasHandler</i> is false).</p>
+<p>The default implementation does nothing.</p>
+<p><b>See also </b><a href="qscriptengineagent.html#exceptionCatch">exceptionCatch</a>().</p>
+<!-- @@@exceptionThrow -->
+<!-- $$$extension[overload1]$$$extensionExtensionconstQVariant& -->
+<h3 class="fn" id="extension"><a name="extension"></a><code>[virtual] </code><span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span> QScriptEngineAgent::<span class="name">extension</span>(<span class="type"><a href="qscriptengineagent.html#Extension-enum">Extension</a></span> <i>extension</i>, const <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span> &amp;<i>argument</i> = QVariant())</h3>
+<p>This virtual function can be reimplemented in a <a href="qscriptengineagent.html">QScriptEngineAgent</a> subclass to provide support for extensions. The optional <i>argument</i> can be provided as input to the <i>extension</i>; the result must be returned in the form of a <a href="../qtcore/qvariant.html">QVariant</a>. You can call <a href="qscriptengineagent.html#supportsExtension">supportsExtension</a>() to check if an extension is supported by the <a href="qscriptengineagent.html">QScriptEngineAgent</a>. By default, no extensions are supported, and this function returns an invalid <a href="../qtcore/qvariant.html">QVariant</a>.</p>
+<p>If you implement the <a href="qscriptengineagent.html#Extension-enum">DebuggerInvocationRequest</a> extension, Qt Script will call this function when a <code>debugger</code> statement is encountered in a script. The <i>argument</i> is a <a href="../qtcore/qvariant.html#QVariantList-typedef">QVariantList</a> containing three items: The first item is the scriptId (a qint64), the second item is the line number (an int), and the third item is the column number (an int).</p>
+<p><b>See also </b><a href="qscriptengineagent.html#supportsExtension">supportsExtension</a>().</p>
+<!-- @@@extension -->
+<!-- $$$functionEntry[overload1]$$$functionEntryqint64 -->
+<h3 class="fn" id="functionEntry"><a name="functionEntry"></a><code>[virtual] </code><span class="type">void</span> QScriptEngineAgent::<span class="name">functionEntry</span>(<span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> <i>scriptId</i>)</h3>
+<p>This function is called when a script function is called in the engine. If the script function is not a native Qt Script function, it resides in the script identified by <i>scriptId</i>; otherwise, <i>scriptId</i> is -1.</p>
+<p>This function is called just before execution of the script function begins. You can obtain the <a href="qscriptcontext.html">QScriptContext</a> associated with the function call with <a href="qscriptengine.html#currentContext">QScriptEngine::currentContext</a>(). The arguments passed to the function are available.</p>
+<p>Reimplement this function to handle this event. For example, a debugger implementation could reimplement this function (and <a href="qscriptengineagent.html#functionExit">functionExit</a>()) to keep track of the call stack and provide step-over functionality.</p>
+<p>The default implementation does nothing.</p>
+<p><b>See also </b><a href="qscriptengineagent.html#functionExit">functionExit</a>(), <a href="qscriptengineagent.html#positionChange">positionChange</a>(), and <a href="qscriptengine.html#currentContext">QScriptEngine::currentContext</a>().</p>
+<!-- @@@functionEntry -->
+<!-- $$$functionExit[overload1]$$$functionExitqint64constQScriptValue& -->
+<h3 class="fn" id="functionExit"><a name="functionExit"></a><code>[virtual] </code><span class="type">void</span> QScriptEngineAgent::<span class="name">functionExit</span>(<span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> <i>scriptId</i>, const <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> &amp;<i>returnValue</i>)</h3>
+<p>This function is called when the currently executing script function is about to return. If the script function is not a native Qt Script function, it resides in the script identified by <i>scriptId</i>; otherwise, <i>scriptId</i> is -1. The <i>returnValue</i> is the value that the script function will return.</p>
+<p>This function is called just before the script function returns. You can still access the <a href="qscriptcontext.html">QScriptContext</a> associated with the script function call with <a href="qscriptengine.html#currentContext">QScriptEngine::currentContext</a>().</p>
+<p>If the engine's <a href="qscriptengine.html#hasUncaughtException">hasUncaughtException</a>() function returns true, the script function is exiting due to an exception; otherwise, the script function is returning normally.</p>
+<p>Reimplement this function to handle this event; typically you will then also want to reimplement <a href="qscriptengineagent.html#functionEntry">functionEntry</a>().</p>
+<p>The default implementation does nothing.</p>
+<p><b>See also </b><a href="qscriptengineagent.html#functionEntry">functionEntry</a>() and <a href="qscriptengine.html#hasUncaughtException">QScriptEngine::hasUncaughtException</a>().</p>
+<!-- @@@functionExit -->
+<!-- $$$positionChange[overload1]$$$positionChangeqint64intint -->
+<h3 class="fn" id="positionChange"><a name="positionChange"></a><code>[virtual] </code><span class="type">void</span> QScriptEngineAgent::<span class="name">positionChange</span>(<span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> <i>scriptId</i>, <span class="type">int</span> <i>lineNumber</i>, <span class="type">int</span> <i>columnNumber</i>)</h3>
+<p>This function is called when the engine is about to execute a new statement in the script identified by <i>scriptId</i>. The statement begins on the line and column specified by <i>lineNumber</i> This event is not generated for native Qt Script functions.</p>
+<p>Reimplement this function to handle this event. For example, a debugger implementation could reimplement this function to provide line-by-line stepping, and a profiler implementation could use it to count the number of times each statement is executed.</p>
+<p>The default implementation does nothing.</p>
+<p><b>Note: </b><i>columnNumber</i> is undefined</p><p><b>See also </b><a href="qscriptengineagent.html#scriptLoad">scriptLoad</a>() and <a href="qscriptengineagent.html#functionEntry">functionEntry</a>().</p>
+<!-- @@@positionChange -->
+<!-- $$$scriptLoad[overload1]$$$scriptLoadqint64constQString&constQString&int -->
+<h3 class="fn" id="scriptLoad"><a name="scriptLoad"></a><code>[virtual] </code><span class="type">void</span> QScriptEngineAgent::<span class="name">scriptLoad</span>(<span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> <i>id</i>, const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>program</i>, const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>fileName</i>, <span class="type">int</span> <i>baseLineNumber</i>)</h3>
+<p>This function is called when the engine has parsed a script and has associated it with the given <i>id</i>. The id can be used to identify this particular script in subsequent event notifications.</p>
+<p><i>program</i>, <i>fileName</i> and <i>baseLineNumber</i> are the original arguments to the <a href="qscriptengine.html#evaluate">QScriptEngine::evaluate</a>() call that triggered this event.</p>
+<p>This function is called just before the script is about to be evaluated.</p>
+<p>You can reimplement this function to record information about the script; for example, by retaining the script text, you can obtain the line of text corresponding to a line number in a subsequent call to <a href="qscriptengineagent.html#positionChange">positionChange</a>().</p>
+<p>The default implementation does nothing.</p>
+<p><b>See also </b><a href="qscriptengineagent.html#scriptUnload">scriptUnload</a>().</p>
+<!-- @@@scriptLoad -->
+<!-- $$$scriptUnload[overload1]$$$scriptUnloadqint64 -->
+<h3 class="fn" id="scriptUnload"><a name="scriptUnload"></a><code>[virtual] </code><span class="type">void</span> QScriptEngineAgent::<span class="name">scriptUnload</span>(<span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> <i>id</i>)</h3>
+<p>This function is called when the engine has discarded the script identified by the given <i>id</i>.</p>
+<p>You can reimplement this function to clean up any resources you have associated with the script.</p>
+<p>The default implementation does nothing.</p>
+<p><b>See also </b><a href="qscriptengineagent.html#scriptLoad">scriptLoad</a>().</p>
+<!-- @@@scriptUnload -->
+<!-- $$$supportsExtension[overload1]$$$supportsExtensionExtension -->
+<h3 class="fn" id="supportsExtension"><a name="supportsExtension"></a><code>[virtual] </code><span class="type">bool</span> QScriptEngineAgent::<span class="name">supportsExtension</span>(<span class="type"><a href="qscriptengineagent.html#Extension-enum">Extension</a></span> <i>extension</i>) const</h3>
+<p>Returns true if the <a href="qscriptengineagent.html">QScriptEngineAgent</a> supports the given <i>extension</i>; otherwise, false is returned. By default, no extensions are supported.</p>
+<p><b>See also </b><a href="qscriptengineagent.html#extension">extension</a>().</p>
+<!-- @@@supportsExtension -->
+</div>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

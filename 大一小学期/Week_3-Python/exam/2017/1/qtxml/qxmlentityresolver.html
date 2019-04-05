@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qxml.cpp -->
+  <title>QXmlEntityResolver Class | Qt XML 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtxml-index.html">Qt XML</a></td><td ><a href="qtxml-module.html">C++ Classes</a></td><td >QXmlEntityResolver</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">QXmlEntityResolver Class</h1>
+<!-- $$$QXmlEntityResolver-brief -->
+<p>The <a href="qxmlentityresolver.html">QXmlEntityResolver</a> class provides an interface to resolve external entities contained in XML data. <a href="#details">More...</a></p>
+<!-- @@@QXmlEntityResolver -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign">   <span class="preprocessor">#include &lt;QXmlEntityResolver&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> qmake:</td><td class="memItemRight bottomAlign"> QT += xml</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Inherited By:</td><td class="memItemRight bottomAlign"> <p><a href="qxmldefaulthandler.html">QXmlDefaultHandler</a></p>
+</td></tr></table></div><ul>
+<li><a href="qxmlentityresolver-members.html">List of all members, including inherited members</a></li>
+</ul>
+<p><b>Note:</b> All functions in this class are <a href="../qtdoc/threads-reentrancy.html">reentrant</a>.</p>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> virtual </td><td class="memItemRight bottomAlign"><b><a href="qxmlentityresolver.html#dtor.QXmlEntityResolver">~QXmlEntityResolver</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QString </td><td class="memItemRight bottomAlign"><b><a href="qxmlentityresolver.html#errorString">errorString</a></b>() const = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="qxmlentityresolver.html#resolveEntity">resolveEntity</a></b>(const QString &amp;<i>publicId</i>, const QString &amp;<i>systemId</i>, QXmlInputSource *&amp;<i>ret</i>) = 0</td></tr>
+</table></div>
+<a name="details"></a>
+<!-- $$$QXmlEntityResolver-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="qxmlentityresolver.html">QXmlEntityResolver</a> class provides an interface to resolve external entities contained in XML data.</p>
+<p>If an application needs to implement customized handling for external entities, it must implement this interface, i.e&#x2e; <a href="qxmlentityresolver.html#resolveEntity">resolveEntity</a>(), and register it with <a href="qxmlreader.html#setEntityResolver">QXmlReader::setEntityResolver</a>().</p>
+</div>
+<p><b>See also </b><a href="qxmldtdhandler.html">QXmlDTDHandler</a>, <a href="qxmldeclhandler.html">QXmlDeclHandler</a>, <a href="qxmlcontenthandler.html">QXmlContentHandler</a>, <a href="qxmlerrorhandler.html">QXmlErrorHandler</a>, <a href="qxmllexicalhandler.html">QXmlLexicalHandler</a>, and <a href="xml-sax.html#introduction-to-sax2">Introduction to SAX2</a>.</p>
+<!-- @@@QXmlEntityResolver -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$~QXmlEntityResolver[overload1]$$$~QXmlEntityResolver -->
+<h3 class="fn" id="dtor.QXmlEntityResolver"><a name="dtor.QXmlEntityResolver"></a><code>[virtual] </code>QXmlEntityResolver::<span class="name">~QXmlEntityResolver</span>()</h3>
+<p>Destroys the entity resolver.</p>
+<!-- @@@~QXmlEntityResolver -->
+<!-- $$$errorString[overload1]$$$errorString -->
+<h3 class="fn" id="errorString"><a name="errorString"></a><code>[pure virtual] </code><span class="type"><a href="../qtcore/qstring.html">QString</a></span> QXmlEntityResolver::<span class="name">errorString</span>() const</h3>
+<p>The reader calls this function to get an error string if any of the handler functions returns <code>false</code>.</p>
+<!-- @@@errorString -->
+<!-- $$$resolveEntity[overload1]$$$resolveEntityconstQString&constQString&QXmlInputSource*& -->
+<h3 class="fn" id="resolveEntity"><a name="resolveEntity"></a><code>[pure virtual] </code><span class="type">bool</span> QXmlEntityResolver::<span class="name">resolveEntity</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>publicId</i>, const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>systemId</i>, <span class="type"><a href="qxmlinputsource.html">QXmlInputSource</a></span> *&amp;<i>ret</i>)</h3>
+<p>The reader calls this function before it opens any external entity, except the top-level document entity. The application may request the reader to resolve the entity itself (<i>ret</i> is 0) or to use an entirely different input source (<i>ret</i> points to the input source).</p>
+<p>The reader deletes the input source <i>ret</i> when it no longer needs it, so you should allocate it on the heap with <code>new</code>.</p>
+<p>The argument <i>publicId</i> is the public identifier of the external entity, <i>systemId</i> is the system identifier of the external entity and <i>ret</i> is the return value of this function. If <i>ret</i> is 0 the reader should resolve the entity itself, if it is non-zero it must point to an input source which the reader uses instead.</p>
+<p>If this function returns <code>false</code> the reader stops parsing and reports an error. The reader uses the function <a href="qxmlentityresolver.html#errorString">errorString</a>() to get the error message.</p>
+<!-- @@@resolveEntity -->
+</div>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

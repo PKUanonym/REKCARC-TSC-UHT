@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qsqlrelationaltablemodel.cpp -->
+  <title>QSqlRelationalTableModel Class | Qt SQL 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtsql-index.html">Qt SQL</a></td><td ><a href="qtsql-module.html">C++ Classes</a></td><td >QSqlRelationalTableModel</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-types">Public Types</a></li>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#reimplemented-public-functions">Reimplemented Public Functions</a></li>
+<li class="level1"><a href="#public-slots">Public Slots</a></li>
+<li class="level1"><a href="#reimplemented-protected-functions">Reimplemented Protected Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">QSqlRelationalTableModel Class</h1>
+<!-- $$$QSqlRelationalTableModel-brief -->
+<p>The <a href="qsqlrelationaltablemodel.html">QSqlRelationalTableModel</a> class provides an editable data model for a single database table, with foreign key support. <a href="#details">More...</a></p>
+<!-- @@@QSqlRelationalTableModel -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign">   <span class="preprocessor">#include &lt;QSqlRelationalTableModel&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> qmake:</td><td class="memItemRight bottomAlign"> QT += sql</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Inherits:</td><td class="memItemRight bottomAlign"> <a href="qsqltablemodel.html">QSqlTableModel</a></td></tr></table></div><ul>
+<li><a href="qsqlrelationaltablemodel-members.html">List of all members, including inherited members</a></li>
+</ul>
+<a name="public-types"></a>
+<h2 id="public-types">Public Types</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="qsqlrelationaltablemodel.html#JoinMode-enum">JoinMode</a></b> { InnerJoin, LeftJoin }</td></tr>
+</table></div>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qsqlrelationaltablemodel.html#QSqlRelationalTableModel">QSqlRelationalTableModel</a></b>(QObject *<i>parent</i> = Q_NULLPTR, QSqlDatabase <i>db</i> = QSqlDatabase())</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual </td><td class="memItemRight bottomAlign"><b><a href="qsqlrelationaltablemodel.html#dtor.QSqlRelationalTableModel">~QSqlRelationalTableModel</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QSqlRelation </td><td class="memItemRight bottomAlign"><b><a href="qsqlrelationaltablemodel.html#relation">relation</a></b>(int <i>column</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QSqlTableModel *</td><td class="memItemRight bottomAlign"><b><a href="qsqlrelationaltablemodel.html#relationModel">relationModel</a></b>(int <i>column</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qsqlrelationaltablemodel.html#setJoinMode">setJoinMode</a></b>(QSqlRelationalTableModel::JoinMode <i>joinMode</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="qsqlrelationaltablemodel.html#setRelation">setRelation</a></b>(int <i>column</i>, const QSqlRelation &amp;<i>relation</i>)</td></tr>
+</table></div>
+<a name="reimplemented-public-functions"></a>
+<h2 id="reimplemented-public-functions">Reimplemented Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="qsqlrelationaltablemodel.html#clear">clear</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QVariant </td><td class="memItemRight bottomAlign"><b><a href="qsqlrelationaltablemodel.html#data">data</a></b>(const QModelIndex &amp;<i>index</i>, int <i>role</i> = Qt::DisplayRole) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="qsqlrelationaltablemodel.html#removeColumns">removeColumns</a></b>(int <i>column</i>, int <i>count</i>, const QModelIndex &amp;<i>parent</i> = QModelIndex())</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="qsqlrelationaltablemodel.html#select">select</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="qsqlrelationaltablemodel.html#setData">setData</a></b>(const QModelIndex &amp;<i>index</i>, const QVariant &amp;<i>value</i>, int <i>role</i> = Qt::EditRole)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="qsqlrelationaltablemodel.html#setTable">setTable</a></b>(const QString &amp;<i>table</i>)</td></tr>
+</table></div>
+<ul>
+<li class="fn">27 public functions inherited from <a href="qsqltablemodel.html#public-functions">QSqlTableModel</a></li>
+<li class="fn">16 public functions inherited from <a href="qsqlquerymodel.html#public-functions">QSqlQueryModel</a></li>
+<li class="fn">4 public functions inherited from <a href="../qtcore/qabstracttablemodel.html#public-functions">QAbstractTableModel</a></li>
+<li class="fn">39 public functions inherited from <a href="../qtcore/qabstractitemmodel.html#public-functions">QAbstractItemModel</a></li>
+<li class="fn">31 public functions inherited from <a href="../qtcore/qobject.html#public-functions">QObject</a></li>
+</ul>
+<a name="public-slots"></a>
+<h2 id="public-slots">Public Slots</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="qsqlrelationaltablemodel.html#revertRow">revertRow</a></b>(int <i>row</i>)</td></tr>
+</table></div>
+<ul>
+<li class="fn">6 public slots inherited from <a href="qsqltablemodel.html#public-slots">QSqlTableModel</a></li>
+<li class="fn">2 public slots inherited from <a href="../qtcore/qabstractitemmodel.html#public-slots">QAbstractItemModel</a></li>
+<li class="fn">1 public slot inherited from <a href="../qtcore/qobject.html#public-slots">QObject</a></li>
+</ul>
+<a name="reimplemented-protected-functions"></a>
+<h2 id="reimplemented-protected-functions">Reimplemented Protected Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="qsqlrelationaltablemodel.html#insertRowIntoTable">insertRowIntoTable</a></b>(const QSqlRecord &amp;<i>values</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QString </td><td class="memItemRight bottomAlign"><b><a href="qsqlrelationaltablemodel.html#orderByClause">orderByClause</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QString </td><td class="memItemRight bottomAlign"><b><a href="qsqlrelationaltablemodel.html#selectStatement">selectStatement</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="qsqlrelationaltablemodel.html#updateRowInTable">updateRowInTable</a></b>(int <i>row</i>, const QSqlRecord &amp;<i>values</i>)</td></tr>
+</table></div>
+<ul>
+<li class="fn">9 protected functions inherited from <a href="qsqltablemodel.html#protected-functions">QSqlTableModel</a></li>
+<li class="fn">3 protected functions inherited from <a href="qsqlquerymodel.html#protected-functions">QSqlQueryModel</a></li>
+<li class="fn">19 protected functions inherited from <a href="../qtcore/qabstractitemmodel.html#protected-functions">QAbstractItemModel</a></li>
+<li class="fn">9 protected functions inherited from <a href="../qtcore/qobject.html#protected-functions">QObject</a></li>
+</ul>
+<h3>Additional Inherited Members</h3>
+<ul>
+<li class="fn">1 property inherited from <a href="../qtcore/qobject.html#properties">QObject</a></li>
+<li class="fn">4 signals inherited from <a href="qsqltablemodel.html#signals">QSqlTableModel</a></li>
+<li class="fn">18 signals inherited from <a href="../qtcore/qabstractitemmodel.html#signals">QAbstractItemModel</a></li>
+<li class="fn">2 signals inherited from <a href="../qtcore/qobject.html#signals">QObject</a></li>
+<li class="fn">1 public variable inherited from <a href="../qtcore/qobject.html#public-variables">QObject</a></li>
+<li class="fn">10 static public members inherited from <a href="../qtcore/qobject.html#static-public-members">QObject</a></li>
+<li class="fn">9 protected functions inherited from <a href="qsqltablemodel.html#protected-functions">QSqlTableModel</a></li>
+<li class="fn">3 protected functions inherited from <a href="qsqlquerymodel.html#protected-functions">QSqlQueryModel</a></li>
+<li class="fn">19 protected functions inherited from <a href="../qtcore/qabstractitemmodel.html#protected-functions">QAbstractItemModel</a></li>
+<li class="fn">9 protected functions inherited from <a href="../qtcore/qobject.html#protected-functions">QObject</a></li>
+<li class="fn">1 protected slot inherited from <a href="../qtcore/qabstractitemmodel.html#protected-slots">QAbstractItemModel</a></li>
+<li class="fn">2 protected variables inherited from <a href="../qtcore/qobject.html#protected-variables">QObject</a></li>
+</ul>
+<a name="details"></a>
+<!-- $$$QSqlRelationalTableModel-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="qsqlrelationaltablemodel.html">QSqlRelationalTableModel</a> class provides an editable data model for a single database table, with foreign key support.</p>
+<p><a href="qsqlrelationaltablemodel.html">QSqlRelationalTableModel</a> acts like <a href="qsqltablemodel.html">QSqlTableModel</a>, but allows columns to be set as foreign keys into other database tables.</p>
+<div class="table"><table class="generic">
+ <tr valign="top" class="odd"><td ><img src="images/noforeignkeys.png" alt="" /></td><td ><img src="images/foreignkeys.png" alt="" /></td></tr>
+</table></div>
+<p>The screenshot on the left shows a plain <a href="qsqltablemodel.html">QSqlTableModel</a> in a <a href="../qtwidgets/qtableview.html">QTableView</a>. Foreign keys (<code>city</code> and <code>country</code>) aren't resolved to human-readable values. The screenshot on the right shows a <a href="qsqlrelationaltablemodel.html">QSqlRelationalTableModel</a>, with foreign keys resolved into human-readable text strings.</p>
+<p>The following code snippet shows how the <a href="qsqlrelationaltablemodel.html">QSqlRelationalTableModel</a> was set up:</p>
+<pre class="cpp">
+
+      model<span class="operator">-</span><span class="operator">&gt;</span>setTable(<span class="string">&quot;employee&quot;</span>);
+
+      model<span class="operator">-</span><span class="operator">&gt;</span>setRelation(<span class="number">2</span><span class="operator">,</span> <span class="type"><a href="qsqlrelation.html">QSqlRelation</a></span>(<span class="string">&quot;city&quot;</span><span class="operator">,</span> <span class="string">&quot;id&quot;</span><span class="operator">,</span> <span class="string">&quot;name&quot;</span>));
+      model<span class="operator">-</span><span class="operator">&gt;</span>setRelation(<span class="number">3</span><span class="operator">,</span> <span class="type"><a href="qsqlrelation.html">QSqlRelation</a></span>(<span class="string">&quot;country&quot;</span><span class="operator">,</span> <span class="string">&quot;id&quot;</span><span class="operator">,</span> <span class="string">&quot;name&quot;</span>));
+
+</pre>
+<p>The <a href="qsqlrelationaltablemodel.html#setRelation">setRelation</a>() function calls establish a relationship between two tables. The first call specifies that column 2 in table <code>employee</code> is a foreign key that maps with field <code>id</code> of table <code>city</code>, and that the view should present the <code>city</code>'s <code>name</code> field to the user. The second call does something similar with column 3.</p>
+<p>If you use a read-write <a href="qsqlrelationaltablemodel.html">QSqlRelationalTableModel</a>, you probably want to use <a href="qsqlrelationaldelegate.html">QSqlRelationalDelegate</a> on the view. Unlike the default delegate, <a href="qsqlrelationaldelegate.html">QSqlRelationalDelegate</a> provides a combobox for fields that are foreign keys into other tables. To use the class, simply call <a href="../qtwidgets/qabstractitemview.html#setItemDelegate">QAbstractItemView::setItemDelegate</a>() on the view with an instance of <a href="qsqlrelationaldelegate.html">QSqlRelationalDelegate</a>:</p>
+<pre class="cpp">
+
+      <span class="type"><a href="../qtwidgets/qtableview.html">QTableView</a></span> <span class="operator">*</span>view <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qtableview.html">QTableView</a></span>;
+      view<span class="operator">-</span><span class="operator">&gt;</span>setModel(model);
+      view<span class="operator">-</span><span class="operator">&gt;</span>setItemDelegate(<span class="keyword">new</span> <span class="type"><a href="qsqlrelationaldelegate.html">QSqlRelationalDelegate</a></span>(view));
+
+</pre>
+<p>The <a href="qtsql-relationaltablemodel-example.html">relationaltablemodel</a> example illustrates how to use <a href="qsqlrelationaltablemodel.html">QSqlRelationalTableModel</a> in conjunction with <a href="qsqlrelationaldelegate.html">QSqlRelationalDelegate</a> to provide tables with foreign key support.</p>
+<p class="centerAlign"><img src="images/relationaltable.png" alt="" /></p><p>Notes:</p>
+<ul>
+<li>The table must have a primary key declared.</li>
+<li>The table's primary key may not contain a relation to another table.</li>
+<li>If a relational table contains keys that refer to non-existent rows in the referenced table, the rows containing the invalid keys will not be exposed through the model. The user or the database is responsible for keeping referential integrity.</li>
+<li>If a relation's display column name is also used as a column name in the relational table, or if it is used as display column name in more than one relation it will be aliased. The alias is the relation's table name, display column name and a unique id joined by an underscore (e.g&#x2e; tablename_columnname_id). <a href="qsqlrecord.html#fieldName">QSqlRecord::fieldName</a>() will return the aliased column name. All occurrences of the duplicate display column name are aliased when duplication is detected, but no aliasing is done to the column names in the main table. The aliasing doesn't affect <a href="qsqlrelation.html">QSqlRelation</a>, so <a href="qsqlrelation.html#displayColumn">QSqlRelation::displayColumn</a>() will return the original display column name.</li>
+<li>The reference table name is aliased. The alias is the word &quot;relTblAl&quot; and the relationed column index joined by an underscore (e.g&#x2e; relTblAl_2). The alias can be used to filter the table (For example, <a href="qsqltablemodel.html#setFilter">setFilter</a>(&quot;relTblAl_2='Oslo' OR relTblAl_3='USA'&quot;)).</li>
+<li>When using <a href="qsqlrelationaltablemodel.html#setData">setData</a>() the role should always be <a href="../qtcore/qt.html#ItemDataRole-enum">Qt::EditRole</a>, and when using <a href="qsqlrelationaltablemodel.html#data">data</a>() the role should always be <a href="../qtcore/qt.html#ItemDataRole-enum">Qt::DisplayRole</a>.</li>
+</ul>
+</div>
+<p><b>See also </b><a href="qsqlrelation.html">QSqlRelation</a>, <a href="qsqlrelationaldelegate.html">QSqlRelationalDelegate</a>, and <a href="qtsql-relationaltablemodel-example.html">Relational Table Model Example</a>.</p>
+<!-- @@@QSqlRelationalTableModel -->
+<div class="types">
+<h2>Member Type Documentation</h2>
+<!-- $$$JoinMode$$$InnerJoin$$$LeftJoin -->
+<h3 class="fn" id="JoinMode-enum"><a name="JoinMode-enum"></a>enum QSqlRelationalTableModel::<span class="name">JoinMode</span></h3>
+<div class="table"><table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td class="topAlign"><code>QSqlRelationalTableModel::InnerJoin</code></td><td class="topAlign tblval"><code>0</code></td><td class="topAlign">- Inner join mode, return rows when there is at least one match in both tables.</td></tr>
+<tr><td class="topAlign"><code>QSqlRelationalTableModel::LeftJoin</code></td><td class="topAlign tblval"><code>1</code></td><td class="topAlign">- Left join mode, returns all rows from the left table (table_name1), even if there are no matches in the right table (table_name2).</td></tr>
+</table></div>
+<p>This enum was introduced or modified in  Qt 4.8.</p>
+<p><b>See also </b><a href="qsqlrelationaltablemodel.html#setJoinMode">QSqlRelationalTableModel::setJoinMode</a>().</p>
+<!-- @@@JoinMode -->
+</div>
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$QSqlRelationalTableModel[overload1]$$$QSqlRelationalTableModelQObject*QSqlDatabase -->
+<h3 class="fn" id="QSqlRelationalTableModel"><a name="QSqlRelationalTableModel"></a>QSqlRelationalTableModel::<span class="name">QSqlRelationalTableModel</span>(<span class="type"><a href="../qtcore/qobject.html#QObject">QObject</a></span> *<i>parent</i> = Q_NULLPTR, <span class="type"><a href="qsqldatabase.html">QSqlDatabase</a></span> <i>db</i> = QSqlDatabase())</h3>
+<p>Creates an empty <a href="qsqlrelationaltablemodel.html">QSqlRelationalTableModel</a> and sets the parent to <i>parent</i> and the database connection to <i>db</i>. If <i>db</i> is not valid, the default database connection will be used.</p>
+<!-- @@@QSqlRelationalTableModel -->
+<!-- $$$~QSqlRelationalTableModel[overload1]$$$~QSqlRelationalTableModel -->
+<h3 class="fn" id="dtor.QSqlRelationalTableModel"><a name="dtor.QSqlRelationalTableModel"></a><code>[virtual] </code>QSqlRelationalTableModel::<span class="name">~QSqlRelationalTableModel</span>()</h3>
+<p>Destroys the object and frees any allocated resources.</p>
+<!-- @@@~QSqlRelationalTableModel -->
+<!-- $$$clear[overload1]$$$clear -->
+<h3 class="fn" id="clear"><a name="clear"></a><code>[virtual] </code><span class="type">void</span> QSqlRelationalTableModel::<span class="name">clear</span>()</h3>
+<p>Reimplemented from <a href="qsqlquerymodel.html#clear">QSqlQueryModel::clear</a>().</p>
+<!-- @@@clear -->
+<!-- $$$data[overload1]$$$dataconstQModelIndex&int -->
+<h3 class="fn" id="data"><a name="data"></a><code>[virtual] </code><span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span> QSqlRelationalTableModel::<span class="name">data</span>(const <span class="type"><a href="../qtcore/qmodelindex.html">QModelIndex</a></span> &amp;<i>index</i>, <span class="type">int</span> <i>role</i> = Qt::DisplayRole) const</h3>
+<p>Reimplemented from <a href="../qtcore/qabstractitemmodel.html#data">QAbstractItemModel::data</a>().</p>
+<p><b>See also </b><a href="qsqlrelationaltablemodel.html#setData">setData</a>().</p>
+<!-- @@@data -->
+<!-- $$$insertRowIntoTable[overload1]$$$insertRowIntoTableconstQSqlRecord& -->
+<h3 class="fn" id="insertRowIntoTable"><a name="insertRowIntoTable"></a><code>[virtual protected] </code><span class="type">bool</span> QSqlRelationalTableModel::<span class="name">insertRowIntoTable</span>(const <span class="type"><a href="qsqlrecord.html">QSqlRecord</a></span> &amp;<i>values</i>)</h3>
+<p>Reimplemented from <a href="qsqltablemodel.html#insertRowIntoTable">QSqlTableModel::insertRowIntoTable</a>().</p>
+<!-- @@@insertRowIntoTable -->
+<!-- $$$orderByClause[overload1]$$$orderByClause -->
+<h3 class="fn" id="orderByClause"><a name="orderByClause"></a><code>[virtual protected] </code><span class="type"><a href="../qtcore/qstring.html">QString</a></span> QSqlRelationalTableModel::<span class="name">orderByClause</span>() const</h3>
+<p>Reimplemented from <a href="qsqltablemodel.html#orderByClause">QSqlTableModel::orderByClause</a>().</p>
+<!-- @@@orderByClause -->
+<!-- $$$relation[overload1]$$$relationint -->
+<h3 class="fn" id="relation"><a name="relation"></a><span class="type"><a href="qsqlrelation.html">QSqlRelation</a></span> QSqlRelationalTableModel::<span class="name">relation</span>(<span class="type">int</span> <i>column</i>) const</h3>
+<p>Returns the relation for the column <i>column</i>, or an invalid relation if no relation is set.</p>
+<p><b>See also </b><a href="qsqlrelationaltablemodel.html#setRelation">setRelation</a>() and <a href="qsqlrelation.html#isValid">QSqlRelation::isValid</a>().</p>
+<!-- @@@relation -->
+<!-- $$$relationModel[overload1]$$$relationModelint -->
+<h3 class="fn" id="relationModel"><a name="relationModel"></a><code>[virtual] </code><span class="type"><a href="qsqltablemodel.html#QSqlTableModel">QSqlTableModel</a></span> *QSqlRelationalTableModel::<span class="name">relationModel</span>(<span class="type">int</span> <i>column</i>) const</h3>
+<p>Returns a <a href="qsqltablemodel.html">QSqlTableModel</a> object for accessing the table for which <i>column</i> is a foreign key, or 0 if there is no relation for the given <i>column</i>.</p>
+<p>The returned object is owned by the <a href="qsqlrelationaltablemodel.html">QSqlRelationalTableModel</a>.</p>
+<p><b>See also </b><a href="qsqlrelationaltablemodel.html#setRelation">setRelation</a>() and <a href="qsqlrelationaltablemodel.html#relation">relation</a>().</p>
+<!-- @@@relationModel -->
+<!-- $$$removeColumns[overload1]$$$removeColumnsintintconstQModelIndex& -->
+<h3 class="fn" id="removeColumns"><a name="removeColumns"></a><code>[virtual] </code><span class="type">bool</span> QSqlRelationalTableModel::<span class="name">removeColumns</span>(<span class="type">int</span> <i>column</i>, <span class="type">int</span> <i>count</i>, const <span class="type"><a href="../qtcore/qmodelindex.html">QModelIndex</a></span> &amp;<i>parent</i> = QModelIndex())</h3>
+<p>Reimplemented from <a href="../qtcore/qabstractitemmodel.html#removeColumns">QAbstractItemModel::removeColumns</a>().</p>
+<!-- @@@removeColumns -->
+<!-- $$$revertRow[overload1]$$$revertRowint -->
+<h3 class="fn" id="revertRow"><a name="revertRow"></a><code>[virtual slot] </code><span class="type">void</span> QSqlRelationalTableModel::<span class="name">revertRow</span>(<span class="type">int</span> <i>row</i>)</h3>
+<p>Reimplemented from <a href="qsqltablemodel.html#revertRow">QSqlTableModel::revertRow</a>().</p>
+<!-- @@@revertRow -->
+<!-- $$$select[overload1]$$$select -->
+<h3 class="fn" id="select"><a name="select"></a><code>[virtual] </code><span class="type">bool</span> QSqlRelationalTableModel::<span class="name">select</span>()</h3>
+<p>Reimplemented from <a href="qsqltablemodel.html#select">QSqlTableModel::select</a>().</p>
+<!-- @@@select -->
+<!-- $$$selectStatement[overload1]$$$selectStatement -->
+<h3 class="fn" id="selectStatement"><a name="selectStatement"></a><code>[virtual protected] </code><span class="type"><a href="../qtcore/qstring.html">QString</a></span> QSqlRelationalTableModel::<span class="name">selectStatement</span>() const</h3>
+<p>Reimplemented from <a href="qsqltablemodel.html#selectStatement">QSqlTableModel::selectStatement</a>().</p>
+<!-- @@@selectStatement -->
+<!-- $$$setData[overload1]$$$setDataconstQModelIndex&constQVariant&int -->
+<h3 class="fn" id="setData"><a name="setData"></a><code>[virtual] </code><span class="type">bool</span> QSqlRelationalTableModel::<span class="name">setData</span>(const <span class="type"><a href="../qtcore/qmodelindex.html">QModelIndex</a></span> &amp;<i>index</i>, const <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span> &amp;<i>value</i>, <span class="type">int</span> <i>role</i> = Qt::EditRole)</h3>
+<p>Reimplemented from <a href="../qtcore/qabstractitemmodel.html#setData">QAbstractItemModel::setData</a>().</p>
+<p>Sets the data for the <i>role</i> in the item with the specified <i>index</i> to the <i>value</i> given. Depending on the edit strategy, the value might be applied to the database at once, or it may be cached in the model.</p>
+<p>Returns <code>true</code> if the value could be set, or false on error (for example, if <i>index</i> is out of bounds).</p>
+<p>For relational columns, <i>value</i> must be the index, not the display value. The index must also exist in the referenced table, otherwise the function returns <code>false</code>.</p>
+<p><b>See also </b><a href="qsqltablemodel.html#editStrategy">editStrategy</a>(), <a href="qsqlrelationaltablemodel.html#data">data</a>(), <a href="qsqltablemodel.html#submit">submit</a>(), and <a href="qsqlrelationaltablemodel.html#revertRow">revertRow</a>().</p>
+<!-- @@@setData -->
+<!-- $$$setJoinMode[overload1]$$$setJoinModeQSqlRelationalTableModel::JoinMode -->
+<h3 class="fn" id="setJoinMode"><a name="setJoinMode"></a><span class="type">void</span> QSqlRelationalTableModel::<span class="name">setJoinMode</span>(<span class="type"><a href="qsqlrelationaltablemodel.html#JoinMode-enum">QSqlRelationalTableModel::JoinMode</a></span> <i>joinMode</i>)</h3>
+<p>Sets the SQL <i>joinMode</i> to show or hide rows with NULL foreign keys. In <a href="qsqlrelationaltablemodel.html#JoinMode-enum">InnerJoin</a> mode (the default) these rows will not be shown: use the <a href="qsqlrelationaltablemodel.html#JoinMode-enum">LeftJoin</a> mode if you want to show them.</p>
+<p>This function was introduced in  Qt 4.8.</p>
+<p><b>See also </b><a href="qsqlrelationaltablemodel.html#JoinMode-enum">QSqlRelationalTableModel::JoinMode</a>.</p>
+<!-- @@@setJoinMode -->
+<!-- $$$setRelation[overload1]$$$setRelationintconstQSqlRelation& -->
+<h3 class="fn" id="setRelation"><a name="setRelation"></a><code>[virtual] </code><span class="type">void</span> QSqlRelationalTableModel::<span class="name">setRelation</span>(<span class="type">int</span> <i>column</i>, const <span class="type"><a href="qsqlrelation.html">QSqlRelation</a></span> &amp;<i>relation</i>)</h3>
+<p>Lets the specified <i>column</i> be a foreign index specified by <i>relation</i>.</p>
+<p>Example:</p>
+<pre class="cpp">
+
+      model<span class="operator">-</span><span class="operator">&gt;</span>setTable(<span class="string">&quot;employee&quot;</span>);
+
+      model<span class="operator">-</span><span class="operator">&gt;</span>setRelation(<span class="number">2</span><span class="operator">,</span> <span class="type"><a href="qsqlrelation.html">QSqlRelation</a></span>(<span class="string">&quot;city&quot;</span><span class="operator">,</span> <span class="string">&quot;id&quot;</span><span class="operator">,</span> <span class="string">&quot;name&quot;</span>));
+
+</pre>
+<p>The setRelation() call specifies that column 2 in table <code>employee</code> is a foreign key that maps with field <code>id</code> of table <code>city</code>, and that the view should present the <code>city</code>'s <code>name</code> field to the user.</p>
+<p>Note: The table's primary key may not contain a relation to another table.</p>
+<p><b>See also </b><a href="qsqlrelationaltablemodel.html#relation">relation</a>().</p>
+<!-- @@@setRelation -->
+<!-- $$$setTable[overload1]$$$setTableconstQString& -->
+<h3 class="fn" id="setTable"><a name="setTable"></a><code>[virtual] </code><span class="type">void</span> QSqlRelationalTableModel::<span class="name">setTable</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>table</i>)</h3>
+<p>Reimplemented from <a href="qsqltablemodel.html#setTable">QSqlTableModel::setTable</a>().</p>
+<!-- @@@setTable -->
+<!-- $$$updateRowInTable[overload1]$$$updateRowInTableintconstQSqlRecord& -->
+<h3 class="fn" id="updateRowInTable"><a name="updateRowInTable"></a><code>[virtual protected] </code><span class="type">bool</span> QSqlRelationalTableModel::<span class="name">updateRowInTable</span>(<span class="type">int</span> <i>row</i>, const <span class="type"><a href="qsqlrecord.html">QSqlRecord</a></span> &amp;<i>values</i>)</h3>
+<p>Reimplemented from <a href="qsqltablemodel.html#updateRowInTable">QSqlTableModel::updateRowInTable</a>().</p>
+<!-- @@@updateRowInTable -->
+</div>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

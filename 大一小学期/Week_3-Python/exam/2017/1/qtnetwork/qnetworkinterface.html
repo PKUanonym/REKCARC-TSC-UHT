@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qnetworkinterface.cpp -->
+  <title>QNetworkInterface Class | Qt Network 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtnetwork-index.html">Qt Network</a></td><td ><a href="qtnetwork-module.html">C++ Classes</a></td><td >QNetworkInterface</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-types">Public Types</a></li>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#static-public-members">Static Public Members</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">QNetworkInterface Class</h1>
+<!-- $$$QNetworkInterface-brief -->
+<p>The <a href="qnetworkinterface.html">QNetworkInterface</a> class provides a listing of the host's IP addresses and network interfaces. <a href="#details">More...</a></p>
+<!-- @@@QNetworkInterface -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign">   <span class="preprocessor">#include &lt;QNetworkInterface&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> qmake:</td><td class="memItemRight bottomAlign"> QT += network</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Since:</td><td class="memItemRight bottomAlign">  Qt 4.2</td></tr></table></div><ul>
+<li><a href="qnetworkinterface-members.html">List of all members, including inherited members</a></li>
+</ul>
+<p><b>Note:</b> All functions in this class are <a href="../qtdoc/threads-reentrancy.html">reentrant</a>.</p>
+<a name="public-types"></a>
+<h2 id="public-types">Public Types</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="qnetworkinterface.html#InterfaceFlag-enum">InterfaceFlag</a></b> { IsUp, IsRunning, CanBroadcast, IsLoopBack, IsPointToPoint, CanMulticast }</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> flags </td><td class="memItemRight bottomAlign"><b><a href="qnetworkinterface.html#InterfaceFlag-enum">InterfaceFlags</a></b></td></tr>
+</table></div>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qnetworkinterface.html#QNetworkInterface">QNetworkInterface</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qnetworkinterface.html#QNetworkInterface-1">QNetworkInterface</a></b>(const QNetworkInterface &amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qnetworkinterface.html#dtor.QNetworkInterface">~QNetworkInterface</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QList&lt;QNetworkAddressEntry&gt; </td><td class="memItemRight bottomAlign"><b><a href="qnetworkinterface.html#addressEntries">addressEntries</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> InterfaceFlags </td><td class="memItemRight bottomAlign"><b><a href="qnetworkinterface.html#flags">flags</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qnetworkinterface.html#hardwareAddress">hardwareAddress</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qnetworkinterface.html#humanReadableName">humanReadableName</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="qnetworkinterface.html#index">index</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qnetworkinterface.html#isValid">isValid</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qnetworkinterface.html#name">name</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qnetworkinterface.html#swap">swap</a></b>(QNetworkInterface &amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QNetworkInterface &amp;</td><td class="memItemRight bottomAlign"><b><a href="qnetworkinterface.html#operator-eq">operator=</a></b>(QNetworkInterface &amp;&amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QNetworkInterface &amp;</td><td class="memItemRight bottomAlign"><b><a href="qnetworkinterface.html#operator-eq-1">operator=</a></b>(const QNetworkInterface &amp;<i>other</i>)</td></tr>
+</table></div>
+<a name="static-public-members"></a>
+<h2 id="static-public-members">Static Public Members</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> QList&lt;QHostAddress&gt; </td><td class="memItemRight bottomAlign"><b><a href="qnetworkinterface.html#allAddresses">allAddresses</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QList&lt;QNetworkInterface&gt; </td><td class="memItemRight bottomAlign"><b><a href="qnetworkinterface.html#allInterfaces">allInterfaces</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QNetworkInterface </td><td class="memItemRight bottomAlign"><b><a href="qnetworkinterface.html#interfaceFromIndex">interfaceFromIndex</a></b>(int <i>index</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QNetworkInterface </td><td class="memItemRight bottomAlign"><b><a href="qnetworkinterface.html#interfaceFromName">interfaceFromName</a></b>(const QString &amp;<i>name</i>)</td></tr>
+</table></div>
+<a name="details"></a>
+<!-- $$$QNetworkInterface-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="qnetworkinterface.html">QNetworkInterface</a> class provides a listing of the host's IP addresses and network interfaces.</p>
+<p><a href="qnetworkinterface.html">QNetworkInterface</a> represents one network interface attached to the host where the program is being run. Each network interface may contain zero or more IP addresses, each of which is optionally associated with a netmask and/or a broadcast address. The list of such trios can be obtained with <a href="qnetworkinterface.html#addressEntries">addressEntries</a>(). Alternatively, when the netmask or the broadcast addresses aren't necessary, use the <a href="qnetworkinterface.html#allAddresses">allAddresses</a>() convenience function to obtain just the IP addresses.</p>
+<p><a href="qnetworkinterface.html">QNetworkInterface</a> also reports the interface's hardware address with <a href="qnetworkinterface.html#hardwareAddress">hardwareAddress</a>().</p>
+<p>Not all operating systems support reporting all features. Only the IPv4 addresses are guaranteed to be listed by this class in all platforms. In particular, IPv6 address listing is only supported on Windows, Linux, OS X and the BSDs.</p>
+</div>
+<p><b>See also </b><a href="qnetworkaddressentry.html">QNetworkAddressEntry</a>.</p>
+<!-- @@@QNetworkInterface -->
+<div class="types">
+<h2>Member Type Documentation</h2>
+<!-- $$$InterfaceFlag$$$IsUp$$$IsRunning$$$CanBroadcast$$$IsLoopBack$$$IsPointToPoint$$$CanMulticast -->
+<h3 class="flags" id="InterfaceFlag-enum"><a name="InterfaceFlag-enum"></a>enum QNetworkInterface::<span class="name">InterfaceFlag</span><br/>flags QNetworkInterface::<span class="name">InterfaceFlags</span></h3>
+<p>Specifies the flags associated with this network interface. The possible values are:</p>
+<div class="table"><table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td class="topAlign"><code>QNetworkInterface::IsUp</code></td><td class="topAlign tblval"><code>0x1</code></td><td class="topAlign">the network interface is active</td></tr>
+<tr><td class="topAlign"><code>QNetworkInterface::IsRunning</code></td><td class="topAlign tblval"><code>0x2</code></td><td class="topAlign">the network interface has resources allocated</td></tr>
+<tr><td class="topAlign"><code>QNetworkInterface::CanBroadcast</code></td><td class="topAlign tblval"><code>0x4</code></td><td class="topAlign">the network interface works in broadcast mode</td></tr>
+<tr><td class="topAlign"><code>QNetworkInterface::IsLoopBack</code></td><td class="topAlign tblval"><code>0x8</code></td><td class="topAlign">the network interface is a loopback interface: that is, it's a virtual interface whose destination is the host computer itself</td></tr>
+<tr><td class="topAlign"><code>QNetworkInterface::IsPointToPoint</code></td><td class="topAlign tblval"><code>0x10</code></td><td class="topAlign">the network interface is a point-to-point interface: that is, there is one, single other address that can be directly reached by it.</td></tr>
+<tr><td class="topAlign"><code>QNetworkInterface::CanMulticast</code></td><td class="topAlign tblval"><code>0x20</code></td><td class="topAlign">the network interface supports multicasting</td></tr>
+</table></div>
+<p>Note that one network interface cannot be both broadcast-based and point-to-point.</p>
+<p>The InterfaceFlags type is a typedef for <a href="../qtcore/qflags.html">QFlags</a>&lt;InterfaceFlag&gt;. It stores an OR combination of InterfaceFlag values.</p>
+<!-- @@@InterfaceFlag -->
+</div>
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$QNetworkInterface[overload1]$$$QNetworkInterface -->
+<h3 class="fn" id="QNetworkInterface"><a name="QNetworkInterface"></a>QNetworkInterface::<span class="name">QNetworkInterface</span>()</h3>
+<p>Constructs an empty network interface object.</p>
+<!-- @@@QNetworkInterface -->
+<!-- $$$QNetworkInterface$$$QNetworkInterfaceconstQNetworkInterface& -->
+<h3 class="fn" id="QNetworkInterface-1"><a name="QNetworkInterface-1"></a>QNetworkInterface::<span class="name">QNetworkInterface</span>(const <span class="type"><a href="qnetworkinterface.html#QNetworkInterface">QNetworkInterface</a></span> &amp;<i>other</i>)</h3>
+<p>Creates a copy of the <a href="qnetworkinterface.html">QNetworkInterface</a> object contained in <i>other</i>.</p>
+<!-- @@@QNetworkInterface -->
+<!-- $$$~QNetworkInterface[overload1]$$$~QNetworkInterface -->
+<h3 class="fn" id="dtor.QNetworkInterface"><a name="dtor.QNetworkInterface"></a>QNetworkInterface::<span class="name">~QNetworkInterface</span>()</h3>
+<p>Frees the resources associated with the <a href="qnetworkinterface.html">QNetworkInterface</a> object.</p>
+<!-- @@@~QNetworkInterface -->
+<!-- $$$addressEntries[overload1]$$$addressEntries -->
+<h3 class="fn" id="addressEntries"><a name="addressEntries"></a><span class="type"><a href="../qtcore/qlist.html">QList</a></span>&lt;<span class="type"><a href="qnetworkaddressentry.html">QNetworkAddressEntry</a></span>&gt; QNetworkInterface::<span class="name">addressEntries</span>() const</h3>
+<p>Returns the list of IP addresses that this interface possesses along with their associated netmasks and broadcast addresses.</p>
+<p>If the netmask or broadcast address information is not necessary, you can call the <a href="qnetworkinterface.html#allAddresses">allAddresses</a>() function to obtain just the IP addresses.</p>
+<!-- @@@addressEntries -->
+<!-- $$$allAddresses[overload1]$$$allAddresses -->
+<h3 class="fn" id="allAddresses"><a name="allAddresses"></a><code>[static] </code><span class="type"><a href="../qtcore/qlist.html">QList</a></span>&lt;<span class="type"><a href="qhostaddress.html">QHostAddress</a></span>&gt; QNetworkInterface::<span class="name">allAddresses</span>()</h3>
+<p>This convenience function returns all IP addresses found on the host machine. It is equivalent to calling <a href="qnetworkinterface.html#addressEntries">addressEntries</a>() on all the objects returned by <a href="qnetworkinterface.html#allInterfaces">allInterfaces</a>() to obtain lists of <a href="qhostaddress.html">QHostAddress</a> objects then calling QHostAddress::ip() on each of these.</p>
+<!-- @@@allAddresses -->
+<!-- $$$allInterfaces[overload1]$$$allInterfaces -->
+<h3 class="fn" id="allInterfaces"><a name="allInterfaces"></a><code>[static] </code><span class="type"><a href="../qtcore/qlist.html">QList</a></span>&lt;<span class="type"><a href="qnetworkinterface.html#QNetworkInterface">QNetworkInterface</a></span>&gt; QNetworkInterface::<span class="name">allInterfaces</span>()</h3>
+<p>Returns a listing of all the network interfaces found on the host machine. In case of failure it returns a list with zero elements.</p>
+<!-- @@@allInterfaces -->
+<!-- $$$flags[overload1]$$$flags -->
+<h3 class="fn" id="flags"><a name="flags"></a><span class="type"><a href="qnetworkinterface.html#InterfaceFlag-enum">InterfaceFlags</a></span> QNetworkInterface::<span class="name">flags</span>() const</h3>
+<p>Returns the flags associated with this network interface.</p>
+<!-- @@@flags -->
+<!-- $$$hardwareAddress[overload1]$$$hardwareAddress -->
+<h3 class="fn" id="hardwareAddress"><a name="hardwareAddress"></a><span class="type"><a href="../qtcore/qstring.html">QString</a></span> QNetworkInterface::<span class="name">hardwareAddress</span>() const</h3>
+<p>Returns the low-level hardware address for this interface. On Ethernet interfaces, this will be a MAC address in string representation, separated by colons.</p>
+<p>Other interface types may have other types of hardware addresses. Implementations should not depend on this function returning a valid MAC address.</p>
+<!-- @@@hardwareAddress -->
+<!-- $$$humanReadableName[overload1]$$$humanReadableName -->
+<h3 class="fn" id="humanReadableName"><a name="humanReadableName"></a><span class="type"><a href="../qtcore/qstring.html">QString</a></span> QNetworkInterface::<span class="name">humanReadableName</span>() const</h3>
+<p>Returns the human-readable name of this network interface on Windows, such as &quot;Local Area Connection&quot;, if the name could be determined. If it couldn't, this function returns the same as <a href="qnetworkinterface.html#name">name</a>(). The human-readable name is a name that the user can modify in the Windows Control Panel, so it may change during the execution of the program.</p>
+<p>On Unix, this function currently always returns the same as <a href="qnetworkinterface.html#name">name</a>(), since Unix systems don't store a configuration for human-readable names.</p>
+<p>This function was introduced in  Qt 4.5.</p>
+<!-- @@@humanReadableName -->
+<!-- $$$index[overload1]$$$index -->
+<h3 class="fn" id="index"><a name="index"></a><span class="type">int</span> QNetworkInterface::<span class="name">index</span>() const</h3>
+<p>Returns the interface system index, if known. This is an integer assigned by the operating system to identify this interface and it generally doesn't change. It matches the scope ID field in IPv6 addresses.</p>
+<p>If the index isn't known, this function returns 0.</p>
+<p>This function was introduced in  Qt 4.5.</p>
+<!-- @@@index -->
+<!-- $$$interfaceFromIndex[overload1]$$$interfaceFromIndexint -->
+<h3 class="fn" id="interfaceFromIndex"><a name="interfaceFromIndex"></a><code>[static] </code><span class="type"><a href="qnetworkinterface.html#QNetworkInterface">QNetworkInterface</a></span> QNetworkInterface::<span class="name">interfaceFromIndex</span>(<span class="type">int</span> <i>index</i>)</h3>
+<p>Returns a <a href="qnetworkinterface.html">QNetworkInterface</a> object for the interface whose internal ID is <i>index</i>. Network interfaces have a unique identifier called the &quot;interface index&quot; to distinguish it from other interfaces on the system. Often, this value is assigned progressively and interfaces being removed and then added again get a different value every time.</p>
+<p>This index is also found in the IPv6 address' scope ID field.</p>
+<!-- @@@interfaceFromIndex -->
+<!-- $$$interfaceFromName[overload1]$$$interfaceFromNameconstQString& -->
+<h3 class="fn" id="interfaceFromName"><a name="interfaceFromName"></a><code>[static] </code><span class="type"><a href="qnetworkinterface.html#QNetworkInterface">QNetworkInterface</a></span> QNetworkInterface::<span class="name">interfaceFromName</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>name</i>)</h3>
+<p>Returns a <a href="qnetworkinterface.html">QNetworkInterface</a> object for the interface named <i>name</i>. If no such interface exists, this function returns an invalid <a href="qnetworkinterface.html">QNetworkInterface</a> object.</p>
+<p>The string <i>name</i> may be either an actual interface name (such as &quot;eth0&quot; or &quot;en1&quot;) or an interface index in string form (&quot;1&quot;, &quot;2&quot;, etc.)&#x2e;</p>
+<p><b>See also </b><a href="qnetworkinterface.html#name">name</a>() and <a href="qnetworkinterface.html#isValid">isValid</a>().</p>
+<!-- @@@interfaceFromName -->
+<!-- $$$isValid[overload1]$$$isValid -->
+<h3 class="fn" id="isValid"><a name="isValid"></a><span class="type">bool</span> QNetworkInterface::<span class="name">isValid</span>() const</h3>
+<p>Returns <code>true</code> if this <a href="qnetworkinterface.html">QNetworkInterface</a> object contains valid information about a network interface.</p>
+<!-- @@@isValid -->
+<!-- $$$name[overload1]$$$name -->
+<h3 class="fn" id="name"><a name="name"></a><span class="type"><a href="../qtcore/qstring.html">QString</a></span> QNetworkInterface::<span class="name">name</span>() const</h3>
+<p>Returns the name of this network interface. On Unix systems, this is a string containing the type of the interface and optionally a sequence number, such as &quot;eth0&quot;, &quot;lo&quot; or &quot;pcn0&quot;. On Windows, it's an internal ID that cannot be changed by the user.</p>
+<!-- @@@name -->
+<!-- $$$swap[overload1]$$$swapQNetworkInterface& -->
+<h3 class="fn" id="swap"><a name="swap"></a><span class="type">void</span> QNetworkInterface::<span class="name">swap</span>(<span class="type"><a href="qnetworkinterface.html#QNetworkInterface">QNetworkInterface</a></span> &amp;<i>other</i>)</h3>
+<p>Swaps this network interface instance with <i>other</i>. This function is very fast and never fails.</p>
+<p>This function was introduced in  Qt 5.0.</p>
+<!-- @@@swap -->
+<!-- $$$operator=[overload1]$$$operator=QNetworkInterface&& -->
+<h3 class="fn" id="operator-eq"><a name="operator-eq"></a><span class="type"><a href="qnetworkinterface.html#QNetworkInterface">QNetworkInterface</a></span> &amp;QNetworkInterface::<span class="name">operator=</span>(<span class="type"><a href="qnetworkinterface.html#QNetworkInterface">QNetworkInterface</a></span> &amp;&amp;<i>other</i>)</h3>
+<p>Move-assignment operator.</p><!-- @@@operator= -->
+<!-- $$$operator=$$$operator=constQNetworkInterface& -->
+<h3 class="fn" id="operator-eq-1"><a name="operator-eq-1"></a><span class="type"><a href="qnetworkinterface.html#QNetworkInterface">QNetworkInterface</a></span> &amp;QNetworkInterface::<span class="name">operator=</span>(const <span class="type"><a href="qnetworkinterface.html#QNetworkInterface">QNetworkInterface</a></span> &amp;<i>other</i>)</h3>
+<p>Copies the contents of the <a href="qnetworkinterface.html">QNetworkInterface</a> object contained in <i>other</i> into this one.</p>
+<!-- @@@operator= -->
+</div>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qsqlrecord.cpp -->
+  <title>QSqlRecord Class | Qt SQL 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtsql-index.html">Qt SQL</a></td><td ><a href="qtsql-module.html">C++ Classes</a></td><td >QSqlRecord</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">QSqlRecord Class</h1>
+<!-- $$$QSqlRecord-brief -->
+<p>The <a href="qsqlrecord.html">QSqlRecord</a> class encapsulates a database record. <a href="#details">More...</a></p>
+<!-- @@@QSqlRecord -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign">   <span class="preprocessor">#include &lt;QSqlRecord&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> qmake:</td><td class="memItemRight bottomAlign"> QT += sql</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Inherited By:</td><td class="memItemRight bottomAlign"> <p><a href="qsqlindex.html">QSqlIndex</a></p>
+</td></tr></table></div><ul>
+<li><a href="qsqlrecord-members.html">List of all members, including inherited members</a></li>
+</ul>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qsqlrecord.html#QSqlRecord">QSqlRecord</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qsqlrecord.html#QSqlRecord-1">QSqlRecord</a></b>(const QSqlRecord &amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qsqlrecord.html#dtor.QSqlRecord">~QSqlRecord</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qsqlrecord.html#append">append</a></b>(const QSqlField &amp;<i>field</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qsqlrecord.html#clear">clear</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qsqlrecord.html#clearValues">clearValues</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qsqlrecord.html#contains">contains</a></b>(const QString &amp;<i>name</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="qsqlrecord.html#count">count</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QSqlField </td><td class="memItemRight bottomAlign"><b><a href="qsqlrecord.html#field">field</a></b>(int <i>index</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QSqlField </td><td class="memItemRight bottomAlign"><b><a href="qsqlrecord.html#field-1">field</a></b>(const QString &amp;<i>name</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qsqlrecord.html#fieldName">fieldName</a></b>(int <i>index</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="qsqlrecord.html#indexOf">indexOf</a></b>(const QString &amp;<i>name</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qsqlrecord.html#insert">insert</a></b>(int <i>pos</i>, const QSqlField &amp;<i>field</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qsqlrecord.html#isEmpty">isEmpty</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qsqlrecord.html#isGenerated">isGenerated</a></b>(const QString &amp;<i>name</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qsqlrecord.html#isGenerated-1">isGenerated</a></b>(int <i>index</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qsqlrecord.html#isNull">isNull</a></b>(const QString &amp;<i>name</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qsqlrecord.html#isNull-1">isNull</a></b>(int <i>index</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QSqlRecord </td><td class="memItemRight bottomAlign"><b><a href="qsqlrecord.html#keyValues">keyValues</a></b>(const QSqlRecord &amp;<i>keyFields</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qsqlrecord.html#remove">remove</a></b>(int <i>pos</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qsqlrecord.html#replace">replace</a></b>(int <i>pos</i>, const QSqlField &amp;<i>field</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qsqlrecord.html#setGenerated">setGenerated</a></b>(const QString &amp;<i>name</i>, bool <i>generated</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qsqlrecord.html#setGenerated-1">setGenerated</a></b>(int <i>index</i>, bool <i>generated</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qsqlrecord.html#setNull">setNull</a></b>(int <i>index</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qsqlrecord.html#setNull-1">setNull</a></b>(const QString &amp;<i>name</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qsqlrecord.html#setValue">setValue</a></b>(int <i>index</i>, const QVariant &amp;<i>val</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qsqlrecord.html#setValue-1">setValue</a></b>(const QString &amp;<i>name</i>, const QVariant &amp;<i>val</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariant </td><td class="memItemRight bottomAlign"><b><a href="qsqlrecord.html#value">value</a></b>(int <i>index</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariant </td><td class="memItemRight bottomAlign"><b><a href="qsqlrecord.html#value-1">value</a></b>(const QString &amp;<i>name</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qsqlrecord.html#operator-not-eq">operator!=</a></b>(const QSqlRecord &amp;<i>other</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QSqlRecord &amp;</td><td class="memItemRight bottomAlign"><b><a href="qsqlrecord.html#operator-eq">operator=</a></b>(const QSqlRecord &amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qsqlrecord.html#operator-eq-eq">operator==</a></b>(const QSqlRecord &amp;<i>other</i>) const</td></tr>
+</table></div>
+<a name="details"></a>
+<!-- $$$QSqlRecord-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="qsqlrecord.html">QSqlRecord</a> class encapsulates a database record.</p>
+<p>The <a href="qsqlrecord.html">QSqlRecord</a> class encapsulates the functionality and characteristics of a database record (usually a row in a table or view within the database). <a href="qsqlrecord.html">QSqlRecord</a> supports adding and removing fields as well as setting and retrieving field values.</p>
+<p>The values of a record's fields' can be set by name or position with <a href="qsqlrecord.html#setValue">setValue</a>(); if you want to set a field to null use <a href="qsqlrecord.html#setNull">setNull</a>(). To find the position of a field by name use <a href="qsqlrecord.html#indexOf">indexOf</a>(), and to find the name of a field at a particular position use <a href="qsqlrecord.html#fieldName">fieldName</a>(). Use <a href="qsqlrecord.html#field">field</a>() to retrieve a <a href="qsqlfield.html">QSqlField</a> object for a given field. Use <a href="qsqlrecord.html#contains">contains</a>() to see if the record contains a particular field name.</p>
+<p>When queries are generated to be executed on the database only those fields for which <a href="qsqlrecord.html#isGenerated">isGenerated</a>() is true are included in the generated SQL.</p>
+<p>A record can have fields added with <a href="qsqlrecord.html#append">append</a>() or <a href="qsqlrecord.html#insert">insert</a>(), replaced with <a href="qsqlrecord.html#replace">replace</a>(), and removed with <a href="qsqlrecord.html#remove">remove</a>(). All the fields can be removed with <a href="qsqlrecord.html#clear">clear</a>(). The number of fields is given by <a href="qsqlrecord.html#count">count</a>(); all their values can be cleared (to null) using <a href="qsqlrecord.html#clearValues">clearValues</a>().</p>
+</div>
+<p><b>See also </b><a href="qsqlfield.html">QSqlField</a> and <a href="qsqlquery.html#record">QSqlQuery::record</a>().</p>
+<!-- @@@QSqlRecord -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$QSqlRecord[overload1]$$$QSqlRecord -->
+<h3 class="fn" id="QSqlRecord"><a name="QSqlRecord"></a>QSqlRecord::<span class="name">QSqlRecord</span>()</h3>
+<p>Constructs an empty record.</p>
+<p><b>See also </b><a href="qsqlrecord.html#isEmpty">isEmpty</a>(), <a href="qsqlrecord.html#append">append</a>(), and <a href="qsqlrecord.html#insert">insert</a>().</p>
+<!-- @@@QSqlRecord -->
+<!-- $$$QSqlRecord$$$QSqlRecordconstQSqlRecord& -->
+<h3 class="fn" id="QSqlRecord-1"><a name="QSqlRecord-1"></a>QSqlRecord::<span class="name">QSqlRecord</span>(const <span class="type"><a href="qsqlrecord.html#QSqlRecord">QSqlRecord</a></span> &amp;<i>other</i>)</h3>
+<p>Constructs a copy of <i>other</i>.</p>
+<p><a href="qsqlrecord.html">QSqlRecord</a> is <a href="../qtcore/implicit-sharing.html">implicitly shared</a>. This means you can make copies of a record in <a href="../qtcore/containers.html#constant-time">constant time</a>.</p>
+<!-- @@@QSqlRecord -->
+<!-- $$$~QSqlRecord[overload1]$$$~QSqlRecord -->
+<h3 class="fn" id="dtor.QSqlRecord"><a name="dtor.QSqlRecord"></a>QSqlRecord::<span class="name">~QSqlRecord</span>()</h3>
+<p>Destroys the object and frees any allocated resources.</p>
+<!-- @@@~QSqlRecord -->
+<!-- $$$append[overload1]$$$appendconstQSqlField& -->
+<h3 class="fn" id="append"><a name="append"></a><span class="type">void</span> QSqlRecord::<span class="name">append</span>(const <span class="type"><a href="qsqlfield.html">QSqlField</a></span> &amp;<i>field</i>)</h3>
+<p>Append a copy of field <i>field</i> to the end of the record.</p>
+<p><b>See also </b><a href="qsqlrecord.html#insert">insert</a>(), <a href="qsqlrecord.html#replace">replace</a>(), and <a href="qsqlrecord.html#remove">remove</a>().</p>
+<!-- @@@append -->
+<!-- $$$clear[overload1]$$$clear -->
+<h3 class="fn" id="clear"><a name="clear"></a><span class="type">void</span> QSqlRecord::<span class="name">clear</span>()</h3>
+<p>Removes all the record's fields.</p>
+<p><b>See also </b><a href="qsqlrecord.html#clearValues">clearValues</a>() and <a href="qsqlrecord.html#isEmpty">isEmpty</a>().</p>
+<!-- @@@clear -->
+<!-- $$$clearValues[overload1]$$$clearValues -->
+<h3 class="fn" id="clearValues"><a name="clearValues"></a><span class="type">void</span> QSqlRecord::<span class="name">clearValues</span>()</h3>
+<p>Clears the value of all fields in the record and sets each field to null.</p>
+<p><b>See also </b><a href="qsqlrecord.html#setValue">setValue</a>().</p>
+<!-- @@@clearValues -->
+<!-- $$$contains[overload1]$$$containsconstQString& -->
+<h3 class="fn" id="contains"><a name="contains"></a><span class="type">bool</span> QSqlRecord::<span class="name">contains</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>name</i>) const</h3>
+<p>Returns <code>true</code> if there is a field in the record called <i>name</i>; otherwise returns <code>false</code>.</p>
+<!-- @@@contains -->
+<!-- $$$count[overload1]$$$count -->
+<h3 class="fn" id="count"><a name="count"></a><span class="type">int</span> QSqlRecord::<span class="name">count</span>() const</h3>
+<p>Returns the number of fields in the record.</p>
+<p><b>See also </b><a href="qsqlrecord.html#isEmpty">isEmpty</a>().</p>
+<!-- @@@count -->
+<!-- $$$field[overload1]$$$fieldint -->
+<h3 class="fn" id="field"><a name="field"></a><span class="type"><a href="qsqlfield.html">QSqlField</a></span> QSqlRecord::<span class="name">field</span>(<span class="type">int</span> <i>index</i>) const</h3>
+<p>Returns the field at position <i>index</i>. If the <i>index</i> is out of range, function returns a <a href="../qtcore/containers.html#default-constructed-value">default-constructed value</a>.</p>
+<!-- @@@field -->
+<!-- $$$field$$$fieldconstQString& -->
+<h3 class="fn" id="field-1"><a name="field-1"></a><span class="type"><a href="qsqlfield.html">QSqlField</a></span> QSqlRecord::<span class="name">field</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>name</i>) const</h3>
+<p>This is an overloaded function.</p>
+<p>Returns the field called <i>name</i>.</p>
+<!-- @@@field -->
+<!-- $$$fieldName[overload1]$$$fieldNameint -->
+<h3 class="fn" id="fieldName"><a name="fieldName"></a><span class="type"><a href="../qtcore/qstring.html">QString</a></span> QSqlRecord::<span class="name">fieldName</span>(<span class="type">int</span> <i>index</i>) const</h3>
+<p>Returns the name of the field at position <i>index</i>. If the field does not exist, an empty string is returned.</p>
+<p><b>See also </b><a href="qsqlrecord.html#indexOf">indexOf</a>().</p>
+<!-- @@@fieldName -->
+<!-- $$$indexOf[overload1]$$$indexOfconstQString& -->
+<h3 class="fn" id="indexOf"><a name="indexOf"></a><span class="type">int</span> QSqlRecord::<span class="name">indexOf</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>name</i>) const</h3>
+<p>Returns the position of the field called <i>name</i> within the record, or -1 if it cannot be found. Field names are not case-sensitive. If more than one field matches, the first one is returned.</p>
+<p><b>See also </b><a href="qsqlrecord.html#fieldName">fieldName</a>().</p>
+<!-- @@@indexOf -->
+<!-- $$$insert[overload1]$$$insertintconstQSqlField& -->
+<h3 class="fn" id="insert"><a name="insert"></a><span class="type">void</span> QSqlRecord::<span class="name">insert</span>(<span class="type">int</span> <i>pos</i>, const <span class="type"><a href="qsqlfield.html">QSqlField</a></span> &amp;<i>field</i>)</h3>
+<p>Inserts the field <i>field</i> at position <i>pos</i> in the record.</p>
+<p><b>See also </b><a href="qsqlrecord.html#append">append</a>(), <a href="qsqlrecord.html#replace">replace</a>(), and <a href="qsqlrecord.html#remove">remove</a>().</p>
+<!-- @@@insert -->
+<!-- $$$isEmpty[overload1]$$$isEmpty -->
+<h3 class="fn" id="isEmpty"><a name="isEmpty"></a><span class="type">bool</span> QSqlRecord::<span class="name">isEmpty</span>() const</h3>
+<p>Returns <code>true</code> if there are no fields in the record; otherwise returns <code>false</code>.</p>
+<p><b>See also </b><a href="qsqlrecord.html#append">append</a>(), <a href="qsqlrecord.html#insert">insert</a>(), and <a href="qsqlrecord.html#clear">clear</a>().</p>
+<!-- @@@isEmpty -->
+<!-- $$$isGenerated[overload1]$$$isGeneratedconstQString& -->
+<h3 class="fn" id="isGenerated"><a name="isGenerated"></a><span class="type">bool</span> QSqlRecord::<span class="name">isGenerated</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>name</i>) const</h3>
+<p>Returns <code>true</code> if the record has a field called <i>name</i> and this field is to be generated (the default); otherwise returns <code>false</code>.</p>
+<p><b>See also </b><a href="qsqlrecord.html#setGenerated">setGenerated</a>().</p>
+<!-- @@@isGenerated -->
+<!-- $$$isGenerated$$$isGeneratedint -->
+<h3 class="fn" id="isGenerated-1"><a name="isGenerated-1"></a><span class="type">bool</span> QSqlRecord::<span class="name">isGenerated</span>(<span class="type">int</span> <i>index</i>) const</h3>
+<p>This is an overloaded function.</p>
+<p>Returns <code>true</code> if the record has a field at position <i>index</i> and this field is to be generated (the default); otherwise returns <code>false</code>.</p>
+<p><b>See also </b><a href="qsqlrecord.html#setGenerated">setGenerated</a>().</p>
+<!-- @@@isGenerated -->
+<!-- $$$isNull[overload1]$$$isNullconstQString& -->
+<h3 class="fn" id="isNull"><a name="isNull"></a><span class="type">bool</span> QSqlRecord::<span class="name">isNull</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>name</i>) const</h3>
+<p>Returns <code>true</code> if the field called <i>name</i> is null or if there is no field called <i>name</i>; otherwise returns <code>false</code>.</p>
+<p><b>See also </b><a href="qsqlrecord.html#setNull">setNull</a>().</p>
+<!-- @@@isNull -->
+<!-- $$$isNull$$$isNullint -->
+<h3 class="fn" id="isNull-1"><a name="isNull-1"></a><span class="type">bool</span> QSqlRecord::<span class="name">isNull</span>(<span class="type">int</span> <i>index</i>) const</h3>
+<p>This is an overloaded function.</p>
+<p>Returns <code>true</code> if the field <i>index</i> is null or if there is no field at position <i>index</i>; otherwise returns <code>false</code>.</p>
+<!-- @@@isNull -->
+<!-- $$$keyValues[overload1]$$$keyValuesconstQSqlRecord& -->
+<h3 class="fn" id="keyValues"><a name="keyValues"></a><span class="type"><a href="qsqlrecord.html#QSqlRecord">QSqlRecord</a></span> QSqlRecord::<span class="name">keyValues</span>(const <span class="type"><a href="qsqlrecord.html#QSqlRecord">QSqlRecord</a></span> &amp;<i>keyFields</i>) const</h3>
+<p>Returns a record containing the fields represented in <i>keyFields</i> set to values that match by field name.</p>
+<p>This function was introduced in  Qt 5.1.</p>
+<!-- @@@keyValues -->
+<!-- $$$remove[overload1]$$$removeint -->
+<h3 class="fn" id="remove"><a name="remove"></a><span class="type">void</span> QSqlRecord::<span class="name">remove</span>(<span class="type">int</span> <i>pos</i>)</h3>
+<p>Removes the field at position <i>pos</i>. If <i>pos</i> is out of range, nothing happens.</p>
+<p><b>See also </b><a href="qsqlrecord.html#append">append</a>(), <a href="qsqlrecord.html#insert">insert</a>(), and <a href="qsqlrecord.html#replace">replace</a>().</p>
+<!-- @@@remove -->
+<!-- $$$replace[overload1]$$$replaceintconstQSqlField& -->
+<h3 class="fn" id="replace"><a name="replace"></a><span class="type">void</span> QSqlRecord::<span class="name">replace</span>(<span class="type">int</span> <i>pos</i>, const <span class="type"><a href="qsqlfield.html">QSqlField</a></span> &amp;<i>field</i>)</h3>
+<p>Replaces the field at position <i>pos</i> with the given <i>field</i>. If <i>pos</i> is out of range, nothing happens.</p>
+<p><b>See also </b><a href="qsqlrecord.html#append">append</a>(), <a href="qsqlrecord.html#insert">insert</a>(), and <a href="qsqlrecord.html#remove">remove</a>().</p>
+<!-- @@@replace -->
+<!-- $$$setGenerated[overload1]$$$setGeneratedconstQString&bool -->
+<h3 class="fn" id="setGenerated"><a name="setGenerated"></a><span class="type">void</span> QSqlRecord::<span class="name">setGenerated</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>name</i>, <span class="type">bool</span> <i>generated</i>)</h3>
+<p>Sets the generated flag for the field called <i>name</i> to <i>generated</i>. If the field does not exist, nothing happens. Only fields that have <i>generated</i> set to true are included in the SQL that is generated by <a href="qsqlquerymodel.html">QSqlQueryModel</a> for example.</p>
+<p><b>See also </b><a href="qsqlrecord.html#isGenerated">isGenerated</a>().</p>
+<!-- @@@setGenerated -->
+<!-- $$$setGenerated$$$setGeneratedintbool -->
+<h3 class="fn" id="setGenerated-1"><a name="setGenerated-1"></a><span class="type">void</span> QSqlRecord::<span class="name">setGenerated</span>(<span class="type">int</span> <i>index</i>, <span class="type">bool</span> <i>generated</i>)</h3>
+<p>This is an overloaded function.</p>
+<p>Sets the generated flag for the field <i>index</i> to <i>generated</i>.</p>
+<p><b>See also </b><a href="qsqlrecord.html#isGenerated">isGenerated</a>().</p>
+<!-- @@@setGenerated -->
+<!-- $$$setNull[overload1]$$$setNullint -->
+<h3 class="fn" id="setNull"><a name="setNull"></a><span class="type">void</span> QSqlRecord::<span class="name">setNull</span>(<span class="type">int</span> <i>index</i>)</h3>
+<p>Sets the value of field <i>index</i> to null. If the field does not exist, nothing happens.</p>
+<p><b>See also </b><a href="qsqlrecord.html#isNull">isNull</a>() and <a href="qsqlrecord.html#setValue">setValue</a>().</p>
+<!-- @@@setNull -->
+<!-- $$$setNull$$$setNullconstQString& -->
+<h3 class="fn" id="setNull-1"><a name="setNull-1"></a><span class="type">void</span> QSqlRecord::<span class="name">setNull</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>name</i>)</h3>
+<p>This is an overloaded function.</p>
+<p>Sets the value of the field called <i>name</i> to null. If the field does not exist, nothing happens.</p>
+<!-- @@@setNull -->
+<!-- $$$setValue[overload1]$$$setValueintconstQVariant& -->
+<h3 class="fn" id="setValue"><a name="setValue"></a><span class="type">void</span> QSqlRecord::<span class="name">setValue</span>(<span class="type">int</span> <i>index</i>, const <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span> &amp;<i>val</i>)</h3>
+<p>Sets the value of the field at position <i>index</i> to <i>val</i>. If the field does not exist, nothing happens.</p>
+<p><b>See also </b><a href="qsqlrecord.html#value">value</a>() and <a href="qsqlrecord.html#setNull">setNull</a>().</p>
+<!-- @@@setValue -->
+<!-- $$$setValue$$$setValueconstQString&constQVariant& -->
+<h3 class="fn" id="setValue-1"><a name="setValue-1"></a><span class="type">void</span> QSqlRecord::<span class="name">setValue</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>name</i>, const <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span> &amp;<i>val</i>)</h3>
+<p>This is an overloaded function.</p>
+<p>Sets the value of the field called <i>name</i> to <i>val</i>. If the field does not exist, nothing happens.</p>
+<!-- @@@setValue -->
+<!-- $$$value[overload1]$$$valueint -->
+<h3 class="fn" id="value"><a name="value"></a><span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span> QSqlRecord::<span class="name">value</span>(<span class="type">int</span> <i>index</i>) const</h3>
+<p>Returns the value of the field located at position <i>index</i> in the record. If <i>index</i> is out of bounds, an invalid <a href="../qtcore/qvariant.html">QVariant</a> is returned.</p>
+<p><b>See also </b><a href="qsqlrecord.html#setValue">setValue</a>(), <a href="qsqlrecord.html#fieldName">fieldName</a>(), and <a href="qsqlrecord.html#isNull">isNull</a>().</p>
+<!-- @@@value -->
+<!-- $$$value$$$valueconstQString& -->
+<h3 class="fn" id="value-1"><a name="value-1"></a><span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span> QSqlRecord::<span class="name">value</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>name</i>) const</h3>
+<p>This is an overloaded function.</p>
+<p>Returns the value of the field called <i>name</i> in the record. If field <i>name</i> does not exist an invalid variant is returned.</p>
+<p><b>See also </b><a href="qsqlrecord.html#indexOf">indexOf</a>().</p>
+<!-- @@@value -->
+<!-- $$$operator!=[overload1]$$$operator!=constQSqlRecord& -->
+<h3 class="fn" id="operator-not-eq"><a name="operator-not-eq"></a><span class="type">bool</span> QSqlRecord::<span class="name">operator!=</span>(const <span class="type"><a href="qsqlrecord.html#QSqlRecord">QSqlRecord</a></span> &amp;<i>other</i>) const</h3>
+<p>Returns <code>true</code> if this object is not identical to <i>other</i>; otherwise returns <code>false</code>.</p>
+<p><b>See also </b><a href="qsqlrecord.html#operator-eq-eq">operator==</a>().</p>
+<!-- @@@operator!= -->
+<!-- $$$operator=[overload1]$$$operator=constQSqlRecord& -->
+<h3 class="fn" id="operator-eq"><a name="operator-eq"></a><span class="type"><a href="qsqlrecord.html#QSqlRecord">QSqlRecord</a></span> &amp;QSqlRecord::<span class="name">operator=</span>(const <span class="type"><a href="qsqlrecord.html#QSqlRecord">QSqlRecord</a></span> &amp;<i>other</i>)</h3>
+<p>Sets the record equal to <i>other</i>.</p>
+<p><a href="qsqlrecord.html">QSqlRecord</a> is <a href="../qtcore/implicit-sharing.html">implicitly shared</a>. This means you can make copies of a record in <a href="../qtcore/containers.html#constant-time">constant time</a>.</p>
+<!-- @@@operator= -->
+<!-- $$$operator==[overload1]$$$operator==constQSqlRecord& -->
+<h3 class="fn" id="operator-eq-eq"><a name="operator-eq-eq"></a><span class="type">bool</span> QSqlRecord::<span class="name">operator==</span>(const <span class="type"><a href="qsqlrecord.html#QSqlRecord">QSqlRecord</a></span> &amp;<i>other</i>) const</h3>
+<p>Returns <code>true</code> if this object is identical to <i>other</i> (i.e&#x2e;, has the same fields in the same order); otherwise returns <code>false</code>.</p>
+<p><b>See also </b><a href="qsqlrecord.html#operator-not-eq">operator!=</a>().</p>
+<!-- @@@operator== -->
+</div>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

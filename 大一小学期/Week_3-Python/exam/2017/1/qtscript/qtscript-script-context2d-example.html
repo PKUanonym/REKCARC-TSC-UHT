@@ -1,0 +1,736 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- context2d.qdoc -->
+  <title>Context2D Example | Qt Script</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtscript-index.html">Qt Script</a></td><td >Context2D Example</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#using-the-html-canvas-element-in-a-web-browser">Using The HTML Canvas Element in a Web Browser</a></li>
+<li class="level1"><a href="#using-qt-script-to-script-a-canvas">Using Qt Script to script a Canvas</a></li>
+<li class="level1"><a href="#the-context2d-class">The Context2D Class</a></li>
+<li class="level2"><a href="#implementation">Implementation</a></li>
+<li class="level1"><a href="#the-canvas-widget">The Canvas Widget</a></li>
+<li class="level1"><a href="#the-environment">The Environment</a></li>
+<li class="level1"><a href="#the-application-window">The Application Window</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">Context2D Example</h1>
+<span class="subtitle"></span>
+<!-- $$$script/context2d-description -->
+<div class="descr"> <a name="details"></a>
+<p>This Qt Script example is an implementation of the Context2D API.</p>
+<p class="centerAlign"><img src="images/context2d-example.png" alt="" /></p><p>Context2D is part of the specification for the HTML <code>&lt;canvas&gt;</code> element. It can be used to draw graphics via scripting. A good resource for learning more about the HTML <code>&lt;canvas&gt;</code> element is the <a href="http://developer.mozilla.org/en/docs/HTML:Canvas">Mozilla Developer Center</a>.</p>
+<a name="using-the-html-canvas-element-in-a-web-browser"></a>
+<h2 id="using-the-html-canvas-element-in-a-web-browser">Using The HTML Canvas Element in a Web Browser</h2>
+<p>First, let's look at how the <code>&lt;canvas&gt;</code> element is typically used in a web browser. The following HTML snippet defines a canvas of size 400x400 pixels with id <code>mycanvas</code>:</p>
+<pre class="cpp">
+
+  <span class="operator">&lt;</span>canvas width<span class="operator">=</span><span class="string">&quot;400&quot;</span> height<span class="operator">=</span><span class="string">&quot;400&quot;</span> id<span class="operator">=</span><span class="string">&quot;mycanvas&quot;</span><span class="operator">&gt;</span>Fallback content goes here<span class="operator">.</span><span class="operator">&lt;</span><span class="operator">/</span>canvas<span class="operator">&gt;</span>
+
+</pre>
+<p>To draw on the canvas, we must first obtain a reference to the DOM element corresponding to the <code>&lt;canvas&gt;</code> tag and then call the element's getContext() function. The resulting object implements the Context2D API that we use to draw.</p>
+<pre class="cpp">
+
+  <span class="operator">&lt;</span>script<span class="operator">&gt;</span>
+  var canvas <span class="operator">=</span> document<span class="operator">.</span>getElementById(<span class="string">&quot;mycanvas&quot;</span>);
+  var ctx <span class="operator">=</span> canvas<span class="operator">.</span>getContext(<span class="string">&quot;2d&quot;</span>);
+
+  <span class="comment">// Draw a face</span>
+  ctx<span class="operator">.</span>beginPath();
+  ctx<span class="operator">.</span>arc(<span class="number">75</span><span class="operator">,</span><span class="number">75</span><span class="operator">,</span><span class="number">50</span><span class="operator">,</span><span class="number">0</span><span class="operator">,</span>Math<span class="operator">.</span>PI<span class="operator">*</span><span class="number">2</span><span class="operator">,</span><span class="keyword">true</span>); <span class="comment">// Outer circle</span>
+  ctx<span class="operator">.</span>moveTo(<span class="number">110</span><span class="operator">,</span><span class="number">75</span>);
+  ctx<span class="operator">.</span>arc(<span class="number">75</span><span class="operator">,</span><span class="number">75</span><span class="operator">,</span><span class="number">35</span><span class="operator">,</span><span class="number">0</span><span class="operator">,</span>Math<span class="operator">.</span>PI<span class="operator">,</span><span class="keyword">false</span>);   <span class="comment">// Mouth</span>
+  ctx<span class="operator">.</span>moveTo(<span class="number">65</span><span class="operator">,</span><span class="number">65</span>);
+  ctx<span class="operator">.</span>arc(<span class="number">60</span><span class="operator">,</span><span class="number">65</span><span class="operator">,</span><span class="number">5</span><span class="operator">,</span><span class="number">0</span><span class="operator">,</span>Math<span class="operator">.</span>PI<span class="operator">*</span><span class="number">2</span><span class="operator">,</span><span class="keyword">true</span>);  <span class="comment">// Left eye</span>
+  ctx<span class="operator">.</span>moveTo(<span class="number">95</span><span class="operator">,</span><span class="number">65</span>);
+  ctx<span class="operator">.</span>arc(<span class="number">90</span><span class="operator">,</span><span class="number">65</span><span class="operator">,</span><span class="number">5</span><span class="operator">,</span><span class="number">0</span><span class="operator">,</span>Math<span class="operator">.</span>PI<span class="operator">*</span><span class="number">2</span><span class="operator">,</span><span class="keyword">true</span>);  <span class="comment">// Right eye</span>
+  ctx<span class="operator">.</span>stroke();
+  <span class="operator">&lt;</span><span class="operator">/</span>script<span class="operator">&gt;</span>
+
+</pre>
+<p>When the page is rendered by a browser that supports the <code>&lt;canvas&gt;</code> tag, this would be the result:</p>
+<p class="centerAlign"><img src="images/context2d-example-smileysmile.png" alt="" /></p><a name="using-qt-script-to-script-a-canvas"></a>
+<h2 id="using-qt-script-to-script-a-canvas">Using Qt Script to script a Canvas</h2>
+<p>The goal of this example is to be able to evaluate scripts that use the Context2D API, and render the results. Basic interaction (mouse, keyboard) should also be supported. In other words, we want to present scripts with an execution environment that very much resembles that of a web browser. Of course, our environment is only a small subset of what a browser provides; i.e&#x2e; we don't provide a full DOM API, only what is needed to run &quot;self-contained&quot; Context2D scripts (i.e&#x2e; scripts that don't depend on other parts of the DOM document).</p>
+<p>Our &quot;Context2D-browser&quot; is set up through the following steps:</p>
+<ul>
+<li>Create an Environment.</li>
+<li>Create a Context2D, and a QContext2DCanvas widget to render it.</li>
+<li>Add the canvas object to the environment; this will enable scripts to obtain a reference to it.</li>
+<li>Evaluate scripts in the environment.</li>
+</ul>
+<p>Once a script has been evaluated, the application handles any timer events and input events that occur subsequently (i.e&#x2e; forwards events to their associated script targets).</p>
+<a name="the-context2d-class"></a>
+<h2 id="the-context2d-class">The Context2D Class</h2>
+<p>The &quot;heart&quot; of this example is the Context2D C++ class that implements the drawing API. Its interface is defined in terms of properties and slots. Note that this class isn't tied to Qt Script in any way.</p>
+<pre class="cpp">
+
+  <span class="keyword">class</span> Context2D : <span class="keyword">public</span> <span class="type"><a href="../qtcore/qobject.html">QObject</a></span>
+  {
+      Q_OBJECT
+      <span class="comment">// compositing</span>
+      Q_PROPERTY(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> globalAlpha READ globalAlpha WRITE setGlobalAlpha)
+      Q_PROPERTY(<span class="type"><a href="../qtcore/qstring.html">QString</a></span> globalCompositeOperation READ globalCompositeOperation WRITE setGlobalCompositeOperation)
+      Q_PROPERTY(<span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span> strokeStyle READ strokeStyle WRITE setStrokeStyle)
+      Q_PROPERTY(<span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span> fillStyle READ fillStyle WRITE setFillStyle)
+      <span class="comment">// line caps/joins</span>
+      Q_PROPERTY(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> lineWidth READ lineWidth WRITE setLineWidth)
+      Q_PROPERTY(<span class="type"><a href="../qtcore/qstring.html">QString</a></span> lineCap READ lineCap WRITE setLineCap)
+      Q_PROPERTY(<span class="type"><a href="../qtcore/qstring.html">QString</a></span> lineJoin READ lineJoin WRITE setLineJoin)
+      Q_PROPERTY(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> miterLimit READ miterLimit WRITE setMiterLimit)
+      <span class="comment">// shadows</span>
+      Q_PROPERTY(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> shadowOffsetX READ shadowOffsetX WRITE setShadowOffsetX)
+      Q_PROPERTY(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> shadowOffsetY READ shadowOffsetY WRITE setShadowOffsetY)
+      Q_PROPERTY(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> shadowBlur READ shadowBlur WRITE setShadowBlur)
+      Q_PROPERTY(<span class="type"><a href="../qtcore/qstring.html">QString</a></span> shadowColor READ shadowColor WRITE setShadowColor)
+
+</pre>
+<p>The properties define various aspects of the Context2D configuration.</p>
+<pre class="cpp">
+
+  <span class="keyword">public</span> <span class="keyword">slots</span>:
+      <span class="type">void</span> save(); <span class="comment">// push state on state stack</span>
+      <span class="type">void</span> restore(); <span class="comment">// pop state stack and restore state</span>
+
+      <span class="type">void</span> scale(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> x<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> y);
+      <span class="type">void</span> rotate(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> angle);
+      <span class="type">void</span> translate(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> x<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> y);
+      <span class="type">void</span> transform(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> m11<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> m12<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> m21<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> m22<span class="operator">,</span>
+                     <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> dx<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> dy);
+      <span class="type">void</span> setTransform(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> m11<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> m12<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> m21<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> m22<span class="operator">,</span>
+                        <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> dx<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> dy);
+
+      CanvasGradient createLinearGradient(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> x0<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> y0<span class="operator">,</span>
+                                          <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> x1<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> y1);
+      CanvasGradient createRadialGradient(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> x0<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> y0<span class="operator">,</span>
+                                          <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> r0<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> x1<span class="operator">,</span>
+                                          <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> y1<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> r1);
+
+      <span class="comment">// rects</span>
+      <span class="type">void</span> clearRect(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> x<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> y<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> w<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> h);
+      <span class="type">void</span> fillRect(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> x<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> y<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> w<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> h);
+      <span class="type">void</span> strokeRect(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> x<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> y<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> w<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> h);
+
+      <span class="comment">// path API</span>
+      <span class="type">void</span> beginPath();
+      <span class="type">void</span> closePath();
+      <span class="type">void</span> moveTo(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> x<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> y);
+      <span class="type">void</span> lineTo(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> x<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> y);
+      <span class="type">void</span> quadraticCurveTo(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> cpx<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> cpy<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> x<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> y);
+      <span class="type">void</span> bezierCurveTo(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> cp1x<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> cp1y<span class="operator">,</span>
+                         <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> cp2x<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> cp2y<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> x<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> y);
+      <span class="type">void</span> arcTo(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> x1<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> y1<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> x2<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> y2<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> radius);
+      <span class="type">void</span> rect(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> x<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> y<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> w<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> h);
+      <span class="type">void</span> arc(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> x<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> y<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> radius<span class="operator">,</span>
+               <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> startAngle<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> endAngle<span class="operator">,</span>
+               bool anticlockwise);
+      <span class="type">void</span> fill();
+      <span class="type">void</span> stroke();
+      <span class="type">void</span> clip();
+      bool isPointInPath(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> x<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> y) <span class="keyword">const</span>;
+
+</pre>
+<p>The slots define the operations that can be performed.</p>
+<pre class="cpp">
+
+  <span class="keyword">signals</span>:
+      <span class="type">void</span> changed(<span class="keyword">const</span> <span class="type">QImage</span> <span class="operator">&amp;</span>image);
+
+</pre>
+<p>The changed() signal is emitted when the contents of the drawing area has changed, so that clients associated with the Context2D object (i.e&#x2e; the canvas widget that renders it) are notified.</p>
+<a name="implementation"></a>
+<h3 >Implementation</h3>
+<p>Conveniently enough, the concepts, data structures and operations of the Context2D API map more or less directly to Qt's painting API. Conceptually, all we have to do is initialize a QPainter according to the Context2D properties, and use functions like QPainter::strokePath() to do the painting. Painting is done on a QImage.</p>
+<pre class="cpp">
+
+  <span class="type"><a href="../qtcore/qstring.html">QString</a></span> Context2D<span class="operator">::</span>lineCap() <span class="keyword">const</span>
+  {
+      <span class="keyword">switch</span> (m_state<span class="operator">.</span>lineCap) {
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>FlatCap:
+          <span class="keyword">return</span> <span class="string">&quot;butt&quot;</span>;
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>SquareCap:
+          <span class="keyword">return</span> <span class="string">&quot;square&quot;</span>;
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>RoundCap:
+          <span class="keyword">return</span> <span class="string">&quot;round&quot;</span>;
+      <span class="keyword">default</span>: ;
+      }
+      <span class="keyword">return</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span>();
+  }
+
+  <span class="type">void</span> Context2D<span class="operator">::</span>setLineCap(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>capString)
+  {
+      <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>PenCapStyle style;
+      <span class="keyword">if</span> (capString <span class="operator">=</span><span class="operator">=</span> <span class="string">&quot;round&quot;</span>)
+          style <span class="operator">=</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>RoundCap;
+      <span class="keyword">else</span> <span class="keyword">if</span> (capString <span class="operator">=</span><span class="operator">=</span> <span class="string">&quot;square&quot;</span>)
+          style <span class="operator">=</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>SquareCap;
+      <span class="keyword">else</span> <span class="comment">//if (capString == &quot;butt&quot;)</span>
+          style <span class="operator">=</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>FlatCap;
+      m_state<span class="operator">.</span>lineCap <span class="operator">=</span> style;
+      m_state<span class="operator">.</span>flags <span class="operator">|</span><span class="operator">=</span> DirtyLineCap;
+  }
+
+</pre>
+<p>The property accessors and most of the slots manipulate the internal Context2D state in some way. For the <code>lineCap</code> property, Context2D uses a string representation; we therefore have to map it from/to a <a href="../qtcore/qt.html#PenCapStyle-enum">Qt::PenCapStyle</a>. The <code>lineJoin</code> property is handled in the same fashion. All the property setters also set a <i>dirty flag</i> for the property; this is used to decide which aspects of the QPainter that need to be updated before doing the next painting operation.</p>
+<pre class="cpp">
+
+  <span class="type">void</span> Context2D<span class="operator">::</span>setFillStyle(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span> <span class="operator">&amp;</span>style)
+  {
+      <span class="keyword">if</span> (style<span class="operator">.</span>canConvert<span class="operator">&lt;</span>CanvasGradient<span class="operator">&gt;</span>()) {
+          CanvasGradient cg <span class="operator">=</span> qvariant_cast<span class="operator">&lt;</span>CanvasGradient<span class="operator">&gt;</span>(style);
+          m_state<span class="operator">.</span>fillStyle <span class="operator">=</span> cg<span class="operator">.</span>value;
+      } <span class="keyword">else</span> {
+          <span class="type">QColor</span> color <span class="operator">=</span> colorFromString(style<span class="operator">.</span>toString());
+          m_state<span class="operator">.</span>fillStyle <span class="operator">=</span> color;
+      }
+      m_state<span class="operator">.</span>flags <span class="operator">|</span><span class="operator">=</span> DirtyFillStyle;
+  }
+
+</pre>
+<p>The implementation of the <code>fillStyle</code> property is interesting, since the value can be either a string or a <code>CanvasGradient</code>. We handle this by having the property be of type <a href="../qtcore/qvariant.html">QVariant</a>, and check the actual type of the value to see how to handle the write.</p>
+<pre class="cpp">
+
+  <span class="type">void</span> Context2D<span class="operator">::</span>fillRect(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> x<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> y<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> w<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> h)
+  {
+      beginPainting();
+      m_painter<span class="operator">.</span>save();
+      m_painter<span class="operator">.</span>setMatrix(m_state<span class="operator">.</span>matrix<span class="operator">,</span> <span class="keyword">false</span>);
+      m_painter<span class="operator">.</span>fillRect(<span class="type"><a href="../qtcore/qrectf.html">QRectF</a></span>(x<span class="operator">,</span> y<span class="operator">,</span> w<span class="operator">,</span> h)<span class="operator">,</span> m_painter<span class="operator">.</span>brush());
+      m_painter<span class="operator">.</span>restore();
+      scheduleChange();
+  }
+
+</pre>
+<p>Context2D does not have a concept of a paint event; painting operations can happen at any time. We would like to be efficient, and not have to call QPainter::begin() and QPainter::end() for every painting operation, since typically many painting operations will follow in quick succession. The implementations of the painting operations use a helper function, beginPainting(), that activates the QPainter if it isn't active already, and updates the state of the QPainter (brush, pen, etc.) so that it reflects the current Context2D state.</p>
+<pre class="cpp">
+
+  <span class="type">void</span> Context2D<span class="operator">::</span>scheduleChange()
+  {
+      <span class="keyword">if</span> (m_changeTimerId <span class="operator">=</span><span class="operator">=</span> <span class="operator">-</span><span class="number">1</span>)
+          m_changeTimerId <span class="operator">=</span> startTimer(<span class="number">0</span>);
+  }
+
+  <span class="type">void</span> Context2D<span class="operator">::</span>timerEvent(<span class="type"><a href="../qtcore/qtimerevent.html">QTimerEvent</a></span> <span class="operator">*</span>e)
+  {
+      <span class="keyword">if</span> (e<span class="operator">-</span><span class="operator">&gt;</span>timerId() <span class="operator">=</span><span class="operator">=</span> m_changeTimerId) {
+          killTimer(m_changeTimerId);
+          m_changeTimerId <span class="operator">=</span> <span class="operator">-</span><span class="number">1</span>;
+          <span class="keyword">emit</span> changed(endPainting());
+      } <span class="keyword">else</span> {
+          <span class="type"><a href="../qtcore/qobject.html">QObject</a></span><span class="operator">::</span>timerEvent(e);
+      }
+  }
+
+</pre>
+<p>The implementation of each painting operation ends by calling scheduleChange(), which will post a zero-timer event if one is not already pending. When the application returns to the event loop later (presumably after all the drawing operations have finished), the timer will trigger, QPainter::end() will be called, and the changed() signal is emitted with the new image as argument. The net effect is that there will typically be only a single (QPainter::begin(), QPainter::end()) pair executed for the full sequence of painting operations.</p>
+<a name="the-canvas-widget"></a>
+<h2 id="the-canvas-widget">The Canvas Widget</h2>
+<pre class="cpp">
+
+  <span class="keyword">class</span> QContext2DCanvas : <span class="keyword">public</span> <span class="type"><a href="../qtwidgets/qwidget.html">QWidget</a></span>
+  {
+      Q_OBJECT
+  <span class="keyword">public</span>:
+      QContext2DCanvas(Context2D <span class="operator">*</span>context<span class="operator">,</span> Environment <span class="operator">*</span>env<span class="operator">,</span> <span class="type"><a href="../qtwidgets/qwidget.html">QWidget</a></span> <span class="operator">*</span>parent <span class="operator">=</span> <span class="number">0</span>);
+      <span class="operator">~</span>QContext2DCanvas();
+
+      Context2D <span class="operator">*</span>context() <span class="keyword">const</span>;
+      <span class="type">void</span> reset();
+
+  <span class="keyword">public</span> <span class="keyword">slots</span>:
+      <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> getContext(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>str);
+      <span class="type">void</span> resize(<span class="type">int</span> width<span class="operator">,</span> <span class="type">int</span> height);
+
+      <span class="comment">// EventTarget</span>
+      <span class="type">void</span> addEventListener(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>type<span class="operator">,</span> <span class="keyword">const</span> <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> <span class="operator">&amp;</span>listener<span class="operator">,</span>
+                            bool useCapture);
+
+  <span class="keyword">protected</span>:
+      <span class="keyword">virtual</span> <span class="type">void</span> paintEvent(<span class="type">QPaintEvent</span> <span class="operator">*</span>e);
+      <span class="keyword">virtual</span> <span class="type">void</span> mouseMoveEvent(<span class="type">QMouseEvent</span> <span class="operator">*</span>e);
+      <span class="keyword">virtual</span> <span class="type">void</span> mousePressEvent(<span class="type">QMouseEvent</span> <span class="operator">*</span>e);
+      <span class="keyword">virtual</span> <span class="type">void</span> mouseReleaseEvent(<span class="type">QMouseEvent</span> <span class="operator">*</span>e);
+      <span class="keyword">virtual</span> <span class="type">void</span> keyPressEvent(<span class="type">QKeyEvent</span> <span class="operator">*</span>e);
+      <span class="keyword">virtual</span> <span class="type">void</span> keyReleaseEvent(<span class="type">QKeyEvent</span> <span class="operator">*</span>e);
+      <span class="keyword">virtual</span> <span class="type">void</span> resizeEvent(<span class="type">QResizeEvent</span> <span class="operator">*</span>e);
+
+  <span class="keyword">private</span> <span class="keyword">slots</span>:
+      <span class="type">void</span> contentsChanged(<span class="keyword">const</span> <span class="type">QImage</span> <span class="operator">&amp;</span>image);
+
+</pre>
+<p>The QContext2DCanvas class provides a widget that renders the contents of a Context2D object. It also provides a minimal scripting API, most notably the getContext() function.</p>
+<pre class="cpp">
+
+  QContext2DCanvas<span class="operator">::</span>QContext2DCanvas(Context2D <span class="operator">*</span>context<span class="operator">,</span> Environment <span class="operator">*</span>env<span class="operator">,</span> <span class="type"><a href="../qtwidgets/qwidget.html">QWidget</a></span> <span class="operator">*</span>parent)
+      : <span class="type"><a href="../qtwidgets/qwidget.html">QWidget</a></span>(parent)<span class="operator">,</span> m_context(context)<span class="operator">,</span> m_env(env)
+  {
+      <span class="type"><a href="../qtcore/qobject.html">QObject</a></span><span class="operator">::</span>connect(context<span class="operator">,</span> SIGNAL(changed(<span class="type">QImage</span>))<span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> SLOT(contentsChanged(<span class="type">QImage</span>)));
+      setMouseTracking(<span class="keyword">true</span>);
+  }
+
+</pre>
+<p>The constructor connects to the changed() signal of the Context2D object, so that the widget can update itself when it needs to do so. Mouse tracking is enabled so that mouse move events will be received even when no mouse buttons are depressed.</p>
+<pre class="cpp">
+
+  <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> QContext2DCanvas<span class="operator">::</span>getContext(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>str)
+  {
+      <span class="keyword">if</span> (str <span class="operator">!</span><span class="operator">=</span> <span class="string">&quot;2d&quot;</span>)
+          <span class="keyword">return</span> <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span>();
+      <span class="keyword">return</span> m_env<span class="operator">-</span><span class="operator">&gt;</span>toWrapper(m_context);
+  }
+
+</pre>
+<p>The getContext() function asks the environment to wrap the Context2D object; the resulting proxy object makes the Context2D API available to scripts.</p>
+<pre class="cpp">
+
+  <span class="type">void</span> QContext2DCanvas<span class="operator">::</span>contentsChanged(<span class="keyword">const</span> <span class="type">QImage</span> <span class="operator">&amp;</span>image)
+  {
+      m_image <span class="operator">=</span> image;
+      update();
+  }
+
+  <span class="type">void</span> QContext2DCanvas<span class="operator">::</span>paintEvent(<span class="type">QPaintEvent</span> <span class="operator">*</span>e)
+  {
+      <span class="type">QPainter</span> p(<span class="keyword">this</span>);
+  <span class="preprocessor">#ifdef Q_OS_SYMBIAN</span>
+      <span class="comment">// Draw white rect first since in with some themes the js-file content will produce black-on-black.</span>
+      <span class="type">QBrush</span> whiteBgBrush(<span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>white);
+      p<span class="operator">.</span>fillRect(e<span class="operator">-</span><span class="operator">&gt;</span>rect()<span class="operator">,</span> whiteBgBrush);
+  <span class="preprocessor">#endif</span>
+      p<span class="operator">.</span>setClipRect(e<span class="operator">-</span><span class="operator">&gt;</span>rect());
+      p<span class="operator">.</span>drawImage(<span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> m_image);
+  }
+
+</pre>
+<p>The paintEvent() function simply paints the contents that was last received from the Context2D object.</p>
+<pre class="cpp">
+
+  <span class="type">void</span> QContext2DCanvas<span class="operator">::</span>mouseMoveEvent(<span class="type">QMouseEvent</span> <span class="operator">*</span>e)
+  {
+      m_env<span class="operator">-</span><span class="operator">&gt;</span>handleEvent(<span class="keyword">this</span><span class="operator">,</span> e);
+  }
+
+  <span class="type">void</span> QContext2DCanvas<span class="operator">::</span>mousePressEvent(<span class="type">QMouseEvent</span> <span class="operator">*</span>e)
+  {
+      m_env<span class="operator">-</span><span class="operator">&gt;</span>handleEvent(<span class="keyword">this</span><span class="operator">,</span> e);
+  }
+
+  <span class="type">void</span> QContext2DCanvas<span class="operator">::</span>mouseReleaseEvent(<span class="type">QMouseEvent</span> <span class="operator">*</span>e)
+  {
+      m_env<span class="operator">-</span><span class="operator">&gt;</span>handleEvent(<span class="keyword">this</span><span class="operator">,</span> e);
+  }
+
+  <span class="type">void</span> QContext2DCanvas<span class="operator">::</span>keyPressEvent(<span class="type">QKeyEvent</span> <span class="operator">*</span>e)
+  {
+      m_env<span class="operator">-</span><span class="operator">&gt;</span>handleEvent(<span class="keyword">this</span><span class="operator">,</span> e);
+  }
+
+  <span class="type">void</span> QContext2DCanvas<span class="operator">::</span>keyReleaseEvent(<span class="type">QKeyEvent</span> <span class="operator">*</span>e)
+  {
+      m_env<span class="operator">-</span><span class="operator">&gt;</span>handleEvent(<span class="keyword">this</span><span class="operator">,</span> e);
+  }
+
+</pre>
+<p>The canvas widget reimplements mouse and key event handlers, and forwards these events to the scripting environment. The environment will take care of delivering the event to the proper script target, if any.</p>
+<a name="the-environment"></a>
+<h2 id="the-environment">The Environment</h2>
+<pre class="cpp">
+
+  <span class="keyword">class</span> Environment : <span class="keyword">public</span> <span class="type"><a href="../qtcore/qobject.html">QObject</a></span>
+  {
+      Q_OBJECT
+      Q_PROPERTY(<span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> document READ document)
+  <span class="keyword">public</span>:
+      Environment(<span class="type"><a href="../qtcore/qobject.html">QObject</a></span> <span class="operator">*</span>parent <span class="operator">=</span> <span class="number">0</span>);
+      <span class="operator">~</span>Environment();
+
+      <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> document() <span class="keyword">const</span>;
+
+      <span class="type">void</span> addCanvas(QContext2DCanvas <span class="operator">*</span>canvas);
+      QContext2DCanvas <span class="operator">*</span>canvasByName(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>name) <span class="keyword">const</span>;
+      <span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span>QContext2DCanvas<span class="operator">*</span><span class="operator">&gt;</span> canvases() <span class="keyword">const</span>;
+
+      <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> evaluate(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>code<span class="operator">,</span>
+                            <span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>fileName <span class="operator">=</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span>());
+
+      <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> toWrapper(<span class="type"><a href="../qtcore/qobject.html">QObject</a></span> <span class="operator">*</span>object);
+
+      <span class="type">void</span> handleEvent(QContext2DCanvas <span class="operator">*</span>canvas<span class="operator">,</span> <span class="type">QMouseEvent</span> <span class="operator">*</span>e);
+      <span class="type">void</span> handleEvent(QContext2DCanvas <span class="operator">*</span>canvas<span class="operator">,</span> <span class="type">QKeyEvent</span> <span class="operator">*</span>e);
+
+      <span class="type">void</span> reset();
+
+</pre>
+<p>The Environment class provides a scripting environment where a Canvas C++ object can be registered, looked up by ID (name), and where scripts can be evaluated. The environment has a <code>document</code> property, just like the scripting environment of a web browser, so that scripts can call <code>document.getElementById()</code> to obtain a reference to a canvas.</p>
+<pre class="cpp">
+
+  <span class="keyword">public</span> <span class="keyword">slots</span>:
+      <span class="type">int</span> setInterval(<span class="keyword">const</span> <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> <span class="operator">&amp;</span>expression<span class="operator">,</span> <span class="type">int</span> delay);
+      <span class="type">void</span> clearInterval(<span class="type">int</span> timerId);
+
+      <span class="type">int</span> setTimeout(<span class="keyword">const</span> <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> <span class="operator">&amp;</span>expression<span class="operator">,</span> <span class="type">int</span> delay);
+      <span class="type">void</span> clearTimeout(<span class="type">int</span> timerId);
+
+</pre>
+<p>The Environment class provides the timer attributes of the DOM Window Object interface. This enables us to support scripts that do animation, for example.</p>
+<pre class="cpp">
+
+  <span class="keyword">signals</span>:
+      <span class="type">void</span> scriptError(<span class="keyword">const</span> <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> <span class="operator">&amp;</span>error);
+
+</pre>
+<p>The scriptError() signal is emitted when evaluation of a script causes a script exception. For example, if a mouse press handler or timeout handler causes an exception, the environment's client(s) will be notified of this and can report the error.</p>
+<pre class="cpp">
+
+  Environment<span class="operator">::</span>Environment(<span class="type"><a href="../qtcore/qobject.html">QObject</a></span> <span class="operator">*</span>parent)
+      : <span class="type"><a href="../qtcore/qobject.html">QObject</a></span>(parent)
+  {
+      m_engine <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="qscriptengine.html">QScriptEngine</a></span>(<span class="keyword">this</span>);
+
+      m_document <span class="operator">=</span> m_engine<span class="operator">-</span><span class="operator">&gt;</span>newQObject(
+          <span class="keyword">new</span> Document(<span class="keyword">this</span>)<span class="operator">,</span> <span class="type"><a href="qscriptengine.html">QScriptEngine</a></span><span class="operator">::</span><span class="type">QtOwnership</span><span class="operator">,</span>
+          <span class="type"><a href="qscriptengine.html">QScriptEngine</a></span><span class="operator">::</span>ExcludeSuperClassContents);
+
+      CanvasGradientPrototype<span class="operator">::</span>setup(m_engine);
+
+      m_originalGlobalObject <span class="operator">=</span> m_engine<span class="operator">-</span><span class="operator">&gt;</span>globalObject();
+      reset();
+  }
+
+</pre>
+<p>The constructor initializes the environment. First it creates the <a href="qscriptengine.html">QScriptEngine</a> that will be used to evaluate scripts. It creates the Document object that provides the getElementById() function. Note that the <a href="qscriptengine.html#QObjectWrapOption-enum">QScriptEngine::ExcludeSuperClassContents</a> flag is specified to avoid the wrapper objects from exposing properties and methods inherited from <a href="../qtcore/qobject.html">QObject</a>. Next, the environment wraps a pointer to <i>itself</i>; this is to prepare for setting this object as the script engine's Global Object. The properties of the standard Global Object are copied, so that these will also be available in our custom Global Object. We also create two self-references to the object; again, this is to provide a minimal level of compabilitity with the scripting environment that web browsers provide.</p>
+<pre class="cpp">
+
+  <span class="type">void</span> Environment<span class="operator">::</span>addCanvas(QContext2DCanvas <span class="operator">*</span>canvas)
+  {
+      m_canvases<span class="operator">.</span>append(canvas);
+  }
+
+  QContext2DCanvas <span class="operator">*</span>Environment<span class="operator">::</span>canvasByName(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>name) <span class="keyword">const</span>
+  {
+      <span class="keyword">for</span> (<span class="type">int</span> i <span class="operator">=</span> <span class="number">0</span>; i <span class="operator">&lt;</span> m_canvases<span class="operator">.</span>size(); <span class="operator">+</span><span class="operator">+</span>i) {
+          QContext2DCanvas <span class="operator">*</span>canvas <span class="operator">=</span> m_canvases<span class="operator">.</span>at(i);
+          <span class="keyword">if</span> (canvas<span class="operator">-</span><span class="operator">&gt;</span>objectName() <span class="operator">=</span><span class="operator">=</span> name)
+              <span class="keyword">return</span> canvas;
+      }
+      <span class="keyword">return</span> <span class="number">0</span>;
+  }
+
+</pre>
+<p>The addCanvas() function adds the given canvas to the list of registered canvas objects. The canvasByName() function looks up a canvas by <a href="../qtcore/qobject.html#objectName-prop">QObject::objectName</a>(). This function is used to implement the <code>document.getElementById()</code> script function.</p>
+<pre class="cpp">
+
+  <span class="type">int</span> Environment<span class="operator">::</span>setInterval(<span class="keyword">const</span> <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> <span class="operator">&amp;</span>expression<span class="operator">,</span> <span class="type">int</span> delay)
+  {
+      <span class="keyword">if</span> (expression<span class="operator">.</span>isString() <span class="operator">|</span><span class="operator">|</span> expression<span class="operator">.</span>isFunction()) {
+          <span class="type">int</span> timerId <span class="operator">=</span> startTimer(delay);
+          m_intervalHash<span class="operator">.</span>insert(timerId<span class="operator">,</span> expression);
+          <span class="keyword">return</span> timerId;
+      }
+      <span class="keyword">return</span> <span class="operator">-</span><span class="number">1</span>;
+  }
+
+  <span class="type">void</span> Environment<span class="operator">::</span>clearInterval(<span class="type">int</span> timerId)
+  {
+      killTimer(timerId);
+      m_intervalHash<span class="operator">.</span>remove(timerId);
+  }
+
+  <span class="type">void</span> Environment<span class="operator">::</span>timerEvent(<span class="type"><a href="../qtcore/qtimerevent.html">QTimerEvent</a></span> <span class="operator">*</span>event)
+  {
+      <span class="type">int</span> id <span class="operator">=</span> event<span class="operator">-</span><span class="operator">&gt;</span>timerId();
+      <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> expression <span class="operator">=</span> m_intervalHash<span class="operator">.</span>value(id);
+      <span class="keyword">if</span> (<span class="operator">!</span>expression<span class="operator">.</span>isValid()) {
+          expression <span class="operator">=</span> m_timeoutHash<span class="operator">.</span>value(id);
+          <span class="keyword">if</span> (expression<span class="operator">.</span>isValid())
+              killTimer(id);
+      }
+      <span class="keyword">if</span> (expression<span class="operator">.</span>isString()) {
+          evaluate(expression<span class="operator">.</span>toString());
+      } <span class="keyword">else</span> <span class="keyword">if</span> (expression<span class="operator">.</span>isFunction()) {
+          expression<span class="operator">.</span>call();
+      }
+      maybeEmitScriptError();
+  }
+
+</pre>
+<p>The setInterval() and clearInterval() implementations use a <a href="../qtcore/qhash.html#qhash">QHash</a> to map from timer ID to the <a href="qscriptvalue.html">QScriptValue</a> that holds the expression to evaluate when the timer is triggered. A helper function, maybeEmitScriptError(), is called after invoking the script handler; it will emit the scriptError() signal if the script engine has an uncaught exception.</p>
+<pre class="cpp">
+
+  <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> Environment<span class="operator">::</span>toWrapper(<span class="type"><a href="../qtcore/qobject.html">QObject</a></span> <span class="operator">*</span>object)
+  {
+      <span class="keyword">return</span> m_engine<span class="operator">-</span><span class="operator">&gt;</span>newQObject(object<span class="operator">,</span> <span class="type"><a href="qscriptengine.html">QScriptEngine</a></span><span class="operator">::</span><span class="type">QtOwnership</span><span class="operator">,</span>
+                                  <span class="type"><a href="qscriptengine.html">QScriptEngine</a></span><span class="operator">::</span>PreferExistingWrapperObject
+                                  <span class="operator">|</span> <span class="type"><a href="qscriptengine.html">QScriptEngine</a></span><span class="operator">::</span>ExcludeSuperClassContents);
+  }
+
+</pre>
+<p>The toWrapper() functions creates a <a href="qscriptvalue.html">QScriptValue</a> that wraps the given <a href="../qtcore/qobject.html">QObject</a>. Note that the <a href="qscriptengine.html#QObjectWrapOption-enum">QScriptEngine::PreferExistingWrapperObject</a> flag is specified; this guarantees that a single, unique wrapper object will be returned, even if toWrapper() is called several times with the same argument. This is important, since it is possible that a script can set new properties on the resulting wrapper object (e.g&#x2e; event handlers like <code>onmousedown</code>), and we want these to persist.</p>
+<pre class="cpp">
+
+  <span class="type">void</span> Environment<span class="operator">::</span>handleEvent(QContext2DCanvas <span class="operator">*</span>canvas<span class="operator">,</span> <span class="type">QMouseEvent</span> <span class="operator">*</span>e)
+  {
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> type;
+      <span class="keyword">switch</span> (e<span class="operator">-</span><span class="operator">&gt;</span>type()) {
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qevent.html">QEvent</a></span><span class="operator">::</span>MouseButtonPress:
+          type <span class="operator">=</span> <span class="string">&quot;mousedown&quot;</span>; <span class="keyword">break</span>;
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qevent.html">QEvent</a></span><span class="operator">::</span>MouseButtonRelease:
+          type <span class="operator">=</span> <span class="string">&quot;mouseup&quot;</span>; <span class="keyword">break</span>;
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qevent.html">QEvent</a></span><span class="operator">::</span>MouseMove:
+          type <span class="operator">=</span> <span class="string">&quot;mousemove&quot;</span>; <span class="keyword">break</span>;
+      <span class="keyword">default</span>: <span class="keyword">break</span>;
+      }
+      <span class="keyword">if</span> (type<span class="operator">.</span>isEmpty())
+          <span class="keyword">return</span>;
+
+      <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> handlerObject;
+      <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> handler <span class="operator">=</span> eventHandler(canvas<span class="operator">,</span> type<span class="operator">,</span> <span class="operator">&amp;</span>handlerObject);
+      <span class="keyword">if</span> (<span class="operator">!</span>handler<span class="operator">.</span>isFunction())
+          <span class="keyword">return</span>;
+
+      <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> scriptEvent <span class="operator">=</span> newFakeDomEvent(type<span class="operator">,</span> toWrapper(canvas));
+      <span class="comment">// MouseEvent</span>
+      scriptEvent<span class="operator">.</span>setProperty(<span class="string">&quot;screenX&quot;</span><span class="operator">,</span> e<span class="operator">-</span><span class="operator">&gt;</span>globalX()<span class="operator">,</span> <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span><span class="operator">::</span>ReadOnly);
+      scriptEvent<span class="operator">.</span>setProperty(<span class="string">&quot;screenY&quot;</span><span class="operator">,</span> e<span class="operator">-</span><span class="operator">&gt;</span>globalY()<span class="operator">,</span> <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span><span class="operator">::</span>ReadOnly);
+      scriptEvent<span class="operator">.</span>setProperty(<span class="string">&quot;clientX&quot;</span><span class="operator">,</span> e<span class="operator">-</span><span class="operator">&gt;</span>x()<span class="operator">,</span> <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span><span class="operator">::</span>ReadOnly);
+      scriptEvent<span class="operator">.</span>setProperty(<span class="string">&quot;clientY&quot;</span><span class="operator">,</span> e<span class="operator">-</span><span class="operator">&gt;</span>y()<span class="operator">,</span> <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span><span class="operator">::</span>ReadOnly);
+      scriptEvent<span class="operator">.</span>setProperty(<span class="string">&quot;layerX&quot;</span><span class="operator">,</span> e<span class="operator">-</span><span class="operator">&gt;</span>x()<span class="operator">,</span> <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span><span class="operator">::</span>ReadOnly);
+      scriptEvent<span class="operator">.</span>setProperty(<span class="string">&quot;layerY&quot;</span><span class="operator">,</span> e<span class="operator">-</span><span class="operator">&gt;</span>y()<span class="operator">,</span> <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span><span class="operator">::</span>ReadOnly);
+      scriptEvent<span class="operator">.</span>setProperty(<span class="string">&quot;pageX&quot;</span><span class="operator">,</span> e<span class="operator">-</span><span class="operator">&gt;</span>x()<span class="operator">,</span> <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span><span class="operator">::</span>ReadOnly);
+      scriptEvent<span class="operator">.</span>setProperty(<span class="string">&quot;pageY&quot;</span><span class="operator">,</span> e<span class="operator">-</span><span class="operator">&gt;</span>y()<span class="operator">,</span> <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span><span class="operator">::</span>ReadOnly);
+      scriptEvent<span class="operator">.</span>setProperty(<span class="string">&quot;altKey&quot;</span><span class="operator">,</span> (e<span class="operator">-</span><span class="operator">&gt;</span>modifiers() <span class="operator">&amp;</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>AltModifier) <span class="operator">!</span><span class="operator">=</span> <span class="number">0</span><span class="operator">,</span>
+                              <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span><span class="operator">::</span>ReadOnly);
+      scriptEvent<span class="operator">.</span>setProperty(<span class="string">&quot;ctrlKey&quot;</span><span class="operator">,</span> (e<span class="operator">-</span><span class="operator">&gt;</span>modifiers() <span class="operator">&amp;</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>ControlModifier) <span class="operator">!</span><span class="operator">=</span> <span class="number">0</span><span class="operator">,</span>
+                              <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span><span class="operator">::</span>ReadOnly);
+      scriptEvent<span class="operator">.</span>setProperty(<span class="string">&quot;metaKey&quot;</span><span class="operator">,</span> (e<span class="operator">-</span><span class="operator">&gt;</span>modifiers() <span class="operator">&amp;</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>MetaModifier) <span class="operator">!</span><span class="operator">=</span> <span class="number">0</span><span class="operator">,</span>
+                              <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span><span class="operator">::</span>ReadOnly);
+      scriptEvent<span class="operator">.</span>setProperty(<span class="string">&quot;shiftKey&quot;</span><span class="operator">,</span> (e<span class="operator">-</span><span class="operator">&gt;</span>modifiers() <span class="operator">&amp;</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>ShiftModifier) <span class="operator">!</span><span class="operator">=</span> <span class="number">0</span><span class="operator">,</span>
+                              <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span><span class="operator">::</span>ReadOnly);
+      <span class="type">int</span> button <span class="operator">=</span> <span class="number">0</span>;
+      <span class="keyword">if</span> (e<span class="operator">-</span><span class="operator">&gt;</span>button() <span class="operator">=</span><span class="operator">=</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>RightButton)
+          button <span class="operator">=</span> <span class="number">2</span>;
+      <span class="keyword">else</span> <span class="keyword">if</span> (e<span class="operator">-</span><span class="operator">&gt;</span>button() <span class="operator">=</span><span class="operator">=</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>MidButton)
+          button <span class="operator">=</span> <span class="number">1</span>;
+      scriptEvent<span class="operator">.</span>setProperty(<span class="string">&quot;button&quot;</span><span class="operator">,</span> button);
+      scriptEvent<span class="operator">.</span>setProperty(<span class="string">&quot;relatedTarget&quot;</span><span class="operator">,</span> m_engine<span class="operator">-</span><span class="operator">&gt;</span>nullValue()<span class="operator">,</span>
+                              <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span><span class="operator">::</span>ReadOnly);
+      handler<span class="operator">.</span>call(handlerObject<span class="operator">,</span> <span class="type">QScriptValueList</span>() <span class="operator">&lt;</span><span class="operator">&lt;</span> scriptEvent);
+      maybeEmitScriptError();
+  }
+
+</pre>
+<p>The handleEvent() function determines if there exists a handler for the given event in the environment, and if so, invokes that handler. Since the script expects a DOM event, the Qt C++ event must be converted to a DOM event before it is passed to the script. This mapping is relatively straightforward, but again, we only implement a subset of the full DOM API; just enough to get most scripts to work.</p>
+<pre class="cpp">
+
+  <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> Environment<span class="operator">::</span>newFakeDomEvent(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>type<span class="operator">,</span> <span class="keyword">const</span> <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> <span class="operator">&amp;</span>target)
+  {
+      <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> e <span class="operator">=</span> m_engine<span class="operator">-</span><span class="operator">&gt;</span>newObject();
+      <span class="comment">// Event</span>
+      e<span class="operator">.</span>setProperty(<span class="string">&quot;type&quot;</span><span class="operator">,</span> type<span class="operator">,</span> <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span><span class="operator">::</span>ReadOnly);
+      e<span class="operator">.</span>setProperty(<span class="string">&quot;bubbles&quot;</span><span class="operator">,</span> <span class="keyword">true</span><span class="operator">,</span> <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span><span class="operator">::</span>ReadOnly);
+      e<span class="operator">.</span>setProperty(<span class="string">&quot;cancelable&quot;</span><span class="operator">,</span> <span class="keyword">false</span><span class="operator">,</span> <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span><span class="operator">::</span>ReadOnly);
+      e<span class="operator">.</span>setProperty(<span class="string">&quot;target&quot;</span><span class="operator">,</span> target<span class="operator">,</span> <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span><span class="operator">::</span>ReadOnly);
+      e<span class="operator">.</span>setProperty(<span class="string">&quot;currentTarget&quot;</span><span class="operator">,</span> target<span class="operator">,</span> <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span><span class="operator">::</span>ReadOnly);
+      e<span class="operator">.</span>setProperty(<span class="string">&quot;eventPhase&quot;</span><span class="operator">,</span> <span class="number">3</span>); <span class="comment">// bubbling</span>
+      e<span class="operator">.</span>setProperty(<span class="string">&quot;timeStamp&quot;</span><span class="operator">,</span> <span class="type"><a href="../qtcore/qdatetime.html">QDateTime</a></span><span class="operator">::</span>currentDateTime()<span class="operator">.</span>toTime_t());
+      <span class="comment">// UIEvent</span>
+      e<span class="operator">.</span>setProperty(<span class="string">&quot;detail&quot;</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span><span class="operator">::</span>ReadOnly);
+      e<span class="operator">.</span>setProperty(<span class="string">&quot;view&quot;</span><span class="operator">,</span> m_engine<span class="operator">-</span><span class="operator">&gt;</span>globalObject()<span class="operator">,</span> <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span><span class="operator">::</span>ReadOnly);
+      <span class="keyword">return</span> e;
+  }
+
+</pre>
+<p>The newFakeDomEvent() function is a helper function that creates a new script object and initializes it with default values for the attributes defined in the DOM Event and DOM UIEvent interfaces.</p>
+<pre class="cpp">
+
+  <span class="keyword">class</span> Document : <span class="keyword">public</span> <span class="type"><a href="../qtcore/qobject.html">QObject</a></span>
+  {
+      Q_OBJECT
+  <span class="keyword">public</span>:
+      Document(Environment <span class="operator">*</span>env);
+      <span class="operator">~</span>Document();
+
+  <span class="keyword">public</span> <span class="keyword">slots</span>:
+      <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> getElementById(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>id) <span class="keyword">const</span>;
+      <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> getElementsByTagName(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>name) <span class="keyword">const</span>;
+
+      <span class="comment">// EventTarget</span>
+      <span class="type">void</span> addEventListener(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>type<span class="operator">,</span> <span class="keyword">const</span> <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> <span class="operator">&amp;</span>listener<span class="operator">,</span>
+                            bool useCapture);
+  };
+
+</pre>
+<p>The Document class defines two slots that become available to scripts: getElementById() and getElementsByTagName(). When the tag name is &quot;canvas&quot;, getElementsByTagName() will return a list of all canvas objects that are registered in the environment.</p>
+<a name="the-application-window"></a>
+<h2 id="the-application-window">The Application Window</h2>
+<pre class="cpp">
+
+  Window<span class="operator">::</span>Window(<span class="type"><a href="../qtwidgets/qwidget.html">QWidget</a></span> <span class="operator">*</span>parent)
+      : <span class="type"><a href="../qtwidgets/qwidget.html">QWidget</a></span>(parent)
+  <span class="preprocessor">#ifndef QT_NO_SCRIPTTOOLS</span>
+        <span class="operator">,</span> m_debugger(<span class="number">0</span>)<span class="operator">,</span> m_debugWindow(<span class="number">0</span>)
+  <span class="preprocessor">#endif</span>
+  {
+      m_env <span class="operator">=</span> <span class="keyword">new</span> Environment(<span class="keyword">this</span>);
+      <span class="type"><a href="../qtcore/qobject.html">QObject</a></span><span class="operator">::</span>connect(m_env<span class="operator">,</span> SIGNAL(scriptError(<span class="type"><a href="qscriptvalue.html">QScriptValue</a></span>))<span class="operator">,</span>
+                       <span class="keyword">this</span><span class="operator">,</span> SLOT(reportScriptError(<span class="type"><a href="qscriptvalue.html">QScriptValue</a></span>)));
+
+      Context2D <span class="operator">*</span>context <span class="operator">=</span> <span class="keyword">new</span> Context2D(<span class="keyword">this</span>);
+      context<span class="operator">-</span><span class="operator">&gt;</span>setSize(<span class="number">150</span><span class="operator">,</span> <span class="number">150</span>);
+      m_canvas <span class="operator">=</span> <span class="keyword">new</span> QContext2DCanvas(context<span class="operator">,</span> m_env<span class="operator">,</span> <span class="keyword">this</span>);
+      m_canvas<span class="operator">-</span><span class="operator">&gt;</span>setFixedSize(context<span class="operator">-</span><span class="operator">&gt;</span>size());
+      m_canvas<span class="operator">-</span><span class="operator">&gt;</span>setObjectName(<span class="string">&quot;tutorial&quot;</span>);
+      m_env<span class="operator">-</span><span class="operator">&gt;</span>addCanvas(m_canvas);
+
+</pre>
+<p>The Window constructor creates an Environment object and connects to its scriptError() signal. It then creates a Context2D object, and a QContext2DCanvas widget to hold it. The canvas widget is given the name <code>tutorial</code>, and added to the environment; scripts can access the canvas by e.g&#x2e; <code>document.getElementById('tutorial')</code>.</p>
+<pre class="cpp">
+
+      <span class="type"><a href="../qtcore/qdir.html">QDir</a></span> dir(scriptsDir());
+      <span class="type"><a href="../qtcore/qfileinfo.html#QFileInfoList-typedef">QFileInfoList</a></span> entries <span class="operator">=</span> dir<span class="operator">.</span>entryInfoList(<span class="type"><a href="../qtcore/qstringlist.html">QStringList</a></span>() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">&quot;*.js&quot;</span>);
+      <span class="keyword">for</span> (<span class="type">int</span> i <span class="operator">=</span> <span class="number">0</span>; i <span class="operator">&lt;</span> entries<span class="operator">.</span>size(); <span class="operator">+</span><span class="operator">+</span>i)
+          m_view<span class="operator">-</span><span class="operator">&gt;</span>addItem(entries<span class="operator">.</span>at(i)<span class="operator">.</span>fileName());
+      connect(m_view<span class="operator">,</span> SIGNAL(currentItemChanged(<span class="type"><a href="../qtwidgets/qlistwidgetitem.html">QListWidgetItem</a></span><span class="operator">*</span><span class="operator">,</span><span class="type"><a href="../qtwidgets/qlistwidgetitem.html">QListWidgetItem</a></span><span class="operator">*</span>))<span class="operator">,</span>
+              <span class="keyword">this</span><span class="operator">,</span> SLOT(selectScript(<span class="type"><a href="../qtwidgets/qlistwidgetitem.html">QListWidgetItem</a></span><span class="operator">*</span>)));
+
+</pre>
+<p>The window contains a list widget that is populated with available scripts (read from a <code>scripts/</code> folder).</p>
+<pre class="cpp">
+
+  <span class="type">void</span> Window<span class="operator">::</span>selectScript(<span class="type"><a href="../qtwidgets/qlistwidgetitem.html">QListWidgetItem</a></span> <span class="operator">*</span>item)
+  {
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> fileName <span class="operator">=</span> item<span class="operator">-</span><span class="operator">&gt;</span>text();
+      runScript(fileName<span class="operator">,</span> <span class="comment">/*debug=*/</span><span class="keyword">false</span>);
+  }
+
+</pre>
+<p>When an item is selected, the corresponding script is evaluated in the environment.</p>
+<pre class="cpp">
+
+  <span class="type">void</span> Window<span class="operator">::</span>runInDebugger()
+  {
+      <span class="type"><a href="../qtwidgets/qlistwidgetitem.html">QListWidgetItem</a></span> <span class="operator">*</span>item <span class="operator">=</span> m_view<span class="operator">-</span><span class="operator">&gt;</span>currentItem();
+      <span class="keyword">if</span> (item) {
+          <span class="type"><a href="../qtcore/qstring.html">QString</a></span> fileName <span class="operator">=</span> item<span class="operator">-</span><span class="operator">&gt;</span>text();
+          runScript(fileName<span class="operator">,</span> <span class="comment">/*debug=*/</span><span class="keyword">true</span>);
+      }
+  }
+
+</pre>
+<p>When the &quot;Run in Debugger&quot; button is clicked, the Qt Script debugger will automatically be invoked when the first statement of the script is reached. This enables the user to inspect the scripting environment and control further execution of the script; e.g&#x2e; he can single-step through the script and/or set breakpoints. It is also possible to enter script statements in the debugger's console widget, e.g&#x2e; to perform custom Context2D drawing operations, interactively.</p>
+<pre class="cpp">
+
+  <span class="type">void</span> Window<span class="operator">::</span>runScript(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>fileName<span class="operator">,</span> bool debug)
+  {
+      <span class="type"><a href="../qtcore/qfile.html">QFile</a></span> file(scriptsDir() <span class="operator">+</span> <span class="string">&quot;/&quot;</span> <span class="operator">+</span> fileName);
+      file<span class="operator">.</span>open(<span class="type"><a href="../qtcore/qiodevice.html">QIODevice</a></span><span class="operator">::</span>ReadOnly);
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> contents <span class="operator">=</span> file<span class="operator">.</span>readAll();
+      file<span class="operator">.</span>close();
+      m_env<span class="operator">-</span><span class="operator">&gt;</span>reset();
+
+  <span class="preprocessor">#ifndef QT_NO_SCRIPTTOOLS</span>
+      <span class="keyword">if</span> (debug) {
+          <span class="keyword">if</span> (<span class="operator">!</span>m_debugger) {
+              m_debugger <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtscripttools/qscriptenginedebugger.html">QScriptEngineDebugger</a></span>(<span class="keyword">this</span>);
+              m_debugWindow <span class="operator">=</span> m_debugger<span class="operator">-</span><span class="operator">&gt;</span>standardWindow();
+              m_debugWindow<span class="operator">-</span><span class="operator">&gt;</span>setWindowModality(<span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>ApplicationModal);
+              m_debugWindow<span class="operator">-</span><span class="operator">&gt;</span>resize(<span class="number">1280</span><span class="operator">,</span> <span class="number">704</span>);
+          }
+          m_debugger<span class="operator">-</span><span class="operator">&gt;</span>attachTo(m_env<span class="operator">-</span><span class="operator">&gt;</span>engine());
+          m_debugger<span class="operator">-</span><span class="operator">&gt;</span>action(<span class="type"><a href="../qtscripttools/qscriptenginedebugger.html">QScriptEngineDebugger</a></span><span class="operator">::</span>InterruptAction)<span class="operator">-</span><span class="operator">&gt;</span>trigger();
+      } <span class="keyword">else</span> {
+          <span class="keyword">if</span> (m_debugger)
+              m_debugger<span class="operator">-</span><span class="operator">&gt;</span>detach();
+      }
+  <span class="preprocessor">#else</span>
+      Q_UNUSED(debug);
+  <span class="preprocessor">#endif</span>
+
+      <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> ret <span class="operator">=</span> m_env<span class="operator">-</span><span class="operator">&gt;</span>evaluate(contents<span class="operator">,</span> fileName);
+
+  <span class="preprocessor">#ifndef QT_NO_SCRIPTTOOLS</span>
+      <span class="keyword">if</span> (m_debugWindow)
+          m_debugWindow<span class="operator">-</span><span class="operator">&gt;</span>hide();
+  <span class="preprocessor">#endif</span>
+
+      <span class="keyword">if</span> (ret<span class="operator">.</span>isError())
+          reportScriptError(ret);
+  }
+
+</pre>
+<p>If the evaluation of a script causes an uncaught exception, the Qt Script debugger will automatically be invoked; this enables the user to get an idea of what went wrong.</p>
+<p>Files:</p>
+<ul>
+<li><a href="qtscript-script-context2d-context2d-cpp.html">script/context2d/context2d.cpp</a></li>
+<li><a href="qtscript-script-context2d-context2d-h.html">script/context2d/context2d.h</a></li>
+<li><a href="qtscript-script-context2d-domimage-cpp.html">script/context2d/domimage.cpp</a></li>
+<li><a href="qtscript-script-context2d-domimage-h.html">script/context2d/domimage.h</a></li>
+<li><a href="qtscript-script-context2d-environment-cpp.html">script/context2d/environment.cpp</a></li>
+<li><a href="qtscript-script-context2d-environment-h.html">script/context2d/environment.h</a></li>
+<li><a href="qtscript-script-context2d-qcontext2dcanvas-cpp.html">script/context2d/qcontext2dcanvas.cpp</a></li>
+<li><a href="qtscript-script-context2d-qcontext2dcanvas-h.html">script/context2d/qcontext2dcanvas.h</a></li>
+<li><a href="qtscript-script-context2d-window-cpp.html">script/context2d/window.cpp</a></li>
+<li><a href="qtscript-script-context2d-window-h.html">script/context2d/window.h</a></li>
+<li><a href="qtscript-script-context2d-scripts-alpha-js.html">script/context2d/scripts/alpha.js</a></li>
+<li><a href="qtscript-script-context2d-scripts-arc-js.html">script/context2d/scripts/arc.js</a></li>
+<li><a href="qtscript-script-context2d-scripts-bezier-js.html">script/context2d/scripts/bezier.js</a></li>
+<li><a href="qtscript-script-context2d-scripts-clock-js.html">script/context2d/scripts/clock.js</a></li>
+<li><a href="qtscript-script-context2d-scripts-fill1-js.html">script/context2d/scripts/fill1.js</a></li>
+<li><a href="qtscript-script-context2d-scripts-grad-js.html">script/context2d/scripts/grad.js</a></li>
+<li><a href="qtscript-script-context2d-scripts-linecap-js.html">script/context2d/scripts/linecap.js</a></li>
+<li><a href="qtscript-script-context2d-scripts-linestye-js.html">script/context2d/scripts/linestye.js</a></li>
+<li><a href="qtscript-script-context2d-scripts-moveto-js.html">script/context2d/scripts/moveto.js</a></li>
+<li><a href="qtscript-script-context2d-scripts-moveto2-js.html">script/context2d/scripts/moveto2.js</a></li>
+<li><a href="qtscript-script-context2d-scripts-pacman-js.html">script/context2d/scripts/pacman.js</a></li>
+<li><a href="qtscript-script-context2d-scripts-plasma-js.html">script/context2d/scripts/plasma.js</a></li>
+<li><a href="qtscript-script-context2d-scripts-pong-js.html">script/context2d/scripts/pong.js</a></li>
+<li><a href="qtscript-script-context2d-scripts-quad-js.html">script/context2d/scripts/quad.js</a></li>
+<li><a href="qtscript-script-context2d-scripts-rgba-js.html">script/context2d/scripts/rgba.js</a></li>
+<li><a href="qtscript-script-context2d-scripts-rotate-js.html">script/context2d/scripts/rotate.js</a></li>
+<li><a href="qtscript-script-context2d-scripts-scale-js.html">script/context2d/scripts/scale.js</a></li>
+<li><a href="qtscript-script-context2d-scripts-stroke1-js.html">script/context2d/scripts/stroke1.js</a></li>
+<li><a href="qtscript-script-context2d-scripts-translate-js.html">script/context2d/scripts/translate.js</a></li>
+<li><a href="qtscript-script-context2d-main-cpp.html">script/context2d/main.cpp</a></li>
+<li><a href="qtscript-script-context2d-context2d-pro.html">script/context2d/context2d.pro</a></li>
+<li><a href="qtscript-script-context2d-context2d-qrc.html">script/context2d/context2d.qrc</a></li>
+</ul>
+</div>
+<!-- @@@script/context2d -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

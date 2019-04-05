@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- xml-processing.qdoc -->
+  <title>Working with the DOM Tree | Qt XML 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtxml-index.html">Qt XML</a></td><td >Working with the DOM Tree</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+  <link rel="prev" href="xml-sax.html" />
+<p class="naviNextPrevious headerNavi">
+<a class="prevPage" href="xml-sax.html">The SAX interface</a>
+</p><p/>
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#introduction-to-dom">Introduction to DOM</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">Working with the DOM Tree</h1>
+<span class="subtitle"></span>
+<!-- $$$xml-dom.tml-description -->
+<div class="descr"> <a name="details"></a>
+<a name="dom"></a><p>DOM Level 2 is a W3C Recommendation for XML interfaces that maps the constituents of an XML document to a tree structure. The specification of DOM Level 2 can be found at <a href="http://www.w3.org/DOM/">http://www.w3.org/DOM/</a>.</p>
+<a name="domintro"></a><a name="introduction-to-dom"></a>
+<h2 id="introduction-to-dom">Introduction to DOM</h2>
+<p>DOM provides an interface to access and change the content and structure of an XML file. It makes a hierarchical view of the document (a tree view). Thus -- in contrast to the SAX2 interface -- an object model of the document is resident in memory after parsing which makes manipulation easy.</p>
+<p>All DOM nodes in the document tree are subclasses of <a href="qdomnode.html">QDomNode</a>. The document itself is represented as a <a href="qdomdocument.html">QDomDocument</a> object.</p>
+<p>Here are the available node classes and their potential child classes:</p>
+<ul>
+<li><a href="qdomdocument.html">QDomDocument</a>: Possible children are<ul>
+<li><a href="qdomelement.html">QDomElement</a> (at most one)</li>
+<li><a href="qdomprocessinginstruction.html">QDomProcessingInstruction</a></li>
+<li><a href="qdomcomment.html">QDomComment</a></li>
+<li><a href="qdomdocumenttype.html">QDomDocumentType</a></li>
+</ul>
+</li>
+<li><a href="qdomdocumentfragment.html">QDomDocumentFragment</a>: Possible children are<ul>
+<li><a href="qdomelement.html">QDomElement</a></li>
+<li><a href="qdomprocessinginstruction.html">QDomProcessingInstruction</a></li>
+<li><a href="qdomcomment.html">QDomComment</a></li>
+<li><a href="qdomtext.html">QDomText</a></li>
+<li><a href="qdomcdatasection.html">QDomCDATASection</a></li>
+<li><a href="qdomentityreference.html">QDomEntityReference</a></li>
+</ul>
+</li>
+<li><a href="qdomdocumenttype.html">QDomDocumentType</a>: No children</li>
+<li><a href="qdomentityreference.html">QDomEntityReference</a>: Possible children are<ul>
+<li><a href="qdomelement.html">QDomElement</a></li>
+<li><a href="qdomprocessinginstruction.html">QDomProcessingInstruction</a></li>
+<li><a href="qdomcomment.html">QDomComment</a></li>
+<li><a href="qdomtext.html">QDomText</a></li>
+<li><a href="qdomcdatasection.html">QDomCDATASection</a></li>
+<li><a href="qdomentityreference.html">QDomEntityReference</a></li>
+</ul>
+</li>
+<li><a href="qdomelement.html">QDomElement</a>: Possible children are<ul>
+<li><a href="qdomelement.html">QDomElement</a></li>
+<li><a href="qdomtext.html">QDomText</a></li>
+<li><a href="qdomcomment.html">QDomComment</a></li>
+<li><a href="qdomprocessinginstruction.html">QDomProcessingInstruction</a></li>
+<li><a href="qdomcdatasection.html">QDomCDATASection</a></li>
+<li><a href="qdomentityreference.html">QDomEntityReference</a></li>
+</ul>
+</li>
+<li><a href="qdomattr.html">QDomAttr</a>: Possible children are<ul>
+<li><a href="qdomtext.html">QDomText</a></li>
+<li><a href="qdomentityreference.html">QDomEntityReference</a></li>
+</ul>
+</li>
+<li><a href="qdomprocessinginstruction.html">QDomProcessingInstruction</a>: No children</li>
+<li><a href="qdomcomment.html">QDomComment</a>: No children</li>
+<li><a href="qdomtext.html">QDomText</a>: No children</li>
+<li><a href="qdomcdatasection.html">QDomCDATASection</a>: No children</li>
+<li><a href="qdomentity.html">QDomEntity</a>: Possible children are<ul>
+<li><a href="qdomelement.html">QDomElement</a></li>
+<li><a href="qdomprocessinginstruction.html">QDomProcessingInstruction</a></li>
+<li><a href="qdomcomment.html">QDomComment</a></li>
+<li><a href="qdomtext.html">QDomText</a></li>
+<li><a href="qdomcdatasection.html">QDomCDATASection</a></li>
+<li><a href="qdomentityreference.html">QDomEntityReference</a></li>
+</ul>
+</li>
+<li><a href="qdomnotation.html">QDomNotation</a>: No children</li>
+</ul>
+<p>With <a href="qdomnodelist.html">QDomNodeList</a> and <a href="qdomnamednodemap.html">QDomNamedNodeMap</a> two collection classes are provided: <a href="qdomnodelist.html">QDomNodeList</a> is a list of nodes, and <a href="qdomnamednodemap.html">QDomNamedNodeMap</a> is used to handle unordered sets of nodes (often used for attributes).</p>
+<p>The <a href="qdomimplementation.html">QDomImplementation</a> class allows the user to query features of the DOM implementation.</p>
+<p>To get started please refer to the <a href="qdomdocument.html">QDomDocument</a> documentation. You might also want to take a look at the <a href="qtxml-dombookmarks-example.html">DOM Bookmarks example</a>, which illustrates how to read and write an XML bookmark file (XBEL) using DOM.</p>
+</div>
+<!-- @@@xml-dom.tml -->
+<p class="naviNextPrevious footerNavi">
+<a class="prevPage" href="xml-sax.html">The SAX interface</a>
+</p>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

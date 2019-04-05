@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>sslclient.cpp Example File | Qt Network 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtnetwork-index.html">Qt Network</a></td><td ><a href="qtnetwork-securesocketclient-example.html">Secure Socket Client Example</a></td><td >sslclient.cpp Example File</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar"><div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">sslclient.cpp Example File</h1>
+<span class="subtitle">securesocketclient/sslclient.cpp</span>
+<!-- $$$securesocketclient/sslclient.cpp-description -->
+<div class="descr"> <a name="details"></a>
+<pre class="cpp">
+
+  <span class="comment">/****************************************************************************
+  **
+  ** Copyright (C) 2015 The Qt Company Ltd.
+  ** Contact: http://www.qt.io/licensing/
+  **
+  ** This file is part of the examples of the Qt Toolkit.
+  **
+  ** $QT_BEGIN_LICENSE:BSD$
+  ** You may use this file under the terms of the BSD license as follows:
+  **
+  ** &quot;Redistribution and use in source and binary forms, with or without
+  ** modification, are permitted provided that the following conditions are
+  ** met:
+  **   * Redistributions of source code must retain the above copyright
+  **     notice, this list of conditions and the following disclaimer.
+  **   * Redistributions in binary form must reproduce the above copyright
+  **     notice, this list of conditions and the following disclaimer in
+  **     the documentation and/or other materials provided with the
+  **     distribution.
+  **   * Neither the name of The Qt Company Ltd nor the names of its
+  **     contributors may be used to endorse or promote products derived
+  **     from this software without specific prior written permission.
+  **
+  **
+  ** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  ** &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  ** LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  ** A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  ** OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  ** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  ** LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  ** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  ** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  ** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.&quot;
+  **
+  ** $QT_END_LICENSE$
+  **
+  ****************************************************************************/</span>
+
+  <span class="preprocessor">#include &quot;certificateinfo.h&quot;</span>
+  <span class="preprocessor">#include &quot;sslclient.h&quot;</span>
+  <span class="preprocessor">#include &quot;ui_sslclient.h&quot;</span>
+  <span class="preprocessor">#include &quot;ui_sslerrors.h&quot;</span>
+
+  <span class="preprocessor">#include &lt;QtWidgets/QScrollBar&gt;</span>
+  <span class="preprocessor">#include &lt;QtWidgets/QStyle&gt;</span>
+  <span class="preprocessor">#include &lt;QtWidgets/QToolButton&gt;</span>
+  <span class="preprocessor">#include &lt;QtWidgets/QMessageBox&gt;</span>
+  <span class="preprocessor">#include &lt;QtNetwork/QSslCipher&gt;</span>
+
+  SslClient<span class="operator">::</span>SslClient(<span class="type">QWidget</span> <span class="operator">*</span>parent)
+      : <span class="type">QWidget</span>(parent)<span class="operator">,</span> socket(<span class="number">0</span>)<span class="operator">,</span> padLock(<span class="number">0</span>)<span class="operator">,</span> executingDialog(<span class="keyword">false</span>)
+  {
+      form <span class="operator">=</span> <span class="keyword">new</span> Ui_Form;
+      form<span class="operator">-</span><span class="operator">&gt;</span>setupUi(<span class="keyword">this</span>);
+      form<span class="operator">-</span><span class="operator">&gt;</span>hostNameEdit<span class="operator">-</span><span class="operator">&gt;</span>setSelection(<span class="number">0</span><span class="operator">,</span> form<span class="operator">-</span><span class="operator">&gt;</span>hostNameEdit<span class="operator">-</span><span class="operator">&gt;</span>text()<span class="operator">.</span>size());
+      form<span class="operator">-</span><span class="operator">&gt;</span>sessionOutput<span class="operator">-</span><span class="operator">&gt;</span>setHtml(tr(<span class="string">&quot;&amp;lt;not connected&amp;gt;&quot;</span>));
+
+      connect(form<span class="operator">-</span><span class="operator">&gt;</span>hostNameEdit<span class="operator">,</span> SIGNAL(textChanged(<span class="type"><a href="../qtcore/qstring.html">QString</a></span>))<span class="operator">,</span>
+              <span class="keyword">this</span><span class="operator">,</span> SLOT(updateEnabledState()));
+      connect(form<span class="operator">-</span><span class="operator">&gt;</span>connectButton<span class="operator">,</span> SIGNAL(clicked())<span class="operator">,</span>
+              <span class="keyword">this</span><span class="operator">,</span> SLOT(secureConnect()));
+      connect(form<span class="operator">-</span><span class="operator">&gt;</span>sendButton<span class="operator">,</span> SIGNAL(clicked())<span class="operator">,</span>
+              <span class="keyword">this</span><span class="operator">,</span> SLOT(sendData()));
+  }
+
+  SslClient<span class="operator">::</span><span class="operator">~</span>SslClient()
+  {
+      <span class="keyword">delete</span> form;
+  }
+
+  <span class="type">void</span> SslClient<span class="operator">::</span>updateEnabledState()
+  {
+      bool unconnected <span class="operator">=</span> <span class="operator">!</span>socket <span class="operator">|</span><span class="operator">|</span> socket<span class="operator">-</span><span class="operator">&gt;</span>state() <span class="operator">=</span><span class="operator">=</span> <span class="type"><a href="qabstractsocket.html">QAbstractSocket</a></span><span class="operator">::</span>UnconnectedState;
+
+      form<span class="operator">-</span><span class="operator">&gt;</span>hostNameEdit<span class="operator">-</span><span class="operator">&gt;</span>setReadOnly(<span class="operator">!</span>unconnected);
+      form<span class="operator">-</span><span class="operator">&gt;</span>hostNameEdit<span class="operator">-</span><span class="operator">&gt;</span>setFocusPolicy(unconnected <span class="operator">?</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>StrongFocus : <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>NoFocus);
+
+      form<span class="operator">-</span><span class="operator">&gt;</span>hostNameLabel<span class="operator">-</span><span class="operator">&gt;</span>setEnabled(unconnected);
+      form<span class="operator">-</span><span class="operator">&gt;</span>portBox<span class="operator">-</span><span class="operator">&gt;</span>setEnabled(unconnected);
+      form<span class="operator">-</span><span class="operator">&gt;</span>portLabel<span class="operator">-</span><span class="operator">&gt;</span>setEnabled(unconnected);
+      form<span class="operator">-</span><span class="operator">&gt;</span>connectButton<span class="operator">-</span><span class="operator">&gt;</span>setEnabled(unconnected <span class="operator">&amp;</span><span class="operator">&amp;</span> <span class="operator">!</span>form<span class="operator">-</span><span class="operator">&gt;</span>hostNameEdit<span class="operator">-</span><span class="operator">&gt;</span>text()<span class="operator">.</span>isEmpty());
+
+      bool connected <span class="operator">=</span> socket <span class="operator">&amp;</span><span class="operator">&amp;</span> socket<span class="operator">-</span><span class="operator">&gt;</span>state() <span class="operator">=</span><span class="operator">=</span> <span class="type"><a href="qabstractsocket.html">QAbstractSocket</a></span><span class="operator">::</span>ConnectedState;
+      form<span class="operator">-</span><span class="operator">&gt;</span>sessionOutput<span class="operator">-</span><span class="operator">&gt;</span>setEnabled(connected);
+      form<span class="operator">-</span><span class="operator">&gt;</span>sessionInput<span class="operator">-</span><span class="operator">&gt;</span>setEnabled(connected);
+      form<span class="operator">-</span><span class="operator">&gt;</span>sessionInputLabel<span class="operator">-</span><span class="operator">&gt;</span>setEnabled(connected);
+      form<span class="operator">-</span><span class="operator">&gt;</span>sendButton<span class="operator">-</span><span class="operator">&gt;</span>setEnabled(connected);
+  }
+
+  <span class="type">void</span> SslClient<span class="operator">::</span>secureConnect()
+  {
+      <span class="keyword">if</span> (<span class="operator">!</span>socket) {
+          socket <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="qsslsocket.html">QSslSocket</a></span>(<span class="keyword">this</span>);
+          connect(socket<span class="operator">,</span> SIGNAL(stateChanged(<span class="type"><a href="qabstractsocket.html">QAbstractSocket</a></span><span class="operator">::</span>SocketState))<span class="operator">,</span>
+                  <span class="keyword">this</span><span class="operator">,</span> SLOT(socketStateChanged(<span class="type"><a href="qabstractsocket.html">QAbstractSocket</a></span><span class="operator">::</span>SocketState)));
+          connect(socket<span class="operator">,</span> SIGNAL(encrypted())<span class="operator">,</span>
+                  <span class="keyword">this</span><span class="operator">,</span> SLOT(socketEncrypted()));
+          connect(socket<span class="operator">,</span> SIGNAL(error(<span class="type"><a href="qabstractsocket.html">QAbstractSocket</a></span><span class="operator">::</span>SocketError))<span class="operator">,</span>
+                  <span class="keyword">this</span><span class="operator">,</span> SLOT(socketError(<span class="type"><a href="qabstractsocket.html">QAbstractSocket</a></span><span class="operator">::</span>SocketError)));
+          connect(socket<span class="operator">,</span> SIGNAL(sslErrors(<span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span><span class="type"><a href="qsslerror.html">QSslError</a></span><span class="operator">&gt;</span>))<span class="operator">,</span>
+                  <span class="keyword">this</span><span class="operator">,</span> SLOT(sslErrors(<span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span><span class="type"><a href="qsslerror.html">QSslError</a></span><span class="operator">&gt;</span>)));
+          connect(socket<span class="operator">,</span> SIGNAL(readyRead())<span class="operator">,</span>
+                  <span class="keyword">this</span><span class="operator">,</span> SLOT(socketReadyRead()));
+      }
+
+      socket<span class="operator">-</span><span class="operator">&gt;</span>connectToHostEncrypted(form<span class="operator">-</span><span class="operator">&gt;</span>hostNameEdit<span class="operator">-</span><span class="operator">&gt;</span>text()<span class="operator">,</span> form<span class="operator">-</span><span class="operator">&gt;</span>portBox<span class="operator">-</span><span class="operator">&gt;</span>value());
+      updateEnabledState();
+  }
+
+  <span class="type">void</span> SslClient<span class="operator">::</span>socketStateChanged(<span class="type"><a href="qabstractsocket.html">QAbstractSocket</a></span><span class="operator">::</span>SocketState state)
+  {
+      <span class="keyword">if</span> (executingDialog)
+          <span class="keyword">return</span>;
+
+      updateEnabledState();
+      <span class="keyword">if</span> (state <span class="operator">=</span><span class="operator">=</span> <span class="type"><a href="qabstractsocket.html">QAbstractSocket</a></span><span class="operator">::</span>UnconnectedState) {
+          form<span class="operator">-</span><span class="operator">&gt;</span>hostNameEdit<span class="operator">-</span><span class="operator">&gt;</span>setPalette(<span class="type"><a href="../qtgui/qpalette.html">QPalette</a></span>());
+          form<span class="operator">-</span><span class="operator">&gt;</span>hostNameEdit<span class="operator">-</span><span class="operator">&gt;</span>setFocus();
+          form<span class="operator">-</span><span class="operator">&gt;</span>cipherLabel<span class="operator">-</span><span class="operator">&gt;</span>setText(tr(<span class="string">&quot;&lt;none&gt;&quot;</span>));
+          <span class="keyword">if</span> (padLock)
+              padLock<span class="operator">-</span><span class="operator">&gt;</span>hide();
+      }
+  }
+
+  <span class="type">void</span> SslClient<span class="operator">::</span>socketEncrypted()
+  {
+      <span class="keyword">if</span> (<span class="operator">!</span>socket)
+          <span class="keyword">return</span>;                 <span class="comment">// might have disconnected already</span>
+
+      form<span class="operator">-</span><span class="operator">&gt;</span>sessionOutput<span class="operator">-</span><span class="operator">&gt;</span>clear();
+      form<span class="operator">-</span><span class="operator">&gt;</span>sessionInput<span class="operator">-</span><span class="operator">&gt;</span>setFocus();
+
+      <span class="type"><a href="../qtgui/qpalette.html">QPalette</a></span> palette;
+      palette<span class="operator">.</span>setColor(<span class="type"><a href="../qtgui/qpalette.html">QPalette</a></span><span class="operator">::</span>Base<span class="operator">,</span> <span class="type"><a href="../qtgui/qcolor.html">QColor</a></span>(<span class="number">255</span><span class="operator">,</span> <span class="number">255</span><span class="operator">,</span> <span class="number">192</span>));
+      form<span class="operator">-</span><span class="operator">&gt;</span>hostNameEdit<span class="operator">-</span><span class="operator">&gt;</span>setPalette(palette);
+
+      <span class="type"><a href="qsslcipher.html">QSslCipher</a></span> ciph <span class="operator">=</span> socket<span class="operator">-</span><span class="operator">&gt;</span>sessionCipher();
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> cipher <span class="operator">=</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span>(<span class="string">&quot;%1, %2 (%3/%4)&quot;</span>)<span class="operator">.</span>arg(ciph<span class="operator">.</span>authenticationMethod())
+                       <span class="operator">.</span>arg(ciph<span class="operator">.</span>name())<span class="operator">.</span>arg(ciph<span class="operator">.</span>usedBits())<span class="operator">.</span>arg(ciph<span class="operator">.</span>supportedBits());;
+      form<span class="operator">-</span><span class="operator">&gt;</span>cipherLabel<span class="operator">-</span><span class="operator">&gt;</span>setText(cipher);
+
+      <span class="keyword">if</span> (<span class="operator">!</span>padLock) {
+          padLock <span class="operator">=</span> <span class="keyword">new</span> <span class="type">QToolButton</span>;
+          padLock<span class="operator">-</span><span class="operator">&gt;</span>setIcon(<span class="type"><a href="../qtgui/qicon.html">QIcon</a></span>(<span class="string">&quot;:/encrypted.png&quot;</span>));
+  <span class="preprocessor">#ifndef QT_NO_CURSOR</span>
+          padLock<span class="operator">-</span><span class="operator">&gt;</span>setCursor(<span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>ArrowCursor);
+  <span class="preprocessor">#endif</span>
+          padLock<span class="operator">-</span><span class="operator">&gt;</span>setToolTip(tr(<span class="string">&quot;Display encryption details.&quot;</span>));
+
+          <span class="type">int</span> extent <span class="operator">=</span> form<span class="operator">-</span><span class="operator">&gt;</span>hostNameEdit<span class="operator">-</span><span class="operator">&gt;</span>height() <span class="operator">-</span> <span class="number">2</span>;
+          padLock<span class="operator">-</span><span class="operator">&gt;</span>resize(extent<span class="operator">,</span> extent);
+          padLock<span class="operator">-</span><span class="operator">&gt;</span>setSizePolicy(<span class="type">QSizePolicy</span><span class="operator">::</span>Fixed<span class="operator">,</span> <span class="type">QSizePolicy</span><span class="operator">::</span>Ignored);
+
+          <span class="type">QHBoxLayout</span> <span class="operator">*</span>layout <span class="operator">=</span> <span class="keyword">new</span> <span class="type">QHBoxLayout</span>(form<span class="operator">-</span><span class="operator">&gt;</span>hostNameEdit);
+          layout<span class="operator">-</span><span class="operator">&gt;</span>setMargin(form<span class="operator">-</span><span class="operator">&gt;</span>hostNameEdit<span class="operator">-</span><span class="operator">&gt;</span>style()<span class="operator">-</span><span class="operator">&gt;</span>pixelMetric(<span class="type">QStyle</span><span class="operator">::</span>PM_DefaultFrameWidth));
+          layout<span class="operator">-</span><span class="operator">&gt;</span>setSpacing(<span class="number">0</span>);
+          layout<span class="operator">-</span><span class="operator">&gt;</span>addStretch();
+          layout<span class="operator">-</span><span class="operator">&gt;</span>addWidget(padLock);
+
+          form<span class="operator">-</span><span class="operator">&gt;</span>hostNameEdit<span class="operator">-</span><span class="operator">&gt;</span>setLayout(layout);
+
+          connect(padLock<span class="operator">,</span> SIGNAL(clicked())<span class="operator">,</span>
+                  <span class="keyword">this</span><span class="operator">,</span> SLOT(displayCertificateInfo()));
+      } <span class="keyword">else</span> {
+          padLock<span class="operator">-</span><span class="operator">&gt;</span>show();
+      }
+  }
+
+  <span class="type">void</span> SslClient<span class="operator">::</span>socketReadyRead()
+  {
+      appendString(<span class="type"><a href="../qtcore/qstring.html">QString</a></span><span class="operator">::</span>fromUtf8(socket<span class="operator">-</span><span class="operator">&gt;</span>readAll()));
+  }
+
+  <span class="type">void</span> SslClient<span class="operator">::</span>sendData()
+  {
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> input <span class="operator">=</span> form<span class="operator">-</span><span class="operator">&gt;</span>sessionInput<span class="operator">-</span><span class="operator">&gt;</span>text();
+      appendString(input <span class="operator">+</span> <span class="char">'\n'</span>);
+      socket<span class="operator">-</span><span class="operator">&gt;</span>write(input<span class="operator">.</span>toUtf8() <span class="operator">+</span> <span class="string">&quot;\r\n&quot;</span>);
+      form<span class="operator">-</span><span class="operator">&gt;</span>sessionInput<span class="operator">-</span><span class="operator">&gt;</span>clear();
+  }
+
+  <span class="type">void</span> SslClient<span class="operator">::</span>socketError(<span class="type"><a href="qabstractsocket.html">QAbstractSocket</a></span><span class="operator">::</span>SocketError)
+  {
+      <span class="type">QMessageBox</span><span class="operator">::</span>critical(<span class="keyword">this</span><span class="operator">,</span> tr(<span class="string">&quot;Connection error&quot;</span>)<span class="operator">,</span> socket<span class="operator">-</span><span class="operator">&gt;</span>errorString());
+  }
+
+  <span class="type">void</span> SslClient<span class="operator">::</span>sslErrors(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span><span class="type"><a href="qsslerror.html">QSslError</a></span><span class="operator">&gt;</span> <span class="operator">&amp;</span>errors)
+  {
+      <span class="type">QDialog</span> errorDialog(<span class="keyword">this</span>);
+      Ui_SslErrors ui;
+      ui<span class="operator">.</span>setupUi(<span class="operator">&amp;</span>errorDialog);
+      connect(ui<span class="operator">.</span>certificateChainButton<span class="operator">,</span> SIGNAL(clicked())<span class="operator">,</span>
+              <span class="keyword">this</span><span class="operator">,</span> SLOT(displayCertificateInfo()));
+
+      foreach (<span class="keyword">const</span> <span class="type"><a href="qsslerror.html">QSslError</a></span> <span class="operator">&amp;</span>error<span class="operator">,</span> errors)
+          ui<span class="operator">.</span>sslErrorList<span class="operator">-</span><span class="operator">&gt;</span>addItem(error<span class="operator">.</span>errorString());
+
+      executingDialog <span class="operator">=</span> <span class="keyword">true</span>;
+      <span class="keyword">if</span> (errorDialog<span class="operator">.</span>exec() <span class="operator">=</span><span class="operator">=</span> <span class="type">QDialog</span><span class="operator">::</span>Accepted)
+          socket<span class="operator">-</span><span class="operator">&gt;</span>ignoreSslErrors();
+      executingDialog <span class="operator">=</span> <span class="keyword">false</span>;
+
+      <span class="comment">// did the socket state change?</span>
+      <span class="keyword">if</span> (socket<span class="operator">-</span><span class="operator">&gt;</span>state() <span class="operator">!</span><span class="operator">=</span> <span class="type"><a href="qabstractsocket.html">QAbstractSocket</a></span><span class="operator">::</span>ConnectedState)
+          socketStateChanged(socket<span class="operator">-</span><span class="operator">&gt;</span>state());
+  }
+
+  <span class="type">void</span> SslClient<span class="operator">::</span>displayCertificateInfo()
+  {
+      CertificateInfo <span class="operator">*</span>info <span class="operator">=</span> <span class="keyword">new</span> CertificateInfo(<span class="keyword">this</span>);
+      info<span class="operator">-</span><span class="operator">&gt;</span>setCertificateChain(socket<span class="operator">-</span><span class="operator">&gt;</span>peerCertificateChain());
+      info<span class="operator">-</span><span class="operator">&gt;</span>exec();
+      info<span class="operator">-</span><span class="operator">&gt;</span>deleteLater();
+  }
+
+  <span class="type">void</span> SslClient<span class="operator">::</span>appendString(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>line)
+  {
+      <span class="type"><a href="../qtgui/qtextcursor.html">QTextCursor</a></span> cursor(form<span class="operator">-</span><span class="operator">&gt;</span>sessionOutput<span class="operator">-</span><span class="operator">&gt;</span>textCursor());
+      cursor<span class="operator">.</span>movePosition(<span class="type"><a href="../qtgui/qtextcursor.html">QTextCursor</a></span><span class="operator">::</span>End);
+      cursor<span class="operator">.</span>insertText(line);
+      form<span class="operator">-</span><span class="operator">&gt;</span>sessionOutput<span class="operator">-</span><span class="operator">&gt;</span>verticalScrollBar()<span class="operator">-</span><span class="operator">&gt;</span>setValue(form<span class="operator">-</span><span class="operator">&gt;</span>sessionOutput<span class="operator">-</span><span class="operator">&gt;</span>verticalScrollBar()<span class="operator">-</span><span class="operator">&gt;</span>maximum());
+  }
+
+</pre>
+</div>
+<!-- @@@securesocketclient/sslclient.cpp -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

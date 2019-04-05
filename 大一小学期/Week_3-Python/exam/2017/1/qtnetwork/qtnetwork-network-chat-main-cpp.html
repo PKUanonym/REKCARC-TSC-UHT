@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>main.cpp Example File | Qt Network 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtnetwork-index.html">Qt Network</a></td><td ><a href="qtnetwork-network-chat-example.html">Network Chat Example</a></td><td >main.cpp Example File</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar"><div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">main.cpp Example File</h1>
+<span class="subtitle">network-chat/main.cpp</span>
+<!-- $$$network-chat/main.cpp-description -->
+<div class="descr"> <a name="details"></a>
+<pre class="cpp">
+
+  <span class="comment">/****************************************************************************
+  **
+  ** Copyright (C) 2015 The Qt Company Ltd.
+  ** Contact: http://www.qt.io/licensing/
+  **
+  ** This file is part of the examples of the Qt Toolkit.
+  **
+  ** $QT_BEGIN_LICENSE:BSD$
+  ** You may use this file under the terms of the BSD license as follows:
+  **
+  ** &quot;Redistribution and use in source and binary forms, with or without
+  ** modification, are permitted provided that the following conditions are
+  ** met:
+  **   * Redistributions of source code must retain the above copyright
+  **     notice, this list of conditions and the following disclaimer.
+  **   * Redistributions in binary form must reproduce the above copyright
+  **     notice, this list of conditions and the following disclaimer in
+  **     the documentation and/or other materials provided with the
+  **     distribution.
+  **   * Neither the name of The Qt Company Ltd nor the names of its
+  **     contributors may be used to endorse or promote products derived
+  **     from this software without specific prior written permission.
+  **
+  **
+  ** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  ** &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  ** LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  ** A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  ** OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  ** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  ** LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  ** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  ** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  ** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.&quot;
+  **
+  ** $QT_END_LICENSE$
+  **
+  ****************************************************************************/</span>
+
+  <span class="preprocessor">#include &lt;QApplication&gt;</span>
+
+  <span class="preprocessor">#include &quot;chatdialog.h&quot;</span>
+
+  <span class="preprocessor">#include &lt;QtCore/QSettings&gt;</span>
+  <span class="preprocessor">#include &lt;QtNetwork/QNetworkConfigurationManager&gt;</span>
+  <span class="preprocessor">#include &lt;QtNetwork/QNetworkSession&gt;</span>
+
+  <span class="type">int</span> main(<span class="type">int</span> argc<span class="operator">,</span> <span class="type">char</span> <span class="operator">*</span>argv<span class="operator">[</span><span class="operator">]</span>)
+  {
+      <span class="type">QApplication</span> app(argc<span class="operator">,</span> argv);
+
+      <span class="type"><a href="qnetworkconfigurationmanager.html">QNetworkConfigurationManager</a></span> manager;
+      <span class="keyword">if</span> (manager<span class="operator">.</span>capabilities() <span class="operator">&amp;</span> <span class="type"><a href="qnetworkconfigurationmanager.html">QNetworkConfigurationManager</a></span><span class="operator">::</span>NetworkSessionRequired) {
+          <span class="comment">// Get saved network configuration</span>
+          <span class="type"><a href="../qtcore/qsettings.html">QSettings</a></span> settings(<span class="type"><a href="../qtcore/qsettings.html">QSettings</a></span><span class="operator">::</span>UserScope<span class="operator">,</span> QLatin1String(<span class="string">&quot;QtProject&quot;</span>));
+          settings<span class="operator">.</span>beginGroup(QLatin1String(<span class="string">&quot;QtNetwork&quot;</span>));
+          <span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> id <span class="operator">=</span> settings<span class="operator">.</span>value(QLatin1String(<span class="string">&quot;DefaultNetworkConfiguration&quot;</span>))<span class="operator">.</span>toString();
+          settings<span class="operator">.</span>endGroup();
+
+          <span class="comment">// If the saved network configuration is not currently discovered use the system default</span>
+          <span class="type"><a href="qnetworkconfiguration.html">QNetworkConfiguration</a></span> config <span class="operator">=</span> manager<span class="operator">.</span>configurationFromIdentifier(id);
+          <span class="keyword">if</span> ((config<span class="operator">.</span>state() <span class="operator">&amp;</span> <span class="type"><a href="qnetworkconfiguration.html">QNetworkConfiguration</a></span><span class="operator">::</span>Discovered) <span class="operator">!</span><span class="operator">=</span>
+              <span class="type"><a href="qnetworkconfiguration.html">QNetworkConfiguration</a></span><span class="operator">::</span>Discovered) {
+              config <span class="operator">=</span> manager<span class="operator">.</span>defaultConfiguration();
+          }
+
+          <span class="type"><a href="qnetworksession.html">QNetworkSession</a></span> <span class="operator">*</span>networkSession <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="qnetworksession.html">QNetworkSession</a></span>(config<span class="operator">,</span> <span class="operator">&amp;</span>app);
+          networkSession<span class="operator">-</span><span class="operator">&gt;</span>open();
+          networkSession<span class="operator">-</span><span class="operator">&gt;</span>waitForOpened();
+
+          <span class="keyword">if</span> (networkSession<span class="operator">-</span><span class="operator">&gt;</span>isOpen()) {
+              <span class="comment">// Save the used configuration</span>
+              <span class="type"><a href="qnetworkconfiguration.html">QNetworkConfiguration</a></span> config <span class="operator">=</span> networkSession<span class="operator">-</span><span class="operator">&gt;</span>configuration();
+              <span class="type"><a href="../qtcore/qstring.html">QString</a></span> id;
+              <span class="keyword">if</span> (config<span class="operator">.</span>type() <span class="operator">=</span><span class="operator">=</span> <span class="type"><a href="qnetworkconfiguration.html">QNetworkConfiguration</a></span><span class="operator">::</span>UserChoice) {
+                  id <span class="operator">=</span> networkSession<span class="operator">-</span><span class="operator">&gt;</span>sessionProperty(
+                          QLatin1String(<span class="string">&quot;UserChoiceConfiguration&quot;</span>))<span class="operator">.</span>toString();
+              } <span class="keyword">else</span> {
+                  id <span class="operator">=</span> config<span class="operator">.</span>identifier();
+              }
+
+              <span class="type"><a href="../qtcore/qsettings.html">QSettings</a></span> settings(<span class="type"><a href="../qtcore/qsettings.html">QSettings</a></span><span class="operator">::</span>UserScope<span class="operator">,</span> QLatin1String(<span class="string">&quot;QtProject&quot;</span>));
+              settings<span class="operator">.</span>beginGroup(QLatin1String(<span class="string">&quot;QtNetwork&quot;</span>));
+              settings<span class="operator">.</span>setValue(QLatin1String(<span class="string">&quot;DefaultNetworkConfiguration&quot;</span>)<span class="operator">,</span> id);
+              settings<span class="operator">.</span>endGroup();
+          }
+      }
+
+      ChatDialog dialog;
+      dialog<span class="operator">.</span>show();
+      <span class="keyword">return</span> app<span class="operator">.</span>exec();
+  }
+
+</pre>
+</div>
+<!-- @@@network-chat/main.cpp -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

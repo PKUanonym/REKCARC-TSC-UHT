@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html ng-app="searchApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Results</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css">
+    <link rel="stylesheet" href="{% static 'thunews/searchresult.css' %}">
+    <script type="text/javascript">var query_url = '{% url "api_query" %}'</script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-sanitize.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-route.min.js"></script>
+    <script type="text/javascript" src="{% static 'thunews/searchapp.js' %}"></script>
+</head>
+
+{% verbatim %}
+
+<body grey lighten-3>
+<div ng-controller="SearchController as searchCtrl" class="container">
+    <form name="searchForm" ng-submit="searchForm.$valid && searchCtrl.search()" novalidate>
+        <div class="row searchbar">
+            <input type="text" name="keyword" ng-model="searchCtrl.keywords" class="col s6" required>
+            <select name="datelimit" class="browser-default col s2 offset-s1" ng-model="searchCtrl.datelimit">
+                <option value="">Any time</option>
+                <option value="week">Within a week</option>
+                <option value="month">Within a month</option>
+                <option value="year">Within a year</option>
+            </select>
+            <button type="submit" class="col s2 offset-s1 btn waves-effect waves-light">Search</button>
+        </div>
+    </form>
+    <div ng-repeat="item in searchCtrl.result.results" class="item">
+        <a href="{{item.url}}" class="item-title" ng-bind-html="item.title" target="_blank"></a>
+        <span class="date">{{item.date}}</span>
+        <p ng-bind-html="item.abstract"></p>
+    </div>
+    <div ng-show="searchCtrl.result.count == 0">Not found</div>
+    <div class="pagination-div">
+        <ul class="pagination">
+            <li class="waves-effect">
+                <a ng-show="searchCtrl.result.previous" ng-click="searchCtrl.prevPage()">
+                    <i class="material-icons">chevron_left</i>
+                </a>
+            </li>
+            <li class="active">{{searchCtrl.pageNum}}</li>
+            <li class="waves-effect">
+                <a ng-show="searchCtrl.result.next" ng-click="searchCtrl.nextPage()">
+                    <i class="material-icons">chevron_right</i>
+                </a>
+            </li>
+        </ul>
+        <span class="date" ng-show="searchCtrl.result.count">
+            {{searchCtrl.getPageStart()}} - {{searchCtrl.getPageEnd()}} of {{searchCtrl.result.count}} results
+        </span>
+     </div>
+</div>
+</body>
+
+{% endverbatim %}
+
+</html>

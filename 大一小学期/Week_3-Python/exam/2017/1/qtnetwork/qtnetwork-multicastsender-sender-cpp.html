@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>sender.cpp Example File | Qt Network 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtnetwork-index.html">Qt Network</a></td><td ><a href="qtnetwork-multicastsender-example.html">Multicast Sender Example</a></td><td >sender.cpp Example File</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar"><div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">sender.cpp Example File</h1>
+<span class="subtitle">multicastsender/sender.cpp</span>
+<!-- $$$multicastsender/sender.cpp-description -->
+<div class="descr"> <a name="details"></a>
+<pre class="cpp">
+
+  <span class="comment">/****************************************************************************
+  **
+  ** Copyright (C) 2015 The Qt Company Ltd.
+  ** Contact: http://www.qt.io/licensing/
+  **
+  ** This file is part of the examples of the Qt Toolkit.
+  **
+  ** $QT_BEGIN_LICENSE:BSD$
+  ** You may use this file under the terms of the BSD license as follows:
+  **
+  ** &quot;Redistribution and use in source and binary forms, with or without
+  ** modification, are permitted provided that the following conditions are
+  ** met:
+  **   * Redistributions of source code must retain the above copyright
+  **     notice, this list of conditions and the following disclaimer.
+  **   * Redistributions in binary form must reproduce the above copyright
+  **     notice, this list of conditions and the following disclaimer in
+  **     the documentation and/or other materials provided with the
+  **     distribution.
+  **   * Neither the name of The Qt Company Ltd nor the names of its
+  **     contributors may be used to endorse or promote products derived
+  **     from this software without specific prior written permission.
+  **
+  **
+  ** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  ** &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  ** LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  ** A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  ** OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  ** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  ** LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  ** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  ** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  ** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.&quot;
+  **
+  ** $QT_END_LICENSE$
+  **
+  ****************************************************************************/</span>
+
+  <span class="preprocessor">#include &lt;QtWidgets&gt;</span>
+  <span class="preprocessor">#include &lt;QtNetwork&gt;</span>
+
+  <span class="preprocessor">#include &quot;sender.h&quot;</span>
+
+  Sender<span class="operator">::</span>Sender(<span class="type">QWidget</span> <span class="operator">*</span>parent)
+      : <span class="type">QDialog</span>(parent)
+  {
+      groupAddress <span class="operator">=</span> <span class="type"><a href="qhostaddress.html">QHostAddress</a></span>(<span class="string">&quot;239.255.43.21&quot;</span>);
+
+      statusLabel <span class="operator">=</span> <span class="keyword">new</span> <span class="type">QLabel</span>(tr(<span class="string">&quot;Ready to multicast datagrams to group %1 on port 45454&quot;</span>)<span class="operator">.</span>arg(groupAddress<span class="operator">.</span>toString()));
+
+      ttlLabel <span class="operator">=</span> <span class="keyword">new</span> <span class="type">QLabel</span>(tr(<span class="string">&quot;TTL for multicast datagrams:&quot;</span>));
+      ttlSpinBox <span class="operator">=</span> <span class="keyword">new</span> <span class="type">QSpinBox</span>;
+      ttlSpinBox<span class="operator">-</span><span class="operator">&gt;</span>setRange(<span class="number">0</span><span class="operator">,</span> <span class="number">255</span>);
+
+      <span class="type">QHBoxLayout</span> <span class="operator">*</span>ttlLayout <span class="operator">=</span> <span class="keyword">new</span> <span class="type">QHBoxLayout</span>;
+      ttlLayout<span class="operator">-</span><span class="operator">&gt;</span>addWidget(ttlLabel);
+      ttlLayout<span class="operator">-</span><span class="operator">&gt;</span>addWidget(ttlSpinBox);
+
+      startButton <span class="operator">=</span> <span class="keyword">new</span> <span class="type">QPushButton</span>(tr(<span class="string">&quot;&amp;Start&quot;</span>));
+      quitButton <span class="operator">=</span> <span class="keyword">new</span> <span class="type">QPushButton</span>(tr(<span class="string">&quot;&amp;Quit&quot;</span>));
+
+      buttonBox <span class="operator">=</span> <span class="keyword">new</span> <span class="type">QDialogButtonBox</span>;
+      buttonBox<span class="operator">-</span><span class="operator">&gt;</span>addButton(startButton<span class="operator">,</span> <span class="type">QDialogButtonBox</span><span class="operator">::</span>ActionRole);
+      buttonBox<span class="operator">-</span><span class="operator">&gt;</span>addButton(quitButton<span class="operator">,</span> <span class="type">QDialogButtonBox</span><span class="operator">::</span>RejectRole);
+
+      timer <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtcore/qtimer.html">QTimer</a></span>(<span class="keyword">this</span>);
+      udpSocket <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="qudpsocket.html">QUdpSocket</a></span>(<span class="keyword">this</span>);
+      messageNo <span class="operator">=</span> <span class="number">1</span>;
+
+      connect(ttlSpinBox<span class="operator">,</span> SIGNAL(valueChanged(<span class="type">int</span>))<span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> SLOT(ttlChanged(<span class="type">int</span>)));
+      connect(startButton<span class="operator">,</span> SIGNAL(clicked())<span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> SLOT(startSending()));
+      connect(quitButton<span class="operator">,</span> SIGNAL(clicked())<span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> SLOT(close()));
+      connect(timer<span class="operator">,</span> SIGNAL(timeout())<span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> SLOT(sendDatagram()));
+
+      <span class="type">QVBoxLayout</span> <span class="operator">*</span>mainLayout <span class="operator">=</span> <span class="keyword">new</span> <span class="type">QVBoxLayout</span>;
+      mainLayout<span class="operator">-</span><span class="operator">&gt;</span>addWidget(statusLabel);
+      mainLayout<span class="operator">-</span><span class="operator">&gt;</span>addLayout(ttlLayout);
+      mainLayout<span class="operator">-</span><span class="operator">&gt;</span>addWidget(buttonBox);
+      setLayout(mainLayout);
+
+      setWindowTitle(tr(<span class="string">&quot;Multicast Sender&quot;</span>));
+      ttlSpinBox<span class="operator">-</span><span class="operator">&gt;</span>setValue(<span class="number">1</span>);
+  }
+
+  <span class="type">void</span> Sender<span class="operator">::</span>ttlChanged(<span class="type">int</span> newTtl)
+  {
+      udpSocket<span class="operator">-</span><span class="operator">&gt;</span>setSocketOption(<span class="type"><a href="qabstractsocket.html">QAbstractSocket</a></span><span class="operator">::</span>MulticastTtlOption<span class="operator">,</span> newTtl);
+  }
+
+  <span class="type">void</span> Sender<span class="operator">::</span>startSending()
+  {
+      startButton<span class="operator">-</span><span class="operator">&gt;</span>setEnabled(<span class="keyword">false</span>);
+      timer<span class="operator">-</span><span class="operator">&gt;</span>start(<span class="number">1000</span>);
+  }
+
+  <span class="type">void</span> Sender<span class="operator">::</span>sendDatagram()
+  {
+      statusLabel<span class="operator">-</span><span class="operator">&gt;</span>setText(tr(<span class="string">&quot;Now sending datagram %1&quot;</span>)<span class="operator">.</span>arg(messageNo));
+      <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> datagram <span class="operator">=</span> <span class="string">&quot;Multicast message &quot;</span> <span class="operator">+</span> <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span><span class="operator">::</span>number(messageNo);
+      udpSocket<span class="operator">-</span><span class="operator">&gt;</span>writeDatagram(datagram<span class="operator">.</span>data()<span class="operator">,</span> datagram<span class="operator">.</span>size()<span class="operator">,</span>
+                               groupAddress<span class="operator">,</span> <span class="number">45454</span>);
+      <span class="operator">+</span><span class="operator">+</span>messageNo;
+  }
+
+</pre>
+</div>
+<!-- @@@multicastsender/sender.cpp -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qsslconfiguration.cpp -->
+  <title>QSslConfiguration Class | Qt Network 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtnetwork-index.html">Qt Network</a></td><td ><a href="qtnetwork-module.html">C++ Classes</a></td><td >QSslConfiguration</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-types">Public Types</a></li>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#static-public-members">Static Public Members</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">QSslConfiguration Class</h1>
+<!-- $$$QSslConfiguration-brief -->
+<p>The <a href="qsslconfiguration.html">QSslConfiguration</a> class holds the configuration and state of an SSL connection <a href="#details">More...</a></p>
+<!-- @@@QSslConfiguration -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign">   <span class="preprocessor">#include &lt;QSslConfiguration&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> qmake:</td><td class="memItemRight bottomAlign"> QT += network</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Since:</td><td class="memItemRight bottomAlign">  Qt 4.4</td></tr></table></div><ul>
+<li><a href="qsslconfiguration-members.html">List of all members, including inherited members</a></li>
+</ul>
+<p><b>Note:</b> All functions in this class are <a href="../qtdoc/threads-reentrancy.html">reentrant</a>.</p>
+<a name="public-types"></a>
+<h2 id="public-types">Public Types</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="qsslconfiguration.html#NextProtocolNegotiationStatus-enum">NextProtocolNegotiationStatus</a></b> { NextProtocolNegotiationNone, NextProtocolNegotiationNegotiated, NextProtocolNegotiationUnsupported }</td></tr>
+</table></div>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qsslconfiguration.html#QSslConfiguration">QSslConfiguration</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qsslconfiguration.html#QSslConfiguration-1">QSslConfiguration</a></b>(const QSslConfiguration &amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qsslconfiguration.html#dtor.QSslConfiguration">~QSslConfiguration</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QList&lt;QByteArray&gt; </td><td class="memItemRight bottomAlign"><b><a href="qsslconfiguration.html#allowedNextProtocols">allowedNextProtocols</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QList&lt;QSslCertificate&gt; </td><td class="memItemRight bottomAlign"><b><a href="qsslconfiguration.html#caCertificates">caCertificates</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QList&lt;QSslCipher&gt; </td><td class="memItemRight bottomAlign"><b><a href="qsslconfiguration.html#ciphers">ciphers</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVector&lt;QSslEllipticCurve&gt; </td><td class="memItemRight bottomAlign"><b><a href="qsslconfiguration.html#ellipticCurves">ellipticCurves</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qsslconfiguration.html#isNull">isNull</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QSslCertificate </td><td class="memItemRight bottomAlign"><b><a href="qsslconfiguration.html#localCertificate">localCertificate</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QList&lt;QSslCertificate&gt; </td><td class="memItemRight bottomAlign"><b><a href="qsslconfiguration.html#localCertificateChain">localCertificateChain</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QByteArray </td><td class="memItemRight bottomAlign"><b><a href="qsslconfiguration.html#nextNegotiatedProtocol">nextNegotiatedProtocol</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> NextProtocolNegotiationStatus </td><td class="memItemRight bottomAlign"><b><a href="qsslconfiguration.html#nextProtocolNegotiationStatus">nextProtocolNegotiationStatus</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QSslCertificate </td><td class="memItemRight bottomAlign"><b><a href="qsslconfiguration.html#peerCertificate">peerCertificate</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QList&lt;QSslCertificate&gt; </td><td class="memItemRight bottomAlign"><b><a href="qsslconfiguration.html#peerCertificateChain">peerCertificateChain</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="qsslconfiguration.html#peerVerifyDepth">peerVerifyDepth</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QSslSocket::PeerVerifyMode </td><td class="memItemRight bottomAlign"><b><a href="qsslconfiguration.html#peerVerifyMode">peerVerifyMode</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QSslKey </td><td class="memItemRight bottomAlign"><b><a href="qsslconfiguration.html#privateKey">privateKey</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QSsl::SslProtocol </td><td class="memItemRight bottomAlign"><b><a href="qsslconfiguration.html#protocol">protocol</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QSslCipher </td><td class="memItemRight bottomAlign"><b><a href="qsslconfiguration.html#sessionCipher">sessionCipher</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QSsl::SslProtocol </td><td class="memItemRight bottomAlign"><b><a href="qsslconfiguration.html#sessionProtocol">sessionProtocol</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QByteArray </td><td class="memItemRight bottomAlign"><b><a href="qsslconfiguration.html#sessionTicket">sessionTicket</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="qsslconfiguration.html#sessionTicketLifeTimeHint">sessionTicketLifeTimeHint</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qsslconfiguration.html#setAllowedNextProtocols">setAllowedNextProtocols</a></b>(QList&lt;QByteArray&gt; <i>protocols</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qsslconfiguration.html#setCaCertificates">setCaCertificates</a></b>(const QList&lt;QSslCertificate&gt; &amp;<i>certificates</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qsslconfiguration.html#setCiphers">setCiphers</a></b>(const QList&lt;QSslCipher&gt; &amp;<i>ciphers</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qsslconfiguration.html#setEllipticCurves">setEllipticCurves</a></b>(const QVector&lt;QSslEllipticCurve&gt; &amp;<i>curves</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qsslconfiguration.html#setLocalCertificate">setLocalCertificate</a></b>(const QSslCertificate &amp;<i>certificate</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qsslconfiguration.html#setLocalCertificateChain">setLocalCertificateChain</a></b>(const QList&lt;QSslCertificate&gt; &amp;<i>localChain</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qsslconfiguration.html#setPeerVerifyDepth">setPeerVerifyDepth</a></b>(int <i>depth</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qsslconfiguration.html#setPeerVerifyMode">setPeerVerifyMode</a></b>(QSslSocket::PeerVerifyMode <i>mode</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qsslconfiguration.html#setPrivateKey">setPrivateKey</a></b>(const QSslKey &amp;<i>key</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qsslconfiguration.html#setProtocol">setProtocol</a></b>(QSsl::SslProtocol <i>protocol</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qsslconfiguration.html#setSessionTicket">setSessionTicket</a></b>(const QByteArray &amp;<i>sessionTicket</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qsslconfiguration.html#setSslOption">setSslOption</a></b>(QSsl::SslOption <i>option</i>, bool <i>on</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qsslconfiguration.html#swap">swap</a></b>(QSslConfiguration &amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qsslconfiguration.html#testSslOption">testSslOption</a></b>(QSsl::SslOption <i>option</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qsslconfiguration.html#operator-not-eq">operator!=</a></b>(const QSslConfiguration &amp;<i>other</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QSslConfiguration &amp;</td><td class="memItemRight bottomAlign"><b><a href="qsslconfiguration.html#operator-eq">operator=</a></b>(QSslConfiguration &amp;&amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QSslConfiguration &amp;</td><td class="memItemRight bottomAlign"><b><a href="qsslconfiguration.html#operator-eq-1">operator=</a></b>(const QSslConfiguration &amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qsslconfiguration.html#operator-eq-eq">operator==</a></b>(const QSslConfiguration &amp;<i>other</i>) const</td></tr>
+</table></div>
+<a name="static-public-members"></a>
+<h2 id="static-public-members">Static Public Members</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> const char </td><td class="memItemRight bottomAlign"><b><a href="qsslconfiguration.html#NextProtocolHttp1_1-var">NextProtocolHttp1_1</a></b>[]</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> const char </td><td class="memItemRight bottomAlign"><b><a href="qsslconfiguration.html#NextProtocolSpdy3_0-var">NextProtocolSpdy3_0</a></b>[]</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QSslConfiguration </td><td class="memItemRight bottomAlign"><b><a href="qsslconfiguration.html#defaultConfiguration">defaultConfiguration</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qsslconfiguration.html#setDefaultConfiguration">setDefaultConfiguration</a></b>(const QSslConfiguration &amp;<i>configuration</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QList&lt;QSslCipher&gt; </td><td class="memItemRight bottomAlign"><b><a href="qsslconfiguration.html#supportedCiphers">supportedCiphers</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVector&lt;QSslEllipticCurve&gt; </td><td class="memItemRight bottomAlign"><b><a href="qsslconfiguration.html#supportedEllipticCurves">supportedEllipticCurves</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QList&lt;QSslCertificate&gt; </td><td class="memItemRight bottomAlign"><b><a href="qsslconfiguration.html#systemCaCertificates">systemCaCertificates</a></b>()</td></tr>
+</table></div>
+<a name="details"></a>
+<!-- $$$QSslConfiguration-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="qsslconfiguration.html">QSslConfiguration</a> class holds the configuration and state of an SSL connection</p>
+<p><a href="qsslconfiguration.html">QSslConfiguration</a> is used by Qt networking classes to relay information about an open SSL connection and to allow the application to control certain features of that connection.</p>
+<p>The settings that <a href="qsslconfiguration.html">QSslConfiguration</a> currently supports are:</p>
+<ul>
+<li>The SSL/TLS protocol to be used</li>
+<li>The certificate to be presented to the peer during connection and its associated private key</li>
+<li>The ciphers allowed to be used for encrypting the connection</li>
+<li>The list of Certificate Authorities certificates that are used to validate the peer's certificate</li>
+</ul>
+<p>These settings are applied only during the connection handshake. Setting them after the connection has been established has no effect.</p>
+<p>The state that <a href="qsslconfiguration.html">QSslConfiguration</a> supports are:</p>
+<ul>
+<li>The certificate the peer presented during handshake, along with the chain leading to a CA certificate</li>
+<li>The cipher used to encrypt this session</li>
+</ul>
+<p>The state can only be obtained once the SSL connection starts, but not necessarily before it's done. Some settings may change during the course of the SSL connection without need to restart it (for instance, the cipher can be changed over time).</p>
+<p>State in <a href="qsslconfiguration.html">QSslConfiguration</a> objects cannot be changed.</p>
+<p><a href="qsslconfiguration.html">QSslConfiguration</a> can be used with <a href="qsslsocket.html">QSslSocket</a> and the Network Access API.</p>
+<p>Note that changing settings in <a href="qsslconfiguration.html">QSslConfiguration</a> is not enough to change the settings in the related SSL connection. You must call setSslConfiguration on a modified <a href="qsslconfiguration.html">QSslConfiguration</a> object to achieve that. The following example illustrates how to change the protocol to TLSv1_0 in a <a href="qsslsocket.html">QSslSocket</a> object:</p>
+<pre class="cpp">
+
+  <span class="type"><a href="qsslconfiguration.html#QSslConfiguration">QSslConfiguration</a></span> config <span class="operator">=</span> sslSocket<span class="operator">.</span>sslConfiguration();
+  config<span class="operator">.</span>setProtocol(<span class="type"><a href="qssl.html">QSsl</a></span><span class="operator">::</span>TlsV1_0);
+  sslSocket<span class="operator">.</span>setSslConfiguration(config);
+
+</pre>
+</div>
+<p><b>See also </b><a href="qssl.html#SslProtocol-enum">QSsl::SslProtocol</a>, <a href="qsslcertificate.html">QSslCertificate</a>, <a href="qsslcipher.html">QSslCipher</a>, <a href="qsslkey.html">QSslKey</a>, <a href="qsslsocket.html">QSslSocket</a>, <a href="qnetworkaccessmanager.html">QNetworkAccessManager</a>, <a href="qsslsocket.html#sslConfiguration">QSslSocket::sslConfiguration</a>(), and <a href="qsslsocket.html#setSslConfiguration">QSslSocket::setSslConfiguration</a>().</p>
+<!-- @@@QSslConfiguration -->
+<div class="types">
+<h2>Member Type Documentation</h2>
+<!-- $$$NextProtocolNegotiationStatus$$$NextProtocolNegotiationNone$$$NextProtocolNegotiationNegotiated$$$NextProtocolNegotiationUnsupported -->
+<h3 class="fn" id="NextProtocolNegotiationStatus-enum"><a name="NextProtocolNegotiationStatus-enum"></a>enum QSslConfiguration::<span class="name">NextProtocolNegotiationStatus</span></h3>
+<p>Describes the status of the Next Protocol Negotiation (NPN).</p>
+<div class="table"><table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td class="topAlign"><code>QSslConfiguration::NextProtocolNegotiationNone</code></td><td class="topAlign tblval"><code>0</code></td><td class="topAlign">No application protocol has been negotiated (yet).</td></tr>
+<tr><td class="topAlign"><code>QSslConfiguration::NextProtocolNegotiationNegotiated</code></td><td class="topAlign tblval"><code>1</code></td><td class="topAlign">A next protocol has been negotiated (see <a href="qsslconfiguration.html#nextNegotiatedProtocol">nextNegotiatedProtocol</a>()).</td></tr>
+<tr><td class="topAlign"><code>QSslConfiguration::NextProtocolNegotiationUnsupported</code></td><td class="topAlign tblval"><code>2</code></td><td class="topAlign">The client and server could not agree on a common next application protocol.</td></tr>
+</table></div>
+<!-- @@@NextProtocolNegotiationStatus -->
+</div>
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$QSslConfiguration[overload1]$$$QSslConfiguration -->
+<h3 class="fn" id="QSslConfiguration"><a name="QSslConfiguration"></a>QSslConfiguration::<span class="name">QSslConfiguration</span>()</h3>
+<p>Constructs an empty SSL configuration. This configuration contains no valid settings and the state will be empty. <a href="qsslconfiguration.html#isNull">isNull</a>() will return true after this constructor is called.</p>
+<p>Once any setter methods are called, <a href="qsslconfiguration.html#isNull">isNull</a>() will return false.</p>
+<!-- @@@QSslConfiguration -->
+<!-- $$$QSslConfiguration$$$QSslConfigurationconstQSslConfiguration& -->
+<h3 class="fn" id="QSslConfiguration-1"><a name="QSslConfiguration-1"></a>QSslConfiguration::<span class="name">QSslConfiguration</span>(const <span class="type"><a href="qsslconfiguration.html#QSslConfiguration">QSslConfiguration</a></span> &amp;<i>other</i>)</h3>
+<p>Copies the configuration and state of <i>other</i>. If <i>other</i> is null, this object will be null too.</p>
+<!-- @@@QSslConfiguration -->
+<!-- $$$~QSslConfiguration[overload1]$$$~QSslConfiguration -->
+<h3 class="fn" id="dtor.QSslConfiguration"><a name="dtor.QSslConfiguration"></a>QSslConfiguration::<span class="name">~QSslConfiguration</span>()</h3>
+<p>Releases any resources held by <a href="qsslconfiguration.html">QSslConfiguration</a>.</p>
+<!-- @@@~QSslConfiguration -->
+<!-- $$$allowedNextProtocols[overload1]$$$allowedNextProtocols -->
+<h3 class="fn" id="allowedNextProtocols"><a name="allowedNextProtocols"></a><span class="type"><a href="../qtcore/qlist.html">QList</a></span>&lt;<span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span>&gt; QSslConfiguration::<span class="name">allowedNextProtocols</span>() const</h3>
+<p>This function returns the allowed protocols to be negotiated with the server through the Next Protocol Negotiation (NPN) TLS extension, as set by <a href="qsslconfiguration.html#setAllowedNextProtocols">setAllowedNextProtocols</a>().</p>
+<p>This function was introduced in  Qt 5.3.</p>
+<p><b>See also </b><a href="qsslconfiguration.html#nextNegotiatedProtocol">nextNegotiatedProtocol</a>(), <a href="qsslconfiguration.html#nextProtocolNegotiationStatus">nextProtocolNegotiationStatus</a>(), <a href="qsslconfiguration.html#setAllowedNextProtocols">setAllowedNextProtocols</a>(), <a href="qsslconfiguration.html#NextProtocolSpdy3_0-var">QSslConfiguration::NextProtocolSpdy3_0</a>, and <a href="qsslconfiguration.html#NextProtocolHttp1_1-var">QSslConfiguration::NextProtocolHttp1_1</a>.</p>
+<!-- @@@allowedNextProtocols -->
+<!-- $$$caCertificates[overload1]$$$caCertificates -->
+<h3 class="fn" id="caCertificates"><a name="caCertificates"></a><span class="type"><a href="../qtcore/qlist.html">QList</a></span>&lt;<span class="type"><a href="qsslcertificate.html">QSslCertificate</a></span>&gt; QSslConfiguration::<span class="name">caCertificates</span>() const</h3>
+<p>Returns this connection's CA certificate database. The CA certificate database is used by the socket during the handshake phase to validate the peer's certificate. It can be modified prior to the handshake with <a href="qsslconfiguration.html#setCaCertificates">setCaCertificates</a>(), or with <a href="qsslsocket.html">QSslSocket</a>'s <a href="qsslsocket.html#addCaCertificate">addCaCertificate()</a> and <a href="qsslsocket.html#addCaCertificates">addCaCertificates()</a>.</p>
+<p><b>See also </b><a href="qsslconfiguration.html#setCaCertificates">setCaCertificates</a>().</p>
+<!-- @@@caCertificates -->
+<!-- $$$ciphers[overload1]$$$ciphers -->
+<h3 class="fn" id="ciphers"><a name="ciphers"></a><span class="type"><a href="../qtcore/qlist.html">QList</a></span>&lt;<span class="type"><a href="qsslcipher.html">QSslCipher</a></span>&gt; QSslConfiguration::<span class="name">ciphers</span>() const</h3>
+<p>Returns this connection's current cryptographic cipher suite. This list is used during the handshake phase for choosing a session cipher. The returned list of ciphers is ordered by descending preference. (i.e&#x2e;, the first cipher in the list is the most preferred cipher). The session cipher will be the first one in the list that is also supported by the peer.</p>
+<p>By default, the handshake phase can choose any of the ciphers supported by this system's SSL libraries, which may vary from system to system. The list of ciphers supported by this system's SSL libraries is returned by QSslSocket::supportedCiphers(). You can restrict the list of ciphers used for choosing the session cipher for this socket by calling <a href="qsslconfiguration.html#setCiphers">setCiphers</a>() with a subset of the supported ciphers. You can revert to using the entire set by calling <a href="qsslconfiguration.html#setCiphers">setCiphers</a>() with the list returned by QSslSocket::supportedCiphers().</p>
+<p><b>See also </b><a href="qsslconfiguration.html#setCiphers">setCiphers</a>() and <a href="qsslsocket-obsolete.html#supportedCiphers">QSslSocket::supportedCiphers</a>().</p>
+<!-- @@@ciphers -->
+<!-- $$$defaultConfiguration[overload1]$$$defaultConfiguration -->
+<h3 class="fn" id="defaultConfiguration"><a name="defaultConfiguration"></a><code>[static] </code><span class="type"><a href="qsslconfiguration.html#QSslConfiguration">QSslConfiguration</a></span> QSslConfiguration::<span class="name">defaultConfiguration</span>()</h3>
+<p>Returns the default SSL configuration to be used in new SSL connections.</p>
+<p>The default SSL configuration consists of:</p>
+<ul>
+<li>no local certificate and no private key</li>
+<li>protocol SecureProtocols (meaning either TLS 1.0 or SSL 3 will be used)</li>
+<li>the system's default CA certificate list</li>
+<li>the cipher list equal to the list of the SSL libraries' supported SSL ciphers that are 128 bits or more</li>
+</ul>
+<p><b>See also </b><a href="qsslsocket-obsolete.html#supportedCiphers">QSslSocket::supportedCiphers</a>() and <a href="qsslconfiguration.html#setDefaultConfiguration">setDefaultConfiguration</a>().</p>
+<!-- @@@defaultConfiguration -->
+<!-- $$$ellipticCurves[overload1]$$$ellipticCurves -->
+<h3 class="fn" id="ellipticCurves"><a name="ellipticCurves"></a><span class="type"><a href="../qtcore/qvector.html">QVector</a></span>&lt;<span class="type"><a href="qsslellipticcurve.html">QSslEllipticCurve</a></span>&gt; QSslConfiguration::<span class="name">ellipticCurves</span>() const</h3>
+<p>Returns this connection's current list of elliptic curves. This list is used during the handshake phase for choosing an elliptic curve (when using an elliptic curve cipher). The returned list of curves is ordered by descending preference (i.e&#x2e;, the first curve in the list is the most preferred one).</p>
+<p>By default, the handshake phase can choose any of the curves supported by this system's SSL libraries, which may vary from system to system. The list of curves supported by this system's SSL libraries is returned by QSslSocket::supportedEllipticCurves().</p>
+<p>You can restrict the list of curves used for choosing the session cipher for this socket by calling <a href="qsslconfiguration.html#setEllipticCurves">setEllipticCurves</a>() with a subset of the supported ciphers. You can revert to using the entire set by calling <a href="qsslconfiguration.html#setEllipticCurves">setEllipticCurves</a>() with the list returned by QSslSocket::supportedEllipticCurves().</p>
+<p>This function was introduced in  Qt 5.5.</p>
+<p><b>See also </b><a href="qsslconfiguration.html#setEllipticCurves">setEllipticCurves</a>.</p>
+<!-- @@@ellipticCurves -->
+<!-- $$$isNull[overload1]$$$isNull -->
+<h3 class="fn" id="isNull"><a name="isNull"></a><span class="type">bool</span> QSslConfiguration::<span class="name">isNull</span>() const</h3>
+<p>Returns <code>true</code> if this is a null <a href="qsslconfiguration.html">QSslConfiguration</a> object.</p>
+<p>A <a href="qsslconfiguration.html">QSslConfiguration</a> object is null if it has been default-constructed and no setter methods have been called.</p>
+<p><b>See also </b><a href="qsslconfiguration.html#setProtocol">setProtocol</a>(), <a href="qsslconfiguration.html#setLocalCertificate">setLocalCertificate</a>(), <a href="qsslconfiguration.html#setPrivateKey">setPrivateKey</a>(), <a href="qsslconfiguration.html#setCiphers">setCiphers</a>(), and <a href="qsslconfiguration.html#setCaCertificates">setCaCertificates</a>().</p>
+<!-- @@@isNull -->
+<!-- $$$localCertificate[overload1]$$$localCertificate -->
+<h3 class="fn" id="localCertificate"><a name="localCertificate"></a><span class="type"><a href="qsslcertificate.html">QSslCertificate</a></span> QSslConfiguration::<span class="name">localCertificate</span>() const</h3>
+<p>Returns the certificate to be presented to the peer during the SSL handshake process.</p>
+<p><b>See also </b><a href="qsslconfiguration.html#setLocalCertificate">setLocalCertificate</a>().</p>
+<!-- @@@localCertificate -->
+<!-- $$$localCertificateChain[overload1]$$$localCertificateChain -->
+<h3 class="fn" id="localCertificateChain"><a name="localCertificateChain"></a><span class="type"><a href="../qtcore/qlist.html">QList</a></span>&lt;<span class="type"><a href="qsslcertificate.html">QSslCertificate</a></span>&gt; QSslConfiguration::<span class="name">localCertificateChain</span>() const</h3>
+<p>Returns the certificate chain to be presented to the peer during the SSL handshake process.</p>
+<p>This function was introduced in  Qt 5.1.</p>
+<p><b>See also </b><a href="qsslconfiguration.html#setLocalCertificateChain">setLocalCertificateChain</a>() and <a href="qsslconfiguration.html#localCertificate">localCertificate</a>().</p>
+<!-- @@@localCertificateChain -->
+<!-- $$$nextNegotiatedProtocol[overload1]$$$nextNegotiatedProtocol -->
+<h3 class="fn" id="nextNegotiatedProtocol"><a name="nextNegotiatedProtocol"></a><span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> QSslConfiguration::<span class="name">nextNegotiatedProtocol</span>() const</h3>
+<p>This function returns the protocol negotiated with the server if the Next Protocol Negotiation (NPN) TLS extension was enabled. In order for the NPN extension to be enabled, <a href="qsslconfiguration.html#setAllowedNextProtocols">setAllowedNextProtocols</a>() needs to be called explicitly before connecting to the server.</p>
+<p>If no protocol could be negotiated or the extension was not enabled, this function returns a <a href="../qtcore/qbytearray.html">QByteArray</a> which is null.</p>
+<p>This function was introduced in  Qt 5.3.</p>
+<p><b>See also </b><a href="qsslconfiguration.html#setAllowedNextProtocols">setAllowedNextProtocols</a>() and <a href="qsslconfiguration.html#nextProtocolNegotiationStatus">nextProtocolNegotiationStatus</a>().</p>
+<!-- @@@nextNegotiatedProtocol -->
+<!-- $$$nextProtocolNegotiationStatus[overload1]$$$nextProtocolNegotiationStatus -->
+<h3 class="fn" id="nextProtocolNegotiationStatus"><a name="nextProtocolNegotiationStatus"></a><span class="type"><a href="qsslconfiguration.html#NextProtocolNegotiationStatus-enum">NextProtocolNegotiationStatus</a></span> QSslConfiguration::<span class="name">nextProtocolNegotiationStatus</span>() const</h3>
+<p>This function returns the status of the Next Protocol Negotiation (NPN). If the feature has not been enabled through <a href="qsslconfiguration.html#setAllowedNextProtocols">setAllowedNextProtocols</a>(), this function returns <a href="qsslconfiguration.html#NextProtocolNegotiationStatus-enum">NextProtocolNegotiationNone</a>. The status will be set before emitting the encrypted() signal.</p>
+<p>This function was introduced in  Qt 5.3.</p>
+<p><b>See also </b><a href="qsslconfiguration.html#setAllowedNextProtocols">setAllowedNextProtocols</a>(), <a href="qsslconfiguration.html#allowedNextProtocols">allowedNextProtocols</a>(), <a href="qsslconfiguration.html#nextNegotiatedProtocol">nextNegotiatedProtocol</a>(), and <a href="qsslconfiguration.html#NextProtocolNegotiationStatus-enum">QSslConfiguration::NextProtocolNegotiationStatus</a>.</p>
+<!-- @@@nextProtocolNegotiationStatus -->
+<!-- $$$peerCertificate[overload1]$$$peerCertificate -->
+<h3 class="fn" id="peerCertificate"><a name="peerCertificate"></a><span class="type"><a href="qsslcertificate.html">QSslCertificate</a></span> QSslConfiguration::<span class="name">peerCertificate</span>() const</h3>
+<p>Returns the peer's digital certificate (i.e&#x2e;, the immediate certificate of the host you are connected to), or a null certificate, if the peer has not assigned a certificate.</p>
+<p>The peer certificate is checked automatically during the handshake phase, so this function is normally used to fetch the certificate for display or for connection diagnostic purposes. It contains information about the peer, including its host name, the certificate issuer, and the peer's public key.</p>
+<p>Because the peer certificate is set during the handshake phase, it is safe to access the peer certificate from a slot connected to the <a href="qsslsocket.html#sslErrors">QSslSocket::sslErrors</a>() signal, <a href="qnetworkreply.html#sslErrors">QNetworkReply::sslErrors</a>() signal, or the <a href="qsslsocket.html#encrypted">QSslSocket::encrypted</a>() signal.</p>
+<p>If a null certificate is returned, it can mean the SSL handshake failed, or it can mean the host you are connected to doesn't have a certificate, or it can mean there is no connection.</p>
+<p>If you want to check the peer's complete chain of certificates, use <a href="qsslconfiguration.html#peerCertificateChain">peerCertificateChain</a>() to get them all at once.</p>
+<p><b>See also </b><a href="qsslconfiguration.html#peerCertificateChain">peerCertificateChain</a>(), <a href="qsslsocket.html#sslErrors">QSslSocket::sslErrors</a>(), <a href="qsslsocket.html#ignoreSslErrors">QSslSocket::ignoreSslErrors</a>(), <a href="qnetworkreply.html#sslErrors">QNetworkReply::sslErrors</a>(), and <a href="qnetworkreply.html#ignoreSslErrors">QNetworkReply::ignoreSslErrors</a>().</p>
+<!-- @@@peerCertificate -->
+<!-- $$$peerCertificateChain[overload1]$$$peerCertificateChain -->
+<h3 class="fn" id="peerCertificateChain"><a name="peerCertificateChain"></a><span class="type"><a href="../qtcore/qlist.html">QList</a></span>&lt;<span class="type"><a href="qsslcertificate.html">QSslCertificate</a></span>&gt; QSslConfiguration::<span class="name">peerCertificateChain</span>() const</h3>
+<p>Returns the peer's chain of digital certificates, starting with the peer's immediate certificate and ending with the CA's certificate.</p>
+<p>Peer certificates are checked automatically during the handshake phase. This function is normally used to fetch certificates for display, or for performing connection diagnostics. Certificates contain information about the peer and the certificate issuers, including host name, issuer names, and issuer public keys.</p>
+<p>Because the peer certificate is set during the handshake phase, it is safe to access the peer certificate from a slot connected to the <a href="qsslsocket.html#sslErrors">QSslSocket::sslErrors</a>() signal, <a href="qnetworkreply.html#sslErrors">QNetworkReply::sslErrors</a>() signal, or the <a href="qsslsocket.html#encrypted">QSslSocket::encrypted</a>() signal.</p>
+<p>If an empty list is returned, it can mean the SSL handshake failed, or it can mean the host you are connected to doesn't have a certificate, or it can mean there is no connection.</p>
+<p>If you want to get only the peer's immediate certificate, use <a href="qsslconfiguration.html#peerCertificate">peerCertificate</a>().</p>
+<p><b>See also </b><a href="qsslconfiguration.html#peerCertificate">peerCertificate</a>(), <a href="qsslsocket.html#sslErrors">QSslSocket::sslErrors</a>(), <a href="qsslsocket.html#ignoreSslErrors">QSslSocket::ignoreSslErrors</a>(), <a href="qnetworkreply.html#sslErrors">QNetworkReply::sslErrors</a>(), and <a href="qnetworkreply.html#ignoreSslErrors">QNetworkReply::ignoreSslErrors</a>().</p>
+<!-- @@@peerCertificateChain -->
+<!-- $$$peerVerifyDepth[overload1]$$$peerVerifyDepth -->
+<h3 class="fn" id="peerVerifyDepth"><a name="peerVerifyDepth"></a><span class="type">int</span> QSslConfiguration::<span class="name">peerVerifyDepth</span>() const</h3>
+<p>Returns the maximum number of certificates in the peer's certificate chain to be checked during the SSL handshake phase, or 0 (the default) if no maximum depth has been set, indicating that the whole certificate chain should be checked.</p>
+<p>The certificates are checked in issuing order, starting with the peer's own certificate, then its issuer's certificate, and so on.</p>
+<p><b>See also </b><a href="qsslconfiguration.html#setPeerVerifyDepth">setPeerVerifyDepth</a>() and <a href="qsslconfiguration.html#peerVerifyMode">peerVerifyMode</a>().</p>
+<!-- @@@peerVerifyDepth -->
+<!-- $$$peerVerifyMode[overload1]$$$peerVerifyMode -->
+<h3 class="fn" id="peerVerifyMode"><a name="peerVerifyMode"></a><span class="type"><a href="qsslsocket.html#PeerVerifyMode-enum">QSslSocket::PeerVerifyMode</a></span> QSslConfiguration::<span class="name">peerVerifyMode</span>() const</h3>
+<p>Returns the verify mode. This mode decides whether <a href="qsslsocket.html">QSslSocket</a> should request a certificate from the peer (i.e&#x2e;, the client requests a certificate from the server, or a server requesting a certificate from the client), and whether it should require that this certificate is valid.</p>
+<p>The default mode is AutoVerifyPeer, which tells <a href="qsslsocket.html">QSslSocket</a> to use VerifyPeer for clients, QueryPeer for servers.</p>
+<p><b>See also </b><a href="qsslconfiguration.html#setPeerVerifyMode">setPeerVerifyMode</a>().</p>
+<!-- @@@peerVerifyMode -->
+<!-- $$$privateKey[overload1]$$$privateKey -->
+<h3 class="fn" id="privateKey"><a name="privateKey"></a><span class="type"><a href="qsslkey.html">QSslKey</a></span> QSslConfiguration::<span class="name">privateKey</span>() const</h3>
+<p>Returns the <a href="qsslkey.html">SSL key</a> assigned to this connection or a null key if none has been assigned yet.</p>
+<p><b>See also </b><a href="qsslconfiguration.html#setPrivateKey">setPrivateKey</a>() and <a href="qsslconfiguration.html#localCertificate">localCertificate</a>().</p>
+<!-- @@@privateKey -->
+<!-- $$$protocol[overload1]$$$protocol -->
+<h3 class="fn" id="protocol"><a name="protocol"></a><span class="type"><a href="qssl.html#SslProtocol-enum">QSsl::SslProtocol</a></span> QSslConfiguration::<span class="name">protocol</span>() const</h3>
+<p>Returns the protocol setting for this SSL configuration.</p>
+<p><b>See also </b><a href="qsslconfiguration.html#setProtocol">setProtocol</a>().</p>
+<!-- @@@protocol -->
+<!-- $$$sessionCipher[overload1]$$$sessionCipher -->
+<h3 class="fn" id="sessionCipher"><a name="sessionCipher"></a><span class="type"><a href="qsslcipher.html">QSslCipher</a></span> QSslConfiguration::<span class="name">sessionCipher</span>() const</h3>
+<p>Returns the socket's cryptographic <a href="qsslcipher.html">cipher</a>, or a null cipher if the connection isn't encrypted. The socket's cipher for the session is set during the handshake phase. The cipher is used to encrypt and decrypt data transmitted through the socket.</p>
+<p>The SSL infrastructure also provides functions for setting the ordered list of ciphers from which the handshake phase will eventually select the session cipher. This ordered list must be in place before the handshake phase begins.</p>
+<p><b>See also </b><a href="qsslconfiguration.html#ciphers">ciphers</a>(), <a href="qsslconfiguration.html#setCiphers">setCiphers</a>(), and <a href="qsslsocket-obsolete.html#supportedCiphers">QSslSocket::supportedCiphers</a>().</p>
+<!-- @@@sessionCipher -->
+<!-- $$$sessionProtocol[overload1]$$$sessionProtocol -->
+<h3 class="fn" id="sessionProtocol"><a name="sessionProtocol"></a><span class="type"><a href="qssl.html#SslProtocol-enum">QSsl::SslProtocol</a></span> QSslConfiguration::<span class="name">sessionProtocol</span>() const</h3>
+<p>Returns the socket's SSL/TLS protocol or UnknownProtocol if the connection isn't encrypted. The socket's protocol for the session is set during the handshake phase.</p>
+<p>This function was introduced in  Qt 5.4.</p>
+<p><b>See also </b><a href="qsslconfiguration.html#protocol">protocol</a>() and <a href="qsslconfiguration.html#setProtocol">setProtocol</a>().</p>
+<!-- @@@sessionProtocol -->
+<!-- $$$sessionTicket[overload1]$$$sessionTicket -->
+<h3 class="fn" id="sessionTicket"><a name="sessionTicket"></a><span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> QSslConfiguration::<span class="name">sessionTicket</span>() const</h3>
+<p>If <a href="qssl.html#SslOption-enum">QSsl::SslOptionDisableSessionPersistence</a> was turned off, this function returns the session ticket used in the SSL handshake in ASN.1 format, suitable to e.g&#x2e; be persisted to disk. If no session ticket was used or <a href="qssl.html#SslOption-enum">QSsl::SslOptionDisableSessionPersistence</a> was not turned off, this function returns an empty <a href="../qtcore/qbytearray.html">QByteArray</a>.</p>
+<p><b>Note: </b>When persisting the session ticket to disk or similar, be careful not to expose the session to a potential attacker, as knowledge of the session allows for eavesdropping on data encrypted with the session parameters.</p><p>This function was introduced in  Qt 5.2.</p>
+<p><b>See also </b><a href="qsslconfiguration.html#setSessionTicket">setSessionTicket</a>(), <a href="qssl.html#SslOption-enum">QSsl::SslOptionDisableSessionPersistence</a>, and <a href="qsslconfiguration.html#setSslOption">setSslOption</a>().</p>
+<!-- @@@sessionTicket -->
+<!-- $$$sessionTicketLifeTimeHint[overload1]$$$sessionTicketLifeTimeHint -->
+<h3 class="fn" id="sessionTicketLifeTimeHint"><a name="sessionTicketLifeTimeHint"></a><span class="type">int</span> QSslConfiguration::<span class="name">sessionTicketLifeTimeHint</span>() const</h3>
+<p>If <a href="qssl.html#SslOption-enum">QSsl::SslOptionDisableSessionPersistence</a> was turned off, this function returns the session ticket life time hint sent by the server (which might be 0). If the server did not send a session ticket (e.g&#x2e; when resuming a session or when the server does not support it) or <a href="qssl.html#SslOption-enum">QSsl::SslOptionDisableSessionPersistence</a> was not turned off, this function returns -1.</p>
+<p>This function was introduced in  Qt 5.2.</p>
+<p><b>See also </b><a href="qsslconfiguration.html#sessionTicket">sessionTicket</a>(), <a href="qssl.html#SslOption-enum">QSsl::SslOptionDisableSessionPersistence</a>, and <a href="qsslconfiguration.html#setSslOption">setSslOption</a>().</p>
+<!-- @@@sessionTicketLifeTimeHint -->
+<!-- $$$setAllowedNextProtocols[overload1]$$$setAllowedNextProtocolsQList<QByteArray> -->
+<h3 class="fn" id="setAllowedNextProtocols"><a name="setAllowedNextProtocols"></a><span class="type">void</span> QSslConfiguration::<span class="name">setAllowedNextProtocols</span>(<span class="type"><a href="../qtcore/qlist.html">QList</a></span>&lt;<span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span>&gt; <i>protocols</i>)</h3>
+<p>This function sets the allowed <i>protocols</i> to be negotiated with the server through the Next Protocol Negotiation (NPN) TLS extension; each element in <i>protocols</i> must define one allowed protocol. The function must be called explicitly before connecting to send the NPN extension in the SSL handshake. Whether or not the negotiation succeeded can be queried through <a href="qsslconfiguration.html#nextProtocolNegotiationStatus">nextProtocolNegotiationStatus</a>().</p>
+<p>This function was introduced in  Qt 5.3.</p>
+<p><b>See also </b><a href="qsslconfiguration.html#nextNegotiatedProtocol">nextNegotiatedProtocol</a>(), <a href="qsslconfiguration.html#nextProtocolNegotiationStatus">nextProtocolNegotiationStatus</a>(), <a href="qsslconfiguration.html#allowedNextProtocols">allowedNextProtocols</a>(), <a href="qsslconfiguration.html#NextProtocolSpdy3_0-var">QSslConfiguration::NextProtocolSpdy3_0</a>, and <a href="qsslconfiguration.html#NextProtocolHttp1_1-var">QSslConfiguration::NextProtocolHttp1_1</a>.</p>
+<!-- @@@setAllowedNextProtocols -->
+<!-- $$$setCaCertificates[overload1]$$$setCaCertificatesconstQList<QSslCertificate>& -->
+<h3 class="fn" id="setCaCertificates"><a name="setCaCertificates"></a><span class="type">void</span> QSslConfiguration::<span class="name">setCaCertificates</span>(const <span class="type"><a href="../qtcore/qlist.html">QList</a></span>&lt;<span class="type"><a href="qsslcertificate.html">QSslCertificate</a></span>&gt; &amp;<i>certificates</i>)</h3>
+<p>Sets this socket's CA certificate database to be <i>certificates</i>. The certificate database must be set prior to the SSL handshake. The CA certificate database is used by the socket during the handshake phase to validate the peer's certificate.</p>
+<p><b>See also </b><a href="qsslconfiguration.html#caCertificates">caCertificates</a>().</p>
+<!-- @@@setCaCertificates -->
+<!-- $$$setCiphers[overload1]$$$setCiphersconstQList<QSslCipher>& -->
+<h3 class="fn" id="setCiphers"><a name="setCiphers"></a><span class="type">void</span> QSslConfiguration::<span class="name">setCiphers</span>(const <span class="type"><a href="../qtcore/qlist.html">QList</a></span>&lt;<span class="type"><a href="qsslcipher.html">QSslCipher</a></span>&gt; &amp;<i>ciphers</i>)</h3>
+<p>Sets the cryptographic cipher suite for this socket to <i>ciphers</i>, which must contain a subset of the ciphers in the list returned by <a href="qsslconfiguration.html#supportedCiphers">supportedCiphers</a>().</p>
+<p>Restricting the cipher suite must be done before the handshake phase, where the session cipher is chosen.</p>
+<p><b>See also </b><a href="qsslconfiguration.html#ciphers">ciphers</a>() and <a href="qsslsocket-obsolete.html#supportedCiphers">QSslSocket::supportedCiphers</a>().</p>
+<!-- @@@setCiphers -->
+<!-- $$$setDefaultConfiguration[overload1]$$$setDefaultConfigurationconstQSslConfiguration& -->
+<h3 class="fn" id="setDefaultConfiguration"><a name="setDefaultConfiguration"></a><code>[static] </code><span class="type">void</span> QSslConfiguration::<span class="name">setDefaultConfiguration</span>(const <span class="type"><a href="qsslconfiguration.html#QSslConfiguration">QSslConfiguration</a></span> &amp;<i>configuration</i>)</h3>
+<p>Sets the default SSL configuration to be used in new SSL connections to be <i>configuration</i>. Existing connections are not affected by this call.</p>
+<p><b>See also </b><a href="qsslsocket-obsolete.html#supportedCiphers">QSslSocket::supportedCiphers</a>() and <a href="qsslconfiguration.html#defaultConfiguration">defaultConfiguration</a>().</p>
+<!-- @@@setDefaultConfiguration -->
+<!-- $$$setEllipticCurves[overload1]$$$setEllipticCurvesconstQVector<QSslEllipticCurve>& -->
+<h3 class="fn" id="setEllipticCurves"><a name="setEllipticCurves"></a><span class="type">void</span> QSslConfiguration::<span class="name">setEllipticCurves</span>(const <span class="type"><a href="../qtcore/qvector.html">QVector</a></span>&lt;<span class="type"><a href="qsslellipticcurve.html">QSslEllipticCurve</a></span>&gt; &amp;<i>curves</i>)</h3>
+<p>Sets the list of elliptic curves to be used by this socket to <i>curves</i>, which must contain a subset of the curves in the list returned by <a href="qsslconfiguration.html#supportedEllipticCurves">supportedEllipticCurves</a>().</p>
+<p>Restricting the elliptic curves must be done before the handshake phase, where the session cipher is chosen.</p>
+<p>This function was introduced in  Qt 5.5.</p>
+<p><b>See also </b><a href="qsslconfiguration.html#ellipticCurves">ellipticCurves</a>.</p>
+<!-- @@@setEllipticCurves -->
+<!-- $$$setLocalCertificate[overload1]$$$setLocalCertificateconstQSslCertificate& -->
+<h3 class="fn" id="setLocalCertificate"><a name="setLocalCertificate"></a><span class="type">void</span> QSslConfiguration::<span class="name">setLocalCertificate</span>(const <span class="type"><a href="qsslcertificate.html">QSslCertificate</a></span> &amp;<i>certificate</i>)</h3>
+<p>Sets the certificate to be presented to the peer during SSL handshake to be <i>certificate</i>.</p>
+<p>Setting the certificate once the connection has been established has no effect.</p>
+<p>A certificate is the means of identification used in the SSL process. The local certificate is used by the remote end to verify the local user's identity against its list of Certification Authorities. In most cases, such as in HTTP web browsing, only servers identify to the clients, so the client does not send a certificate.</p>
+<p><b>See also </b><a href="qsslconfiguration.html#localCertificate">localCertificate</a>().</p>
+<!-- @@@setLocalCertificate -->
+<!-- $$$setLocalCertificateChain[overload1]$$$setLocalCertificateChainconstQList<QSslCertificate>& -->
+<h3 class="fn" id="setLocalCertificateChain"><a name="setLocalCertificateChain"></a><span class="type">void</span> QSslConfiguration::<span class="name">setLocalCertificateChain</span>(const <span class="type"><a href="../qtcore/qlist.html">QList</a></span>&lt;<span class="type"><a href="qsslcertificate.html">QSslCertificate</a></span>&gt; &amp;<i>localChain</i>)</h3>
+<p>Sets the certificate chain to be presented to the peer during the SSL handshake to be <i>localChain</i>.</p>
+<p>Setting the certificate chain once the connection has been established has no effect.</p>
+<p>A certificate is the means of identification used in the SSL process. The local certificate is used by the remote end to verify the local user's identity against its list of Certification Authorities. In most cases, such as in HTTP web browsing, only servers identify to the clients, so the client does not send a certificate.</p>
+<p>Unlike <a href="qsslconfiguration.html#setLocalCertificate">QSslConfiguration::setLocalCertificate</a>() this method allows you to specify any intermediate certificates required in order to validate your certificate. The first item in the list must be the leaf certificate.</p>
+<p>This function was introduced in  Qt 5.1.</p>
+<p><b>See also </b><a href="qsslconfiguration.html#localCertificateChain">localCertificateChain</a>().</p>
+<!-- @@@setLocalCertificateChain -->
+<!-- $$$setPeerVerifyDepth[overload1]$$$setPeerVerifyDepthint -->
+<h3 class="fn" id="setPeerVerifyDepth"><a name="setPeerVerifyDepth"></a><span class="type">void</span> QSslConfiguration::<span class="name">setPeerVerifyDepth</span>(<span class="type">int</span> <i>depth</i>)</h3>
+<p>Sets the maximum number of certificates in the peer's certificate chain to be checked during the SSL handshake phase, to <i>depth</i>. Setting a depth of 0 means that no maximum depth is set, indicating that the whole certificate chain should be checked.</p>
+<p>The certificates are checked in issuing order, starting with the peer's own certificate, then its issuer's certificate, and so on.</p>
+<p><b>See also </b><a href="qsslconfiguration.html#peerVerifyDepth">peerVerifyDepth</a>() and <a href="qsslconfiguration.html#setPeerVerifyMode">setPeerVerifyMode</a>().</p>
+<!-- @@@setPeerVerifyDepth -->
+<!-- $$$setPeerVerifyMode[overload1]$$$setPeerVerifyModeQSslSocket::PeerVerifyMode -->
+<h3 class="fn" id="setPeerVerifyMode"><a name="setPeerVerifyMode"></a><span class="type">void</span> QSslConfiguration::<span class="name">setPeerVerifyMode</span>(<span class="type"><a href="qsslsocket.html#PeerVerifyMode-enum">QSslSocket::PeerVerifyMode</a></span> <i>mode</i>)</h3>
+<p>Sets the verify mode to <i>mode</i>. This mode decides whether <a href="qsslsocket.html">QSslSocket</a> should request a certificate from the peer (i.e&#x2e;, the client requests a certificate from the server, or a server requesting a certificate from the client), and whether it should require that this certificate is valid.</p>
+<p>The default mode is AutoVerifyPeer, which tells <a href="qsslsocket.html">QSslSocket</a> to use VerifyPeer for clients, QueryPeer for servers.</p>
+<p><b>See also </b><a href="qsslconfiguration.html#peerVerifyMode">peerVerifyMode</a>().</p>
+<!-- @@@setPeerVerifyMode -->
+<!-- $$$setPrivateKey[overload1]$$$setPrivateKeyconstQSslKey& -->
+<h3 class="fn" id="setPrivateKey"><a name="setPrivateKey"></a><span class="type">void</span> QSslConfiguration::<span class="name">setPrivateKey</span>(const <span class="type"><a href="qsslkey.html">QSslKey</a></span> &amp;<i>key</i>)</h3>
+<p>Sets the connection's private <a href="qsslkey.html">key</a> to <i>key</i>. The private key and the local <a href="qsslcertificate.html">certificate</a> are used by clients and servers that must prove their identity to SSL peers.</p>
+<p>Both the key and the local certificate are required if you are creating an SSL server socket. If you are creating an SSL client socket, the key and local certificate are required if your client must identify itself to an SSL server.</p>
+<p><b>See also </b><a href="qsslconfiguration.html#privateKey">privateKey</a>() and <a href="qsslconfiguration.html#setLocalCertificate">setLocalCertificate</a>().</p>
+<!-- @@@setPrivateKey -->
+<!-- $$$setProtocol[overload1]$$$setProtocolQSsl::SslProtocol -->
+<h3 class="fn" id="setProtocol"><a name="setProtocol"></a><span class="type">void</span> QSslConfiguration::<span class="name">setProtocol</span>(<span class="type"><a href="qssl.html#SslProtocol-enum">QSsl::SslProtocol</a></span> <i>protocol</i>)</h3>
+<p>Sets the protocol setting for this configuration to be <i>protocol</i>.</p>
+<p>Setting the protocol once the connection has already been established has no effect.</p>
+<p><b>See also </b><a href="qsslconfiguration.html#protocol">protocol</a>().</p>
+<!-- @@@setProtocol -->
+<!-- $$$setSessionTicket[overload1]$$$setSessionTicketconstQByteArray& -->
+<h3 class="fn" id="setSessionTicket"><a name="setSessionTicket"></a><span class="type">void</span> QSslConfiguration::<span class="name">setSessionTicket</span>(const <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> &amp;<i>sessionTicket</i>)</h3>
+<p>Sets the session ticket to be used in an SSL handshake. <a href="qssl.html#SslOption-enum">QSsl::SslOptionDisableSessionPersistence</a> must be turned off for this to work, and <i>sessionTicket</i> must be in ASN.1 format as returned by <a href="qsslconfiguration.html#sessionTicket">sessionTicket</a>().</p>
+<p>This function was introduced in  Qt 5.2.</p>
+<p><b>See also </b><a href="qsslconfiguration.html#sessionTicket">sessionTicket</a>(), <a href="qssl.html#SslOption-enum">QSsl::SslOptionDisableSessionPersistence</a>, and <a href="qsslconfiguration.html#setSslOption">setSslOption</a>().</p>
+<!-- @@@setSessionTicket -->
+<!-- $$$setSslOption[overload1]$$$setSslOptionQSsl::SslOptionbool -->
+<h3 class="fn" id="setSslOption"><a name="setSslOption"></a><span class="type">void</span> QSslConfiguration::<span class="name">setSslOption</span>(<span class="type"><a href="qssl.html#SslOption-enum">QSsl::SslOption</a></span> <i>option</i>, <span class="type">bool</span> <i>on</i>)</h3>
+<p>Enables or disables an SSL compatibility <i>option</i>. If <i>on</i> is true, the <i>option</i> is enabled. If <i>on</i> is false, the <i>option</i> is disabled.</p>
+<p><b>See also </b><a href="qsslconfiguration.html#testSslOption">testSslOption</a>().</p>
+<!-- @@@setSslOption -->
+<!-- $$$supportedCiphers[overload1]$$$supportedCiphers -->
+<h3 class="fn" id="supportedCiphers"><a name="supportedCiphers"></a><code>[static] </code><span class="type"><a href="../qtcore/qlist.html">QList</a></span>&lt;<span class="type"><a href="qsslcipher.html">QSslCipher</a></span>&gt; QSslConfiguration::<span class="name">supportedCiphers</span>()</h3>
+<p>Returns the list of cryptographic ciphers supported by this system. This list is set by the system's SSL libraries and may vary from system to system.</p>
+<p>This function was introduced in  Qt 5.5.</p>
+<p><b>See also </b><a href="qsslconfiguration.html#ciphers">ciphers</a>() and <a href="qsslconfiguration.html#setCiphers">setCiphers</a>().</p>
+<!-- @@@supportedCiphers -->
+<!-- $$$supportedEllipticCurves[overload1]$$$supportedEllipticCurves -->
+<h3 class="fn" id="supportedEllipticCurves"><a name="supportedEllipticCurves"></a><code>[static] </code><span class="type"><a href="../qtcore/qvector.html">QVector</a></span>&lt;<span class="type"><a href="qsslellipticcurve.html">QSslEllipticCurve</a></span>&gt; QSslConfiguration::<span class="name">supportedEllipticCurves</span>()</h3>
+<p>Returns the list of elliptic curves supported by this system. This list is set by the system's SSL libraries and may vary from system to system.</p>
+<p>This function was introduced in  Qt 5.5.</p>
+<p><b>See also </b><a href="qsslconfiguration.html#ellipticCurves">ellipticCurves</a>() and <a href="qsslconfiguration.html#setEllipticCurves">setEllipticCurves</a>().</p>
+<!-- @@@supportedEllipticCurves -->
+<!-- $$$swap[overload1]$$$swapQSslConfiguration& -->
+<h3 class="fn" id="swap"><a name="swap"></a><span class="type">void</span> QSslConfiguration::<span class="name">swap</span>(<span class="type"><a href="qsslconfiguration.html#QSslConfiguration">QSslConfiguration</a></span> &amp;<i>other</i>)</h3>
+<p>Swaps this SSL configuration instance with <i>other</i>. This function is very fast and never fails.</p>
+<p>This function was introduced in  Qt 5.0.</p>
+<!-- @@@swap -->
+<!-- $$$systemCaCertificates[overload1]$$$systemCaCertificates -->
+<h3 class="fn" id="systemCaCertificates"><a name="systemCaCertificates"></a><code>[static] </code><span class="type"><a href="../qtcore/qlist.html">QList</a></span>&lt;<span class="type"><a href="qsslcertificate.html">QSslCertificate</a></span>&gt; QSslConfiguration::<span class="name">systemCaCertificates</span>()</h3>
+<p>This function provides the CA certificate database provided by the operating system. The CA certificate database returned by this function is used to initialize the database returned by <a href="qsslconfiguration.html#caCertificates">caCertificates</a>() on the default <a href="qsslconfiguration.html">QSslConfiguration</a>.</p>
+<p>This function was introduced in  Qt 5.5.</p>
+<p><b>See also </b><a href="qsslconfiguration.html#caCertificates">caCertificates</a>(), <a href="qsslconfiguration.html#setCaCertificates">setCaCertificates</a>(), and <a href="qsslconfiguration.html#defaultConfiguration">defaultConfiguration</a>().</p>
+<!-- @@@systemCaCertificates -->
+<!-- $$$testSslOption[overload1]$$$testSslOptionQSsl::SslOption -->
+<h3 class="fn" id="testSslOption"><a name="testSslOption"></a><span class="type">bool</span> QSslConfiguration::<span class="name">testSslOption</span>(<span class="type"><a href="qssl.html#SslOption-enum">QSsl::SslOption</a></span> <i>option</i>) const</h3>
+<p>Returns <code>true</code> if the specified SSL compatibility <i>option</i> is enabled.</p>
+<p>This function was introduced in  Qt 4.8.</p>
+<p><b>See also </b><a href="qsslconfiguration.html#setSslOption">setSslOption</a>().</p>
+<!-- @@@testSslOption -->
+<!-- $$$operator!=[overload1]$$$operator!=constQSslConfiguration& -->
+<h3 class="fn" id="operator-not-eq"><a name="operator-not-eq"></a><span class="type">bool</span> QSslConfiguration::<span class="name">operator!=</span>(const <span class="type"><a href="qsslconfiguration.html#QSslConfiguration">QSslConfiguration</a></span> &amp;<i>other</i>) const</h3>
+<p>Returns <code>true</code> if this <a href="qsslconfiguration.html">QSslConfiguration</a> differs from <i>other</i>. Two <a href="qsslconfiguration.html">QSslConfiguration</a> objects are considered different if any state or setting is different.</p>
+<p><b>See also </b><a href="qsslconfiguration.html#operator-eq-eq">operator==</a>().</p>
+<!-- @@@operator!= -->
+<!-- $$$operator=[overload1]$$$operator=QSslConfiguration&& -->
+<h3 class="fn" id="operator-eq"><a name="operator-eq"></a><span class="type"><a href="qsslconfiguration.html#QSslConfiguration">QSslConfiguration</a></span> &amp;QSslConfiguration::<span class="name">operator=</span>(<span class="type"><a href="qsslconfiguration.html#QSslConfiguration">QSslConfiguration</a></span> &amp;&amp;<i>other</i>)</h3>
+<p>Move-assignment operator.</p><!-- @@@operator= -->
+<!-- $$$operator=$$$operator=constQSslConfiguration& -->
+<h3 class="fn" id="operator-eq-1"><a name="operator-eq-1"></a><span class="type"><a href="qsslconfiguration.html#QSslConfiguration">QSslConfiguration</a></span> &amp;QSslConfiguration::<span class="name">operator=</span>(const <span class="type"><a href="qsslconfiguration.html#QSslConfiguration">QSslConfiguration</a></span> &amp;<i>other</i>)</h3>
+<p>Copies the configuration and state of <i>other</i>. If <i>other</i> is null, this object will be null too.</p>
+<!-- @@@operator= -->
+<!-- $$$operator==[overload1]$$$operator==constQSslConfiguration& -->
+<h3 class="fn" id="operator-eq-eq"><a name="operator-eq-eq"></a><span class="type">bool</span> QSslConfiguration::<span class="name">operator==</span>(const <span class="type"><a href="qsslconfiguration.html#QSslConfiguration">QSslConfiguration</a></span> &amp;<i>other</i>) const</h3>
+<p>Returns <code>true</code> if this <a href="qsslconfiguration.html">QSslConfiguration</a> object is equal to <i>other</i>.</p>
+<p>Two <a href="qsslconfiguration.html">QSslConfiguration</a> objects are considered equal if they have the exact same settings and state.</p>
+<p><b>See also </b><a href="qsslconfiguration.html#operator-not-eq">operator!=</a>().</p>
+<!-- @@@operator== -->
+</div>
+<div class="vars">
+<h2>Member Variable Documentation</h2>
+<!-- $$$NextProtocolHttp1_1 -->
+<h3 class="fn" id="NextProtocolHttp1_1-var"><a name="NextProtocolHttp1_1-var"></a>const <span class="type">char</span> QSslConfiguration::<span class="name">NextProtocolHttp1_1</span>[]</h3>
+<p>This variable holds the value used for negotiating HTTP 1.1 during the Next Protocol Negotiation.</p>
+<!-- @@@NextProtocolHttp1_1 -->
+<!-- $$$NextProtocolSpdy3_0 -->
+<h3 class="fn" id="NextProtocolSpdy3_0-var"><a name="NextProtocolSpdy3_0-var"></a>const <span class="type">char</span> QSslConfiguration::<span class="name">NextProtocolSpdy3_0</span>[]</h3>
+<p>This variable holds the value used for negotiating SPDY 3.0 during the Next Protocol Negotiation.</p>
+<!-- @@@NextProtocolSpdy3_0 -->
+</div>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

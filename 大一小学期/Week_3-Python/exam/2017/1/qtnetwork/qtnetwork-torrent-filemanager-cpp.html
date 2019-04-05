@@ -1,0 +1,500 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>filemanager.cpp Example File | Qt Network 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtnetwork-index.html">Qt Network</a></td><td ><a href="qtnetwork-torrent-example.html">Torrent Example</a></td><td >filemanager.cpp Example File</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar"><div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">filemanager.cpp Example File</h1>
+<span class="subtitle">torrent/filemanager.cpp</span>
+<!-- $$$torrent/filemanager.cpp-description -->
+<div class="descr"> <a name="details"></a>
+<pre class="cpp">
+
+  <span class="comment">/****************************************************************************
+  **
+  ** Copyright (C) 2015 The Qt Company Ltd.
+  ** Contact: http://www.qt.io/licensing/
+  **
+  ** This file is part of the examples of the Qt Toolkit.
+  **
+  ** $QT_BEGIN_LICENSE:BSD$
+  ** You may use this file under the terms of the BSD license as follows:
+  **
+  ** &quot;Redistribution and use in source and binary forms, with or without
+  ** modification, are permitted provided that the following conditions are
+  ** met:
+  **   * Redistributions of source code must retain the above copyright
+  **     notice, this list of conditions and the following disclaimer.
+  **   * Redistributions in binary form must reproduce the above copyright
+  **     notice, this list of conditions and the following disclaimer in
+  **     the documentation and/or other materials provided with the
+  **     distribution.
+  **   * Neither the name of The Qt Company Ltd nor the names of its
+  **     contributors may be used to endorse or promote products derived
+  **     from this software without specific prior written permission.
+  **
+  **
+  ** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  ** &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  ** LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  ** A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  ** OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  ** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  ** LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  ** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  ** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  ** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.&quot;
+  **
+  ** $QT_END_LICENSE$
+  **
+  ****************************************************************************/</span>
+
+  <span class="preprocessor">#include &quot;filemanager.h&quot;</span>
+  <span class="preprocessor">#include &quot;metainfo.h&quot;</span>
+
+  <span class="preprocessor">#include &lt;QByteArray&gt;</span>
+  <span class="preprocessor">#include &lt;QDir&gt;</span>
+  <span class="preprocessor">#include &lt;QFile&gt;</span>
+  <span class="preprocessor">#include &lt;QTimer&gt;</span>
+  <span class="preprocessor">#include &lt;QTimerEvent&gt;</span>
+  <span class="preprocessor">#include &lt;QCryptographicHash&gt;</span>
+
+  FileManager<span class="operator">::</span>FileManager(<span class="type"><a href="../qtcore/qobject.html">QObject</a></span> <span class="operator">*</span>parent)
+      : <span class="type"><a href="../qtcore/qthread.html">QThread</a></span>(parent)
+  {
+      quit <span class="operator">=</span> <span class="keyword">false</span>;
+      totalLength <span class="operator">=</span> <span class="number">0</span>;
+      readId <span class="operator">=</span> <span class="number">0</span>;
+      startVerification <span class="operator">=</span> <span class="keyword">false</span>;
+      wokeUp <span class="operator">=</span> <span class="keyword">false</span>;
+      newFile <span class="operator">=</span> <span class="keyword">false</span>;
+      numPieces <span class="operator">=</span> <span class="number">0</span>;
+      verifiedPieces<span class="operator">.</span>fill(<span class="keyword">false</span>);
+  }
+
+  FileManager<span class="operator">::</span><span class="operator">~</span>FileManager()
+  {
+      quit <span class="operator">=</span> <span class="keyword">true</span>;
+      <span class="type">cond</span><span class="operator">.</span>wakeOne();
+      wait();
+
+      foreach (<span class="type"><a href="../qtcore/qfile.html">QFile</a></span> <span class="operator">*</span>file<span class="operator">,</span> files) {
+          file<span class="operator">-</span><span class="operator">&gt;</span>close();
+          <span class="keyword">delete</span> file;
+      }
+  }
+
+  <span class="type">int</span> FileManager<span class="operator">::</span>read(<span class="type">int</span> pieceIndex<span class="operator">,</span> <span class="type">int</span> offset<span class="operator">,</span> <span class="type">int</span> length)
+  {
+      ReadRequest request;
+      request<span class="operator">.</span>pieceIndex <span class="operator">=</span> pieceIndex;
+      request<span class="operator">.</span>offset <span class="operator">=</span> offset;
+      request<span class="operator">.</span>length <span class="operator">=</span> length;
+
+      <span class="type"><a href="../qtcore/qmutexlocker.html">QMutexLocker</a></span> locker(<span class="operator">&amp;</span>mutex);
+      request<span class="operator">.</span>id <span class="operator">=</span> readId<span class="operator">+</span><span class="operator">+</span>;
+      readRequests <span class="operator">&lt;</span><span class="operator">&lt;</span> request;
+
+      <span class="keyword">if</span> (<span class="operator">!</span>wokeUp) {
+          wokeUp <span class="operator">=</span> <span class="keyword">true</span>;
+          <span class="type"><a href="../qtcore/qmetaobject.html">QMetaObject</a></span><span class="operator">::</span>invokeMethod(<span class="keyword">this</span><span class="operator">,</span> <span class="string">&quot;wakeUp&quot;</span><span class="operator">,</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>QueuedConnection);
+      }
+
+      <span class="keyword">return</span> request<span class="operator">.</span>id;
+  }
+
+  <span class="type">void</span> FileManager<span class="operator">::</span>write(<span class="type">int</span> pieceIndex<span class="operator">,</span> <span class="type">int</span> offset<span class="operator">,</span> <span class="keyword">const</span> <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> <span class="operator">&amp;</span>data)
+  {
+      WriteRequest request;
+      request<span class="operator">.</span>pieceIndex <span class="operator">=</span> pieceIndex;
+      request<span class="operator">.</span>offset <span class="operator">=</span> offset;
+      request<span class="operator">.</span>data <span class="operator">=</span> data;
+
+      <span class="type"><a href="../qtcore/qmutexlocker.html">QMutexLocker</a></span> locker(<span class="operator">&amp;</span>mutex);
+      writeRequests <span class="operator">&lt;</span><span class="operator">&lt;</span> request;
+
+      <span class="keyword">if</span> (<span class="operator">!</span>wokeUp) {
+          wokeUp <span class="operator">=</span> <span class="keyword">true</span>;
+          <span class="type"><a href="../qtcore/qmetaobject.html">QMetaObject</a></span><span class="operator">::</span>invokeMethod(<span class="keyword">this</span><span class="operator">,</span> <span class="string">&quot;wakeUp&quot;</span><span class="operator">,</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>QueuedConnection);
+      }
+  }
+
+  <span class="type">void</span> FileManager<span class="operator">::</span>verifyPiece(<span class="type">int</span> pieceIndex)
+  {
+      <span class="type"><a href="../qtcore/qmutexlocker.html">QMutexLocker</a></span> locker(<span class="operator">&amp;</span>mutex);
+      pendingVerificationRequests <span class="operator">&lt;</span><span class="operator">&lt;</span> pieceIndex;
+      startVerification <span class="operator">=</span> <span class="keyword">true</span>;
+
+      <span class="keyword">if</span> (<span class="operator">!</span>wokeUp) {
+          wokeUp <span class="operator">=</span> <span class="keyword">true</span>;
+          <span class="type"><a href="../qtcore/qmetaobject.html">QMetaObject</a></span><span class="operator">::</span>invokeMethod(<span class="keyword">this</span><span class="operator">,</span> <span class="string">&quot;wakeUp&quot;</span><span class="operator">,</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>QueuedConnection);
+      }
+  }
+
+  <span class="type">int</span> FileManager<span class="operator">::</span>pieceLengthAt(<span class="type">int</span> pieceIndex) <span class="keyword">const</span>
+  {
+      <span class="type"><a href="../qtcore/qmutexlocker.html">QMutexLocker</a></span> locker(<span class="operator">&amp;</span>mutex);
+      <span class="keyword">return</span> (sha1s<span class="operator">.</span>size() <span class="operator">=</span><span class="operator">=</span> pieceIndex <span class="operator">+</span> <span class="number">1</span>)
+          <span class="operator">?</span> (totalLength <span class="operator">%</span> pieceLength) : pieceLength;
+  }
+
+  <span class="type"><a href="../qtcore/qbitarray.html">QBitArray</a></span> FileManager<span class="operator">::</span>completedPieces() <span class="keyword">const</span>
+  {
+      <span class="type"><a href="../qtcore/qmutexlocker.html">QMutexLocker</a></span> locker(<span class="operator">&amp;</span>mutex);
+      <span class="keyword">return</span> verifiedPieces;
+  }
+
+  <span class="type">void</span> FileManager<span class="operator">::</span>setCompletedPieces(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qbitarray.html">QBitArray</a></span> <span class="operator">&amp;</span>pieces)
+  {
+      <span class="type"><a href="../qtcore/qmutexlocker.html">QMutexLocker</a></span> locker(<span class="operator">&amp;</span>mutex);
+      verifiedPieces <span class="operator">=</span> pieces;
+  }
+
+  <span class="type"><a href="../qtcore/qstring.html">QString</a></span> FileManager<span class="operator">::</span>errorString() <span class="keyword">const</span>
+  {
+      <span class="keyword">return</span> errString;
+  }
+
+  <span class="type">void</span> FileManager<span class="operator">::</span>run()
+  {
+      <span class="keyword">if</span> (<span class="operator">!</span>generateFiles())
+          <span class="keyword">return</span>;
+
+      <span class="keyword">do</span> {
+          {
+              <span class="comment">// Go to sleep if there's nothing to do.</span>
+              <span class="type"><a href="../qtcore/qmutexlocker.html">QMutexLocker</a></span> locker(<span class="operator">&amp;</span>mutex);
+              <span class="keyword">if</span> (<span class="operator">!</span>quit <span class="operator">&amp;</span><span class="operator">&amp;</span> readRequests<span class="operator">.</span>isEmpty() <span class="operator">&amp;</span><span class="operator">&amp;</span> writeRequests<span class="operator">.</span>isEmpty() <span class="operator">&amp;</span><span class="operator">&amp;</span> <span class="operator">!</span>startVerification)
+                  <span class="type">cond</span><span class="operator">.</span>wait(<span class="operator">&amp;</span>mutex);
+          }
+
+          <span class="comment">// Read pending read requests</span>
+          mutex<span class="operator">.</span>lock();
+          <span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span>ReadRequest<span class="operator">&gt;</span> newReadRequests <span class="operator">=</span> readRequests;
+          readRequests<span class="operator">.</span>clear();
+          mutex<span class="operator">.</span>unlock();
+          <span class="keyword">while</span> (<span class="operator">!</span>newReadRequests<span class="operator">.</span>isEmpty()) {
+              ReadRequest request <span class="operator">=</span> newReadRequests<span class="operator">.</span>takeFirst();
+              <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> block <span class="operator">=</span> readBlock(request<span class="operator">.</span>pieceIndex<span class="operator">,</span> request<span class="operator">.</span>offset<span class="operator">,</span> request<span class="operator">.</span>length);
+              <span class="keyword">emit</span> dataRead(request<span class="operator">.</span>id<span class="operator">,</span> request<span class="operator">.</span>pieceIndex<span class="operator">,</span> request<span class="operator">.</span>offset<span class="operator">,</span> block);
+          }
+
+          <span class="comment">// Write pending write requests</span>
+          mutex<span class="operator">.</span>lock();
+          <span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span>WriteRequest<span class="operator">&gt;</span> newWriteRequests <span class="operator">=</span> writeRequests;
+          writeRequests<span class="operator">.</span>clear();
+          <span class="keyword">while</span> (<span class="operator">!</span>quit <span class="operator">&amp;</span><span class="operator">&amp;</span> <span class="operator">!</span>newWriteRequests<span class="operator">.</span>isEmpty()) {
+              WriteRequest request <span class="operator">=</span> newWriteRequests<span class="operator">.</span>takeFirst();
+              writeBlock(request<span class="operator">.</span>pieceIndex<span class="operator">,</span> request<span class="operator">.</span>offset<span class="operator">,</span> request<span class="operator">.</span>data);
+          }
+
+          <span class="comment">// Process pending verification requests</span>
+          <span class="keyword">if</span> (startVerification) {
+              newPendingVerificationRequests <span class="operator">=</span> pendingVerificationRequests;
+              pendingVerificationRequests<span class="operator">.</span>clear();
+              verifyFileContents();
+              startVerification <span class="operator">=</span> <span class="keyword">false</span>;
+          }
+          mutex<span class="operator">.</span>unlock();
+          newPendingVerificationRequests<span class="operator">.</span>clear();
+
+      } <span class="keyword">while</span> (<span class="operator">!</span>quit);
+
+      <span class="comment">// Write pending write requests</span>
+      mutex<span class="operator">.</span>lock();
+      <span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span>WriteRequest<span class="operator">&gt;</span> newWriteRequests <span class="operator">=</span> writeRequests;
+      writeRequests<span class="operator">.</span>clear();
+      mutex<span class="operator">.</span>unlock();
+      <span class="keyword">while</span> (<span class="operator">!</span>newWriteRequests<span class="operator">.</span>isEmpty()) {
+          WriteRequest request <span class="operator">=</span> newWriteRequests<span class="operator">.</span>takeFirst();
+          writeBlock(request<span class="operator">.</span>pieceIndex<span class="operator">,</span> request<span class="operator">.</span>offset<span class="operator">,</span> request<span class="operator">.</span>data);
+      }
+  }
+
+  <span class="type">void</span> FileManager<span class="operator">::</span>startDataVerification()
+  {
+      <span class="type"><a href="../qtcore/qmutexlocker.html">QMutexLocker</a></span> locker(<span class="operator">&amp;</span>mutex);
+      startVerification <span class="operator">=</span> <span class="keyword">true</span>;
+      <span class="type">cond</span><span class="operator">.</span>wakeOne();
+  }
+
+  bool FileManager<span class="operator">::</span>generateFiles()
+  {
+      numPieces <span class="operator">=</span> <span class="operator">-</span><span class="number">1</span>;
+
+      <span class="comment">// Set up the thread local data</span>
+      <span class="keyword">if</span> (metaInfo<span class="operator">.</span>fileForm() <span class="operator">=</span><span class="operator">=</span> MetaInfo<span class="operator">::</span>SingleFileForm) {
+          <span class="type"><a href="../qtcore/qmutexlocker.html">QMutexLocker</a></span> locker(<span class="operator">&amp;</span>mutex);
+          MetaInfoSingleFile singleFile <span class="operator">=</span> metaInfo<span class="operator">.</span>singleFile();
+
+          <span class="type"><a href="../qtcore/qstring.html">QString</a></span> prefix;
+          <span class="keyword">if</span> (<span class="operator">!</span>destinationPath<span class="operator">.</span>isEmpty()) {
+              prefix <span class="operator">=</span> destinationPath;
+              <span class="keyword">if</span> (<span class="operator">!</span>prefix<span class="operator">.</span>endsWith(<span class="char">'/'</span>))
+                  prefix <span class="operator">+</span><span class="operator">=</span> <span class="char">'/'</span>;
+              <span class="type"><a href="../qtcore/qdir.html">QDir</a></span> dir;
+              <span class="keyword">if</span> (<span class="operator">!</span>dir<span class="operator">.</span>mkpath(prefix)) {
+                  errString <span class="operator">=</span> tr(<span class="string">&quot;Failed to create directory %1&quot;</span>)<span class="operator">.</span>arg(prefix);
+                  <span class="keyword">emit</span> error();
+                  <span class="keyword">return</span> <span class="keyword">false</span>;
+              }
+          }
+          <span class="type"><a href="../qtcore/qfile.html">QFile</a></span> <span class="operator">*</span>file <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtcore/qfile.html">QFile</a></span>(prefix <span class="operator">+</span> singleFile<span class="operator">.</span>name);
+          <span class="keyword">if</span> (<span class="operator">!</span>file<span class="operator">-</span><span class="operator">&gt;</span>open(<span class="type"><a href="../qtcore/qfile.html">QFile</a></span><span class="operator">::</span>ReadWrite)) {
+              errString <span class="operator">=</span> tr(<span class="string">&quot;Failed to open/create file %1: %2&quot;</span>)
+                          <span class="operator">.</span>arg(file<span class="operator">-</span><span class="operator">&gt;</span>fileName())<span class="operator">.</span>arg(file<span class="operator">-</span><span class="operator">&gt;</span>errorString());
+              <span class="keyword">emit</span> error();
+              <span class="keyword">delete</span> file;
+              <span class="keyword">return</span> <span class="keyword">false</span>;
+          }
+
+          <span class="keyword">if</span> (file<span class="operator">-</span><span class="operator">&gt;</span>size() <span class="operator">!</span><span class="operator">=</span> singleFile<span class="operator">.</span>length) {
+              newFile <span class="operator">=</span> <span class="keyword">true</span>;
+              <span class="keyword">if</span> (<span class="operator">!</span>file<span class="operator">-</span><span class="operator">&gt;</span>resize(singleFile<span class="operator">.</span>length)) {
+                  errString <span class="operator">=</span> tr(<span class="string">&quot;Failed to resize file %1: %2&quot;</span>)
+                              <span class="operator">.</span>arg(file<span class="operator">-</span><span class="operator">&gt;</span>fileName())<span class="operator">.</span>arg(file<span class="operator">-</span><span class="operator">&gt;</span>errorString());
+                  <span class="keyword">delete</span> file;
+                  <span class="keyword">emit</span> error();
+                  <span class="keyword">return</span> <span class="keyword">false</span>;
+              }
+          }
+          fileSizes <span class="operator">&lt;</span><span class="operator">&lt;</span> file<span class="operator">-</span><span class="operator">&gt;</span>size();
+          files <span class="operator">&lt;</span><span class="operator">&lt;</span> file;
+          file<span class="operator">-</span><span class="operator">&gt;</span>close();
+
+          pieceLength <span class="operator">=</span> singleFile<span class="operator">.</span>pieceLength;
+          totalLength <span class="operator">=</span> singleFile<span class="operator">.</span>length;
+          sha1s <span class="operator">=</span> singleFile<span class="operator">.</span>sha1Sums;
+      } <span class="keyword">else</span> {
+          <span class="type"><a href="../qtcore/qmutexlocker.html">QMutexLocker</a></span> locker(<span class="operator">&amp;</span>mutex);
+          <span class="type"><a href="../qtcore/qdir.html">QDir</a></span> dir;
+          <span class="type"><a href="../qtcore/qstring.html">QString</a></span> prefix;
+
+          <span class="keyword">if</span> (<span class="operator">!</span>destinationPath<span class="operator">.</span>isEmpty()) {
+              prefix <span class="operator">=</span> destinationPath;
+              <span class="keyword">if</span> (<span class="operator">!</span>prefix<span class="operator">.</span>endsWith(<span class="char">'/'</span>))
+                  prefix <span class="operator">+</span><span class="operator">=</span> <span class="char">'/'</span>;
+          }
+          <span class="keyword">if</span> (<span class="operator">!</span>metaInfo<span class="operator">.</span>name()<span class="operator">.</span>isEmpty()) {
+              prefix <span class="operator">+</span><span class="operator">=</span> metaInfo<span class="operator">.</span>name();
+              <span class="keyword">if</span> (<span class="operator">!</span>prefix<span class="operator">.</span>endsWith(<span class="char">'/'</span>))
+                  prefix <span class="operator">+</span><span class="operator">=</span> <span class="char">'/'</span>;
+          }
+          <span class="keyword">if</span> (<span class="operator">!</span>dir<span class="operator">.</span>mkpath(prefix)) {
+              errString <span class="operator">=</span> tr(<span class="string">&quot;Failed to create directory %1&quot;</span>)<span class="operator">.</span>arg(prefix);
+              <span class="keyword">emit</span> error();
+              <span class="keyword">return</span> <span class="keyword">false</span>;
+          }
+
+          foreach (<span class="keyword">const</span> MetaInfoMultiFile <span class="operator">&amp;</span>entry<span class="operator">,</span> metaInfo<span class="operator">.</span>multiFiles()) {
+              <span class="type"><a href="../qtcore/qstring.html">QString</a></span> filePath <span class="operator">=</span> <span class="type"><a href="../qtcore/qfileinfo.html">QFileInfo</a></span>(prefix <span class="operator">+</span> entry<span class="operator">.</span>path)<span class="operator">.</span>path();
+              <span class="keyword">if</span> (<span class="operator">!</span><span class="type"><a href="../qtcore/qfile.html">QFile</a></span><span class="operator">::</span>exists(filePath)) {
+                  <span class="keyword">if</span> (<span class="operator">!</span>dir<span class="operator">.</span>mkpath(filePath)) {
+                      errString <span class="operator">=</span> tr(<span class="string">&quot;Failed to create directory %1&quot;</span>)<span class="operator">.</span>arg(filePath);
+                      <span class="keyword">emit</span> error();
+                      <span class="keyword">return</span> <span class="keyword">false</span>;
+                  }
+              }
+
+              <span class="type"><a href="../qtcore/qfile.html">QFile</a></span> <span class="operator">*</span>file <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtcore/qfile.html">QFile</a></span>(prefix <span class="operator">+</span> entry<span class="operator">.</span>path);
+              <span class="keyword">if</span> (<span class="operator">!</span>file<span class="operator">-</span><span class="operator">&gt;</span>open(<span class="type"><a href="../qtcore/qfile.html">QFile</a></span><span class="operator">::</span>ReadWrite)) {
+                  errString <span class="operator">=</span> tr(<span class="string">&quot;Failed to open/create file %1: %2&quot;</span>)
+                              <span class="operator">.</span>arg(file<span class="operator">-</span><span class="operator">&gt;</span>fileName())<span class="operator">.</span>arg(file<span class="operator">-</span><span class="operator">&gt;</span>errorString());
+                  <span class="keyword">emit</span> error();
+                  <span class="keyword">delete</span> file;
+                  <span class="keyword">return</span> <span class="keyword">false</span>;
+              }
+
+              <span class="keyword">if</span> (file<span class="operator">-</span><span class="operator">&gt;</span>size() <span class="operator">!</span><span class="operator">=</span> entry<span class="operator">.</span>length) {
+                  newFile <span class="operator">=</span> <span class="keyword">true</span>;
+                  <span class="keyword">if</span> (<span class="operator">!</span>file<span class="operator">-</span><span class="operator">&gt;</span>resize(entry<span class="operator">.</span>length)) {
+                      errString <span class="operator">=</span> tr(<span class="string">&quot;Failed to resize file %1: %2&quot;</span>)
+                                  <span class="operator">.</span>arg(file<span class="operator">-</span><span class="operator">&gt;</span>fileName())<span class="operator">.</span>arg(file<span class="operator">-</span><span class="operator">&gt;</span>errorString());
+                      <span class="keyword">emit</span> error();
+                      <span class="keyword">delete</span> file;
+                      <span class="keyword">return</span> <span class="keyword">false</span>;
+                  }
+              }
+              fileSizes <span class="operator">&lt;</span><span class="operator">&lt;</span> file<span class="operator">-</span><span class="operator">&gt;</span>size();
+              files <span class="operator">&lt;</span><span class="operator">&lt;</span> file;
+              file<span class="operator">-</span><span class="operator">&gt;</span>close();
+
+              totalLength <span class="operator">+</span><span class="operator">=</span> entry<span class="operator">.</span>length;
+          }
+
+          sha1s <span class="operator">=</span> metaInfo<span class="operator">.</span>sha1Sums();
+          pieceLength <span class="operator">=</span> metaInfo<span class="operator">.</span>pieceLength();
+      }
+      numPieces <span class="operator">=</span> sha1s<span class="operator">.</span>size();
+      <span class="keyword">return</span> <span class="keyword">true</span>;
+  }
+
+  <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> FileManager<span class="operator">::</span>readBlock(<span class="type">int</span> pieceIndex<span class="operator">,</span> <span class="type">int</span> offset<span class="operator">,</span> <span class="type">int</span> length)
+  {
+      <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> block;
+      <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> startReadIndex <span class="operator">=</span> (<span class="type"><a href="../qtcore/qtglobal.html#quint64-typedef">quint64</a></span>(pieceIndex) <span class="operator">*</span> pieceLength) <span class="operator">+</span> offset;
+      <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> currentIndex <span class="operator">=</span> <span class="number">0</span>;
+
+      <span class="keyword">for</span> (<span class="type">int</span> i <span class="operator">=</span> <span class="number">0</span>; <span class="operator">!</span>quit <span class="operator">&amp;</span><span class="operator">&amp;</span> i <span class="operator">&lt;</span> files<span class="operator">.</span>size() <span class="operator">&amp;</span><span class="operator">&amp;</span> length <span class="operator">&gt;</span> <span class="number">0</span>; <span class="operator">+</span><span class="operator">+</span>i) {
+          <span class="type"><a href="../qtcore/qfile.html">QFile</a></span> <span class="operator">*</span>file <span class="operator">=</span> files<span class="operator">[</span>i<span class="operator">]</span>;
+          <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> currentFileSize <span class="operator">=</span> fileSizes<span class="operator">.</span>at(i);
+          <span class="keyword">if</span> ((currentIndex <span class="operator">+</span> currentFileSize) <span class="operator">&gt;</span> startReadIndex) {
+              <span class="keyword">if</span> (<span class="operator">!</span>file<span class="operator">-</span><span class="operator">&gt;</span>isOpen()) {
+                  <span class="keyword">if</span> (<span class="operator">!</span>file<span class="operator">-</span><span class="operator">&gt;</span>open(<span class="type"><a href="../qtcore/qfile.html">QFile</a></span><span class="operator">::</span>ReadWrite)) {
+                      errString <span class="operator">=</span> tr(<span class="string">&quot;Failed to read from file %1: %2&quot;</span>)
+                          <span class="operator">.</span>arg(file<span class="operator">-</span><span class="operator">&gt;</span>fileName())<span class="operator">.</span>arg(file<span class="operator">-</span><span class="operator">&gt;</span>errorString());
+                      <span class="keyword">emit</span> error();
+                      <span class="keyword">break</span>;
+                  }
+              }
+
+              file<span class="operator">-</span><span class="operator">&gt;</span>seek(startReadIndex <span class="operator">-</span> currentIndex);
+              <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> chunk <span class="operator">=</span> file<span class="operator">-</span><span class="operator">&gt;</span>read(<a href="../qtcore/qtglobal.html#qMin">qMin</a><span class="operator">&lt;</span><span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span><span class="operator">&gt;</span>(length<span class="operator">,</span> currentFileSize <span class="operator">-</span> file<span class="operator">-</span><span class="operator">&gt;</span>pos()));
+              file<span class="operator">-</span><span class="operator">&gt;</span>close();
+
+              block <span class="operator">+</span><span class="operator">=</span> chunk;
+              length <span class="operator">-</span><span class="operator">=</span> chunk<span class="operator">.</span>size();
+              startReadIndex <span class="operator">+</span><span class="operator">=</span> chunk<span class="operator">.</span>size();
+              <span class="keyword">if</span> (length <span class="operator">&lt;</span> <span class="number">0</span>) {
+                  errString <span class="operator">=</span> tr(<span class="string">&quot;Failed to read from file %1 (read %3 bytes): %2&quot;</span>)
+                              <span class="operator">.</span>arg(file<span class="operator">-</span><span class="operator">&gt;</span>fileName())<span class="operator">.</span>arg(file<span class="operator">-</span><span class="operator">&gt;</span>errorString())<span class="operator">.</span>arg(length);
+                  <span class="keyword">emit</span> error();
+                  <span class="keyword">break</span>;
+              }
+          }
+          currentIndex <span class="operator">+</span><span class="operator">=</span> currentFileSize;
+      }
+      <span class="keyword">return</span> block;
+  }
+
+  bool FileManager<span class="operator">::</span>writeBlock(<span class="type">int</span> pieceIndex<span class="operator">,</span> <span class="type">int</span> offset<span class="operator">,</span> <span class="keyword">const</span> <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> <span class="operator">&amp;</span>data)
+  {
+      <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> startWriteIndex <span class="operator">=</span> (<span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span>(pieceIndex) <span class="operator">*</span> pieceLength) <span class="operator">+</span> offset;
+      <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> currentIndex <span class="operator">=</span> <span class="number">0</span>;
+      <span class="type">int</span> bytesToWrite <span class="operator">=</span> data<span class="operator">.</span>size();
+      <span class="type">int</span> written <span class="operator">=</span> <span class="number">0</span>;
+
+      <span class="keyword">for</span> (<span class="type">int</span> i <span class="operator">=</span> <span class="number">0</span>; <span class="operator">!</span>quit <span class="operator">&amp;</span><span class="operator">&amp;</span> i <span class="operator">&lt;</span> files<span class="operator">.</span>size(); <span class="operator">+</span><span class="operator">+</span>i) {
+          <span class="type"><a href="../qtcore/qfile.html">QFile</a></span> <span class="operator">*</span>file <span class="operator">=</span> files<span class="operator">[</span>i<span class="operator">]</span>;
+          <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> currentFileSize <span class="operator">=</span> fileSizes<span class="operator">.</span>at(i);
+
+          <span class="keyword">if</span> ((currentIndex <span class="operator">+</span> currentFileSize) <span class="operator">&gt;</span> startWriteIndex) {
+              <span class="keyword">if</span> (<span class="operator">!</span>file<span class="operator">-</span><span class="operator">&gt;</span>isOpen()) {
+                  <span class="keyword">if</span> (<span class="operator">!</span>file<span class="operator">-</span><span class="operator">&gt;</span>open(<span class="type"><a href="../qtcore/qfile.html">QFile</a></span><span class="operator">::</span>ReadWrite)) {
+                      errString <span class="operator">=</span> tr(<span class="string">&quot;Failed to write to file %1: %2&quot;</span>)
+                          <span class="operator">.</span>arg(file<span class="operator">-</span><span class="operator">&gt;</span>fileName())<span class="operator">.</span>arg(file<span class="operator">-</span><span class="operator">&gt;</span>errorString());
+                      <span class="keyword">emit</span> error();
+                      <span class="keyword">break</span>;
+                  }
+              }
+
+              file<span class="operator">-</span><span class="operator">&gt;</span>seek(startWriteIndex <span class="operator">-</span> currentIndex);
+              <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> bytesWritten <span class="operator">=</span> file<span class="operator">-</span><span class="operator">&gt;</span>write(data<span class="operator">.</span>constData() <span class="operator">+</span> written<span class="operator">,</span>
+                                                <a href="../qtcore/qtglobal.html#qMin">qMin</a><span class="operator">&lt;</span><span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span><span class="operator">&gt;</span>(bytesToWrite<span class="operator">,</span> currentFileSize <span class="operator">-</span> file<span class="operator">-</span><span class="operator">&gt;</span>pos()));
+              file<span class="operator">-</span><span class="operator">&gt;</span>close();
+
+              <span class="keyword">if</span> (bytesWritten <span class="operator">&lt;</span><span class="operator">=</span> <span class="number">0</span>) {
+                  errString <span class="operator">=</span> tr(<span class="string">&quot;Failed to write to file %1: %2&quot;</span>)
+                              <span class="operator">.</span>arg(file<span class="operator">-</span><span class="operator">&gt;</span>fileName())<span class="operator">.</span>arg(file<span class="operator">-</span><span class="operator">&gt;</span>errorString());
+                  <span class="keyword">emit</span> error();
+                  <span class="keyword">return</span> <span class="keyword">false</span>;
+              }
+
+              written <span class="operator">+</span><span class="operator">=</span> bytesWritten;
+              startWriteIndex <span class="operator">+</span><span class="operator">=</span> bytesWritten;
+              bytesToWrite <span class="operator">-</span><span class="operator">=</span> bytesWritten;
+              <span class="keyword">if</span> (bytesToWrite <span class="operator">=</span><span class="operator">=</span> <span class="number">0</span>)
+                  <span class="keyword">break</span>;
+          }
+          currentIndex <span class="operator">+</span><span class="operator">=</span> currentFileSize;
+      }
+      <span class="keyword">return</span> <span class="keyword">true</span>;
+  }
+
+  <span class="type">void</span> FileManager<span class="operator">::</span>verifyFileContents()
+  {
+      <span class="comment">// Verify all pieces the first time</span>
+      <span class="keyword">if</span> (newPendingVerificationRequests<span class="operator">.</span>isEmpty()) {
+          <span class="keyword">if</span> (verifiedPieces<span class="operator">.</span>count(<span class="keyword">true</span>) <span class="operator">=</span><span class="operator">=</span> <span class="number">0</span>) {
+              verifiedPieces<span class="operator">.</span>resize(sha1s<span class="operator">.</span>size());
+
+              <span class="type">int</span> oldPercent <span class="operator">=</span> <span class="number">0</span>;
+              <span class="keyword">if</span> (<span class="operator">!</span>newFile) {
+                  <span class="type">int</span> numPieces <span class="operator">=</span> sha1s<span class="operator">.</span>size();
+
+                  <span class="keyword">for</span> (<span class="type">int</span> index <span class="operator">=</span> <span class="number">0</span>; index <span class="operator">&lt;</span> numPieces; <span class="operator">+</span><span class="operator">+</span>index) {
+                      verifySinglePiece(index);
+
+                      <span class="type">int</span> percent <span class="operator">=</span> ((index <span class="operator">+</span> <span class="number">1</span>) <span class="operator">*</span> <span class="number">100</span>) <span class="operator">/</span> numPieces;
+                      <span class="keyword">if</span> (oldPercent <span class="operator">!</span><span class="operator">=</span> percent) {
+                          <span class="keyword">emit</span> verificationProgress(percent);
+                          oldPercent <span class="operator">=</span> percent;
+                      }
+                  }
+              }
+          }
+          <span class="keyword">emit</span> verificationDone();
+          <span class="keyword">return</span>;
+      }
+
+      <span class="comment">// Verify all pending pieces</span>
+      foreach (<span class="type">int</span> index<span class="operator">,</span> newPendingVerificationRequests)
+          <span class="keyword">emit</span> pieceVerified(index<span class="operator">,</span> verifySinglePiece(index));
+  }
+
+  bool FileManager<span class="operator">::</span>verifySinglePiece(<span class="type">int</span> pieceIndex)
+  {
+      <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> block <span class="operator">=</span> readBlock(pieceIndex<span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> pieceLength);
+      <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> sha1Sum <span class="operator">=</span> <span class="type"><a href="../qtcore/qcryptographichash.html">QCryptographicHash</a></span><span class="operator">::</span>hash(block<span class="operator">,</span> <span class="type"><a href="../qtcore/qcryptographichash.html">QCryptographicHash</a></span><span class="operator">::</span>Sha1);
+
+      <span class="keyword">if</span> (sha1Sum <span class="operator">!</span><span class="operator">=</span> sha1s<span class="operator">.</span>at(pieceIndex))
+          <span class="keyword">return</span> <span class="keyword">false</span>;
+      verifiedPieces<span class="operator">.</span>setBit(pieceIndex);
+      <span class="keyword">return</span> <span class="keyword">true</span>;
+  }
+
+  <span class="type">void</span> FileManager<span class="operator">::</span>wakeUp()
+  {
+      <span class="type"><a href="../qtcore/qmutexlocker.html">QMutexLocker</a></span> locker(<span class="operator">&amp;</span>mutex);
+      wokeUp <span class="operator">=</span> <span class="keyword">false</span>;
+      <span class="type">cond</span><span class="operator">.</span>wakeOne();
+  }
+
+</pre>
+</div>
+<!-- @@@torrent/filemanager.cpp -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

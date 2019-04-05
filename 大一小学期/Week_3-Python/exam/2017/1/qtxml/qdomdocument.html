@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qdom.cpp -->
+  <title>QDomDocument Class | Qt XML 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtxml-index.html">Qt XML</a></td><td ><a href="qtxml-module.html">C++ Classes</a></td><td >QDomDocument</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">QDomDocument Class</h1>
+<!-- $$$QDomDocument-brief -->
+<p>The <a href="qdomdocument.html">QDomDocument</a> class represents an XML document. <a href="#details">More...</a></p>
+<!-- @@@QDomDocument -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign">   <span class="preprocessor">#include &lt;QDomDocument&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> qmake:</td><td class="memItemRight bottomAlign"> QT += xml</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Inherits:</td><td class="memItemRight bottomAlign"> <a href="qdomnode.html">QDomNode</a></td></tr></table></div><ul>
+<li><a href="qdomdocument-members.html">List of all members, including inherited members</a></li>
+</ul>
+<p><b>Note:</b> All functions in this class are <a href="../qtdoc/threads-reentrancy.html">reentrant</a> with the following exceptions:</p>
+<ul>
+<li><a href="qdomdocument.html#setContent">setContent</a>(const QByteArray &amp;data, bool namespaceProcessing, QString *errorMsg, int *errorLine, int *errorColumn)</li>
+</ul>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qdomdocument.html#QDomDocument">QDomDocument</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qdomdocument.html#QDomDocument-1">QDomDocument</a></b>(const QString &amp;<i>name</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qdomdocument.html#QDomDocument-2">QDomDocument</a></b>(const QDomDocumentType &amp;<i>doctype</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qdomdocument.html#QDomDocument-3">QDomDocument</a></b>(const QDomDocument &amp;<i>x</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qdomdocument.html#dtor.QDomDocument">~QDomDocument</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QDomAttr </td><td class="memItemRight bottomAlign"><b><a href="qdomdocument.html#createAttribute">createAttribute</a></b>(const QString &amp;<i>name</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QDomAttr </td><td class="memItemRight bottomAlign"><b><a href="qdomdocument.html#createAttributeNS">createAttributeNS</a></b>(const QString &amp;<i>nsURI</i>, const QString &amp;<i>qName</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QDomCDATASection </td><td class="memItemRight bottomAlign"><b><a href="qdomdocument.html#createCDATASection">createCDATASection</a></b>(const QString &amp;<i>value</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QDomComment </td><td class="memItemRight bottomAlign"><b><a href="qdomdocument.html#createComment">createComment</a></b>(const QString &amp;<i>value</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QDomDocumentFragment </td><td class="memItemRight bottomAlign"><b><a href="qdomdocument.html#createDocumentFragment">createDocumentFragment</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QDomElement </td><td class="memItemRight bottomAlign"><b><a href="qdomdocument.html#createElement">createElement</a></b>(const QString &amp;<i>tagName</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QDomElement </td><td class="memItemRight bottomAlign"><b><a href="qdomdocument.html#createElementNS">createElementNS</a></b>(const QString &amp;<i>nsURI</i>, const QString &amp;<i>qName</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QDomEntityReference </td><td class="memItemRight bottomAlign"><b><a href="qdomdocument.html#createEntityReference">createEntityReference</a></b>(const QString &amp;<i>name</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QDomProcessingInstruction </td><td class="memItemRight bottomAlign"><b><a href="qdomdocument.html#createProcessingInstruction">createProcessingInstruction</a></b>(const QString &amp;<i>target</i>, const QString &amp;<i>data</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QDomText </td><td class="memItemRight bottomAlign"><b><a href="qdomdocument.html#createTextNode">createTextNode</a></b>(const QString &amp;<i>value</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QDomDocumentType </td><td class="memItemRight bottomAlign"><b><a href="qdomdocument.html#doctype">doctype</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QDomElement </td><td class="memItemRight bottomAlign"><b><a href="qdomdocument.html#documentElement">documentElement</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QDomElement </td><td class="memItemRight bottomAlign"><b><a href="qdomdocument.html#elementById">elementById</a></b>(const QString &amp;<i>elementId</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QDomNodeList </td><td class="memItemRight bottomAlign"><b><a href="qdomdocument.html#elementsByTagName">elementsByTagName</a></b>(const QString &amp;<i>tagname</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QDomNodeList </td><td class="memItemRight bottomAlign"><b><a href="qdomdocument.html#elementsByTagNameNS">elementsByTagNameNS</a></b>(const QString &amp;<i>nsURI</i>, const QString &amp;<i>localName</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QDomImplementation </td><td class="memItemRight bottomAlign"><b><a href="qdomdocument.html#implementation">implementation</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QDomNode </td><td class="memItemRight bottomAlign"><b><a href="qdomdocument.html#importNode">importNode</a></b>(const QDomNode &amp;<i>importedNode</i>, bool <i>deep</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QDomNode::NodeType </td><td class="memItemRight bottomAlign"><b><a href="qdomdocument.html#nodeType">nodeType</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qdomdocument.html#setContent">setContent</a></b>(const QByteArray &amp;<i>data</i>, bool <i>namespaceProcessing</i>, QString *<i>errorMsg</i> = Q_NULLPTR, int *<i>errorLine</i> = Q_NULLPTR, int *<i>errorColumn</i> = Q_NULLPTR)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qdomdocument.html#setContent-1">setContent</a></b>(const QString &amp;<i>text</i>, bool <i>namespaceProcessing</i>, QString *<i>errorMsg</i> = Q_NULLPTR, int *<i>errorLine</i> = Q_NULLPTR, int *<i>errorColumn</i> = Q_NULLPTR)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qdomdocument.html#setContent-2">setContent</a></b>(QIODevice *<i>dev</i>, bool <i>namespaceProcessing</i>, QString *<i>errorMsg</i> = Q_NULLPTR, int *<i>errorLine</i> = Q_NULLPTR, int *<i>errorColumn</i> = Q_NULLPTR)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qdomdocument.html#setContent-3">setContent</a></b>(QXmlInputSource *<i>source</i>, bool <i>namespaceProcessing</i>, QString *<i>errorMsg</i> = Q_NULLPTR, int *<i>errorLine</i> = Q_NULLPTR, int *<i>errorColumn</i> = Q_NULLPTR)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qdomdocument.html#setContent-4">setContent</a></b>(const QByteArray &amp;<i>buffer</i>, QString *<i>errorMsg</i> = Q_NULLPTR, int *<i>errorLine</i> = Q_NULLPTR, int *<i>errorColumn</i> = Q_NULLPTR)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qdomdocument.html#setContent-5">setContent</a></b>(const QString &amp;<i>text</i>, QString *<i>errorMsg</i> = Q_NULLPTR, int *<i>errorLine</i> = Q_NULLPTR, int *<i>errorColumn</i> = Q_NULLPTR)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qdomdocument.html#setContent-6">setContent</a></b>(QIODevice *<i>dev</i>, QString *<i>errorMsg</i> = Q_NULLPTR, int *<i>errorLine</i> = Q_NULLPTR, int *<i>errorColumn</i> = Q_NULLPTR)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qdomdocument.html#setContent-7">setContent</a></b>(QXmlInputSource *<i>source</i>, QXmlReader *<i>reader</i>, QString *<i>errorMsg</i> = Q_NULLPTR, int *<i>errorLine</i> = Q_NULLPTR, int *<i>errorColumn</i> = Q_NULLPTR)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QByteArray </td><td class="memItemRight bottomAlign"><b><a href="qdomdocument.html#toByteArray">toByteArray</a></b>(int <i>indent</i> = 1) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qdomdocument.html#toString">toString</a></b>(int <i>indent</i> = 1) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QDomDocument &amp;</td><td class="memItemRight bottomAlign"><b><a href="qdomdocument.html#operator-eq">operator=</a></b>(const QDomDocument &amp;<i>x</i>)</td></tr>
+</table></div>
+<ul>
+<li class="fn">65 public functions inherited from <a href="qdomnode.html#public-functions">QDomNode</a></li>
+</ul>
+<a name="details"></a>
+<!-- $$$QDomDocument-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="qdomdocument.html">QDomDocument</a> class represents an XML document.</p>
+<p>The <a href="qdomdocument.html">QDomDocument</a> class represents the entire XML document. Conceptually, it is the root of the document tree, and provides the primary access to the document's data.</p>
+<p>Since elements, text nodes, comments, processing instructions, etc., cannot exist outside the context of a document, the document class also contains the factory functions needed to create these objects. The node objects created have an <a href="qdomnode.html#ownerDocument">ownerDocument</a>() function which associates them with the document within whose context they were created. The DOM classes that will be used most often are <a href="qdomnode.html">QDomNode</a>, <a href="qdomdocument.html">QDomDocument</a>, <a href="qdomelement.html">QDomElement</a> and <a href="qdomtext.html">QDomText</a>.</p>
+<p>The parsed XML is represented internally by a tree of objects that can be accessed using the various QDom classes. All QDom classes only <i>reference</i> objects in the internal tree. The internal objects in the DOM tree will get deleted once the last QDom object referencing them or the <a href="qdomdocument.html">QDomDocument</a> itself is deleted.</p>
+<p>Creation of elements, text nodes, etc. is done using the various factory functions provided in this class. Using the default constructors of the QDom classes will only result in empty objects that cannot be manipulated or inserted into the Document.</p>
+<p>The <a href="qdomdocument.html">QDomDocument</a> class has several functions for creating document data, for example, <a href="qdomdocument.html#createElement">createElement</a>(), <a href="qdomdocument.html#createTextNode">createTextNode</a>(), <a href="qdomdocument.html#createComment">createComment</a>(), <a href="qdomdocument.html#createCDATASection">createCDATASection</a>(), <a href="qdomdocument.html#createProcessingInstruction">createProcessingInstruction</a>(), <a href="qdomdocument.html#createAttribute">createAttribute</a>() and <a href="qdomdocument.html#createEntityReference">createEntityReference</a>(). Some of these functions have versions that support namespaces, i.e&#x2e; <a href="qdomdocument.html#createElementNS">createElementNS</a>() and <a href="qdomdocument.html#createAttributeNS">createAttributeNS</a>(). The <a href="qdomdocument.html#createDocumentFragment">createDocumentFragment</a>() function is used to hold parts of the document; this is useful for manipulating for complex documents.</p>
+<p>The entire content of the document is set with <a href="qdomdocument.html#setContent">setContent</a>(). This function parses the string it is passed as an XML document and creates the DOM tree that represents the document. The root element is available using <a href="qdomdocument.html#documentElement">documentElement</a>(). The textual representation of the document can be obtained using <a href="qdomdocument.html#toString">toString</a>().</p>
+<p><b>Note: </b>The DOM tree might end up reserving a lot of memory if the XML document is big. For such documents, the <a href="../qtcore/qxmlstreamreader.html">QXmlStreamReader</a> or the QXmlQuery classes might be better solutions.</p><p>It is possible to insert a node from another document into the document using <a href="qdomdocument.html#importNode">importNode</a>().</p>
+<p>You can obtain a list of all the elements that have a particular tag with <a href="qdomdocument.html#elementsByTagName">elementsByTagName</a>() or with <a href="qdomdocument.html#elementsByTagNameNS">elementsByTagNameNS</a>().</p>
+<p>The QDom classes are typically used as follows:</p>
+<pre class="cpp">
+
+  <span class="type"><a href="qdomdocument.html#QDomDocument">QDomDocument</a></span> doc(<span class="string">&quot;mydocument&quot;</span>);
+  <span class="type"><a href="../qtcore/qfile.html">QFile</a></span> file(<span class="string">&quot;mydocument.xml&quot;</span>);
+  <span class="keyword">if</span> (<span class="operator">!</span>file<span class="operator">.</span>open(<span class="type"><a href="../qtcore/qiodevice.html">QIODevice</a></span><span class="operator">::</span>ReadOnly))
+      <span class="keyword">return</span>;
+  <span class="keyword">if</span> (<span class="operator">!</span>doc<span class="operator">.</span>setContent(<span class="operator">&amp;</span>file)) {
+      file<span class="operator">.</span>close();
+      <span class="keyword">return</span>;
+  }
+  file<span class="operator">.</span>close();
+
+  <span class="comment">// print out the element names of all elements that are direct children</span>
+  <span class="comment">// of the outermost element.</span>
+  <span class="type"><a href="qdomelement.html">QDomElement</a></span> docElem <span class="operator">=</span> doc<span class="operator">.</span>documentElement();
+
+  <span class="type"><a href="qdomnode.html#QDomNode">QDomNode</a></span> n <span class="operator">=</span> docElem<span class="operator">.</span>firstChild();
+  <span class="keyword">while</span>(<span class="operator">!</span>n<span class="operator">.</span>isNull()) {
+      <span class="type"><a href="qdomelement.html">QDomElement</a></span> e <span class="operator">=</span> n<span class="operator">.</span>toElement(); <span class="comment">// try to convert the node to an element.</span>
+      <span class="keyword">if</span>(<span class="operator">!</span>e<span class="operator">.</span>isNull()) {
+          cout <span class="operator">&lt;</span><span class="operator">&lt;</span> <a href="../qtcore/qtglobal.html#qPrintable">qPrintable</a>(e<span class="operator">.</span>tagName()) <span class="operator">&lt;</span><span class="operator">&lt;</span> endl; <span class="comment">// the node really is an element.</span>
+      }
+      n <span class="operator">=</span> n<span class="operator">.</span>nextSibling();
+  }
+
+  <span class="comment">// Here we append a new element to the end of the document</span>
+  <span class="type"><a href="qdomelement.html">QDomElement</a></span> elem <span class="operator">=</span> doc<span class="operator">.</span>createElement(<span class="string">&quot;img&quot;</span>);
+  elem<span class="operator">.</span>setAttribute(<span class="string">&quot;src&quot;</span><span class="operator">,</span> <span class="string">&quot;myimage.png&quot;</span>);
+  docElem<span class="operator">.</span>appendChild(elem);
+
+</pre>
+<p>Once <code>doc</code> and <code>elem</code> go out of scope, the whole internal tree representing the XML document is deleted.</p>
+<p>To create a document using DOM use code like this:</p>
+<pre class="cpp">
+
+  <span class="type"><a href="qdomdocument.html#QDomDocument">QDomDocument</a></span> doc(<span class="string">&quot;MyML&quot;</span>);
+  <span class="type"><a href="qdomelement.html">QDomElement</a></span> root <span class="operator">=</span> doc<span class="operator">.</span>createElement(<span class="string">&quot;MyML&quot;</span>);
+  doc<span class="operator">.</span>appendChild(root);
+
+  <span class="type"><a href="qdomelement.html">QDomElement</a></span> tag <span class="operator">=</span> doc<span class="operator">.</span>createElement(<span class="string">&quot;Greeting&quot;</span>);
+  root<span class="operator">.</span>appendChild(tag);
+
+  <span class="type"><a href="qdomtext.html">QDomText</a></span> t <span class="operator">=</span> doc<span class="operator">.</span>createTextNode(<span class="string">&quot;Hello World&quot;</span>);
+  tag<span class="operator">.</span>appendChild(t);
+
+  <span class="type"><a href="../qtcore/qstring.html">QString</a></span> xml <span class="operator">=</span> doc<span class="operator">.</span>toString();
+
+</pre>
+<p>For further information about the Document Object Model see the Document Object Model (DOM) <a href="http://www.w3.org/TR/REC-DOM-Level-1/">Level 1</a> and <a href="http://www.w3.org/TR/DOM-Level-2-Core/">Level 2 Core</a> Specifications.</p>
+</div>
+<p><b>See also </b><a href="qtxml-dombookmarks-example.html">DOM Bookmarks Example</a> and <a href="../qtwidgets/qtwidgets-itemviews-simpledommodel-example.html">Simple DOM Model Example</a>.</p>
+<!-- @@@QDomDocument -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$QDomDocument[overload1]$$$QDomDocument -->
+<h3 class="fn" id="QDomDocument"><a name="QDomDocument"></a>QDomDocument::<span class="name">QDomDocument</span>()</h3>
+<p>Constructs an empty document.</p>
+<!-- @@@QDomDocument -->
+<!-- $$$QDomDocument$$$QDomDocumentconstQString& -->
+<h3 class="fn" id="QDomDocument-1"><a name="QDomDocument-1"></a>QDomDocument::<span class="name">QDomDocument</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>name</i>)</h3>
+<p>Creates a document and sets the name of the document type to <i>name</i>.</p>
+<!-- @@@QDomDocument -->
+<!-- $$$QDomDocument$$$QDomDocumentconstQDomDocumentType& -->
+<h3 class="fn" id="QDomDocument-2"><a name="QDomDocument-2"></a>QDomDocument::<span class="name">QDomDocument</span>(const <span class="type"><a href="qdomdocumenttype.html">QDomDocumentType</a></span> &amp;<i>doctype</i>)</h3>
+<p>Creates a document with the document type <i>doctype</i>.</p>
+<p><b>See also </b><a href="qdomimplementation.html#createDocumentType">QDomImplementation::createDocumentType</a>().</p>
+<!-- @@@QDomDocument -->
+<!-- $$$QDomDocument$$$QDomDocumentconstQDomDocument& -->
+<h3 class="fn" id="QDomDocument-3"><a name="QDomDocument-3"></a>QDomDocument::<span class="name">QDomDocument</span>(const <span class="type"><a href="qdomdocument.html#QDomDocument">QDomDocument</a></span> &amp;<i>x</i>)</h3>
+<p>Constructs a copy of <i>x</i>.</p>
+<p>The data of the copy is shared (shallow copy): modifying one node will also change the other. If you want to make a deep copy, use <a href="qdomnode.html#cloneNode">cloneNode</a>().</p>
+<!-- @@@QDomDocument -->
+<!-- $$$~QDomDocument[overload1]$$$~QDomDocument -->
+<h3 class="fn" id="dtor.QDomDocument"><a name="dtor.QDomDocument"></a>QDomDocument::<span class="name">~QDomDocument</span>()</h3>
+<p>Destroys the object and frees its resources.</p>
+<!-- @@@~QDomDocument -->
+<!-- $$$createAttribute[overload1]$$$createAttributeconstQString& -->
+<h3 class="fn" id="createAttribute"><a name="createAttribute"></a><span class="type"><a href="qdomattr.html">QDomAttr</a></span> QDomDocument::<span class="name">createAttribute</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>name</i>)</h3>
+<p>Creates a new attribute called <i>name</i> that can be inserted into an element, e.g&#x2e; using <a href="qdomelement.html#setAttributeNode">QDomElement::setAttributeNode</a>().</p>
+<p>If <i>name</i> is not a valid XML name, the behavior of this function is governed by <a href="qdomimplementation.html#InvalidDataPolicy-enum">QDomImplementation::InvalidDataPolicy</a>.</p>
+<p><b>See also </b><a href="qdomdocument.html#createAttributeNS">createAttributeNS</a>().</p>
+<!-- @@@createAttribute -->
+<!-- $$$createAttributeNS[overload1]$$$createAttributeNSconstQString&constQString& -->
+<h3 class="fn" id="createAttributeNS"><a name="createAttributeNS"></a><span class="type"><a href="qdomattr.html">QDomAttr</a></span> QDomDocument::<span class="name">createAttributeNS</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>nsURI</i>, const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>qName</i>)</h3>
+<p>Creates a new attribute with namespace support that can be inserted into an element. The name of the attribute is <i>qName</i> and the namespace URI is <i>nsURI</i>. This function also sets <a href="qdomnode.html#prefix">QDomNode::prefix</a>() and <a href="qdomnode.html#localName">QDomNode::localName</a>() to appropriate values (depending on <i>qName</i>).</p>
+<p>If <i>qName</i> is not a valid XML name, the behavior of this function is governed by <a href="qdomimplementation.html#InvalidDataPolicy-enum">QDomImplementation::InvalidDataPolicy</a>.</p>
+<p><b>See also </b><a href="qdomdocument.html#createAttribute">createAttribute</a>().</p>
+<!-- @@@createAttributeNS -->
+<!-- $$$createCDATASection[overload1]$$$createCDATASectionconstQString& -->
+<h3 class="fn" id="createCDATASection"><a name="createCDATASection"></a><span class="type"><a href="qdomcdatasection.html">QDomCDATASection</a></span> QDomDocument::<span class="name">createCDATASection</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>value</i>)</h3>
+<p>Creates a new CDATA section for the string <i>value</i> that can be inserted into the document, e.g&#x2e; using <a href="qdomnode.html#appendChild">QDomNode::appendChild</a>().</p>
+<p>If <i>value</i> contains characters which cannot be stored in a CDATA section, the behavior of this function is governed by <a href="qdomimplementation.html#InvalidDataPolicy-enum">QDomImplementation::InvalidDataPolicy</a>.</p>
+<p><b>See also </b><a href="qdomnode.html#appendChild">QDomNode::appendChild</a>(), <a href="qdomnode.html#insertBefore">QDomNode::insertBefore</a>(), and <a href="qdomnode.html#insertAfter">QDomNode::insertAfter</a>().</p>
+<!-- @@@createCDATASection -->
+<!-- $$$createComment[overload1]$$$createCommentconstQString& -->
+<h3 class="fn" id="createComment"><a name="createComment"></a><span class="type"><a href="qdomcomment.html">QDomComment</a></span> QDomDocument::<span class="name">createComment</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>value</i>)</h3>
+<p>Creates a new comment for the string <i>value</i> that can be inserted into the document, e.g&#x2e; using <a href="qdomnode.html#appendChild">QDomNode::appendChild</a>().</p>
+<p>If <i>value</i> contains characters which cannot be stored in an XML comment, the behavior of this function is governed by <a href="qdomimplementation.html#InvalidDataPolicy-enum">QDomImplementation::InvalidDataPolicy</a>.</p>
+<p><b>See also </b><a href="qdomnode.html#appendChild">QDomNode::appendChild</a>(), <a href="qdomnode.html#insertBefore">QDomNode::insertBefore</a>(), and <a href="qdomnode.html#insertAfter">QDomNode::insertAfter</a>().</p>
+<!-- @@@createComment -->
+<!-- $$$createDocumentFragment[overload1]$$$createDocumentFragment -->
+<h3 class="fn" id="createDocumentFragment"><a name="createDocumentFragment"></a><span class="type"><a href="qdomdocumentfragment.html">QDomDocumentFragment</a></span> QDomDocument::<span class="name">createDocumentFragment</span>()</h3>
+<p>Creates a new document fragment, that can be used to hold parts of the document, e.g&#x2e; when doing complex manipulations of the document tree.</p>
+<!-- @@@createDocumentFragment -->
+<!-- $$$createElement[overload1]$$$createElementconstQString& -->
+<h3 class="fn" id="createElement"><a name="createElement"></a><span class="type"><a href="qdomelement.html">QDomElement</a></span> QDomDocument::<span class="name">createElement</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>tagName</i>)</h3>
+<p>Creates a new element called <i>tagName</i> that can be inserted into the DOM tree, e.g&#x2e; using <a href="qdomnode.html#appendChild">QDomNode::appendChild</a>().</p>
+<p>If <i>tagName</i> is not a valid XML name, the behavior of this function is governed by <a href="qdomimplementation.html#InvalidDataPolicy-enum">QDomImplementation::InvalidDataPolicy</a>.</p>
+<p><b>See also </b><a href="qdomdocument.html#createElementNS">createElementNS</a>(), <a href="qdomnode.html#appendChild">QDomNode::appendChild</a>(), <a href="qdomnode.html#insertBefore">QDomNode::insertBefore</a>(), and <a href="qdomnode.html#insertAfter">QDomNode::insertAfter</a>().</p>
+<!-- @@@createElement -->
+<!-- $$$createElementNS[overload1]$$$createElementNSconstQString&constQString& -->
+<h3 class="fn" id="createElementNS"><a name="createElementNS"></a><span class="type"><a href="qdomelement.html">QDomElement</a></span> QDomDocument::<span class="name">createElementNS</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>nsURI</i>, const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>qName</i>)</h3>
+<p>Creates a new element with namespace support that can be inserted into the DOM tree. The name of the element is <i>qName</i> and the namespace URI is <i>nsURI</i>. This function also sets <a href="qdomnode.html#prefix">QDomNode::prefix</a>() and <a href="qdomnode.html#localName">QDomNode::localName</a>() to appropriate values (depending on <i>qName</i>).</p>
+<p>If <i>qName</i> is an empty string, returns a null element regardless of whether the invalid data policy is set.</p>
+<p><b>See also </b><a href="qdomdocument.html#createElement">createElement</a>().</p>
+<!-- @@@createElementNS -->
+<!-- $$$createEntityReference[overload1]$$$createEntityReferenceconstQString& -->
+<h3 class="fn" id="createEntityReference"><a name="createEntityReference"></a><span class="type"><a href="qdomentityreference.html">QDomEntityReference</a></span> QDomDocument::<span class="name">createEntityReference</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>name</i>)</h3>
+<p>Creates a new entity reference called <i>name</i> that can be inserted into the document, e.g&#x2e; using <a href="qdomnode.html#appendChild">QDomNode::appendChild</a>().</p>
+<p>If <i>name</i> is not a valid XML name, the behavior of this function is governed by <a href="qdomimplementation.html#InvalidDataPolicy-enum">QDomImplementation::InvalidDataPolicy</a>.</p>
+<p><b>See also </b><a href="qdomnode.html#appendChild">QDomNode::appendChild</a>(), <a href="qdomnode.html#insertBefore">QDomNode::insertBefore</a>(), and <a href="qdomnode.html#insertAfter">QDomNode::insertAfter</a>().</p>
+<!-- @@@createEntityReference -->
+<!-- $$$createProcessingInstruction[overload1]$$$createProcessingInstructionconstQString&constQString& -->
+<h3 class="fn" id="createProcessingInstruction"><a name="createProcessingInstruction"></a><span class="type"><a href="qdomprocessinginstruction.html">QDomProcessingInstruction</a></span> QDomDocument::<span class="name">createProcessingInstruction</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>target</i>, const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>data</i>)</h3>
+<p>Creates a new processing instruction that can be inserted into the document, e.g&#x2e; using <a href="qdomnode.html#appendChild">QDomNode::appendChild</a>(). This function sets the target for the processing instruction to <i>target</i> and the data to <i>data</i>.</p>
+<p>If <i>target</i> is not a valid XML name, or data if contains characters which cannot appear in a processing instruction, the behavior of this function is governed by <a href="qdomimplementation.html#InvalidDataPolicy-enum">QDomImplementation::InvalidDataPolicy</a>.</p>
+<p><b>See also </b><a href="qdomnode.html#appendChild">QDomNode::appendChild</a>(), <a href="qdomnode.html#insertBefore">QDomNode::insertBefore</a>(), and <a href="qdomnode.html#insertAfter">QDomNode::insertAfter</a>().</p>
+<!-- @@@createProcessingInstruction -->
+<!-- $$$createTextNode[overload1]$$$createTextNodeconstQString& -->
+<h3 class="fn" id="createTextNode"><a name="createTextNode"></a><span class="type"><a href="qdomtext.html">QDomText</a></span> QDomDocument::<span class="name">createTextNode</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>value</i>)</h3>
+<p>Creates a text node for the string <i>value</i> that can be inserted into the document tree, e.g&#x2e; using <a href="qdomnode.html#appendChild">QDomNode::appendChild</a>().</p>
+<p>If <i>value</i> contains characters which cannot be stored as character data of an XML document (even in the form of character references), the behavior of this function is governed by <a href="qdomimplementation.html#InvalidDataPolicy-enum">QDomImplementation::InvalidDataPolicy</a>.</p>
+<p><b>See also </b><a href="qdomnode.html#appendChild">QDomNode::appendChild</a>(), <a href="qdomnode.html#insertBefore">QDomNode::insertBefore</a>(), and <a href="qdomnode.html#insertAfter">QDomNode::insertAfter</a>().</p>
+<!-- @@@createTextNode -->
+<!-- $$$doctype[overload1]$$$doctype -->
+<h3 class="fn" id="doctype"><a name="doctype"></a><span class="type"><a href="qdomdocumenttype.html">QDomDocumentType</a></span> QDomDocument::<span class="name">doctype</span>() const</h3>
+<p>Returns the document type of this document.</p>
+<!-- @@@doctype -->
+<!-- $$$documentElement[overload1]$$$documentElement -->
+<h3 class="fn" id="documentElement"><a name="documentElement"></a><span class="type"><a href="qdomelement.html">QDomElement</a></span> QDomDocument::<span class="name">documentElement</span>() const</h3>
+<p>Returns the root element of the document.</p>
+<!-- @@@documentElement -->
+<!-- $$$elementById[overload1]$$$elementByIdconstQString& -->
+<h3 class="fn" id="elementById"><a name="elementById"></a><span class="type"><a href="qdomelement.html">QDomElement</a></span> QDomDocument::<span class="name">elementById</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>elementId</i>)</h3>
+<p>Returns the element whose ID is equal to <i>elementId</i>. If no element with the ID was found, this function returns a <a href="qdomnode.html#isNull">null element</a>.</p>
+<p>Since the QDomClasses do not know which attributes are element IDs, this function returns always a <a href="qdomnode.html#isNull">null element</a>. This may change in a future version.</p>
+<!-- @@@elementById -->
+<!-- $$$elementsByTagName[overload1]$$$elementsByTagNameconstQString& -->
+<h3 class="fn" id="elementsByTagName"><a name="elementsByTagName"></a><span class="type"><a href="qdomnodelist.html">QDomNodeList</a></span> QDomDocument::<span class="name">elementsByTagName</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>tagname</i>) const</h3>
+<p>Returns a <a href="qdomnodelist.html">QDomNodeList</a>, that contains all the elements in the document with the name <i>tagname</i>. The order of the node list is the order they are encountered in a preorder traversal of the element tree.</p>
+<p><b>See also </b><a href="qdomdocument.html#elementsByTagNameNS">elementsByTagNameNS</a>() and <a href="qdomelement.html#elementsByTagName">QDomElement::elementsByTagName</a>().</p>
+<!-- @@@elementsByTagName -->
+<!-- $$$elementsByTagNameNS[overload1]$$$elementsByTagNameNSconstQString&constQString& -->
+<h3 class="fn" id="elementsByTagNameNS"><a name="elementsByTagNameNS"></a><span class="type"><a href="qdomnodelist.html">QDomNodeList</a></span> QDomDocument::<span class="name">elementsByTagNameNS</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>nsURI</i>, const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>localName</i>)</h3>
+<p>Returns a <a href="qdomnodelist.html">QDomNodeList</a> that contains all the elements in the document with the local name <i>localName</i> and a namespace URI of <i>nsURI</i>. The order of the node list is the order they are encountered in a preorder traversal of the element tree.</p>
+<p><b>See also </b><a href="qdomdocument.html#elementsByTagName">elementsByTagName</a>() and <a href="qdomelement.html#elementsByTagNameNS">QDomElement::elementsByTagNameNS</a>().</p>
+<!-- @@@elementsByTagNameNS -->
+<!-- $$$implementation[overload1]$$$implementation -->
+<h3 class="fn" id="implementation"><a name="implementation"></a><span class="type"><a href="qdomimplementation.html">QDomImplementation</a></span> QDomDocument::<span class="name">implementation</span>() const</h3>
+<p>Returns a <a href="qdomimplementation.html">QDomImplementation</a> object.</p>
+<!-- @@@implementation -->
+<!-- $$$importNode[overload1]$$$importNodeconstQDomNode&bool -->
+<h3 class="fn" id="importNode"><a name="importNode"></a><span class="type"><a href="qdomnode.html#QDomNode">QDomNode</a></span> QDomDocument::<span class="name">importNode</span>(const <span class="type"><a href="qdomnode.html#QDomNode">QDomNode</a></span> &amp;<i>importedNode</i>, <span class="type">bool</span> <i>deep</i>)</h3>
+<p>Imports the node <i>importedNode</i> from another document to this document. <i>importedNode</i> remains in the original document; this function creates a copy that can be used within this document.</p>
+<p>This function returns the imported node that belongs to this document. The returned node has no parent. It is not possible to import <a href="qdomdocument.html">QDomDocument</a> and <a href="qdomdocumenttype.html">QDomDocumentType</a> nodes. In those cases this function returns a <a href="qdomnode.html#isNull">null node</a>.</p>
+<p>If <i>importedNode</i> is a <a href="qdomnode.html#isNull">null node</a>, a null node is returned.</p>
+<p>If <i>deep</i> is true, this function imports not only the node <i>importedNode</i> but its whole subtree; if it is false, only the <i>importedNode</i> is imported. The argument <i>deep</i> has no effect on <a href="qdomattr.html">QDomAttr</a> and <a href="qdomentityreference.html">QDomEntityReference</a> nodes, since the descendants of <a href="qdomattr.html">QDomAttr</a> nodes are always imported and those of <a href="qdomentityreference.html">QDomEntityReference</a> nodes are never imported.</p>
+<p>The behavior of this function is slightly different depending on the node types:</p>
+<div class="table"><table class="generic">
+ <thead><tr class="qt-style"><th >Node Type</th><th >Behavior</th></tr></thead>
+<tr valign="top" class="odd"><td ><a href="qdomattr.html">QDomAttr</a></td><td >The owner element is set to 0 and the specified flag is set to true in the generated attribute. The whole subtree of <i>importedNode</i> is always imported for attribute nodes: <i>deep</i> has no effect.</td></tr>
+<tr valign="top" class="even"><td ><a href="qdomdocument.html">QDomDocument</a></td><td >Document nodes cannot be imported.</td></tr>
+<tr valign="top" class="odd"><td ><a href="qdomdocumentfragment.html">QDomDocumentFragment</a></td><td >If <i>deep</i> is true, this function imports the whole document fragment; otherwise it only generates an empty document fragment.</td></tr>
+<tr valign="top" class="even"><td ><a href="qdomdocumenttype.html">QDomDocumentType</a></td><td >Document type nodes cannot be imported.</td></tr>
+<tr valign="top" class="odd"><td ><a href="qdomelement.html">QDomElement</a></td><td >Attributes for which <a href="qdomattr.html#specified">QDomAttr::specified</a>() is true are also imported, other attributes are not imported. If <i>deep</i> is true, this function also imports the subtree of <i>importedNode</i>; otherwise it imports only the element node (and some attributes, see above).</td></tr>
+<tr valign="top" class="even"><td ><a href="qdomentity.html">QDomEntity</a></td><td >Entity nodes can be imported, but at the moment there is no way to use them since the document type is read-only in DOM level 2.</td></tr>
+<tr valign="top" class="odd"><td ><a href="qdomentityreference.html">QDomEntityReference</a></td><td >Descendants of entity reference nodes are never imported: <i>deep</i> has no effect.</td></tr>
+<tr valign="top" class="even"><td ><a href="qdomnotation.html">QDomNotation</a></td><td >Notation nodes can be imported, but at the moment there is no way to use them since the document type is read-only in DOM level 2.</td></tr>
+<tr valign="top" class="odd"><td ><a href="qdomprocessinginstruction.html">QDomProcessingInstruction</a></td><td >The target and value of the processing instruction is copied to the new node.</td></tr>
+<tr valign="top" class="even"><td ><a href="qdomtext.html">QDomText</a></td><td >The text is copied to the new node.</td></tr>
+<tr valign="top" class="odd"><td ><a href="qdomcdatasection.html">QDomCDATASection</a></td><td >The text is copied to the new node.</td></tr>
+<tr valign="top" class="even"><td ><a href="qdomcomment.html">QDomComment</a></td><td >The text is copied to the new node.</td></tr>
+</table></div>
+<p><b>See also </b><a href="qdomelement.html#setAttribute">QDomElement::setAttribute</a>(), <a href="qdomnode.html#insertBefore">QDomNode::insertBefore</a>(), <a href="qdomnode.html#insertAfter">QDomNode::insertAfter</a>(), <a href="qdomnode.html#replaceChild">QDomNode::replaceChild</a>(), <a href="qdomnode.html#removeChild">QDomNode::removeChild</a>(), and <a href="qdomnode.html#appendChild">QDomNode::appendChild</a>().</p>
+<!-- @@@importNode -->
+<!-- $$$nodeType[overload1]$$$nodeType -->
+<h3 class="fn" id="nodeType"><a name="nodeType"></a><span class="type"><a href="qdomnode.html#NodeType-enum">QDomNode::NodeType</a></span> QDomDocument::<span class="name">nodeType</span>() const</h3>
+<p>Returns <code>DocumentNode</code>.</p>
+<!-- @@@nodeType -->
+<!-- $$$setContent[overload1]$$$setContentconstQByteArray&boolQString*int*int* -->
+<h3 class="fn" id="setContent"><a name="setContent"></a><span class="type">bool</span> QDomDocument::<span class="name">setContent</span>(const <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> &amp;<i>data</i>, <span class="type">bool</span> <i>namespaceProcessing</i>, <span class="type"><a href="../qtcore/qstring.html">QString</a></span> *<i>errorMsg</i> = Q_NULLPTR, <span class="type">int</span> *<i>errorLine</i> = Q_NULLPTR, <span class="type">int</span> *<i>errorColumn</i> = Q_NULLPTR)</h3>
+<p>This function parses the XML document from the byte array <i>data</i> and sets it as the content of the document. It tries to detect the encoding of the document as required by the XML specification.</p>
+<p>If <i>namespaceProcessing</i> is true, the parser recognizes namespaces in the XML file and sets the prefix name, local name and namespace URI to appropriate values. If <i>namespaceProcessing</i> is false, the parser does no namespace processing when it reads the XML file.</p>
+<p>If a parse error occurs, this function returns <code>false</code> and the error message is placed in <code>*</code><i>errorMsg</i>, the line number in <code>*</code><i>errorLine</i> and the column number in <code>*</code><i>errorColumn</i> (unless the associated pointer is set to 0); otherwise this function returns <code>true</code>. The various error messages are described in the <a href="qxmlparseexception.html">QXmlParseException</a> class documentation. Note that, if you want to display these error messages to your application's users, they will be displayed in English unless they are explicitly translated.</p>
+<p>If <i>namespaceProcessing</i> is true, the function <a href="qdomnode.html#prefix">QDomNode::prefix</a>() returns a string for all elements and attributes. It returns an empty string if the element or attribute has no prefix.</p>
+<p>Text nodes consisting only of whitespace are stripped and won't appear in the <a href="qdomdocument.html">QDomDocument</a>. If this behavior is not desired, one can use the setContent() overload that allows a <a href="qxmlreader.html">QXmlReader</a> to be supplied.</p>
+<p>If <i>namespaceProcessing</i> is false, the functions <a href="qdomnode.html#prefix">QDomNode::prefix</a>(), <a href="qdomnode.html#localName">QDomNode::localName</a>() and <a href="qdomnode.html#namespaceURI">QDomNode::namespaceURI</a>() return an empty string.</p>
+<p>Entity references are handled as follows:</p>
+<ul>
+<li>References to internal general entities and character entities occurring in the content are included. The result is a <a href="qdomtext.html">QDomText</a> node with the references replaced by their corresponding entity values.</li>
+<li>References to parameter entities occurring in the internal subset are included. The result is a <a href="qdomdocumenttype.html">QDomDocumentType</a> node which contains entity and notation declarations with the references replaced by their corresponding entity values.</li>
+<li>Any general parsed entity reference which is not defined in the internal subset and which occurs in the content is represented as a <a href="qdomentityreference.html">QDomEntityReference</a> node.</li>
+<li>Any parsed entity reference which is not defined in the internal subset and which occurs outside of the content is replaced with an empty string.</li>
+<li>Any unparsed entity reference is replaced with an empty string.</li>
+</ul>
+<p><b>Warning:</b> This function is not <a href="../qtdoc/threads-reentrancy.html">reentrant</a>.</p>
+<p><b>See also </b><a href="qdomnode.html#namespaceURI">QDomNode::namespaceURI</a>(), <a href="qdomnode.html#localName">QDomNode::localName</a>(), <a href="qdomnode.html#prefix">QDomNode::prefix</a>(), <a href="../qtcore/qstring.html#isNull">QString::isNull</a>(), and <a href="../qtcore/qstring.html#isEmpty">QString::isEmpty</a>().</p>
+<!-- @@@setContent -->
+<!-- $$$setContent$$$setContentconstQString&boolQString*int*int* -->
+<h3 class="fn" id="setContent-1"><a name="setContent-1"></a><span class="type">bool</span> QDomDocument::<span class="name">setContent</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>text</i>, <span class="type">bool</span> <i>namespaceProcessing</i>, <span class="type"><a href="../qtcore/qstring.html">QString</a></span> *<i>errorMsg</i> = Q_NULLPTR, <span class="type">int</span> *<i>errorLine</i> = Q_NULLPTR, <span class="type">int</span> *<i>errorColumn</i> = Q_NULLPTR)</h3>
+<p>This is an overloaded function.</p>
+<p>This function reads the XML document from the string <i>text</i>, returning true if the content was successfully parsed; otherwise returns <code>false</code>. Since <i>text</i> is already a Unicode string, no encoding detection is done.</p>
+<!-- @@@setContent -->
+<!-- $$$setContent$$$setContentQIODevice*boolQString*int*int* -->
+<h3 class="fn" id="setContent-2"><a name="setContent-2"></a><span class="type">bool</span> QDomDocument::<span class="name">setContent</span>(<span class="type"><a href="../qtcore/qiodevice.html">QIODevice</a></span> *<i>dev</i>, <span class="type">bool</span> <i>namespaceProcessing</i>, <span class="type"><a href="../qtcore/qstring.html">QString</a></span> *<i>errorMsg</i> = Q_NULLPTR, <span class="type">int</span> *<i>errorLine</i> = Q_NULLPTR, <span class="type">int</span> *<i>errorColumn</i> = Q_NULLPTR)</h3>
+<p>This is an overloaded function.</p>
+<p>This function reads the XML document from the IO device <i>dev</i>, returning true if the content was successfully parsed; otherwise returns <code>false</code>.</p>
+<!-- @@@setContent -->
+<!-- $$$setContent$$$setContentQXmlInputSource*boolQString*int*int* -->
+<h3 class="fn" id="setContent-3"><a name="setContent-3"></a><span class="type">bool</span> QDomDocument::<span class="name">setContent</span>(<span class="type"><a href="qxmlinputsource.html">QXmlInputSource</a></span> *<i>source</i>, <span class="type">bool</span> <i>namespaceProcessing</i>, <span class="type"><a href="../qtcore/qstring.html">QString</a></span> *<i>errorMsg</i> = Q_NULLPTR, <span class="type">int</span> *<i>errorLine</i> = Q_NULLPTR, <span class="type">int</span> *<i>errorColumn</i> = Q_NULLPTR)</h3>
+<p>This is an overloaded function.</p>
+<p>This function reads the XML document from the <a href="qxmlinputsource.html">QXmlInputSource</a> <i>source</i>, returning true if the content was successfully parsed; otherwise returns <code>false</code>.</p>
+<p>This function was introduced in  Qt 4.5.</p>
+<!-- @@@setContent -->
+<!-- $$$setContent$$$setContentconstQByteArray&QString*int*int* -->
+<h3 class="fn" id="setContent-4"><a name="setContent-4"></a><span class="type">bool</span> QDomDocument::<span class="name">setContent</span>(const <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> &amp;<i>buffer</i>, <span class="type"><a href="../qtcore/qstring.html">QString</a></span> *<i>errorMsg</i> = Q_NULLPTR, <span class="type">int</span> *<i>errorLine</i> = Q_NULLPTR, <span class="type">int</span> *<i>errorColumn</i> = Q_NULLPTR)</h3>
+<p>This is an overloaded function.</p>
+<p>This function reads the XML document from the byte array <i>buffer</i>, returning true if the content was successfully parsed; otherwise returns false.</p>
+<p>No namespace processing is performed.</p>
+<!-- @@@setContent -->
+<!-- $$$setContent$$$setContentconstQString&QString*int*int* -->
+<h3 class="fn" id="setContent-5"><a name="setContent-5"></a><span class="type">bool</span> QDomDocument::<span class="name">setContent</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>text</i>, <span class="type"><a href="../qtcore/qstring.html">QString</a></span> *<i>errorMsg</i> = Q_NULLPTR, <span class="type">int</span> *<i>errorLine</i> = Q_NULLPTR, <span class="type">int</span> *<i>errorColumn</i> = Q_NULLPTR)</h3>
+<p>This is an overloaded function.</p>
+<p>This function reads the XML document from the string <i>text</i>, returning true if the content was successfully parsed; otherwise returns <code>false</code>. Since <i>text</i> is already a Unicode string, no encoding detection is performed.</p>
+<p>No namespace processing is performed either.</p>
+<!-- @@@setContent -->
+<!-- $$$setContent$$$setContentQIODevice*QString*int*int* -->
+<h3 class="fn" id="setContent-6"><a name="setContent-6"></a><span class="type">bool</span> QDomDocument::<span class="name">setContent</span>(<span class="type"><a href="../qtcore/qiodevice.html">QIODevice</a></span> *<i>dev</i>, <span class="type"><a href="../qtcore/qstring.html">QString</a></span> *<i>errorMsg</i> = Q_NULLPTR, <span class="type">int</span> *<i>errorLine</i> = Q_NULLPTR, <span class="type">int</span> *<i>errorColumn</i> = Q_NULLPTR)</h3>
+<p>This is an overloaded function.</p>
+<p>This function reads the XML document from the IO device <i>dev</i>, returning true if the content was successfully parsed; otherwise returns <code>false</code>.</p>
+<p>No namespace processing is performed.</p>
+<!-- @@@setContent -->
+<!-- $$$setContent$$$setContentQXmlInputSource*QXmlReader*QString*int*int* -->
+<h3 class="fn" id="setContent-7"><a name="setContent-7"></a><span class="type">bool</span> QDomDocument::<span class="name">setContent</span>(<span class="type"><a href="qxmlinputsource.html">QXmlInputSource</a></span> *<i>source</i>, <span class="type"><a href="qxmlreader.html">QXmlReader</a></span> *<i>reader</i>, <span class="type"><a href="../qtcore/qstring.html">QString</a></span> *<i>errorMsg</i> = Q_NULLPTR, <span class="type">int</span> *<i>errorLine</i> = Q_NULLPTR, <span class="type">int</span> *<i>errorColumn</i> = Q_NULLPTR)</h3>
+<p>This is an overloaded function.</p>
+<p>This function reads the XML document from the <a href="qxmlinputsource.html">QXmlInputSource</a> <i>source</i> and parses it with the <a href="qxmlreader.html">QXmlReader</a> <i>reader</i>, returning true if the content was successfully parsed; otherwise returns <code>false</code>.</p>
+<p>This function doesn't change the features of the <i>reader</i>. If you want to use certain features for parsing you can use this function to set up the reader appropriately.</p>
+<p><b>See also </b><a href="qxmlsimplereader.html">QXmlSimpleReader</a>.</p>
+<!-- @@@setContent -->
+<!-- $$$toByteArray[overload1]$$$toByteArrayint -->
+<h3 class="fn" id="toByteArray"><a name="toByteArray"></a><span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> QDomDocument::<span class="name">toByteArray</span>(<span class="type">int</span> <i>indent</i> = 1) const</h3>
+<p>Converts the parsed document back to its textual representation and returns a <a href="../qtcore/qbytearray.html">QByteArray</a> containing the data encoded as UTF-8.</p>
+<p>This function uses <i>indent</i> as the amount of space to indent subelements.</p>
+<p><b>See also </b><a href="qdomdocument.html#toString">toString</a>().</p>
+<!-- @@@toByteArray -->
+<!-- $$$toString[overload1]$$$toStringint -->
+<h3 class="fn" id="toString"><a name="toString"></a><span class="type"><a href="../qtcore/qstring.html">QString</a></span> QDomDocument::<span class="name">toString</span>(<span class="type">int</span> <i>indent</i> = 1) const</h3>
+<p>Converts the parsed document back to its textual representation.</p>
+<p>This function uses <i>indent</i> as the amount of space to indent subelements.</p>
+<p>If <i>indent</i> is -1, no whitespace at all is added.</p>
+<!-- @@@toString -->
+<!-- $$$operator=[overload1]$$$operator=constQDomDocument& -->
+<h3 class="fn" id="operator-eq"><a name="operator-eq"></a><span class="type"><a href="qdomdocument.html#QDomDocument">QDomDocument</a></span> &amp;QDomDocument::<span class="name">operator=</span>(const <span class="type"><a href="qdomdocument.html#QDomDocument">QDomDocument</a></span> &amp;<i>x</i>)</h3>
+<p>Assigns <i>x</i> to this DOM document.</p>
+<p>The data of the copy is shared (shallow copy): modifying one node will also change the other. If you want to make a deep copy, use <a href="qdomnode.html#cloneNode">cloneNode</a>().</p>
+<!-- @@@operator= -->
+</div>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

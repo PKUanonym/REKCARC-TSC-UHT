@@ -1,0 +1,12 @@
+{% extends 'searchengine/base.html' %}
+{% block content %}
+<div>
+    {% for event in events %}
+        {{ event.event }}|||{{ event.ttime }}|||
+        <form action="{% url 'searchengine:search' %}" method="post" class="form">
+            {% csrf_token %}
+            <button type="submit" name="del{{ event.id }}" class="btn btn-primary">删除</button>
+        </form><br>
+    {% endfor %}
+</div>
+{% endblock content %}

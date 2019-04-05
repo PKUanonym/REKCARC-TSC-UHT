@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qdnslookup.cpp -->
+  <title>QDnsLookup Class | Qt Network 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtnetwork-index.html">Qt Network</a></td><td ><a href="qtnetwork-module.html">C++ Classes</a></td><td >QDnsLookup</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-types">Public Types</a></li>
+<li class="level1"><a href="#properties">Properties</a></li>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#public-slots">Public Slots</a></li>
+<li class="level1"><a href="#signals">Signals</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">QDnsLookup Class</h1>
+<!-- $$$QDnsLookup-brief -->
+<p>The <a href="qdnslookup.html">QDnsLookup</a> class represents a DNS lookup. <a href="#details">More...</a></p>
+<!-- @@@QDnsLookup -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign">   <span class="preprocessor">#include &lt;QDnsLookup&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> qmake:</td><td class="memItemRight bottomAlign"> QT += network</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Since:</td><td class="memItemRight bottomAlign">  Qt 5.0</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Inherits:</td><td class="memItemRight bottomAlign"> <a href="../qtcore/qobject.html">QObject</a></td></tr></table></div><ul>
+<li><a href="qdnslookup-members.html">List of all members, including inherited members</a></li>
+</ul>
+<a name="public-types"></a>
+<h2 id="public-types">Public Types</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="qdnslookup.html#Error-enum">Error</a></b> { NoError, ResolverError, OperationCancelledError, InvalidRequestError, ..., NotFoundError }</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="qdnslookup.html#Type-enum">Type</a></b> { A, AAAA, ANY, CNAME, ..., TXT }</td></tr>
+</table></div>
+<a name="properties"></a>
+<h2 id="properties">Properties</h2>
+<div class="table"><table class="propsummary">
+<tr><td class="topAlign"><ul>
+<li class="fn"><b><a href="qdnslookup.html#error-prop">error</a></b> : const Error</li>
+<li class="fn"><b><a href="qdnslookup.html#errorString-prop">errorString</a></b> : const QString</li>
+<li class="fn"><b><a href="qdnslookup.html#name-prop">name</a></b> : QString</li>
+</ul></td><td class="topAlign"><ul>
+<li class="fn"><b><a href="qdnslookup.html#nameserver-prop">nameserver</a></b> : QHostAddress</li>
+<li class="fn"><b><a href="qdnslookup.html#type-prop">type</a></b> : Type</li>
+</ul>
+</td></tr>
+</table></div>
+<ul>
+<li class="fn">1 property inherited from <a href="../qtcore/qobject.html#properties">QObject</a></li>
+</ul>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qdnslookup.html#QDnsLookup">QDnsLookup</a></b>(QObject *<i>parent</i> = Q_NULLPTR)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qdnslookup.html#QDnsLookup-1">QDnsLookup</a></b>(Type <i>type</i>, const QString &amp;<i>name</i>, QObject *<i>parent</i> = Q_NULLPTR)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qdnslookup.html#QDnsLookup-2">QDnsLookup</a></b>(Type <i>type</i>, const QString &amp;<i>name</i>, const QHostAddress &amp;<i>nameserver</i>, QObject *<i>parent</i> = Q_NULLPTR)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qdnslookup.html#dtor.QDnsLookup">~QDnsLookup</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QList&lt;QDnsDomainNameRecord&gt; </td><td class="memItemRight bottomAlign"><b><a href="qdnslookup.html#canonicalNameRecords">canonicalNameRecords</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> Error </td><td class="memItemRight bottomAlign"><b><a href="qdnslookup.html#error-prop">error</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qdnslookup.html#errorString-prop">errorString</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QList&lt;QDnsHostAddressRecord&gt; </td><td class="memItemRight bottomAlign"><b><a href="qdnslookup.html#hostAddressRecords">hostAddressRecords</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qdnslookup.html#isFinished">isFinished</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QList&lt;QDnsMailExchangeRecord&gt; </td><td class="memItemRight bottomAlign"><b><a href="qdnslookup.html#mailExchangeRecords">mailExchangeRecords</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qdnslookup.html#name-prop">name</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QList&lt;QDnsDomainNameRecord&gt; </td><td class="memItemRight bottomAlign"><b><a href="qdnslookup.html#nameServerRecords">nameServerRecords</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QHostAddress </td><td class="memItemRight bottomAlign"><b><a href="qdnslookup.html#nameserver-prop">nameserver</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QList&lt;QDnsDomainNameRecord&gt; </td><td class="memItemRight bottomAlign"><b><a href="qdnslookup.html#pointerRecords">pointerRecords</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QList&lt;QDnsServiceRecord&gt; </td><td class="memItemRight bottomAlign"><b><a href="qdnslookup.html#serviceRecords">serviceRecords</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qdnslookup.html#name-prop">setName</a></b>(const QString &amp;<i>name</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qdnslookup.html#nameserver-prop">setNameserver</a></b>(const QHostAddress &amp;<i>nameserver</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qdnslookup.html#type-prop">setType</a></b>(<i>QDnsLookup::Type</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QList&lt;QDnsTextRecord&gt; </td><td class="memItemRight bottomAlign"><b><a href="qdnslookup.html#textRecords">textRecords</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> Type </td><td class="memItemRight bottomAlign"><b><a href="qdnslookup.html#type-prop">type</a></b>() const</td></tr>
+</table></div>
+<ul>
+<li class="fn">31 public functions inherited from <a href="../qtcore/qobject.html#public-functions">QObject</a></li>
+</ul>
+<a name="public-slots"></a>
+<h2 id="public-slots">Public Slots</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qdnslookup.html#abort">abort</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qdnslookup.html#lookup">lookup</a></b>()</td></tr>
+</table></div>
+<ul>
+<li class="fn">1 public slot inherited from <a href="../qtcore/qobject.html#public-slots">QObject</a></li>
+</ul>
+<a name="signals"></a>
+<h2 id="signals">Signals</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qdnslookup.html#finished">finished</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qdnslookup.html#nameChanged">nameChanged</a></b>(const QString &amp;<i>name</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qdnslookup.html#nameserver-prop">nameserverChanged</a></b>(const QHostAddress &amp;<i>nameserver</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qdnslookup.html#typeChanged">typeChanged</a></b>(Type <i>type</i>)</td></tr>
+</table></div>
+<ul>
+<li class="fn">2 signals inherited from <a href="../qtcore/qobject.html#signals">QObject</a></li>
+</ul>
+<h3>Additional Inherited Members</h3>
+<ul>
+<li class="fn">1 public variable inherited from <a href="../qtcore/qobject.html#public-variables">QObject</a></li>
+<li class="fn">10 static public members inherited from <a href="../qtcore/qobject.html#static-public-members">QObject</a></li>
+<li class="fn">9 protected functions inherited from <a href="../qtcore/qobject.html#protected-functions">QObject</a></li>
+<li class="fn">2 protected variables inherited from <a href="../qtcore/qobject.html#protected-variables">QObject</a></li>
+</ul>
+<a name="details"></a>
+<!-- $$$QDnsLookup-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="qdnslookup.html">QDnsLookup</a> class represents a DNS lookup.</p>
+<p><a href="qdnslookup.html">QDnsLookup</a> uses the mechanisms provided by the operating system to perform DNS lookups. To perform a lookup you need to specify a <a href="qdnslookup.html#name-prop">name</a> and <a href="qdnslookup.html#type-prop">type</a> then invoke the <a href="qdnslookup.html#lookup">lookup()</a> slot. The <a href="qdnslookup.html#finished">finished()</a> signal will be emitted upon completion.</p>
+<p>For example, you can determine which servers an XMPP chat client should connect to for a given domain with:</p>
+<pre class="cpp">
+
+  <span class="type">void</span> MyObject<span class="operator">::</span>lookupServers()
+  {
+      <span class="comment">// Create a DNS lookup.</span>
+      dns <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="qdnslookup.html#QDnsLookup">QDnsLookup</a></span>(<span class="keyword">this</span>);
+      connect(dns<span class="operator">,</span> SIGNAL(finished())<span class="operator">,</span>
+              <span class="keyword">this</span><span class="operator">,</span> SLOT(handleServers()));
+
+      <span class="comment">// Find the XMPP servers for gmail.com</span>
+      dns<span class="operator">-</span><span class="operator">&gt;</span>setType(<span class="type"><a href="qdnslookup.html#QDnsLookup">QDnsLookup</a></span><span class="operator">::</span>SRV);
+      dns<span class="operator">-</span><span class="operator">&gt;</span>setName(<span class="string">&quot;_xmpp-client._tcp.gmail.com&quot;</span>);
+      dns<span class="operator">-</span><span class="operator">&gt;</span>lookup();
+  }
+
+</pre>
+<p>Once the request finishes you can handle the results with:</p>
+<pre class="cpp">
+
+  <span class="type">void</span> MyObject<span class="operator">::</span>handleServers()
+  {
+      <span class="comment">// Check the lookup succeeded.</span>
+      <span class="keyword">if</span> (dns<span class="operator">-</span><span class="operator">&gt;</span>error() <span class="operator">!</span><span class="operator">=</span> <span class="type"><a href="qdnslookup.html#QDnsLookup">QDnsLookup</a></span><span class="operator">::</span>NoError) {
+          <a href="../qtcore/qtglobal.html#qWarning">qWarning</a>(<span class="string">&quot;DNS lookup failed&quot;</span>);
+          dns<span class="operator">-</span><span class="operator">&gt;</span>deleteLater();
+          <span class="keyword">return</span>;
+      }
+
+      <span class="comment">// Handle the results.</span>
+      foreach (<span class="keyword">const</span> <span class="type"><a href="qdnsservicerecord.html">QDnsServiceRecord</a></span> <span class="operator">&amp;</span>record<span class="operator">,</span> dns<span class="operator">-</span><span class="operator">&gt;</span>serviceRecords()) {
+          <span class="operator">.</span><span class="operator">.</span><span class="operator">.</span>
+      }
+      dns<span class="operator">-</span><span class="operator">&gt;</span>deleteLater();
+  }
+
+</pre>
+<p><b>Note: </b>If you simply want to find the IP address(es) associated with a host name, or the host name associated with an IP address you should use <a href="qhostinfo.html">QHostInfo</a> instead.</p></div>
+<!-- @@@QDnsLookup -->
+<div class="types">
+<h2>Member Type Documentation</h2>
+<!-- $$$Error$$$NoError$$$ResolverError$$$OperationCancelledError$$$InvalidRequestError$$$InvalidReplyError$$$ServerFailureError$$$ServerRefusedError$$$NotFoundError -->
+<h3 class="fn" id="Error-enum"><a name="Error-enum"></a>enum QDnsLookup::<span class="name">Error</span></h3>
+<p>Indicates all possible error conditions found during the processing of the DNS lookup.</p>
+<div class="table"><table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td class="topAlign"><code>QDnsLookup::NoError</code></td><td class="topAlign tblval"><code>0</code></td><td class="topAlign">no error condition.</td></tr>
+<tr><td class="topAlign"><code>QDnsLookup::ResolverError</code></td><td class="topAlign tblval"><code>1</code></td><td class="topAlign">there was an error initializing the system's DNS resolver.</td></tr>
+<tr><td class="topAlign"><code>QDnsLookup::OperationCancelledError</code></td><td class="topAlign tblval"><code>2</code></td><td class="topAlign">the lookup was aborted using the <a href="qdnslookup.html#abort">abort</a>() method.</td></tr>
+<tr><td class="topAlign"><code>QDnsLookup::InvalidRequestError</code></td><td class="topAlign tblval"><code>3</code></td><td class="topAlign">the requested DNS lookup was invalid.</td></tr>
+<tr><td class="topAlign"><code>QDnsLookup::InvalidReplyError</code></td><td class="topAlign tblval"><code>4</code></td><td class="topAlign">the reply returned by the server was invalid.</td></tr>
+<tr><td class="topAlign"><code>QDnsLookup::ServerFailureError</code></td><td class="topAlign tblval"><code>5</code></td><td class="topAlign">the server encountered an internal failure while processing the request (SERVFAIL).</td></tr>
+<tr><td class="topAlign"><code>QDnsLookup::ServerRefusedError</code></td><td class="topAlign tblval"><code>6</code></td><td class="topAlign">the server refused to process the request for security or policy reasons (REFUSED).</td></tr>
+<tr><td class="topAlign"><code>QDnsLookup::NotFoundError</code></td><td class="topAlign tblval"><code>7</code></td><td class="topAlign">the requested domain name does not exist (NXDOMAIN).</td></tr>
+</table></div>
+<!-- @@@Error -->
+<!-- $$$Type$$$A$$$AAAA$$$ANY$$$CNAME$$$MX$$$NS$$$PTR$$$SRV$$$TXT -->
+<h3 class="fn" id="Type-enum"><a name="Type-enum"></a>enum QDnsLookup::<span class="name">Type</span></h3>
+<p>Indicates the type of DNS lookup that was performed.</p>
+<div class="table"><table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td class="topAlign"><code>QDnsLookup::A</code></td><td class="topAlign tblval"><code>1</code></td><td class="topAlign">IPv4 address records.</td></tr>
+<tr><td class="topAlign"><code>QDnsLookup::AAAA</code></td><td class="topAlign tblval"><code>28</code></td><td class="topAlign">IPv6 address records.</td></tr>
+<tr><td class="topAlign"><code>QDnsLookup::ANY</code></td><td class="topAlign tblval"><code>255</code></td><td class="topAlign">any records.</td></tr>
+<tr><td class="topAlign"><code>QDnsLookup::CNAME</code></td><td class="topAlign tblval"><code>5</code></td><td class="topAlign">canonical name records.</td></tr>
+<tr><td class="topAlign"><code>QDnsLookup::MX</code></td><td class="topAlign tblval"><code>15</code></td><td class="topAlign">mail exchange records.</td></tr>
+<tr><td class="topAlign"><code>QDnsLookup::NS</code></td><td class="topAlign tblval"><code>2</code></td><td class="topAlign">name server records.</td></tr>
+<tr><td class="topAlign"><code>QDnsLookup::PTR</code></td><td class="topAlign tblval"><code>12</code></td><td class="topAlign">pointer records.</td></tr>
+<tr><td class="topAlign"><code>QDnsLookup::SRV</code></td><td class="topAlign tblval"><code>33</code></td><td class="topAlign">service records.</td></tr>
+<tr><td class="topAlign"><code>QDnsLookup::TXT</code></td><td class="topAlign tblval"><code>16</code></td><td class="topAlign">text records.</td></tr>
+</table></div>
+<!-- @@@Type -->
+</div>
+<div class="prop">
+<h2>Property Documentation</h2>
+<!-- $$$error-prop$$$error$$$finished -->
+<h3 class="fn" id="error-prop"><a name="error-prop"></a><span class="name">error</span> : const <span class="type"><a href="qdnslookup.html#Error-enum">Error</a></span></h3>
+<p>This property holds the type of error that occurred if the DNS lookup failed, or NoError.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft topAlign rightAlign"> Error </td><td class="memItemRight bottomAlign"><span class="name"><b>error</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="qdnslookup.html#finished">finished</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@error -->
+<!-- $$$errorString-prop$$$errorString$$$finished -->
+<h3 class="fn" id="errorString-prop"><a name="errorString-prop"></a><span class="name">errorString</span> : const <span class="type"><a href="../qtcore/qstring.html">QString</a></span></h3>
+<p>This property holds a human-readable description of the error if the DNS lookup failed.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>errorString</b></span>() const</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="qdnslookup.html#finished">finished</a></b></span>()</td></tr>
+</table></div>
+<!-- @@@errorString -->
+<!-- $$$name-prop$$$name$$$setNameconstQString&$$$nameChangedconstQString& -->
+<h3 class="fn" id="name-prop"><a name="name-prop"></a><span class="name">name</span> : <span class="type"><a href="../qtcore/qstring.html">QString</a></span></h3>
+<p>This property holds the name to lookup.</p>
+<p><b>Note: </b>The name will be encoded using IDNA, which means it's unsuitable for querying SRV records compatible with the DNS-SD specification.</p><p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>name</b></span>() const</td></tr>
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>setName</b></span>(const QString &amp;<i>name</i>)</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="qdnslookup.html#nameChanged">nameChanged</a></b></span>(const QString &amp;<i>name</i>)</td></tr>
+</table></div>
+<!-- @@@name -->
+<!-- $$$nameserver-prop$$$nameserver$$$setNameserverconstQHostAddress&$$$nameserverChangedconstQHostAddress& -->
+<h3 class="fn" id="nameserver-prop"><a name="nameserver-prop"></a><span class="name">nameserver</span> : <span class="type"><a href="qhostaddress.html">QHostAddress</a></span></h3>
+<p>This property holds the nameserver to use for DNS lookup.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft topAlign rightAlign"> QHostAddress </td><td class="memItemRight bottomAlign"><span class="name"><b>nameserver</b></span>() const</td></tr>
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>setNameserver</b></span>(const QHostAddress &amp;<i>nameserver</i>)</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>nameserverChanged</b></span>(const QHostAddress &amp;<i>nameserver</i>)</td></tr>
+</table></div>
+<!-- @@@nameserver -->
+<!-- $$$type-prop$$$type$$$setTypeQDnsLookup::Type$$$typeChangedType -->
+<h3 class="fn" id="type-prop"><a name="type-prop"></a><span class="name">type</span> : <span class="type"><a href="qdnslookup.html#Type-enum">Type</a></span></h3>
+<p>This property holds the type of DNS lookup.</p>
+<p><b>Access functions:</b></p>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft topAlign rightAlign"> Type </td><td class="memItemRight bottomAlign"><span class="name"><b>type</b></span>() const</td></tr>
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>setType</b></span>(<i>QDnsLookup::Type</i>)</td></tr>
+</table></div>
+<p><b>Notifier signal:</b></p>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="qdnslookup.html#typeChanged">typeChanged</a></b></span>(Type <i>type</i>)</td></tr>
+</table></div>
+<!-- @@@type -->
+</div>
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$QDnsLookup[overload1]$$$QDnsLookupQObject* -->
+<h3 class="fn" id="QDnsLookup"><a name="QDnsLookup"></a>QDnsLookup::<span class="name">QDnsLookup</span>(<span class="type"><a href="../qtcore/qobject.html#QObject">QObject</a></span> *<i>parent</i> = Q_NULLPTR)</h3>
+<p>Constructs a <a href="qdnslookup.html">QDnsLookup</a> object and sets <i>parent</i> as the parent object.</p>
+<p>The <a href="qdnslookup.html#type-prop">type</a> property will default to <a href="qdnslookup.html#Type-enum">QDnsLookup::A</a>.</p>
+<!-- @@@QDnsLookup -->
+<!-- $$$QDnsLookup$$$QDnsLookupTypeconstQString&QObject* -->
+<h3 class="fn" id="QDnsLookup-1"><a name="QDnsLookup-1"></a>QDnsLookup::<span class="name">QDnsLookup</span>(<span class="type"><a href="qdnslookup.html#Type-enum">Type</a></span> <i>type</i>, const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>name</i>, <span class="type"><a href="../qtcore/qobject.html#QObject">QObject</a></span> *<i>parent</i> = Q_NULLPTR)</h3>
+<p>Constructs a <a href="qdnslookup.html">QDnsLookup</a> object for the given <i>type</i> and <i>name</i> and sets <i>parent</i> as the parent object.</p>
+<!-- @@@QDnsLookup -->
+<!-- $$$QDnsLookup$$$QDnsLookupTypeconstQString&constQHostAddress&QObject* -->
+<h3 class="fn" id="QDnsLookup-2"><a name="QDnsLookup-2"></a>QDnsLookup::<span class="name">QDnsLookup</span>(<span class="type"><a href="qdnslookup.html#Type-enum">Type</a></span> <i>type</i>, const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>name</i>, const <span class="type"><a href="qhostaddress.html">QHostAddress</a></span> &amp;<i>nameserver</i>, <span class="type"><a href="../qtcore/qobject.html#QObject">QObject</a></span> *<i>parent</i> = Q_NULLPTR)</h3>
+<p>Constructs a <a href="qdnslookup.html">QDnsLookup</a> object for the given <i>type</i>, <i>name</i> and <i>nameserver</i> and sets <i>parent</i> as the parent object.</p>
+<p>This function was introduced in  Qt 5.4.</p>
+<!-- @@@QDnsLookup -->
+<!-- $$$~QDnsLookup[overload1]$$$~QDnsLookup -->
+<h3 class="fn" id="dtor.QDnsLookup"><a name="dtor.QDnsLookup"></a>QDnsLookup::<span class="name">~QDnsLookup</span>()</h3>
+<p>Destroys the <a href="qdnslookup.html">QDnsLookup</a> object.</p>
+<p>It is safe to delete a <a href="qdnslookup.html">QDnsLookup</a> object even if it is not finished, you will simply never receive its results.</p>
+<!-- @@@~QDnsLookup -->
+<!-- $$$abort[overload1]$$$abort -->
+<h3 class="fn" id="abort"><a name="abort"></a><code>[slot] </code><span class="type">void</span> QDnsLookup::<span class="name">abort</span>()</h3>
+<p>Aborts the DNS lookup operation.</p>
+<p>If the lookup is already finished, does nothing.</p>
+<!-- @@@abort -->
+<!-- $$$canonicalNameRecords[overload1]$$$canonicalNameRecords -->
+<h3 class="fn" id="canonicalNameRecords"><a name="canonicalNameRecords"></a><span class="type"><a href="../qtcore/qlist.html">QList</a></span>&lt;<span class="type"><a href="qdnsdomainnamerecord.html">QDnsDomainNameRecord</a></span>&gt; QDnsLookup::<span class="name">canonicalNameRecords</span>() const</h3>
+<p>Returns the list of canonical name records associated with this lookup.</p>
+<!-- @@@canonicalNameRecords -->
+<!-- $$$finished -->
+<h3 class="fn" id="finished"><a name="finished"></a><code>[signal] </code><span class="type">void</span> QDnsLookup::<span class="name">finished</span>()</h3>
+<p>This signal is emitted when the reply has finished processing.</p>
+<p><b>Note:</b> Notifier signal for property <a href="qdnslookup.html#error-prop">error</a>. Notifier signal for property <a href="qdnslookup.html#errorString-prop">errorString</a>. </p><!-- @@@finished -->
+<!-- $$$hostAddressRecords[overload1]$$$hostAddressRecords -->
+<h3 class="fn" id="hostAddressRecords"><a name="hostAddressRecords"></a><span class="type"><a href="../qtcore/qlist.html">QList</a></span>&lt;<span class="type"><a href="qdnshostaddressrecord.html">QDnsHostAddressRecord</a></span>&gt; QDnsLookup::<span class="name">hostAddressRecords</span>() const</h3>
+<p>Returns the list of host address records associated with this lookup.</p>
+<!-- @@@hostAddressRecords -->
+<!-- $$$isFinished[overload1]$$$isFinished -->
+<h3 class="fn" id="isFinished"><a name="isFinished"></a><span class="type">bool</span> QDnsLookup::<span class="name">isFinished</span>() const</h3>
+<p>Returns whether the reply has finished or was aborted.</p>
+<!-- @@@isFinished -->
+<!-- $$$lookup[overload1]$$$lookup -->
+<h3 class="fn" id="lookup"><a name="lookup"></a><code>[slot] </code><span class="type">void</span> QDnsLookup::<span class="name">lookup</span>()</h3>
+<p>Performs the DNS lookup.</p>
+<p>The <a href="qdnslookup.html#finished">finished()</a> signal is emitted upon completion.</p>
+<!-- @@@lookup -->
+<!-- $$$mailExchangeRecords[overload1]$$$mailExchangeRecords -->
+<h3 class="fn" id="mailExchangeRecords"><a name="mailExchangeRecords"></a><span class="type"><a href="../qtcore/qlist.html">QList</a></span>&lt;<span class="type"><a href="qdnsmailexchangerecord.html">QDnsMailExchangeRecord</a></span>&gt; QDnsLookup::<span class="name">mailExchangeRecords</span>() const</h3>
+<p>Returns the list of mail exchange records associated with this lookup.</p>
+<p>The records are sorted according to <a href="http://www.rfc-editor.org/rfc/rfc5321.txt">RFC 5321</a>, so if you use them to connect to servers, you should try them in the order they are listed.</p>
+<!-- @@@mailExchangeRecords -->
+<!-- $$$nameChanged -->
+<h3 class="fn" id="nameChanged"><a name="nameChanged"></a><code>[signal] </code><span class="type">void</span> QDnsLookup::<span class="name">nameChanged</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>name</i>)</h3>
+<p>This signal is emitted when the lookup <a href="qdnslookup.html#name-prop">name</a> changes. <i>name</i> is the new lookup name.</p>
+<p><b>Note:</b> Notifier signal for property <a href="qdnslookup.html#name-prop">name</a>. </p><!-- @@@nameChanged -->
+<!-- $$$nameServerRecords[overload1]$$$nameServerRecords -->
+<h3 class="fn" id="nameServerRecords"><a name="nameServerRecords"></a><span class="type"><a href="../qtcore/qlist.html">QList</a></span>&lt;<span class="type"><a href="qdnsdomainnamerecord.html">QDnsDomainNameRecord</a></span>&gt; QDnsLookup::<span class="name">nameServerRecords</span>() const</h3>
+<p>Returns the list of name server records associated with this lookup.</p>
+<!-- @@@nameServerRecords -->
+<!-- $$$pointerRecords[overload1]$$$pointerRecords -->
+<h3 class="fn" id="pointerRecords"><a name="pointerRecords"></a><span class="type"><a href="../qtcore/qlist.html">QList</a></span>&lt;<span class="type"><a href="qdnsdomainnamerecord.html">QDnsDomainNameRecord</a></span>&gt; QDnsLookup::<span class="name">pointerRecords</span>() const</h3>
+<p>Returns the list of pointer records associated with this lookup.</p>
+<!-- @@@pointerRecords -->
+<!-- $$$serviceRecords[overload1]$$$serviceRecords -->
+<h3 class="fn" id="serviceRecords"><a name="serviceRecords"></a><span class="type"><a href="../qtcore/qlist.html">QList</a></span>&lt;<span class="type"><a href="qdnsservicerecord.html">QDnsServiceRecord</a></span>&gt; QDnsLookup::<span class="name">serviceRecords</span>() const</h3>
+<p>Returns the list of service records associated with this lookup.</p>
+<p>The records are sorted according to <a href="http://www.rfc-editor.org/rfc/rfc2782.txt">RFC 2782</a>, so if you use them to connect to servers, you should try them in the order they are listed.</p>
+<!-- @@@serviceRecords -->
+<!-- $$$textRecords[overload1]$$$textRecords -->
+<h3 class="fn" id="textRecords"><a name="textRecords"></a><span class="type"><a href="../qtcore/qlist.html">QList</a></span>&lt;<span class="type"><a href="qdnstextrecord.html">QDnsTextRecord</a></span>&gt; QDnsLookup::<span class="name">textRecords</span>() const</h3>
+<p>Returns the list of text records associated with this lookup.</p>
+<!-- @@@textRecords -->
+<!-- $$$typeChanged -->
+<h3 class="fn" id="typeChanged"><a name="typeChanged"></a><code>[signal] </code><span class="type">void</span> QDnsLookup::<span class="name">typeChanged</span>(<span class="type"><a href="qdnslookup.html#Type-enum">Type</a></span> <i>type</i>)</h3>
+<p>This signal is emitted when the lookup <a href="qdnslookup.html#type-prop">type</a> changes. <i>type</i> is the new lookup type.</p>
+<p><b>Note:</b> Notifier signal for property <a href="qdnslookup.html#type-prop">type</a>. </p><!-- @@@typeChanged -->
+</div>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

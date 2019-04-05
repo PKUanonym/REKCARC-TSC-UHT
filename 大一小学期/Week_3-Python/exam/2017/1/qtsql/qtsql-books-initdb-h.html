@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>initdb.h Example File | Qt SQL 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtsql-index.html">Qt SQL</a></td><td ><a href="qtsql-books-example.html">Books</a></td><td >initdb.h Example File</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar"><div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">initdb.h Example File</h1>
+<span class="subtitle">books/initdb.h</span>
+<!-- $$$books/initdb.h-description -->
+<div class="descr"> <a name="details"></a>
+<pre class="cpp">
+
+  <span class="comment">/****************************************************************************
+  **
+  ** Copyright (C) 2015 The Qt Company Ltd.
+  ** Contact: http://www.qt.io/licensing/
+  **
+  ** This file is part of the demonstration applications of the Qt Toolkit.
+  **
+  ** $QT_BEGIN_LICENSE:LGPL21$
+  ** Commercial License Usage
+  ** Licensees holding valid commercial Qt licenses may use this file in
+  ** accordance with the commercial license agreement provided with the
+  ** Software or, alternatively, in accordance with the terms contained in
+  ** a written agreement between you and The Qt Company. For licensing terms
+  ** and conditions see http://www.qt.io/terms-conditions. For further
+  ** information use the contact form at http://www.qt.io/contact-us.
+  **
+  ** GNU Lesser General Public License Usage
+  ** Alternatively, this file may be used under the terms of the GNU Lesser
+  ** General Public License version 2.1 or version 3 as published by the Free
+  ** Software Foundation and appearing in the file LICENSE.LGPLv21 and
+  ** LICENSE.LGPLv3 included in the packaging of this file. Please review the
+  ** following information to ensure the GNU Lesser General Public License
+  ** requirements will be met: https://www.gnu.org/licenses/lgpl.html and
+  ** http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
+  **
+  ** As a special exception, The Qt Company gives you certain additional
+  ** rights. These rights are described in The Qt Company LGPL Exception
+  ** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
+  **
+  ** $QT_END_LICENSE$
+  **
+  ****************************************************************************/</span>
+
+  <span class="preprocessor">#ifndef INITDB_H</span>
+  <span class="preprocessor">#define INITDB_H</span>
+
+  <span class="preprocessor">#include &lt;QtSql&gt;</span>
+
+  <span class="type">void</span> addBook(<span class="type"><a href="qsqlquery.html">QSqlQuery</a></span> <span class="operator">&amp;</span>q<span class="operator">,</span> <span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>title<span class="operator">,</span> <span class="type">int</span> year<span class="operator">,</span> <span class="keyword">const</span> <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span> <span class="operator">&amp;</span>authorId<span class="operator">,</span>
+               <span class="keyword">const</span> <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span> <span class="operator">&amp;</span>genreId<span class="operator">,</span> <span class="type">int</span> rating)
+  {
+      q<span class="operator">.</span>addBindValue(title);
+      q<span class="operator">.</span>addBindValue(year);
+      q<span class="operator">.</span>addBindValue(authorId);
+      q<span class="operator">.</span>addBindValue(genreId);
+      q<span class="operator">.</span>addBindValue(rating);
+      q<span class="operator">.</span>exec();
+  }
+
+  <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span> addGenre(<span class="type"><a href="qsqlquery.html">QSqlQuery</a></span> <span class="operator">&amp;</span>q<span class="operator">,</span> <span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>name)
+  {
+      q<span class="operator">.</span>addBindValue(name);
+      q<span class="operator">.</span>exec();
+      <span class="keyword">return</span> q<span class="operator">.</span>lastInsertId();
+  }
+
+  <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span> addAuthor(<span class="type"><a href="qsqlquery.html">QSqlQuery</a></span> <span class="operator">&amp;</span>q<span class="operator">,</span> <span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>name<span class="operator">,</span> <span class="keyword">const</span> <span class="type"><a href="../qtcore/qdate.html">QDate</a></span> <span class="operator">&amp;</span>birthdate)
+  {
+      q<span class="operator">.</span>addBindValue(name);
+      q<span class="operator">.</span>addBindValue(birthdate);
+      q<span class="operator">.</span>exec();
+      <span class="keyword">return</span> q<span class="operator">.</span>lastInsertId();
+  }
+
+  <span class="type"><a href="qsqlerror.html">QSqlError</a></span> initDb()
+  {
+      <span class="type"><a href="qsqldatabase.html">QSqlDatabase</a></span> db <span class="operator">=</span> <span class="type"><a href="qsqldatabase.html">QSqlDatabase</a></span><span class="operator">::</span>addDatabase(<span class="string">&quot;QSQLITE&quot;</span>);
+      db<span class="operator">.</span>setDatabaseName(<span class="string">&quot;:memory:&quot;</span>);
+
+      <span class="keyword">if</span> (<span class="operator">!</span>db<span class="operator">.</span>open())
+          <span class="keyword">return</span> db<span class="operator">.</span>lastError();
+
+      <span class="type"><a href="../qtcore/qstringlist.html">QStringList</a></span> tables <span class="operator">=</span> db<span class="operator">.</span>tables();
+      <span class="keyword">if</span> (tables<span class="operator">.</span>contains(<span class="string">&quot;books&quot;</span><span class="operator">,</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>CaseInsensitive)
+          <span class="operator">&amp;</span><span class="operator">&amp;</span> tables<span class="operator">.</span>contains(<span class="string">&quot;authors&quot;</span><span class="operator">,</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>CaseInsensitive))
+          <span class="keyword">return</span> <span class="type"><a href="qsqlerror.html">QSqlError</a></span>();
+
+      <span class="type"><a href="qsqlquery.html">QSqlQuery</a></span> q;
+      <span class="keyword">if</span> (<span class="operator">!</span>q<span class="operator">.</span>exec(QLatin1String(<span class="string">&quot;create table books(id integer primary key, title varchar, author integer, genre integer, year integer, rating integer)&quot;</span>)))
+          <span class="keyword">return</span> q<span class="operator">.</span>lastError();
+      <span class="keyword">if</span> (<span class="operator">!</span>q<span class="operator">.</span>exec(QLatin1String(<span class="string">&quot;create table authors(id integer primary key, name varchar, birthdate date)&quot;</span>)))
+          <span class="keyword">return</span> q<span class="operator">.</span>lastError();
+      <span class="keyword">if</span> (<span class="operator">!</span>q<span class="operator">.</span>exec(QLatin1String(<span class="string">&quot;create table genres(id integer primary key, name varchar)&quot;</span>)))
+          <span class="keyword">return</span> q<span class="operator">.</span>lastError();
+
+      <span class="keyword">if</span> (<span class="operator">!</span>q<span class="operator">.</span>prepare(QLatin1String(<span class="string">&quot;insert into authors(name, birthdate) values(?, ?)&quot;</span>)))
+          <span class="keyword">return</span> q<span class="operator">.</span>lastError();
+      <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span> asimovId <span class="operator">=</span> addAuthor(q<span class="operator">,</span> QLatin1String(<span class="string">&quot;Isaac Asimov&quot;</span>)<span class="operator">,</span> <span class="type"><a href="../qtcore/qdate.html">QDate</a></span>(<span class="number">1920</span><span class="operator">,</span> <span class="number">2</span><span class="operator">,</span> <span class="number">1</span>));
+      <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span> greeneId <span class="operator">=</span> addAuthor(q<span class="operator">,</span> QLatin1String(<span class="string">&quot;Graham Greene&quot;</span>)<span class="operator">,</span> <span class="type"><a href="../qtcore/qdate.html">QDate</a></span>(<span class="number">1904</span><span class="operator">,</span> <span class="number">10</span><span class="operator">,</span> <span class="number">2</span>));
+      <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span> pratchettId <span class="operator">=</span> addAuthor(q<span class="operator">,</span> QLatin1String(<span class="string">&quot;Terry Pratchett&quot;</span>)<span class="operator">,</span> <span class="type"><a href="../qtcore/qdate.html">QDate</a></span>(<span class="number">1948</span><span class="operator">,</span> <span class="number">4</span><span class="operator">,</span> <span class="number">28</span>));
+
+      <span class="keyword">if</span> (<span class="operator">!</span>q<span class="operator">.</span>prepare(QLatin1String(<span class="string">&quot;insert into genres(name) values(?)&quot;</span>)))
+          <span class="keyword">return</span> q<span class="operator">.</span>lastError();
+      <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span> sfiction <span class="operator">=</span> addGenre(q<span class="operator">,</span> QLatin1String(<span class="string">&quot;Science Fiction&quot;</span>));
+      <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span> fiction <span class="operator">=</span> addGenre(q<span class="operator">,</span> QLatin1String(<span class="string">&quot;Fiction&quot;</span>));
+      <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span> fantasy <span class="operator">=</span> addGenre(q<span class="operator">,</span> QLatin1String(<span class="string">&quot;Fantasy&quot;</span>));
+
+      <span class="keyword">if</span> (<span class="operator">!</span>q<span class="operator">.</span>prepare(QLatin1String(<span class="string">&quot;insert into books(title, year, author, genre, rating) values(?, ?, ?, ?, ?)&quot;</span>)))
+          <span class="keyword">return</span> q<span class="operator">.</span>lastError();
+      addBook(q<span class="operator">,</span> QLatin1String(<span class="string">&quot;Foundation&quot;</span>)<span class="operator">,</span> <span class="number">1951</span><span class="operator">,</span> asimovId<span class="operator">,</span> sfiction<span class="operator">,</span> <span class="number">3</span>);
+      addBook(q<span class="operator">,</span> QLatin1String(<span class="string">&quot;Foundation and Empire&quot;</span>)<span class="operator">,</span> <span class="number">1952</span><span class="operator">,</span> asimovId<span class="operator">,</span> sfiction<span class="operator">,</span> <span class="number">4</span>);
+      addBook(q<span class="operator">,</span> QLatin1String(<span class="string">&quot;Second Foundation&quot;</span>)<span class="operator">,</span> <span class="number">1953</span><span class="operator">,</span> asimovId<span class="operator">,</span> sfiction<span class="operator">,</span> <span class="number">3</span>);
+      addBook(q<span class="operator">,</span> QLatin1String(<span class="string">&quot;Foundation's Edge&quot;</span>)<span class="operator">,</span> <span class="number">1982</span><span class="operator">,</span> asimovId<span class="operator">,</span> sfiction<span class="operator">,</span> <span class="number">3</span>);
+      addBook(q<span class="operator">,</span> QLatin1String(<span class="string">&quot;Foundation and Earth&quot;</span>)<span class="operator">,</span> <span class="number">1986</span><span class="operator">,</span> asimovId<span class="operator">,</span> sfiction<span class="operator">,</span> <span class="number">4</span>);
+      addBook(q<span class="operator">,</span> QLatin1String(<span class="string">&quot;Prelude to Foundation&quot;</span>)<span class="operator">,</span> <span class="number">1988</span><span class="operator">,</span> asimovId<span class="operator">,</span> sfiction<span class="operator">,</span> <span class="number">3</span>);
+      addBook(q<span class="operator">,</span> QLatin1String(<span class="string">&quot;Forward the Foundation&quot;</span>)<span class="operator">,</span> <span class="number">1993</span><span class="operator">,</span> asimovId<span class="operator">,</span> sfiction<span class="operator">,</span> <span class="number">3</span>);
+      addBook(q<span class="operator">,</span> QLatin1String(<span class="string">&quot;The Power and the Glory&quot;</span>)<span class="operator">,</span> <span class="number">1940</span><span class="operator">,</span> greeneId<span class="operator">,</span> fiction<span class="operator">,</span> <span class="number">4</span>);
+      addBook(q<span class="operator">,</span> QLatin1String(<span class="string">&quot;The Third Man&quot;</span>)<span class="operator">,</span> <span class="number">1950</span><span class="operator">,</span> greeneId<span class="operator">,</span> fiction<span class="operator">,</span> <span class="number">5</span>);
+      addBook(q<span class="operator">,</span> QLatin1String(<span class="string">&quot;Our Man in Havana&quot;</span>)<span class="operator">,</span> <span class="number">1958</span><span class="operator">,</span> greeneId<span class="operator">,</span> fiction<span class="operator">,</span> <span class="number">4</span>);
+      addBook(q<span class="operator">,</span> QLatin1String(<span class="string">&quot;Guards! Guards!&quot;</span>)<span class="operator">,</span> <span class="number">1989</span><span class="operator">,</span> pratchettId<span class="operator">,</span> fantasy<span class="operator">,</span> <span class="number">3</span>);
+      addBook(q<span class="operator">,</span> QLatin1String(<span class="string">&quot;Night Watch&quot;</span>)<span class="operator">,</span> <span class="number">2002</span><span class="operator">,</span> pratchettId<span class="operator">,</span> fantasy<span class="operator">,</span> <span class="number">3</span>);
+      addBook(q<span class="operator">,</span> QLatin1String(<span class="string">&quot;Going Postal&quot;</span>)<span class="operator">,</span> <span class="number">2004</span><span class="operator">,</span> pratchettId<span class="operator">,</span> fantasy<span class="operator">,</span> <span class="number">3</span>);
+
+      <span class="keyword">return</span> <span class="type"><a href="qsqlerror.html">QSqlError</a></span>();
+  }
+
+  <span class="preprocessor">#endif</span>
+
+</pre>
+</div>
+<!-- @@@books/initdb.h -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

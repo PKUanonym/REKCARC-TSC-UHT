@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>bookwindow.ui Example File | Qt SQL 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtsql-index.html">Qt SQL</a></td><td ><a href="qtsql-books-example.html">Books</a></td><td >bookwindow.ui Example File</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar"><div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">bookwindow.ui Example File</h1>
+<span class="subtitle">books/bookwindow.ui</span>
+<!-- $$$books/bookwindow.ui-description -->
+<div class="descr"> <a name="details"></a>
+<pre class="cpp">
+
+  &lt;ui version=&quot;4.0&quot; &gt;
+   &lt;author&gt;&lt;/author&gt;
+   &lt;comment&gt;&lt;/comment&gt;
+   &lt;exportmacro&gt;&lt;/exportmacro&gt;
+   &lt;class&gt;BookWindow&lt;/class&gt;
+   &lt;widget class=&quot;QMainWindow&quot; name=&quot;BookWindow&quot; &gt;
+   &lt;property name=&quot;geometry&quot; &gt;
+     &lt;rect&gt;
+      &lt;x&gt;0&lt;/x&gt;
+      &lt;y&gt;0&lt;/y&gt;
+      &lt;width&gt;601&lt;/width&gt;
+      &lt;height&gt;420&lt;/height&gt;
+     &lt;/rect&gt;
+    &lt;/property&gt;
+    &lt;property name=&quot;windowTitle&quot; &gt;
+     &lt;string&gt;Books&lt;/string&gt;
+    &lt;/property&gt;
+    &lt;widget class=&quot;QWidget&quot; name=&quot;centralWidget&quot; &gt;
+     &lt;layout class=&quot;QVBoxLayout&quot; &gt;
+      &lt;property name=&quot;margin&quot; &gt;
+       &lt;number&gt;9&lt;/number&gt;
+      &lt;/property&gt;
+      &lt;property name=&quot;spacing&quot; &gt;
+       &lt;number&gt;6&lt;/number&gt;
+      &lt;/property&gt;
+      &lt;item&gt;
+       &lt;widget class=&quot;QGroupBox&quot; name=&quot;groupBox&quot; &gt;
+        &lt;property name=&quot;title&quot; &gt;
+         &lt;string&gt;Books&lt;/string&gt;
+        &lt;/property&gt;
+        &lt;layout class=&quot;QVBoxLayout&quot; &gt;
+         &lt;property name=&quot;margin&quot; &gt;
+          &lt;number&gt;9&lt;/number&gt;
+         &lt;/property&gt;
+         &lt;property name=&quot;spacing&quot; &gt;
+          &lt;number&gt;6&lt;/number&gt;
+         &lt;/property&gt;
+         &lt;item&gt;
+          &lt;widget class=&quot;QTableView&quot; name=&quot;bookTable&quot; &gt;
+           &lt;property name=&quot;selectionBehavior&quot; &gt;
+            &lt;enum&gt;QAbstractItemView::SelectRows&lt;/enum&gt;
+           &lt;/property&gt;
+          &lt;/widget&gt;
+         &lt;/item&gt;
+         &lt;item&gt;
+          &lt;widget class=&quot;QGroupBox&quot; name=&quot;groupBox_2&quot; &gt;
+           &lt;property name=&quot;title&quot; &gt;
+            &lt;string&gt;Details&lt;/string&gt;
+           &lt;/property&gt;
+           &lt;layout class=&quot;QFormLayout&quot; &gt;
+             &lt;item row=&quot;0&quot; column=&quot;0&quot; &gt;
+             &lt;widget class=&quot;QLabel&quot; name=&quot;label_5&quot; &gt;
+              &lt;property name=&quot;text&quot; &gt;
+               &lt;string&gt;&amp;lt;b&gt;Title:&amp;lt;/b&gt;&lt;/string&gt;
+              &lt;/property&gt;
+             &lt;/widget&gt;
+            &lt;/item&gt;
+            &lt;item row=&quot;0&quot; column=&quot;1&quot; &gt;
+             &lt;widget class=&quot;QLineEdit&quot; name=&quot;titleEdit&quot; &gt;
+              &lt;property name=&quot;enabled&quot; &gt;
+               &lt;bool&gt;true&lt;/bool&gt;
+              &lt;/property&gt;
+             &lt;/widget&gt;
+            &lt;/item&gt;
+            &lt;item row=&quot;1&quot; column=&quot;0&quot; &gt;
+             &lt;widget class=&quot;QLabel&quot; name=&quot;label_2_2_2_2&quot; &gt;
+              &lt;property name=&quot;text&quot; &gt;
+               &lt;string&gt;&amp;lt;b&gt;Author: &amp;lt;/b&gt;&lt;/string&gt;
+              &lt;/property&gt;
+             &lt;/widget&gt;
+              &lt;/item&gt;
+               &lt;item row=&quot;1&quot; column=&quot;1&quot; &gt;
+             &lt;widget class=&quot;QComboBox&quot; name=&quot;authorEdit&quot; &gt;
+              &lt;property name=&quot;enabled&quot; &gt;
+               &lt;bool&gt;true&lt;/bool&gt;
+              &lt;/property&gt;
+             &lt;/widget&gt;
+            &lt;/item&gt;
+            &lt;item row=&quot;2&quot; column=&quot;0&quot; &gt;
+             &lt;widget class=&quot;QLabel&quot; name=&quot;label_3&quot; &gt;
+              &lt;property name=&quot;text&quot; &gt;
+               &lt;string&gt;&amp;lt;b&gt;Genre:&amp;lt;/b&gt;&lt;/string&gt;
+              &lt;/property&gt;
+             &lt;/widget&gt;
+            &lt;/item&gt;
+            &lt;item row=&quot;2&quot; column=&quot;1&quot; &gt;
+             &lt;widget class=&quot;QComboBox&quot; name=&quot;genreEdit&quot; &gt;
+              &lt;property name=&quot;enabled&quot; &gt;
+               &lt;bool&gt;true&lt;/bool&gt;
+              &lt;/property&gt;
+             &lt;/widget&gt;
+            &lt;/item&gt;
+            &lt;item row=&quot;3&quot; column=&quot;0&quot; &gt;
+             &lt;widget class=&quot;QLabel&quot; name=&quot;label_4&quot; &gt;
+              &lt;property name=&quot;text&quot; &gt;
+               &lt;string&gt;&amp;lt;b&gt;Year:&amp;lt;/b&gt;&lt;/string&gt;
+              &lt;/property&gt;
+             &lt;/widget&gt;
+            &lt;/item&gt;
+            &lt;item row=&quot;3&quot; column=&quot;1&quot; &gt;
+             &lt;widget class=&quot;QSpinBox&quot; name=&quot;yearEdit&quot; &gt;
+              &lt;property name=&quot;enabled&quot; &gt;
+               &lt;bool&gt;true&lt;/bool&gt;
+              &lt;/property&gt;
+              &lt;property name=&quot;prefix&quot; &gt;
+               &lt;string/&gt;
+              &lt;/property&gt;
+              &lt;property name=&quot;maximum&quot; &gt;
+               &lt;number&gt;2100&lt;/number&gt;
+              &lt;/property&gt;
+              &lt;property name=&quot;minimum&quot; &gt;
+               &lt;number&gt;-1000&lt;/number&gt;
+              &lt;/property&gt;
+             &lt;/widget&gt;
+            &lt;/item&gt;
+            &lt;item row=&quot;4&quot; column=&quot;0&quot; &gt;
+             &lt;widget class=&quot;QLabel&quot; name=&quot;label&quot; &gt;
+              &lt;property name=&quot;text&quot; &gt;
+               &lt;string&gt;&amp;lt;b&gt;Rating:&amp;lt;/b&gt;&lt;/string&gt;
+              &lt;/property&gt;
+             &lt;/widget&gt;
+            &lt;/item&gt;
+            &lt;item row=&quot;4&quot; column=&quot;1&quot; &gt;
+             &lt;widget class=&quot;QSpinBox&quot; name=&quot;ratingEdit&quot; &gt;
+              &lt;property name=&quot;maximum&quot; &gt;
+               &lt;number&gt;5&lt;/number&gt;
+              &lt;/property&gt;
+             &lt;/widget&gt;
+            &lt;/item&gt;
+           &lt;/layout&gt;
+          &lt;/widget&gt;
+         &lt;/item&gt;
+        &lt;/layout&gt;
+       &lt;/widget&gt;
+      &lt;/item&gt;
+     &lt;/layout&gt;
+    &lt;/widget&gt;
+   &lt;/widget&gt;
+   &lt;pixmapfunction&gt;&lt;/pixmapfunction&gt;
+   &lt;tabstops&gt;
+    &lt;tabstop&gt;bookTable&lt;/tabstop&gt;
+    &lt;tabstop&gt;titleEdit&lt;/tabstop&gt;
+    &lt;tabstop&gt;authorEdit&lt;/tabstop&gt;
+    &lt;tabstop&gt;genreEdit&lt;/tabstop&gt;
+    &lt;tabstop&gt;yearEdit&lt;/tabstop&gt;
+   &lt;/tabstops&gt;
+   &lt;resources/&gt;
+   &lt;connections/&gt;
+  &lt;/ui&gt;
+
+</pre>
+</div>
+<!-- @@@books/bookwindow.ui -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

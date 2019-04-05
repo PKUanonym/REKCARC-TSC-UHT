@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>peermanager.cpp Example File | Qt Network 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtnetwork-index.html">Qt Network</a></td><td ><a href="qtnetwork-network-chat-example.html">Network Chat Example</a></td><td >peermanager.cpp Example File</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar"><div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">peermanager.cpp Example File</h1>
+<span class="subtitle">network-chat/peermanager.cpp</span>
+<!-- $$$network-chat/peermanager.cpp-description -->
+<div class="descr"> <a name="details"></a>
+<pre class="cpp">
+
+  <span class="comment">/****************************************************************************
+  **
+  ** Copyright (C) 2015 The Qt Company Ltd.
+  ** Contact: http://www.qt.io/licensing/
+  **
+  ** This file is part of the examples of the Qt Toolkit.
+  **
+  ** $QT_BEGIN_LICENSE:BSD$
+  ** You may use this file under the terms of the BSD license as follows:
+  **
+  ** &quot;Redistribution and use in source and binary forms, with or without
+  ** modification, are permitted provided that the following conditions are
+  ** met:
+  **   * Redistributions of source code must retain the above copyright
+  **     notice, this list of conditions and the following disclaimer.
+  **   * Redistributions in binary form must reproduce the above copyright
+  **     notice, this list of conditions and the following disclaimer in
+  **     the documentation and/or other materials provided with the
+  **     distribution.
+  **   * Neither the name of The Qt Company Ltd nor the names of its
+  **     contributors may be used to endorse or promote products derived
+  **     from this software without specific prior written permission.
+  **
+  **
+  ** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  ** &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  ** LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  ** A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  ** OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  ** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  ** LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  ** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  ** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  ** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.&quot;
+  **
+  ** $QT_END_LICENSE$
+  **
+  ****************************************************************************/</span>
+
+  <span class="preprocessor">#include &lt;QtNetwork&gt;</span>
+
+  <span class="preprocessor">#include &quot;client.h&quot;</span>
+  <span class="preprocessor">#include &quot;connection.h&quot;</span>
+  <span class="preprocessor">#include &quot;peermanager.h&quot;</span>
+
+  <span class="keyword">static</span> <span class="keyword">const</span> <span class="type"><a href="../qtcore/qtglobal.html#qint32-typedef">qint32</a></span> BroadcastInterval <span class="operator">=</span> <span class="number">2000</span>;
+  <span class="keyword">static</span> <span class="keyword">const</span> <span class="type">unsigned</span> broadcastPort <span class="operator">=</span> <span class="number">45000</span>;
+
+  PeerManager<span class="operator">::</span>PeerManager(Client <span class="operator">*</span>client)
+      : <span class="type"><a href="../qtcore/qobject.html">QObject</a></span>(client)
+  {
+      <span class="keyword">this</span><span class="operator">-</span><span class="operator">&gt;</span>client <span class="operator">=</span> client;
+
+      <span class="type"><a href="../qtcore/qstringlist.html">QStringList</a></span> envVariables;
+      envVariables <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">&quot;USERNAME.*&quot;</span> <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">&quot;USER.*&quot;</span> <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">&quot;USERDOMAIN.*&quot;</span>
+                   <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">&quot;HOSTNAME.*&quot;</span> <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">&quot;DOMAINNAME.*&quot;</span>;
+
+      <span class="type"><a href="../qtcore/qstringlist.html">QStringList</a></span> environment <span class="operator">=</span> <span class="type"><a href="../qtcore/qprocess.html">QProcess</a></span><span class="operator">::</span>systemEnvironment();
+      foreach (<span class="type"><a href="../qtcore/qstring.html">QString</a></span> string<span class="operator">,</span> envVariables) {
+          <span class="type">int</span> index <span class="operator">=</span> environment<span class="operator">.</span>indexOf(<span class="type"><a href="../qtcore/qregexp.html">QRegExp</a></span>(string));
+          <span class="keyword">if</span> (index <span class="operator">!</span><span class="operator">=</span> <span class="operator">-</span><span class="number">1</span>) {
+              <span class="type"><a href="../qtcore/qstringlist.html">QStringList</a></span> stringList <span class="operator">=</span> environment<span class="operator">.</span>at(index)<span class="operator">.</span>split(<span class="char">'='</span>);
+              <span class="keyword">if</span> (stringList<span class="operator">.</span>size() <span class="operator">=</span><span class="operator">=</span> <span class="number">2</span>) {
+                  username <span class="operator">=</span> stringList<span class="operator">.</span>at(<span class="number">1</span>)<span class="operator">.</span>toUtf8();
+                  <span class="keyword">break</span>;
+              }
+          }
+      }
+
+      <span class="keyword">if</span> (username<span class="operator">.</span>isEmpty())
+          username <span class="operator">=</span> <span class="string">&quot;unknown&quot;</span>;
+
+      updateAddresses();
+      serverPort <span class="operator">=</span> <span class="number">0</span>;
+
+      broadcastSocket<span class="operator">.</span>bind(<span class="type"><a href="qhostaddress.html">QHostAddress</a></span><span class="operator">::</span>Any<span class="operator">,</span> broadcastPort<span class="operator">,</span> <span class="type"><a href="qudpsocket.html">QUdpSocket</a></span><span class="operator">::</span>ShareAddress
+                           <span class="operator">|</span> <span class="type"><a href="qudpsocket.html">QUdpSocket</a></span><span class="operator">::</span>ReuseAddressHint);
+      connect(<span class="operator">&amp;</span>broadcastSocket<span class="operator">,</span> SIGNAL(readyRead())<span class="operator">,</span>
+              <span class="keyword">this</span><span class="operator">,</span> SLOT(readBroadcastDatagram()));
+
+      broadcastTimer<span class="operator">.</span>setInterval(BroadcastInterval);
+      connect(<span class="operator">&amp;</span>broadcastTimer<span class="operator">,</span> SIGNAL(timeout())<span class="operator">,</span>
+              <span class="keyword">this</span><span class="operator">,</span> SLOT(sendBroadcastDatagram()));
+  }
+
+  <span class="type">void</span> PeerManager<span class="operator">::</span>setServerPort(<span class="type">int</span> port)
+  {
+      serverPort <span class="operator">=</span> port;
+  }
+
+  <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> PeerManager<span class="operator">::</span>userName() <span class="keyword">const</span>
+  {
+      <span class="keyword">return</span> username;
+  }
+
+  <span class="type">void</span> PeerManager<span class="operator">::</span>startBroadcasting()
+  {
+      broadcastTimer<span class="operator">.</span>start();
+  }
+
+  bool PeerManager<span class="operator">::</span>isLocalHostAddress(<span class="keyword">const</span> <span class="type"><a href="qhostaddress.html">QHostAddress</a></span> <span class="operator">&amp;</span>address)
+  {
+      foreach (<span class="type"><a href="qhostaddress.html">QHostAddress</a></span> localAddress<span class="operator">,</span> ipAddresses) {
+          <span class="keyword">if</span> (address <span class="operator">=</span><span class="operator">=</span> localAddress)
+              <span class="keyword">return</span> <span class="keyword">true</span>;
+      }
+      <span class="keyword">return</span> <span class="keyword">false</span>;
+  }
+
+  <span class="type">void</span> PeerManager<span class="operator">::</span>sendBroadcastDatagram()
+  {
+      <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> datagram(username);
+      datagram<span class="operator">.</span>append(<span class="char">'@'</span>);
+      datagram<span class="operator">.</span>append(<span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span><span class="operator">::</span>number(serverPort));
+
+      bool validBroadcastAddresses <span class="operator">=</span> <span class="keyword">true</span>;
+      foreach (<span class="type"><a href="qhostaddress.html">QHostAddress</a></span> address<span class="operator">,</span> broadcastAddresses) {
+          <span class="keyword">if</span> (broadcastSocket<span class="operator">.</span>writeDatagram(datagram<span class="operator">,</span> address<span class="operator">,</span>
+                                            broadcastPort) <span class="operator">=</span><span class="operator">=</span> <span class="operator">-</span><span class="number">1</span>)
+              validBroadcastAddresses <span class="operator">=</span> <span class="keyword">false</span>;
+      }
+
+      <span class="keyword">if</span> (<span class="operator">!</span>validBroadcastAddresses)
+          updateAddresses();
+  }
+
+  <span class="type">void</span> PeerManager<span class="operator">::</span>readBroadcastDatagram()
+  {
+      <span class="keyword">while</span> (broadcastSocket<span class="operator">.</span>hasPendingDatagrams()) {
+          <span class="type"><a href="qhostaddress.html">QHostAddress</a></span> senderIp;
+          <span class="type"><a href="../qtcore/qtglobal.html#quint16-typedef">quint16</a></span> senderPort;
+          <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> datagram;
+          datagram<span class="operator">.</span>resize(broadcastSocket<span class="operator">.</span>pendingDatagramSize());
+          <span class="keyword">if</span> (broadcastSocket<span class="operator">.</span>readDatagram(datagram<span class="operator">.</span>data()<span class="operator">,</span> datagram<span class="operator">.</span>size()<span class="operator">,</span>
+                                           <span class="operator">&amp;</span>senderIp<span class="operator">,</span> <span class="operator">&amp;</span>senderPort) <span class="operator">=</span><span class="operator">=</span> <span class="operator">-</span><span class="number">1</span>)
+              <span class="keyword">continue</span>;
+
+          <span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span><span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span><span class="operator">&gt;</span> list <span class="operator">=</span> datagram<span class="operator">.</span>split(<span class="char">'@'</span>);
+          <span class="keyword">if</span> (list<span class="operator">.</span>size() <span class="operator">!</span><span class="operator">=</span> <span class="number">2</span>)
+              <span class="keyword">continue</span>;
+
+          <span class="type">int</span> senderServerPort <span class="operator">=</span> list<span class="operator">.</span>at(<span class="number">1</span>)<span class="operator">.</span>toInt();
+          <span class="keyword">if</span> (isLocalHostAddress(senderIp) <span class="operator">&amp;</span><span class="operator">&amp;</span> senderServerPort <span class="operator">=</span><span class="operator">=</span> serverPort)
+              <span class="keyword">continue</span>;
+
+          <span class="keyword">if</span> (<span class="operator">!</span>client<span class="operator">-</span><span class="operator">&gt;</span>hasConnection(senderIp)) {
+              Connection <span class="operator">*</span>connection <span class="operator">=</span> <span class="keyword">new</span> Connection(<span class="keyword">this</span>);
+              <span class="keyword">emit</span> newConnection(connection);
+              connection<span class="operator">-</span><span class="operator">&gt;</span>connectToHost(senderIp<span class="operator">,</span> senderServerPort);
+          }
+      }
+  }
+
+  <span class="type">void</span> PeerManager<span class="operator">::</span>updateAddresses()
+  {
+      broadcastAddresses<span class="operator">.</span>clear();
+      ipAddresses<span class="operator">.</span>clear();
+      foreach (<span class="type"><a href="qnetworkinterface.html">QNetworkInterface</a></span> interface<span class="operator">,</span> <span class="type"><a href="qnetworkinterface.html">QNetworkInterface</a></span><span class="operator">::</span>allInterfaces()) {
+          foreach (<span class="type"><a href="qnetworkaddressentry.html">QNetworkAddressEntry</a></span> entry<span class="operator">,</span> interface<span class="operator">.</span>addressEntries()) {
+              <span class="type"><a href="qhostaddress.html">QHostAddress</a></span> broadcastAddress <span class="operator">=</span> entry<span class="operator">.</span>broadcast();
+              <span class="keyword">if</span> (broadcastAddress <span class="operator">!</span><span class="operator">=</span> <span class="type"><a href="qhostaddress.html">QHostAddress</a></span><span class="operator">::</span>Null <span class="operator">&amp;</span><span class="operator">&amp;</span> entry<span class="operator">.</span>ip() <span class="operator">!</span><span class="operator">=</span> <span class="type"><a href="qhostaddress.html">QHostAddress</a></span><span class="operator">::</span>LocalHost) {
+                  broadcastAddresses <span class="operator">&lt;</span><span class="operator">&lt;</span> broadcastAddress;
+                  ipAddresses <span class="operator">&lt;</span><span class="operator">&lt;</span> entry<span class="operator">.</span>ip();
+              }
+          }
+      }
+  }
+
+</pre>
+</div>
+<!-- @@@network-chat/peermanager.cpp -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

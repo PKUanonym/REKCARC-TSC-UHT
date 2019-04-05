@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- xmlstreamlint.qdoc -->
+  <title>XML Stream Lint Example | Qt XML 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtxml-index.html">Qt XML</a></td><td >XML Stream Lint Example</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#basic-operation">Basic Operation</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">XML Stream Lint Example</h1>
+<span class="subtitle"></span>
+<!-- $$$xmlstreamlint-description -->
+<div class="descr"> <a name="details"></a>
+<p>The XML Stream Lint example provides a simple command line utility that accepts a file name as its single argument and writes it to the standard output file.</p>
+<p>The specified file is parsed using an <a href="../qtcore/qxmlstreamreader.html">QXmlStreamReader</a> object and written to the standard output file using an <a href="../qtcore/qxmlstreamwriter.html">QXmlStreamWriter</a> object. If the file does not contain a well-formed XML document or the use of namespaces in the document is incorrect, a description of the error is printed to the standard error file and will appear in the console.</p>
+<a name="basic-operation"></a>
+<h2 id="basic-operation">Basic Operation</h2>
+<p>The main function of the example opens the file specified by the user for input (<code>inputFile</code>), and it uses <a href="../qtcore/qfile.html">QFile</a> to access the standard output file.</p>
+<p>Reading XML is handled by an instance of the <a href="../qtcore/qxmlstreamreader.html">QXmlStreamReader</a> class, which operates on the input file object; writing is handled by an instance of <a href="../qtcore/qxmlstreamwriter.html">QXmlStreamWriter</a> operating on the output file object:</p>
+<pre class="cpp">
+
+      <span class="type"><a href="../qtcore/qxmlstreamreader.html">QXmlStreamReader</a></span> reader(<span class="operator">&amp;</span>inputFile);
+      <span class="type"><a href="../qtcore/qxmlstreamwriter.html">QXmlStreamWriter</a></span> writer(<span class="operator">&amp;</span>outputFile);
+
+</pre>
+<p>The work of parsing and rewriting the XML is done in a while loop, and is driven by input from the reader:</p>
+<pre class="cpp">
+
+      <span class="keyword">while</span> (<span class="operator">!</span>reader<span class="operator">.</span>atEnd())
+      {
+          reader<span class="operator">.</span>readNext();
+
+          <span class="keyword">if</span> (reader<span class="operator">.</span>error())
+          {
+              errorStream <span class="operator">&lt;</span><span class="operator">&lt;</span> XmlStreamLint<span class="operator">::</span>tr(
+                             <span class="string">&quot;Error: %1 in file %2 at line %3, column %4.\n&quot;</span>)<span class="operator">.</span>arg(
+                                 reader<span class="operator">.</span>errorString()<span class="operator">,</span> inputFilePath<span class="operator">,</span>
+                                 <span class="type"><a href="../qtcore/qstring.html">QString</a></span><span class="operator">::</span>number(reader<span class="operator">.</span>lineNumber())<span class="operator">,</span>
+                                 <span class="type"><a href="../qtcore/qstring.html">QString</a></span><span class="operator">::</span>number(reader<span class="operator">.</span>columnNumber()));
+              <span class="keyword">return</span> ParseFailure;
+
+</pre>
+<p>If more input is available, the next token from the input file is read and parsed. If an error occurred, information is written to the standard error file via a stream, and the example exits by returning a non-zero value from the main function.</p>
+<pre class="cpp">
+
+          } <span class="keyword">else</span>
+              writer<span class="operator">.</span>writeCurrentToken(reader);
+      }
+
+</pre>
+<p>For valid input, the writer is fed the current token from the reader, and this is written to the output file that was specified when it was constructed.</p>
+<p>When there is no more input, the loop terminates, and the example can exit successfully.</p>
+<p>Files:</p>
+<ul>
+<li><a href="qtxml-xmlstreamlint-main-cpp.html">xmlstreamlint/main.cpp</a></li>
+<li><a href="qtxml-xmlstreamlint-xmlstreamlint-pro.html">xmlstreamlint/xmlstreamlint.pro</a></li>
+</ul>
+</div>
+<!-- @@@xmlstreamlint -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

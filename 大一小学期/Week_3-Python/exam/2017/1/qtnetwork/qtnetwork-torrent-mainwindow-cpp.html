@@ -1,0 +1,770 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>mainwindow.cpp Example File | Qt Network 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtnetwork-index.html">Qt Network</a></td><td ><a href="qtnetwork-torrent-example.html">Torrent Example</a></td><td >mainwindow.cpp Example File</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar"><div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">mainwindow.cpp Example File</h1>
+<span class="subtitle">torrent/mainwindow.cpp</span>
+<!-- $$$torrent/mainwindow.cpp-description -->
+<div class="descr"> <a name="details"></a>
+<pre class="cpp">
+
+  <span class="comment">/****************************************************************************
+  **
+  ** Copyright (C) 2015 The Qt Company Ltd.
+  ** Contact: http://www.qt.io/licensing/
+  **
+  ** This file is part of the examples of the Qt Toolkit.
+  **
+  ** $QT_BEGIN_LICENSE:BSD$
+  ** You may use this file under the terms of the BSD license as follows:
+  **
+  ** &quot;Redistribution and use in source and binary forms, with or without
+  ** modification, are permitted provided that the following conditions are
+  ** met:
+  **   * Redistributions of source code must retain the above copyright
+  **     notice, this list of conditions and the following disclaimer.
+  **   * Redistributions in binary form must reproduce the above copyright
+  **     notice, this list of conditions and the following disclaimer in
+  **     the documentation and/or other materials provided with the
+  **     distribution.
+  **   * Neither the name of The Qt Company Ltd nor the names of its
+  **     contributors may be used to endorse or promote products derived
+  **     from this software without specific prior written permission.
+  **
+  **
+  ** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  ** &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  ** LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  ** A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  ** OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  ** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  ** LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  ** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  ** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  ** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.&quot;
+  **
+  ** $QT_END_LICENSE$
+  **
+  ****************************************************************************/</span>
+
+  <span class="preprocessor">#include &lt;QtWidgets&gt;</span>
+
+  <span class="preprocessor">#include &quot;addtorrentdialog.h&quot;</span>
+  <span class="preprocessor">#include &quot;mainwindow.h&quot;</span>
+  <span class="preprocessor">#include &quot;ratecontroller.h&quot;</span>
+  <span class="preprocessor">#include &quot;torrentclient.h&quot;</span>
+
+  <span class="comment">// TorrentView extends QTreeWidget to allow drag and drop.</span>
+  <span class="keyword">class</span> TorrentView : <span class="keyword">public</span> <span class="type">QTreeWidget</span>
+  {
+      Q_OBJECT
+  <span class="keyword">public</span>:
+      TorrentView(<span class="type">QWidget</span> <span class="operator">*</span>parent <span class="operator">=</span> <span class="number">0</span>);
+
+  <span class="preprocessor">#ifndef QT_NO_DRAGANDDROP</span>
+  <span class="keyword">signals</span>:
+      <span class="type">void</span> fileDropped(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>fileName);
+
+  <span class="keyword">protected</span>:
+      <span class="type">void</span> dragMoveEvent(<span class="type"><a href="../qtgui/qdragmoveevent.html">QDragMoveEvent</a></span> <span class="operator">*</span>event) Q_DECL_OVERRIDE;
+      <span class="type">void</span> dropEvent(<span class="type"><a href="../qtgui/qdropevent.html">QDropEvent</a></span> <span class="operator">*</span>event) Q_DECL_OVERRIDE;
+  <span class="preprocessor">#endif</span>
+  };
+
+  <span class="comment">// TorrentViewDelegate is used to draw the progress bars.</span>
+  <span class="keyword">class</span> TorrentViewDelegate : <span class="keyword">public</span> <span class="type">QItemDelegate</span>
+  {
+      Q_OBJECT
+  <span class="keyword">public</span>:
+      <span class="keyword">inline</span> TorrentViewDelegate(MainWindow <span class="operator">*</span>mainWindow) : <span class="type">QItemDelegate</span>(mainWindow) {}
+
+      <span class="type">void</span> paint(<span class="type"><a href="../qtgui/qpainter.html">QPainter</a></span> <span class="operator">*</span>painter<span class="operator">,</span> <span class="keyword">const</span> <span class="type">QStyleOptionViewItem</span> <span class="operator">&amp;</span>option<span class="operator">,</span>
+                 <span class="keyword">const</span> <span class="type"><a href="../qtcore/qmodelindex.html">QModelIndex</a></span> <span class="operator">&amp;</span>index ) <span class="keyword">const</span> Q_DECL_OVERRIDE
+      {
+          <span class="keyword">if</span> (index<span class="operator">.</span>column() <span class="operator">!</span><span class="operator">=</span> <span class="number">2</span>) {
+              <span class="type">QItemDelegate</span><span class="operator">::</span>paint(painter<span class="operator">,</span> option<span class="operator">,</span> index);
+              <span class="keyword">return</span>;
+          }
+
+          <span class="comment">// Set up a QStyleOptionProgressBar to precisely mimic the</span>
+          <span class="comment">// environment of a progress bar.</span>
+          <span class="type">QStyleOptionProgressBar</span> progressBarOption;
+          progressBarOption<span class="operator">.</span>state <span class="operator">=</span> <span class="type">QStyle</span><span class="operator">::</span>State_Enabled;
+          progressBarOption<span class="operator">.</span>direction <span class="operator">=</span> <span class="type">QApplication</span><span class="operator">::</span>layoutDirection();
+          progressBarOption<span class="operator">.</span>rect <span class="operator">=</span> option<span class="operator">.</span>rect;
+          progressBarOption<span class="operator">.</span>fontMetrics <span class="operator">=</span> <span class="type">QApplication</span><span class="operator">::</span>fontMetrics();
+          progressBarOption<span class="operator">.</span>minimum <span class="operator">=</span> <span class="number">0</span>;
+          progressBarOption<span class="operator">.</span>maximum <span class="operator">=</span> <span class="number">100</span>;
+          progressBarOption<span class="operator">.</span>textAlignment <span class="operator">=</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>AlignCenter;
+          progressBarOption<span class="operator">.</span>textVisible <span class="operator">=</span> <span class="keyword">true</span>;
+
+          <span class="comment">// Set the progress and text values of the style option.</span>
+          <span class="type">int</span> progress <span class="operator">=</span> qobject_cast<span class="operator">&lt;</span>MainWindow <span class="operator">*</span><span class="operator">&gt;</span>(parent())<span class="operator">-</span><span class="operator">&gt;</span>clientForRow(index<span class="operator">.</span>row())<span class="operator">-</span><span class="operator">&gt;</span>progress();
+          progressBarOption<span class="operator">.</span>progress <span class="operator">=</span> progress <span class="operator">&lt;</span> <span class="number">0</span> <span class="operator">?</span> <span class="number">0</span> : progress;
+          progressBarOption<span class="operator">.</span>text <span class="operator">=</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span><span class="operator">::</span>asprintf(<span class="string">&quot;%d%%&quot;</span><span class="operator">,</span> progressBarOption<span class="operator">.</span>progress);
+
+          <span class="comment">// Draw the progress bar onto the view.</span>
+          <span class="type">QApplication</span><span class="operator">::</span>style()<span class="operator">-</span><span class="operator">&gt;</span>drawControl(<span class="type">QStyle</span><span class="operator">::</span>CE_ProgressBar<span class="operator">,</span> <span class="operator">&amp;</span>progressBarOption<span class="operator">,</span> painter);
+      }
+  };
+
+  MainWindow<span class="operator">::</span>MainWindow(<span class="type">QWidget</span> <span class="operator">*</span>parent)
+      : <span class="type">QMainWindow</span>(parent)<span class="operator">,</span> quitDialog(<span class="number">0</span>)<span class="operator">,</span> saveChanges(<span class="keyword">false</span>)
+  {
+      <span class="comment">// Initialize some static strings</span>
+      <span class="type"><a href="../qtcore/qstringlist.html">QStringList</a></span> headers;
+      headers <span class="operator">&lt;</span><span class="operator">&lt;</span> tr(<span class="string">&quot;Torrent&quot;</span>) <span class="operator">&lt;</span><span class="operator">&lt;</span> tr(<span class="string">&quot;Peers/Seeds&quot;</span>) <span class="operator">&lt;</span><span class="operator">&lt;</span> tr(<span class="string">&quot;Progress&quot;</span>)
+              <span class="operator">&lt;</span><span class="operator">&lt;</span> tr(<span class="string">&quot;Down rate&quot;</span>) <span class="operator">&lt;</span><span class="operator">&lt;</span> tr(<span class="string">&quot;Up rate&quot;</span>) <span class="operator">&lt;</span><span class="operator">&lt;</span> tr(<span class="string">&quot;Status&quot;</span>);
+
+      <span class="comment">// Main torrent list</span>
+      torrentView <span class="operator">=</span> <span class="keyword">new</span> TorrentView(<span class="keyword">this</span>);
+      torrentView<span class="operator">-</span><span class="operator">&gt;</span>setItemDelegate(<span class="keyword">new</span> TorrentViewDelegate(<span class="keyword">this</span>));
+      torrentView<span class="operator">-</span><span class="operator">&gt;</span>setHeaderLabels(headers);
+      torrentView<span class="operator">-</span><span class="operator">&gt;</span>setSelectionBehavior(<span class="type">QAbstractItemView</span><span class="operator">::</span>SelectRows);
+      torrentView<span class="operator">-</span><span class="operator">&gt;</span>setAlternatingRowColors(<span class="keyword">true</span>);
+      torrentView<span class="operator">-</span><span class="operator">&gt;</span>setRootIsDecorated(<span class="keyword">false</span>);
+      setCentralWidget(torrentView);
+
+      <span class="comment">// Set header resize modes and initial section sizes</span>
+      <span class="type"><a href="../qtgui/qfontmetrics.html">QFontMetrics</a></span> fm <span class="operator">=</span> fontMetrics();
+      <span class="type">QHeaderView</span> <span class="operator">*</span>header <span class="operator">=</span> torrentView<span class="operator">-</span><span class="operator">&gt;</span>header();
+      header<span class="operator">-</span><span class="operator">&gt;</span>resizeSection(<span class="number">0</span><span class="operator">,</span> fm<span class="operator">.</span>width(<span class="string">&quot;typical-name-for-a-torrent.torrent&quot;</span>));
+      header<span class="operator">-</span><span class="operator">&gt;</span>resizeSection(<span class="number">1</span><span class="operator">,</span> fm<span class="operator">.</span>width(headers<span class="operator">.</span>at(<span class="number">1</span>) <span class="operator">+</span> <span class="string">&quot;  &quot;</span>));
+      header<span class="operator">-</span><span class="operator">&gt;</span>resizeSection(<span class="number">2</span><span class="operator">,</span> fm<span class="operator">.</span>width(headers<span class="operator">.</span>at(<span class="number">2</span>) <span class="operator">+</span> <span class="string">&quot;  &quot;</span>));
+      header<span class="operator">-</span><span class="operator">&gt;</span>resizeSection(<span class="number">3</span><span class="operator">,</span> <a href="../qtcore/qtglobal.html#qMax">qMax</a>(fm<span class="operator">.</span>width(headers<span class="operator">.</span>at(<span class="number">3</span>) <span class="operator">+</span> <span class="string">&quot;  &quot;</span>)<span class="operator">,</span> fm<span class="operator">.</span>width(<span class="string">&quot; 1234.0 KB/s &quot;</span>)));
+      header<span class="operator">-</span><span class="operator">&gt;</span>resizeSection(<span class="number">4</span><span class="operator">,</span> <a href="../qtcore/qtglobal.html#qMax">qMax</a>(fm<span class="operator">.</span>width(headers<span class="operator">.</span>at(<span class="number">4</span>) <span class="operator">+</span> <span class="string">&quot;  &quot;</span>)<span class="operator">,</span> fm<span class="operator">.</span>width(<span class="string">&quot; 1234.0 KB/s &quot;</span>)));
+      header<span class="operator">-</span><span class="operator">&gt;</span>resizeSection(<span class="number">5</span><span class="operator">,</span> <a href="../qtcore/qtglobal.html#qMax">qMax</a>(fm<span class="operator">.</span>width(headers<span class="operator">.</span>at(<span class="number">5</span>) <span class="operator">+</span> <span class="string">&quot;  &quot;</span>)<span class="operator">,</span> fm<span class="operator">.</span>width(tr(<span class="string">&quot;Downloading&quot;</span>) <span class="operator">+</span> <span class="string">&quot;  &quot;</span>)));
+
+      <span class="comment">// Create common actions</span>
+      <span class="type">QAction</span> <span class="operator">*</span>newTorrentAction <span class="operator">=</span> <span class="keyword">new</span> <span class="type">QAction</span>(<span class="type"><a href="../qtgui/qicon.html">QIcon</a></span>(<span class="string">&quot;:/icons/bottom.png&quot;</span>)<span class="operator">,</span> tr(<span class="string">&quot;Add &amp;new torrent&quot;</span>)<span class="operator">,</span> <span class="keyword">this</span>);
+      pauseTorrentAction <span class="operator">=</span> <span class="keyword">new</span> <span class="type">QAction</span>(<span class="type"><a href="../qtgui/qicon.html">QIcon</a></span>(<span class="string">&quot;:/icons/player_pause.png&quot;</span>)<span class="operator">,</span> tr(<span class="string">&quot;&amp;Pause torrent&quot;</span>)<span class="operator">,</span> <span class="keyword">this</span>);
+      removeTorrentAction <span class="operator">=</span> <span class="keyword">new</span> <span class="type">QAction</span>(<span class="type"><a href="../qtgui/qicon.html">QIcon</a></span>(<span class="string">&quot;:/icons/player_stop.png&quot;</span>)<span class="operator">,</span> tr(<span class="string">&quot;&amp;Remove torrent&quot;</span>)<span class="operator">,</span> <span class="keyword">this</span>);
+
+      <span class="comment">// File menu</span>
+      <span class="type">QMenu</span> <span class="operator">*</span>fileMenu <span class="operator">=</span> menuBar()<span class="operator">-</span><span class="operator">&gt;</span>addMenu(tr(<span class="string">&quot;&amp;File&quot;</span>));
+      fileMenu<span class="operator">-</span><span class="operator">&gt;</span>addAction(newTorrentAction);
+      fileMenu<span class="operator">-</span><span class="operator">&gt;</span>addAction(pauseTorrentAction);
+      fileMenu<span class="operator">-</span><span class="operator">&gt;</span>addAction(removeTorrentAction);
+      fileMenu<span class="operator">-</span><span class="operator">&gt;</span>addSeparator();
+      fileMenu<span class="operator">-</span><span class="operator">&gt;</span>addAction(<span class="type"><a href="../qtgui/qicon.html">QIcon</a></span>(<span class="string">&quot;:/icons/exit.png&quot;</span>)<span class="operator">,</span> tr(<span class="string">&quot;E&amp;xit&quot;</span>)<span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> SLOT(close()));
+
+      <span class="comment">// Help menu</span>
+      <span class="type">QMenu</span> <span class="operator">*</span>helpMenu <span class="operator">=</span> menuBar()<span class="operator">-</span><span class="operator">&gt;</span>addMenu(tr(<span class="string">&quot;&amp;Help&quot;</span>));
+      helpMenu<span class="operator">-</span><span class="operator">&gt;</span>addAction(tr(<span class="string">&quot;&amp;About&quot;</span>)<span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> SLOT(about()));
+      helpMenu<span class="operator">-</span><span class="operator">&gt;</span>addAction(tr(<span class="string">&quot;About &amp;Qt&quot;</span>)<span class="operator">,</span> qApp<span class="operator">,</span> SLOT(aboutQt()));
+
+      <span class="comment">// Top toolbar</span>
+      <span class="type">QToolBar</span> <span class="operator">*</span>topBar <span class="operator">=</span> <span class="keyword">new</span> <span class="type">QToolBar</span>(tr(<span class="string">&quot;Tools&quot;</span>));
+      addToolBar(<span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>TopToolBarArea<span class="operator">,</span> topBar);
+      topBar<span class="operator">-</span><span class="operator">&gt;</span>setMovable(<span class="keyword">false</span>);
+      topBar<span class="operator">-</span><span class="operator">&gt;</span>addAction(newTorrentAction);
+      topBar<span class="operator">-</span><span class="operator">&gt;</span>addAction(removeTorrentAction);
+      topBar<span class="operator">-</span><span class="operator">&gt;</span>addAction(pauseTorrentAction);
+      topBar<span class="operator">-</span><span class="operator">&gt;</span>addSeparator();
+      downActionTool <span class="operator">=</span> topBar<span class="operator">-</span><span class="operator">&gt;</span>addAction(<span class="type"><a href="../qtgui/qicon.html">QIcon</a></span>(tr(<span class="string">&quot;:/icons/1downarrow.png&quot;</span>))<span class="operator">,</span> tr(<span class="string">&quot;Move down&quot;</span>));
+      upActionTool <span class="operator">=</span> topBar<span class="operator">-</span><span class="operator">&gt;</span>addAction(<span class="type"><a href="../qtgui/qicon.html">QIcon</a></span>(tr(<span class="string">&quot;:/icons/1uparrow.png&quot;</span>))<span class="operator">,</span> tr(<span class="string">&quot;Move up&quot;</span>));
+
+      <span class="comment">// Bottom toolbar</span>
+      <span class="type">QToolBar</span> <span class="operator">*</span>bottomBar <span class="operator">=</span> <span class="keyword">new</span> <span class="type">QToolBar</span>(tr(<span class="string">&quot;Rate control&quot;</span>));
+      addToolBar(<span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>BottomToolBarArea<span class="operator">,</span> bottomBar);
+      bottomBar<span class="operator">-</span><span class="operator">&gt;</span>setMovable(<span class="keyword">false</span>);
+      downloadLimitSlider <span class="operator">=</span> <span class="keyword">new</span> <span class="type">QSlider</span>(<span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Horizontal);
+      downloadLimitSlider<span class="operator">-</span><span class="operator">&gt;</span>setRange(<span class="number">0</span><span class="operator">,</span> <span class="number">1000</span>);
+      bottomBar<span class="operator">-</span><span class="operator">&gt;</span>addWidget(<span class="keyword">new</span> <span class="type">QLabel</span>(tr(<span class="string">&quot;Max download:&quot;</span>)));
+      bottomBar<span class="operator">-</span><span class="operator">&gt;</span>addWidget(downloadLimitSlider);
+      bottomBar<span class="operator">-</span><span class="operator">&gt;</span>addWidget((downloadLimitLabel <span class="operator">=</span> <span class="keyword">new</span> <span class="type">QLabel</span>(tr(<span class="string">&quot;0 KB/s&quot;</span>))));
+      downloadLimitLabel<span class="operator">-</span><span class="operator">&gt;</span>setFixedSize(<span class="type"><a href="../qtcore/qsize.html">QSize</a></span>(fm<span class="operator">.</span>width(tr(<span class="string">&quot;99999 KB/s&quot;</span>))<span class="operator">,</span> fm<span class="operator">.</span>lineSpacing()));
+      bottomBar<span class="operator">-</span><span class="operator">&gt;</span>addSeparator();
+      uploadLimitSlider <span class="operator">=</span> <span class="keyword">new</span> <span class="type">QSlider</span>(<span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Horizontal);
+      uploadLimitSlider<span class="operator">-</span><span class="operator">&gt;</span>setRange(<span class="number">0</span><span class="operator">,</span> <span class="number">1000</span>);
+      bottomBar<span class="operator">-</span><span class="operator">&gt;</span>addWidget(<span class="keyword">new</span> <span class="type">QLabel</span>(tr(<span class="string">&quot;Max upload:&quot;</span>)));
+      bottomBar<span class="operator">-</span><span class="operator">&gt;</span>addWidget(uploadLimitSlider);
+      bottomBar<span class="operator">-</span><span class="operator">&gt;</span>addWidget((uploadLimitLabel <span class="operator">=</span> <span class="keyword">new</span> <span class="type">QLabel</span>(tr(<span class="string">&quot;0 KB/s&quot;</span>))));
+      uploadLimitLabel<span class="operator">-</span><span class="operator">&gt;</span>setFixedSize(<span class="type"><a href="../qtcore/qsize.html">QSize</a></span>(fm<span class="operator">.</span>width(tr(<span class="string">&quot;99999 KB/s&quot;</span>))<span class="operator">,</span> fm<span class="operator">.</span>lineSpacing()));
+
+  <span class="preprocessor">#ifdef Q_OS_OSX</span>
+      setUnifiedTitleAndToolBarOnMac(<span class="keyword">true</span>);
+  <span class="preprocessor">#endif</span>
+
+      <span class="comment">// Set up connections</span>
+      connect(torrentView<span class="operator">,</span> SIGNAL(itemSelectionChanged())<span class="operator">,</span>
+              <span class="keyword">this</span><span class="operator">,</span> SLOT(setActionsEnabled()));
+      connect(torrentView<span class="operator">,</span> SIGNAL(fileDropped(<span class="type"><a href="../qtcore/qstring.html">QString</a></span>))<span class="operator">,</span>
+              <span class="keyword">this</span><span class="operator">,</span> SLOT(acceptFileDrop(<span class="type"><a href="../qtcore/qstring.html">QString</a></span>)));
+      connect(uploadLimitSlider<span class="operator">,</span> SIGNAL(valueChanged(<span class="type">int</span>))<span class="operator">,</span>
+              <span class="keyword">this</span><span class="operator">,</span> SLOT(setUploadLimit(<span class="type">int</span>)));
+      connect(downloadLimitSlider<span class="operator">,</span> SIGNAL(valueChanged(<span class="type">int</span>))<span class="operator">,</span>
+              <span class="keyword">this</span><span class="operator">,</span> SLOT(setDownloadLimit(<span class="type">int</span>)));
+      connect(newTorrentAction<span class="operator">,</span> SIGNAL(triggered())<span class="operator">,</span>
+              <span class="keyword">this</span><span class="operator">,</span> SLOT(addTorrent()));
+      connect(pauseTorrentAction<span class="operator">,</span> SIGNAL(triggered())<span class="operator">,</span>
+              <span class="keyword">this</span><span class="operator">,</span> SLOT(pauseTorrent()));
+      connect(removeTorrentAction<span class="operator">,</span> SIGNAL(triggered())<span class="operator">,</span>
+              <span class="keyword">this</span><span class="operator">,</span> SLOT(removeTorrent()));
+      connect(upActionTool<span class="operator">,</span> SIGNAL(triggered(bool))<span class="operator">,</span>
+              <span class="keyword">this</span><span class="operator">,</span> SLOT(moveTorrentUp()));
+      connect(downActionTool<span class="operator">,</span> SIGNAL(triggered(bool))<span class="operator">,</span>
+              <span class="keyword">this</span><span class="operator">,</span> SLOT(moveTorrentDown()));
+
+      <span class="comment">// Load settings and start</span>
+      setWindowTitle(tr(<span class="string">&quot;Torrent Client&quot;</span>));
+      setActionsEnabled();
+      <span class="type"><a href="../qtcore/qmetaobject.html">QMetaObject</a></span><span class="operator">::</span>invokeMethod(<span class="keyword">this</span><span class="operator">,</span> <span class="string">&quot;loadSettings&quot;</span><span class="operator">,</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>QueuedConnection);
+  }
+
+  <span class="type"><a href="../qtcore/qsize.html">QSize</a></span> MainWindow<span class="operator">::</span>sizeHint() <span class="keyword">const</span>
+  {
+      <span class="keyword">const</span> <span class="type">QHeaderView</span> <span class="operator">*</span>header <span class="operator">=</span> torrentView<span class="operator">-</span><span class="operator">&gt;</span>header();
+
+      <span class="comment">// Add up the sizes of all header sections. The last section is</span>
+      <span class="comment">// stretched, so its size is relative to the size of the width;</span>
+      <span class="comment">// instead of counting it, we count the size of its largest value.</span>
+      <span class="type">int</span> width <span class="operator">=</span> fontMetrics()<span class="operator">.</span>width(tr(<span class="string">&quot;Downloading&quot;</span>) <span class="operator">+</span> <span class="string">&quot;  &quot;</span>);
+      <span class="keyword">for</span> (<span class="type">int</span> i <span class="operator">=</span> <span class="number">0</span>; i <span class="operator">&lt;</span> header<span class="operator">-</span><span class="operator">&gt;</span>count() <span class="operator">-</span> <span class="number">1</span>; <span class="operator">+</span><span class="operator">+</span>i)
+          width <span class="operator">+</span><span class="operator">=</span> header<span class="operator">-</span><span class="operator">&gt;</span>sectionSize(i);
+
+      <span class="keyword">return</span> <span class="type"><a href="../qtcore/qsize.html">QSize</a></span>(width<span class="operator">,</span> <span class="type">QMainWindow</span><span class="operator">::</span>sizeHint()<span class="operator">.</span>height())
+          <span class="operator">.</span>expandedTo(<span class="type">QApplication</span><span class="operator">::</span>globalStrut());
+  }
+
+  <span class="keyword">const</span> TorrentClient <span class="operator">*</span>MainWindow<span class="operator">::</span>clientForRow(<span class="type">int</span> row) <span class="keyword">const</span>
+  {
+      <span class="comment">// Return the client at the given row.</span>
+      <span class="keyword">return</span> jobs<span class="operator">.</span>at(row)<span class="operator">.</span>client;
+  }
+
+  <span class="type">int</span> MainWindow<span class="operator">::</span>rowOfClient(TorrentClient <span class="operator">*</span>client) <span class="keyword">const</span>
+  {
+      <span class="comment">// Return the row that displays this client's status, or -1 if the</span>
+      <span class="comment">// client is not known.</span>
+      <span class="type">int</span> row <span class="operator">=</span> <span class="number">0</span>;
+      foreach (Job job<span class="operator">,</span> jobs) {
+          <span class="keyword">if</span> (job<span class="operator">.</span>client <span class="operator">=</span><span class="operator">=</span> client)
+              <span class="keyword">return</span> row;
+          <span class="operator">+</span><span class="operator">+</span>row;
+      }
+      <span class="keyword">return</span> <span class="operator">-</span><span class="number">1</span>;
+  }
+
+  <span class="type">void</span> MainWindow<span class="operator">::</span>loadSettings()
+  {
+      <span class="comment">// Load base settings (last working directory, upload/download limits).</span>
+      <span class="type"><a href="../qtcore/qsettings.html">QSettings</a></span> settings(<span class="string">&quot;QtProject&quot;</span><span class="operator">,</span> <span class="string">&quot;Torrent&quot;</span>);
+      lastDirectory <span class="operator">=</span> settings<span class="operator">.</span>value(<span class="string">&quot;LastDirectory&quot;</span>)<span class="operator">.</span>toString();
+      <span class="keyword">if</span> (lastDirectory<span class="operator">.</span>isEmpty())
+          lastDirectory <span class="operator">=</span> <span class="type"><a href="../qtcore/qdir.html">QDir</a></span><span class="operator">::</span>currentPath();
+      <span class="type">int</span> up <span class="operator">=</span> settings<span class="operator">.</span>value(<span class="string">&quot;UploadLimit&quot;</span>)<span class="operator">.</span>toInt();
+      <span class="type">int</span> down <span class="operator">=</span> settings<span class="operator">.</span>value(<span class="string">&quot;DownloadLimit&quot;</span>)<span class="operator">.</span>toInt();
+      uploadLimitSlider<span class="operator">-</span><span class="operator">&gt;</span>setValue(up <span class="operator">?</span> up : <span class="number">170</span>);
+      downloadLimitSlider<span class="operator">-</span><span class="operator">&gt;</span>setValue(down <span class="operator">?</span> down : <span class="number">550</span>);
+
+      <span class="comment">// Resume all previous downloads.</span>
+      <span class="type">int</span> size <span class="operator">=</span> settings<span class="operator">.</span>beginReadArray(<span class="string">&quot;Torrents&quot;</span>);
+      <span class="keyword">for</span> (<span class="type">int</span> i <span class="operator">=</span> <span class="number">0</span>; i <span class="operator">&lt;</span> size; <span class="operator">+</span><span class="operator">+</span>i) {
+          settings<span class="operator">.</span>setArrayIndex(i);
+          <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> resumeState <span class="operator">=</span> settings<span class="operator">.</span>value(<span class="string">&quot;resumeState&quot;</span>)<span class="operator">.</span>toByteArray();
+          <span class="type"><a href="../qtcore/qstring.html">QString</a></span> fileName <span class="operator">=</span> settings<span class="operator">.</span>value(<span class="string">&quot;sourceFileName&quot;</span>)<span class="operator">.</span>toString();
+          <span class="type"><a href="../qtcore/qstring.html">QString</a></span> dest <span class="operator">=</span> settings<span class="operator">.</span>value(<span class="string">&quot;destinationFolder&quot;</span>)<span class="operator">.</span>toString();
+
+          <span class="keyword">if</span> (addTorrent(fileName<span class="operator">,</span> dest<span class="operator">,</span> resumeState)) {
+              TorrentClient <span class="operator">*</span>client <span class="operator">=</span> jobs<span class="operator">.</span>last()<span class="operator">.</span>client;
+              client<span class="operator">-</span><span class="operator">&gt;</span>setDownloadedBytes(settings<span class="operator">.</span>value(<span class="string">&quot;downloadedBytes&quot;</span>)<span class="operator">.</span>toLongLong());
+              client<span class="operator">-</span><span class="operator">&gt;</span>setUploadedBytes(settings<span class="operator">.</span>value(<span class="string">&quot;uploadedBytes&quot;</span>)<span class="operator">.</span>toLongLong());
+          }
+      }
+  }
+
+  bool MainWindow<span class="operator">::</span>addTorrent()
+  {
+      <span class="comment">// Show the file dialog, let the user select what torrent to start downloading.</span>
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> fileName <span class="operator">=</span> <span class="type">QFileDialog</span><span class="operator">::</span>getOpenFileName(<span class="keyword">this</span><span class="operator">,</span> tr(<span class="string">&quot;Choose a torrent file&quot;</span>)<span class="operator">,</span>
+                                                      lastDirectory<span class="operator">,</span>
+                                                      tr(<span class="string">&quot;Torrents (*.torrent);;&quot;</span>
+                                                         <span class="string">&quot; All files (*.*)&quot;</span>));
+      <span class="keyword">if</span> (fileName<span class="operator">.</span>isEmpty())
+          <span class="keyword">return</span> <span class="keyword">false</span>;
+      lastDirectory <span class="operator">=</span> <span class="type"><a href="../qtcore/qfileinfo.html">QFileInfo</a></span>(fileName)<span class="operator">.</span>absolutePath();
+
+      <span class="comment">// Show the &quot;Add Torrent&quot; dialog.</span>
+      AddTorrentDialog <span class="operator">*</span>addTorrentDialog <span class="operator">=</span> <span class="keyword">new</span> AddTorrentDialog(<span class="keyword">this</span>);
+      addTorrentDialog<span class="operator">-</span><span class="operator">&gt;</span>setTorrent(fileName);
+      addTorrentDialog<span class="operator">-</span><span class="operator">&gt;</span>deleteLater();
+      <span class="keyword">if</span> (<span class="operator">!</span>addTorrentDialog<span class="operator">-</span><span class="operator">&gt;</span>exec())
+          <span class="keyword">return</span> <span class="keyword">false</span>;
+
+      <span class="comment">// Add the torrent to our list of downloads</span>
+      addTorrent(fileName<span class="operator">,</span> addTorrentDialog<span class="operator">-</span><span class="operator">&gt;</span>destinationFolder());
+      <span class="keyword">if</span> (<span class="operator">!</span>saveChanges) {
+          saveChanges <span class="operator">=</span> <span class="keyword">true</span>;
+          <span class="type"><a href="../qtcore/qtimer.html">QTimer</a></span><span class="operator">::</span>singleShot(<span class="number">1000</span><span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> SLOT(saveSettings()));
+      }
+      <span class="keyword">return</span> <span class="keyword">true</span>;
+  }
+
+  <span class="type">void</span> MainWindow<span class="operator">::</span>removeTorrent()
+  {
+      <span class="comment">// Find the row of the current item, and find the torrent client</span>
+      <span class="comment">// for that row.</span>
+      <span class="type">int</span> row <span class="operator">=</span> torrentView<span class="operator">-</span><span class="operator">&gt;</span>indexOfTopLevelItem(torrentView<span class="operator">-</span><span class="operator">&gt;</span>currentItem());
+      TorrentClient <span class="operator">*</span>client <span class="operator">=</span> jobs<span class="operator">.</span>at(row)<span class="operator">.</span>client;
+
+      <span class="comment">// Stop the client.</span>
+      client<span class="operator">-</span><span class="operator">&gt;</span>disconnect();
+      connect(client<span class="operator">,</span> SIGNAL(stopped())<span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> SLOT(torrentStopped()));
+      client<span class="operator">-</span><span class="operator">&gt;</span>stop();
+
+      <span class="comment">// Remove the row from the view.</span>
+      <span class="keyword">delete</span> torrentView<span class="operator">-</span><span class="operator">&gt;</span>takeTopLevelItem(row);
+      jobs<span class="operator">.</span>removeAt(row);
+      setActionsEnabled();
+
+      saveChanges <span class="operator">=</span> <span class="keyword">true</span>;
+      saveSettings();
+  }
+
+  <span class="type">void</span> MainWindow<span class="operator">::</span>torrentStopped()
+  {
+      <span class="comment">// Schedule the client for deletion.</span>
+      TorrentClient <span class="operator">*</span>client <span class="operator">=</span> qobject_cast<span class="operator">&lt;</span>TorrentClient <span class="operator">*</span><span class="operator">&gt;</span>(sender());
+      client<span class="operator">-</span><span class="operator">&gt;</span>deleteLater();
+
+      <span class="comment">// If the quit dialog is shown, update its progress.</span>
+      <span class="keyword">if</span> (quitDialog) {
+          <span class="keyword">if</span> (<span class="operator">+</span><span class="operator">+</span>jobsStopped <span class="operator">=</span><span class="operator">=</span> jobsToStop)
+              quitDialog<span class="operator">-</span><span class="operator">&gt;</span>close();
+      }
+  }
+
+  <span class="type">void</span> MainWindow<span class="operator">::</span>torrentError(TorrentClient<span class="operator">::</span>Error)
+  {
+      <span class="comment">// Delete the client.</span>
+      TorrentClient <span class="operator">*</span>client <span class="operator">=</span> qobject_cast<span class="operator">&lt;</span>TorrentClient <span class="operator">*</span><span class="operator">&gt;</span>(sender());
+      <span class="type">int</span> row <span class="operator">=</span> rowOfClient(client);
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> fileName <span class="operator">=</span> jobs<span class="operator">.</span>at(row)<span class="operator">.</span>torrentFileName;
+      jobs<span class="operator">.</span>removeAt(row);
+
+      <span class="comment">// Display the warning.</span>
+      <span class="type">QMessageBox</span><span class="operator">::</span>warning(<span class="keyword">this</span><span class="operator">,</span> tr(<span class="string">&quot;Error&quot;</span>)<span class="operator">,</span>
+                           tr(<span class="string">&quot;An error occurred while downloading %0: %1&quot;</span>)
+                           <span class="operator">.</span>arg(fileName)
+                           <span class="operator">.</span>arg(client<span class="operator">-</span><span class="operator">&gt;</span>errorString()));
+
+      <span class="keyword">delete</span> torrentView<span class="operator">-</span><span class="operator">&gt;</span>takeTopLevelItem(row);
+      client<span class="operator">-</span><span class="operator">&gt;</span>deleteLater();
+  }
+
+  bool MainWindow<span class="operator">::</span>addTorrent(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>fileName<span class="operator">,</span> <span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>destinationFolder<span class="operator">,</span>
+                              <span class="keyword">const</span> <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> <span class="operator">&amp;</span>resumeState)
+  {
+      <span class="comment">// Check if the torrent is already being downloaded.</span>
+      foreach (Job job<span class="operator">,</span> jobs) {
+          <span class="keyword">if</span> (job<span class="operator">.</span>torrentFileName <span class="operator">=</span><span class="operator">=</span> fileName <span class="operator">&amp;</span><span class="operator">&amp;</span> job<span class="operator">.</span>destinationDirectory <span class="operator">=</span><span class="operator">=</span> destinationFolder) {
+              <span class="type">QMessageBox</span><span class="operator">::</span>warning(<span class="keyword">this</span><span class="operator">,</span> tr(<span class="string">&quot;Already downloading&quot;</span>)<span class="operator">,</span>
+                                   tr(<span class="string">&quot;The torrent file %1 is &quot;</span>
+                                      <span class="string">&quot;already being downloaded.&quot;</span>)<span class="operator">.</span>arg(fileName));
+              <span class="keyword">return</span> <span class="keyword">false</span>;
+          }
+      }
+
+      <span class="comment">// Create a new torrent client and attempt to parse the torrent data.</span>
+      TorrentClient <span class="operator">*</span>client <span class="operator">=</span> <span class="keyword">new</span> TorrentClient(<span class="keyword">this</span>);
+      <span class="keyword">if</span> (<span class="operator">!</span>client<span class="operator">-</span><span class="operator">&gt;</span>setTorrent(fileName)) {
+          <span class="type">QMessageBox</span><span class="operator">::</span>warning(<span class="keyword">this</span><span class="operator">,</span> tr(<span class="string">&quot;Error&quot;</span>)<span class="operator">,</span>
+                               tr(<span class="string">&quot;The torrent file %1 cannot not be opened/resumed.&quot;</span>)<span class="operator">.</span>arg(fileName));
+          <span class="keyword">delete</span> client;
+          <span class="keyword">return</span> <span class="keyword">false</span>;
+      }
+      client<span class="operator">-</span><span class="operator">&gt;</span>setDestinationFolder(destinationFolder);
+      client<span class="operator">-</span><span class="operator">&gt;</span>setDumpedState(resumeState);
+
+      <span class="comment">// Setup the client connections.</span>
+      connect(client<span class="operator">,</span> SIGNAL(stateChanged(TorrentClient<span class="operator">::</span>State))<span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> SLOT(updateState(TorrentClient<span class="operator">::</span>State)));
+      connect(client<span class="operator">,</span> SIGNAL(peerInfoUpdated())<span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> SLOT(updatePeerInfo()));
+      connect(client<span class="operator">,</span> SIGNAL(progressUpdated(<span class="type">int</span>))<span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> SLOT(updateProgress(<span class="type">int</span>)));
+      connect(client<span class="operator">,</span> SIGNAL(downloadRateUpdated(<span class="type">int</span>))<span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> SLOT(updateDownloadRate(<span class="type">int</span>)));
+      connect(client<span class="operator">,</span> SIGNAL(uploadRateUpdated(<span class="type">int</span>))<span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> SLOT(updateUploadRate(<span class="type">int</span>)));
+      connect(client<span class="operator">,</span> SIGNAL(stopped())<span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> SLOT(torrentStopped()));
+      connect(client<span class="operator">,</span> SIGNAL(error(TorrentClient<span class="operator">::</span>Error))<span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> SLOT(torrentError(TorrentClient<span class="operator">::</span>Error)));
+
+      <span class="comment">// Add the client to the list of downloading jobs.</span>
+      Job job;
+      job<span class="operator">.</span>client <span class="operator">=</span> client;
+      job<span class="operator">.</span>torrentFileName <span class="operator">=</span> fileName;
+      job<span class="operator">.</span>destinationDirectory <span class="operator">=</span> destinationFolder;
+      jobs <span class="operator">&lt;</span><span class="operator">&lt;</span> job;
+
+      <span class="comment">// Create and add a row in the torrent view for this download.</span>
+      <span class="type">QTreeWidgetItem</span> <span class="operator">*</span>item <span class="operator">=</span> <span class="keyword">new</span> <span class="type">QTreeWidgetItem</span>(torrentView);
+
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> baseFileName <span class="operator">=</span> <span class="type"><a href="../qtcore/qfileinfo.html">QFileInfo</a></span>(fileName)<span class="operator">.</span>fileName();
+      <span class="keyword">if</span> (baseFileName<span class="operator">.</span>toLower()<span class="operator">.</span>endsWith(<span class="string">&quot;.torrent&quot;</span>))
+          baseFileName<span class="operator">.</span>remove(baseFileName<span class="operator">.</span>size() <span class="operator">-</span> <span class="number">8</span>);
+
+      item<span class="operator">-</span><span class="operator">&gt;</span>setText(<span class="number">0</span><span class="operator">,</span> baseFileName);
+      item<span class="operator">-</span><span class="operator">&gt;</span>setToolTip(<span class="number">0</span><span class="operator">,</span> tr(<span class="string">&quot;Torrent: %1&lt;br&gt;Destination: %2&quot;</span>)
+                       <span class="operator">.</span>arg(baseFileName)<span class="operator">.</span>arg(destinationFolder));
+      item<span class="operator">-</span><span class="operator">&gt;</span>setText(<span class="number">1</span><span class="operator">,</span> tr(<span class="string">&quot;0/0&quot;</span>));
+      item<span class="operator">-</span><span class="operator">&gt;</span>setText(<span class="number">2</span><span class="operator">,</span> <span class="string">&quot;0&quot;</span>);
+      item<span class="operator">-</span><span class="operator">&gt;</span>setText(<span class="number">3</span><span class="operator">,</span> <span class="string">&quot;0.0 KB/s&quot;</span>);
+      item<span class="operator">-</span><span class="operator">&gt;</span>setText(<span class="number">4</span><span class="operator">,</span> <span class="string">&quot;0.0 KB/s&quot;</span>);
+      item<span class="operator">-</span><span class="operator">&gt;</span>setText(<span class="number">5</span><span class="operator">,</span> tr(<span class="string">&quot;Idle&quot;</span>));
+      item<span class="operator">-</span><span class="operator">&gt;</span>setFlags(item<span class="operator">-</span><span class="operator">&gt;</span>flags() <span class="operator">&amp;</span> <span class="operator">~</span><span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>ItemIsEditable);
+      item<span class="operator">-</span><span class="operator">&gt;</span>setTextAlignment(<span class="number">1</span><span class="operator">,</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>AlignHCenter);
+
+      <span class="keyword">if</span> (<span class="operator">!</span>saveChanges) {
+          saveChanges <span class="operator">=</span> <span class="keyword">true</span>;
+          <span class="type"><a href="../qtcore/qtimer.html">QTimer</a></span><span class="operator">::</span>singleShot(<span class="number">5000</span><span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> SLOT(saveSettings()));
+      }
+      client<span class="operator">-</span><span class="operator">&gt;</span>start();
+      <span class="keyword">return</span> <span class="keyword">true</span>;
+  }
+
+  <span class="type">void</span> MainWindow<span class="operator">::</span>saveSettings()
+  {
+      <span class="keyword">if</span> (<span class="operator">!</span>saveChanges)
+        <span class="keyword">return</span>;
+      saveChanges <span class="operator">=</span> <span class="keyword">false</span>;
+
+      <span class="comment">// Prepare and reset the settings</span>
+      <span class="type"><a href="../qtcore/qsettings.html">QSettings</a></span> settings(<span class="string">&quot;QtProject&quot;</span><span class="operator">,</span> <span class="string">&quot;Torrent&quot;</span>);
+      settings<span class="operator">.</span>clear();
+
+      settings<span class="operator">.</span>setValue(<span class="string">&quot;LastDirectory&quot;</span><span class="operator">,</span> lastDirectory);
+      settings<span class="operator">.</span>setValue(<span class="string">&quot;UploadLimit&quot;</span><span class="operator">,</span> uploadLimitSlider<span class="operator">-</span><span class="operator">&gt;</span>value());
+      settings<span class="operator">.</span>setValue(<span class="string">&quot;DownloadLimit&quot;</span><span class="operator">,</span> downloadLimitSlider<span class="operator">-</span><span class="operator">&gt;</span>value());
+
+      <span class="comment">// Store data on all known torrents</span>
+      settings<span class="operator">.</span>beginWriteArray(<span class="string">&quot;Torrents&quot;</span>);
+      <span class="keyword">for</span> (<span class="type">int</span> i <span class="operator">=</span> <span class="number">0</span>; i <span class="operator">&lt;</span> jobs<span class="operator">.</span>size(); <span class="operator">+</span><span class="operator">+</span>i) {
+          settings<span class="operator">.</span>setArrayIndex(i);
+          settings<span class="operator">.</span>setValue(<span class="string">&quot;sourceFileName&quot;</span><span class="operator">,</span> jobs<span class="operator">.</span>at(i)<span class="operator">.</span>torrentFileName);
+          settings<span class="operator">.</span>setValue(<span class="string">&quot;destinationFolder&quot;</span><span class="operator">,</span> jobs<span class="operator">.</span>at(i)<span class="operator">.</span>destinationDirectory);
+          settings<span class="operator">.</span>setValue(<span class="string">&quot;uploadedBytes&quot;</span><span class="operator">,</span> jobs<span class="operator">.</span>at(i)<span class="operator">.</span>client<span class="operator">-</span><span class="operator">&gt;</span>uploadedBytes());
+          settings<span class="operator">.</span>setValue(<span class="string">&quot;downloadedBytes&quot;</span><span class="operator">,</span> jobs<span class="operator">.</span>at(i)<span class="operator">.</span>client<span class="operator">-</span><span class="operator">&gt;</span>downloadedBytes());
+          settings<span class="operator">.</span>setValue(<span class="string">&quot;resumeState&quot;</span><span class="operator">,</span> jobs<span class="operator">.</span>at(i)<span class="operator">.</span>client<span class="operator">-</span><span class="operator">&gt;</span>dumpedState());
+      }
+      settings<span class="operator">.</span>endArray();
+      settings<span class="operator">.</span>sync();
+  }
+
+  <span class="type">void</span> MainWindow<span class="operator">::</span>updateState(TorrentClient<span class="operator">::</span>State)
+  {
+      <span class="comment">// Update the state string whenever the client's state changes.</span>
+      TorrentClient <span class="operator">*</span>client <span class="operator">=</span> qobject_cast<span class="operator">&lt;</span>TorrentClient <span class="operator">*</span><span class="operator">&gt;</span>(sender());
+      <span class="type">int</span> row <span class="operator">=</span> rowOfClient(client);
+      <span class="type">QTreeWidgetItem</span> <span class="operator">*</span>item <span class="operator">=</span> torrentView<span class="operator">-</span><span class="operator">&gt;</span>topLevelItem(row);
+      <span class="keyword">if</span> (item) {
+          item<span class="operator">-</span><span class="operator">&gt;</span>setToolTip(<span class="number">0</span><span class="operator">,</span> tr(<span class="string">&quot;Torrent: %1&lt;br&gt;Destination: %2&lt;br&gt;State: %3&quot;</span>)
+                           <span class="operator">.</span>arg(jobs<span class="operator">.</span>at(row)<span class="operator">.</span>torrentFileName)
+                           <span class="operator">.</span>arg(jobs<span class="operator">.</span>at(row)<span class="operator">.</span>destinationDirectory)
+                           <span class="operator">.</span>arg(client<span class="operator">-</span><span class="operator">&gt;</span>stateString()));
+
+          item<span class="operator">-</span><span class="operator">&gt;</span>setText(<span class="number">5</span><span class="operator">,</span> client<span class="operator">-</span><span class="operator">&gt;</span>stateString());
+      }
+      setActionsEnabled();
+  }
+
+  <span class="type">void</span> MainWindow<span class="operator">::</span>updatePeerInfo()
+  {
+      <span class="comment">// Update the number of connected, visited, seed and leecher peers.</span>
+      TorrentClient <span class="operator">*</span>client <span class="operator">=</span> qobject_cast<span class="operator">&lt;</span>TorrentClient <span class="operator">*</span><span class="operator">&gt;</span>(sender());
+      <span class="type">int</span> row <span class="operator">=</span> rowOfClient(client);
+
+      <span class="type">QTreeWidgetItem</span> <span class="operator">*</span>item <span class="operator">=</span> torrentView<span class="operator">-</span><span class="operator">&gt;</span>topLevelItem(row);
+      item<span class="operator">-</span><span class="operator">&gt;</span>setText(<span class="number">1</span><span class="operator">,</span> tr(<span class="string">&quot;%1/%2&quot;</span>)<span class="operator">.</span>arg(client<span class="operator">-</span><span class="operator">&gt;</span>connectedPeerCount())
+                    <span class="operator">.</span>arg(client<span class="operator">-</span><span class="operator">&gt;</span>seedCount()));
+  }
+
+  <span class="type">void</span> MainWindow<span class="operator">::</span>updateProgress(<span class="type">int</span> percent)
+  {
+      TorrentClient <span class="operator">*</span>client <span class="operator">=</span> qobject_cast<span class="operator">&lt;</span>TorrentClient <span class="operator">*</span><span class="operator">&gt;</span>(sender());
+      <span class="type">int</span> row <span class="operator">=</span> rowOfClient(client);
+
+      <span class="comment">// Update the progressbar.</span>
+      <span class="type">QTreeWidgetItem</span> <span class="operator">*</span>item <span class="operator">=</span> torrentView<span class="operator">-</span><span class="operator">&gt;</span>topLevelItem(row);
+      <span class="keyword">if</span> (item)
+          item<span class="operator">-</span><span class="operator">&gt;</span>setText(<span class="number">2</span><span class="operator">,</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span><span class="operator">::</span>number(percent));
+  }
+
+  <span class="type">void</span> MainWindow<span class="operator">::</span>setActionsEnabled()
+  {
+      <span class="comment">// Find the view item and client for the current row, and update</span>
+      <span class="comment">// the states of the actions.</span>
+      <span class="type">QTreeWidgetItem</span> <span class="operator">*</span>item <span class="operator">=</span> <span class="number">0</span>;
+      <span class="keyword">if</span> (<span class="operator">!</span>torrentView<span class="operator">-</span><span class="operator">&gt;</span>selectedItems()<span class="operator">.</span>isEmpty())
+          item <span class="operator">=</span> torrentView<span class="operator">-</span><span class="operator">&gt;</span>selectedItems()<span class="operator">.</span>first();
+      TorrentClient <span class="operator">*</span>client <span class="operator">=</span> item <span class="operator">?</span> jobs<span class="operator">.</span>at(torrentView<span class="operator">-</span><span class="operator">&gt;</span>indexOfTopLevelItem(item))<span class="operator">.</span>client : <span class="number">0</span>;
+      bool pauseEnabled <span class="operator">=</span> client <span class="operator">&amp;</span><span class="operator">&amp;</span> ((client<span class="operator">-</span><span class="operator">&gt;</span>state() <span class="operator">=</span><span class="operator">=</span> TorrentClient<span class="operator">::</span>Paused)
+                                         <span class="operator">|</span><span class="operator">|</span>  (client<span class="operator">-</span><span class="operator">&gt;</span>state() <span class="operator">&gt;</span> TorrentClient<span class="operator">::</span>Preparing));
+
+      removeTorrentAction<span class="operator">-</span><span class="operator">&gt;</span>setEnabled(item <span class="operator">!</span><span class="operator">=</span> <span class="number">0</span>);
+      pauseTorrentAction<span class="operator">-</span><span class="operator">&gt;</span>setEnabled(item <span class="operator">!</span><span class="operator">=</span> <span class="number">0</span> <span class="operator">&amp;</span><span class="operator">&amp;</span> pauseEnabled);
+
+      <span class="keyword">if</span> (client <span class="operator">&amp;</span><span class="operator">&amp;</span> client<span class="operator">-</span><span class="operator">&gt;</span>state() <span class="operator">=</span><span class="operator">=</span> TorrentClient<span class="operator">::</span>Paused) {
+          pauseTorrentAction<span class="operator">-</span><span class="operator">&gt;</span>setIcon(<span class="type"><a href="../qtgui/qicon.html">QIcon</a></span>(<span class="string">&quot;:/icons/player_play.png&quot;</span>));
+          pauseTorrentAction<span class="operator">-</span><span class="operator">&gt;</span>setText(tr(<span class="string">&quot;Resume torrent&quot;</span>));
+      } <span class="keyword">else</span> {
+          pauseTorrentAction<span class="operator">-</span><span class="operator">&gt;</span>setIcon(<span class="type"><a href="../qtgui/qicon.html">QIcon</a></span>(<span class="string">&quot;:/icons/player_pause.png&quot;</span>));
+          pauseTorrentAction<span class="operator">-</span><span class="operator">&gt;</span>setText(tr(<span class="string">&quot;Pause torrent&quot;</span>));
+      }
+
+      <span class="type">int</span> row <span class="operator">=</span> torrentView<span class="operator">-</span><span class="operator">&gt;</span>indexOfTopLevelItem(item);
+      upActionTool<span class="operator">-</span><span class="operator">&gt;</span>setEnabled(item <span class="operator">&amp;</span><span class="operator">&amp;</span> row <span class="operator">!</span><span class="operator">=</span> <span class="number">0</span>);
+      downActionTool<span class="operator">-</span><span class="operator">&gt;</span>setEnabled(item <span class="operator">&amp;</span><span class="operator">&amp;</span> row <span class="operator">!</span><span class="operator">=</span> jobs<span class="operator">.</span>size() <span class="operator">-</span> <span class="number">1</span>);
+  }
+
+  <span class="type">void</span> MainWindow<span class="operator">::</span>updateDownloadRate(<span class="type">int</span> bytesPerSecond)
+  {
+      <span class="comment">// Update the download rate.</span>
+      TorrentClient <span class="operator">*</span>client <span class="operator">=</span> qobject_cast<span class="operator">&lt;</span>TorrentClient <span class="operator">*</span><span class="operator">&gt;</span>(sender());
+      <span class="type">int</span> row <span class="operator">=</span> rowOfClient(client);
+      <span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> num <span class="operator">=</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span><span class="operator">::</span>asprintf(<span class="string">&quot;%.1f KB/s&quot;</span><span class="operator">,</span> bytesPerSecond <span class="operator">/</span> <span class="number">1024.0</span>);
+      torrentView<span class="operator">-</span><span class="operator">&gt;</span>topLevelItem(row)<span class="operator">-</span><span class="operator">&gt;</span>setText(<span class="number">3</span><span class="operator">,</span> num);
+
+      <span class="keyword">if</span> (<span class="operator">!</span>saveChanges) {
+          saveChanges <span class="operator">=</span> <span class="keyword">true</span>;
+          <span class="type"><a href="../qtcore/qtimer.html">QTimer</a></span><span class="operator">::</span>singleShot(<span class="number">5000</span><span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> SLOT(saveSettings()));
+      }
+  }
+
+  <span class="type">void</span> MainWindow<span class="operator">::</span>updateUploadRate(<span class="type">int</span> bytesPerSecond)
+  {
+      <span class="comment">// Update the upload rate.</span>
+      TorrentClient <span class="operator">*</span>client <span class="operator">=</span> qobject_cast<span class="operator">&lt;</span>TorrentClient <span class="operator">*</span><span class="operator">&gt;</span>(sender());
+      <span class="type">int</span> row <span class="operator">=</span> rowOfClient(client);
+      <span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> num <span class="operator">=</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span><span class="operator">::</span>asprintf(<span class="string">&quot;%.1f KB/s&quot;</span><span class="operator">,</span> bytesPerSecond <span class="operator">/</span> <span class="number">1024.0</span>);
+      torrentView<span class="operator">-</span><span class="operator">&gt;</span>topLevelItem(row)<span class="operator">-</span><span class="operator">&gt;</span>setText(<span class="number">4</span><span class="operator">,</span> num);
+
+      <span class="keyword">if</span> (<span class="operator">!</span>saveChanges) {
+          saveChanges <span class="operator">=</span> <span class="keyword">true</span>;
+          <span class="type"><a href="../qtcore/qtimer.html">QTimer</a></span><span class="operator">::</span>singleShot(<span class="number">5000</span><span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> SLOT(saveSettings()));
+      }
+  }
+
+  <span class="type">void</span> MainWindow<span class="operator">::</span>pauseTorrent()
+  {
+      <span class="comment">// Pause or unpause the current torrent.</span>
+      <span class="type">int</span> row <span class="operator">=</span> torrentView<span class="operator">-</span><span class="operator">&gt;</span>indexOfTopLevelItem(torrentView<span class="operator">-</span><span class="operator">&gt;</span>currentItem());
+      TorrentClient <span class="operator">*</span>client <span class="operator">=</span> jobs<span class="operator">.</span>at(row)<span class="operator">.</span>client;
+      client<span class="operator">-</span><span class="operator">&gt;</span>setPaused(client<span class="operator">-</span><span class="operator">&gt;</span>state() <span class="operator">!</span><span class="operator">=</span> TorrentClient<span class="operator">::</span>Paused);
+      setActionsEnabled();
+  }
+
+  <span class="type">void</span> MainWindow<span class="operator">::</span>moveTorrentUp()
+  {
+      <span class="type">QTreeWidgetItem</span> <span class="operator">*</span>item <span class="operator">=</span> torrentView<span class="operator">-</span><span class="operator">&gt;</span>currentItem();
+      <span class="type">int</span> row <span class="operator">=</span> torrentView<span class="operator">-</span><span class="operator">&gt;</span>indexOfTopLevelItem(item);
+      <span class="keyword">if</span> (row <span class="operator">=</span><span class="operator">=</span> <span class="number">0</span>)
+          <span class="keyword">return</span>;
+
+      Job tmp <span class="operator">=</span> jobs<span class="operator">.</span>at(row <span class="operator">-</span> <span class="number">1</span>);
+      jobs<span class="operator">[</span>row <span class="operator">-</span> <span class="number">1</span><span class="operator">]</span> <span class="operator">=</span> jobs<span class="operator">[</span>row<span class="operator">]</span>;
+      jobs<span class="operator">[</span>row<span class="operator">]</span> <span class="operator">=</span> tmp;
+
+      <span class="type">QTreeWidgetItem</span> <span class="operator">*</span>itemAbove <span class="operator">=</span> torrentView<span class="operator">-</span><span class="operator">&gt;</span>takeTopLevelItem(row <span class="operator">-</span> <span class="number">1</span>);
+      torrentView<span class="operator">-</span><span class="operator">&gt;</span>insertTopLevelItem(row<span class="operator">,</span> itemAbove);
+      setActionsEnabled();
+  }
+
+  <span class="type">void</span> MainWindow<span class="operator">::</span>moveTorrentDown()
+  {
+      <span class="type">QTreeWidgetItem</span> <span class="operator">*</span>item <span class="operator">=</span> torrentView<span class="operator">-</span><span class="operator">&gt;</span>currentItem();
+      <span class="type">int</span> row <span class="operator">=</span> torrentView<span class="operator">-</span><span class="operator">&gt;</span>indexOfTopLevelItem(item);
+      <span class="keyword">if</span> (row <span class="operator">=</span><span class="operator">=</span> jobs<span class="operator">.</span>size() <span class="operator">-</span> <span class="number">1</span>)
+          <span class="keyword">return</span>;
+
+      Job tmp <span class="operator">=</span> jobs<span class="operator">.</span>at(row <span class="operator">+</span> <span class="number">1</span>);
+      jobs<span class="operator">[</span>row <span class="operator">+</span> <span class="number">1</span><span class="operator">]</span> <span class="operator">=</span> jobs<span class="operator">[</span>row<span class="operator">]</span>;
+      jobs<span class="operator">[</span>row<span class="operator">]</span> <span class="operator">=</span> tmp;
+
+      <span class="type">QTreeWidgetItem</span> <span class="operator">*</span>itemAbove <span class="operator">=</span> torrentView<span class="operator">-</span><span class="operator">&gt;</span>takeTopLevelItem(row <span class="operator">+</span> <span class="number">1</span>);
+      torrentView<span class="operator">-</span><span class="operator">&gt;</span>insertTopLevelItem(row<span class="operator">,</span> itemAbove);
+      setActionsEnabled();
+  }
+
+  <span class="keyword">static</span> <span class="type">int</span> rateFromValue(<span class="type">int</span> value)
+  {
+      <span class="type">int</span> rate <span class="operator">=</span> <span class="number">0</span>;
+      <span class="keyword">if</span> (value <span class="operator">&gt;</span><span class="operator">=</span> <span class="number">0</span> <span class="operator">&amp;</span><span class="operator">&amp;</span> value <span class="operator">&lt;</span> <span class="number">250</span>) {
+          rate <span class="operator">=</span> <span class="number">1</span> <span class="operator">+</span> <span class="type">int</span>(value <span class="operator">*</span> <span class="number">0.124</span>);
+      } <span class="keyword">else</span> <span class="keyword">if</span> (value <span class="operator">&lt;</span> <span class="number">500</span>) {
+          rate <span class="operator">=</span> <span class="number">32</span> <span class="operator">+</span> <span class="type">int</span>((value <span class="operator">-</span> <span class="number">250</span>) <span class="operator">*</span> <span class="number">0.384</span>);
+      } <span class="keyword">else</span> <span class="keyword">if</span> (value <span class="operator">&lt;</span> <span class="number">750</span>) {
+          rate <span class="operator">=</span> <span class="number">128</span> <span class="operator">+</span> <span class="type">int</span>((value <span class="operator">-</span> <span class="number">500</span>) <span class="operator">*</span> <span class="number">1.536</span>);
+      } <span class="keyword">else</span> {
+          rate <span class="operator">=</span> <span class="number">512</span> <span class="operator">+</span> <span class="type">int</span>((value <span class="operator">-</span> <span class="number">750</span>) <span class="operator">*</span> <span class="number">6.1445</span>);
+      }
+      <span class="keyword">return</span> rate;
+  }
+
+  <span class="type">void</span> MainWindow<span class="operator">::</span>setUploadLimit(<span class="type">int</span> value)
+  {
+      <span class="type">int</span> rate <span class="operator">=</span> rateFromValue(value);
+      uploadLimitLabel<span class="operator">-</span><span class="operator">&gt;</span>setText(tr(<span class="string">&quot;%1 KB/s&quot;</span>)<span class="operator">.</span>arg(<span class="type"><a href="../qtcore/qstring.html">QString</a></span><span class="operator">::</span>asprintf(<span class="string">&quot;%4d&quot;</span><span class="operator">,</span> rate)));
+      RateController<span class="operator">::</span>instance()<span class="operator">-</span><span class="operator">&gt;</span>setUploadLimit(rate <span class="operator">*</span> <span class="number">1024</span>);
+  }
+
+  <span class="type">void</span> MainWindow<span class="operator">::</span>setDownloadLimit(<span class="type">int</span> value)
+  {
+      <span class="type">int</span> rate <span class="operator">=</span> rateFromValue(value);
+      downloadLimitLabel<span class="operator">-</span><span class="operator">&gt;</span>setText(tr(<span class="string">&quot;%1 KB/s&quot;</span>)<span class="operator">.</span>arg(<span class="type"><a href="../qtcore/qstring.html">QString</a></span><span class="operator">::</span>asprintf(<span class="string">&quot;%4d&quot;</span><span class="operator">,</span> rate)));
+      RateController<span class="operator">::</span>instance()<span class="operator">-</span><span class="operator">&gt;</span>setDownloadLimit(rate <span class="operator">*</span> <span class="number">1024</span>);
+  }
+
+  <span class="type">void</span> MainWindow<span class="operator">::</span>about()
+  {
+      <span class="type">QLabel</span> <span class="operator">*</span>icon <span class="operator">=</span> <span class="keyword">new</span> <span class="type">QLabel</span>;
+      icon<span class="operator">-</span><span class="operator">&gt;</span>setPixmap(<span class="type"><a href="../qtgui/qpixmap.html">QPixmap</a></span>(<span class="string">&quot;:/icons/peertopeer.png&quot;</span>));
+
+      <span class="type">QLabel</span> <span class="operator">*</span>text <span class="operator">=</span> <span class="keyword">new</span> <span class="type">QLabel</span>;
+      text<span class="operator">-</span><span class="operator">&gt;</span>setWordWrap(<span class="keyword">true</span>);
+      text<span class="operator">-</span><span class="operator">&gt;</span>setText(<span class="string">&quot;&lt;p&gt;The &lt;b&gt;Torrent Client&lt;/b&gt; example demonstrates how to&quot;</span>
+                    <span class="string">&quot; write a complete peer-to-peer file sharing&quot;</span>
+                    <span class="string">&quot; application using Qt's network and thread classes.&lt;/p&gt;&quot;</span>
+                    <span class="string">&quot;&lt;p&gt;This feature complete client implementation of&quot;</span>
+                    <span class="string">&quot; the BitTorrent protocol can efficiently&quot;</span>
+                    <span class="string">&quot; maintain several hundred network connections&quot;</span>
+                    <span class="string">&quot; simultaneously.&lt;/p&gt;&quot;</span>);
+
+      <span class="type">QPushButton</span> <span class="operator">*</span>quitButton <span class="operator">=</span> <span class="keyword">new</span> <span class="type">QPushButton</span>(<span class="string">&quot;OK&quot;</span>);
+
+      <span class="type">QHBoxLayout</span> <span class="operator">*</span>topLayout <span class="operator">=</span> <span class="keyword">new</span> <span class="type">QHBoxLayout</span>;
+      topLayout<span class="operator">-</span><span class="operator">&gt;</span>setMargin(<span class="number">10</span>);
+      topLayout<span class="operator">-</span><span class="operator">&gt;</span>setSpacing(<span class="number">10</span>);
+      topLayout<span class="operator">-</span><span class="operator">&gt;</span>addWidget(icon);
+      topLayout<span class="operator">-</span><span class="operator">&gt;</span>addWidget(text);
+
+      <span class="type">QHBoxLayout</span> <span class="operator">*</span>bottomLayout <span class="operator">=</span> <span class="keyword">new</span> <span class="type">QHBoxLayout</span>;
+      bottomLayout<span class="operator">-</span><span class="operator">&gt;</span>addStretch();
+      bottomLayout<span class="operator">-</span><span class="operator">&gt;</span>addWidget(quitButton);
+      bottomLayout<span class="operator">-</span><span class="operator">&gt;</span>addStretch();
+
+      <span class="type">QVBoxLayout</span> <span class="operator">*</span>mainLayout <span class="operator">=</span> <span class="keyword">new</span> <span class="type">QVBoxLayout</span>;
+      mainLayout<span class="operator">-</span><span class="operator">&gt;</span>addLayout(topLayout);
+      mainLayout<span class="operator">-</span><span class="operator">&gt;</span>addLayout(bottomLayout);
+
+      <span class="type">QDialog</span> about(<span class="keyword">this</span>);
+      about<span class="operator">.</span>setModal(<span class="keyword">true</span>);
+      about<span class="operator">.</span>setWindowTitle(tr(<span class="string">&quot;About Torrent Client&quot;</span>));
+      about<span class="operator">.</span>setLayout(mainLayout);
+
+      connect(quitButton<span class="operator">,</span> SIGNAL(clicked())<span class="operator">,</span> <span class="operator">&amp;</span>about<span class="operator">,</span> SLOT(close()));
+
+      about<span class="operator">.</span>exec();
+  }
+
+  <span class="type">void</span> MainWindow<span class="operator">::</span>acceptFileDrop(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>fileName)
+  {
+      <span class="comment">// Create and show the &quot;Add Torrent&quot; dialog.</span>
+      AddTorrentDialog <span class="operator">*</span>addTorrentDialog <span class="operator">=</span> <span class="keyword">new</span> AddTorrentDialog;
+      lastDirectory <span class="operator">=</span> <span class="type"><a href="../qtcore/qfileinfo.html">QFileInfo</a></span>(fileName)<span class="operator">.</span>absolutePath();
+      addTorrentDialog<span class="operator">-</span><span class="operator">&gt;</span>setTorrent(fileName);
+      addTorrentDialog<span class="operator">-</span><span class="operator">&gt;</span>deleteLater();
+      <span class="keyword">if</span> (<span class="operator">!</span>addTorrentDialog<span class="operator">-</span><span class="operator">&gt;</span>exec())
+          <span class="keyword">return</span>;
+
+      <span class="comment">// Add the torrent to our list of downloads.</span>
+      addTorrent(fileName<span class="operator">,</span> addTorrentDialog<span class="operator">-</span><span class="operator">&gt;</span>destinationFolder());
+      saveSettings();
+  }
+
+  <span class="type">void</span> MainWindow<span class="operator">::</span>closeEvent(<span class="type"><a href="../qtgui/qcloseevent.html">QCloseEvent</a></span> <span class="operator">*</span>)
+  {
+      <span class="keyword">if</span> (jobs<span class="operator">.</span>isEmpty())
+          <span class="keyword">return</span>;
+
+      <span class="comment">// Save upload / download numbers.</span>
+      saveSettings();
+      saveChanges <span class="operator">=</span> <span class="keyword">false</span>;
+
+      quitDialog <span class="operator">=</span> <span class="keyword">new</span> <span class="type">QProgressDialog</span>(tr(<span class="string">&quot;Disconnecting from trackers&quot;</span>)<span class="operator">,</span> tr(<span class="string">&quot;Abort&quot;</span>)<span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> jobsToStop<span class="operator">,</span> <span class="keyword">this</span>);
+
+      <span class="comment">// Stop all clients, remove the rows from the view and wait for</span>
+      <span class="comment">// them to signal that they have stopped.</span>
+      jobsToStop <span class="operator">=</span> <span class="number">0</span>;
+      jobsStopped <span class="operator">=</span> <span class="number">0</span>;
+      foreach (Job job<span class="operator">,</span> jobs) {
+          <span class="operator">+</span><span class="operator">+</span>jobsToStop;
+          TorrentClient <span class="operator">*</span>client <span class="operator">=</span> job<span class="operator">.</span>client;
+          client<span class="operator">-</span><span class="operator">&gt;</span>disconnect();
+          connect(client<span class="operator">,</span> SIGNAL(stopped())<span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> SLOT(torrentStopped()));
+          client<span class="operator">-</span><span class="operator">&gt;</span>stop();
+          <span class="keyword">delete</span> torrentView<span class="operator">-</span><span class="operator">&gt;</span>takeTopLevelItem(<span class="number">0</span>);
+      }
+
+      <span class="keyword">if</span> (jobsToStop <span class="operator">&gt;</span> jobsStopped)
+          quitDialog<span class="operator">-</span><span class="operator">&gt;</span>exec();
+      quitDialog<span class="operator">-</span><span class="operator">&gt;</span>deleteLater();
+      quitDialog <span class="operator">=</span> <span class="number">0</span>;
+  }
+
+  TorrentView<span class="operator">::</span>TorrentView(<span class="type">QWidget</span> <span class="operator">*</span>parent)
+      : <span class="type">QTreeWidget</span>(parent)
+  {
+  <span class="preprocessor">#ifndef QT_NO_DRAGANDDROP</span>
+      setAcceptDrops(<span class="keyword">true</span>);
+  <span class="preprocessor">#endif</span>
+  }
+
+  <span class="preprocessor">#ifndef QT_NO_DRAGANDDROP</span>
+  <span class="type">void</span> TorrentView<span class="operator">::</span>dragMoveEvent(<span class="type"><a href="../qtgui/qdragmoveevent.html">QDragMoveEvent</a></span> <span class="operator">*</span>event)
+  {
+      <span class="comment">// Accept file actions with a '.torrent' extension.</span>
+      <span class="type"><a href="../qtcore/qurl.html">QUrl</a></span> url(event<span class="operator">-</span><span class="operator">&gt;</span>mimeData()<span class="operator">-</span><span class="operator">&gt;</span>text());
+      <span class="keyword">if</span> (url<span class="operator">.</span>isValid() <span class="operator">&amp;</span><span class="operator">&amp;</span> url<span class="operator">.</span>scheme() <span class="operator">=</span><span class="operator">=</span> <span class="string">&quot;file&quot;</span>
+              <span class="operator">&amp;</span><span class="operator">&amp;</span> url<span class="operator">.</span>path()<span class="operator">.</span>toLower()<span class="operator">.</span>endsWith(<span class="string">&quot;.torrent&quot;</span>))
+          event<span class="operator">-</span><span class="operator">&gt;</span>acceptProposedAction();
+  }
+
+  <span class="type">void</span> TorrentView<span class="operator">::</span>dropEvent(<span class="type"><a href="../qtgui/qdropevent.html">QDropEvent</a></span> <span class="operator">*</span>event)
+  {
+      <span class="comment">// Accept drops if the file has a '.torrent' extension and it</span>
+      <span class="comment">// exists.</span>
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> fileName <span class="operator">=</span> <span class="type"><a href="../qtcore/qurl.html">QUrl</a></span>(event<span class="operator">-</span><span class="operator">&gt;</span>mimeData()<span class="operator">-</span><span class="operator">&gt;</span>text())<span class="operator">.</span>path();
+      <span class="keyword">if</span> (<span class="type"><a href="../qtcore/qfile.html">QFile</a></span><span class="operator">::</span>exists(fileName) <span class="operator">&amp;</span><span class="operator">&amp;</span> fileName<span class="operator">.</span>toLower()<span class="operator">.</span>endsWith(<span class="string">&quot;.torrent&quot;</span>))
+          <span class="keyword">emit</span> fileDropped(fileName);
+  }
+  <span class="preprocessor">#endif</span>
+
+  <span class="preprocessor">#include &quot;mainwindow.moc&quot;</span>
+
+</pre>
+</div>
+<!-- @@@torrent/mainwindow.cpp -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

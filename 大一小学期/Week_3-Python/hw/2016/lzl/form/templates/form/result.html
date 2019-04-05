@@ -1,0 +1,14 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="{% static 'form/style.css' %}">
+</head>
+<body>
+<ul>
+{% for c in anslist %}
+    <li><a href="{{c.url}}">{{c.title}}</a></li>
+{% endfor %}
+</ul>
+</body>
+</html>

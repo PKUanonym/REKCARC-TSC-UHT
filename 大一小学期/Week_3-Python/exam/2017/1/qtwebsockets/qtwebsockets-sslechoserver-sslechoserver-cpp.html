@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>sslechoserver.cpp Example File | Qt WebSockets 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtwebsockets-index.html">Qt WebSockets</a></td><td ><a href="qtwebsockets-sslechoserver-example.html">SSL Echo Server Example</a></td><td >sslechoserver.cpp Example File</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar"><div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">sslechoserver.cpp Example File</h1>
+<span class="subtitle">sslechoserver/sslechoserver.cpp</span>
+<!-- $$$sslechoserver/sslechoserver.cpp-description -->
+<div class="descr"> <a name="details"></a>
+<pre class="cpp">
+
+  <span class="comment">/****************************************************************************
+  **
+  ** Copyright (C) 2014 Kurt Pattyn &lt;pattyn.kurt@gmail.com&gt;.
+  ** Contact: http://www.qt.io/licensing/
+  **
+  ** This file is part of the QtWebSockets module of the Qt Toolkit.
+  **
+  ** $QT_BEGIN_LICENSE:LGPL21$
+  ** Commercial License Usage
+  ** Licensees holding valid commercial Qt licenses may use this file in
+  ** accordance with the commercial license agreement provided with the
+  ** Software or, alternatively, in accordance with the terms contained in
+  ** a written agreement between you and The Qt Company. For licensing terms
+  ** and conditions see http://www.qt.io/terms-conditions. For further
+  ** information use the contact form at http://www.qt.io/contact-us.
+  **
+  ** GNU Lesser General Public License Usage
+  ** Alternatively, this file may be used under the terms of the GNU Lesser
+  ** General Public License version 2.1 or version 3 as published by the Free
+  ** Software Foundation and appearing in the file LICENSE.LGPLv21 and
+  ** LICENSE.LGPLv3 included in the packaging of this file. Please review the
+  ** following information to ensure the GNU Lesser General Public License
+  ** requirements will be met: https://www.gnu.org/licenses/lgpl.html and
+  ** http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
+  **
+  ** As a special exception, The Qt Company gives you certain additional
+  ** rights. These rights are described in The Qt Company LGPL Exception
+  ** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
+  **
+  ** $QT_END_LICENSE$
+  **
+  ****************************************************************************/</span>
+  <span class="preprocessor">#include &quot;sslechoserver.h&quot;</span>
+  <span class="preprocessor">#include &quot;QtWebSockets/QWebSocketServer&quot;</span>
+  <span class="preprocessor">#include &quot;QtWebSockets/QWebSocket&quot;</span>
+  <span class="preprocessor">#include &lt;QtCore/QDebug&gt;</span>
+  <span class="preprocessor">#include &lt;QtCore/QFile&gt;</span>
+  <span class="preprocessor">#include &lt;QtNetwork/QSslCertificate&gt;</span>
+  <span class="preprocessor">#include &lt;QtNetwork/QSslKey&gt;</span>
+
+  QT_USE_NAMESPACE
+
+  SslEchoServer<span class="operator">::</span>SslEchoServer(<span class="type"><a href="../qtcore/qtglobal.html#quint16-typedef">quint16</a></span> port<span class="operator">,</span> <span class="type"><a href="../qtcore/qobject.html">QObject</a></span> <span class="operator">*</span>parent) :
+      <span class="type"><a href="../qtcore/qobject.html">QObject</a></span>(parent)<span class="operator">,</span>
+      m_pWebSocketServer(Q_NULLPTR)<span class="operator">,</span>
+      m_clients()
+  {
+      m_pWebSocketServer <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="qwebsocketserver.html">QWebSocketServer</a></span>(<span class="type"><a href="../qtcore/qstring.html#QStringLiteral">QStringLiteral</a></span>(<span class="string">&quot;SSL Echo Server&quot;</span>)<span class="operator">,</span>
+                                                <span class="type"><a href="qwebsocketserver.html">QWebSocketServer</a></span><span class="operator">::</span>SecureMode<span class="operator">,</span>
+                                                <span class="keyword">this</span>);
+      <span class="type"><a href="../qtnetwork/qsslconfiguration.html">QSslConfiguration</a></span> sslConfiguration;
+      <span class="type"><a href="../qtcore/qfile.html">QFile</a></span> certFile(<span class="type"><a href="../qtcore/qstring.html#QStringLiteral">QStringLiteral</a></span>(<span class="string">&quot;:/localhost.cert&quot;</span>));
+      <span class="type"><a href="../qtcore/qfile.html">QFile</a></span> keyFile(<span class="type"><a href="../qtcore/qstring.html#QStringLiteral">QStringLiteral</a></span>(<span class="string">&quot;:/localhost.key&quot;</span>));
+      certFile<span class="operator">.</span>open(<span class="type"><a href="../qtcore/qiodevice.html">QIODevice</a></span><span class="operator">::</span>ReadOnly);
+      keyFile<span class="operator">.</span>open(<span class="type"><a href="../qtcore/qiodevice.html">QIODevice</a></span><span class="operator">::</span>ReadOnly);
+      <span class="type"><a href="../qtnetwork/qsslcertificate.html">QSslCertificate</a></span> certificate(<span class="operator">&amp;</span>certFile<span class="operator">,</span> <span class="type"><a href="../qtnetwork/qssl.html">QSsl</a></span><span class="operator">::</span>Pem);
+      <span class="type"><a href="../qtnetwork/qsslkey.html">QSslKey</a></span> sslKey(<span class="operator">&amp;</span>keyFile<span class="operator">,</span> <span class="type"><a href="../qtnetwork/qssl.html">QSsl</a></span><span class="operator">::</span>Rsa<span class="operator">,</span> <span class="type"><a href="../qtnetwork/qssl.html">QSsl</a></span><span class="operator">::</span>Pem);
+      certFile<span class="operator">.</span>close();
+      keyFile<span class="operator">.</span>close();
+      sslConfiguration<span class="operator">.</span>setPeerVerifyMode(<span class="type"><a href="../qtnetwork/qsslsocket.html">QSslSocket</a></span><span class="operator">::</span>VerifyNone);
+      sslConfiguration<span class="operator">.</span>setLocalCertificate(certificate);
+      sslConfiguration<span class="operator">.</span>setPrivateKey(sslKey);
+      sslConfiguration<span class="operator">.</span>setProtocol(<span class="type"><a href="../qtnetwork/qssl.html">QSsl</a></span><span class="operator">::</span>TlsV1SslV3);
+      m_pWebSocketServer<span class="operator">-</span><span class="operator">&gt;</span>setSslConfiguration(sslConfiguration);
+
+      <span class="keyword">if</span> (m_pWebSocketServer<span class="operator">-</span><span class="operator">&gt;</span>listen(<span class="type"><a href="../qtnetwork/qhostaddress.html">QHostAddress</a></span><span class="operator">::</span>Any<span class="operator">,</span> port))
+      {
+          <a href="../qtcore/qtglobal.html#qDebug">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">&quot;SSL Echo Server listening on port&quot;</span> <span class="operator">&lt;</span><span class="operator">&lt;</span> port;
+          connect(m_pWebSocketServer<span class="operator">,</span> <span class="operator">&amp;</span><span class="type"><a href="qwebsocketserver.html">QWebSocketServer</a></span><span class="operator">::</span>newConnection<span class="operator">,</span>
+                  <span class="keyword">this</span><span class="operator">,</span> <span class="operator">&amp;</span>SslEchoServer<span class="operator">::</span>onNewConnection);
+          connect(m_pWebSocketServer<span class="operator">,</span> <span class="operator">&amp;</span><span class="type"><a href="qwebsocketserver.html">QWebSocketServer</a></span><span class="operator">::</span>sslErrors<span class="operator">,</span>
+                  <span class="keyword">this</span><span class="operator">,</span> <span class="operator">&amp;</span>SslEchoServer<span class="operator">::</span>onSslErrors);
+      }
+  }
+
+  SslEchoServer<span class="operator">::</span><span class="operator">~</span>SslEchoServer()
+  {
+      m_pWebSocketServer<span class="operator">-</span><span class="operator">&gt;</span>close();
+      <a href="../qtcore/qtalgorithms.html#qDeleteAll">qDeleteAll</a>(m_clients<span class="operator">.</span>begin()<span class="operator">,</span> m_clients<span class="operator">.</span>end());
+  }
+
+  <span class="type">void</span> SslEchoServer<span class="operator">::</span>onNewConnection()
+  {
+      <span class="type"><a href="qwebsocket.html">QWebSocket</a></span> <span class="operator">*</span>pSocket <span class="operator">=</span> m_pWebSocketServer<span class="operator">-</span><span class="operator">&gt;</span>nextPendingConnection();
+
+      <a href="../qtcore/qtglobal.html#qDebug">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">&quot;Client connected:&quot;</span> <span class="operator">&lt;</span><span class="operator">&lt;</span> pSocket<span class="operator">-</span><span class="operator">&gt;</span>peerName() <span class="operator">&lt;</span><span class="operator">&lt;</span> pSocket<span class="operator">-</span><span class="operator">&gt;</span>origin();
+
+      connect(pSocket<span class="operator">,</span> <span class="operator">&amp;</span><span class="type"><a href="qwebsocket.html">QWebSocket</a></span><span class="operator">::</span>textMessageReceived<span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> <span class="operator">&amp;</span>SslEchoServer<span class="operator">::</span>processTextMessage);
+      connect(pSocket<span class="operator">,</span> <span class="operator">&amp;</span><span class="type"><a href="qwebsocket.html">QWebSocket</a></span><span class="operator">::</span>binaryMessageReceived<span class="operator">,</span>
+              <span class="keyword">this</span><span class="operator">,</span> <span class="operator">&amp;</span>SslEchoServer<span class="operator">::</span>processBinaryMessage);
+      connect(pSocket<span class="operator">,</span> <span class="operator">&amp;</span><span class="type"><a href="qwebsocket.html">QWebSocket</a></span><span class="operator">::</span>disconnected<span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> <span class="operator">&amp;</span>SslEchoServer<span class="operator">::</span>socketDisconnected);
+      <span class="comment">//connect(pSocket, &amp;QWebSocket::pong, this, &amp;SslEchoServer::processPong);</span>
+
+      m_clients <span class="operator">&lt;</span><span class="operator">&lt;</span> pSocket;
+  }
+
+  <span class="type">void</span> SslEchoServer<span class="operator">::</span>processTextMessage(<span class="type"><a href="../qtcore/qstring.html">QString</a></span> message)
+  {
+      <span class="type"><a href="qwebsocket.html">QWebSocket</a></span> <span class="operator">*</span>pClient <span class="operator">=</span> qobject_cast<span class="operator">&lt;</span><span class="type"><a href="qwebsocket.html">QWebSocket</a></span> <span class="operator">*</span><span class="operator">&gt;</span>(sender());
+      <span class="keyword">if</span> (pClient)
+      {
+          pClient<span class="operator">-</span><span class="operator">&gt;</span>sendTextMessage(message);
+      }
+  }
+
+  <span class="type">void</span> SslEchoServer<span class="operator">::</span>processBinaryMessage(<span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> message)
+  {
+      <span class="type"><a href="qwebsocket.html">QWebSocket</a></span> <span class="operator">*</span>pClient <span class="operator">=</span> qobject_cast<span class="operator">&lt;</span><span class="type"><a href="qwebsocket.html">QWebSocket</a></span> <span class="operator">*</span><span class="operator">&gt;</span>(sender());
+      <span class="keyword">if</span> (pClient)
+      {
+          pClient<span class="operator">-</span><span class="operator">&gt;</span>sendBinaryMessage(message);
+      }
+  }
+
+  <span class="type">void</span> SslEchoServer<span class="operator">::</span>socketDisconnected()
+  {
+      <a href="../qtcore/qtglobal.html#qDebug">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">&quot;Client disconnected&quot;</span>;
+      <span class="type"><a href="qwebsocket.html">QWebSocket</a></span> <span class="operator">*</span>pClient <span class="operator">=</span> qobject_cast<span class="operator">&lt;</span><span class="type"><a href="qwebsocket.html">QWebSocket</a></span> <span class="operator">*</span><span class="operator">&gt;</span>(sender());
+      <span class="keyword">if</span> (pClient)
+      {
+          m_clients<span class="operator">.</span>removeAll(pClient);
+          pClient<span class="operator">-</span><span class="operator">&gt;</span>deleteLater();
+      }
+  }
+
+  <span class="type">void</span> SslEchoServer<span class="operator">::</span>onSslErrors(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span><span class="type"><a href="../qtnetwork/qsslerror.html">QSslError</a></span><span class="operator">&gt;</span> <span class="operator">&amp;</span>)
+  {
+      <a href="../qtcore/qtglobal.html#qDebug">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">&quot;Ssl errors occurred&quot;</span>;
+  }
+
+</pre>
+</div>
+<!-- @@@sslechoserver/sslechoserver.cpp -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

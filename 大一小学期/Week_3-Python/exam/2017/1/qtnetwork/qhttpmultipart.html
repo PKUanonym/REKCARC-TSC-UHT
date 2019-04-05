@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qhttpmultipart.cpp -->
+  <title>QHttpMultiPart Class | Qt Network 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtnetwork-index.html">Qt Network</a></td><td ><a href="qtnetwork-module.html">C++ Classes</a></td><td >QHttpMultiPart</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-types">Public Types</a></li>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">QHttpMultiPart Class</h1>
+<!-- $$$QHttpMultiPart-brief -->
+<p>The <a href="qhttpmultipart.html">QHttpMultiPart</a> class resembles a MIME multipart message to be sent over HTTP. <a href="#details">More...</a></p>
+<!-- @@@QHttpMultiPart -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign">   <span class="preprocessor">#include &lt;QHttpMultiPart&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> qmake:</td><td class="memItemRight bottomAlign"> QT += network</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Since:</td><td class="memItemRight bottomAlign">  Qt 4.8</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Inherits:</td><td class="memItemRight bottomAlign"> <a href="../qtcore/qobject.html">QObject</a></td></tr></table></div><ul>
+<li><a href="qhttpmultipart-members.html">List of all members, including inherited members</a></li>
+</ul>
+<a name="public-types"></a>
+<h2 id="public-types">Public Types</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="qhttpmultipart.html#ContentType-enum">ContentType</a></b> { MixedType, RelatedType, FormDataType, AlternativeType }</td></tr>
+</table></div>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qhttpmultipart.html#QHttpMultiPart">QHttpMultiPart</a></b>(QObject *<i>parent</i> = Q_NULLPTR)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qhttpmultipart.html#QHttpMultiPart-1">QHttpMultiPart</a></b>(ContentType <i>contentType</i>, QObject *<i>parent</i> = Q_NULLPTR)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qhttpmultipart.html#dtor.QHttpMultiPart">~QHttpMultiPart</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qhttpmultipart.html#append">append</a></b>(const QHttpPart &amp;<i>httpPart</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QByteArray </td><td class="memItemRight bottomAlign"><b><a href="qhttpmultipart.html#boundary">boundary</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qhttpmultipart.html#setBoundary">setBoundary</a></b>(const QByteArray &amp;<i>boundary</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qhttpmultipart.html#setContentType">setContentType</a></b>(ContentType <i>contentType</i>)</td></tr>
+</table></div>
+<ul>
+<li class="fn">31 public functions inherited from <a href="../qtcore/qobject.html#public-functions">QObject</a></li>
+</ul>
+<h3>Additional Inherited Members</h3>
+<ul>
+<li class="fn">1 property inherited from <a href="../qtcore/qobject.html#properties">QObject</a></li>
+<li class="fn">1 public slot inherited from <a href="../qtcore/qobject.html#public-slots">QObject</a></li>
+<li class="fn">2 signals inherited from <a href="../qtcore/qobject.html#signals">QObject</a></li>
+<li class="fn">1 public variable inherited from <a href="../qtcore/qobject.html#public-variables">QObject</a></li>
+<li class="fn">10 static public members inherited from <a href="../qtcore/qobject.html#static-public-members">QObject</a></li>
+<li class="fn">9 protected functions inherited from <a href="../qtcore/qobject.html#protected-functions">QObject</a></li>
+<li class="fn">2 protected variables inherited from <a href="../qtcore/qobject.html#protected-variables">QObject</a></li>
+</ul>
+<a name="details"></a>
+<!-- $$$QHttpMultiPart-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="qhttpmultipart.html">QHttpMultiPart</a> class resembles a MIME multipart message to be sent over HTTP.</p>
+<p>The <a href="qhttpmultipart.html">QHttpMultiPart</a> resembles a MIME multipart message, as described in RFC 2046, which is to be sent over HTTP. A multipart message consists of an arbitrary number of body parts (see <a href="qhttppart.html">QHttpPart</a>), which are separated by a unique boundary. The boundary of the <a href="qhttpmultipart.html">QHttpMultiPart</a> is constructed with the string &quot;boundary_.oOo._&quot; followed by random characters, and provides enough uniqueness to make sure it does not occur inside the parts itself. If desired, the boundary can still be set via <a href="qhttpmultipart.html#setBoundary">setBoundary</a>().</p>
+<p>As an example, consider the following code snippet, which constructs a multipart message containing a text part followed by an image part:</p>
+<pre class="cpp">
+
+  <span class="type"><a href="qhttpmultipart.html#QHttpMultiPart">QHttpMultiPart</a></span> <span class="operator">*</span>multiPart <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="qhttpmultipart.html#QHttpMultiPart">QHttpMultiPart</a></span>(<span class="type"><a href="qhttpmultipart.html#QHttpMultiPart">QHttpMultiPart</a></span><span class="operator">::</span>FormDataType);
+
+  <span class="type"><a href="qhttppart.html">QHttpPart</a></span> textPart;
+  textPart<span class="operator">.</span>setHeader(<span class="type"><a href="qnetworkrequest.html">QNetworkRequest</a></span><span class="operator">::</span>ContentDispositionHeader<span class="operator">,</span> <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span>(<span class="string">&quot;form-data; name=\&quot;text\&quot;&quot;</span>));
+  textPart<span class="operator">.</span>setBody(<span class="string">&quot;my text&quot;</span>);
+
+  <span class="type"><a href="qhttppart.html">QHttpPart</a></span> imagePart;
+  imagePart<span class="operator">.</span>setHeader(<span class="type"><a href="qnetworkrequest.html">QNetworkRequest</a></span><span class="operator">::</span>ContentTypeHeader<span class="operator">,</span> <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span>(<span class="string">&quot;image/jpeg&quot;</span>));
+  imagePart<span class="operator">.</span>setHeader(<span class="type"><a href="qnetworkrequest.html">QNetworkRequest</a></span><span class="operator">::</span>ContentDispositionHeader<span class="operator">,</span> <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span>(<span class="string">&quot;form-data; name=\&quot;image\&quot;&quot;</span>));
+  <span class="type"><a href="../qtcore/qfile.html">QFile</a></span> <span class="operator">*</span>file <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtcore/qfile.html">QFile</a></span>(<span class="string">&quot;image.jpg&quot;</span>);
+  file<span class="operator">-</span><span class="operator">&gt;</span>open(<span class="type"><a href="../qtcore/qiodevice.html">QIODevice</a></span><span class="operator">::</span>ReadOnly);
+  imagePart<span class="operator">.</span>setBodyDevice(file);
+  file<span class="operator">-</span><span class="operator">&gt;</span>setParent(multiPart); <span class="comment">// we cannot delete the file now, so delete it with the multiPart</span>
+
+  multiPart<span class="operator">-</span><span class="operator">&gt;</span>append(textPart);
+  multiPart<span class="operator">-</span><span class="operator">&gt;</span>append(imagePart);
+
+  <span class="type"><a href="../qtcore/qurl.html">QUrl</a></span> url(<span class="string">&quot;http://my.server.tld&quot;</span>);
+  <span class="type"><a href="qnetworkrequest.html">QNetworkRequest</a></span> request(url);
+
+  <span class="type"><a href="qnetworkaccessmanager.html">QNetworkAccessManager</a></span> manager;
+  <span class="type"><a href="qnetworkreply.html">QNetworkReply</a></span> <span class="operator">*</span>reply <span class="operator">=</span> manager<span class="operator">.</span>post(request<span class="operator">,</span> multiPart);
+  multiPart<span class="operator">-</span><span class="operator">&gt;</span>setParent(reply); <span class="comment">// delete the multiPart with the reply</span>
+  <span class="comment">// here connect signals etc.</span>
+
+</pre>
+</div>
+<p><b>See also </b><a href="qhttppart.html">QHttpPart</a> and <a href="qnetworkaccessmanager.html#post">QNetworkAccessManager::post</a>().</p>
+<!-- @@@QHttpMultiPart -->
+<div class="types">
+<h2>Member Type Documentation</h2>
+<!-- $$$ContentType$$$MixedType$$$RelatedType$$$FormDataType$$$AlternativeType -->
+<h3 class="fn" id="ContentType-enum"><a name="ContentType-enum"></a>enum QHttpMultiPart::<span class="name">ContentType</span></h3>
+<p>List of known content types for a multipart subtype as described in RFC 2046 and others.</p>
+<div class="table"><table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td class="topAlign"><code>QHttpMultiPart::MixedType</code></td><td class="topAlign tblval"><code>0</code></td><td class="topAlign">corresponds to the &quot;multipart/mixed&quot; subtype, meaning the body parts are independent of each other, as described in RFC 2046.</td></tr>
+<tr><td class="topAlign"><code>QHttpMultiPart::RelatedType</code></td><td class="topAlign tblval"><code>1</code></td><td class="topAlign">corresponds to the &quot;multipart/related&quot; subtype, meaning the body parts are related to each other, as described in RFC 2387.</td></tr>
+<tr><td class="topAlign"><code>QHttpMultiPart::FormDataType</code></td><td class="topAlign tblval"><code>2</code></td><td class="topAlign">corresponds to the &quot;multipart/form-data&quot; subtype, meaning the body parts contain form elements, as described in RFC 2388.</td></tr>
+<tr><td class="topAlign"><code>QHttpMultiPart::AlternativeType</code></td><td class="topAlign tblval"><code>3</code></td><td class="topAlign">corresponds to the &quot;multipart/alternative&quot; subtype, meaning the body parts are alternative representations of the same information, as described in RFC 2046.</td></tr>
+</table></div>
+<p><b>See also </b><a href="qhttpmultipart.html#setContentType">setContentType</a>().</p>
+<!-- @@@ContentType -->
+</div>
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$QHttpMultiPart[overload1]$$$QHttpMultiPartQObject* -->
+<h3 class="fn" id="QHttpMultiPart"><a name="QHttpMultiPart"></a>QHttpMultiPart::<span class="name">QHttpMultiPart</span>(<span class="type"><a href="../qtcore/qobject.html#QObject">QObject</a></span> *<i>parent</i> = Q_NULLPTR)</h3>
+<p>Constructs a <a href="qhttpmultipart.html">QHttpMultiPart</a> with content type <a href="qhttpmultipart.html#ContentType-enum">MixedType</a> and sets <i>parent</i> as the parent object.</p>
+<p><b>See also </b><a href="qhttpmultipart.html#ContentType-enum">QHttpMultiPart::ContentType</a>.</p>
+<!-- @@@QHttpMultiPart -->
+<!-- $$$QHttpMultiPart$$$QHttpMultiPartContentTypeQObject* -->
+<h3 class="fn" id="QHttpMultiPart-1"><a name="QHttpMultiPart-1"></a>QHttpMultiPart::<span class="name">QHttpMultiPart</span>(<span class="type"><a href="qhttpmultipart.html#ContentType-enum">ContentType</a></span> <i>contentType</i>, <span class="type"><a href="../qtcore/qobject.html#QObject">QObject</a></span> *<i>parent</i> = Q_NULLPTR)</h3>
+<p>Constructs a <a href="qhttpmultipart.html">QHttpMultiPart</a> with content type <i>contentType</i> and sets parent as the parent object.</p>
+<p><b>See also </b><a href="qhttpmultipart.html#ContentType-enum">QHttpMultiPart::ContentType</a>.</p>
+<!-- @@@QHttpMultiPart -->
+<!-- $$$~QHttpMultiPart[overload1]$$$~QHttpMultiPart -->
+<h3 class="fn" id="dtor.QHttpMultiPart"><a name="dtor.QHttpMultiPart"></a>QHttpMultiPart::<span class="name">~QHttpMultiPart</span>()</h3>
+<p>Destroys the multipart.</p>
+<!-- @@@~QHttpMultiPart -->
+<!-- $$$append[overload1]$$$appendconstQHttpPart& -->
+<h3 class="fn" id="append"><a name="append"></a><span class="type">void</span> QHttpMultiPart::<span class="name">append</span>(const <span class="type"><a href="qhttppart.html">QHttpPart</a></span> &amp;<i>httpPart</i>)</h3>
+<p>Appends <i>httpPart</i> to this multipart.</p>
+<!-- @@@append -->
+<!-- $$$boundary[overload1]$$$boundary -->
+<h3 class="fn" id="boundary"><a name="boundary"></a><span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> QHttpMultiPart::<span class="name">boundary</span>() const</h3>
+<p>returns the boundary.</p>
+<p><b>See also </b><a href="qhttpmultipart.html#setBoundary">setBoundary</a>().</p>
+<!-- @@@boundary -->
+<!-- $$$setBoundary[overload1]$$$setBoundaryconstQByteArray& -->
+<h3 class="fn" id="setBoundary"><a name="setBoundary"></a><span class="type">void</span> QHttpMultiPart::<span class="name">setBoundary</span>(const <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> &amp;<i>boundary</i>)</h3>
+<p>Sets the boundary to <i>boundary</i>.</p>
+<p>Usually, you do not need to generate a boundary yourself; upon construction the boundary is initiated with the string &quot;boundary_.oOo._&quot; followed by random characters, and provides enough uniqueness to make sure it does not occur inside the parts itself.</p>
+<p><b>See also </b><a href="qhttpmultipart.html#boundary">boundary</a>().</p>
+<!-- @@@setBoundary -->
+<!-- $$$setContentType[overload1]$$$setContentTypeContentType -->
+<h3 class="fn" id="setContentType"><a name="setContentType"></a><span class="type">void</span> QHttpMultiPart::<span class="name">setContentType</span>(<span class="type"><a href="qhttpmultipart.html#ContentType-enum">ContentType</a></span> <i>contentType</i>)</h3>
+<p>Sets the content type to <i>contentType</i>. The content type will be used in the HTTP header section when sending the multipart message via <a href="qnetworkaccessmanager.html#post">QNetworkAccessManager::post</a>(). In case you want to use a multipart subtype not contained in <a href="qhttpmultipart.html#ContentType-enum">QHttpMultiPart::ContentType</a>, you can add the &quot;Content-Type&quot; header field to the <a href="qnetworkrequest.html">QNetworkRequest</a> by hand, and then use this request together with the multipart message for posting.</p>
+<p><b>See also </b><a href="qhttpmultipart.html#ContentType-enum">QHttpMultiPart::ContentType</a> and <a href="qnetworkaccessmanager.html#post">QNetworkAccessManager::post</a>().</p>
+<!-- @@@setContentType -->
+</div>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

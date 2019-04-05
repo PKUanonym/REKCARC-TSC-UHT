@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>main.cpp Example File | Qt SQL 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtsql-index.html">Qt SQL</a></td><td ><a href="qtsql-sqlbrowser-example.html">SQL Browser</a></td><td >main.cpp Example File</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar"><div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">main.cpp Example File</h1>
+<span class="subtitle">sqlbrowser/main.cpp</span>
+<!-- $$$sqlbrowser/main.cpp-description -->
+<div class="descr"> <a name="details"></a>
+<pre class="cpp">
+
+  <span class="comment">/****************************************************************************
+  **
+  ** Copyright (C) 2015 The Qt Company Ltd.
+  ** Contact: http://www.qt.io/licensing/
+  **
+  ** This file is part of the demonstration applications of the Qt Toolkit.
+  **
+  ** $QT_BEGIN_LICENSE:LGPL21$
+  ** Commercial License Usage
+  ** Licensees holding valid commercial Qt licenses may use this file in
+  ** accordance with the commercial license agreement provided with the
+  ** Software or, alternatively, in accordance with the terms contained in
+  ** a written agreement between you and The Qt Company. For licensing terms
+  ** and conditions see http://www.qt.io/terms-conditions. For further
+  ** information use the contact form at http://www.qt.io/contact-us.
+  **
+  ** GNU Lesser General Public License Usage
+  ** Alternatively, this file may be used under the terms of the GNU Lesser
+  ** General Public License version 2.1 or version 3 as published by the Free
+  ** Software Foundation and appearing in the file LICENSE.LGPLv21 and
+  ** LICENSE.LGPLv3 included in the packaging of this file. Please review the
+  ** following information to ensure the GNU Lesser General Public License
+  ** requirements will be met: https://www.gnu.org/licenses/lgpl.html and
+  ** http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
+  **
+  ** As a special exception, The Qt Company gives you certain additional
+  ** rights. These rights are described in The Qt Company LGPL Exception
+  ** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
+  **
+  ** $QT_END_LICENSE$
+  **
+  ****************************************************************************/</span>
+
+  <span class="preprocessor">#include &quot;browser.h&quot;</span>
+
+  <span class="preprocessor">#include &lt;QtCore&gt;</span>
+  <span class="preprocessor">#include &lt;QtWidgets&gt;</span>
+  <span class="preprocessor">#include &lt;QtSql&gt;</span>
+
+  <span class="type">void</span> addConnectionsFromCommandline(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstringlist.html">QStringList</a></span> <span class="operator">&amp;</span>args<span class="operator">,</span> Browser <span class="operator">*</span>browser)
+  {
+      <span class="keyword">for</span> (<span class="type">int</span> i <span class="operator">=</span> <span class="number">1</span>; i <span class="operator">&lt;</span> args<span class="operator">.</span>count(); <span class="operator">+</span><span class="operator">+</span>i) {
+          <span class="type"><a href="../qtcore/qurl.html">QUrl</a></span> url(args<span class="operator">.</span>at(i)<span class="operator">,</span> <span class="type"><a href="../qtcore/qurl.html">QUrl</a></span><span class="operator">::</span>TolerantMode);
+          <span class="keyword">if</span> (<span class="operator">!</span>url<span class="operator">.</span>isValid()) {
+              <a href="../qtcore/qtglobal.html#qWarning">qWarning</a>(<span class="string">&quot;Invalid URL: %s&quot;</span><span class="operator">,</span> <a href="../qtcore/qtglobal.html#qPrintable">qPrintable</a>(args<span class="operator">.</span>at(i)));
+              <span class="keyword">continue</span>;
+          }
+          <span class="type"><a href="qsqlerror.html">QSqlError</a></span> err <span class="operator">=</span> browser<span class="operator">-</span><span class="operator">&gt;</span>addConnection(url<span class="operator">.</span>scheme()<span class="operator">,</span> url<span class="operator">.</span>path()<span class="operator">.</span>mid(<span class="number">1</span>)<span class="operator">,</span> url<span class="operator">.</span>host()<span class="operator">,</span>
+                                                 url<span class="operator">.</span>userName()<span class="operator">,</span> url<span class="operator">.</span>password()<span class="operator">,</span> url<span class="operator">.</span>port(<span class="operator">-</span><span class="number">1</span>));
+          <span class="keyword">if</span> (err<span class="operator">.</span>type() <span class="operator">!</span><span class="operator">=</span> <span class="type"><a href="qsqlerror.html">QSqlError</a></span><span class="operator">::</span>NoError)
+              <a href="../qtcore/qtglobal.html#qDebug">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">&quot;Unable to open connection:&quot;</span> <span class="operator">&lt;</span><span class="operator">&lt;</span> err;
+      }
+  }
+
+  <span class="type">int</span> main(<span class="type">int</span> argc<span class="operator">,</span> <span class="type">char</span> <span class="operator">*</span>argv<span class="operator">[</span><span class="operator">]</span>)
+  {
+      <span class="type"><a href="../qtwidgets/qapplication.html">QApplication</a></span> app(argc<span class="operator">,</span> argv);
+
+      <span class="type"><a href="../qtwidgets/qmainwindow.html">QMainWindow</a></span> mainWin;
+      mainWin<span class="operator">.</span>setWindowTitle(<span class="type"><a href="../qtcore/qobject.html">QObject</a></span><span class="operator">::</span>tr(<span class="string">&quot;Qt SQL Browser&quot;</span>));
+
+      Browser browser(<span class="operator">&amp;</span>mainWin);
+      mainWin<span class="operator">.</span>setCentralWidget(<span class="operator">&amp;</span>browser);
+
+      <span class="type"><a href="../qtwidgets/qmenu.html">QMenu</a></span> <span class="operator">*</span>fileMenu <span class="operator">=</span> mainWin<span class="operator">.</span>menuBar()<span class="operator">-</span><span class="operator">&gt;</span>addMenu(<span class="type"><a href="../qtcore/qobject.html">QObject</a></span><span class="operator">::</span>tr(<span class="string">&quot;&amp;File&quot;</span>));
+      fileMenu<span class="operator">-</span><span class="operator">&gt;</span>addAction(<span class="type"><a href="../qtcore/qobject.html">QObject</a></span><span class="operator">::</span>tr(<span class="string">&quot;Add &amp;Connection...&quot;</span>)<span class="operator">,</span> <span class="operator">&amp;</span>browser<span class="operator">,</span> SLOT(addConnection()));
+      fileMenu<span class="operator">-</span><span class="operator">&gt;</span>addSeparator();
+      fileMenu<span class="operator">-</span><span class="operator">&gt;</span>addAction(<span class="type"><a href="../qtcore/qobject.html">QObject</a></span><span class="operator">::</span>tr(<span class="string">&quot;&amp;Quit&quot;</span>)<span class="operator">,</span> <span class="operator">&amp;</span>app<span class="operator">,</span> SLOT(quit()));
+
+      <span class="type"><a href="../qtwidgets/qmenu.html">QMenu</a></span> <span class="operator">*</span>helpMenu <span class="operator">=</span> mainWin<span class="operator">.</span>menuBar()<span class="operator">-</span><span class="operator">&gt;</span>addMenu(<span class="type"><a href="../qtcore/qobject.html">QObject</a></span><span class="operator">::</span>tr(<span class="string">&quot;&amp;Help&quot;</span>));
+      helpMenu<span class="operator">-</span><span class="operator">&gt;</span>addAction(<span class="type"><a href="../qtcore/qobject.html">QObject</a></span><span class="operator">::</span>tr(<span class="string">&quot;About&quot;</span>)<span class="operator">,</span> <span class="operator">&amp;</span>browser<span class="operator">,</span> SLOT(about()));
+      helpMenu<span class="operator">-</span><span class="operator">&gt;</span>addAction(<span class="type"><a href="../qtcore/qobject.html">QObject</a></span><span class="operator">::</span>tr(<span class="string">&quot;About Qt&quot;</span>)<span class="operator">,</span> qApp<span class="operator">,</span> SLOT(aboutQt()));
+
+      <span class="type"><a href="../qtcore/qobject.html">QObject</a></span><span class="operator">::</span>connect(<span class="operator">&amp;</span>browser<span class="operator">,</span> SIGNAL(statusMessage(<span class="type"><a href="../qtcore/qstring.html">QString</a></span>))<span class="operator">,</span>
+                       mainWin<span class="operator">.</span>statusBar()<span class="operator">,</span> SLOT(showMessage(<span class="type"><a href="../qtcore/qstring.html">QString</a></span>)));
+
+      addConnectionsFromCommandline(app<span class="operator">.</span>arguments()<span class="operator">,</span> <span class="operator">&amp;</span>browser);
+      mainWin<span class="operator">.</span>show();
+      <span class="keyword">if</span> (<span class="type"><a href="qsqldatabase.html">QSqlDatabase</a></span><span class="operator">::</span>connectionNames()<span class="operator">.</span>isEmpty())
+          <span class="type"><a href="../qtcore/qmetaobject.html">QMetaObject</a></span><span class="operator">::</span>invokeMethod(<span class="operator">&amp;</span>browser<span class="operator">,</span> <span class="string">&quot;addConnection&quot;</span><span class="operator">,</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>QueuedConnection);
+
+      <span class="keyword">return</span> app<span class="operator">.</span>exec();
+  }
+
+</pre>
+</div>
+<!-- @@@sqlbrowser/main.cpp -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

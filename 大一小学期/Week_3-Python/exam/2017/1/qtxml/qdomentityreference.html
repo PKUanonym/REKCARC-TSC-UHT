@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qdom.cpp -->
+  <title>QDomEntityReference Class | Qt XML 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtxml-index.html">Qt XML</a></td><td ><a href="qtxml-module.html">C++ Classes</a></td><td >QDomEntityReference</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">QDomEntityReference Class</h1>
+<!-- $$$QDomEntityReference-brief -->
+<p>The <a href="qdomentityreference.html">QDomEntityReference</a> class represents an XML entity reference. <a href="#details">More...</a></p>
+<!-- @@@QDomEntityReference -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign">   <span class="preprocessor">#include &lt;QDomEntityReference&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> qmake:</td><td class="memItemRight bottomAlign"> QT += xml</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Inherits:</td><td class="memItemRight bottomAlign"> <a href="qdomnode.html">QDomNode</a></td></tr></table></div><ul>
+<li><a href="qdomentityreference-members.html">List of all members, including inherited members</a></li>
+</ul>
+<p><b>Note:</b> All functions in this class are <a href="../qtdoc/threads-reentrancy.html">reentrant</a>.</p>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qdomentityreference.html#QDomEntityReference">QDomEntityReference</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qdomentityreference.html#QDomEntityReference-1">QDomEntityReference</a></b>(const QDomEntityReference &amp;<i>x</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QDomNode::NodeType </td><td class="memItemRight bottomAlign"><b><a href="qdomentityreference.html#nodeType">nodeType</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QDomEntityReference &amp;</td><td class="memItemRight bottomAlign"><b><a href="qdomentityreference.html#operator-eq">operator=</a></b>(const QDomEntityReference &amp;<i>x</i>)</td></tr>
+</table></div>
+<ul>
+<li class="fn">65 public functions inherited from <a href="qdomnode.html#public-functions">QDomNode</a></li>
+</ul>
+<a name="details"></a>
+<!-- $$$QDomEntityReference-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="qdomentityreference.html">QDomEntityReference</a> class represents an XML entity reference.</p>
+<p>A <a href="qdomentityreference.html">QDomEntityReference</a> object may be inserted into the DOM tree when an entity reference is in the source document, or when the user wishes to insert an entity reference.</p>
+<p>Note that character references and references to predefined entities are expanded by the XML processor so that characters are represented by their Unicode equivalent rather than by an entity reference.</p>
+<p>Moreover, the XML processor may completely expand references to entities while building the DOM tree, instead of providing <a href="qdomentityreference.html">QDomEntityReference</a> objects.</p>
+<p>If it does provide such objects, then for a given entity reference node, it may be that there is no entity node representing the referenced entity; but if such an entity exists, then the child list of the entity reference node is the same as that of the entity node. As with the entity node, all descendants of the entity reference are read-only.</p>
+<p>For further information about the Document Object Model see <a href="http://www.w3.org/TR/REC-DOM-Level-1/">Level 1</a> and <a href="http://www.w3.org/TR/DOM-Level-2-Core/">Level 2 Core</a>. For a more general introduction of the DOM implementation see the <a href="qdomdocument.html">QDomDocument</a> documentation.</p>
+</div>
+<!-- @@@QDomEntityReference -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$QDomEntityReference[overload1]$$$QDomEntityReference -->
+<h3 class="fn" id="QDomEntityReference"><a name="QDomEntityReference"></a>QDomEntityReference::<span class="name">QDomEntityReference</span>()</h3>
+<p>Constructs an empty entity reference. Use <a href="qdomdocument.html#createEntityReference">QDomDocument::createEntityReference</a>() to create a entity reference with content.</p>
+<!-- @@@QDomEntityReference -->
+<!-- $$$QDomEntityReference$$$QDomEntityReferenceconstQDomEntityReference& -->
+<h3 class="fn" id="QDomEntityReference-1"><a name="QDomEntityReference-1"></a>QDomEntityReference::<span class="name">QDomEntityReference</span>(const <span class="type"><a href="qdomentityreference.html#QDomEntityReference">QDomEntityReference</a></span> &amp;<i>x</i>)</h3>
+<p>Constructs a copy of <i>x</i>.</p>
+<p>The data of the copy is shared (shallow copy): modifying one node will also change the other. If you want to make a deep copy, use <a href="qdomnode.html#cloneNode">cloneNode</a>().</p>
+<!-- @@@QDomEntityReference -->
+<!-- $$$nodeType[overload1]$$$nodeType -->
+<h3 class="fn" id="nodeType"><a name="nodeType"></a><span class="type"><a href="qdomnode.html#NodeType-enum">QDomNode::NodeType</a></span> QDomEntityReference::<span class="name">nodeType</span>() const</h3>
+<p>Returns <code>EntityReference</code>.</p>
+<!-- @@@nodeType -->
+<!-- $$$operator=[overload1]$$$operator=constQDomEntityReference& -->
+<h3 class="fn" id="operator-eq"><a name="operator-eq"></a><span class="type"><a href="qdomentityreference.html#QDomEntityReference">QDomEntityReference</a></span> &amp;QDomEntityReference::<span class="name">operator=</span>(const <span class="type"><a href="qdomentityreference.html#QDomEntityReference">QDomEntityReference</a></span> &amp;<i>x</i>)</h3>
+<p>Assigns <i>x</i> to this entity reference.</p>
+<p>The data of the copy is shared (shallow copy): modifying one node will also change the other. If you want to make a deep copy, use <a href="qdomnode.html#cloneNode">cloneNode</a>().</p>
+<!-- @@@operator= -->
+</div>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

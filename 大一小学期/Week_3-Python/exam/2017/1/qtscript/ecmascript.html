@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- ecmascript.qdoc -->
+  <title>ECMAScript Reference | Qt Script</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtscript-index.html">Qt Script</a></td><td >ECMAScript Reference</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#the-global-object">The Global Object</a></li>
+<li class="level2"><a href="#value-properties">Value Properties</a></li>
+<li class="level2"><a href="#function-properties">Function Properties</a></li>
+<li class="level2"><a href="#constructor-properties">Constructor Properties</a></li>
+<li class="level2"><a href="#other-properties">Other Properties</a></li>
+<li class="level1"><a href="#object-objects">Object Objects</a></li>
+<li class="level2"><a href="#object-constructor">Object Constructor</a></li>
+<li class="level2"><a href="#object-prototype-object">Object Prototype Object</a></li>
+<li class="level1"><a href="#function-objects">Function Objects</a></li>
+<li class="level2"><a href="#function-prototype-object">Function Prototype Object</a></li>
+<li class="level1"><a href="#array-objects">Array Objects</a></li>
+<li class="level2"><a href="#array-constructor">Array Constructor</a></li>
+<li class="level2"><a href="#array-prototype-object">Array Prototype Object</a></li>
+<li class="level1"><a href="#string-objects">String Objects</a></li>
+<li class="level2"><a href="#string-constructor">String Constructor</a></li>
+<li class="level2"><a href="#string-prototype-object">String Prototype Object</a></li>
+<li class="level1"><a href="#boolean-objects">Boolean Objects</a></li>
+<li class="level2"><a href="#boolean-prototype-object">Boolean Prototype Object</a></li>
+<li class="level1"><a href="#number-objects">Number Objects</a></li>
+<li class="level2"><a href="#number-prototype-object">Number Prototype Object</a></li>
+<li class="level1"><a href="#the-math-object">The Math Object</a></li>
+<li class="level2"><a href="#value-properties">Value Properties</a></li>
+<li class="level2"><a href="#function-properties">Function Properties</a></li>
+<li class="level1"><a href="#date-objects">Date Objects</a></li>
+<li class="level2"><a href="#date-constructor">Date Constructor</a></li>
+<li class="level2"><a href="#date-prototype-object">Date Prototype Object</a></li>
+<li class="level1"><a href="#regexp-objects">RegExp Objects</a></li>
+<li class="level2"><a href="#regexp-prototype-object">RegExp Prototype Object</a></li>
+<li class="level1"><a href="#error-objects">Error Objects</a></li>
+<li class="level2"><a href="#error-prototype-object">Error Prototype Object</a></li>
+<li class="level1"><a href="#the-json-object">The JSON Object</a></li>
+<li class="level2"><a href="#function-properties">Function Properties</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">ECMAScript Reference</h1>
+<span class="subtitle"></span>
+<!-- $$$ecmascript.html-description -->
+<div class="descr"> <a name="details"></a>
+<p>This reference contains a list of built-in objects, functions and properties supported by Qt Script. For a detailed description, see the <a href="http://www.ecma-international.org/publications/standards/Ecma-262.htm">ECMA-262</a> specification.</p>
+<a name="the-global-object"></a>
+<h2 id="the-global-object">The Global Object</h2>
+<a name="value-properties"></a>
+<h3 >Value Properties</h3>
+<ul>
+<li>NaN</li>
+<li>Infinity</li>
+<li>undefined</li>
+</ul>
+<a name="function-properties"></a>
+<h3 >Function Properties</h3>
+<ul>
+<li>eval(x)</li>
+<li>parseInt(string, radix)</li>
+<li>parseFloat(string)</li>
+<li>isNaN(number)</li>
+<li>isFinite(number)</li>
+<li>decodeURI(encodedURI)</li>
+<li>decodeURIComponent(encodedURIComponent)</li>
+<li>encodeURI(uri)</li>
+<li>encodeURIComponent(uriComponent)</li>
+</ul>
+<a name="constructor-properties"></a>
+<h3 >Constructor Properties</h3>
+<ul>
+<li>Object</li>
+<li>Function</li>
+<li>Array</li>
+<li>String</li>
+<li>Boolean</li>
+<li>Number</li>
+<li>Date</li>
+<li>RegExp</li>
+<li>Error</li>
+<li>EvalError</li>
+<li>RangeError</li>
+<li>ReferenceError</li>
+<li>SyntaxError</li>
+<li>TypeError</li>
+<li>URIError</li>
+</ul>
+<a name="other-properties"></a>
+<h3 >Other Properties</h3>
+<ul>
+<li>Math</li>
+<li>JSON</li>
+</ul>
+<a name="object-objects"></a>
+<h2 id="object-objects">Object Objects</h2>
+<a name="object-constructor"></a>
+<h3 >Object Constructor</h3>
+<a name="function-properties"></a>
+<h4 >Function Properties</h4>
+<ul>
+<li>getPrototypeOf(O)</li>
+<li>getOwnPropertyDescriptor(O, P)</li>
+<li>getOwnPropertyNames(O)</li>
+<li>create(O [, Properties])</li>
+<li>defineProperty(O, P, Attributes)</li>
+<li>defineProperties(O, Properties)</li>
+<li>keys(O)</li>
+</ul>
+<a name="object-prototype-object"></a>
+<h3 >Object Prototype Object</h3>
+<a name="function-properties"></a>
+<h4 >Function Properties</h4>
+<ul>
+<li>toString()</li>
+<li>toLocaleString()</li>
+<li>valueOf()</li>
+<li>hasOwnProperty(V)</li>
+<li>isPrototypeOf(V)</li>
+<li>propertyIsEnumerable(V)</li>
+</ul>
+<a name="function-objects"></a>
+<h2 id="function-objects">Function Objects</h2>
+<a name="function-prototype-object"></a>
+<h3 >Function Prototype Object</h3>
+<a name="function-properties"></a>
+<h4 >Function Properties</h4>
+<ul>
+<li>toString()</li>
+<li>apply(thisArg, argArray)</li>
+<li>call(thisArg [, arg1 [, arg2, ..&#x2e;]])</li>
+</ul>
+<a name="array-objects"></a>
+<h2 id="array-objects">Array Objects</h2>
+<a name="array-constructor"></a>
+<h3 >Array Constructor</h3>
+<a name="function-properties"></a>
+<h4 >Function Properties</h4>
+<ul>
+<li>isArray(arg)</li>
+</ul>
+<a name="array-prototype-object"></a>
+<h3 >Array Prototype Object</h3>
+<a name="function-properties"></a>
+<h4 >Function Properties</h4>
+<ul>
+<li>toString()</li>
+<li>toLocaleString()</li>
+<li>concat([item1 [, item2 [, ..&#x2e;]]])</li>
+<li>join(separator)</li>
+<li>pop()</li>
+<li>push([item1 [, item2 [, ..&#x2e;]]])</li>
+<li>reverse()</li>
+<li>shift()</li>
+<li>slice(start, end)</li>
+<li>sort(comparefn)</li>
+<li>splice(start, deleteCount[, item1 [, item2 [, ..&#x2e;]]])</li>
+<li>unshift([item1 [, item2 [, ..&#x2e;]]])</li>
+<li>indexOf(searchElement [, fromIndex])</li>
+<li>lastIndexOf(searchElement [, fromIndex])</li>
+<li>every(callbackfn [, thisArg])</li>
+<li>some(callbackfn [, thisArg])</li>
+<li><a href="../qtcore/containers.html#foreach">forEach</a>(callbackfn [, thisArg])</li>
+<li>map(callbackfn [, thisArg])</li>
+<li>filter(callbackfn [, thisArg])</li>
+<li>reduce(callbackfn [, initialValue])</li>
+<li>reduceRight(callbackfn [, initialValue])</li>
+</ul>
+<a name="string-objects"></a>
+<h2 id="string-objects">String Objects</h2>
+<a name="string-constructor"></a>
+<h3 >String Constructor</h3>
+<a name="function-properties"></a>
+<h4 >Function Properties</h4>
+<ul>
+<li>fromCharCode([char0 [, char1 [,..&#x2e;]]])</li>
+</ul>
+<a name="string-prototype-object"></a>
+<h3 >String Prototype Object</h3>
+<a name="function-properties"></a>
+<h4 >Function Properties</h4>
+<ul>
+<li>toString()</li>
+<li>valueOf()</li>
+<li>charAt(pos)</li>
+<li>charCodeAt(pos)</li>
+<li>concat([string1 [, string2 [, ..&#x2e;]]])</li>
+<li>indexOf(searchString ,position)</li>
+<li>lastIndexOf(searchString, position)</li>
+<li>localeCompare(that)</li>
+<li>match(regexp)</li>
+<li>replace(searchValue, replaceValue)</li>
+<li>search(regexp)</li>
+<li>slice(start, end)</li>
+<li>split(separator, limit)</li>
+<li>substring(start, end)</li>
+<li>toLowerCase()</li>
+<li>toLocaleLowerCase()</li>
+<li>toUpperCase()</li>
+<li>toLocaleUpperCase()</li>
+<li>trim()</li>
+</ul>
+<a name="boolean-objects"></a>
+<h2 id="boolean-objects">Boolean Objects</h2>
+<a name="boolean-prototype-object"></a>
+<h3 >Boolean Prototype Object</h3>
+<a name="function-properties"></a>
+<h4 >Function Properties</h4>
+<ul>
+<li>toString()</li>
+<li>valueOf()</li>
+</ul>
+<a name="number-objects"></a>
+<h2 id="number-objects">Number Objects</h2>
+<a name="number-prototype-object"></a>
+<h3 >Number Prototype Object</h3>
+<a name="function-properties"></a>
+<h4 >Function Properties</h4>
+<ul>
+<li>toString(radix)</li>
+<li>toLocaleString()</li>
+<li>toFixed(fractionDigits)</li>
+<li>toExponential(fractionDigits)</li>
+<li>toPrecision(precision)</li>
+</ul>
+<a name="the-math-object"></a>
+<h2 id="the-math-object">The Math Object</h2>
+<a name="value-properties"></a>
+<h3 >Value Properties</h3>
+<ul>
+<li>E</li>
+<li>LN10</li>
+<li>LN2</li>
+<li>LOG2E</li>
+<li>LOG10E</li>
+<li>PI</li>
+<li>SQRT1_2</li>
+<li>SQRT2</li>
+</ul>
+<a name="function-properties"></a>
+<h3 >Function Properties</h3>
+<ul>
+<li>abs(x)</li>
+<li>acos(x)</li>
+<li>asin(x)</li>
+<li>atan(x)</li>
+<li>atan2(y, x)</li>
+<li>ceil(x)</li>
+<li>cos(x)</li>
+<li>exp(x)</li>
+<li>floor(x)</li>
+<li>log(x)</li>
+<li>max([value1 [, value2 [, ..&#x2e;]]])</li>
+<li>min([value1 [, value2 [, ..&#x2e;]]])</li>
+<li>pow(x, y)</li>
+<li>random()</li>
+<li>round(x)</li>
+<li>sin(x)</li>
+<li>sqrt(x)</li>
+<li>tan(x)</li>
+</ul>
+<a name="date-objects"></a>
+<h2 id="date-objects">Date Objects</h2>
+<a name="date-constructor"></a>
+<h3 >Date Constructor</h3>
+<a name="function-properties"></a>
+<h4 >Function Properties</h4>
+<ul>
+<li>now()</li>
+<li>parse(string)</li>
+<li>UTC(year, month [, date [, hours [, minutes [, seconds [, ms]]]]])</li>
+</ul>
+<a name="date-prototype-object"></a>
+<h3 >Date Prototype Object</h3>
+<a name="function-properties"></a>
+<h4 >Function Properties</h4>
+<ul>
+<li>toString()</li>
+<li>toDateString()</li>
+<li>toTimeString()</li>
+<li>toLocaleString()</li>
+<li>toLocaleDateString()</li>
+<li>toLocaleTimeString()</li>
+<li>valueOf()</li>
+<li>getTime()</li>
+<li>getFullYear()</li>
+<li>getUTCFullYear()</li>
+<li>getMonth()</li>
+<li>getUTCMonth()</li>
+<li>getDate()</li>
+<li>getUTCDate()</li>
+<li>getDay()</li>
+<li>getUTCDay()</li>
+<li>getHours()</li>
+<li>getUTCHours()</li>
+<li>getMinutes()</li>
+<li>getUTCMinutes()</li>
+<li>getSeconds()</li>
+<li>getUTCSeconds()</li>
+<li>getMilliseconds()</li>
+<li>getUTCMilliseconds()</li>
+<li>getTimeZoneOffset()</li>
+<li>setTime(time)</li>
+<li>setMilliseconds(ms)</li>
+<li>setUTCMilliseconds(ms)</li>
+<li>setSeconds(sec [, ms])</li>
+<li>setUTCSeconds(sec [, ms])</li>
+<li>setMinutes(min [, sec [, ms]])</li>
+<li>setUTCMinutes(min [, sec [, ms]])</li>
+<li>setHours(hour [, min [, sec [, ms]]])</li>
+<li>setUTCHours(hour [, min [, sec [, ms]]])</li>
+<li>setDate(date)</li>
+<li>setUTCDate(date)</li>
+<li>setMonth(month [, date])</li>
+<li>setUTCMonth(month [, date])</li>
+<li>setFullYear(year [, month [, date]])</li>
+<li>setUTCFullYear(year [, month [, date]])</li>
+<li>toUTCString()</li>
+<li>toISOString()</li>
+<li>toJSON()</li>
+</ul>
+<a name="regexp-objects"></a>
+<h2 id="regexp-objects">RegExp Objects</h2>
+<a name="regexp-prototype-object"></a>
+<h3 >RegExp Prototype Object</h3>
+<a name="function-properties"></a>
+<h4 >Function Properties</h4>
+<ul>
+<li>exec(string)</li>
+<li>test(string)</li>
+<li>toString()</li>
+</ul>
+<a name="error-objects"></a>
+<h2 id="error-objects">Error Objects</h2>
+<a name="error-prototype-object"></a>
+<h3 >Error Prototype Object</h3>
+<a name="value-properties"></a>
+<h4 >Value Properties</h4>
+<ul>
+<li>name</li>
+<li>message</li>
+</ul>
+<a name="function-properties"></a>
+<h4 >Function Properties</h4>
+<ul>
+<li>toString()</li>
+</ul>
+<a name="the-json-object"></a>
+<h2 id="the-json-object">The JSON Object</h2>
+<a name="function-properties"></a>
+<h3 >Function Properties</h3>
+<ul>
+<li>parse(text [, reviver])</li>
+<li>stringify(value [, replacer [, space]])</li>
+</ul>
+</div>
+<!-- @@@ecmascript.html -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

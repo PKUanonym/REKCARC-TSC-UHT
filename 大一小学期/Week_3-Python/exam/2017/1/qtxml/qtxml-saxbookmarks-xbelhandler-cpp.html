@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>xbelhandler.cpp Example File | Qt XML 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtxml-index.html">Qt XML</a></td><td ><a href="qtxml-saxbookmarks-example.html">SAX Bookmarks Example</a></td><td >xbelhandler.cpp Example File</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar"><div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">xbelhandler.cpp Example File</h1>
+<span class="subtitle">saxbookmarks/xbelhandler.cpp</span>
+<!-- $$$saxbookmarks/xbelhandler.cpp-description -->
+<div class="descr"> <a name="details"></a>
+<pre class="cpp">
+
+  <span class="comment">/****************************************************************************
+  **
+  ** Copyright (C) 2015 The Qt Company Ltd.
+  ** Contact: http://www.qt.io/licensing/
+  **
+  ** This file is part of the examples of the Qt Toolkit.
+  **
+  ** $QT_BEGIN_LICENSE:BSD$
+  ** You may use this file under the terms of the BSD license as follows:
+  **
+  ** &quot;Redistribution and use in source and binary forms, with or without
+  ** modification, are permitted provided that the following conditions are
+  ** met:
+  **   * Redistributions of source code must retain the above copyright
+  **     notice, this list of conditions and the following disclaimer.
+  **   * Redistributions in binary form must reproduce the above copyright
+  **     notice, this list of conditions and the following disclaimer in
+  **     the documentation and/or other materials provided with the
+  **     distribution.
+  **   * Neither the name of The Qt Company Ltd nor the names of its
+  **     contributors may be used to endorse or promote products derived
+  **     from this software without specific prior written permission.
+  **
+  **
+  ** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  ** &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  ** LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  ** A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  ** OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  ** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  ** LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  ** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  ** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  ** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.&quot;
+  **
+  ** $QT_END_LICENSE$
+  **
+  ****************************************************************************/</span>
+
+  <span class="preprocessor">#include &lt;QtWidgets&gt;</span>
+
+  <span class="preprocessor">#include &quot;xbelhandler.h&quot;</span>
+
+  XbelHandler<span class="operator">::</span>XbelHandler(<span class="type"><a href="../qtwidgets/qtreewidget.html">QTreeWidget</a></span> <span class="operator">*</span>treeWidget)
+      : treeWidget(treeWidget)
+  {
+      item <span class="operator">=</span> <span class="number">0</span>;
+      metXbelTag <span class="operator">=</span> <span class="keyword">false</span>;
+
+      <span class="type"><a href="../qtwidgets/qstyle.html">QStyle</a></span> <span class="operator">*</span>style <span class="operator">=</span> treeWidget<span class="operator">-</span><span class="operator">&gt;</span>style();
+
+      folderIcon<span class="operator">.</span>addPixmap(style<span class="operator">-</span><span class="operator">&gt;</span>standardPixmap(<span class="type"><a href="../qtwidgets/qstyle.html">QStyle</a></span><span class="operator">::</span>SP_DirClosedIcon)<span class="operator">,</span>
+                           <span class="type">QIcon</span><span class="operator">::</span>Normal<span class="operator">,</span> <span class="type">QIcon</span><span class="operator">::</span>Off);
+      folderIcon<span class="operator">.</span>addPixmap(style<span class="operator">-</span><span class="operator">&gt;</span>standardPixmap(<span class="type"><a href="../qtwidgets/qstyle.html">QStyle</a></span><span class="operator">::</span>SP_DirOpenIcon)<span class="operator">,</span>
+                           <span class="type">QIcon</span><span class="operator">::</span>Normal<span class="operator">,</span> <span class="type">QIcon</span><span class="operator">::</span>On);
+      bookmarkIcon<span class="operator">.</span>addPixmap(style<span class="operator">-</span><span class="operator">&gt;</span>standardPixmap(<span class="type"><a href="../qtwidgets/qstyle.html">QStyle</a></span><span class="operator">::</span>SP_FileIcon));
+  }
+
+  bool XbelHandler<span class="operator">::</span>startElement(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span> <span class="comment">/* namespaceURI */</span><span class="operator">,</span>
+                                 <span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span> <span class="comment">/* localName */</span><span class="operator">,</span>
+                                 <span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>qName<span class="operator">,</span>
+                                 <span class="keyword">const</span> <span class="type"><a href="qxmlattributes.html">QXmlAttributes</a></span> <span class="operator">&amp;</span>attributes)
+  {
+      <span class="keyword">if</span> (<span class="operator">!</span>metXbelTag <span class="operator">&amp;</span><span class="operator">&amp;</span> qName <span class="operator">!</span><span class="operator">=</span> <span class="string">&quot;xbel&quot;</span>) {
+          errorStr <span class="operator">=</span> <span class="type"><a href="../qtcore/qobject.html">QObject</a></span><span class="operator">::</span>tr(<span class="string">&quot;The file is not an XBEL file.&quot;</span>);
+          <span class="keyword">return</span> <span class="keyword">false</span>;
+      }
+
+      <span class="keyword">if</span> (qName <span class="operator">=</span><span class="operator">=</span> <span class="string">&quot;xbel&quot;</span>) {
+          <span class="type"><a href="../qtcore/qstring.html">QString</a></span> version <span class="operator">=</span> attributes<span class="operator">.</span>value(<span class="string">&quot;version&quot;</span>);
+          <span class="keyword">if</span> (<span class="operator">!</span>version<span class="operator">.</span>isEmpty() <span class="operator">&amp;</span><span class="operator">&amp;</span> version <span class="operator">!</span><span class="operator">=</span> <span class="string">&quot;1.0&quot;</span>) {
+              errorStr <span class="operator">=</span> <span class="type"><a href="../qtcore/qobject.html">QObject</a></span><span class="operator">::</span>tr(<span class="string">&quot;The file is not an XBEL version 1.0 file.&quot;</span>);
+              <span class="keyword">return</span> <span class="keyword">false</span>;
+          }
+          metXbelTag <span class="operator">=</span> <span class="keyword">true</span>;
+      } <span class="keyword">else</span> <span class="keyword">if</span> (qName <span class="operator">=</span><span class="operator">=</span> <span class="string">&quot;folder&quot;</span>) {
+          item <span class="operator">=</span> createChildItem(qName);
+          item<span class="operator">-</span><span class="operator">&gt;</span>setFlags(item<span class="operator">-</span><span class="operator">&gt;</span>flags() <span class="operator">|</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>ItemIsEditable);
+          item<span class="operator">-</span><span class="operator">&gt;</span>setIcon(<span class="number">0</span><span class="operator">,</span> folderIcon);
+          item<span class="operator">-</span><span class="operator">&gt;</span>setText(<span class="number">0</span><span class="operator">,</span> <span class="type"><a href="../qtcore/qobject.html">QObject</a></span><span class="operator">::</span>tr(<span class="string">&quot;Folder&quot;</span>));
+          bool folded <span class="operator">=</span> (attributes<span class="operator">.</span>value(<span class="string">&quot;folded&quot;</span>) <span class="operator">!</span><span class="operator">=</span> <span class="string">&quot;no&quot;</span>);
+          treeWidget<span class="operator">-</span><span class="operator">&gt;</span>setItemExpanded(item<span class="operator">,</span> <span class="operator">!</span>folded);
+      } <span class="keyword">else</span> <span class="keyword">if</span> (qName <span class="operator">=</span><span class="operator">=</span> <span class="string">&quot;bookmark&quot;</span>) {
+          item <span class="operator">=</span> createChildItem(qName);
+          item<span class="operator">-</span><span class="operator">&gt;</span>setFlags(item<span class="operator">-</span><span class="operator">&gt;</span>flags() <span class="operator">|</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>ItemIsEditable);
+          item<span class="operator">-</span><span class="operator">&gt;</span>setIcon(<span class="number">0</span><span class="operator">,</span> bookmarkIcon);
+          item<span class="operator">-</span><span class="operator">&gt;</span>setText(<span class="number">0</span><span class="operator">,</span> <span class="type"><a href="../qtcore/qobject.html">QObject</a></span><span class="operator">::</span>tr(<span class="string">&quot;Unknown title&quot;</span>));
+          item<span class="operator">-</span><span class="operator">&gt;</span>setText(<span class="number">1</span><span class="operator">,</span> attributes<span class="operator">.</span>value(<span class="string">&quot;href&quot;</span>));
+      } <span class="keyword">else</span> <span class="keyword">if</span> (qName <span class="operator">=</span><span class="operator">=</span> <span class="string">&quot;separator&quot;</span>) {
+          item <span class="operator">=</span> createChildItem(qName);
+          item<span class="operator">-</span><span class="operator">&gt;</span>setFlags(item<span class="operator">-</span><span class="operator">&gt;</span>flags() <span class="operator">&amp;</span> <span class="operator">~</span><span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>ItemIsSelectable);
+          item<span class="operator">-</span><span class="operator">&gt;</span>setText(<span class="number">0</span><span class="operator">,</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span>(<span class="number">30</span><span class="operator">,</span> <span class="number">0xB7</span>));
+      }
+
+      currentText<span class="operator">.</span>clear();
+      <span class="keyword">return</span> <span class="keyword">true</span>;
+  }
+
+  bool XbelHandler<span class="operator">::</span>endElement(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span> <span class="comment">/* namespaceURI */</span><span class="operator">,</span>
+                               <span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span> <span class="comment">/* localName */</span><span class="operator">,</span>
+                               <span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>qName)
+  {
+      <span class="keyword">if</span> (qName <span class="operator">=</span><span class="operator">=</span> <span class="string">&quot;title&quot;</span>) {
+          <span class="keyword">if</span> (item)
+              item<span class="operator">-</span><span class="operator">&gt;</span>setText(<span class="number">0</span><span class="operator">,</span> currentText);
+      } <span class="keyword">else</span> <span class="keyword">if</span> (qName <span class="operator">=</span><span class="operator">=</span> <span class="string">&quot;folder&quot;</span> <span class="operator">|</span><span class="operator">|</span> qName <span class="operator">=</span><span class="operator">=</span> <span class="string">&quot;bookmark&quot;</span>
+                 <span class="operator">|</span><span class="operator">|</span> qName <span class="operator">=</span><span class="operator">=</span> <span class="string">&quot;separator&quot;</span>) {
+          item <span class="operator">=</span> item<span class="operator">-</span><span class="operator">&gt;</span>parent();
+      }
+      <span class="keyword">return</span> <span class="keyword">true</span>;
+  }
+
+  bool XbelHandler<span class="operator">::</span>characters(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>str)
+  {
+      currentText <span class="operator">+</span><span class="operator">=</span> str;
+      <span class="keyword">return</span> <span class="keyword">true</span>;
+  }
+
+  bool XbelHandler<span class="operator">::</span>fatalError(<span class="keyword">const</span> <span class="type"><a href="qxmlparseexception.html">QXmlParseException</a></span> <span class="operator">&amp;</span>exception)
+  {
+      <span class="type"><a href="../qtwidgets/qmessagebox.html">QMessageBox</a></span><span class="operator">::</span>information(treeWidget<span class="operator">-</span><span class="operator">&gt;</span>window()<span class="operator">,</span> <span class="type"><a href="../qtcore/qobject.html">QObject</a></span><span class="operator">::</span>tr(<span class="string">&quot;SAX Bookmarks&quot;</span>)<span class="operator">,</span>
+                               <span class="type"><a href="../qtcore/qobject.html">QObject</a></span><span class="operator">::</span>tr(<span class="string">&quot;Parse error at line %1, column %2:\n&quot;</span>
+                                           <span class="string">&quot;%3&quot;</span>)
+                               <span class="operator">.</span>arg(exception<span class="operator">.</span>lineNumber())
+                               <span class="operator">.</span>arg(exception<span class="operator">.</span>columnNumber())
+                               <span class="operator">.</span>arg(exception<span class="operator">.</span>message()));
+      <span class="keyword">return</span> <span class="keyword">false</span>;
+  }
+
+  <span class="type"><a href="../qtcore/qstring.html">QString</a></span> XbelHandler<span class="operator">::</span>errorString() <span class="keyword">const</span>
+  {
+      <span class="keyword">return</span> errorStr;
+  }
+
+  <span class="type"><a href="../qtwidgets/qtreewidgetitem.html">QTreeWidgetItem</a></span> <span class="operator">*</span>XbelHandler<span class="operator">::</span>createChildItem(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>tagName)
+  {
+      <span class="type"><a href="../qtwidgets/qtreewidgetitem.html">QTreeWidgetItem</a></span> <span class="operator">*</span>childItem;
+      <span class="keyword">if</span> (item) {
+          childItem <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qtreewidgetitem.html">QTreeWidgetItem</a></span>(item);
+      } <span class="keyword">else</span> {
+          childItem <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qtreewidgetitem.html">QTreeWidgetItem</a></span>(treeWidget);
+      }
+      childItem<span class="operator">-</span><span class="operator">&gt;</span>setData(<span class="number">0</span><span class="operator">,</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>UserRole<span class="operator">,</span> tagName);
+      <span class="keyword">return</span> childItem;
+  }
+
+</pre>
+</div>
+<!-- @@@saxbookmarks/xbelhandler.cpp -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

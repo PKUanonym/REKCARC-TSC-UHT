@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>bencodeparser.cpp Example File | Qt Network 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtnetwork-index.html">Qt Network</a></td><td ><a href="qtnetwork-torrent-example.html">Torrent Example</a></td><td >bencodeparser.cpp Example File</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar"><div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">bencodeparser.cpp Example File</h1>
+<span class="subtitle">torrent/bencodeparser.cpp</span>
+<!-- $$$torrent/bencodeparser.cpp-description -->
+<div class="descr"> <a name="details"></a>
+<pre class="cpp">
+
+  <span class="comment">/****************************************************************************
+  **
+  ** Copyright (C) 2015 The Qt Company Ltd.
+  ** Contact: http://www.qt.io/licensing/
+  **
+  ** This file is part of the examples of the Qt Toolkit.
+  **
+  ** $QT_BEGIN_LICENSE:BSD$
+  ** You may use this file under the terms of the BSD license as follows:
+  **
+  ** &quot;Redistribution and use in source and binary forms, with or without
+  ** modification, are permitted provided that the following conditions are
+  ** met:
+  **   * Redistributions of source code must retain the above copyright
+  **     notice, this list of conditions and the following disclaimer.
+  **   * Redistributions in binary form must reproduce the above copyright
+  **     notice, this list of conditions and the following disclaimer in
+  **     the documentation and/or other materials provided with the
+  **     distribution.
+  **   * Neither the name of The Qt Company Ltd nor the names of its
+  **     contributors may be used to endorse or promote products derived
+  **     from this software without specific prior written permission.
+  **
+  **
+  ** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  ** &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  ** LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  ** A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  ** OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  ** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  ** LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  ** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  ** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  ** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.&quot;
+  **
+  ** $QT_END_LICENSE$
+  **
+  ****************************************************************************/</span>
+
+  <span class="preprocessor">#include &quot;bencodeparser.h&quot;</span>
+
+  <span class="preprocessor">#include &lt;QList&gt;</span>
+  <span class="preprocessor">#include &lt;QMetaType&gt;</span>
+
+  BencodeParser<span class="operator">::</span>BencodeParser()
+  {
+  }
+
+  bool BencodeParser<span class="operator">::</span>parse(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> <span class="operator">&amp;</span>content)
+  {
+      <span class="keyword">if</span> (content<span class="operator">.</span>isEmpty()) {
+          errString <span class="operator">=</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span>(<span class="string">&quot;No content&quot;</span>);
+          <span class="keyword">return</span> <span class="keyword">false</span>;
+      }
+
+      <span class="keyword">this</span><span class="operator">-</span><span class="operator">&gt;</span>content <span class="operator">=</span> content;
+      index <span class="operator">=</span> <span class="number">0</span>;
+      infoStart <span class="operator">=</span> <span class="number">0</span>;
+      infoLength <span class="operator">=</span> <span class="number">0</span>;
+      <span class="keyword">return</span> getDictionary(<span class="operator">&amp;</span>dictionaryValue);
+  }
+
+  <span class="type"><a href="../qtcore/qstring.html">QString</a></span> BencodeParser<span class="operator">::</span>errorString() <span class="keyword">const</span>
+  {
+      <span class="keyword">return</span> errString;
+  }
+
+  <span class="type"><a href="../qtcore/qmap.html">QMap</a></span><span class="operator">&lt;</span><span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span><span class="operator">,</span> <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span><span class="operator">&gt;</span> BencodeParser<span class="operator">::</span>dictionary() <span class="keyword">const</span>
+  {
+      <span class="keyword">return</span> dictionaryValue;
+  }
+
+  <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> BencodeParser<span class="operator">::</span>infoSection() <span class="keyword">const</span>
+  {
+      <span class="keyword">return</span> content<span class="operator">.</span>mid(infoStart<span class="operator">,</span> infoLength);
+  }
+
+  bool BencodeParser<span class="operator">::</span>getByteString(<span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> <span class="operator">*</span>byteString)
+  {
+      <span class="keyword">const</span> <span class="type">int</span> contentSize <span class="operator">=</span> content<span class="operator">.</span>size();
+      <span class="type">int</span> size <span class="operator">=</span> <span class="operator">-</span><span class="number">1</span>;
+      <span class="keyword">do</span> {
+          <span class="type">char</span> c <span class="operator">=</span> content<span class="operator">.</span>at(index);
+          <span class="keyword">if</span> (c <span class="operator">&lt;</span> <span class="char">'0'</span> <span class="operator">|</span><span class="operator">|</span> c <span class="operator">&gt;</span> <span class="char">'9'</span>) {
+              <span class="keyword">if</span> (size <span class="operator">=</span><span class="operator">=</span> <span class="operator">-</span><span class="number">1</span>)
+                  <span class="keyword">return</span> <span class="keyword">false</span>;
+              <span class="keyword">if</span> (c <span class="operator">!</span><span class="operator">=</span> <span class="char">':'</span>) {
+                  errString <span class="operator">=</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span>(<span class="string">&quot;Unexpected character at pos %1: %2&quot;</span>)
+                          <span class="operator">.</span>arg(index)<span class="operator">.</span>arg(c);
+                  <span class="keyword">return</span> <span class="keyword">false</span>;
+              }
+              <span class="operator">+</span><span class="operator">+</span>index;
+              <span class="keyword">break</span>;
+          }
+          <span class="keyword">if</span> (size <span class="operator">=</span><span class="operator">=</span> <span class="operator">-</span><span class="number">1</span>)
+              size <span class="operator">=</span> <span class="number">0</span>;
+          size <span class="operator">*</span><span class="operator">=</span> <span class="number">10</span>;
+          size <span class="operator">+</span><span class="operator">=</span> c <span class="operator">-</span> <span class="char">'0'</span>;
+      } <span class="keyword">while</span> (<span class="operator">+</span><span class="operator">+</span>index <span class="operator">&lt;</span> contentSize);
+
+      <span class="keyword">if</span> (byteString)
+          <span class="operator">*</span>byteString <span class="operator">=</span> content<span class="operator">.</span>mid(index<span class="operator">,</span> size);
+      index <span class="operator">+</span><span class="operator">=</span> size;
+      <span class="keyword">return</span> <span class="keyword">true</span>;
+  }
+
+  bool BencodeParser<span class="operator">::</span>getInteger(<span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> <span class="operator">*</span>integer)
+  {
+      <span class="keyword">const</span> <span class="type">int</span> contentSize <span class="operator">=</span> content<span class="operator">.</span>size();
+      <span class="keyword">if</span> (content<span class="operator">.</span>at(index) <span class="operator">!</span><span class="operator">=</span> <span class="char">'i'</span>)
+          <span class="keyword">return</span> <span class="keyword">false</span>;
+
+      <span class="operator">+</span><span class="operator">+</span>index;
+      <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> num <span class="operator">=</span> <span class="operator">-</span><span class="number">1</span>;
+      bool negative <span class="operator">=</span> <span class="keyword">false</span>;
+
+      <span class="keyword">do</span> {
+          <span class="type">char</span> c <span class="operator">=</span> content<span class="operator">.</span>at(index);
+          <span class="keyword">if</span> (c <span class="operator">&lt;</span> <span class="char">'0'</span> <span class="operator">|</span><span class="operator">|</span> c <span class="operator">&gt;</span> <span class="char">'9'</span>) {
+              <span class="keyword">if</span> (num <span class="operator">=</span><span class="operator">=</span> <span class="operator">-</span><span class="number">1</span>) {
+                  <span class="keyword">if</span> (c <span class="operator">!</span><span class="operator">=</span> <span class="char">'-'</span> <span class="operator">|</span><span class="operator">|</span> negative)
+                      <span class="keyword">return</span> <span class="keyword">false</span>;
+                  negative <span class="operator">=</span> <span class="keyword">true</span>;
+                  <span class="keyword">continue</span>;
+              } <span class="keyword">else</span> {
+                  <span class="keyword">if</span> (c <span class="operator">!</span><span class="operator">=</span> <span class="char">'e'</span>) {
+                      errString <span class="operator">=</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span>(<span class="string">&quot;Unexpected character at pos %1: %2&quot;</span>)
+                              <span class="operator">.</span>arg(index)<span class="operator">.</span>arg(c);
+                      <span class="keyword">return</span> <span class="keyword">false</span>;
+                  }
+                  <span class="operator">+</span><span class="operator">+</span>index;
+                  <span class="keyword">break</span>;
+              }
+          }
+          <span class="keyword">if</span> (num <span class="operator">=</span><span class="operator">=</span> <span class="operator">-</span><span class="number">1</span>)
+              num <span class="operator">=</span> <span class="number">0</span>;
+          num <span class="operator">*</span><span class="operator">=</span> <span class="number">10</span>;
+          num <span class="operator">+</span><span class="operator">=</span> c <span class="operator">-</span> <span class="char">'0'</span>;
+      } <span class="keyword">while</span> (<span class="operator">+</span><span class="operator">+</span>index <span class="operator">&lt;</span> contentSize);
+
+      <span class="keyword">if</span> (integer)
+          <span class="operator">*</span>integer <span class="operator">=</span> negative <span class="operator">?</span> <span class="operator">-</span>num : num;
+      <span class="keyword">return</span> <span class="keyword">true</span>;
+  }
+
+  bool BencodeParser<span class="operator">::</span>getList(<span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span><span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span><span class="operator">&gt;</span> <span class="operator">*</span>list)
+  {
+      <span class="keyword">const</span> <span class="type">int</span> contentSize <span class="operator">=</span> content<span class="operator">.</span>size();
+      <span class="keyword">if</span> (content<span class="operator">.</span>at(index) <span class="operator">!</span><span class="operator">=</span> <span class="char">'l'</span>)
+          <span class="keyword">return</span> <span class="keyword">false</span>;
+
+      <span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span><span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span><span class="operator">&gt;</span> tmp;
+      <span class="operator">+</span><span class="operator">+</span>index;
+
+      <span class="keyword">do</span> {
+          <span class="keyword">if</span> (content<span class="operator">.</span>at(index) <span class="operator">=</span><span class="operator">=</span> <span class="char">'e'</span>) {
+              <span class="operator">+</span><span class="operator">+</span>index;
+              <span class="keyword">break</span>;
+          }
+
+          <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> number;
+          <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> byteString;
+          <span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span><span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span><span class="operator">&gt;</span> tmpList;
+          <span class="type"><a href="../qtcore/qmap.html">QMap</a></span><span class="operator">&lt;</span><span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span><span class="operator">,</span> <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span><span class="operator">&gt;</span> dictionary;
+
+          <span class="keyword">if</span> (getInteger(<span class="operator">&amp;</span>number))
+              tmp <span class="operator">&lt;</span><span class="operator">&lt;</span> number;
+          <span class="keyword">else</span> <span class="keyword">if</span> (getByteString(<span class="operator">&amp;</span>byteString))
+              tmp <span class="operator">&lt;</span><span class="operator">&lt;</span> byteString;
+          <span class="keyword">else</span> <span class="keyword">if</span> (getList(<span class="operator">&amp;</span>tmpList))
+              tmp <span class="operator">&lt;</span><span class="operator">&lt;</span> tmpList;
+          <span class="keyword">else</span> <span class="keyword">if</span> (getDictionary(<span class="operator">&amp;</span>dictionary))
+              tmp <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span><span class="operator">::</span>fromValue<span class="operator">&lt;</span><span class="type"><a href="../qtcore/qmap.html">QMap</a></span><span class="operator">&lt;</span><span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span><span class="operator">,</span> <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span><span class="operator">&gt;</span> <span class="operator">&gt;</span>(dictionary);
+          <span class="keyword">else</span> {
+              errString <span class="operator">=</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span>(<span class="string">&quot;error at index %1&quot;</span>)<span class="operator">.</span>arg(index);
+              <span class="keyword">return</span> <span class="keyword">false</span>;
+          }
+      } <span class="keyword">while</span> (index <span class="operator">&lt;</span> contentSize);
+
+      <span class="keyword">if</span> (list)
+          <span class="operator">*</span>list <span class="operator">=</span> tmp;
+      <span class="keyword">return</span> <span class="keyword">true</span>;
+  }
+
+  bool BencodeParser<span class="operator">::</span>getDictionary(<span class="type"><a href="../qtcore/qmap.html">QMap</a></span><span class="operator">&lt;</span><span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span><span class="operator">,</span> <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span><span class="operator">&gt;</span> <span class="operator">*</span>dictionary)
+  {
+      <span class="keyword">const</span> <span class="type">int</span> contentSize <span class="operator">=</span> content<span class="operator">.</span>size();
+      <span class="keyword">if</span> (content<span class="operator">.</span>at(index) <span class="operator">!</span><span class="operator">=</span> <span class="char">'d'</span>)
+          <span class="keyword">return</span> <span class="keyword">false</span>;
+
+      <span class="type"><a href="../qtcore/qmap.html">QMap</a></span><span class="operator">&lt;</span><span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span><span class="operator">,</span> <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span><span class="operator">&gt;</span> tmp;
+      <span class="operator">+</span><span class="operator">+</span>index;
+
+      <span class="keyword">do</span> {
+          <span class="keyword">if</span> (content<span class="operator">.</span>at(index) <span class="operator">=</span><span class="operator">=</span> <span class="char">'e'</span>) {
+              <span class="operator">+</span><span class="operator">+</span>index;
+              <span class="keyword">break</span>;
+          }
+
+          <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> key;
+          <span class="keyword">if</span> (<span class="operator">!</span>getByteString(<span class="operator">&amp;</span>key))
+              <span class="keyword">break</span>;
+
+          <span class="keyword">if</span> (key <span class="operator">=</span><span class="operator">=</span> <span class="string">&quot;info&quot;</span>)
+              infoStart <span class="operator">=</span> index;
+
+          <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> number;
+          <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> byteString;
+          <span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span><span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span><span class="operator">&gt;</span> tmpList;
+          <span class="type"><a href="../qtcore/qmap.html">QMap</a></span><span class="operator">&lt;</span><span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span><span class="operator">,</span> <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span><span class="operator">&gt;</span> dictionary;
+
+          <span class="keyword">if</span> (getInteger(<span class="operator">&amp;</span>number))
+              tmp<span class="operator">.</span>insert(key<span class="operator">,</span> number);
+          <span class="keyword">else</span> <span class="keyword">if</span> (getByteString(<span class="operator">&amp;</span>byteString))
+              tmp<span class="operator">.</span>insert(key<span class="operator">,</span> byteString);
+          <span class="keyword">else</span> <span class="keyword">if</span> (getList(<span class="operator">&amp;</span>tmpList))
+              tmp<span class="operator">.</span>insert(key<span class="operator">,</span> tmpList);
+          <span class="keyword">else</span> <span class="keyword">if</span> (getDictionary(<span class="operator">&amp;</span>dictionary))
+              tmp<span class="operator">.</span>insert(key<span class="operator">,</span> <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span><span class="operator">::</span>fromValue<span class="operator">&lt;</span><span class="type"><a href="../qtcore/qmap.html">QMap</a></span><span class="operator">&lt;</span><span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span><span class="operator">,</span> <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span><span class="operator">&gt;</span> <span class="operator">&gt;</span>(dictionary));
+          <span class="keyword">else</span> {
+              errString <span class="operator">=</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span>(<span class="string">&quot;error at index %1&quot;</span>)<span class="operator">.</span>arg(index);
+              <span class="keyword">return</span> <span class="keyword">false</span>;
+          }
+
+          <span class="keyword">if</span> (key <span class="operator">=</span><span class="operator">=</span> <span class="string">&quot;info&quot;</span>)
+              infoLength <span class="operator">=</span> index <span class="operator">-</span> infoStart;
+
+      } <span class="keyword">while</span> (index <span class="operator">&lt;</span> contentSize);
+
+      <span class="keyword">if</span> (dictionary)
+          <span class="operator">*</span>dictionary <span class="operator">=</span> tmp;
+      <span class="keyword">return</span> <span class="keyword">true</span>;
+  }
+
+</pre>
+</div>
+<!-- @@@torrent/bencodeparser.cpp -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

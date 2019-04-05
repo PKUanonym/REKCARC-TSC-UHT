@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qxml.cpp -->
+  <title>QXmlReader Class | Qt XML 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtxml-index.html">Qt XML</a></td><td ><a href="qtxml-module.html">C++ Classes</a></td><td >QXmlReader</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">QXmlReader Class</h1>
+<!-- $$$QXmlReader-brief -->
+<p>The <a href="qxmlreader.html">QXmlReader</a> class provides an interface for XML readers (i.e&#x2e; parsers). <a href="#details">More...</a></p>
+<!-- @@@QXmlReader -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign">   <span class="preprocessor">#include &lt;QXmlReader&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> qmake:</td><td class="memItemRight bottomAlign"> QT += xml</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Inherited By:</td><td class="memItemRight bottomAlign"> <p><a href="qxmlsimplereader.html">QXmlSimpleReader</a></p>
+</td></tr></table></div><ul>
+<li><a href="qxmlreader-members.html">List of all members, including inherited members</a></li>
+<li><a href="qxmlreader-obsolete.html">Obsolete members</a></li>
+</ul>
+<p><b>Note:</b> All functions in this class are <a href="../qtdoc/threads-reentrancy.html">reentrant</a>.</p>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> virtual </td><td class="memItemRight bottomAlign"><b><a href="qxmlreader.html#dtor.QXmlReader">~QXmlReader</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QXmlDTDHandler *</td><td class="memItemRight bottomAlign"><b><a href="qxmlreader.html#DTDHandler">DTDHandler</a></b>() const = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QXmlContentHandler *</td><td class="memItemRight bottomAlign"><b><a href="qxmlreader.html#contentHandler">contentHandler</a></b>() const = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QXmlDeclHandler *</td><td class="memItemRight bottomAlign"><b><a href="qxmlreader.html#declHandler">declHandler</a></b>() const = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QXmlEntityResolver *</td><td class="memItemRight bottomAlign"><b><a href="qxmlreader.html#entityResolver">entityResolver</a></b>() const = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QXmlErrorHandler *</td><td class="memItemRight bottomAlign"><b><a href="qxmlreader.html#errorHandler">errorHandler</a></b>() const = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="qxmlreader.html#feature">feature</a></b>(const QString &amp;<i>name</i>, bool *<i>ok</i> = Q_NULLPTR) const = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="qxmlreader.html#hasFeature">hasFeature</a></b>(const QString &amp;<i>name</i>) const = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="qxmlreader.html#hasProperty">hasProperty</a></b>(const QString &amp;<i>name</i>) const = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QXmlLexicalHandler *</td><td class="memItemRight bottomAlign"><b><a href="qxmlreader.html#lexicalHandler">lexicalHandler</a></b>() const = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="qxmlreader.html#parse">parse</a></b>(const QXmlInputSource *<i>input</i>) = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void *</td><td class="memItemRight bottomAlign"><b><a href="qxmlreader.html#property">property</a></b>(const QString &amp;<i>name</i>, bool *<i>ok</i> = Q_NULLPTR) const = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="qxmlreader.html#setContentHandler">setContentHandler</a></b>(QXmlContentHandler *<i>handler</i>) = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="qxmlreader.html#setDTDHandler">setDTDHandler</a></b>(QXmlDTDHandler *<i>handler</i>) = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="qxmlreader.html#setDeclHandler">setDeclHandler</a></b>(QXmlDeclHandler *<i>handler</i>) = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="qxmlreader.html#setEntityResolver">setEntityResolver</a></b>(QXmlEntityResolver *<i>handler</i>) = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="qxmlreader.html#setErrorHandler">setErrorHandler</a></b>(QXmlErrorHandler *<i>handler</i>) = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="qxmlreader.html#setFeature">setFeature</a></b>(const QString &amp;<i>name</i>, bool <i>value</i>) = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="qxmlreader.html#setLexicalHandler">setLexicalHandler</a></b>(QXmlLexicalHandler *<i>handler</i>) = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="qxmlreader.html#setProperty">setProperty</a></b>(const QString &amp;<i>name</i>, void *<i>value</i>) = 0</td></tr>
+</table></div>
+<a name="details"></a>
+<!-- $$$QXmlReader-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="qxmlreader.html">QXmlReader</a> class provides an interface for XML readers (i.e&#x2e; parsers).</p>
+<p>This abstract class provides an interface for all of Qt's XML readers. Currently there is only one implementation of a reader included in Qt's XML module: <a href="qxmlsimplereader.html">QXmlSimpleReader</a>. In future releases there might be more readers with different properties available (e.g&#x2e; a validating parser).</p>
+<p>The design of the XML classes follows the <a href="http://www.saxproject.org/">SAX2 Java interface</a>, with the names adapted to fit Qt naming conventions. It should be very easy for anybody who has worked with SAX2 to get started with the Qt XML classes.</p>
+<p>All readers use the class <a href="qxmlinputsource.html">QXmlInputSource</a> to read the input document. Since you are normally interested in particular content in the XML document, the reader reports the content through special handler classes (<a href="qxmldtdhandler.html">QXmlDTDHandler</a>, <a href="qxmldeclhandler.html">QXmlDeclHandler</a>, <a href="qxmlcontenthandler.html">QXmlContentHandler</a>, <a href="qxmlentityresolver.html">QXmlEntityResolver</a>, <a href="qxmlerrorhandler.html">QXmlErrorHandler</a> and <a href="qxmllexicalhandler.html">QXmlLexicalHandler</a>), which you must subclass, if you want to process the contents.</p>
+<p>Since the handler classes only describe interfaces you must implement all the functions. We provide the <a href="qxmldefaulthandler.html">QXmlDefaultHandler</a> class to make this easier: it implements a default behavior (do nothing) for all functions, so you can subclass it and just implement the functions you are interested in.</p>
+<p>Features and properties of the reader can be set with <a href="qxmlreader.html#setFeature">setFeature</a>() and <a href="qxmlreader.html#setProperty">setProperty</a>() respectively. You can set the reader to use your own subclasses with <a href="qxmlreader.html#setEntityResolver">setEntityResolver</a>(), <a href="qxmlreader.html#setDTDHandler">setDTDHandler</a>(), <a href="qxmlreader.html#setContentHandler">setContentHandler</a>(), <a href="qxmlreader.html#setErrorHandler">setErrorHandler</a>(), <a href="qxmlreader.html#setLexicalHandler">setLexicalHandler</a>() and <a href="qxmlreader.html#setDeclHandler">setDeclHandler</a>(). The parse itself is started with a call to <a href="qxmlreader.html#parse">parse</a>().</p>
+</div>
+<p><b>See also </b><a href="qxmlsimplereader.html">QXmlSimpleReader</a>.</p>
+<!-- @@@QXmlReader -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$~QXmlReader[overload1]$$$~QXmlReader -->
+<h3 class="fn" id="dtor.QXmlReader"><a name="dtor.QXmlReader"></a><code>[virtual] </code>QXmlReader::<span class="name">~QXmlReader</span>()</h3>
+<p>Destroys the reader.</p>
+<!-- @@@~QXmlReader -->
+<!-- $$$DTDHandler[overload1]$$$DTDHandler -->
+<h3 class="fn" id="DTDHandler"><a name="DTDHandler"></a><code>[pure virtual] </code><span class="type"><a href="qxmldtdhandler.html">QXmlDTDHandler</a></span> *QXmlReader::<span class="name">DTDHandler</span>() const</h3>
+<p>Returns the DTD handler or 0 if none was set.</p>
+<p><b>See also </b><a href="qxmlreader.html#setDTDHandler">setDTDHandler</a>().</p>
+<!-- @@@DTDHandler -->
+<!-- $$$contentHandler[overload1]$$$contentHandler -->
+<h3 class="fn" id="contentHandler"><a name="contentHandler"></a><code>[pure virtual] </code><span class="type"><a href="qxmlcontenthandler.html">QXmlContentHandler</a></span> *QXmlReader::<span class="name">contentHandler</span>() const</h3>
+<p>Returns the content handler or 0 if none was set.</p>
+<p><b>See also </b><a href="qxmlreader.html#setContentHandler">setContentHandler</a>().</p>
+<!-- @@@contentHandler -->
+<!-- $$$declHandler[overload1]$$$declHandler -->
+<h3 class="fn" id="declHandler"><a name="declHandler"></a><code>[pure virtual] </code><span class="type"><a href="qxmldeclhandler.html">QXmlDeclHandler</a></span> *QXmlReader::<span class="name">declHandler</span>() const</h3>
+<p>Returns the declaration handler or 0 if none was set.</p>
+<p><b>See also </b><a href="qxmlreader.html#setDeclHandler">setDeclHandler</a>().</p>
+<!-- @@@declHandler -->
+<!-- $$$entityResolver[overload1]$$$entityResolver -->
+<h3 class="fn" id="entityResolver"><a name="entityResolver"></a><code>[pure virtual] </code><span class="type"><a href="qxmlentityresolver.html">QXmlEntityResolver</a></span> *QXmlReader::<span class="name">entityResolver</span>() const</h3>
+<p>Returns the entity resolver or 0 if none was set.</p>
+<p><b>See also </b><a href="qxmlreader.html#setEntityResolver">setEntityResolver</a>().</p>
+<!-- @@@entityResolver -->
+<!-- $$$errorHandler[overload1]$$$errorHandler -->
+<h3 class="fn" id="errorHandler"><a name="errorHandler"></a><code>[pure virtual] </code><span class="type"><a href="qxmlerrorhandler.html">QXmlErrorHandler</a></span> *QXmlReader::<span class="name">errorHandler</span>() const</h3>
+<p>Returns the error handler or 0 if none is set.</p>
+<p><b>See also </b><a href="qxmlreader.html#setErrorHandler">setErrorHandler</a>().</p>
+<!-- @@@errorHandler -->
+<!-- $$$feature[overload1]$$$featureconstQString&bool* -->
+<h3 class="fn" id="feature"><a name="feature"></a><code>[pure virtual] </code><span class="type">bool</span> QXmlReader::<span class="name">feature</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>name</i>, <span class="type">bool</span> *<i>ok</i> = Q_NULLPTR) const</h3>
+<p>If the reader has the feature called <i>name</i>, the feature's value is returned. If no such feature exists the return value is undefined.</p>
+<p>If <i>ok</i> is not 0: <code>*</code><i>ok</i> is set to true if the reader has the feature called <i>name</i>; otherwise <code>*</code><i>ok</i> is set to false.</p>
+<p><b>See also </b><a href="qxmlreader.html#setFeature">setFeature</a>() and <a href="qxmlreader.html#hasFeature">hasFeature</a>().</p>
+<!-- @@@feature -->
+<!-- $$$hasFeature[overload1]$$$hasFeatureconstQString& -->
+<h3 class="fn" id="hasFeature"><a name="hasFeature"></a><code>[pure virtual] </code><span class="type">bool</span> QXmlReader::<span class="name">hasFeature</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>name</i>) const</h3>
+<p>Returns <code>true</code> if the reader has the feature called <i>name</i>; otherwise returns <code>false</code>.</p>
+<p><b>See also </b><a href="qxmlreader.html#feature">feature</a>() and <a href="qxmlreader.html#setFeature">setFeature</a>().</p>
+<!-- @@@hasFeature -->
+<!-- $$$hasProperty[overload1]$$$hasPropertyconstQString& -->
+<h3 class="fn" id="hasProperty"><a name="hasProperty"></a><code>[pure virtual] </code><span class="type">bool</span> QXmlReader::<span class="name">hasProperty</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>name</i>) const</h3>
+<p>Returns <code>true</code> if the reader has the property <i>name</i>; otherwise returns <code>false</code>.</p>
+<p><b>See also </b><a href="qxmlreader.html#property">property</a>() and <a href="qxmlreader.html#setProperty">setProperty</a>().</p>
+<!-- @@@hasProperty -->
+<!-- $$$lexicalHandler[overload1]$$$lexicalHandler -->
+<h3 class="fn" id="lexicalHandler"><a name="lexicalHandler"></a><code>[pure virtual] </code><span class="type"><a href="qxmllexicalhandler.html">QXmlLexicalHandler</a></span> *QXmlReader::<span class="name">lexicalHandler</span>() const</h3>
+<p>Returns the lexical handler or 0 if none was set.</p>
+<p><b>See also </b><a href="qxmlreader.html#setLexicalHandler">setLexicalHandler</a>().</p>
+<!-- @@@lexicalHandler -->
+<!-- $$$parse[overload1]$$$parseconstQXmlInputSource* -->
+<h3 class="fn" id="parse"><a name="parse"></a><code>[pure virtual] </code><span class="type">bool</span> QXmlReader::<span class="name">parse</span>(const <span class="type"><a href="qxmlinputsource.html">QXmlInputSource</a></span> *<i>input</i>)</h3>
+<p>Reads an XML document from <i>input</i> and parses it. Returns <code>true</code> if the parsing was successful; otherwise returns <code>false</code>.</p>
+<!-- @@@parse -->
+<!-- $$$property[overload1]$$$propertyconstQString&bool* -->
+<h3 class="fn" id="property"><a name="property"></a><code>[pure virtual] </code><span class="type">void</span> *QXmlReader::<span class="name">property</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>name</i>, <span class="type">bool</span> *<i>ok</i> = Q_NULLPTR) const</h3>
+<p>If the reader has the property <i>name</i>, this function returns the value of the property; otherwise the return value is undefined.</p>
+<p>If <i>ok</i> is not 0: if the reader has the <i>name</i> property <code>*</code><i>ok</i> is set to true; otherwise <code>*</code><i>ok</i> is set to false.</p>
+<p><b>See also </b><a href="qxmlreader.html#setProperty">setProperty</a>() and <a href="qxmlreader.html#hasProperty">hasProperty</a>().</p>
+<!-- @@@property -->
+<!-- $$$setContentHandler[overload1]$$$setContentHandlerQXmlContentHandler* -->
+<h3 class="fn" id="setContentHandler"><a name="setContentHandler"></a><code>[pure virtual] </code><span class="type">void</span> QXmlReader::<span class="name">setContentHandler</span>(<span class="type"><a href="qxmlcontenthandler.html">QXmlContentHandler</a></span> *<i>handler</i>)</h3>
+<p>Sets the content handler to <i>handler</i>.</p>
+<p><b>See also </b><a href="qxmlreader.html#contentHandler">contentHandler</a>().</p>
+<!-- @@@setContentHandler -->
+<!-- $$$setDTDHandler[overload1]$$$setDTDHandlerQXmlDTDHandler* -->
+<h3 class="fn" id="setDTDHandler"><a name="setDTDHandler"></a><code>[pure virtual] </code><span class="type">void</span> QXmlReader::<span class="name">setDTDHandler</span>(<span class="type"><a href="qxmldtdhandler.html">QXmlDTDHandler</a></span> *<i>handler</i>)</h3>
+<p>Sets the DTD handler to <i>handler</i>.</p>
+<p><b>See also </b><a href="qxmlreader.html#DTDHandler">DTDHandler</a>().</p>
+<!-- @@@setDTDHandler -->
+<!-- $$$setDeclHandler[overload1]$$$setDeclHandlerQXmlDeclHandler* -->
+<h3 class="fn" id="setDeclHandler"><a name="setDeclHandler"></a><code>[pure virtual] </code><span class="type">void</span> QXmlReader::<span class="name">setDeclHandler</span>(<span class="type"><a href="qxmldeclhandler.html">QXmlDeclHandler</a></span> *<i>handler</i>)</h3>
+<p>Sets the declaration handler to <i>handler</i>.</p>
+<p><b>See also </b><a href="qxmlreader.html#declHandler">declHandler</a>().</p>
+<!-- @@@setDeclHandler -->
+<!-- $$$setEntityResolver[overload1]$$$setEntityResolverQXmlEntityResolver* -->
+<h3 class="fn" id="setEntityResolver"><a name="setEntityResolver"></a><code>[pure virtual] </code><span class="type">void</span> QXmlReader::<span class="name">setEntityResolver</span>(<span class="type"><a href="qxmlentityresolver.html">QXmlEntityResolver</a></span> *<i>handler</i>)</h3>
+<p>Sets the entity resolver to <i>handler</i>.</p>
+<p><b>See also </b><a href="qxmlreader.html#entityResolver">entityResolver</a>().</p>
+<!-- @@@setEntityResolver -->
+<!-- $$$setErrorHandler[overload1]$$$setErrorHandlerQXmlErrorHandler* -->
+<h3 class="fn" id="setErrorHandler"><a name="setErrorHandler"></a><code>[pure virtual] </code><span class="type">void</span> QXmlReader::<span class="name">setErrorHandler</span>(<span class="type"><a href="qxmlerrorhandler.html">QXmlErrorHandler</a></span> *<i>handler</i>)</h3>
+<p>Sets the error handler to <i>handler</i>. Clears the error handler if <i>handler</i> is 0.</p>
+<p><b>See also </b><a href="qxmlreader.html#errorHandler">errorHandler</a>().</p>
+<!-- @@@setErrorHandler -->
+<!-- $$$setFeature[overload1]$$$setFeatureconstQString&bool -->
+<h3 class="fn" id="setFeature"><a name="setFeature"></a><code>[pure virtual] </code><span class="type">void</span> QXmlReader::<span class="name">setFeature</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>name</i>, <span class="type">bool</span> <i>value</i>)</h3>
+<p>Sets the feature called <i>name</i> to the given <i>value</i>. If the reader doesn't have the feature nothing happens.</p>
+<p><b>See also </b><a href="qxmlreader.html#feature">feature</a>() and <a href="qxmlreader.html#hasFeature">hasFeature</a>().</p>
+<!-- @@@setFeature -->
+<!-- $$$setLexicalHandler[overload1]$$$setLexicalHandlerQXmlLexicalHandler* -->
+<h3 class="fn" id="setLexicalHandler"><a name="setLexicalHandler"></a><code>[pure virtual] </code><span class="type">void</span> QXmlReader::<span class="name">setLexicalHandler</span>(<span class="type"><a href="qxmllexicalhandler.html">QXmlLexicalHandler</a></span> *<i>handler</i>)</h3>
+<p>Sets the lexical handler to <i>handler</i>.</p>
+<p><b>See also </b><a href="qxmlreader.html#lexicalHandler">lexicalHandler</a>().</p>
+<!-- @@@setLexicalHandler -->
+<!-- $$$setProperty[overload1]$$$setPropertyconstQString&void* -->
+<h3 class="fn" id="setProperty"><a name="setProperty"></a><code>[pure virtual] </code><span class="type">void</span> QXmlReader::<span class="name">setProperty</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>name</i>, <span class="type">void</span> *<i>value</i>)</h3>
+<p>Sets the property <i>name</i> to <i>value</i>. If the reader doesn't have the property nothing happens.</p>
+<p><b>See also </b><a href="qxmlreader.html#property">property</a>() and <a href="qxmlreader.html#hasProperty">hasProperty</a>().</p>
+<!-- @@@setProperty -->
+</div>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

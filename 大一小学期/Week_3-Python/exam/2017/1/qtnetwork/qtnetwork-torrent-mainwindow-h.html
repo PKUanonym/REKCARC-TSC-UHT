@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>mainwindow.h Example File | Qt Network 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtnetwork-index.html">Qt Network</a></td><td ><a href="qtnetwork-torrent-example.html">Torrent Example</a></td><td >mainwindow.h Example File</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar"><div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">mainwindow.h Example File</h1>
+<span class="subtitle">torrent/mainwindow.h</span>
+<!-- $$$torrent/mainwindow.h-description -->
+<div class="descr"> <a name="details"></a>
+<pre class="cpp">
+
+  <span class="comment">/****************************************************************************
+  **
+  ** Copyright (C) 2015 The Qt Company Ltd.
+  ** Contact: http://www.qt.io/licensing/
+  **
+  ** This file is part of the examples of the Qt Toolkit.
+  **
+  ** $QT_BEGIN_LICENSE:BSD$
+  ** You may use this file under the terms of the BSD license as follows:
+  **
+  ** &quot;Redistribution and use in source and binary forms, with or without
+  ** modification, are permitted provided that the following conditions are
+  ** met:
+  **   * Redistributions of source code must retain the above copyright
+  **     notice, this list of conditions and the following disclaimer.
+  **   * Redistributions in binary form must reproduce the above copyright
+  **     notice, this list of conditions and the following disclaimer in
+  **     the documentation and/or other materials provided with the
+  **     distribution.
+  **   * Neither the name of The Qt Company Ltd nor the names of its
+  **     contributors may be used to endorse or promote products derived
+  **     from this software without specific prior written permission.
+  **
+  **
+  ** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  ** &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  ** LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  ** A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  ** OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  ** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  ** LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  ** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  ** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  ** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.&quot;
+  **
+  ** $QT_END_LICENSE$
+  **
+  ****************************************************************************/</span>
+
+  <span class="preprocessor">#ifndef MAINWINDOW_H</span>
+  <span class="preprocessor">#define MAINWINDOW_H</span>
+
+  <span class="preprocessor">#include &lt;QList&gt;</span>
+  <span class="preprocessor">#include &lt;QStringList&gt;</span>
+  <span class="preprocessor">#include &lt;QMainWindow&gt;</span>
+
+  <span class="preprocessor">#include &quot;torrentclient.h&quot;</span>
+
+  <span class="keyword">class</span> <span class="type">QAction</span>;
+  <span class="keyword">class</span> <span class="type"><a href="../qtgui/qcloseevent.html">QCloseEvent</a></span>;
+  <span class="keyword">class</span> <span class="type">QLabel</span>;
+  <span class="keyword">class</span> <span class="type">QProgressDialog</span>;
+  <span class="keyword">class</span> <span class="type">QSlider</span>;
+
+  <span class="keyword">class</span> TorrentView;
+
+  <span class="keyword">class</span> MainWindow : <span class="keyword">public</span> <span class="type">QMainWindow</span>
+  {
+      Q_OBJECT
+
+  <span class="keyword">public</span>:
+      MainWindow(<span class="type">QWidget</span> <span class="operator">*</span>parent <span class="operator">=</span> <span class="number">0</span>);
+
+      <span class="type"><a href="../qtcore/qsize.html">QSize</a></span> sizeHint() <span class="keyword">const</span> Q_DECL_OVERRIDE;
+      <span class="keyword">const</span> TorrentClient <span class="operator">*</span>clientForRow(<span class="type">int</span> row) <span class="keyword">const</span>;
+
+  <span class="keyword">protected</span>:
+      <span class="type">void</span> closeEvent(<span class="type"><a href="../qtgui/qcloseevent.html">QCloseEvent</a></span> <span class="operator">*</span>event) Q_DECL_OVERRIDE;
+
+  <span class="keyword">private</span> <span class="keyword">slots</span>:
+      <span class="type">void</span> loadSettings();
+      <span class="type">void</span> saveSettings();
+
+      bool addTorrent();
+      <span class="type">void</span> removeTorrent();
+      <span class="type">void</span> pauseTorrent();
+      <span class="type">void</span> moveTorrentUp();
+      <span class="type">void</span> moveTorrentDown();
+
+      <span class="type">void</span> torrentStopped();
+      <span class="type">void</span> torrentError(TorrentClient<span class="operator">::</span>Error error);
+
+      <span class="type">void</span> updateState(TorrentClient<span class="operator">::</span>State state);
+      <span class="type">void</span> updatePeerInfo();
+      <span class="type">void</span> updateProgress(<span class="type">int</span> percent);
+      <span class="type">void</span> updateDownloadRate(<span class="type">int</span> bytesPerSecond);
+      <span class="type">void</span> updateUploadRate(<span class="type">int</span> bytesPerSecond);
+
+      <span class="type">void</span> setUploadLimit(<span class="type">int</span> bytes);
+      <span class="type">void</span> setDownloadLimit(<span class="type">int</span> bytes);
+
+      <span class="type">void</span> about();
+      <span class="type">void</span> setActionsEnabled();
+      <span class="type">void</span> acceptFileDrop(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>fileName);
+
+  <span class="keyword">private</span>:
+      <span class="type">int</span> rowOfClient(TorrentClient <span class="operator">*</span>client) <span class="keyword">const</span>;
+      bool addTorrent(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>fileName<span class="operator">,</span> <span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>destinationFolder<span class="operator">,</span>
+                      <span class="keyword">const</span> <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> <span class="operator">&amp;</span>resumeState <span class="operator">=</span> <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span>());
+
+      TorrentView <span class="operator">*</span>torrentView;
+      <span class="type">QAction</span> <span class="operator">*</span>pauseTorrentAction;
+      <span class="type">QAction</span> <span class="operator">*</span>removeTorrentAction;
+      <span class="type">QAction</span> <span class="operator">*</span>upActionTool;
+      <span class="type">QAction</span> <span class="operator">*</span>downActionTool;
+      <span class="type">QSlider</span> <span class="operator">*</span>uploadLimitSlider;
+      <span class="type">QSlider</span> <span class="operator">*</span>downloadLimitSlider;
+      <span class="type">QLabel</span> <span class="operator">*</span>uploadLimitLabel;
+      <span class="type">QLabel</span> <span class="operator">*</span>downloadLimitLabel;
+
+      <span class="type">int</span> uploadLimit;
+      <span class="type">int</span> downloadLimit;
+
+      <span class="keyword">struct</span> Job {
+          TorrentClient <span class="operator">*</span>client;
+          <span class="type"><a href="../qtcore/qstring.html">QString</a></span> torrentFileName;
+          <span class="type"><a href="../qtcore/qstring.html">QString</a></span> destinationDirectory;
+      };
+      <span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span>Job<span class="operator">&gt;</span> jobs;
+      <span class="type">int</span> jobsStopped;
+      <span class="type">int</span> jobsToStop;
+
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> lastDirectory;
+      <span class="type">QProgressDialog</span> <span class="operator">*</span>quitDialog;
+
+      bool saveChanges;
+  };
+
+  <span class="preprocessor">#endif</span>
+
+</pre>
+</div>
+<!-- @@@torrent/mainwindow.h -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- ssl.qdoc -->
+  <title>Secure Sockets Layer (SSL) Classes | Qt Network 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtnetwork-index.html">Qt Network</a></td><td >Secure Sockets Layer (SSL) Classes</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#enabling-and-disabling-ssl-support">Enabling and Disabling SSL Support</a></li>
+<li class="level1"><a href="#licensing-information">Licensing Information</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">Secure Sockets Layer (SSL) Classes</h1>
+<span class="subtitle"></span>
+<!-- $$$ssl.html-description -->
+<div class="descr"> <a name="details"></a>
+<p>The classes below provide support for secure network communication using the Secure Sockets Layer (SSL) protocol, using the OpenSSL Toolkit (<a href="http://www.openssl.org/">http://www.openssl.org/</a>) to perform encryption and protocol handling.</p>
+<div class="table"><table class="annotated">
+<tr class="odd topAlign"><td class="tblName"><p><a href="qssl.html">QSsl</a></p></td><td class="tblDescr"><p>Declares enums common to all SSL classes in Qt Network</p></td></tr>
+<tr class="even topAlign"><td class="tblName"><p><a href="qsslcertificate.html">QSslCertificate</a></p></td><td class="tblDescr"><p>Convenient API for an X509 certificate</p></td></tr>
+<tr class="odd topAlign"><td class="tblName"><p><a href="qsslcertificateextension.html">QSslCertificateExtension</a></p></td><td class="tblDescr"><p>API for accessing the extensions of an X509 certificate</p></td></tr>
+<tr class="even topAlign"><td class="tblName"><p><a href="qsslcipher.html">QSslCipher</a></p></td><td class="tblDescr"><p>Represents an SSL cryptographic cipher</p></td></tr>
+<tr class="odd topAlign"><td class="tblName"><p><a href="qsslconfiguration.html">QSslConfiguration</a></p></td><td class="tblDescr"><p>Holds the configuration and state of an SSL connection</p></td></tr>
+<tr class="even topAlign"><td class="tblName"><p><a href="qsslellipticcurve.html">QSslEllipticCurve</a></p></td><td class="tblDescr"><p>Represents an elliptic curve for use by elliptic-curve cipher algorithms</p></td></tr>
+<tr class="odd topAlign"><td class="tblName"><p><a href="qsslerror.html">QSslError</a></p></td><td class="tblDescr"><p>SSL error</p></td></tr>
+<tr class="even topAlign"><td class="tblName"><p><a href="qsslkey.html">QSslKey</a></p></td><td class="tblDescr"><p>Interface for private and public keys</p></td></tr>
+<tr class="odd topAlign"><td class="tblName"><p><a href="qsslpresharedkeyauthenticator.html">QSslPreSharedKeyAuthenticator</a></p></td><td class="tblDescr"><p>Authentication data for pre shared keys (PSK) ciphersuites</p></td></tr>
+<tr class="even topAlign"><td class="tblName"><p><a href="qsslsocket.html">QSslSocket</a></p></td><td class="tblDescr"><p>SSL encrypted socket for both clients and servers</p></td></tr>
+</table></div>
+<p>See the <a href="../qtdoc/build-sources.html#openssl-v1later">OpenSSL Compatibility</a> page for information about the versions of OpenSSL that are known to work with Qt.</p>
+<a name="enabling-and-disabling-ssl-support"></a>
+<h2 id="enabling-and-disabling-ssl-support">Enabling and Disabling SSL Support</h2>
+<p>When building Qt from source, the configuration system checks for the presence of the <code>openssl/opensslv.h</code> header provided by source or developer packages of OpenSSL.</p>
+<p>By default, an SSL-enabled Qt library dynamically loads any installed OpenSSL library at run-time. However, it is possible to link against the library at compile-time by configuring Qt with the <code>-openssl-linked</code> option.</p>
+<p>When building a version of Qt linked against OpenSSL, the build system will attempt to link with libssl and libcrypt libraries located in the default location on the developer's system. This location is configurable: set the <code>OPENSSL_LIBS</code> environment variable to contain the linker options required to link Qt against the installed library. For example, on a Unix/Linux system:</p>
+<pre class="cpp">
+
+  OPENSSL_LIBS<span class="operator">=</span><span class="char">'-L/opt/ssl/lib -lssl -lcrypto'</span> <span class="operator">.</span><span class="operator">/</span>configure <span class="operator">-</span>openssl<span class="operator">-</span>linked
+
+</pre>
+<p>To disable SSL support in a Qt build, configure Qt with the <code>-no-openssl</code> option.</p>
+<a name="licensing-information"></a>
+<h2 id="licensing-information">Licensing Information</h2>
+<p><b>Note: </b>Due to import and export restrictions in some parts of the world, we are unable to supply the OpenSSL Toolkit with Qt packages. Developers wishing to use SSL communication in their deployed applications should either ensure that their users have the appropriate libraries installed, or they should consult a suitably qualified legal professional to ensure that applications using code from the OpenSSL project are correctly certified for import and export in relevant regions of the world.</p><p>When the Qt Network module is built with SSL support, the library is linked against OpenSSL in a way that requires OpenSSL license compliance.</p>
+</div>
+<!-- @@@ssl.html -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>torrentclient.h Example File | Qt Network 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtnetwork-index.html">Qt Network</a></td><td ><a href="qtnetwork-torrent-example.html">Torrent Example</a></td><td >torrentclient.h Example File</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar"><div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">torrentclient.h Example File</h1>
+<span class="subtitle">torrent/torrentclient.h</span>
+<!-- $$$torrent/torrentclient.h-description -->
+<div class="descr"> <a name="details"></a>
+<pre class="cpp">
+
+  <span class="comment">/****************************************************************************
+  **
+  ** Copyright (C) 2015 The Qt Company Ltd.
+  ** Contact: http://www.qt.io/licensing/
+  **
+  ** This file is part of the examples of the Qt Toolkit.
+  **
+  ** $QT_BEGIN_LICENSE:BSD$
+  ** You may use this file under the terms of the BSD license as follows:
+  **
+  ** &quot;Redistribution and use in source and binary forms, with or without
+  ** modification, are permitted provided that the following conditions are
+  ** met:
+  **   * Redistributions of source code must retain the above copyright
+  **     notice, this list of conditions and the following disclaimer.
+  **   * Redistributions in binary form must reproduce the above copyright
+  **     notice, this list of conditions and the following disclaimer in
+  **     the documentation and/or other materials provided with the
+  **     distribution.
+  **   * Neither the name of The Qt Company Ltd nor the names of its
+  **     contributors may be used to endorse or promote products derived
+  **     from this software without specific prior written permission.
+  **
+  **
+  ** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  ** &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  ** LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  ** A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  ** OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  ** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  ** LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  ** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  ** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  ** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.&quot;
+  **
+  ** $QT_END_LICENSE$
+  **
+  ****************************************************************************/</span>
+
+  <span class="preprocessor">#ifndef TORRENTCLIENT_H</span>
+  <span class="preprocessor">#define TORRENTCLIENT_H</span>
+
+  <span class="preprocessor">#include &lt;QBitArray&gt;</span>
+  <span class="preprocessor">#include &lt;QHostAddress&gt;</span>
+  <span class="preprocessor">#include &lt;QList&gt;</span>
+
+  <span class="keyword">class</span> MetaInfo;
+  <span class="keyword">class</span> PeerWireClient;
+  <span class="keyword">class</span> TorrentClientPrivate;
+  <span class="keyword">class</span> TorrentPeer;
+  <span class="keyword">class</span> TorrentPiece;
+  <span class="keyword">class</span> <span class="type"><a href="../qtcore/qtimerevent.html">QTimerEvent</a></span>;
+
+  <span class="keyword">class</span> TorrentPeer {
+  <span class="keyword">public</span>:
+      <span class="type"><a href="qhostaddress.html">QHostAddress</a></span> address;
+      <span class="type"><a href="../qtcore/qtglobal.html#quint16-typedef">quint16</a></span> port;
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> id;
+      bool interesting;
+      bool seed;
+      <span class="type"><a href="../qtcore/qtglobal.html#uint-typedef">uint</a></span> lastVisited;
+      <span class="type"><a href="../qtcore/qtglobal.html#uint-typedef">uint</a></span> connectStart;
+      <span class="type"><a href="../qtcore/qtglobal.html#uint-typedef">uint</a></span> connectTime;
+      <span class="type"><a href="../qtcore/qbitarray.html">QBitArray</a></span> pieces;
+      <span class="type">int</span> numCompletedPieces;
+
+      <span class="keyword">inline</span> bool <span class="keyword">operator</span><span class="operator">=</span><span class="operator">=</span>(<span class="keyword">const</span> TorrentPeer <span class="operator">&amp;</span>other)
+      {
+          <span class="keyword">return</span> port <span class="operator">=</span><span class="operator">=</span> other<span class="operator">.</span>port
+              <span class="operator">&amp;</span><span class="operator">&amp;</span> address <span class="operator">=</span><span class="operator">=</span> other<span class="operator">.</span>address
+              <span class="operator">&amp;</span><span class="operator">&amp;</span> id <span class="operator">=</span><span class="operator">=</span> other<span class="operator">.</span>id;
+      }
+  };
+
+  <span class="keyword">class</span> TorrentClient : <span class="keyword">public</span> <span class="type"><a href="../qtcore/qobject.html">QObject</a></span>
+  {
+      Q_OBJECT
+
+  <span class="keyword">public</span>:
+      <span class="keyword">enum</span> State {
+          Idle<span class="operator">,</span>
+          Paused<span class="operator">,</span>
+          Stopping<span class="operator">,</span>
+          Preparing<span class="operator">,</span>
+          Searching<span class="operator">,</span>
+          Connecting<span class="operator">,</span>
+          WarmingUp<span class="operator">,</span>
+          Downloading<span class="operator">,</span>
+          Endgame<span class="operator">,</span>
+          Seeding
+      };
+      <span class="keyword">enum</span> Error {
+          UnknownError<span class="operator">,</span>
+          TorrentParseError<span class="operator">,</span>
+          InvalidTrackerError<span class="operator">,</span>
+          FileError<span class="operator">,</span>
+          ServerError
+      };
+
+      TorrentClient(<span class="type"><a href="../qtcore/qobject.html">QObject</a></span> <span class="operator">*</span>parent <span class="operator">=</span> <span class="number">0</span>);
+      <span class="operator">~</span>TorrentClient();
+
+      bool setTorrent(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>fileName);
+      bool setTorrent(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> <span class="operator">&amp;</span>torrentData);
+      MetaInfo metaInfo() <span class="keyword">const</span>;
+
+      <span class="type">void</span> setMaxConnections(<span class="type">int</span> connections);
+      <span class="type">int</span> maxConnections() <span class="keyword">const</span>;
+
+      <span class="type">void</span> setDestinationFolder(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>directory);
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> destinationFolder() <span class="keyword">const</span>;
+
+      <span class="type">void</span> setDumpedState(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> <span class="operator">&amp;</span>dumpedState);
+      <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> dumpedState() <span class="keyword">const</span>;
+
+      <span class="comment">// Progress and stats for download feedback.</span>
+      <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> progress() <span class="keyword">const</span>;
+      <span class="type">void</span> setDownloadedBytes(<span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> bytes);
+      <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> downloadedBytes() <span class="keyword">const</span>;
+      <span class="type">void</span> setUploadedBytes(<span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> bytes);
+      <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> uploadedBytes() <span class="keyword">const</span>;
+      <span class="type">int</span> connectedPeerCount() <span class="keyword">const</span>;
+      <span class="type">int</span> seedCount() <span class="keyword">const</span>;
+
+      <span class="comment">// Accessors for the tracker</span>
+      <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> peerId() <span class="keyword">const</span>;
+      <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> infoHash() <span class="keyword">const</span>;
+      <span class="type"><a href="../qtcore/qtglobal.html#quint16-typedef">quint16</a></span> serverPort() <span class="keyword">const</span>;
+
+      <span class="comment">// State and error.</span>
+      State state() <span class="keyword">const</span>;
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> stateString() <span class="keyword">const</span>;
+      Error error() <span class="keyword">const</span>;
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> errorString() <span class="keyword">const</span>;
+
+  <span class="keyword">signals</span>:
+      <span class="type">void</span> stateChanged(TorrentClient<span class="operator">::</span>State state);
+      <span class="type">void</span> error(TorrentClient<span class="operator">::</span>Error error);
+
+      <span class="type">void</span> downloadCompleted();
+      <span class="type">void</span> peerInfoUpdated();
+
+      <span class="type">void</span> dataSent(<span class="type">int</span> uploadedBytes);
+      <span class="type">void</span> dataReceived(<span class="type">int</span> downloadedBytes);
+      <span class="type">void</span> progressUpdated(<span class="type">int</span> percentProgress);
+      <span class="type">void</span> downloadRateUpdated(<span class="type">int</span> bytesPerSecond);
+      <span class="type">void</span> uploadRateUpdated(<span class="type">int</span> bytesPerSecond);
+
+      <span class="type">void</span> stopped();
+
+  <span class="keyword">public</span> <span class="keyword">slots</span>:
+      <span class="type">void</span> start();
+      <span class="type">void</span> stop();
+      <span class="type">void</span> setPaused(bool paused);
+      <span class="type">void</span> setupIncomingConnection(PeerWireClient <span class="operator">*</span>client);
+
+  <span class="keyword">protected</span> <span class="keyword">slots</span>:
+      <span class="type">void</span> timerEvent(<span class="type"><a href="../qtcore/qtimerevent.html">QTimerEvent</a></span> <span class="operator">*</span>event) Q_DECL_OVERRIDE;
+
+  <span class="keyword">private</span> <span class="keyword">slots</span>:
+      <span class="comment">// File management</span>
+      <span class="type">void</span> sendToPeer(<span class="type">int</span> readId<span class="operator">,</span> <span class="type">int</span> pieceIndex<span class="operator">,</span> <span class="type">int</span> begin<span class="operator">,</span> <span class="keyword">const</span> <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> <span class="operator">&amp;</span>data);
+      <span class="type">void</span> fullVerificationDone();
+      <span class="type">void</span> pieceVerified(<span class="type">int</span> pieceIndex<span class="operator">,</span> bool ok);
+      <span class="type">void</span> handleFileError();
+
+      <span class="comment">// Connection handling</span>
+      <span class="type">void</span> connectToPeers();
+      <span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span>TorrentPeer <span class="operator">*</span><span class="operator">&gt;</span> weighedFreePeers() <span class="keyword">const</span>;
+      <span class="type">void</span> setupOutgoingConnection();
+      <span class="type">void</span> initializeConnection(PeerWireClient <span class="operator">*</span>client);
+      <span class="type">void</span> removeClient();
+      <span class="type">void</span> peerPiecesAvailable(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qbitarray.html">QBitArray</a></span> <span class="operator">&amp;</span>pieces);
+      <span class="type">void</span> peerRequestsBlock(<span class="type">int</span> pieceIndex<span class="operator">,</span> <span class="type">int</span> begin<span class="operator">,</span> <span class="type">int</span> length);
+      <span class="type">void</span> blockReceived(<span class="type">int</span> pieceIndex<span class="operator">,</span> <span class="type">int</span> begin<span class="operator">,</span> <span class="keyword">const</span> <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> <span class="operator">&amp;</span>data);
+      <span class="type">void</span> peerWireBytesWritten(<span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> bytes);
+      <span class="type">void</span> peerWireBytesReceived(<span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> bytes);
+      <span class="type">int</span> blocksLeftForPiece(<span class="keyword">const</span> TorrentPiece <span class="operator">*</span>piece) <span class="keyword">const</span>;
+
+      <span class="comment">// Scheduling</span>
+      <span class="type">void</span> scheduleUploads();
+      <span class="type">void</span> scheduleDownloads();
+      <span class="type">void</span> schedulePieceForClient(PeerWireClient <span class="operator">*</span>client);
+      <span class="type">void</span> requestMore(PeerWireClient <span class="operator">*</span>client);
+      <span class="type">int</span> requestBlocks(PeerWireClient <span class="operator">*</span>client<span class="operator">,</span> TorrentPiece <span class="operator">*</span>piece<span class="operator">,</span> <span class="type">int</span> maxBlocks);
+      <span class="type">void</span> peerChoked();
+      <span class="type">void</span> peerUnchoked();
+
+      <span class="comment">// Tracker handling</span>
+      <span class="type">void</span> addToPeerList(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span>TorrentPeer<span class="operator">&gt;</span> <span class="operator">&amp;</span>peerList);
+      <span class="type">void</span> trackerStopped();
+
+      <span class="comment">// Progress</span>
+      <span class="type">void</span> updateProgress(<span class="type">int</span> progress <span class="operator">=</span> <span class="operator">-</span><span class="number">1</span>);
+
+  <span class="keyword">private</span>:
+      TorrentClientPrivate <span class="operator">*</span>d;
+      <span class="keyword">friend</span> <span class="keyword">class</span> TorrentClientPrivate;
+  };
+
+  <span class="preprocessor">#endif</span>
+
+</pre>
+</div>
+<!-- @@@torrent/torrentclient.h -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

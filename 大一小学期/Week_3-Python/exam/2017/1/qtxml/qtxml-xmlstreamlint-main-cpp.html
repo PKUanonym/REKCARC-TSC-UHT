@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>main.cpp Example File | Qt XML 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtxml-index.html">Qt XML</a></td><td ><a href="qtxml-xmlstreamlint-example.html">XML Stream Lint Example</a></td><td >main.cpp Example File</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar"><div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">main.cpp Example File</h1>
+<span class="subtitle">xmlstreamlint/main.cpp</span>
+<!-- $$$xmlstreamlint/main.cpp-description -->
+<div class="descr"> <a name="details"></a>
+<pre class="cpp">
+
+  <span class="comment">/****************************************************************************
+  **
+  ** Copyright (C) 2015 The Qt Company Ltd.
+  ** Contact: http://www.qt.io/licensing/
+  **
+  ** This file is part of the examples of the Qt Toolkit.
+  **
+  ** $QT_BEGIN_LICENSE:BSD$
+  ** You may use this file under the terms of the BSD license as follows:
+  **
+  ** &quot;Redistribution and use in source and binary forms, with or without
+  ** modification, are permitted provided that the following conditions are
+  ** met:
+  **   * Redistributions of source code must retain the above copyright
+  **     notice, this list of conditions and the following disclaimer.
+  **   * Redistributions in binary form must reproduce the above copyright
+  **     notice, this list of conditions and the following disclaimer in
+  **     the documentation and/or other materials provided with the
+  **     distribution.
+  **   * Neither the name of The Qt Company Ltd nor the names of its
+  **     contributors may be used to endorse or promote products derived
+  **     from this software without specific prior written permission.
+  **
+  **
+  ** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  ** &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  ** LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  ** A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  ** OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  ** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  ** LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  ** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  ** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  ** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.&quot;
+  **
+  ** $QT_END_LICENSE$
+  **
+  ****************************************************************************/</span>
+
+  <span class="preprocessor">#include &lt;QCoreApplication&gt;</span>
+  <span class="preprocessor">#include &lt;QFile&gt;</span>
+  <span class="preprocessor">#include &lt;QStringList&gt;</span>
+  <span class="preprocessor">#include &lt;QTextStream&gt;</span>
+  <span class="preprocessor">#include &lt;QXmlStreamReader&gt;</span>
+
+  <span class="comment">/*
+   This class exists for the sole purpose of creating a translation context.
+  */</span>
+  <span class="keyword">class</span> XmlStreamLint
+  {
+  <span class="keyword">public</span>:
+      Q_DECLARE_TR_FUNCTIONS(XmlStreamLint)
+  };
+
+  <span class="type">int</span> main(<span class="type">int</span> argc<span class="operator">,</span> <span class="type">char</span> <span class="operator">*</span>argv<span class="operator">[</span><span class="operator">]</span>)
+  {
+      <span class="keyword">enum</span> ExitCode
+      {
+          Success<span class="operator">,</span>
+          ParseFailure<span class="operator">,</span>
+          ArgumentError<span class="operator">,</span>
+          WriteError<span class="operator">,</span>
+          FileFailure
+      };
+
+      <span class="type"><a href="../qtcore/qcoreapplication.html">QCoreApplication</a></span> app(argc<span class="operator">,</span> argv);
+
+      <span class="type"><a href="../qtcore/qtextstream.html">QTextStream</a></span> errorStream(stderr);
+
+      <span class="keyword">if</span> (argc <span class="operator">!</span><span class="operator">=</span> <span class="number">2</span>)
+      {
+          errorStream <span class="operator">&lt;</span><span class="operator">&lt;</span> XmlStreamLint<span class="operator">::</span>tr(
+                         <span class="string">&quot;Usage: xmlstreamlint &lt;path to XML file&gt;\n&quot;</span>);
+          <span class="keyword">return</span> ArgumentError;
+      }
+
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> inputFilePath(<span class="type"><a href="../qtcore/qcoreapplication.html">QCoreApplication</a></span><span class="operator">::</span>arguments()<span class="operator">.</span>at(<span class="number">1</span>));
+      <span class="type"><a href="../qtcore/qfile.html">QFile</a></span> inputFile(inputFilePath);
+
+      <span class="keyword">if</span> (<span class="operator">!</span><span class="type"><a href="../qtcore/qfile.html">QFile</a></span><span class="operator">::</span>exists(inputFilePath))
+      {
+          errorStream <span class="operator">&lt;</span><span class="operator">&lt;</span> XmlStreamLint<span class="operator">::</span>tr(
+                         <span class="string">&quot;File %1 does not exist.\n&quot;</span>)<span class="operator">.</span>arg(inputFilePath);
+          <span class="keyword">return</span> FileFailure;
+
+      } <span class="keyword">else</span> <span class="keyword">if</span> (<span class="operator">!</span>inputFile<span class="operator">.</span>open(<span class="type"><a href="../qtcore/qiodevice.html">QIODevice</a></span><span class="operator">::</span>ReadOnly)) {
+          errorStream <span class="operator">&lt;</span><span class="operator">&lt;</span> XmlStreamLint<span class="operator">::</span>tr(
+                         <span class="string">&quot;Failed to open file %1.\n&quot;</span>)<span class="operator">.</span>arg(inputFilePath);
+          <span class="keyword">return</span> FileFailure;
+      }
+
+      <span class="type"><a href="../qtcore/qfile.html">QFile</a></span> outputFile;
+      <span class="keyword">if</span> (<span class="operator">!</span>outputFile<span class="operator">.</span>open(stdout<span class="operator">,</span> <span class="type"><a href="../qtcore/qiodevice.html">QIODevice</a></span><span class="operator">::</span>WriteOnly))
+      {
+          errorStream <span class="operator">&lt;</span><span class="operator">&lt;</span> XmlStreamLint<span class="operator">::</span>tr(<span class="string">&quot;Failed to open stdout.&quot;</span>);
+          <span class="keyword">return</span> WriteError;
+      }
+
+      <span class="type"><a href="../qtcore/qxmlstreamreader.html">QXmlStreamReader</a></span> reader(<span class="operator">&amp;</span>inputFile);
+      <span class="type"><a href="../qtcore/qxmlstreamwriter.html">QXmlStreamWriter</a></span> writer(<span class="operator">&amp;</span>outputFile);
+
+      <span class="keyword">while</span> (<span class="operator">!</span>reader<span class="operator">.</span>atEnd())
+      {
+          reader<span class="operator">.</span>readNext();
+
+          <span class="keyword">if</span> (reader<span class="operator">.</span>error())
+          {
+              errorStream <span class="operator">&lt;</span><span class="operator">&lt;</span> XmlStreamLint<span class="operator">::</span>tr(
+                             <span class="string">&quot;Error: %1 in file %2 at line %3, column %4.\n&quot;</span>)<span class="operator">.</span>arg(
+                                 reader<span class="operator">.</span>errorString()<span class="operator">,</span> inputFilePath<span class="operator">,</span>
+                                 <span class="type"><a href="../qtcore/qstring.html">QString</a></span><span class="operator">::</span>number(reader<span class="operator">.</span>lineNumber())<span class="operator">,</span>
+                                 <span class="type"><a href="../qtcore/qstring.html">QString</a></span><span class="operator">::</span>number(reader<span class="operator">.</span>columnNumber()));
+              <span class="keyword">return</span> ParseFailure;
+
+          } <span class="keyword">else</span>
+              writer<span class="operator">.</span>writeCurrentToken(reader);
+      }
+
+      <span class="keyword">return</span> Success;
+  }
+
+</pre>
+</div>
+<!-- @@@xmlstreamlint/main.cpp -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

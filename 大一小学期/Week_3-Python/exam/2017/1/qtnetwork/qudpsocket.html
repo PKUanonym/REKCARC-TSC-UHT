@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qudpsocket.cpp -->
+  <title>QUdpSocket Class | Qt Network 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtnetwork-index.html">Qt Network</a></td><td ><a href="qtnetwork-module.html">C++ Classes</a></td><td >QUdpSocket</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">QUdpSocket Class</h1>
+<!-- $$$QUdpSocket-brief -->
+<p>The <a href="qudpsocket.html">QUdpSocket</a> class provides a UDP socket. <a href="#details">More...</a></p>
+<!-- @@@QUdpSocket -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign">   <span class="preprocessor">#include &lt;QUdpSocket&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> qmake:</td><td class="memItemRight bottomAlign"> QT += network</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Inherits:</td><td class="memItemRight bottomAlign"> <a href="qabstractsocket.html">QAbstractSocket</a></td></tr></table></div><ul>
+<li><a href="qudpsocket-members.html">List of all members, including inherited members</a></li>
+</ul>
+<p><b>Note:</b> All functions in this class are <a href="../qtdoc/threads-reentrancy.html">reentrant</a>.</p>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qudpsocket.html#QUdpSocket">QUdpSocket</a></b>(QObject *<i>parent</i> = Q_NULLPTR)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual </td><td class="memItemRight bottomAlign"><b><a href="qudpsocket.html#dtor.QUdpSocket">~QUdpSocket</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qudpsocket.html#hasPendingDatagrams">hasPendingDatagrams</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qudpsocket.html#joinMulticastGroup">joinMulticastGroup</a></b>(const QHostAddress &amp;<i>groupAddress</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qudpsocket.html#joinMulticastGroup-1">joinMulticastGroup</a></b>(const QHostAddress &amp;<i>groupAddress</i>, const QNetworkInterface &amp;<i>iface</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qudpsocket.html#leaveMulticastGroup">leaveMulticastGroup</a></b>(const QHostAddress &amp;<i>groupAddress</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qudpsocket.html#leaveMulticastGroup-1">leaveMulticastGroup</a></b>(const QHostAddress &amp;<i>groupAddress</i>, const QNetworkInterface &amp;<i>iface</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QNetworkInterface </td><td class="memItemRight bottomAlign"><b><a href="qudpsocket.html#multicastInterface">multicastInterface</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> qint64 </td><td class="memItemRight bottomAlign"><b><a href="qudpsocket.html#pendingDatagramSize">pendingDatagramSize</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> qint64 </td><td class="memItemRight bottomAlign"><b><a href="qudpsocket.html#readDatagram">readDatagram</a></b>(char *<i>data</i>, qint64 <i>maxSize</i>, QHostAddress *<i>address</i> = Q_NULLPTR, quint16 *<i>port</i> = Q_NULLPTR)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qudpsocket.html#setMulticastInterface">setMulticastInterface</a></b>(const QNetworkInterface &amp;<i>iface</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> qint64 </td><td class="memItemRight bottomAlign"><b><a href="qudpsocket.html#writeDatagram">writeDatagram</a></b>(const char *<i>data</i>, qint64 <i>size</i>, const QHostAddress &amp;<i>address</i>, quint16 <i>port</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> qint64 </td><td class="memItemRight bottomAlign"><b><a href="qudpsocket.html#writeDatagram-1">writeDatagram</a></b>(const QByteArray &amp;<i>datagram</i>, const QHostAddress &amp;<i>host</i>, quint16 <i>port</i>)</td></tr>
+</table></div>
+<ul>
+<li class="fn">37 public functions inherited from <a href="qabstractsocket.html#public-functions">QAbstractSocket</a></li>
+<li class="fn">33 public functions inherited from <a href="../qtcore/qiodevice.html#public-functions">QIODevice</a></li>
+<li class="fn">31 public functions inherited from <a href="../qtcore/qobject.html#public-functions">QObject</a></li>
+</ul>
+<h3>Additional Inherited Members</h3>
+<ul>
+<li class="fn">1 property inherited from <a href="../qtcore/qobject.html#properties">QObject</a></li>
+<li class="fn">1 public slot inherited from <a href="../qtcore/qobject.html#public-slots">QObject</a></li>
+<li class="fn">6 signals inherited from <a href="qabstractsocket.html#signals">QAbstractSocket</a></li>
+<li class="fn">4 signals inherited from <a href="../qtcore/qiodevice.html#signals">QIODevice</a></li>
+<li class="fn">2 signals inherited from <a href="../qtcore/qobject.html#signals">QObject</a></li>
+<li class="fn">1 public variable inherited from <a href="../qtcore/qobject.html#public-variables">QObject</a></li>
+<li class="fn">10 static public members inherited from <a href="../qtcore/qobject.html#static-public-members">QObject</a></li>
+<li class="fn">10 protected functions inherited from <a href="qabstractsocket.html#protected-functions">QAbstractSocket</a></li>
+<li class="fn">5 protected functions inherited from <a href="../qtcore/qiodevice.html#protected-functions">QIODevice</a></li>
+<li class="fn">9 protected functions inherited from <a href="../qtcore/qobject.html#protected-functions">QObject</a></li>
+<li class="fn">2 protected variables inherited from <a href="../qtcore/qobject.html#protected-variables">QObject</a></li>
+</ul>
+<a name="details"></a>
+<!-- $$$QUdpSocket-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="qudpsocket.html">QUdpSocket</a> class provides a UDP socket.</p>
+<p>UDP (User Datagram Protocol) is a lightweight, unreliable, datagram-oriented, connectionless protocol. It can be used when reliability isn't important. <a href="qudpsocket.html">QUdpSocket</a> is a subclass of <a href="qabstractsocket.html">QAbstractSocket</a> that allows you to send and receive UDP datagrams.</p>
+<p>The most common way to use this class is to bind to an address and port using <a href="qabstractsocket.html#bind">bind</a>(), then call <a href="qudpsocket.html#writeDatagram">writeDatagram</a>() and <a href="qudpsocket.html#readDatagram">readDatagram</a>() to transfer data. If you want to use the standard <a href="../qtcore/qiodevice.html">QIODevice</a> functions <a href="../qtcore/qiodevice.html#read-1">read</a>(), <a href="../qtcore/qiodevice.html#readLine-1">readLine</a>(), <a href="../qtcore/qiodevice.html#write-2">write</a>(), etc., you must first connect the socket directly to a peer by calling <a href="qabstractsocket.html#connectToHost">connectToHost</a>().</p>
+<p>The socket emits the <a href="../qtcore/qiodevice.html#bytesWritten">bytesWritten</a>() signal every time a datagram is written to the network. If you just want to send datagrams, you don't need to call <a href="qabstractsocket.html#bind">bind</a>().</p>
+<p>The <a href="../qtcore/qiodevice.html#readyRead">readyRead</a>() signal is emitted whenever datagrams arrive. In that case, <a href="qudpsocket.html#hasPendingDatagrams">hasPendingDatagrams</a>() returns <code>true</code>. Call <a href="qudpsocket.html#pendingDatagramSize">pendingDatagramSize</a>() to obtain the size of the first pending datagram, and <a href="qudpsocket.html#readDatagram">readDatagram</a>() to read it.</p>
+<p><b>Note: </b>An incoming datagram should be read when you receive the <a href="../qtcore/qiodevice.html#readyRead">readyRead</a>() signal, otherwise this signal will not be emitted for the next datagram.</p><p>Example:</p>
+<pre class="cpp">
+
+  <span class="type">void</span> Server<span class="operator">::</span>initSocket()
+  {
+      udpSocket <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="qudpsocket.html#QUdpSocket">QUdpSocket</a></span>(<span class="keyword">this</span>);
+      udpSocket<span class="operator">-</span><span class="operator">&gt;</span>bind(<span class="type"><a href="qhostaddress.html">QHostAddress</a></span><span class="operator">::</span>LocalHost<span class="operator">,</span> <span class="number">7755</span>);
+
+      connect(udpSocket<span class="operator">,</span> SIGNAL(readyRead())<span class="operator">,</span>
+              <span class="keyword">this</span><span class="operator">,</span> SLOT(readPendingDatagrams()));
+  }
+
+  <span class="type">void</span> Server<span class="operator">::</span>readPendingDatagrams()
+  {
+      <span class="keyword">while</span> (udpSocket<span class="operator">-</span><span class="operator">&gt;</span>hasPendingDatagrams()) {
+          <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> datagram;
+          datagram<span class="operator">.</span>resize(udpSocket<span class="operator">-</span><span class="operator">&gt;</span>pendingDatagramSize());
+          <span class="type"><a href="qhostaddress.html">QHostAddress</a></span> sender;
+          <span class="type"><a href="../qtcore/qtglobal.html#quint16-typedef">quint16</a></span> senderPort;
+
+          udpSocket<span class="operator">-</span><span class="operator">&gt;</span>readDatagram(datagram<span class="operator">.</span>data()<span class="operator">,</span> datagram<span class="operator">.</span>size()<span class="operator">,</span>
+                                  <span class="operator">&amp;</span>sender<span class="operator">,</span> <span class="operator">&amp;</span>senderPort);
+
+          processTheDatagram(datagram);
+      }
+  }
+
+</pre>
+<p><a href="qudpsocket.html">QUdpSocket</a> also supports UDP multicast. Use <a href="qudpsocket.html#joinMulticastGroup">joinMulticastGroup</a>() and <a href="qudpsocket.html#leaveMulticastGroup">leaveMulticastGroup</a>() to control group membership, and <a href="qabstractsocket.html#SocketOption-enum">QAbstractSocket::MulticastTtlOption</a> and <a href="qabstractsocket.html#SocketOption-enum">QAbstractSocket::MulticastLoopbackOption</a> to set the TTL and loopback socket options. Use <a href="qudpsocket.html#setMulticastInterface">setMulticastInterface</a>() to control the outgoing interface for multicast datagrams, and <a href="qudpsocket.html#multicastInterface">multicastInterface</a>() to query it.</p>
+<p>With <a href="qudpsocket.html">QUdpSocket</a>, you can also establish a virtual connection to a UDP server using <a href="qabstractsocket.html#connectToHost">connectToHost</a>() and then use <a href="../qtcore/qiodevice.html#read-1">read</a>() and <a href="../qtcore/qiodevice.html#write-2">write</a>() to exchange datagrams without specifying the receiver for each datagram.</p>
+<p>The <a href="qtnetwork-broadcastsender-example.html">Broadcast Sender</a>, <a href="qtnetwork-broadcastreceiver-example.html">Broadcast Receiver</a>, <a href="qtnetwork-multicastsender-example.html">Multicast Sender</a>, and <a href="qtnetwork-multicastreceiver-example.html">Multicast Receiver</a> examples illustrate how to use <a href="qudpsocket.html">QUdpSocket</a> in applications.</p>
+</div>
+<p><b>See also </b><a href="qtcpsocket.html">QTcpSocket</a>.</p>
+<!-- @@@QUdpSocket -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$QUdpSocket[overload1]$$$QUdpSocketQObject* -->
+<h3 class="fn" id="QUdpSocket"><a name="QUdpSocket"></a>QUdpSocket::<span class="name">QUdpSocket</span>(<span class="type"><a href="../qtcore/qobject.html#QObject">QObject</a></span> *<i>parent</i> = Q_NULLPTR)</h3>
+<p>Creates a <a href="qudpsocket.html">QUdpSocket</a> object.</p>
+<p><i>parent</i> is passed to the <a href="../qtcore/qobject.html">QObject</a> constructor.</p>
+<p><b>See also </b><a href="qabstractsocket.html#socketType">socketType</a>().</p>
+<!-- @@@QUdpSocket -->
+<!-- $$$~QUdpSocket[overload1]$$$~QUdpSocket -->
+<h3 class="fn" id="dtor.QUdpSocket"><a name="dtor.QUdpSocket"></a><code>[virtual] </code>QUdpSocket::<span class="name">~QUdpSocket</span>()</h3>
+<p>Destroys the socket, closing the connection if necessary.</p>
+<p><b>See also </b><a href="qabstractsocket.html#close">close</a>().</p>
+<!-- @@@~QUdpSocket -->
+<!-- $$$hasPendingDatagrams[overload1]$$$hasPendingDatagrams -->
+<h3 class="fn" id="hasPendingDatagrams"><a name="hasPendingDatagrams"></a><span class="type">bool</span> QUdpSocket::<span class="name">hasPendingDatagrams</span>() const</h3>
+<p>Returns <code>true</code> if at least one datagram is waiting to be read; otherwise returns <code>false</code>.</p>
+<p><b>See also </b><a href="qudpsocket.html#pendingDatagramSize">pendingDatagramSize</a>() and <a href="qudpsocket.html#readDatagram">readDatagram</a>().</p>
+<!-- @@@hasPendingDatagrams -->
+<!-- $$$joinMulticastGroup[overload1]$$$joinMulticastGroupconstQHostAddress& -->
+<h3 class="fn" id="joinMulticastGroup"><a name="joinMulticastGroup"></a><span class="type">bool</span> QUdpSocket::<span class="name">joinMulticastGroup</span>(const <span class="type"><a href="qhostaddress.html">QHostAddress</a></span> &amp;<i>groupAddress</i>)</h3>
+<p>Joins the multicast group specified by <i>groupAddress</i> on the default interface chosen by the operating system. The socket must be in <a href="qabstractsocket.html#SocketState-enum">BoundState</a>, otherwise an error occurs.</p>
+<p>Note that if you are attempting to join an IPv4 group, your socket must not be bound using IPv6 (or in dual mode, using <a href="qhostaddress.html#SpecialAddress-enum">QHostAddress::Any</a>). You must use <a href="qhostaddress.html#SpecialAddress-enum">QHostAddress::AnyIPv4</a> instead.</p>
+<p>This function returns <code>true</code> if successful; otherwise it returns <code>false</code> and sets the socket error accordingly.</p>
+<p>This function was introduced in  Qt 4.8.</p>
+<p><b>See also </b><a href="qudpsocket.html#leaveMulticastGroup">leaveMulticastGroup</a>().</p>
+<!-- @@@joinMulticastGroup -->
+<!-- $$$joinMulticastGroup$$$joinMulticastGroupconstQHostAddress&constQNetworkInterface& -->
+<h3 class="fn" id="joinMulticastGroup-1"><a name="joinMulticastGroup-1"></a><span class="type">bool</span> QUdpSocket::<span class="name">joinMulticastGroup</span>(const <span class="type"><a href="qhostaddress.html">QHostAddress</a></span> &amp;<i>groupAddress</i>, const <span class="type"><a href="qnetworkinterface.html">QNetworkInterface</a></span> &amp;<i>iface</i>)</h3>
+<p>This is an overloaded function.</p>
+<p>Joins the multicast group address <i>groupAddress</i> on the interface <i>iface</i>.</p>
+<p>This function was introduced in  Qt 4.8.</p>
+<p><b>See also </b><a href="qudpsocket.html#leaveMulticastGroup">leaveMulticastGroup</a>().</p>
+<!-- @@@joinMulticastGroup -->
+<!-- $$$leaveMulticastGroup[overload1]$$$leaveMulticastGroupconstQHostAddress& -->
+<h3 class="fn" id="leaveMulticastGroup"><a name="leaveMulticastGroup"></a><span class="type">bool</span> QUdpSocket::<span class="name">leaveMulticastGroup</span>(const <span class="type"><a href="qhostaddress.html">QHostAddress</a></span> &amp;<i>groupAddress</i>)</h3>
+<p>Leaves the multicast group specified by <i>groupAddress</i> on the default interface chosen by the operating system. The socket must be in <a href="qabstractsocket.html#SocketState-enum">BoundState</a>, otherwise an error occurs.</p>
+<p>This function returns <code>true</code> if successful; otherwise it returns <code>false</code> and sets the socket error accordingly.</p>
+<p>This function was introduced in  Qt 4.8.</p>
+<p><b>See also </b><a href="qudpsocket.html#joinMulticastGroup">joinMulticastGroup</a>().</p>
+<!-- @@@leaveMulticastGroup -->
+<!-- $$$leaveMulticastGroup$$$leaveMulticastGroupconstQHostAddress&constQNetworkInterface& -->
+<h3 class="fn" id="leaveMulticastGroup-1"><a name="leaveMulticastGroup-1"></a><span class="type">bool</span> QUdpSocket::<span class="name">leaveMulticastGroup</span>(const <span class="type"><a href="qhostaddress.html">QHostAddress</a></span> &amp;<i>groupAddress</i>, const <span class="type"><a href="qnetworkinterface.html">QNetworkInterface</a></span> &amp;<i>iface</i>)</h3>
+<p>This is an overloaded function.</p>
+<p>Leaves the multicast group specified by <i>groupAddress</i> on the interface <i>iface</i>.</p>
+<p>This function was introduced in  Qt 4.8.</p>
+<p><b>See also </b><a href="qudpsocket.html#joinMulticastGroup">joinMulticastGroup</a>().</p>
+<!-- @@@leaveMulticastGroup -->
+<!-- $$$multicastInterface[overload1]$$$multicastInterface -->
+<h3 class="fn" id="multicastInterface"><a name="multicastInterface"></a><span class="type"><a href="qnetworkinterface.html">QNetworkInterface</a></span> QUdpSocket::<span class="name">multicastInterface</span>() const</h3>
+<p>Returns the interface for the outgoing interface for multicast datagrams. This corresponds to the IP_MULTICAST_IF socket option for IPv4 sockets and the IPV6_MULTICAST_IF socket option for IPv6 sockets. If no interface has been previously set, this function returns an invalid <a href="qnetworkinterface.html">QNetworkInterface</a>. The socket must be in <a href="qabstractsocket.html#SocketState-enum">BoundState</a>, otherwise an invalid <a href="qnetworkinterface.html">QNetworkInterface</a> is returned.</p>
+<p>This function was introduced in  Qt 4.8.</p>
+<p><b>See also </b><a href="qudpsocket.html#setMulticastInterface">setMulticastInterface</a>().</p>
+<!-- @@@multicastInterface -->
+<!-- $$$pendingDatagramSize[overload1]$$$pendingDatagramSize -->
+<h3 class="fn" id="pendingDatagramSize"><a name="pendingDatagramSize"></a><span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> QUdpSocket::<span class="name">pendingDatagramSize</span>() const</h3>
+<p>Returns the size of the first pending UDP datagram. If there is no datagram available, this function returns -1.</p>
+<p><b>See also </b><a href="qudpsocket.html#hasPendingDatagrams">hasPendingDatagrams</a>() and <a href="qudpsocket.html#readDatagram">readDatagram</a>().</p>
+<!-- @@@pendingDatagramSize -->
+<!-- $$$readDatagram[overload1]$$$readDatagramchar*qint64QHostAddress*quint16* -->
+<h3 class="fn" id="readDatagram"><a name="readDatagram"></a><span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> QUdpSocket::<span class="name">readDatagram</span>(<span class="type">char</span> *<i>data</i>, <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> <i>maxSize</i>, <span class="type"><a href="qhostaddress.html">QHostAddress</a></span> *<i>address</i> = Q_NULLPTR, <span class="type"><a href="../qtcore/qtglobal.html#quint16-typedef">quint16</a></span> *<i>port</i> = Q_NULLPTR)</h3>
+<p>Receives a datagram no larger than <i>maxSize</i> bytes and stores it in <i>data</i>. The sender's host address and port is stored in *<i>address</i> and *<i>port</i> (unless the pointers are 0).</p>
+<p>Returns the size of the datagram on success; otherwise returns -1.</p>
+<p>If <i>maxSize</i> is too small, the rest of the datagram will be lost. To avoid loss of data, call <a href="qudpsocket.html#pendingDatagramSize">pendingDatagramSize</a>() to determine the size of the pending datagram before attempting to read it. If <i>maxSize</i> is 0, the datagram will be discarded.</p>
+<p><b>See also </b><a href="qudpsocket.html#writeDatagram">writeDatagram</a>(), <a href="qudpsocket.html#hasPendingDatagrams">hasPendingDatagrams</a>(), and <a href="qudpsocket.html#pendingDatagramSize">pendingDatagramSize</a>().</p>
+<!-- @@@readDatagram -->
+<!-- $$$setMulticastInterface[overload1]$$$setMulticastInterfaceconstQNetworkInterface& -->
+<h3 class="fn" id="setMulticastInterface"><a name="setMulticastInterface"></a><span class="type">void</span> QUdpSocket::<span class="name">setMulticastInterface</span>(const <span class="type"><a href="qnetworkinterface.html">QNetworkInterface</a></span> &amp;<i>iface</i>)</h3>
+<p>Sets the outgoing interface for multicast datagrams to the interface <i>iface</i>. This corresponds to the IP_MULTICAST_IF socket option for IPv4 sockets and the IPV6_MULTICAST_IF socket option for IPv6 sockets. The socket must be in <a href="qabstractsocket.html#SocketState-enum">BoundState</a>, otherwise this function does nothing.</p>
+<p>This function was introduced in  Qt 4.8.</p>
+<p><b>See also </b><a href="qudpsocket.html#multicastInterface">multicastInterface</a>(), <a href="qudpsocket.html#joinMulticastGroup">joinMulticastGroup</a>(), and <a href="qudpsocket.html#leaveMulticastGroup">leaveMulticastGroup</a>().</p>
+<!-- @@@setMulticastInterface -->
+<!-- $$$writeDatagram[overload1]$$$writeDatagramconstchar*qint64constQHostAddress&quint16 -->
+<h3 class="fn" id="writeDatagram"><a name="writeDatagram"></a><span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> QUdpSocket::<span class="name">writeDatagram</span>(const <span class="type">char</span> *<i>data</i>, <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> <i>size</i>, const <span class="type"><a href="qhostaddress.html">QHostAddress</a></span> &amp;<i>address</i>, <span class="type"><a href="../qtcore/qtglobal.html#quint16-typedef">quint16</a></span> <i>port</i>)</h3>
+<p>Sends the datagram at <i>data</i> of size <i>size</i> to the host address <i>address</i> at port <i>port</i>. Returns the number of bytes sent on success; otherwise returns -1.</p>
+<p>Datagrams are always written as one block. The maximum size of a datagram is highly platform-dependent, but can be as low as 8192 bytes. If the datagram is too large, this function will return -1 and <a href="qabstractsocket.html#error">error</a>() will return <a href="qabstractsocket.html#SocketError-enum">DatagramTooLargeError</a>.</p>
+<p>Sending datagrams larger than 512 bytes is in general disadvised, as even if they are sent successfully, they are likely to be fragmented by the IP layer before arriving at their final destination.</p>
+<p><b>Warning:</b> Calling this function on a connected UDP socket may result in an error and no packet being sent. If you are using a connected socket, use <a href="../qtcore/qiodevice.html#write-2">write</a>() to send datagrams.</p>
+<p><b>See also </b><a href="qudpsocket.html#readDatagram">readDatagram</a>() and <a href="../qtcore/qiodevice.html#write-2">write</a>().</p>
+<!-- @@@writeDatagram -->
+<!-- $$$writeDatagram$$$writeDatagramconstQByteArray&constQHostAddress&quint16 -->
+<h3 class="fn" id="writeDatagram-1"><a name="writeDatagram-1"></a><span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> QUdpSocket::<span class="name">writeDatagram</span>(const <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> &amp;<i>datagram</i>, const <span class="type"><a href="qhostaddress.html">QHostAddress</a></span> &amp;<i>host</i>, <span class="type"><a href="../qtcore/qtglobal.html#quint16-typedef">quint16</a></span> <i>port</i>)</h3>
+<p>This is an overloaded function.</p>
+<p>Sends the datagram <i>datagram</i> to the host address <i>host</i> and at port <i>port</i>.</p>
+<!-- @@@writeDatagram -->
+</div>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

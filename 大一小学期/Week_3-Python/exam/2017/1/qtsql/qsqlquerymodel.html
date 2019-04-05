@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qsqlquerymodel.cpp -->
+  <title>QSqlQueryModel Class | Qt SQL 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtsql-index.html">Qt SQL</a></td><td ><a href="qtsql-module.html">C++ Classes</a></td><td >QSqlQueryModel</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#reimplemented-public-functions">Reimplemented Public Functions</a></li>
+<li class="level1"><a href="#protected-functions">Protected Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">QSqlQueryModel Class</h1>
+<!-- $$$QSqlQueryModel-brief -->
+<p>The <a href="qsqlquerymodel.html">QSqlQueryModel</a> class provides a read-only data model for SQL result sets. <a href="#details">More...</a></p>
+<!-- @@@QSqlQueryModel -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign">   <span class="preprocessor">#include &lt;QSqlQueryModel&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> qmake:</td><td class="memItemRight bottomAlign"> QT += sql</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Inherits:</td><td class="memItemRight bottomAlign"> <a href="../qtcore/qabstracttablemodel.html">QAbstractTableModel</a></td></tr><tr><td class="memItemLeft rightAlign topAlign"> Inherited By:</td><td class="memItemRight bottomAlign"> <p><a href="qsqltablemodel.html">QSqlTableModel</a></p>
+</td></tr></table></div><ul>
+<li><a href="qsqlquerymodel-members.html">List of all members, including inherited members</a></li>
+</ul>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qsqlquerymodel.html#QSqlQueryModel">QSqlQueryModel</a></b>(QObject *<i>parent</i> = Q_NULLPTR)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual </td><td class="memItemRight bottomAlign"><b><a href="qsqlquerymodel.html#dtor.QSqlQueryModel">~QSqlQueryModel</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="qsqlquerymodel.html#clear">clear</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QSqlError </td><td class="memItemRight bottomAlign"><b><a href="qsqlquerymodel.html#lastError">lastError</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QSqlQuery </td><td class="memItemRight bottomAlign"><b><a href="qsqlquerymodel.html#query">query</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QSqlRecord </td><td class="memItemRight bottomAlign"><b><a href="qsqlquerymodel.html#record">record</a></b>(int <i>row</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QSqlRecord </td><td class="memItemRight bottomAlign"><b><a href="qsqlquerymodel.html#record-1">record</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qsqlquerymodel.html#setQuery">setQuery</a></b>(const QSqlQuery &amp;<i>query</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qsqlquerymodel.html#setQuery-1">setQuery</a></b>(const QString &amp;<i>query</i>, const QSqlDatabase &amp;<i>db</i> = QSqlDatabase())</td></tr>
+</table></div>
+<a name="reimplemented-public-functions"></a>
+<h2 id="reimplemented-public-functions">Reimplemented Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="qsqlquerymodel.html#canFetchMore">canFetchMore</a></b>(const QModelIndex &amp;<i>parent</i> = QModelIndex()) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual int </td><td class="memItemRight bottomAlign"><b><a href="qsqlquerymodel.html#columnCount">columnCount</a></b>(const QModelIndex &amp;<i>index</i> = QModelIndex()) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QVariant </td><td class="memItemRight bottomAlign"><b><a href="qsqlquerymodel.html#data">data</a></b>(const QModelIndex &amp;<i>item</i>, int <i>role</i> = Qt::DisplayRole) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="qsqlquerymodel.html#fetchMore">fetchMore</a></b>(const QModelIndex &amp;<i>parent</i> = QModelIndex())</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QVariant </td><td class="memItemRight bottomAlign"><b><a href="qsqlquerymodel.html#headerData">headerData</a></b>(int <i>section</i>, Qt::Orientation <i>orientation</i>, int <i>role</i> = Qt::DisplayRole) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="qsqlquerymodel.html#insertColumns">insertColumns</a></b>(int <i>column</i>, int <i>count</i>, const QModelIndex &amp;<i>parent</i> = QModelIndex())</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="qsqlquerymodel.html#removeColumns">removeColumns</a></b>(int <i>column</i>, int <i>count</i>, const QModelIndex &amp;<i>parent</i> = QModelIndex())</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual int </td><td class="memItemRight bottomAlign"><b><a href="qsqlquerymodel.html#rowCount">rowCount</a></b>(const QModelIndex &amp;<i>parent</i> = QModelIndex()) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="qsqlquerymodel.html#setHeaderData">setHeaderData</a></b>(int <i>section</i>, Qt::Orientation <i>orientation</i>, const QVariant &amp;<i>value</i>, int <i>role</i> = Qt::EditRole)</td></tr>
+</table></div>
+<ul>
+<li class="fn">4 public functions inherited from <a href="../qtcore/qabstracttablemodel.html#public-functions">QAbstractTableModel</a></li>
+<li class="fn">39 public functions inherited from <a href="../qtcore/qabstractitemmodel.html#public-functions">QAbstractItemModel</a></li>
+<li class="fn">31 public functions inherited from <a href="../qtcore/qobject.html#public-functions">QObject</a></li>
+</ul>
+<a name="protected-functions"></a>
+<h2 id="protected-functions">Protected Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QModelIndex </td><td class="memItemRight bottomAlign"><b><a href="qsqlquerymodel.html#indexInQuery">indexInQuery</a></b>(const QModelIndex &amp;<i>item</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="qsqlquerymodel.html#queryChange">queryChange</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qsqlquerymodel.html#setLastError">setLastError</a></b>(const QSqlError &amp;<i>error</i>)</td></tr>
+</table></div>
+<ul>
+<li class="fn">19 protected functions inherited from <a href="../qtcore/qabstractitemmodel.html#protected-functions">QAbstractItemModel</a></li>
+<li class="fn">9 protected functions inherited from <a href="../qtcore/qobject.html#protected-functions">QObject</a></li>
+</ul>
+<h3>Additional Inherited Members</h3>
+<ul>
+<li class="fn">1 property inherited from <a href="../qtcore/qobject.html#properties">QObject</a></li>
+<li class="fn">2 public slots inherited from <a href="../qtcore/qabstractitemmodel.html#public-slots">QAbstractItemModel</a></li>
+<li class="fn">1 public slot inherited from <a href="../qtcore/qobject.html#public-slots">QObject</a></li>
+<li class="fn">18 signals inherited from <a href="../qtcore/qabstractitemmodel.html#signals">QAbstractItemModel</a></li>
+<li class="fn">2 signals inherited from <a href="../qtcore/qobject.html#signals">QObject</a></li>
+<li class="fn">1 public variable inherited from <a href="../qtcore/qobject.html#public-variables">QObject</a></li>
+<li class="fn">10 static public members inherited from <a href="../qtcore/qobject.html#static-public-members">QObject</a></li>
+<li class="fn">1 protected slot inherited from <a href="../qtcore/qabstractitemmodel.html#protected-slots">QAbstractItemModel</a></li>
+<li class="fn">2 protected variables inherited from <a href="../qtcore/qobject.html#protected-variables">QObject</a></li>
+</ul>
+<a name="details"></a>
+<!-- $$$QSqlQueryModel-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="qsqlquerymodel.html">QSqlQueryModel</a> class provides a read-only data model for SQL result sets.</p>
+<p><a href="qsqlquerymodel.html">QSqlQueryModel</a> is a high-level interface for executing SQL statements and traversing the result set. It is built on top of the lower-level <a href="qsqlquery.html">QSqlQuery</a> and can be used to provide data to view classes such as <a href="../qtwidgets/qtableview.html">QTableView</a>. For example:</p>
+<pre class="cpp">
+
+      <span class="type"><a href="qsqlquerymodel.html#QSqlQueryModel">QSqlQueryModel</a></span> <span class="operator">*</span>model <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="qsqlquerymodel.html#QSqlQueryModel">QSqlQueryModel</a></span>;
+      model<span class="operator">-</span><span class="operator">&gt;</span>setQuery(<span class="string">&quot;SELECT name, salary FROM employee&quot;</span>);
+      model<span class="operator">-</span><span class="operator">&gt;</span>setHeaderData(<span class="number">0</span><span class="operator">,</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Horizontal<span class="operator">,</span> tr(<span class="string">&quot;Name&quot;</span>));
+      model<span class="operator">-</span><span class="operator">&gt;</span>setHeaderData(<span class="number">1</span><span class="operator">,</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Horizontal<span class="operator">,</span> tr(<span class="string">&quot;Salary&quot;</span>));
+
+      <span class="type"><a href="../qtwidgets/qtableview.html">QTableView</a></span> <span class="operator">*</span>view <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qtableview.html">QTableView</a></span>;
+      view<span class="operator">-</span><span class="operator">&gt;</span>setModel(model);
+      view<span class="operator">-</span><span class="operator">&gt;</span>show();
+
+</pre>
+<p>We set the model's query, then we set up the labels displayed in the view header.</p>
+<p><a href="qsqlquerymodel.html">QSqlQueryModel</a> can also be used to access a database programmatically, without binding it to a view:</p>
+<pre class="cpp">
+
+      <span class="type"><a href="qsqltablemodel.html">QSqlTableModel</a></span> model;
+      model<span class="operator">.</span>setTable(<span class="string">&quot;employee&quot;</span>);
+      model<span class="operator">.</span>select();
+      <span class="type">int</span> salary <span class="operator">=</span> model<span class="operator">.</span>record(<span class="number">4</span>)<span class="operator">.</span>value(<span class="string">&quot;salary&quot;</span>)<span class="operator">.</span>toInt();
+
+</pre>
+<p>The code snippet above extracts the <code>salary</code> field from record 4 in the result set of the query <code>SELECT * from employee</code>. Assuming that <code>salary</code> is column 2, we can rewrite the last line as follows:</p>
+<pre class="cpp">
+
+      <span class="type">int</span> salary <span class="operator">=</span> model<span class="operator">.</span>data(model<span class="operator">.</span>index(<span class="number">4</span><span class="operator">,</span> <span class="number">2</span>))<span class="operator">.</span>toInt();
+
+</pre>
+<p>The model is read-only by default. To make it read-write, you must subclass it and reimplement <a href="../qtcore/qabstractitemmodel.html#setData">setData</a>() and <a href="../qtcore/qabstracttablemodel.html#flags">flags</a>(). Another option is to use <a href="qsqltablemodel.html">QSqlTableModel</a>, which provides a read-write model based on a single database table.</p>
+<p>The <a href="qtsql-querymodel-example.html">querymodel</a> example illustrates how to use <a href="qsqlquerymodel.html">QSqlQueryModel</a> to display the result of a query. It also shows how to subclass <a href="qsqlquerymodel.html">QSqlQueryModel</a> to customize the contents of the data before showing it to the user, and how to create a read-write model based on <a href="qsqlquerymodel.html">QSqlQueryModel</a>.</p>
+<p>If the database doesn't return the number of selected rows in a query, the model will fetch rows incrementally. See <a href="qsqlquerymodel.html#fetchMore">fetchMore</a>() for more information.</p>
+</div>
+<p><b>See also </b><a href="qsqltablemodel.html">QSqlTableModel</a>, <a href="qsqlrelationaltablemodel.html">QSqlRelationalTableModel</a>, <a href="qsqlquery.html">QSqlQuery</a>, <a href="../qtwidgets/model-view-programming.html">Model/View Programming</a>, and <a href="qtsql-querymodel-example.html">Query Model Example</a>.</p>
+<!-- @@@QSqlQueryModel -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$QSqlQueryModel[overload1]$$$QSqlQueryModelQObject* -->
+<h3 class="fn" id="QSqlQueryModel"><a name="QSqlQueryModel"></a>QSqlQueryModel::<span class="name">QSqlQueryModel</span>(<span class="type"><a href="../qtcore/qobject.html#QObject">QObject</a></span> *<i>parent</i> = Q_NULLPTR)</h3>
+<p>Creates an empty <a href="qsqlquerymodel.html">QSqlQueryModel</a> with the given <i>parent</i>.</p>
+<!-- @@@QSqlQueryModel -->
+<!-- $$$~QSqlQueryModel[overload1]$$$~QSqlQueryModel -->
+<h3 class="fn" id="dtor.QSqlQueryModel"><a name="dtor.QSqlQueryModel"></a><code>[virtual] </code>QSqlQueryModel::<span class="name">~QSqlQueryModel</span>()</h3>
+<p>Destroys the object and frees any allocated resources.</p>
+<p><b>See also </b><a href="qsqlquerymodel.html#clear">clear</a>().</p>
+<!-- @@@~QSqlQueryModel -->
+<!-- $$$canFetchMore[overload1]$$$canFetchMoreconstQModelIndex& -->
+<h3 class="fn" id="canFetchMore"><a name="canFetchMore"></a><code>[virtual] </code><span class="type">bool</span> QSqlQueryModel::<span class="name">canFetchMore</span>(const <span class="type"><a href="../qtcore/qmodelindex.html">QModelIndex</a></span> &amp;<i>parent</i> = QModelIndex()) const</h3>
+<p>Reimplemented from <a href="../qtcore/qabstractitemmodel.html#canFetchMore">QAbstractItemModel::canFetchMore</a>().</p>
+<p>Returns <code>true</code> if it is possible to read more rows from the database. This only affects databases that don't report back the size of a query (see <a href="qsqldriver.html#hasFeature">QSqlDriver::hasFeature</a>()).</p>
+<p><i>parent</i> should always be an invalid <a href="../qtcore/qmodelindex.html">QModelIndex</a>.</p>
+<p>This function was introduced in  Qt 4.1.</p>
+<p><b>See also </b><a href="qsqlquerymodel.html#fetchMore">fetchMore</a>().</p>
+<!-- @@@canFetchMore -->
+<!-- $$$clear[overload1]$$$clear -->
+<h3 class="fn" id="clear"><a name="clear"></a><code>[virtual] </code><span class="type">void</span> QSqlQueryModel::<span class="name">clear</span>()</h3>
+<p>Clears the model and releases any acquired resource.</p>
+<!-- @@@clear -->
+<!-- $$$columnCount[overload1]$$$columnCountconstQModelIndex& -->
+<h3 class="fn" id="columnCount"><a name="columnCount"></a><code>[virtual] </code><span class="type">int</span> QSqlQueryModel::<span class="name">columnCount</span>(const <span class="type"><a href="../qtcore/qmodelindex.html">QModelIndex</a></span> &amp;<i>index</i> = QModelIndex()) const</h3>
+<p>Reimplemented from <a href="../qtcore/qabstractitemmodel.html#columnCount">QAbstractItemModel::columnCount</a>().</p>
+<!-- @@@columnCount -->
+<!-- $$$data[overload1]$$$dataconstQModelIndex&int -->
+<h3 class="fn" id="data"><a name="data"></a><code>[virtual] </code><span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span> QSqlQueryModel::<span class="name">data</span>(const <span class="type"><a href="../qtcore/qmodelindex.html">QModelIndex</a></span> &amp;<i>item</i>, <span class="type">int</span> <i>role</i> = Qt::DisplayRole) const</h3>
+<p>Reimplemented from <a href="../qtcore/qabstractitemmodel.html#data">QAbstractItemModel::data</a>().</p>
+<p>Returns the value for the specified <i>item</i> and <i>role</i>.</p>
+<p>If <i>item</i> is out of bounds or if an error occurred, an invalid <a href="../qtcore/qvariant.html">QVariant</a> is returned.</p>
+<p><b>See also </b><a href="qsqlquerymodel.html#lastError">lastError</a>().</p>
+<!-- @@@data -->
+<!-- $$$fetchMore[overload1]$$$fetchMoreconstQModelIndex& -->
+<h3 class="fn" id="fetchMore"><a name="fetchMore"></a><code>[virtual] </code><span class="type">void</span> QSqlQueryModel::<span class="name">fetchMore</span>(const <span class="type"><a href="../qtcore/qmodelindex.html">QModelIndex</a></span> &amp;<i>parent</i> = QModelIndex())</h3>
+<p>Reimplemented from <a href="../qtcore/qabstractitemmodel.html#fetchMore">QAbstractItemModel::fetchMore</a>().</p>
+<p>Fetches more rows from a database. This only affects databases that don't report back the size of a query (see <a href="qsqldriver.html#hasFeature">QSqlDriver::hasFeature</a>()).</p>
+<p>To force fetching of the entire result set, you can use the following:</p>
+<pre class="cpp">
+
+  <span class="keyword">while</span> (myModel<span class="operator">-</span><span class="operator">&gt;</span>canFetchMore())
+      myModel<span class="operator">-</span><span class="operator">&gt;</span>fetchMore();
+
+</pre>
+<p><i>parent</i> should always be an invalid <a href="../qtcore/qmodelindex.html">QModelIndex</a>.</p>
+<p>This function was introduced in  Qt 4.1.</p>
+<p><b>See also </b><a href="qsqlquerymodel.html#canFetchMore">canFetchMore</a>().</p>
+<!-- @@@fetchMore -->
+<!-- $$$headerData[overload1]$$$headerDataintQt::Orientationint -->
+<h3 class="fn" id="headerData"><a name="headerData"></a><code>[virtual] </code><span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span> QSqlQueryModel::<span class="name">headerData</span>(<span class="type">int</span> <i>section</i>, <span class="type"><a href="../qtcore/qt.html#Orientation-enum">Qt::Orientation</a></span> <i>orientation</i>, <span class="type">int</span> <i>role</i> = Qt::DisplayRole) const</h3>
+<p>Reimplemented from <a href="../qtcore/qabstractitemmodel.html#headerData">QAbstractItemModel::headerData</a>().</p>
+<p>Returns the header data for the given <i>role</i> in the <i>section</i> of the header with the specified <i>orientation</i>.</p>
+<p><b>See also </b><a href="qsqlquerymodel.html#setHeaderData">setHeaderData</a>().</p>
+<!-- @@@headerData -->
+<!-- $$$indexInQuery[overload1]$$$indexInQueryconstQModelIndex& -->
+<h3 class="fn" id="indexInQuery"><a name="indexInQuery"></a><code>[virtual protected] </code><span class="type"><a href="../qtcore/qmodelindex.html">QModelIndex</a></span> QSqlQueryModel::<span class="name">indexInQuery</span>(const <span class="type"><a href="../qtcore/qmodelindex.html">QModelIndex</a></span> &amp;<i>item</i>) const</h3>
+<p>Returns the index of the value in the database result set for the given <i>item</i> in the model.</p>
+<p>The return value is identical to <i>item</i> if no columns or rows have been inserted, removed, or moved around.</p>
+<p>Returns an invalid model index if <i>item</i> is out of bounds or if <i>item</i> does not point to a value in the result set.</p>
+<p><b>See also </b><a href="qsqltablemodel.html#indexInQuery">QSqlTableModel::indexInQuery</a>(), <a href="qsqlquerymodel.html#insertColumns">insertColumns</a>(), and <a href="qsqlquerymodel.html#removeColumns">removeColumns</a>().</p>
+<!-- @@@indexInQuery -->
+<!-- $$$insertColumns[overload1]$$$insertColumnsintintconstQModelIndex& -->
+<h3 class="fn" id="insertColumns"><a name="insertColumns"></a><code>[virtual] </code><span class="type">bool</span> QSqlQueryModel::<span class="name">insertColumns</span>(<span class="type">int</span> <i>column</i>, <span class="type">int</span> <i>count</i>, const <span class="type"><a href="../qtcore/qmodelindex.html">QModelIndex</a></span> &amp;<i>parent</i> = QModelIndex())</h3>
+<p>Reimplemented from <a href="../qtcore/qabstractitemmodel.html#insertColumns">QAbstractItemModel::insertColumns</a>().</p>
+<p>Inserts <i>count</i> columns into the model at position <i>column</i>. The <i>parent</i> parameter must always be an invalid <a href="../qtcore/qmodelindex.html">QModelIndex</a>, since the model does not support parent-child relationships.</p>
+<p>Returns <code>true</code> if <i>column</i> is within bounds; otherwise returns <code>false</code>.</p>
+<p>By default, inserted columns are empty. To fill them with data, reimplement <a href="qsqlquerymodel.html#data">data</a>() and handle any inserted column separately:</p>
+<pre class="cpp">
+
+  <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span> MyModel<span class="operator">::</span>data(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qmodelindex.html">QModelIndex</a></span> <span class="operator">&amp;</span>item<span class="operator">,</span> <span class="type">int</span> role) <span class="keyword">const</span>
+  {
+      <span class="keyword">if</span> (item<span class="operator">.</span>column() <span class="operator">=</span><span class="operator">=</span> m_specialColumnNo) {
+          <span class="comment">// handle column separately</span>
+      }
+      <span class="keyword">return</span> <span class="type"><a href="qsqlquerymodel.html#QSqlQueryModel">QSqlQueryModel</a></span><span class="operator">::</span>data(item<span class="operator">,</span> role);
+  }
+
+</pre>
+<p><b>See also </b><a href="qsqlquerymodel.html#removeColumns">removeColumns</a>().</p>
+<!-- @@@insertColumns -->
+<!-- $$$lastError[overload1]$$$lastError -->
+<h3 class="fn" id="lastError"><a name="lastError"></a><span class="type"><a href="qsqlerror.html">QSqlError</a></span> QSqlQueryModel::<span class="name">lastError</span>() const</h3>
+<p>Returns information about the last error that occurred on the database.</p>
+<p><b>See also </b><a href="qsqlquerymodel.html#setLastError">setLastError</a>() and <a href="qsqlquerymodel.html#query">query</a>().</p>
+<!-- @@@lastError -->
+<!-- $$$query[overload1]$$$query -->
+<h3 class="fn" id="query"><a name="query"></a><span class="type"><a href="qsqlquery.html">QSqlQuery</a></span> QSqlQueryModel::<span class="name">query</span>() const</h3>
+<p>Returns the <a href="qsqlquery.html">QSqlQuery</a> associated with this model.</p>
+<p><b>See also </b><a href="qsqlquerymodel.html#setQuery">setQuery</a>().</p>
+<!-- @@@query -->
+<!-- $$$queryChange[overload1]$$$queryChange -->
+<h3 class="fn" id="queryChange"><a name="queryChange"></a><code>[virtual protected] </code><span class="type">void</span> QSqlQueryModel::<span class="name">queryChange</span>()</h3>
+<p>This virtual function is called whenever the query changes. The default implementation does nothing.</p>
+<p><a href="qsqlquerymodel.html#query">query</a>() returns the new query.</p>
+<p><b>See also </b><a href="qsqlquerymodel.html#query">query</a>() and <a href="qsqlquerymodel.html#setQuery">setQuery</a>().</p>
+<!-- @@@queryChange -->
+<!-- $$$record[overload1]$$$recordint -->
+<h3 class="fn" id="record"><a name="record"></a><span class="type"><a href="qsqlrecord.html">QSqlRecord</a></span> QSqlQueryModel::<span class="name">record</span>(<span class="type">int</span> <i>row</i>) const</h3>
+<p>Returns the record containing information about the fields of the current query. If <i>row</i> is the index of a valid row, the record will be populated with values from that row.</p>
+<p>If the model is not initialized, an empty record will be returned.</p>
+<p><b>See also </b><a href="qsqlrecord.html#isEmpty">QSqlRecord::isEmpty</a>().</p>
+<!-- @@@record -->
+<!-- $$$record$$$record -->
+<h3 class="fn" id="record-1"><a name="record-1"></a><span class="type"><a href="qsqlrecord.html">QSqlRecord</a></span> QSqlQueryModel::<span class="name">record</span>() const</h3>
+<p>This is an overloaded function.</p>
+<p>Returns an empty record containing information about the fields of the current query.</p>
+<p>If the model is not initialized, an empty record will be returned.</p>
+<p><b>See also </b><a href="qsqlrecord.html#isEmpty">QSqlRecord::isEmpty</a>().</p>
+<!-- @@@record -->
+<!-- $$$removeColumns[overload1]$$$removeColumnsintintconstQModelIndex& -->
+<h3 class="fn" id="removeColumns"><a name="removeColumns"></a><code>[virtual] </code><span class="type">bool</span> QSqlQueryModel::<span class="name">removeColumns</span>(<span class="type">int</span> <i>column</i>, <span class="type">int</span> <i>count</i>, const <span class="type"><a href="../qtcore/qmodelindex.html">QModelIndex</a></span> &amp;<i>parent</i> = QModelIndex())</h3>
+<p>Reimplemented from <a href="../qtcore/qabstractitemmodel.html#removeColumns">QAbstractItemModel::removeColumns</a>().</p>
+<p>Removes <i>count</i> columns from the model starting from position <i>column</i>. The <i>parent</i> parameter must always be an invalid <a href="../qtcore/qmodelindex.html">QModelIndex</a>, since the model does not support parent-child relationships.</p>
+<p>Removing columns effectively hides them. It does not affect the underlying <a href="qsqlquery.html">QSqlQuery</a>.</p>
+<p>Returns <code>true</code> if the columns were removed; otherwise returns <code>false</code>.</p>
+<!-- @@@removeColumns -->
+<!-- $$$rowCount[overload1]$$$rowCountconstQModelIndex& -->
+<h3 class="fn" id="rowCount"><a name="rowCount"></a><code>[virtual] </code><span class="type">int</span> QSqlQueryModel::<span class="name">rowCount</span>(const <span class="type"><a href="../qtcore/qmodelindex.html">QModelIndex</a></span> &amp;<i>parent</i> = QModelIndex()) const</h3>
+<p>Reimplemented from <a href="../qtcore/qabstractitemmodel.html#rowCount">QAbstractItemModel::rowCount</a>().</p>
+<p>If the database supports returning the size of a query (see <a href="qsqldriver.html#hasFeature">QSqlDriver::hasFeature</a>()), the number of rows of the current query is returned. Otherwise, returns the number of rows currently cached on the client.</p>
+<p><i>parent</i> should always be an invalid <a href="../qtcore/qmodelindex.html">QModelIndex</a>.</p>
+<p>This function was introduced in  Qt 4.1.</p>
+<p><b>See also </b><a href="qsqlquerymodel.html#canFetchMore">canFetchMore</a>() and <a href="qsqldriver.html#hasFeature">QSqlDriver::hasFeature</a>().</p>
+<!-- @@@rowCount -->
+<!-- $$$setHeaderData[overload1]$$$setHeaderDataintQt::OrientationconstQVariant&int -->
+<h3 class="fn" id="setHeaderData"><a name="setHeaderData"></a><code>[virtual] </code><span class="type">bool</span> QSqlQueryModel::<span class="name">setHeaderData</span>(<span class="type">int</span> <i>section</i>, <span class="type"><a href="../qtcore/qt.html#Orientation-enum">Qt::Orientation</a></span> <i>orientation</i>, const <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span> &amp;<i>value</i>, <span class="type">int</span> <i>role</i> = Qt::EditRole)</h3>
+<p>Reimplemented from <a href="../qtcore/qabstractitemmodel.html#setHeaderData">QAbstractItemModel::setHeaderData</a>().</p>
+<p>Sets the caption for a horizontal header for the specified <i>role</i> to <i>value</i>. This is useful if the model is used to display data in a view (e.g&#x2e;, <a href="../qtwidgets/qtableview.html">QTableView</a>).</p>
+<p>Returns <code>true</code> if <i>orientation</i> is <a href="../qtcore/qt.html#Orientation-enum">Qt::Horizontal</a> and the <i>section</i> refers to a valid section; otherwise returns false.</p>
+<p>Note that this function cannot be used to modify values in the database since the model is read-only.</p>
+<p><b>See also </b><a href="qsqlquerymodel.html#headerData">headerData</a>() and <a href="qsqlquerymodel.html#data">data</a>().</p>
+<!-- @@@setHeaderData -->
+<!-- $$$setLastError[overload1]$$$setLastErrorconstQSqlError& -->
+<h3 class="fn" id="setLastError"><a name="setLastError"></a><code>[protected] </code><span class="type">void</span> QSqlQueryModel::<span class="name">setLastError</span>(const <span class="type"><a href="qsqlerror.html">QSqlError</a></span> &amp;<i>error</i>)</h3>
+<p>Protected function which allows derived classes to set the value of the last error that occurred on the database to <i>error</i>.</p>
+<p><b>See also </b><a href="qsqlquerymodel.html#lastError">lastError</a>().</p>
+<!-- @@@setLastError -->
+<!-- $$$setQuery[overload1]$$$setQueryconstQSqlQuery& -->
+<h3 class="fn" id="setQuery"><a name="setQuery"></a><span class="type">void</span> QSqlQueryModel::<span class="name">setQuery</span>(const <span class="type"><a href="qsqlquery.html">QSqlQuery</a></span> &amp;<i>query</i>)</h3>
+<p>Resets the model and sets the data provider to be the given <i>query</i>. Note that the query must be active and must not be isForwardOnly().</p>
+<p><a href="qsqlquerymodel.html#lastError">lastError</a>() can be used to retrieve verbose information if there was an error setting the query.</p>
+<p><b>Note: </b>Calling setQuery() will remove any inserted columns.</p><p><b>See also </b><a href="qsqlquerymodel.html#query">query</a>(), <a href="qsqlquery.html#isActive">QSqlQuery::isActive</a>(), <a href="qsqlquery.html#setForwardOnly">QSqlQuery::setForwardOnly</a>(), and <a href="qsqlquerymodel.html#lastError">lastError</a>().</p>
+<!-- @@@setQuery -->
+<!-- $$$setQuery$$$setQueryconstQString&constQSqlDatabase& -->
+<h3 class="fn" id="setQuery-1"><a name="setQuery-1"></a><span class="type">void</span> QSqlQueryModel::<span class="name">setQuery</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>query</i>, const <span class="type"><a href="qsqldatabase.html">QSqlDatabase</a></span> &amp;<i>db</i> = QSqlDatabase())</h3>
+<p>This is an overloaded function.</p>
+<p>Executes the query <i>query</i> for the given database connection <i>db</i>. If no database (or an invalid database) is specified, the default connection is used.</p>
+<p><a href="qsqlquerymodel.html#lastError">lastError</a>() can be used to retrieve verbose information if there was an error setting the query.</p>
+<p>Example:</p>
+<pre class="cpp">
+
+  <span class="type"><a href="qsqlquerymodel.html#QSqlQueryModel">QSqlQueryModel</a></span> model;
+  model<span class="operator">.</span>setQuery(<span class="string">&quot;select * from MyTable&quot;</span>);
+  <span class="keyword">if</span> (model<span class="operator">.</span>lastError()<span class="operator">.</span>isValid())
+      <a href="../qtcore/qtglobal.html#qDebug">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> model<span class="operator">.</span>lastError();
+
+</pre>
+<p><b>See also </b><a href="qsqlquerymodel.html#query">query</a>(), <a href="qsqlquerymodel.html#queryChange">queryChange</a>(), and <a href="qsqlquerymodel.html#lastError">lastError</a>().</p>
+<!-- @@@setQuery -->
+</div>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

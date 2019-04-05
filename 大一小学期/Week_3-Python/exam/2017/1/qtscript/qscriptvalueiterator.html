@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qscriptvalueiterator.cpp -->
+  <title>QScriptValueIterator Class | Qt Script</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtscript-index.html">Qt Script</a></td><td ><a href="qtscript-module.html">C++ Classes</a></td><td >QScriptValueIterator</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">QScriptValueIterator Class</h1>
+<!-- $$$QScriptValueIterator-brief -->
+<p>The <a href="qscriptvalueiterator.html">QScriptValueIterator</a> class provides a Java-style iterator for <a href="qscriptvalue.html">QScriptValue</a>. <a href="#details">More...</a></p>
+<!-- @@@QScriptValueIterator -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign">   <span class="preprocessor">#include &lt;QScriptValueIterator&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> qmake:</td><td class="memItemRight bottomAlign"> QT += script</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Since:</td><td class="memItemRight bottomAlign">  Qt 4.3</td></tr></table></div><ul>
+<li><a href="qscriptvalueiterator-members.html">List of all members, including inherited members</a></li>
+</ul>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qscriptvalueiterator.html#QScriptValueIterator">QScriptValueIterator</a></b>(const QScriptValue &amp;<i>object</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qscriptvalueiterator.html#dtor.QScriptValueIterator">~QScriptValueIterator</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QScriptValue::PropertyFlags </td><td class="memItemRight bottomAlign"><b><a href="qscriptvalueiterator.html#flags">flags</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qscriptvalueiterator.html#hasNext">hasNext</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qscriptvalueiterator.html#hasPrevious">hasPrevious</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qscriptvalueiterator.html#name">name</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qscriptvalueiterator.html#next">next</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qscriptvalueiterator.html#previous">previous</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qscriptvalueiterator.html#remove">remove</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QScriptString </td><td class="memItemRight bottomAlign"><b><a href="qscriptvalueiterator.html#scriptName">scriptName</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qscriptvalueiterator.html#setValue">setValue</a></b>(const QScriptValue &amp;<i>value</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qscriptvalueiterator.html#toBack">toBack</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qscriptvalueiterator.html#toFront">toFront</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QScriptValue </td><td class="memItemRight bottomAlign"><b><a href="qscriptvalueiterator.html#value">value</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QScriptValueIterator &amp;</td><td class="memItemRight bottomAlign"><b><a href="qscriptvalueiterator.html#operator-eq">operator=</a></b>(QScriptValue &amp;<i>object</i>)</td></tr>
+</table></div>
+<a name="details"></a>
+<!-- $$$QScriptValueIterator-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="qscriptvalueiterator.html">QScriptValueIterator</a> class provides a Java-style iterator for <a href="qscriptvalue.html">QScriptValue</a>.</p>
+<p>The <a href="qscriptvalueiterator.html">QScriptValueIterator</a> constructor takes a <a href="qscriptvalue.html">QScriptValue</a> as argument. After construction, the iterator is located at the very beginning of the sequence of properties. Here's how to iterate over all the properties of a <a href="qscriptvalue.html">QScriptValue</a>:</p>
+<pre class="cpp">
+
+  <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> object;
+  <span class="operator">.</span><span class="operator">.</span><span class="operator">.</span>
+  <span class="type"><a href="qscriptvalueiterator.html#QScriptValueIterator">QScriptValueIterator</a></span> it(object);
+  <span class="keyword">while</span> (it<span class="operator">.</span>hasNext()) {
+      it<span class="operator">.</span>next();
+      <a href="../qtcore/qtglobal.html#qDebug">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> it<span class="operator">.</span>name() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">&quot;: &quot;</span> <span class="operator">&lt;</span><span class="operator">&lt;</span> it<span class="operator">.</span>value()<span class="operator">.</span>toString();
+  }
+
+</pre>
+<p>The <a href="qscriptvalueiterator.html#next">next</a>() advances the iterator. The <a href="qscriptvalueiterator.html#name">name</a>(), <a href="qscriptvalueiterator.html#value">value</a>() and <a href="qscriptvalueiterator.html#flags">flags</a>() functions return the name, value and flags of the last item that was jumped over.</p>
+<p>If you want to remove properties as you iterate over the <a href="qscriptvalue.html">QScriptValue</a>, use <a href="qscriptvalueiterator.html#remove">remove</a>(). If you want to modify the value of a property, use <a href="qscriptvalueiterator.html#setValue">setValue</a>().</p>
+<p>Note that <a href="qscriptvalueiterator.html">QScriptValueIterator</a> only iterates over the <a href="qscriptvalue.html">QScriptValue</a>'s own properties; i.e&#x2e; it does not follow the prototype chain. You can use a loop like this to follow the prototype chain:</p>
+<pre class="cpp">
+
+  <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> obj <span class="operator">=</span> <span class="operator">.</span><span class="operator">.</span><span class="operator">.</span>; <span class="comment">// the object to iterate over</span>
+  <span class="keyword">while</span> (obj<span class="operator">.</span>isObject()) {
+      <span class="type"><a href="qscriptvalueiterator.html#QScriptValueIterator">QScriptValueIterator</a></span> it(obj);
+      <span class="keyword">while</span> (it<span class="operator">.</span>hasNext()) {
+          it<span class="operator">.</span>next();
+          <a href="../qtcore/qtglobal.html#qDebug">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> it<span class="operator">.</span>name();
+      }
+      obj <span class="operator">=</span> obj<span class="operator">.</span>prototype();
+  }
+
+</pre>
+<p>Note that <a href="qscriptvalueiterator.html">QScriptValueIterator</a> will not automatically skip over properties that have the <a href="qscriptvalue.html#PropertyFlag-enum">QScriptValue::SkipInEnumeration</a> flag set; that flag only affects iteration in script code. If you want, you can skip over such properties with code like the following:</p>
+<pre class="cpp">
+
+  <span class="keyword">while</span> (it<span class="operator">.</span>hasNext()) {
+      it<span class="operator">.</span>next();
+      <span class="keyword">if</span> (it<span class="operator">.</span>flags() <span class="operator">&amp;</span> <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span><span class="operator">::</span>SkipInEnumeration)
+          <span class="keyword">continue</span>;
+      <a href="../qtcore/qtglobal.html#qDebug">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">&quot;found enumerated property:&quot;</span> <span class="operator">&lt;</span><span class="operator">&lt;</span> it<span class="operator">.</span>name();
+  }
+
+</pre>
+</div>
+<p><b>See also </b><a href="qscriptvalue.html#property">QScriptValue::property</a>().</p>
+<!-- @@@QScriptValueIterator -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$QScriptValueIterator[overload1]$$$QScriptValueIteratorconstQScriptValue& -->
+<h3 class="fn" id="QScriptValueIterator"><a name="QScriptValueIterator"></a>QScriptValueIterator::<span class="name">QScriptValueIterator</span>(const <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> &amp;<i>object</i>)</h3>
+<p>Constructs an iterator for traversing <i>object</i>. The iterator is set to be at the front of the sequence of properties (before the first property).</p>
+<!-- @@@QScriptValueIterator -->
+<!-- $$$~QScriptValueIterator[overload1]$$$~QScriptValueIterator -->
+<h3 class="fn" id="dtor.QScriptValueIterator"><a name="dtor.QScriptValueIterator"></a>QScriptValueIterator::<span class="name">~QScriptValueIterator</span>()</h3>
+<p>Destroys the iterator.</p>
+<!-- @@@~QScriptValueIterator -->
+<!-- $$$flags[overload1]$$$flags -->
+<h3 class="fn" id="flags"><a name="flags"></a><span class="type"><a href="qscriptvalue.html#PropertyFlag-enum">QScriptValue::PropertyFlags</a></span> QScriptValueIterator::<span class="name">flags</span>() const</h3>
+<p>Returns the flags of the last property that was jumped over using <a href="qscriptvalueiterator.html#next">next</a>() or <a href="qscriptvalueiterator.html#previous">previous</a>().</p>
+<p><b>See also </b><a href="qscriptvalueiterator.html#value">value</a>().</p>
+<!-- @@@flags -->
+<!-- $$$hasNext[overload1]$$$hasNext -->
+<h3 class="fn" id="hasNext"><a name="hasNext"></a><span class="type">bool</span> QScriptValueIterator::<span class="name">hasNext</span>() const</h3>
+<p>Returns true if there is at least one item ahead of the iterator (i.e&#x2e; the iterator is <i>not</i> at the back of the property sequence); otherwise returns false.</p>
+<p><b>See also </b><a href="qscriptvalueiterator.html#next">next</a>() and <a href="qscriptvalueiterator.html#hasPrevious">hasPrevious</a>().</p>
+<!-- @@@hasNext -->
+<!-- $$$hasPrevious[overload1]$$$hasPrevious -->
+<h3 class="fn" id="hasPrevious"><a name="hasPrevious"></a><span class="type">bool</span> QScriptValueIterator::<span class="name">hasPrevious</span>() const</h3>
+<p>Returns true if there is at least one item behind the iterator (i.e&#x2e; the iterator is <i>not</i> at the front of the property sequence); otherwise returns false.</p>
+<p><b>See also </b><a href="qscriptvalueiterator.html#previous">previous</a>() and <a href="qscriptvalueiterator.html#hasNext">hasNext</a>().</p>
+<!-- @@@hasPrevious -->
+<!-- $$$name[overload1]$$$name -->
+<h3 class="fn" id="name"><a name="name"></a><span class="type"><a href="../qtcore/qstring.html">QString</a></span> QScriptValueIterator::<span class="name">name</span>() const</h3>
+<p>Returns the name of the last property that was jumped over using <a href="qscriptvalueiterator.html#next">next</a>() or <a href="qscriptvalueiterator.html#previous">previous</a>().</p>
+<p><b>See also </b><a href="qscriptvalueiterator.html#value">value</a>() and <a href="qscriptvalueiterator.html#flags">flags</a>().</p>
+<!-- @@@name -->
+<!-- $$$next[overload1]$$$next -->
+<h3 class="fn" id="next"><a name="next"></a><span class="type">void</span> QScriptValueIterator::<span class="name">next</span>()</h3>
+<p>Advances the iterator by one position.</p>
+<p>Calling this function on an iterator located at the back of the container leads to undefined results.</p>
+<p><b>See also </b><a href="qscriptvalueiterator.html#hasNext">hasNext</a>(), <a href="qscriptvalueiterator.html#previous">previous</a>(), and <a href="qscriptvalueiterator.html#name">name</a>().</p>
+<!-- @@@next -->
+<!-- $$$previous[overload1]$$$previous -->
+<h3 class="fn" id="previous"><a name="previous"></a><span class="type">void</span> QScriptValueIterator::<span class="name">previous</span>()</h3>
+<p>Moves the iterator back by one position.</p>
+<p>Calling this function on an iterator located at the front of the container leads to undefined results.</p>
+<p><b>See also </b><a href="qscriptvalueiterator.html#hasPrevious">hasPrevious</a>(), <a href="qscriptvalueiterator.html#next">next</a>(), and <a href="qscriptvalueiterator.html#name">name</a>().</p>
+<!-- @@@previous -->
+<!-- $$$remove[overload1]$$$remove -->
+<h3 class="fn" id="remove"><a name="remove"></a><span class="type">void</span> QScriptValueIterator::<span class="name">remove</span>()</h3>
+<p>Removes the last property that was jumped over using <a href="qscriptvalueiterator.html#next">next</a>() or <a href="qscriptvalueiterator.html#previous">previous</a>().</p>
+<p><b>See also </b><a href="qscriptvalueiterator.html#setValue">setValue</a>().</p>
+<!-- @@@remove -->
+<!-- $$$scriptName[overload1]$$$scriptName -->
+<h3 class="fn" id="scriptName"><a name="scriptName"></a><span class="type"><a href="qscriptstring.html">QScriptString</a></span> QScriptValueIterator::<span class="name">scriptName</span>() const</h3>
+<p>Returns the name of the last property that was jumped over using <a href="qscriptvalueiterator.html#next">next</a>() or <a href="qscriptvalueiterator.html#previous">previous</a>().</p>
+<p>This function was introduced in  Qt 4.4.</p>
+<!-- @@@scriptName -->
+<!-- $$$setValue[overload1]$$$setValueconstQScriptValue& -->
+<h3 class="fn" id="setValue"><a name="setValue"></a><span class="type">void</span> QScriptValueIterator::<span class="name">setValue</span>(const <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> &amp;<i>value</i>)</h3>
+<p>Sets the <i>value</i> of the last property that was jumped over using <a href="qscriptvalueiterator.html#next">next</a>() or <a href="qscriptvalueiterator.html#previous">previous</a>().</p>
+<p><b>See also </b><a href="qscriptvalueiterator.html#value">value</a>() and <a href="qscriptvalueiterator.html#name">name</a>().</p>
+<!-- @@@setValue -->
+<!-- $$$toBack[overload1]$$$toBack -->
+<h3 class="fn" id="toBack"><a name="toBack"></a><span class="type">void</span> QScriptValueIterator::<span class="name">toBack</span>()</h3>
+<p>Moves the iterator to the back of the <a href="qscriptvalue.html">QScriptValue</a> (after the last property).</p>
+<p><b>See also </b><a href="qscriptvalueiterator.html#toFront">toFront</a>() and <a href="qscriptvalueiterator.html#previous">previous</a>().</p>
+<!-- @@@toBack -->
+<!-- $$$toFront[overload1]$$$toFront -->
+<h3 class="fn" id="toFront"><a name="toFront"></a><span class="type">void</span> QScriptValueIterator::<span class="name">toFront</span>()</h3>
+<p>Moves the iterator to the front of the <a href="qscriptvalue.html">QScriptValue</a> (before the first property).</p>
+<p><b>See also </b><a href="qscriptvalueiterator.html#toBack">toBack</a>() and <a href="qscriptvalueiterator.html#next">next</a>().</p>
+<!-- @@@toFront -->
+<!-- $$$value[overload1]$$$value -->
+<h3 class="fn" id="value"><a name="value"></a><span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> QScriptValueIterator::<span class="name">value</span>() const</h3>
+<p>Returns the value of the last property that was jumped over using <a href="qscriptvalueiterator.html#next">next</a>() or <a href="qscriptvalueiterator.html#previous">previous</a>().</p>
+<p><b>See also </b><a href="qscriptvalueiterator.html#setValue">setValue</a>() and <a href="qscriptvalueiterator.html#name">name</a>().</p>
+<!-- @@@value -->
+<!-- $$$operator=[overload1]$$$operator=QScriptValue& -->
+<h3 class="fn" id="operator-eq"><a name="operator-eq"></a><span class="type"><a href="qscriptvalueiterator.html#QScriptValueIterator">QScriptValueIterator</a></span> &amp;QScriptValueIterator::<span class="name">operator=</span>(<span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> &amp;<i>object</i>)</h3>
+<p>Makes the iterator operate on <i>object</i>. The iterator is set to be at the front of the sequence of properties (before the first property).</p>
+<!-- @@@operator= -->
+</div>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

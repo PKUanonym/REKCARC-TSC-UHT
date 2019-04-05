@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- sqlwidgetmapper.qdoc -->
+  <title>SQL Widget Mapper Example | Qt SQL 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtsql-index.html">Qt SQL</a></td><td >SQL Widget Mapper Example</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#window-class-definition">Window Class Definition</a></li>
+<li class="level1"><a href="#window-class-implementation">Window Class Implementation</a></li>
+<li class="level1"><a href="#summary-and-further-reading">Summary and Further Reading</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">SQL Widget Mapper Example</h1>
+<span class="subtitle"></span>
+<!-- $$$sqlwidgetmapper-description -->
+<div class="descr"> <a name="details"></a>
+<p class="centerAlign"><img src="images/sql-widget-mapper.png" alt="" /></p><p>In the <a href="../qtwidgets/qtwidgets-itemviews-combowidgetmapper-example.html">Combo Widget Mapper Example</a>, we showed how to use a named mapping between a widget mapper and a <a href="../qtwidgets/qcombobox.html">QComboBox</a> widget with a special purpose model to relate values in the model to a list of choices.</p>
+<p>Again, we create a <code>Window</code> class with an almost identical user interface, providing a combo box to allow their addresses to be classified as &quot;Home&quot;, &quot;Work&quot; or &quot;Other&quot;. However, instead of using a separate model to hold these address types, we use one database table to hold the example data and another to hold the address types. In this way, we store all the information in the same place.</p>
+<a name="window-class-definition"></a>
+<h2 id="window-class-definition">Window Class Definition</h2>
+<p>The class provides a constructor, a slot to keep the buttons up to date, and a private function to set up the model:</p>
+<pre class="cpp">
+
+  <span class="keyword">class</span> Window : <span class="keyword">public</span> <span class="type"><a href="../qtwidgets/qwidget.html">QWidget</a></span>
+  {
+      Q_OBJECT
+
+  <span class="keyword">public</span>:
+      Window(<span class="type"><a href="../qtwidgets/qwidget.html">QWidget</a></span> <span class="operator">*</span>parent <span class="operator">=</span> <span class="number">0</span>);
+
+  <span class="keyword">private</span> <span class="keyword">slots</span>:
+      <span class="type">void</span> updateButtons(<span class="type">int</span> row);
+
+  <span class="keyword">private</span>:
+      <span class="type">void</span> setupModel();
+
+      <span class="type"><a href="../qtwidgets/qlabel.html">QLabel</a></span> <span class="operator">*</span>nameLabel;
+      <span class="type"><a href="../qtwidgets/qlabel.html">QLabel</a></span> <span class="operator">*</span>addressLabel;
+      <span class="type"><a href="../qtwidgets/qlabel.html">QLabel</a></span> <span class="operator">*</span>typeLabel;
+      <span class="type"><a href="../qtwidgets/qlineedit.html">QLineEdit</a></span> <span class="operator">*</span>nameEdit;
+      <span class="type"><a href="../qtwidgets/qtextedit.html">QTextEdit</a></span> <span class="operator">*</span>addressEdit;
+      <span class="type"><a href="../qtwidgets/qcombobox.html">QComboBox</a></span> <span class="operator">*</span>typeComboBox;
+      <span class="type"><a href="../qtwidgets/qpushbutton.html">QPushButton</a></span> <span class="operator">*</span>nextButton;
+      <span class="type"><a href="../qtwidgets/qpushbutton.html">QPushButton</a></span> <span class="operator">*</span>previousButton;
+
+      <span class="type"><a href="qsqlrelationaltablemodel.html">QSqlRelationalTableModel</a></span> <span class="operator">*</span>model;
+      <span class="type"><a href="../qtcore/qitemselectionmodel.html">QItemSelectionModel</a></span> <span class="operator">*</span>selectionModel;
+      <span class="type"><a href="../qtwidgets/qdatawidgetmapper.html">QDataWidgetMapper</a></span> <span class="operator">*</span>mapper;
+      <span class="type">int</span> typeIndex;
+  };
+
+</pre>
+<p>In addition to the <a href="../qtwidgets/qdatawidgetmapper.html">QDataWidgetMapper</a> object and the controls used to make up the user interface, we use a QStandardItemModel to hold our data and a <a href="../qtcore/qstringlistmodel.html">QStringListModel</a> to hold information about the types of address that can be applied to each person's data.</p>
+<a name="window-class-implementation"></a>
+<h2 id="window-class-implementation">Window Class Implementation</h2>
+<p>The first act performed by the <code>Window</code> class constructor is to set up the model used to hold the example data. Since this is a key part of the example, we will look at this first.</p>
+<p>The model is initialized in the window's <code>setupModel()</code> function. Here, we create a SQLite database containing a &quot;person&quot; table with primary key, name, address and type fields.</p>
+<pre class="cpp">
+
+  <span class="type">void</span> Window<span class="operator">::</span>setupModel()
+  {
+      <span class="type"><a href="qsqldatabase.html">QSqlDatabase</a></span> db <span class="operator">=</span> <span class="type"><a href="qsqldatabase.html">QSqlDatabase</a></span><span class="operator">::</span>addDatabase(<span class="string">&quot;QSQLITE&quot;</span>);
+      db<span class="operator">.</span>setDatabaseName(<span class="string">&quot;:memory:&quot;</span>);
+      <span class="keyword">if</span> (<span class="operator">!</span>db<span class="operator">.</span>open()) {
+          <span class="type"><a href="../qtwidgets/qmessagebox.html">QMessageBox</a></span><span class="operator">::</span>critical(<span class="number">0</span><span class="operator">,</span> tr(<span class="string">&quot;Cannot open database&quot;</span>)<span class="operator">,</span>
+              tr(<span class="string">&quot;Unable to establish a database connection.\n&quot;</span>
+                 <span class="string">&quot;This example needs SQLite support. Please read &quot;</span>
+                 <span class="string">&quot;the Qt SQL driver documentation for information how &quot;</span>
+                 <span class="string">&quot;to build it.&quot;</span>)<span class="operator">,</span> <span class="type"><a href="../qtwidgets/qmessagebox.html">QMessageBox</a></span><span class="operator">::</span>Cancel);
+          <span class="keyword">return</span>;
+      }
+
+      <span class="type"><a href="qsqlquery.html">QSqlQuery</a></span> query;
+      query<span class="operator">.</span>exec(<span class="string">&quot;create table person (id int primary key, &quot;</span>
+                 <span class="string">&quot;name varchar(20), address varchar(200), typeid int)&quot;</span>);
+      query<span class="operator">.</span>exec(<span class="string">&quot;insert into person values(1, 'Alice', &quot;</span>
+                 <span class="string">&quot;'&lt;qt&gt;123 Main Street&lt;br/&gt;Market Town&lt;/qt&gt;', 101)&quot;</span>);
+      query<span class="operator">.</span>exec(<span class="string">&quot;insert into person values(2, 'Bob', &quot;</span>
+                 <span class="string">&quot;'&lt;qt&gt;PO Box 32&lt;br/&gt;Mail Handling Service&quot;</span>
+                 <span class="string">&quot;&lt;br/&gt;Service City&lt;/qt&gt;', 102)&quot;</span>);
+      query<span class="operator">.</span>exec(<span class="string">&quot;insert into person values(3, 'Carol', &quot;</span>
+                 <span class="string">&quot;'&lt;qt&gt;The Lighthouse&lt;br/&gt;Remote Island&lt;/qt&gt;', 103)&quot;</span>);
+      query<span class="operator">.</span>exec(<span class="string">&quot;insert into person values(4, 'Donald', &quot;</span>
+                 <span class="string">&quot;'&lt;qt&gt;47338 Park Avenue&lt;br/&gt;Big City&lt;/qt&gt;', 101)&quot;</span>);
+      query<span class="operator">.</span>exec(<span class="string">&quot;insert into person values(5, 'Emma', &quot;</span>
+                 <span class="string">&quot;'&lt;qt&gt;Research Station&lt;br/&gt;Base Camp&lt;br/&gt;&quot;</span>
+                 <span class="string">&quot;Big Mountain&lt;/qt&gt;', 103)&quot;</span>);
+
+</pre>
+<p>On each row of the table, we insert default values for these fields, including values for the address types that correspond to the address types are stored in a separate table.</p>
+<p class="centerAlign"><img src="images/widgetmapper-sql-mapping-table.png" alt="" /></p><p>We create an &quot;addresstype&quot; table containing the identifiers used in the &quot;person&quot; table and the corresponding strings:</p>
+<pre class="cpp">
+
+      query<span class="operator">.</span>exec(<span class="string">&quot;create table addresstype (id int, description varchar(20))&quot;</span>);
+      query<span class="operator">.</span>exec(<span class="string">&quot;insert into addresstype values(101, 'Home')&quot;</span>);
+      query<span class="operator">.</span>exec(<span class="string">&quot;insert into addresstype values(102, 'Work')&quot;</span>);
+      query<span class="operator">.</span>exec(<span class="string">&quot;insert into addresstype values(103, 'Other')&quot;</span>);
+
+      model <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="qsqlrelationaltablemodel.html">QSqlRelationalTableModel</a></span>(<span class="keyword">this</span>);
+      model<span class="operator">-</span><span class="operator">&gt;</span>setTable(<span class="string">&quot;person&quot;</span>);
+      model<span class="operator">-</span><span class="operator">&gt;</span>setEditStrategy(<span class="type"><a href="qsqltablemodel.html">QSqlTableModel</a></span><span class="operator">::</span>OnManualSubmit);
+
+      typeIndex <span class="operator">=</span> model<span class="operator">-</span><span class="operator">&gt;</span>fieldIndex(<span class="string">&quot;typeid&quot;</span>);
+
+      model<span class="operator">-</span><span class="operator">&gt;</span>setRelation(typeIndex<span class="operator">,</span>
+             <span class="type"><a href="qsqlrelation.html">QSqlRelation</a></span>(<span class="string">&quot;addresstype&quot;</span><span class="operator">,</span> <span class="string">&quot;id&quot;</span><span class="operator">,</span> <span class="string">&quot;description&quot;</span>));
+      model<span class="operator">-</span><span class="operator">&gt;</span>select();
+  }
+
+</pre>
+<p>The &quot;typeid&quot; field in the &quot;person&quot; table is related to the contents of the &quot;addresstype&quot; table via a relation in a <a href="qsqlrelationaltablemodel.html">QSqlRelationalTableModel</a>. This kind of model performs all the necessary work to store the data in a database and also allows any relations to be used as models in their own right.</p>
+<p>In this case, we have defined a relation for the &quot;typeid&quot; field in the &quot;person&quot; table that relates it to the &quot;id&quot; field in the &quot;addresstype&quot; table and which causes the contents of the &quot;description&quot; field to be used wherever the &quot;typeid&quot; is presented to the user. (See the <a href="qsqlrelationaltablemodel.html#setRelation">QSqlRelationalTableModel::setRelation</a>() documentation for details.)</p>
+<p class="centerAlign"><img src="images/widgetmapper-sql-mapping.png" alt="" /></p><p>The constructor of the <code>Window</code> class can be explained in three parts. In the first part, we set up the model used to hold the data, then we set up the widgets used for the user interface:</p>
+<pre class="cpp">
+
+  Window<span class="operator">::</span>Window(<span class="type"><a href="../qtwidgets/qwidget.html">QWidget</a></span> <span class="operator">*</span>parent)
+      : <span class="type"><a href="../qtwidgets/qwidget.html">QWidget</a></span>(parent)
+  {
+      setupModel();
+
+      nameLabel <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qlabel.html">QLabel</a></span>(tr(<span class="string">&quot;Na&amp;me:&quot;</span>));
+      nameEdit <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qlineedit.html">QLineEdit</a></span>();
+      addressLabel <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qlabel.html">QLabel</a></span>(tr(<span class="string">&quot;&amp;Address:&quot;</span>));
+      addressEdit <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qtextedit.html">QTextEdit</a></span>();
+      typeLabel <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qlabel.html">QLabel</a></span>(tr(<span class="string">&quot;&amp;Type:&quot;</span>));
+      typeComboBox <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qcombobox.html">QComboBox</a></span>();
+      nextButton <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qpushbutton.html">QPushButton</a></span>(tr(<span class="string">&quot;&amp;Next&quot;</span>));
+      previousButton <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qpushbutton.html">QPushButton</a></span>(tr(<span class="string">&quot;&amp;Previous&quot;</span>));
+
+      nameLabel<span class="operator">-</span><span class="operator">&gt;</span>setBuddy(nameEdit);
+      addressLabel<span class="operator">-</span><span class="operator">&gt;</span>setBuddy(addressEdit);
+      typeLabel<span class="operator">-</span><span class="operator">&gt;</span>setBuddy(typeComboBox);
+
+</pre>
+<p>We obtain a model for the combo box from the main model, based on the relation we set up for the &quot;typeid&quot; field. The call to the combo box's <a href="../qtwidgets/qcombobox.html#modelColumn-prop">setModelColumn()</a> selects the field in the field in the model to display.</p>
+<p>Note that this approach is similar to the one used in the <a href="../qtwidgets/qtwidgets-itemviews-combowidgetmapper-example.html">Combo Widget Mapper Example</a> in that we set up a model for the combo box. However, in this case, we obtain a model based on a relation in the <a href="qsqlrelationaltablemodel.html">QSqlRelationalTableModel</a> rather than create a separate one.</p>
+<p>Next, we set up the widget mapper, relating each input widget to a field in the model:</p>
+<pre class="cpp">
+
+      <span class="type"><a href="qsqltablemodel.html">QSqlTableModel</a></span> <span class="operator">*</span>relModel <span class="operator">=</span> model<span class="operator">-</span><span class="operator">&gt;</span>relationModel(typeIndex);
+      typeComboBox<span class="operator">-</span><span class="operator">&gt;</span>setModel(relModel);
+      typeComboBox<span class="operator">-</span><span class="operator">&gt;</span>setModelColumn(relModel<span class="operator">-</span><span class="operator">&gt;</span>fieldIndex(<span class="string">&quot;description&quot;</span>));
+
+      mapper <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qdatawidgetmapper.html">QDataWidgetMapper</a></span>(<span class="keyword">this</span>);
+      mapper<span class="operator">-</span><span class="operator">&gt;</span>setModel(model);
+      mapper<span class="operator">-</span><span class="operator">&gt;</span>setItemDelegate(<span class="keyword">new</span> <span class="type"><a href="qsqlrelationaldelegate.html">QSqlRelationalDelegate</a></span>(<span class="keyword">this</span>));
+      mapper<span class="operator">-</span><span class="operator">&gt;</span>addMapping(nameEdit<span class="operator">,</span> model<span class="operator">-</span><span class="operator">&gt;</span>fieldIndex(<span class="string">&quot;name&quot;</span>));
+      mapper<span class="operator">-</span><span class="operator">&gt;</span>addMapping(addressEdit<span class="operator">,</span> model<span class="operator">-</span><span class="operator">&gt;</span>fieldIndex(<span class="string">&quot;address&quot;</span>));
+      mapper<span class="operator">-</span><span class="operator">&gt;</span>addMapping(typeComboBox<span class="operator">,</span> typeIndex);
+
+</pre>
+<p>For the combo box, we already know the index of the field in the model from the <code>setupModel()</code> function. We use a <a href="qsqlrelationaldelegate.html">QSqlRelationalDelegate</a> as a proxy between the mapper and the input widgets to match up the &quot;typeid&quot; values in the model with those in the combo box's model and populate the combo box with descriptions rather than integer values.</p>
+<p>As a result, the user is able to select an item from the combo box, and the associated value is written back to the model.</p>
+<p>The rest of the constructor is very similar to that of the <a href="../qtwidgets/qtwidgets-itemviews-simplewidgetmapper-example.html">Simple Widget Mapper Example</a>:</p>
+<pre class="cpp">
+
+      connect(previousButton<span class="operator">,</span> SIGNAL(clicked())<span class="operator">,</span>
+              mapper<span class="operator">,</span> SLOT(toPrevious()));
+      connect(nextButton<span class="operator">,</span> SIGNAL(clicked())<span class="operator">,</span>
+              mapper<span class="operator">,</span> SLOT(toNext()));
+      connect(mapper<span class="operator">,</span> SIGNAL(currentIndexChanged(<span class="type">int</span>))<span class="operator">,</span>
+              <span class="keyword">this</span><span class="operator">,</span> SLOT(updateButtons(<span class="type">int</span>)));
+
+      <span class="type"><a href="../qtwidgets/qgridlayout.html">QGridLayout</a></span> <span class="operator">*</span>layout <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qgridlayout.html">QGridLayout</a></span>();
+      layout<span class="operator">-</span><span class="operator">&gt;</span>addWidget(nameLabel<span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">1</span><span class="operator">,</span> <span class="number">1</span>);
+      layout<span class="operator">-</span><span class="operator">&gt;</span>addWidget(nameEdit<span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">1</span><span class="operator">,</span> <span class="number">1</span><span class="operator">,</span> <span class="number">1</span>);
+      layout<span class="operator">-</span><span class="operator">&gt;</span>addWidget(previousButton<span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">2</span><span class="operator">,</span> <span class="number">1</span><span class="operator">,</span> <span class="number">1</span>);
+      layout<span class="operator">-</span><span class="operator">&gt;</span>addWidget(addressLabel<span class="operator">,</span> <span class="number">1</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">1</span><span class="operator">,</span> <span class="number">1</span>);
+      layout<span class="operator">-</span><span class="operator">&gt;</span>addWidget(addressEdit<span class="operator">,</span> <span class="number">1</span><span class="operator">,</span> <span class="number">1</span><span class="operator">,</span> <span class="number">2</span><span class="operator">,</span> <span class="number">1</span>);
+      layout<span class="operator">-</span><span class="operator">&gt;</span>addWidget(nextButton<span class="operator">,</span> <span class="number">1</span><span class="operator">,</span> <span class="number">2</span><span class="operator">,</span> <span class="number">1</span><span class="operator">,</span> <span class="number">1</span>);
+      layout<span class="operator">-</span><span class="operator">&gt;</span>addWidget(typeLabel<span class="operator">,</span> <span class="number">3</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">1</span><span class="operator">,</span> <span class="number">1</span>);
+      layout<span class="operator">-</span><span class="operator">&gt;</span>addWidget(typeComboBox<span class="operator">,</span> <span class="number">3</span><span class="operator">,</span> <span class="number">1</span><span class="operator">,</span> <span class="number">1</span><span class="operator">,</span> <span class="number">1</span>);
+      setLayout(layout);
+
+      setWindowTitle(tr(<span class="string">&quot;SQL Widget Mapper&quot;</span>));
+      mapper<span class="operator">-</span><span class="operator">&gt;</span>toFirst();
+  }
+
+</pre>
+<p>We show the implementation of the <code>updateButtons()</code> slot for completeness:</p>
+<pre class="cpp">
+
+  <span class="type">void</span> Window<span class="operator">::</span>updateButtons(<span class="type">int</span> row)
+  {
+      previousButton<span class="operator">-</span><span class="operator">&gt;</span>setEnabled(row <span class="operator">&gt;</span> <span class="number">0</span>);
+      nextButton<span class="operator">-</span><span class="operator">&gt;</span>setEnabled(row <span class="operator">&lt;</span> model<span class="operator">-</span><span class="operator">&gt;</span>rowCount() <span class="operator">-</span> <span class="number">1</span>);
+  }
+
+</pre>
+<a name="summary-and-further-reading"></a>
+<h2 id="summary-and-further-reading">Summary and Further Reading</h2>
+<p>The use of a separate model for the combo box and a special delegate for the widget mapper allows us to present a menu of choices to the user. Although the choices are stored in the same database as the user's data, they are held in a separate table. Using this approach, we can reconstructed complete records at a later time while using database features appropriately.</p>
+<p>If SQL models are not being used, it is still possible to use more than one model to present choices to the user. This is covered by the <a href="../qtwidgets/qtwidgets-itemviews-combowidgetmapper-example.html">Combo Widget Mapper Example</a>.</p>
+<p>Files:</p>
+<ul>
+<li><a href="qtsql-sqlwidgetmapper-window-cpp.html">sqlwidgetmapper/window.cpp</a></li>
+<li><a href="qtsql-sqlwidgetmapper-window-h.html">sqlwidgetmapper/window.h</a></li>
+<li><a href="qtsql-sqlwidgetmapper-main-cpp.html">sqlwidgetmapper/main.cpp</a></li>
+<li><a href="qtsql-sqlwidgetmapper-sqlwidgetmapper-pro.html">sqlwidgetmapper/sqlwidgetmapper.pro</a></li>
+</ul>
+</div>
+<!-- @@@sqlwidgetmapper -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

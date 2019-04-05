@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en" ng-app="indexApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Tsinghua News Search</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css">
+    <script type="text/javascript">var query_url = '{% url "query" %}'</script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
+    <script type="text/javascript" src="{% static 'thunews/indexapp.js' %}"></script>
+</head>
+
+<body grey lighten-3>
+
+    <div style="height: 300px"></div>
+
+    <div class="container" ng-controller="IndexController as indexCtrl">
+        <form name="searchForm" ng-submit="searchForm.$valid && indexCtrl.redirect()" novalidate>
+            <div class="input-field">
+                <div class="row">
+                    <input type="text" name="keywords" class="col s8 offset-s1" ng-model="indexCtrl.keywords" required>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <button class="btn waves-effect waves-light" type="submit">Search</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

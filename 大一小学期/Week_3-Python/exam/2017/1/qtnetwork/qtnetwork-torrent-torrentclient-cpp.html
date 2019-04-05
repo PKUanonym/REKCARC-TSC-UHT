@@ -1,0 +1,1579 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>torrentclient.cpp Example File | Qt Network 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtnetwork-index.html">Qt Network</a></td><td ><a href="qtnetwork-torrent-example.html">Torrent Example</a></td><td >torrentclient.cpp Example File</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar"><div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">torrentclient.cpp Example File</h1>
+<span class="subtitle">torrent/torrentclient.cpp</span>
+<!-- $$$torrent/torrentclient.cpp-description -->
+<div class="descr"> <a name="details"></a>
+<pre class="cpp">
+
+  <span class="comment">/****************************************************************************
+  **
+  ** Copyright (C) 2015 The Qt Company Ltd.
+  ** Contact: http://www.qt.io/licensing/
+  **
+  ** This file is part of the examples of the Qt Toolkit.
+  **
+  ** $QT_BEGIN_LICENSE:BSD$
+  ** You may use this file under the terms of the BSD license as follows:
+  **
+  ** &quot;Redistribution and use in source and binary forms, with or without
+  ** modification, are permitted provided that the following conditions are
+  ** met:
+  **   * Redistributions of source code must retain the above copyright
+  **     notice, this list of conditions and the following disclaimer.
+  **   * Redistributions in binary form must reproduce the above copyright
+  **     notice, this list of conditions and the following disclaimer in
+  **     the documentation and/or other materials provided with the
+  **     distribution.
+  **   * Neither the name of The Qt Company Ltd nor the names of its
+  **     contributors may be used to endorse or promote products derived
+  **     from this software without specific prior written permission.
+  **
+  **
+  ** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  ** &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  ** LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  ** A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  ** OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  ** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  ** LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  ** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  ** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  ** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.&quot;
+  **
+  ** $QT_END_LICENSE$
+  **
+  ****************************************************************************/</span>
+
+  <span class="preprocessor">#include &quot;connectionmanager.h&quot;</span>
+  <span class="preprocessor">#include &quot;filemanager.h&quot;</span>
+  <span class="preprocessor">#include &quot;metainfo.h&quot;</span>
+  <span class="preprocessor">#include &quot;torrentclient.h&quot;</span>
+  <span class="preprocessor">#include &quot;torrentserver.h&quot;</span>
+  <span class="preprocessor">#include &quot;trackerclient.h&quot;</span>
+  <span class="preprocessor">#include &quot;peerwireclient.h&quot;</span>
+  <span class="preprocessor">#include &quot;ratecontroller.h&quot;</span>
+
+  <span class="preprocessor">#include &lt;QtCore&gt;</span>
+  <span class="preprocessor">#include &lt;QNetworkInterface&gt;</span>
+
+  <span class="preprocessor">#include &lt;algorithm&gt;</span>
+
+  <span class="comment">// These constants could also be configurable by the user.</span>
+  <span class="keyword">static</span> <span class="keyword">const</span> <span class="type">int</span> ServerMinPort <span class="operator">=</span> <span class="number">6881</span>;
+  <span class="keyword">static</span> <span class="keyword">const</span> <span class="type">int</span> ServerMaxPort <span class="operator">=</span> <span class="comment">/* 6889 */</span> <span class="number">7000</span>;
+  <span class="keyword">static</span> <span class="keyword">const</span> <span class="type">int</span> BlockSize <span class="operator">=</span> <span class="number">16384</span>;
+  <span class="keyword">static</span> <span class="keyword">const</span> <span class="type">int</span> MaxBlocksInProgress <span class="operator">=</span> <span class="number">5</span>;
+  <span class="keyword">static</span> <span class="keyword">const</span> <span class="type">int</span> MaxBlocksInMultiMode <span class="operator">=</span> <span class="number">2</span>;
+  <span class="keyword">static</span> <span class="keyword">const</span> <span class="type">int</span> MaxConnectionPerPeer <span class="operator">=</span> <span class="number">1</span>;
+  <span class="keyword">static</span> <span class="keyword">const</span> <span class="type">int</span> RateControlWindowLength <span class="operator">=</span> <span class="number">10</span>;
+  <span class="keyword">static</span> <span class="keyword">const</span> <span class="type">int</span> RateControlTimerDelay <span class="operator">=</span> <span class="number">1000</span>;
+  <span class="keyword">static</span> <span class="keyword">const</span> <span class="type">int</span> MinimumTimeBeforeRevisit <span class="operator">=</span> <span class="number">30</span>;
+  <span class="keyword">static</span> <span class="keyword">const</span> <span class="type">int</span> MaxUploads <span class="operator">=</span> <span class="number">4</span>;
+  <span class="keyword">static</span> <span class="keyword">const</span> <span class="type">int</span> UploadScheduleInterval <span class="operator">=</span> <span class="number">10000</span>;
+
+  <span class="keyword">class</span> TorrentPiece {
+  <span class="keyword">public</span>:
+      <span class="type">int</span> index;
+      <span class="type">int</span> length;
+      <span class="type"><a href="../qtcore/qbitarray.html">QBitArray</a></span> completedBlocks;
+      <span class="type"><a href="../qtcore/qbitarray.html">QBitArray</a></span> requestedBlocks;
+      bool inProgress;
+  };
+
+  <span class="keyword">class</span> TorrentClientPrivate
+  {
+  <span class="keyword">public</span>:
+      TorrentClientPrivate(TorrentClient <span class="operator">*</span>qq);
+
+      <span class="comment">// State / error</span>
+      <span class="type">void</span> setError(TorrentClient<span class="operator">::</span>Error error);
+      <span class="type">void</span> setState(TorrentClient<span class="operator">::</span>State state);
+      TorrentClient<span class="operator">::</span>Error error;
+      TorrentClient<span class="operator">::</span>State state;
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> errorString;
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> stateString;
+
+      <span class="comment">// Where to save data</span>
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> destinationFolder;
+      MetaInfo metaInfo;
+
+      <span class="comment">// Announce tracker and file manager</span>
+      <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> peerId;
+      <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> infoHash;
+      TrackerClient trackerClient;
+      FileManager fileManager;
+
+      <span class="comment">// Connections</span>
+      <span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span>PeerWireClient <span class="operator">*</span><span class="operator">&gt;</span> connections;
+      <span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span>TorrentPeer <span class="operator">*</span><span class="operator">&gt;</span> peers;
+      bool schedulerCalled;
+      <span class="type">void</span> callScheduler();
+      bool connectingToClients;
+      <span class="type">void</span> callPeerConnector();
+      <span class="type">int</span> uploadScheduleTimer;
+
+      <span class="comment">// Pieces</span>
+      <span class="type"><a href="../qtcore/qmap.html">QMap</a></span><span class="operator">&lt;</span><span class="type">int</span><span class="operator">,</span> PeerWireClient <span class="operator">*</span><span class="operator">&gt;</span> readIds;
+      <span class="type"><a href="../qtcore/qmultimap.html">QMultiMap</a></span><span class="operator">&lt;</span>PeerWireClient <span class="operator">*</span><span class="operator">,</span> TorrentPiece <span class="operator">*</span><span class="operator">&gt;</span> payloads;
+      <span class="type"><a href="../qtcore/qmap.html">QMap</a></span><span class="operator">&lt;</span><span class="type">int</span><span class="operator">,</span> TorrentPiece <span class="operator">*</span><span class="operator">&gt;</span> pendingPieces;
+      <span class="type"><a href="../qtcore/qbitarray.html">QBitArray</a></span> completedPieces;
+      <span class="type"><a href="../qtcore/qbitarray.html">QBitArray</a></span> incompletePieces;
+      <span class="type">int</span> pieceCount;
+
+      <span class="comment">// Progress</span>
+      <span class="type">int</span> lastProgressValue;
+      <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> downloadedBytes;
+      <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> uploadedBytes;
+      <span class="type">int</span> downloadRate<span class="operator">[</span>RateControlWindowLength<span class="operator">]</span>;
+      <span class="type">int</span> uploadRate<span class="operator">[</span>RateControlWindowLength<span class="operator">]</span>;
+      <span class="type">int</span> transferRateTimer;
+
+      TorrentClient <span class="operator">*</span>q;
+  };
+
+  TorrentClientPrivate<span class="operator">::</span>TorrentClientPrivate(TorrentClient <span class="operator">*</span>qq)
+      : trackerClient(qq)<span class="operator">,</span> q(qq)
+  {
+      error <span class="operator">=</span> TorrentClient<span class="operator">::</span>UnknownError;
+      state <span class="operator">=</span> TorrentClient<span class="operator">::</span>Idle;
+      errorString <span class="operator">=</span> QT_TRANSLATE_NOOP(TorrentClient<span class="operator">,</span> <span class="string">&quot;Unknown error&quot;</span>);
+      stateString <span class="operator">=</span> QT_TRANSLATE_NOOP(TorrentClient<span class="operator">,</span> <span class="string">&quot;Idle&quot;</span>);
+      schedulerCalled <span class="operator">=</span> <span class="keyword">false</span>;
+      connectingToClients <span class="operator">=</span> <span class="keyword">false</span>;
+      uploadScheduleTimer <span class="operator">=</span> <span class="number">0</span>;
+      lastProgressValue <span class="operator">=</span> <span class="operator">-</span><span class="number">1</span>;
+      pieceCount <span class="operator">=</span> <span class="number">0</span>;
+      downloadedBytes <span class="operator">=</span> <span class="number">0</span>;
+      uploadedBytes <span class="operator">=</span> <span class="number">0</span>;
+      memset(downloadRate<span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="keyword">sizeof</span>(downloadRate));
+      memset(uploadRate<span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="keyword">sizeof</span>(uploadRate));
+      transferRateTimer <span class="operator">=</span> <span class="number">0</span>;
+  }
+
+  <span class="type">void</span> TorrentClientPrivate<span class="operator">::</span>setError(TorrentClient<span class="operator">::</span>Error errorCode)
+  {
+      <span class="keyword">this</span><span class="operator">-</span><span class="operator">&gt;</span>error <span class="operator">=</span> errorCode;
+      <span class="keyword">switch</span> (error) {
+      <span class="keyword">case</span> TorrentClient<span class="operator">::</span>UnknownError:
+          errorString <span class="operator">=</span> QT_TRANSLATE_NOOP(TorrentClient<span class="operator">,</span> <span class="string">&quot;Unknown error&quot;</span>);
+          <span class="keyword">break</span>;
+      <span class="keyword">case</span> TorrentClient<span class="operator">::</span>TorrentParseError:
+          errorString <span class="operator">=</span> QT_TRANSLATE_NOOP(TorrentClient<span class="operator">,</span> <span class="string">&quot;Invalid torrent data&quot;</span>);
+          <span class="keyword">break</span>;
+      <span class="keyword">case</span> TorrentClient<span class="operator">::</span>InvalidTrackerError:
+          errorString <span class="operator">=</span> QT_TRANSLATE_NOOP(TorrentClient<span class="operator">,</span> <span class="string">&quot;Unable to connect to tracker&quot;</span>);
+          <span class="keyword">break</span>;
+      <span class="keyword">case</span> TorrentClient<span class="operator">::</span>FileError:
+          errorString <span class="operator">=</span> QT_TRANSLATE_NOOP(TorrentClient<span class="operator">,</span> <span class="string">&quot;File error&quot;</span>);
+          <span class="keyword">break</span>;
+      <span class="keyword">case</span> TorrentClient<span class="operator">::</span>ServerError:
+          errorString <span class="operator">=</span> QT_TRANSLATE_NOOP(TorrentClient<span class="operator">,</span> <span class="string">&quot;Unable to initialize server&quot;</span>);
+          <span class="keyword">break</span>;
+      }
+      <span class="keyword">emit</span> q<span class="operator">-</span><span class="operator">&gt;</span>error(errorCode);
+  }
+
+  <span class="type">void</span> TorrentClientPrivate<span class="operator">::</span>setState(TorrentClient<span class="operator">::</span>State state)
+  {
+      <span class="keyword">this</span><span class="operator">-</span><span class="operator">&gt;</span>state <span class="operator">=</span> state;
+      <span class="keyword">switch</span> (state) {
+      <span class="keyword">case</span> TorrentClient<span class="operator">::</span>Idle:
+          stateString <span class="operator">=</span> QT_TRANSLATE_NOOP(TorrentClient<span class="operator">,</span> <span class="string">&quot;Idle&quot;</span>);
+          <span class="keyword">break</span>;
+      <span class="keyword">case</span> TorrentClient<span class="operator">::</span>Paused:
+          stateString <span class="operator">=</span> QT_TRANSLATE_NOOP(TorrentClient<span class="operator">,</span> <span class="string">&quot;Paused&quot;</span>);
+          <span class="keyword">break</span>;
+      <span class="keyword">case</span> TorrentClient<span class="operator">::</span>Stopping:
+          stateString <span class="operator">=</span> QT_TRANSLATE_NOOP(TorrentClient<span class="operator">,</span> <span class="string">&quot;Stopping&quot;</span>);
+          <span class="keyword">break</span>;
+      <span class="keyword">case</span> TorrentClient<span class="operator">::</span>Preparing:
+          stateString <span class="operator">=</span> QT_TRANSLATE_NOOP(TorrentClient<span class="operator">,</span> <span class="string">&quot;Preparing&quot;</span>);
+          <span class="keyword">break</span>;
+      <span class="keyword">case</span> TorrentClient<span class="operator">::</span>Searching:
+          stateString <span class="operator">=</span> QT_TRANSLATE_NOOP(TorrentClient<span class="operator">,</span> <span class="string">&quot;Searching&quot;</span>);
+          <span class="keyword">break</span>;
+      <span class="keyword">case</span> TorrentClient<span class="operator">::</span>Connecting:
+          stateString <span class="operator">=</span> QT_TRANSLATE_NOOP(TorrentClient<span class="operator">,</span> <span class="string">&quot;Connecting&quot;</span>);
+          <span class="keyword">break</span>;
+      <span class="keyword">case</span> TorrentClient<span class="operator">::</span>WarmingUp:
+          stateString <span class="operator">=</span> QT_TRANSLATE_NOOP(TorrentClient<span class="operator">,</span> <span class="string">&quot;Warming up&quot;</span>);
+          <span class="keyword">break</span>;
+      <span class="keyword">case</span> TorrentClient<span class="operator">::</span>Downloading:
+          stateString <span class="operator">=</span> QT_TRANSLATE_NOOP(TorrentClient<span class="operator">,</span> <span class="string">&quot;Downloading&quot;</span>);
+          <span class="keyword">break</span>;
+      <span class="keyword">case</span> TorrentClient<span class="operator">::</span>Endgame:
+          stateString <span class="operator">=</span> QT_TRANSLATE_NOOP(TorrentClient<span class="operator">,</span> <span class="string">&quot;Finishing&quot;</span>);
+          <span class="keyword">break</span>;
+      <span class="keyword">case</span> TorrentClient<span class="operator">::</span>Seeding:
+          stateString <span class="operator">=</span> QT_TRANSLATE_NOOP(TorrentClient<span class="operator">,</span> <span class="string">&quot;Seeding&quot;</span>);
+          <span class="keyword">break</span>;
+      }
+      <span class="keyword">emit</span> q<span class="operator">-</span><span class="operator">&gt;</span>stateChanged(state);
+  }
+
+  <span class="type">void</span> TorrentClientPrivate<span class="operator">::</span>callScheduler()
+  {
+      <span class="keyword">if</span> (<span class="operator">!</span>schedulerCalled) {
+          schedulerCalled <span class="operator">=</span> <span class="keyword">true</span>;
+          <span class="type"><a href="../qtcore/qmetaobject.html">QMetaObject</a></span><span class="operator">::</span>invokeMethod(q<span class="operator">,</span> <span class="string">&quot;scheduleDownloads&quot;</span><span class="operator">,</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>QueuedConnection);
+      }
+  }
+
+  <span class="type">void</span> TorrentClientPrivate<span class="operator">::</span>callPeerConnector()
+  {
+      <span class="keyword">if</span> (<span class="operator">!</span>connectingToClients) {
+          connectingToClients <span class="operator">=</span> <span class="keyword">true</span>;
+          <span class="type"><a href="../qtcore/qtimer.html">QTimer</a></span><span class="operator">::</span>singleShot(<span class="number">10000</span><span class="operator">,</span> q<span class="operator">,</span> SLOT(connectToPeers()));
+      }
+  }
+
+  TorrentClient<span class="operator">::</span>TorrentClient(<span class="type"><a href="../qtcore/qobject.html">QObject</a></span> <span class="operator">*</span>parent)
+      : <span class="type"><a href="../qtcore/qobject.html">QObject</a></span>(parent)<span class="operator">,</span> d(<span class="keyword">new</span> TorrentClientPrivate(<span class="keyword">this</span>))
+  {
+      <span class="comment">// Connect the file manager</span>
+      connect(<span class="operator">&amp;</span>d<span class="operator">-</span><span class="operator">&gt;</span>fileManager<span class="operator">,</span> SIGNAL(dataRead(<span class="type">int</span><span class="operator">,</span><span class="type">int</span><span class="operator">,</span><span class="type">int</span><span class="operator">,</span><span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span>))<span class="operator">,</span>
+              <span class="keyword">this</span><span class="operator">,</span> SLOT(sendToPeer(<span class="type">int</span><span class="operator">,</span><span class="type">int</span><span class="operator">,</span><span class="type">int</span><span class="operator">,</span><span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span>)));
+      connect(<span class="operator">&amp;</span>d<span class="operator">-</span><span class="operator">&gt;</span>fileManager<span class="operator">,</span> SIGNAL(verificationProgress(<span class="type">int</span>))<span class="operator">,</span>
+              <span class="keyword">this</span><span class="operator">,</span> SLOT(updateProgress(<span class="type">int</span>)));
+      connect(<span class="operator">&amp;</span>d<span class="operator">-</span><span class="operator">&gt;</span>fileManager<span class="operator">,</span> SIGNAL(verificationDone())<span class="operator">,</span>
+              <span class="keyword">this</span><span class="operator">,</span> SLOT(fullVerificationDone()));
+      connect(<span class="operator">&amp;</span>d<span class="operator">-</span><span class="operator">&gt;</span>fileManager<span class="operator">,</span> SIGNAL(pieceVerified(<span class="type">int</span><span class="operator">,</span>bool))<span class="operator">,</span>
+              <span class="keyword">this</span><span class="operator">,</span> SLOT(pieceVerified(<span class="type">int</span><span class="operator">,</span>bool)));
+      connect(<span class="operator">&amp;</span>d<span class="operator">-</span><span class="operator">&gt;</span>fileManager<span class="operator">,</span> SIGNAL(error())<span class="operator">,</span>
+              <span class="keyword">this</span><span class="operator">,</span> SLOT(handleFileError()));
+
+      <span class="comment">// Connect the tracker client</span>
+      connect(<span class="operator">&amp;</span>d<span class="operator">-</span><span class="operator">&gt;</span>trackerClient<span class="operator">,</span> SIGNAL(peerListUpdated(<span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span>TorrentPeer<span class="operator">&gt;</span>))<span class="operator">,</span>
+              <span class="keyword">this</span><span class="operator">,</span> SLOT(addToPeerList(<span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span>TorrentPeer<span class="operator">&gt;</span>)));
+      connect(<span class="operator">&amp;</span>d<span class="operator">-</span><span class="operator">&gt;</span>trackerClient<span class="operator">,</span> SIGNAL(stopped())<span class="operator">,</span>
+              <span class="keyword">this</span><span class="operator">,</span> SIGNAL(stopped()));
+  }
+
+  TorrentClient<span class="operator">::</span><span class="operator">~</span>TorrentClient()
+  {
+      <a href="../qtcore/qtalgorithms.html#qDeleteAll">qDeleteAll</a>(d<span class="operator">-</span><span class="operator">&gt;</span>peers);
+      <a href="../qtcore/qtalgorithms.html#qDeleteAll">qDeleteAll</a>(d<span class="operator">-</span><span class="operator">&gt;</span>pendingPieces);
+      <span class="keyword">delete</span> d;
+  }
+
+  bool TorrentClient<span class="operator">::</span>setTorrent(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>fileName)
+  {
+      <span class="type"><a href="../qtcore/qfile.html">QFile</a></span> file(fileName);
+      <span class="keyword">if</span> (<span class="operator">!</span>file<span class="operator">.</span>open(<span class="type"><a href="../qtcore/qiodevice.html">QIODevice</a></span><span class="operator">::</span>ReadOnly) <span class="operator">|</span><span class="operator">|</span> <span class="operator">!</span>setTorrent(file<span class="operator">.</span>readAll())) {
+          d<span class="operator">-</span><span class="operator">&gt;</span>setError(TorrentParseError);
+          <span class="keyword">return</span> <span class="keyword">false</span>;
+      }
+      <span class="keyword">return</span> <span class="keyword">true</span>;
+  }
+
+  bool TorrentClient<span class="operator">::</span>setTorrent(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> <span class="operator">&amp;</span>torrentData)
+  {
+      <span class="keyword">if</span> (<span class="operator">!</span>d<span class="operator">-</span><span class="operator">&gt;</span>metaInfo<span class="operator">.</span>parse(torrentData)) {
+          d<span class="operator">-</span><span class="operator">&gt;</span>setError(TorrentParseError);
+          <span class="keyword">return</span> <span class="keyword">false</span>;
+      }
+
+      <span class="comment">// Calculate SHA1 hash of the &quot;info&quot; section in the torrent</span>
+      <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> infoValue <span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>metaInfo<span class="operator">.</span>infoValue();
+      d<span class="operator">-</span><span class="operator">&gt;</span>infoHash <span class="operator">=</span> <span class="type"><a href="../qtcore/qcryptographichash.html">QCryptographicHash</a></span><span class="operator">::</span>hash(infoValue<span class="operator">,</span> <span class="type"><a href="../qtcore/qcryptographichash.html">QCryptographicHash</a></span><span class="operator">::</span>Sha1);
+
+      <span class="keyword">return</span> <span class="keyword">true</span>;
+  }
+
+  MetaInfo TorrentClient<span class="operator">::</span>metaInfo() <span class="keyword">const</span>
+  {
+      <span class="keyword">return</span> d<span class="operator">-</span><span class="operator">&gt;</span>metaInfo;
+  }
+
+  <span class="type">void</span> TorrentClient<span class="operator">::</span>setDestinationFolder(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>directory)
+  {
+      d<span class="operator">-</span><span class="operator">&gt;</span>destinationFolder <span class="operator">=</span> directory;
+  }
+
+  <span class="type"><a href="../qtcore/qstring.html">QString</a></span> TorrentClient<span class="operator">::</span>destinationFolder() <span class="keyword">const</span>
+  {
+      <span class="keyword">return</span> d<span class="operator">-</span><span class="operator">&gt;</span>destinationFolder;
+  }
+
+  <span class="type">void</span> TorrentClient<span class="operator">::</span>setDumpedState(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> <span class="operator">&amp;</span>dumpedState)
+  {
+      <span class="comment">// Recover partially completed pieces</span>
+      <span class="type"><a href="../qtcore/qdatastream.html">QDataStream</a></span> stream(dumpedState);
+
+      <span class="type"><a href="../qtcore/qtglobal.html#quint16-typedef">quint16</a></span> version <span class="operator">=</span> <span class="number">0</span>;
+      stream <span class="operator">&gt;</span><span class="operator">&gt;</span> version;
+      <span class="keyword">if</span> (version <span class="operator">!</span><span class="operator">=</span> <span class="number">2</span>)
+          <span class="keyword">return</span>;
+
+      stream <span class="operator">&gt;</span><span class="operator">&gt;</span> d<span class="operator">-</span><span class="operator">&gt;</span>completedPieces;
+
+      <span class="keyword">while</span> (<span class="operator">!</span>stream<span class="operator">.</span>atEnd()) {
+          <span class="type">int</span> index;
+          <span class="type">int</span> length;
+          <span class="type"><a href="../qtcore/qbitarray.html">QBitArray</a></span> completed;
+          stream <span class="operator">&gt;</span><span class="operator">&gt;</span> index <span class="operator">&gt;</span><span class="operator">&gt;</span> length <span class="operator">&gt;</span><span class="operator">&gt;</span> completed;
+          <span class="keyword">if</span> (stream<span class="operator">.</span>status() <span class="operator">!</span><span class="operator">=</span> <span class="type"><a href="../qtcore/qdatastream.html">QDataStream</a></span><span class="operator">::</span>Ok) {
+              d<span class="operator">-</span><span class="operator">&gt;</span>completedPieces<span class="operator">.</span>clear();
+              <span class="keyword">break</span>;
+          }
+
+          TorrentPiece <span class="operator">*</span>piece <span class="operator">=</span> <span class="keyword">new</span> TorrentPiece;
+          piece<span class="operator">-</span><span class="operator">&gt;</span>index <span class="operator">=</span> index;
+          piece<span class="operator">-</span><span class="operator">&gt;</span>length <span class="operator">=</span> length;
+          piece<span class="operator">-</span><span class="operator">&gt;</span>completedBlocks <span class="operator">=</span> completed;
+          piece<span class="operator">-</span><span class="operator">&gt;</span>requestedBlocks<span class="operator">.</span>resize(completed<span class="operator">.</span>size());
+          piece<span class="operator">-</span><span class="operator">&gt;</span>inProgress <span class="operator">=</span> <span class="keyword">false</span>;
+          d<span class="operator">-</span><span class="operator">&gt;</span>pendingPieces<span class="operator">[</span>index<span class="operator">]</span> <span class="operator">=</span> piece;
+      }
+  }
+
+  <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> TorrentClient<span class="operator">::</span>dumpedState() <span class="keyword">const</span>
+  {
+      <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> partials;
+      <span class="type"><a href="../qtcore/qdatastream.html">QDataStream</a></span> stream(<span class="operator">&amp;</span>partials<span class="operator">,</span> <span class="type"><a href="../qtcore/qiodevice.html">QIODevice</a></span><span class="operator">::</span>WriteOnly);
+
+      stream <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="type"><a href="../qtcore/qtglobal.html#quint16-typedef">quint16</a></span>(<span class="number">2</span>);
+      stream <span class="operator">&lt;</span><span class="operator">&lt;</span> d<span class="operator">-</span><span class="operator">&gt;</span>completedPieces;
+
+      <span class="comment">// Save the state of all partially downloaded pieces into a format</span>
+      <span class="comment">// suitable for storing in settings.</span>
+      <span class="type"><a href="../qtcore/qmap.html">QMap</a></span><span class="operator">&lt;</span><span class="type">int</span><span class="operator">,</span> TorrentPiece <span class="operator">*</span><span class="operator">&gt;</span><span class="operator">::</span>ConstIterator it <span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>pendingPieces<span class="operator">.</span>constBegin();
+      <span class="keyword">while</span> (it <span class="operator">!</span><span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>pendingPieces<span class="operator">.</span>constEnd()) {
+          TorrentPiece <span class="operator">*</span>piece <span class="operator">=</span> it<span class="operator">.</span>value();
+          <span class="keyword">if</span> (blocksLeftForPiece(piece) <span class="operator">&gt;</span> <span class="number">0</span> <span class="operator">&amp;</span><span class="operator">&amp;</span> blocksLeftForPiece(piece) <span class="operator">&lt;</span> piece<span class="operator">-</span><span class="operator">&gt;</span>completedBlocks<span class="operator">.</span>size()) {
+              stream <span class="operator">&lt;</span><span class="operator">&lt;</span> piece<span class="operator">-</span><span class="operator">&gt;</span>index;
+              stream <span class="operator">&lt;</span><span class="operator">&lt;</span> piece<span class="operator">-</span><span class="operator">&gt;</span>length;
+              stream <span class="operator">&lt;</span><span class="operator">&lt;</span> piece<span class="operator">-</span><span class="operator">&gt;</span>completedBlocks;
+          }
+          <span class="operator">+</span><span class="operator">+</span>it;
+      }
+
+      <span class="keyword">return</span> partials;
+  }
+
+  <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> TorrentClient<span class="operator">::</span>progress() <span class="keyword">const</span>
+  {
+      <span class="keyword">return</span> d<span class="operator">-</span><span class="operator">&gt;</span>lastProgressValue;
+  }
+
+  <span class="type">void</span> TorrentClient<span class="operator">::</span>setDownloadedBytes(<span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> bytes)
+  {
+      d<span class="operator">-</span><span class="operator">&gt;</span>downloadedBytes <span class="operator">=</span> bytes;
+  }
+
+  <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> TorrentClient<span class="operator">::</span>downloadedBytes() <span class="keyword">const</span>
+  {
+      <span class="keyword">return</span> d<span class="operator">-</span><span class="operator">&gt;</span>downloadedBytes;
+  }
+
+  <span class="type">void</span> TorrentClient<span class="operator">::</span>setUploadedBytes(<span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> bytes)
+  {
+      d<span class="operator">-</span><span class="operator">&gt;</span>uploadedBytes <span class="operator">=</span> bytes;
+  }
+
+  <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> TorrentClient<span class="operator">::</span>uploadedBytes() <span class="keyword">const</span>
+  {
+      <span class="keyword">return</span> d<span class="operator">-</span><span class="operator">&gt;</span>uploadedBytes;
+  }
+
+  <span class="type">int</span> TorrentClient<span class="operator">::</span>connectedPeerCount() <span class="keyword">const</span>
+  {
+      <span class="type">int</span> tmp <span class="operator">=</span> <span class="number">0</span>;
+      foreach (PeerWireClient <span class="operator">*</span>client<span class="operator">,</span> d<span class="operator">-</span><span class="operator">&gt;</span>connections) {
+          <span class="keyword">if</span> (client<span class="operator">-</span><span class="operator">&gt;</span>state() <span class="operator">=</span><span class="operator">=</span> <span class="type"><a href="qabstractsocket.html">QAbstractSocket</a></span><span class="operator">::</span>ConnectedState)
+              <span class="operator">+</span><span class="operator">+</span>tmp;
+      }
+      <span class="keyword">return</span> tmp;
+  }
+
+  <span class="type">int</span> TorrentClient<span class="operator">::</span>seedCount() <span class="keyword">const</span>
+  {
+      <span class="type">int</span> tmp <span class="operator">=</span> <span class="number">0</span>;
+      foreach (PeerWireClient <span class="operator">*</span>client<span class="operator">,</span> d<span class="operator">-</span><span class="operator">&gt;</span>connections) {
+          <span class="keyword">if</span> (client<span class="operator">-</span><span class="operator">&gt;</span>availablePieces()<span class="operator">.</span>count(<span class="keyword">true</span>) <span class="operator">=</span><span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>pieceCount)
+              <span class="operator">+</span><span class="operator">+</span>tmp;
+      }
+      <span class="keyword">return</span> tmp;
+  }
+
+  TorrentClient<span class="operator">::</span>State TorrentClient<span class="operator">::</span>state() <span class="keyword">const</span>
+  {
+      <span class="keyword">return</span> d<span class="operator">-</span><span class="operator">&gt;</span>state;
+  }
+
+  <span class="type"><a href="../qtcore/qstring.html">QString</a></span> TorrentClient<span class="operator">::</span>stateString() <span class="keyword">const</span>
+  {
+      <span class="keyword">return</span> d<span class="operator">-</span><span class="operator">&gt;</span>stateString;
+  }
+
+  TorrentClient<span class="operator">::</span>Error TorrentClient<span class="operator">::</span>error() <span class="keyword">const</span>
+  {
+      <span class="keyword">return</span> d<span class="operator">-</span><span class="operator">&gt;</span>error;
+  }
+
+  <span class="type"><a href="../qtcore/qstring.html">QString</a></span> TorrentClient<span class="operator">::</span>errorString() <span class="keyword">const</span>
+  {
+      <span class="keyword">return</span> d<span class="operator">-</span><span class="operator">&gt;</span>errorString;
+  }
+
+  <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> TorrentClient<span class="operator">::</span>peerId() <span class="keyword">const</span>
+  {
+      <span class="keyword">return</span> d<span class="operator">-</span><span class="operator">&gt;</span>peerId;
+  }
+
+  <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> TorrentClient<span class="operator">::</span>infoHash() <span class="keyword">const</span>
+  {
+      <span class="keyword">return</span> d<span class="operator">-</span><span class="operator">&gt;</span>infoHash;
+  }
+
+  <span class="type">void</span> TorrentClient<span class="operator">::</span>start()
+  {
+      <span class="keyword">if</span> (d<span class="operator">-</span><span class="operator">&gt;</span>state <span class="operator">!</span><span class="operator">=</span> Idle)
+          <span class="keyword">return</span>;
+
+      TorrentServer<span class="operator">::</span>instance()<span class="operator">-</span><span class="operator">&gt;</span>addClient(<span class="keyword">this</span>);
+
+      <span class="comment">// Initialize the file manager</span>
+      d<span class="operator">-</span><span class="operator">&gt;</span>setState(Preparing);
+      d<span class="operator">-</span><span class="operator">&gt;</span>fileManager<span class="operator">.</span>setMetaInfo(d<span class="operator">-</span><span class="operator">&gt;</span>metaInfo);
+      d<span class="operator">-</span><span class="operator">&gt;</span>fileManager<span class="operator">.</span>setDestinationFolder(d<span class="operator">-</span><span class="operator">&gt;</span>destinationFolder);
+      d<span class="operator">-</span><span class="operator">&gt;</span>fileManager<span class="operator">.</span>setCompletedPieces(d<span class="operator">-</span><span class="operator">&gt;</span>completedPieces);
+      d<span class="operator">-</span><span class="operator">&gt;</span>fileManager<span class="operator">.</span>start(<span class="type"><a href="../qtcore/qthread.html">QThread</a></span><span class="operator">::</span>LowestPriority);
+      d<span class="operator">-</span><span class="operator">&gt;</span>fileManager<span class="operator">.</span>startDataVerification();
+  }
+
+  <span class="type">void</span> TorrentClient<span class="operator">::</span>stop()
+  {
+      <span class="keyword">if</span> (d<span class="operator">-</span><span class="operator">&gt;</span>state <span class="operator">=</span><span class="operator">=</span> Stopping)
+          <span class="keyword">return</span>;
+
+      TorrentServer<span class="operator">::</span>instance()<span class="operator">-</span><span class="operator">&gt;</span>removeClient(<span class="keyword">this</span>);
+
+      <span class="comment">// Update the state</span>
+      State oldState <span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>state;
+      d<span class="operator">-</span><span class="operator">&gt;</span>setState(Stopping);
+
+      <span class="comment">// Stop the timer</span>
+      <span class="keyword">if</span> (d<span class="operator">-</span><span class="operator">&gt;</span>transferRateTimer) {
+          killTimer(d<span class="operator">-</span><span class="operator">&gt;</span>transferRateTimer);
+          d<span class="operator">-</span><span class="operator">&gt;</span>transferRateTimer <span class="operator">=</span> <span class="number">0</span>;
+      }
+
+      <span class="comment">// Abort all existing connections</span>
+      foreach (PeerWireClient <span class="operator">*</span>client<span class="operator">,</span> d<span class="operator">-</span><span class="operator">&gt;</span>connections) {
+          RateController<span class="operator">::</span>instance()<span class="operator">-</span><span class="operator">&gt;</span>removeSocket(client);
+          ConnectionManager<span class="operator">::</span>instance()<span class="operator">-</span><span class="operator">&gt;</span>removeConnection(client);
+          client<span class="operator">-</span><span class="operator">&gt;</span>abort();
+      }
+      d<span class="operator">-</span><span class="operator">&gt;</span>connections<span class="operator">.</span>clear();
+
+      <span class="comment">// Perhaps stop the tracker</span>
+      <span class="keyword">if</span> (oldState <span class="operator">&gt;</span> Preparing) {
+          d<span class="operator">-</span><span class="operator">&gt;</span>trackerClient<span class="operator">.</span>stop();
+      } <span class="keyword">else</span> {
+          d<span class="operator">-</span><span class="operator">&gt;</span>setState(Idle);
+          <span class="keyword">emit</span> stopped();
+      }
+  }
+
+  <span class="type">void</span> TorrentClient<span class="operator">::</span>setPaused(bool paused)
+  {
+      <span class="keyword">if</span> (paused) {
+          <span class="comment">// Abort all connections, and set the max number of</span>
+          <span class="comment">// connections to 0. Keep the list of peers, so we can quickly</span>
+          <span class="comment">// resume later.</span>
+          d<span class="operator">-</span><span class="operator">&gt;</span>setState(Paused);
+          foreach (PeerWireClient <span class="operator">*</span>client<span class="operator">,</span> d<span class="operator">-</span><span class="operator">&gt;</span>connections)
+              client<span class="operator">-</span><span class="operator">&gt;</span>abort();
+          d<span class="operator">-</span><span class="operator">&gt;</span>connections<span class="operator">.</span>clear();
+          TorrentServer<span class="operator">::</span>instance()<span class="operator">-</span><span class="operator">&gt;</span>removeClient(<span class="keyword">this</span>);
+      } <span class="keyword">else</span> {
+          <span class="comment">// Restore the max number of connections, and start the peer</span>
+          <span class="comment">// connector. We should also quickly start receiving incoming</span>
+          <span class="comment">// connections.</span>
+          d<span class="operator">-</span><span class="operator">&gt;</span>setState(d<span class="operator">-</span><span class="operator">&gt;</span>completedPieces<span class="operator">.</span>count(<span class="keyword">true</span>) <span class="operator">=</span><span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>fileManager<span class="operator">.</span>pieceCount()
+                      <span class="operator">?</span> Seeding : Searching);
+          connectToPeers();
+          TorrentServer<span class="operator">::</span>instance()<span class="operator">-</span><span class="operator">&gt;</span>addClient(<span class="keyword">this</span>);
+      }
+  }
+
+  <span class="type">void</span> TorrentClient<span class="operator">::</span>timerEvent(<span class="type"><a href="../qtcore/qtimerevent.html">QTimerEvent</a></span> <span class="operator">*</span>event)
+  {
+      <span class="keyword">if</span> (event<span class="operator">-</span><span class="operator">&gt;</span>timerId() <span class="operator">=</span><span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>uploadScheduleTimer) {
+          <span class="comment">// Update the state of who's choked and who's not</span>
+          scheduleUploads();
+          <span class="keyword">return</span>;
+      }
+
+      <span class="keyword">if</span> (event<span class="operator">-</span><span class="operator">&gt;</span>timerId() <span class="operator">!</span><span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>transferRateTimer) {
+          <span class="type"><a href="../qtcore/qobject.html">QObject</a></span><span class="operator">::</span>timerEvent(event);
+          <span class="keyword">return</span>;
+      }
+
+      <span class="comment">// Calculate average upload/download rate</span>
+      <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> uploadBytesPerSecond <span class="operator">=</span> <span class="number">0</span>;
+      <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> downloadBytesPerSecond <span class="operator">=</span> <span class="number">0</span>;
+      <span class="keyword">for</span> (<span class="type">int</span> i <span class="operator">=</span> <span class="number">0</span>; i <span class="operator">&lt;</span> RateControlWindowLength; <span class="operator">+</span><span class="operator">+</span>i) {
+          uploadBytesPerSecond <span class="operator">+</span><span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>uploadRate<span class="operator">[</span>i<span class="operator">]</span>;
+          downloadBytesPerSecond <span class="operator">+</span><span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>downloadRate<span class="operator">[</span>i<span class="operator">]</span>;
+      }
+      uploadBytesPerSecond <span class="operator">/</span><span class="operator">=</span> <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span>(RateControlWindowLength);
+      downloadBytesPerSecond <span class="operator">/</span><span class="operator">=</span> <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span>(RateControlWindowLength);
+      <span class="keyword">for</span> (<span class="type">int</span> i <span class="operator">=</span> RateControlWindowLength <span class="operator">-</span> <span class="number">2</span>; i <span class="operator">&gt;</span><span class="operator">=</span> <span class="number">0</span>; <span class="operator">-</span><span class="operator">-</span>i) {
+          d<span class="operator">-</span><span class="operator">&gt;</span>uploadRate<span class="operator">[</span>i <span class="operator">+</span> <span class="number">1</span><span class="operator">]</span> <span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>uploadRate<span class="operator">[</span>i<span class="operator">]</span>;
+          d<span class="operator">-</span><span class="operator">&gt;</span>downloadRate<span class="operator">[</span>i <span class="operator">+</span> <span class="number">1</span><span class="operator">]</span> <span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>downloadRate<span class="operator">[</span>i<span class="operator">]</span>;
+      }
+      d<span class="operator">-</span><span class="operator">&gt;</span>uploadRate<span class="operator">[</span><span class="number">0</span><span class="operator">]</span> <span class="operator">=</span> <span class="number">0</span>;
+      d<span class="operator">-</span><span class="operator">&gt;</span>downloadRate<span class="operator">[</span><span class="number">0</span><span class="operator">]</span> <span class="operator">=</span> <span class="number">0</span>;
+      <span class="keyword">emit</span> uploadRateUpdated(<span class="type">int</span>(uploadBytesPerSecond));
+      <span class="keyword">emit</span> downloadRateUpdated(<span class="type">int</span>(downloadBytesPerSecond));
+
+      <span class="comment">// Stop the timer if there is no activity.</span>
+      <span class="keyword">if</span> (downloadBytesPerSecond <span class="operator">=</span><span class="operator">=</span> <span class="number">0</span> <span class="operator">&amp;</span><span class="operator">&amp;</span> uploadBytesPerSecond <span class="operator">=</span><span class="operator">=</span> <span class="number">0</span>) {
+          killTimer(d<span class="operator">-</span><span class="operator">&gt;</span>transferRateTimer);
+          d<span class="operator">-</span><span class="operator">&gt;</span>transferRateTimer <span class="operator">=</span> <span class="number">0</span>;
+      }
+  }
+
+  <span class="type">void</span> TorrentClient<span class="operator">::</span>sendToPeer(<span class="type">int</span> readId<span class="operator">,</span> <span class="type">int</span> pieceIndex<span class="operator">,</span> <span class="type">int</span> begin<span class="operator">,</span> <span class="keyword">const</span> <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> <span class="operator">&amp;</span>data)
+  {
+      <span class="comment">// Send the requested block to the peer if the client connection</span>
+      <span class="comment">// still exists; otherwise do nothing. This slot is called by the</span>
+      <span class="comment">// file manager after it has read a block of data.</span>
+      PeerWireClient <span class="operator">*</span>client <span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>readIds<span class="operator">.</span>value(readId);
+      <span class="keyword">if</span> (client) {
+          <span class="keyword">if</span> ((client<span class="operator">-</span><span class="operator">&gt;</span>peerWireState() <span class="operator">&amp;</span> PeerWireClient<span class="operator">::</span>ChokingPeer) <span class="operator">=</span><span class="operator">=</span> <span class="number">0</span>)
+              client<span class="operator">-</span><span class="operator">&gt;</span>sendBlock(pieceIndex<span class="operator">,</span> begin<span class="operator">,</span> data);
+      }
+      d<span class="operator">-</span><span class="operator">&gt;</span>readIds<span class="operator">.</span>remove(readId);
+  }
+
+  <span class="type">void</span> TorrentClient<span class="operator">::</span>fullVerificationDone()
+  {
+      <span class="comment">// Update our list of completed and incomplete pieces.</span>
+      d<span class="operator">-</span><span class="operator">&gt;</span>completedPieces <span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>fileManager<span class="operator">.</span>completedPieces();
+      d<span class="operator">-</span><span class="operator">&gt;</span>incompletePieces<span class="operator">.</span>resize(d<span class="operator">-</span><span class="operator">&gt;</span>completedPieces<span class="operator">.</span>size());
+      d<span class="operator">-</span><span class="operator">&gt;</span>pieceCount <span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>completedPieces<span class="operator">.</span>size();
+      <span class="keyword">for</span> (<span class="type">int</span> i <span class="operator">=</span> <span class="number">0</span>; i <span class="operator">&lt;</span> d<span class="operator">-</span><span class="operator">&gt;</span>fileManager<span class="operator">.</span>pieceCount(); <span class="operator">+</span><span class="operator">+</span>i) {
+          <span class="keyword">if</span> (<span class="operator">!</span>d<span class="operator">-</span><span class="operator">&gt;</span>completedPieces<span class="operator">.</span>testBit(i))
+              d<span class="operator">-</span><span class="operator">&gt;</span>incompletePieces<span class="operator">.</span>setBit(i);
+      }
+
+      updateProgress();
+
+      <span class="comment">// If the checksums show that what the dumped state thought was</span>
+      <span class="comment">// partial was in fact complete, then we trust the checksums.</span>
+      <span class="type"><a href="../qtcore/qmap.html">QMap</a></span><span class="operator">&lt;</span><span class="type">int</span><span class="operator">,</span> TorrentPiece <span class="operator">*</span><span class="operator">&gt;</span><span class="operator">::</span>Iterator it <span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>pendingPieces<span class="operator">.</span>begin();
+      <span class="keyword">while</span> (it <span class="operator">!</span><span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>pendingPieces<span class="operator">.</span>end()) {
+          <span class="keyword">if</span> (d<span class="operator">-</span><span class="operator">&gt;</span>completedPieces<span class="operator">.</span>testBit(it<span class="operator">.</span>key()))
+              it <span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>pendingPieces<span class="operator">.</span>erase(it);
+          <span class="keyword">else</span>
+              <span class="operator">+</span><span class="operator">+</span>it;
+      }
+
+      d<span class="operator">-</span><span class="operator">&gt;</span>uploadScheduleTimer <span class="operator">=</span> startTimer(UploadScheduleInterval);
+
+      <span class="comment">// Start the server</span>
+      TorrentServer <span class="operator">*</span>server <span class="operator">=</span> TorrentServer<span class="operator">::</span>instance();
+      <span class="keyword">if</span> (<span class="operator">!</span>server<span class="operator">-</span><span class="operator">&gt;</span>isListening()) {
+          <span class="comment">// Set up the peer wire server</span>
+          <span class="keyword">for</span> (<span class="type">int</span> i <span class="operator">=</span> ServerMinPort; i <span class="operator">&lt;</span><span class="operator">=</span> ServerMaxPort; <span class="operator">+</span><span class="operator">+</span>i) {
+              <span class="keyword">if</span> (server<span class="operator">-</span><span class="operator">&gt;</span>listen(<span class="type"><a href="qhostaddress.html">QHostAddress</a></span><span class="operator">::</span>Any<span class="operator">,</span> i))
+                  <span class="keyword">break</span>;
+          }
+          <span class="keyword">if</span> (<span class="operator">!</span>server<span class="operator">-</span><span class="operator">&gt;</span>isListening()) {
+              d<span class="operator">-</span><span class="operator">&gt;</span>setError(ServerError);
+              <span class="keyword">return</span>;
+          }
+      }
+
+      d<span class="operator">-</span><span class="operator">&gt;</span>setState(d<span class="operator">-</span><span class="operator">&gt;</span>completedPieces<span class="operator">.</span>count(<span class="keyword">true</span>) <span class="operator">=</span><span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>pieceCount <span class="operator">?</span> Seeding : Searching);
+
+      <span class="comment">// Start the tracker client</span>
+      d<span class="operator">-</span><span class="operator">&gt;</span>trackerClient<span class="operator">.</span>start(d<span class="operator">-</span><span class="operator">&gt;</span>metaInfo);
+  }
+
+  <span class="type">void</span> TorrentClient<span class="operator">::</span>pieceVerified(<span class="type">int</span> pieceIndex<span class="operator">,</span> bool ok)
+  {
+      TorrentPiece <span class="operator">*</span>piece <span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>pendingPieces<span class="operator">.</span>value(pieceIndex);
+
+      <span class="comment">// Remove this piece from all payloads</span>
+      <span class="type"><a href="../qtcore/qmultimap.html">QMultiMap</a></span><span class="operator">&lt;</span>PeerWireClient <span class="operator">*</span><span class="operator">,</span> TorrentPiece <span class="operator">*</span><span class="operator">&gt;</span><span class="operator">::</span>Iterator it <span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>payloads<span class="operator">.</span>begin();
+      <span class="keyword">while</span> (it <span class="operator">!</span><span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>payloads<span class="operator">.</span>end()) {
+          <span class="keyword">if</span> (it<span class="operator">.</span>value()<span class="operator">-</span><span class="operator">&gt;</span>index <span class="operator">=</span><span class="operator">=</span> pieceIndex)
+              it <span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>payloads<span class="operator">.</span>erase(it);
+          <span class="keyword">else</span>
+              <span class="operator">+</span><span class="operator">+</span>it;
+      }
+
+      <span class="keyword">if</span> (<span class="operator">!</span>ok) {
+          <span class="comment">// If a piece did not pass the SHA1 check, we'll simply clear</span>
+          <span class="comment">// its state, and the scheduler will re-request it</span>
+          piece<span class="operator">-</span><span class="operator">&gt;</span>inProgress <span class="operator">=</span> <span class="keyword">false</span>;
+          piece<span class="operator">-</span><span class="operator">&gt;</span>completedBlocks<span class="operator">.</span>fill(<span class="keyword">false</span>);
+          piece<span class="operator">-</span><span class="operator">&gt;</span>requestedBlocks<span class="operator">.</span>fill(<span class="keyword">false</span>);
+          d<span class="operator">-</span><span class="operator">&gt;</span>callScheduler();
+          <span class="keyword">return</span>;
+      }
+
+      <span class="comment">// Update the peer list so we know who's still interesting.</span>
+      foreach (TorrentPeer <span class="operator">*</span>peer<span class="operator">,</span> d<span class="operator">-</span><span class="operator">&gt;</span>peers) {
+          <span class="keyword">if</span> (<span class="operator">!</span>peer<span class="operator">-</span><span class="operator">&gt;</span>interesting)
+              <span class="keyword">continue</span>;
+          bool interesting <span class="operator">=</span> <span class="keyword">false</span>;
+          <span class="keyword">for</span> (<span class="type">int</span> i <span class="operator">=</span> <span class="number">0</span>; i <span class="operator">&lt;</span> d<span class="operator">-</span><span class="operator">&gt;</span>pieceCount; <span class="operator">+</span><span class="operator">+</span>i) {
+              <span class="keyword">if</span> (peer<span class="operator">-</span><span class="operator">&gt;</span>pieces<span class="operator">.</span>testBit(i) <span class="operator">&amp;</span><span class="operator">&amp;</span> d<span class="operator">-</span><span class="operator">&gt;</span>incompletePieces<span class="operator">.</span>testBit(i)) {
+                  interesting <span class="operator">=</span> <span class="keyword">true</span>;
+                  <span class="keyword">break</span>;
+              }
+          }
+          peer<span class="operator">-</span><span class="operator">&gt;</span>interesting <span class="operator">=</span> interesting;
+      }
+
+      <span class="comment">// Delete the piece and update our structures.</span>
+      <span class="keyword">delete</span> piece;
+      d<span class="operator">-</span><span class="operator">&gt;</span>pendingPieces<span class="operator">.</span>remove(pieceIndex);
+      d<span class="operator">-</span><span class="operator">&gt;</span>completedPieces<span class="operator">.</span>setBit(pieceIndex);
+      d<span class="operator">-</span><span class="operator">&gt;</span>incompletePieces<span class="operator">.</span>clearBit(pieceIndex);
+
+      <span class="comment">// Notify connected peers.</span>
+      foreach (PeerWireClient <span class="operator">*</span>client<span class="operator">,</span> d<span class="operator">-</span><span class="operator">&gt;</span>connections) {
+          <span class="keyword">if</span> (client<span class="operator">-</span><span class="operator">&gt;</span>state() <span class="operator">=</span><span class="operator">=</span> <span class="type"><a href="qabstractsocket.html">QAbstractSocket</a></span><span class="operator">::</span>ConnectedState
+              <span class="operator">&amp;</span><span class="operator">&amp;</span> <span class="operator">!</span>client<span class="operator">-</span><span class="operator">&gt;</span>availablePieces()<span class="operator">.</span>testBit(pieceIndex)) {
+              client<span class="operator">-</span><span class="operator">&gt;</span>sendPieceNotification(pieceIndex);
+          }
+      }
+
+      <span class="comment">// Notify the tracker if we've entered Seeding status; otherwise</span>
+      <span class="comment">// call the scheduler.</span>
+      <span class="type">int</span> completed <span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>completedPieces<span class="operator">.</span>count(<span class="keyword">true</span>);
+      <span class="keyword">if</span> (completed <span class="operator">=</span><span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>pieceCount) {
+          <span class="keyword">if</span> (d<span class="operator">-</span><span class="operator">&gt;</span>state <span class="operator">!</span><span class="operator">=</span> Seeding) {
+              d<span class="operator">-</span><span class="operator">&gt;</span>setState(Seeding);
+              d<span class="operator">-</span><span class="operator">&gt;</span>trackerClient<span class="operator">.</span>startSeeding();
+          }
+      } <span class="keyword">else</span> {
+          <span class="keyword">if</span> (completed <span class="operator">=</span><span class="operator">=</span> <span class="number">1</span>)
+              d<span class="operator">-</span><span class="operator">&gt;</span>setState(Downloading);
+          <span class="keyword">else</span> <span class="keyword">if</span> (d<span class="operator">-</span><span class="operator">&gt;</span>incompletePieces<span class="operator">.</span>count(<span class="keyword">true</span>) <span class="operator">&lt;</span> <span class="number">5</span> <span class="operator">&amp;</span><span class="operator">&amp;</span> d<span class="operator">-</span><span class="operator">&gt;</span>pendingPieces<span class="operator">.</span>size() <span class="operator">&gt;</span> d<span class="operator">-</span><span class="operator">&gt;</span>incompletePieces<span class="operator">.</span>count(<span class="keyword">true</span>))
+              d<span class="operator">-</span><span class="operator">&gt;</span>setState(Endgame);
+          d<span class="operator">-</span><span class="operator">&gt;</span>callScheduler();
+      }
+
+      updateProgress();
+  }
+
+  <span class="type">void</span> TorrentClient<span class="operator">::</span>handleFileError()
+  {
+      <span class="keyword">if</span> (d<span class="operator">-</span><span class="operator">&gt;</span>state <span class="operator">=</span><span class="operator">=</span> Paused)
+          <span class="keyword">return</span>;
+      setPaused(<span class="keyword">true</span>);
+      <span class="keyword">emit</span> error(FileError);
+  }
+
+  <span class="type">void</span> TorrentClient<span class="operator">::</span>connectToPeers()
+  {
+      d<span class="operator">-</span><span class="operator">&gt;</span>connectingToClients <span class="operator">=</span> <span class="keyword">false</span>;
+
+      <span class="keyword">if</span> (d<span class="operator">-</span><span class="operator">&gt;</span>state <span class="operator">=</span><span class="operator">=</span> Stopping <span class="operator">|</span><span class="operator">|</span> d<span class="operator">-</span><span class="operator">&gt;</span>state <span class="operator">=</span><span class="operator">=</span> Idle <span class="operator">|</span><span class="operator">|</span> d<span class="operator">-</span><span class="operator">&gt;</span>state <span class="operator">=</span><span class="operator">=</span> Paused)
+          <span class="keyword">return</span>;
+
+      <span class="keyword">if</span> (d<span class="operator">-</span><span class="operator">&gt;</span>state <span class="operator">=</span><span class="operator">=</span> Searching)
+          d<span class="operator">-</span><span class="operator">&gt;</span>setState(Connecting);
+
+      <span class="comment">// Find the list of peers we are not currently connected to, where</span>
+      <span class="comment">// the more interesting peers are listed more than once.</span>
+      <span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span>TorrentPeer <span class="operator">*</span><span class="operator">&gt;</span> weighedPeers <span class="operator">=</span> weighedFreePeers();
+
+      <span class="comment">// Start as many connections as we can</span>
+      <span class="keyword">while</span> (<span class="operator">!</span>weighedPeers<span class="operator">.</span>isEmpty() <span class="operator">&amp;</span><span class="operator">&amp;</span> ConnectionManager<span class="operator">::</span>instance()<span class="operator">-</span><span class="operator">&gt;</span>canAddConnection()
+             <span class="operator">&amp;</span><span class="operator">&amp;</span> (qrand() <span class="operator">%</span> (ConnectionManager<span class="operator">::</span>instance()<span class="operator">-</span><span class="operator">&gt;</span>maxConnections() <span class="operator">/</span> <span class="number">2</span>))) {
+          PeerWireClient <span class="operator">*</span>client <span class="operator">=</span> <span class="keyword">new</span> PeerWireClient(ConnectionManager<span class="operator">::</span>instance()<span class="operator">-</span><span class="operator">&gt;</span>clientId()<span class="operator">,</span> <span class="keyword">this</span>);
+          RateController<span class="operator">::</span>instance()<span class="operator">-</span><span class="operator">&gt;</span>addSocket(client);
+          ConnectionManager<span class="operator">::</span>instance()<span class="operator">-</span><span class="operator">&gt;</span>addConnection(client);
+
+          initializeConnection(client);
+          d<span class="operator">-</span><span class="operator">&gt;</span>connections <span class="operator">&lt;</span><span class="operator">&lt;</span> client;
+
+          <span class="comment">// Pick a random peer from the list of weighed peers.</span>
+          TorrentPeer <span class="operator">*</span>peer <span class="operator">=</span> weighedPeers<span class="operator">.</span>takeAt(qrand() <span class="operator">%</span> weighedPeers<span class="operator">.</span>size());
+          weighedPeers<span class="operator">.</span>removeAll(peer);
+          peer<span class="operator">-</span><span class="operator">&gt;</span>connectStart <span class="operator">=</span> <span class="type"><a href="../qtcore/qdatetime.html">QDateTime</a></span><span class="operator">::</span>currentDateTime()<span class="operator">.</span>toTime_t();
+          peer<span class="operator">-</span><span class="operator">&gt;</span>lastVisited <span class="operator">=</span> peer<span class="operator">-</span><span class="operator">&gt;</span>connectStart;
+
+          <span class="comment">// Connect to the peer.</span>
+          client<span class="operator">-</span><span class="operator">&gt;</span>setPeer(peer);
+          client<span class="operator">-</span><span class="operator">&gt;</span>connectToHost(peer<span class="operator">-</span><span class="operator">&gt;</span>address<span class="operator">,</span> peer<span class="operator">-</span><span class="operator">&gt;</span>port);
+      }
+  }
+
+  <span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span>TorrentPeer <span class="operator">*</span><span class="operator">&gt;</span> TorrentClient<span class="operator">::</span>weighedFreePeers() <span class="keyword">const</span>
+  {
+      <span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span>TorrentPeer <span class="operator">*</span><span class="operator">&gt;</span> weighedPeers;
+
+      <span class="comment">// Generate a list of peers that we want to connect to.</span>
+      <span class="type"><a href="../qtcore/qtglobal.html#uint-typedef">uint</a></span> now <span class="operator">=</span> <span class="type"><a href="../qtcore/qdatetime.html">QDateTime</a></span><span class="operator">::</span>currentDateTime()<span class="operator">.</span>toTime_t();
+      <span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span>TorrentPeer <span class="operator">*</span><span class="operator">&gt;</span> freePeers;
+      <span class="type"><a href="../qtcore/qmap.html">QMap</a></span><span class="operator">&lt;</span><span class="type"><a href="../qtcore/qstring.html">QString</a></span><span class="operator">,</span> <span class="type">int</span><span class="operator">&gt;</span> connectionsPerPeer;
+      foreach (TorrentPeer <span class="operator">*</span>peer<span class="operator">,</span> d<span class="operator">-</span><span class="operator">&gt;</span>peers) {
+          bool busy <span class="operator">=</span> <span class="keyword">false</span>;
+          foreach (PeerWireClient <span class="operator">*</span>client<span class="operator">,</span> d<span class="operator">-</span><span class="operator">&gt;</span>connections) {
+              <span class="keyword">if</span> (client<span class="operator">-</span><span class="operator">&gt;</span>state() <span class="operator">=</span><span class="operator">=</span> PeerWireClient<span class="operator">::</span>ConnectedState
+                  <span class="operator">&amp;</span><span class="operator">&amp;</span> client<span class="operator">-</span><span class="operator">&gt;</span>peerAddress() <span class="operator">=</span><span class="operator">=</span> peer<span class="operator">-</span><span class="operator">&gt;</span>address
+                  <span class="operator">&amp;</span><span class="operator">&amp;</span> client<span class="operator">-</span><span class="operator">&gt;</span>peerPort() <span class="operator">=</span><span class="operator">=</span> peer<span class="operator">-</span><span class="operator">&gt;</span>port) {
+                  <span class="keyword">if</span> (<span class="operator">+</span><span class="operator">+</span>connectionsPerPeer<span class="operator">[</span>peer<span class="operator">-</span><span class="operator">&gt;</span>address<span class="operator">.</span>toString()<span class="operator">]</span> <span class="operator">&gt;</span><span class="operator">=</span> MaxConnectionPerPeer) {
+                      busy <span class="operator">=</span> <span class="keyword">true</span>;
+                      <span class="keyword">break</span>;
+                  }
+              }
+          }
+          <span class="keyword">if</span> (<span class="operator">!</span>busy <span class="operator">&amp;</span><span class="operator">&amp;</span> (now <span class="operator">-</span> peer<span class="operator">-</span><span class="operator">&gt;</span>lastVisited) <span class="operator">&gt;</span> <span class="type"><a href="../qtcore/qtglobal.html#uint-typedef">uint</a></span>(MinimumTimeBeforeRevisit))
+              freePeers <span class="operator">&lt;</span><span class="operator">&lt;</span> peer;
+      }
+
+      <span class="comment">// Nothing to connect to</span>
+      <span class="keyword">if</span> (freePeers<span class="operator">.</span>isEmpty())
+          <span class="keyword">return</span> weighedPeers;
+
+      <span class="comment">// Assign points based on connection speed and pieces available.</span>
+      <span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span><span class="type"><a href="../qtcore/qpair.html">QPair</a></span><span class="operator">&lt;</span><span class="type">int</span><span class="operator">,</span> TorrentPeer <span class="operator">*</span><span class="operator">&gt;</span> <span class="operator">&gt;</span> points;
+      foreach (TorrentPeer <span class="operator">*</span>peer<span class="operator">,</span> freePeers) {
+          <span class="type">int</span> tmp <span class="operator">=</span> <span class="number">0</span>;
+          <span class="keyword">if</span> (peer<span class="operator">-</span><span class="operator">&gt;</span>interesting) {
+              tmp <span class="operator">+</span><span class="operator">=</span> peer<span class="operator">-</span><span class="operator">&gt;</span>numCompletedPieces;
+              <span class="keyword">if</span> (d<span class="operator">-</span><span class="operator">&gt;</span>state <span class="operator">=</span><span class="operator">=</span> Seeding)
+                  tmp <span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>pieceCount <span class="operator">-</span> tmp;
+              <span class="keyword">if</span> (<span class="operator">!</span>peer<span class="operator">-</span><span class="operator">&gt;</span>connectStart) <span class="comment">// An unknown peer is as interesting as a seed</span>
+                  tmp <span class="operator">+</span><span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>pieceCount;
+
+              <span class="comment">// 1/5 of the total score for each second below 5 it takes to</span>
+              <span class="comment">// connect.</span>
+              <span class="keyword">if</span> (peer<span class="operator">-</span><span class="operator">&gt;</span>connectTime <span class="operator">&lt;</span> <span class="number">5</span>)
+                  tmp <span class="operator">+</span><span class="operator">=</span> (d<span class="operator">-</span><span class="operator">&gt;</span>pieceCount <span class="operator">/</span> <span class="number">10</span>) <span class="operator">*</span> (<span class="number">5</span> <span class="operator">-</span> peer<span class="operator">-</span><span class="operator">&gt;</span>connectTime);
+          }
+          points <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="type"><a href="../qtcore/qpair.html">QPair</a></span><span class="operator">&lt;</span><span class="type">int</span><span class="operator">,</span> TorrentPeer <span class="operator">*</span><span class="operator">&gt;</span>(tmp<span class="operator">,</span> peer);
+      }
+      std<span class="operator">::</span>sort(points<span class="operator">.</span>begin()<span class="operator">,</span> points<span class="operator">.</span>end());
+
+      <span class="comment">// Minimize the list so the point difference is never more than 1.</span>
+      <span class="keyword">typedef</span> <span class="type"><a href="../qtcore/qpair.html">QPair</a></span><span class="operator">&lt;</span><span class="type">int</span><span class="operator">,</span>TorrentPeer<span class="operator">*</span><span class="operator">&gt;</span> PointPair;
+      <span class="type"><a href="../qtcore/qmultimap.html">QMultiMap</a></span><span class="operator">&lt;</span><span class="type">int</span><span class="operator">,</span> TorrentPeer <span class="operator">*</span><span class="operator">&gt;</span> pointMap;
+      <span class="type">int</span> lowestScore <span class="operator">=</span> <span class="number">0</span>;
+      <span class="type">int</span> lastIndex <span class="operator">=</span> <span class="number">0</span>;
+      foreach (PointPair point<span class="operator">,</span> points) {
+          <span class="keyword">if</span> (point<span class="operator">.</span>first <span class="operator">&gt;</span> lowestScore) {
+              lowestScore <span class="operator">=</span> point<span class="operator">.</span>first;
+              <span class="operator">+</span><span class="operator">+</span>lastIndex;
+          }
+          pointMap<span class="operator">.</span>insert(lastIndex<span class="operator">,</span> point<span class="operator">.</span>second);
+      }
+
+      <span class="comment">// Now make up a list of peers where the ones with more points are</span>
+      <span class="comment">// listed many times.</span>
+      <span class="type"><a href="../qtcore/qmultimap.html">QMultiMap</a></span><span class="operator">&lt;</span><span class="type">int</span><span class="operator">,</span> TorrentPeer <span class="operator">*</span><span class="operator">&gt;</span><span class="operator">::</span>ConstIterator it <span class="operator">=</span> pointMap<span class="operator">.</span>constBegin();
+      <span class="keyword">while</span> (it <span class="operator">!</span><span class="operator">=</span> pointMap<span class="operator">.</span>constEnd()) {
+          <span class="keyword">for</span> (<span class="type">int</span> i <span class="operator">=</span> <span class="number">0</span>; i <span class="operator">&lt;</span> it<span class="operator">.</span>key() <span class="operator">+</span> <span class="number">1</span>; <span class="operator">+</span><span class="operator">+</span>i)
+              weighedPeers <span class="operator">&lt;</span><span class="operator">&lt;</span> it<span class="operator">.</span>value();
+          <span class="operator">+</span><span class="operator">+</span>it;
+      }
+
+      <span class="keyword">return</span> weighedPeers;
+  }
+
+  <span class="type">void</span> TorrentClient<span class="operator">::</span>setupIncomingConnection(PeerWireClient <span class="operator">*</span>client)
+  {
+      <span class="comment">// Connect signals</span>
+      initializeConnection(client);
+
+      <span class="comment">// Initialize this client</span>
+      RateController<span class="operator">::</span>instance()<span class="operator">-</span><span class="operator">&gt;</span>addSocket(client);
+      d<span class="operator">-</span><span class="operator">&gt;</span>connections <span class="operator">&lt;</span><span class="operator">&lt;</span> client;
+
+      client<span class="operator">-</span><span class="operator">&gt;</span>initialize(d<span class="operator">-</span><span class="operator">&gt;</span>infoHash<span class="operator">,</span> d<span class="operator">-</span><span class="operator">&gt;</span>pieceCount);
+      client<span class="operator">-</span><span class="operator">&gt;</span>sendPieceList(d<span class="operator">-</span><span class="operator">&gt;</span>completedPieces);
+
+      <span class="keyword">emit</span> peerInfoUpdated();
+
+      <span class="keyword">if</span> (d<span class="operator">-</span><span class="operator">&gt;</span>state <span class="operator">=</span><span class="operator">=</span> Searching <span class="operator">|</span><span class="operator">|</span> d<span class="operator">-</span><span class="operator">&gt;</span>state <span class="operator">=</span><span class="operator">=</span> Connecting) {
+          <span class="type">int</span> completed <span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>completedPieces<span class="operator">.</span>count(<span class="keyword">true</span>);
+          <span class="keyword">if</span> (completed <span class="operator">=</span><span class="operator">=</span> <span class="number">0</span>)
+              d<span class="operator">-</span><span class="operator">&gt;</span>setState(WarmingUp);
+          <span class="keyword">else</span> <span class="keyword">if</span> (d<span class="operator">-</span><span class="operator">&gt;</span>incompletePieces<span class="operator">.</span>count(<span class="keyword">true</span>) <span class="operator">&lt;</span> <span class="number">5</span> <span class="operator">&amp;</span><span class="operator">&amp;</span> d<span class="operator">-</span><span class="operator">&gt;</span>pendingPieces<span class="operator">.</span>size() <span class="operator">&gt;</span> d<span class="operator">-</span><span class="operator">&gt;</span>incompletePieces<span class="operator">.</span>count(<span class="keyword">true</span>))
+              d<span class="operator">-</span><span class="operator">&gt;</span>setState(Endgame);
+      }
+
+      <span class="keyword">if</span> (d<span class="operator">-</span><span class="operator">&gt;</span>connections<span class="operator">.</span>isEmpty())
+          scheduleUploads();
+  }
+
+  <span class="type">void</span> TorrentClient<span class="operator">::</span>setupOutgoingConnection()
+  {
+      PeerWireClient <span class="operator">*</span>client <span class="operator">=</span> qobject_cast<span class="operator">&lt;</span>PeerWireClient <span class="operator">*</span><span class="operator">&gt;</span>(sender());
+
+      <span class="comment">// Update connection statistics.</span>
+      foreach (TorrentPeer <span class="operator">*</span>peer<span class="operator">,</span> d<span class="operator">-</span><span class="operator">&gt;</span>peers) {
+          <span class="keyword">if</span> (peer<span class="operator">-</span><span class="operator">&gt;</span>port <span class="operator">=</span><span class="operator">=</span> client<span class="operator">-</span><span class="operator">&gt;</span>peerPort() <span class="operator">&amp;</span><span class="operator">&amp;</span> peer<span class="operator">-</span><span class="operator">&gt;</span>address <span class="operator">=</span><span class="operator">=</span> client<span class="operator">-</span><span class="operator">&gt;</span>peerAddress()) {
+              peer<span class="operator">-</span><span class="operator">&gt;</span>connectTime <span class="operator">=</span> peer<span class="operator">-</span><span class="operator">&gt;</span>lastVisited <span class="operator">-</span> peer<span class="operator">-</span><span class="operator">&gt;</span>connectStart;
+              <span class="keyword">break</span>;
+          }
+      }
+
+      <span class="comment">// Send handshake and piece list</span>
+      client<span class="operator">-</span><span class="operator">&gt;</span>initialize(d<span class="operator">-</span><span class="operator">&gt;</span>infoHash<span class="operator">,</span> d<span class="operator">-</span><span class="operator">&gt;</span>pieceCount);
+      client<span class="operator">-</span><span class="operator">&gt;</span>sendPieceList(d<span class="operator">-</span><span class="operator">&gt;</span>completedPieces);
+
+      <span class="keyword">emit</span> peerInfoUpdated();
+
+      <span class="keyword">if</span> (d<span class="operator">-</span><span class="operator">&gt;</span>state <span class="operator">=</span><span class="operator">=</span> Searching <span class="operator">|</span><span class="operator">|</span> d<span class="operator">-</span><span class="operator">&gt;</span>state <span class="operator">=</span><span class="operator">=</span> Connecting) {
+          <span class="type">int</span> completed <span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>completedPieces<span class="operator">.</span>count(<span class="keyword">true</span>);
+          <span class="keyword">if</span> (completed <span class="operator">=</span><span class="operator">=</span> <span class="number">0</span>)
+              d<span class="operator">-</span><span class="operator">&gt;</span>setState(WarmingUp);
+          <span class="keyword">else</span> <span class="keyword">if</span> (d<span class="operator">-</span><span class="operator">&gt;</span>incompletePieces<span class="operator">.</span>count(<span class="keyword">true</span>) <span class="operator">&lt;</span> <span class="number">5</span> <span class="operator">&amp;</span><span class="operator">&amp;</span> d<span class="operator">-</span><span class="operator">&gt;</span>pendingPieces<span class="operator">.</span>size() <span class="operator">&gt;</span> d<span class="operator">-</span><span class="operator">&gt;</span>incompletePieces<span class="operator">.</span>count(<span class="keyword">true</span>))
+              d<span class="operator">-</span><span class="operator">&gt;</span>setState(Endgame);
+      }
+  }
+
+  <span class="type">void</span> TorrentClient<span class="operator">::</span>initializeConnection(PeerWireClient <span class="operator">*</span>client)
+  {
+      connect(client<span class="operator">,</span> SIGNAL(connected())<span class="operator">,</span>
+              <span class="keyword">this</span><span class="operator">,</span> SLOT(setupOutgoingConnection()));
+      connect(client<span class="operator">,</span> SIGNAL(disconnected())<span class="operator">,</span>
+              <span class="keyword">this</span><span class="operator">,</span> SLOT(removeClient()));
+      connect(client<span class="operator">,</span> SIGNAL(error(<span class="type"><a href="qabstractsocket.html">QAbstractSocket</a></span><span class="operator">::</span>SocketError))<span class="operator">,</span>
+              <span class="keyword">this</span><span class="operator">,</span> SLOT(removeClient()));
+      connect(client<span class="operator">,</span> SIGNAL(piecesAvailable(<span class="type"><a href="../qtcore/qbitarray.html">QBitArray</a></span>))<span class="operator">,</span>
+              <span class="keyword">this</span><span class="operator">,</span> SLOT(peerPiecesAvailable(<span class="type"><a href="../qtcore/qbitarray.html">QBitArray</a></span>)));
+      connect(client<span class="operator">,</span> SIGNAL(blockRequested(<span class="type">int</span><span class="operator">,</span><span class="type">int</span><span class="operator">,</span><span class="type">int</span>))<span class="operator">,</span>
+              <span class="keyword">this</span><span class="operator">,</span> SLOT(peerRequestsBlock(<span class="type">int</span><span class="operator">,</span><span class="type">int</span><span class="operator">,</span><span class="type">int</span>)));
+      connect(client<span class="operator">,</span> SIGNAL(blockReceived(<span class="type">int</span><span class="operator">,</span><span class="type">int</span><span class="operator">,</span><span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span>))<span class="operator">,</span>
+              <span class="keyword">this</span><span class="operator">,</span> SLOT(blockReceived(<span class="type">int</span><span class="operator">,</span><span class="type">int</span><span class="operator">,</span><span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span>)));
+      connect(client<span class="operator">,</span> SIGNAL(choked())<span class="operator">,</span>
+              <span class="keyword">this</span><span class="operator">,</span> SLOT(peerChoked()));
+      connect(client<span class="operator">,</span> SIGNAL(unchoked())<span class="operator">,</span>
+              <span class="keyword">this</span><span class="operator">,</span> SLOT(peerUnchoked()));
+      connect(client<span class="operator">,</span> SIGNAL(bytesWritten(<span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span>))<span class="operator">,</span>
+              <span class="keyword">this</span><span class="operator">,</span> SLOT(peerWireBytesWritten(<span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span>)));
+      connect(client<span class="operator">,</span> SIGNAL(bytesReceived(<span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span>))<span class="operator">,</span>
+              <span class="keyword">this</span><span class="operator">,</span> SLOT(peerWireBytesReceived(<span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span>)));
+  }
+
+  <span class="type">void</span> TorrentClient<span class="operator">::</span>removeClient()
+  {
+      PeerWireClient <span class="operator">*</span>client <span class="operator">=</span> <span class="keyword">static_cast</span><span class="operator">&lt;</span>PeerWireClient <span class="operator">*</span><span class="operator">&gt;</span>(sender());
+
+      <span class="comment">// Remove the host from our list of known peers if the connection</span>
+      <span class="comment">// failed.</span>
+      <span class="keyword">if</span> (client<span class="operator">-</span><span class="operator">&gt;</span>peer() <span class="operator">&amp;</span><span class="operator">&amp;</span> client<span class="operator">-</span><span class="operator">&gt;</span>error() <span class="operator">=</span><span class="operator">=</span> <span class="type"><a href="qabstractsocket.html">QAbstractSocket</a></span><span class="operator">::</span>ConnectionRefusedError)
+          d<span class="operator">-</span><span class="operator">&gt;</span>peers<span class="operator">.</span>removeAll(client<span class="operator">-</span><span class="operator">&gt;</span>peer());
+
+      <span class="comment">// Remove the client from RateController and all structures.</span>
+      RateController<span class="operator">::</span>instance()<span class="operator">-</span><span class="operator">&gt;</span>removeSocket(client);
+      d<span class="operator">-</span><span class="operator">&gt;</span>connections<span class="operator">.</span>removeAll(client);
+      <span class="type"><a href="../qtcore/qmultimap.html">QMultiMap</a></span><span class="operator">&lt;</span>PeerWireClient <span class="operator">*</span><span class="operator">,</span> TorrentPiece <span class="operator">*</span><span class="operator">&gt;</span><span class="operator">::</span>Iterator it <span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>payloads<span class="operator">.</span>find(client);
+      <span class="keyword">while</span> (it <span class="operator">!</span><span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>payloads<span class="operator">.</span>end() <span class="operator">&amp;</span><span class="operator">&amp;</span> it<span class="operator">.</span>key() <span class="operator">=</span><span class="operator">=</span> client) {
+          TorrentPiece <span class="operator">*</span>piece <span class="operator">=</span> it<span class="operator">.</span>value();
+          piece<span class="operator">-</span><span class="operator">&gt;</span>inProgress <span class="operator">=</span> <span class="keyword">false</span>;
+          piece<span class="operator">-</span><span class="operator">&gt;</span>requestedBlocks<span class="operator">.</span>fill(<span class="keyword">false</span>);
+          it <span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>payloads<span class="operator">.</span>erase(it);
+      }
+
+      <span class="comment">// Remove pending read requests.</span>
+      <span class="type"><a href="../qtcore/qmapiterator.html">QMapIterator</a></span><span class="operator">&lt;</span><span class="type">int</span><span class="operator">,</span> PeerWireClient <span class="operator">*</span><span class="operator">&gt;</span> it2(d<span class="operator">-</span><span class="operator">&gt;</span>readIds);
+      <span class="keyword">while</span> (it2<span class="operator">.</span>findNext(client))
+          d<span class="operator">-</span><span class="operator">&gt;</span>readIds<span class="operator">.</span>remove(it2<span class="operator">.</span>key());
+
+      <span class="comment">// Delete the client later.</span>
+      disconnect(client<span class="operator">,</span> SIGNAL(disconnected())<span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> SLOT(removeClient()));
+      client<span class="operator">-</span><span class="operator">&gt;</span>deleteLater();
+      ConnectionManager<span class="operator">::</span>instance()<span class="operator">-</span><span class="operator">&gt;</span>removeConnection(client);
+
+      <span class="keyword">emit</span> peerInfoUpdated();
+      d<span class="operator">-</span><span class="operator">&gt;</span>callPeerConnector();
+  }
+
+  <span class="type">void</span> TorrentClient<span class="operator">::</span>peerPiecesAvailable(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qbitarray.html">QBitArray</a></span> <span class="operator">&amp;</span>pieces)
+  {
+      PeerWireClient <span class="operator">*</span>client <span class="operator">=</span> qobject_cast<span class="operator">&lt;</span>PeerWireClient <span class="operator">*</span><span class="operator">&gt;</span>(sender());
+
+      <span class="comment">// Find the peer in our list of announced peers. If it's there,</span>
+      <span class="comment">// then we can use the piece list into to gather statistics that</span>
+      <span class="comment">// help us decide what peers to connect to.</span>
+      TorrentPeer <span class="operator">*</span>peer <span class="operator">=</span> <span class="number">0</span>;
+      <span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span>TorrentPeer <span class="operator">*</span><span class="operator">&gt;</span><span class="operator">::</span>Iterator it <span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>peers<span class="operator">.</span>begin();
+      <span class="keyword">while</span> (it <span class="operator">!</span><span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>peers<span class="operator">.</span>end()) {
+          <span class="keyword">if</span> ((<span class="operator">*</span>it)<span class="operator">-</span><span class="operator">&gt;</span>address <span class="operator">=</span><span class="operator">=</span> client<span class="operator">-</span><span class="operator">&gt;</span>peerAddress() <span class="operator">&amp;</span><span class="operator">&amp;</span> (<span class="operator">*</span>it)<span class="operator">-</span><span class="operator">&gt;</span>port <span class="operator">=</span><span class="operator">=</span> client<span class="operator">-</span><span class="operator">&gt;</span>peerPort()) {
+              peer <span class="operator">=</span> <span class="operator">*</span>it;
+              <span class="keyword">break</span>;
+          }
+          <span class="operator">+</span><span class="operator">+</span>it;
+      }
+
+      <span class="comment">// If the peer is a seed, and we are in seeding mode, then the</span>
+      <span class="comment">// peer is uninteresting.</span>
+      <span class="keyword">if</span> (pieces<span class="operator">.</span>count(<span class="keyword">true</span>) <span class="operator">=</span><span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>pieceCount) {
+          <span class="keyword">if</span> (peer)
+              peer<span class="operator">-</span><span class="operator">&gt;</span>seed <span class="operator">=</span> <span class="keyword">true</span>;
+          <span class="keyword">emit</span> peerInfoUpdated();
+          <span class="keyword">if</span> (d<span class="operator">-</span><span class="operator">&gt;</span>state <span class="operator">=</span><span class="operator">=</span> Seeding) {
+              client<span class="operator">-</span><span class="operator">&gt;</span>abort();
+              <span class="keyword">return</span>;
+          } <span class="keyword">else</span> {
+              <span class="keyword">if</span> (peer)
+                  peer<span class="operator">-</span><span class="operator">&gt;</span>interesting <span class="operator">=</span> <span class="keyword">true</span>;
+              <span class="keyword">if</span> ((client<span class="operator">-</span><span class="operator">&gt;</span>peerWireState() <span class="operator">&amp;</span> PeerWireClient<span class="operator">::</span>InterestedInPeer) <span class="operator">=</span><span class="operator">=</span> <span class="number">0</span>)
+                  client<span class="operator">-</span><span class="operator">&gt;</span>sendInterested();
+              d<span class="operator">-</span><span class="operator">&gt;</span>callScheduler();
+              <span class="keyword">return</span>;
+          }
+      }
+
+      <span class="comment">// Update our list of available pieces.</span>
+      <span class="keyword">if</span> (peer) {
+          peer<span class="operator">-</span><span class="operator">&gt;</span>pieces <span class="operator">=</span> pieces;
+          peer<span class="operator">-</span><span class="operator">&gt;</span>numCompletedPieces <span class="operator">=</span> pieces<span class="operator">.</span>count(<span class="keyword">true</span>);
+      }
+
+      <span class="comment">// Check for interesting pieces, and tell the peer whether we are</span>
+      <span class="comment">// interested or not.</span>
+      bool interested <span class="operator">=</span> <span class="keyword">false</span>;
+      <span class="type">int</span> piecesSize <span class="operator">=</span> pieces<span class="operator">.</span>size();
+      <span class="keyword">for</span> (<span class="type">int</span> pieceIndex <span class="operator">=</span> <span class="number">0</span>; pieceIndex <span class="operator">&lt;</span> piecesSize; <span class="operator">+</span><span class="operator">+</span>pieceIndex) {
+          <span class="keyword">if</span> (<span class="operator">!</span>pieces<span class="operator">.</span>testBit(pieceIndex))
+              <span class="keyword">continue</span>;
+          <span class="keyword">if</span> (<span class="operator">!</span>d<span class="operator">-</span><span class="operator">&gt;</span>completedPieces<span class="operator">.</span>testBit(pieceIndex)) {
+              interested <span class="operator">=</span> <span class="keyword">true</span>;
+              <span class="keyword">if</span> ((client<span class="operator">-</span><span class="operator">&gt;</span>peerWireState() <span class="operator">&amp;</span> PeerWireClient<span class="operator">::</span>InterestedInPeer) <span class="operator">=</span><span class="operator">=</span> <span class="number">0</span>) {
+                  <span class="keyword">if</span> (peer)
+                      peer<span class="operator">-</span><span class="operator">&gt;</span>interesting <span class="operator">=</span> <span class="keyword">true</span>;
+                  client<span class="operator">-</span><span class="operator">&gt;</span>sendInterested();
+              }
+
+              <span class="type"><a href="../qtcore/qmultimap.html">QMultiMap</a></span><span class="operator">&lt;</span>PeerWireClient <span class="operator">*</span><span class="operator">,</span> TorrentPiece <span class="operator">*</span><span class="operator">&gt;</span><span class="operator">::</span>Iterator it <span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>payloads<span class="operator">.</span>find(client);
+              <span class="type">int</span> inProgress <span class="operator">=</span> <span class="number">0</span>;
+              <span class="keyword">while</span> (it <span class="operator">!</span><span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>payloads<span class="operator">.</span>end() <span class="operator">&amp;</span><span class="operator">&amp;</span> it<span class="operator">.</span>key() <span class="operator">=</span><span class="operator">=</span> client) {
+                  <span class="keyword">if</span> (it<span class="operator">.</span>value()<span class="operator">-</span><span class="operator">&gt;</span>inProgress)
+                      inProgress <span class="operator">+</span><span class="operator">=</span> it<span class="operator">.</span>value()<span class="operator">-</span><span class="operator">&gt;</span>requestedBlocks<span class="operator">.</span>count(<span class="keyword">true</span>);
+                  <span class="operator">+</span><span class="operator">+</span>it;
+              }
+              <span class="keyword">if</span> (<span class="operator">!</span>inProgress)
+                  d<span class="operator">-</span><span class="operator">&gt;</span>callScheduler();
+              <span class="keyword">break</span>;
+          }
+      }
+      <span class="keyword">if</span> (<span class="operator">!</span>interested <span class="operator">&amp;</span><span class="operator">&amp;</span> (client<span class="operator">-</span><span class="operator">&gt;</span>peerWireState() <span class="operator">&amp;</span> PeerWireClient<span class="operator">::</span>InterestedInPeer)) {
+          <span class="keyword">if</span> (peer)
+              peer<span class="operator">-</span><span class="operator">&gt;</span>interesting <span class="operator">=</span> <span class="keyword">false</span>;
+          client<span class="operator">-</span><span class="operator">&gt;</span>sendNotInterested();
+      }
+  }
+
+  <span class="type">void</span> TorrentClient<span class="operator">::</span>peerRequestsBlock(<span class="type">int</span> pieceIndex<span class="operator">,</span> <span class="type">int</span> begin<span class="operator">,</span> <span class="type">int</span> length)
+  {
+      PeerWireClient <span class="operator">*</span>client <span class="operator">=</span> qobject_cast<span class="operator">&lt;</span>PeerWireClient <span class="operator">*</span><span class="operator">&gt;</span>(sender());
+
+      <span class="comment">// Silently ignore requests from choked peers</span>
+      <span class="keyword">if</span> (client<span class="operator">-</span><span class="operator">&gt;</span>peerWireState() <span class="operator">&amp;</span> PeerWireClient<span class="operator">::</span>ChokingPeer)
+          <span class="keyword">return</span>;
+
+      <span class="comment">// Silently ignore requests for pieces we don't have.</span>
+      <span class="keyword">if</span> (<span class="operator">!</span>d<span class="operator">-</span><span class="operator">&gt;</span>completedPieces<span class="operator">.</span>testBit(pieceIndex))
+          <span class="keyword">return</span>;
+
+      <span class="comment">// Request the block from the file manager</span>
+      d<span class="operator">-</span><span class="operator">&gt;</span>readIds<span class="operator">.</span>insert(d<span class="operator">-</span><span class="operator">&gt;</span>fileManager<span class="operator">.</span>read(pieceIndex<span class="operator">,</span> begin<span class="operator">,</span> length)<span class="operator">,</span>
+                        qobject_cast<span class="operator">&lt;</span>PeerWireClient <span class="operator">*</span><span class="operator">&gt;</span>(sender()));
+  }
+
+  <span class="type">void</span> TorrentClient<span class="operator">::</span>blockReceived(<span class="type">int</span> pieceIndex<span class="operator">,</span> <span class="type">int</span> begin<span class="operator">,</span> <span class="keyword">const</span> <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> <span class="operator">&amp;</span>data)
+  {
+      PeerWireClient <span class="operator">*</span>client <span class="operator">=</span> qobject_cast<span class="operator">&lt;</span>PeerWireClient <span class="operator">*</span><span class="operator">&gt;</span>(sender());
+      <span class="keyword">if</span> (data<span class="operator">.</span>size() <span class="operator">=</span><span class="operator">=</span> <span class="number">0</span>) {
+          client<span class="operator">-</span><span class="operator">&gt;</span>abort();
+          <span class="keyword">return</span>;
+      }
+
+      <span class="comment">// Ignore it if we already have this block.</span>
+      <span class="type">int</span> blockBit <span class="operator">=</span> begin <span class="operator">/</span> BlockSize;
+      TorrentPiece <span class="operator">*</span>piece <span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>pendingPieces<span class="operator">.</span>value(pieceIndex);
+      <span class="keyword">if</span> (<span class="operator">!</span>piece <span class="operator">|</span><span class="operator">|</span> piece<span class="operator">-</span><span class="operator">&gt;</span>completedBlocks<span class="operator">.</span>testBit(blockBit)) {
+          <span class="comment">// Discard blocks that we already have, and fill up the pipeline.</span>
+          requestMore(client);
+          <span class="keyword">return</span>;
+      }
+
+      <span class="comment">// If we are in warmup or endgame mode, cancel all duplicate</span>
+      <span class="comment">// requests for this block.</span>
+      <span class="keyword">if</span> (d<span class="operator">-</span><span class="operator">&gt;</span>state <span class="operator">=</span><span class="operator">=</span> WarmingUp <span class="operator">|</span><span class="operator">|</span> d<span class="operator">-</span><span class="operator">&gt;</span>state <span class="operator">=</span><span class="operator">=</span> Endgame) {
+          <span class="type"><a href="../qtcore/qmultimap.html">QMultiMap</a></span><span class="operator">&lt;</span>PeerWireClient <span class="operator">*</span><span class="operator">,</span> TorrentPiece <span class="operator">*</span><span class="operator">&gt;</span><span class="operator">::</span>Iterator it <span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>payloads<span class="operator">.</span>begin();
+          <span class="keyword">while</span> (it <span class="operator">!</span><span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>payloads<span class="operator">.</span>end()) {
+              PeerWireClient <span class="operator">*</span>otherClient <span class="operator">=</span> it<span class="operator">.</span>key();
+              <span class="keyword">if</span> (otherClient <span class="operator">!</span><span class="operator">=</span> client <span class="operator">&amp;</span><span class="operator">&amp;</span> it<span class="operator">.</span>value()<span class="operator">-</span><span class="operator">&gt;</span>index <span class="operator">=</span><span class="operator">=</span> pieceIndex) {
+                  <span class="keyword">if</span> (otherClient<span class="operator">-</span><span class="operator">&gt;</span>incomingBlocks()<span class="operator">.</span>contains(TorrentBlock(pieceIndex<span class="operator">,</span> begin<span class="operator">,</span> data<span class="operator">.</span>size())))
+                      it<span class="operator">.</span>key()<span class="operator">-</span><span class="operator">&gt;</span>cancelRequest(pieceIndex<span class="operator">,</span> begin<span class="operator">,</span> data<span class="operator">.</span>size());
+              }
+              <span class="operator">+</span><span class="operator">+</span>it;
+          }
+      }
+
+      <span class="keyword">if</span> (d<span class="operator">-</span><span class="operator">&gt;</span>state <span class="operator">!</span><span class="operator">=</span> Downloading <span class="operator">&amp;</span><span class="operator">&amp;</span> d<span class="operator">-</span><span class="operator">&gt;</span>state <span class="operator">!</span><span class="operator">=</span> Endgame <span class="operator">&amp;</span><span class="operator">&amp;</span> d<span class="operator">-</span><span class="operator">&gt;</span>completedPieces<span class="operator">.</span>count(<span class="keyword">true</span>) <span class="operator">&gt;</span> <span class="number">0</span>)
+          d<span class="operator">-</span><span class="operator">&gt;</span>setState(Downloading);
+
+      <span class="comment">// Store this block</span>
+      d<span class="operator">-</span><span class="operator">&gt;</span>fileManager<span class="operator">.</span>write(pieceIndex<span class="operator">,</span> begin<span class="operator">,</span> data);
+      piece<span class="operator">-</span><span class="operator">&gt;</span>completedBlocks<span class="operator">.</span>setBit(blockBit);
+      piece<span class="operator">-</span><span class="operator">&gt;</span>requestedBlocks<span class="operator">.</span>clearBit(blockBit);
+
+      <span class="keyword">if</span> (blocksLeftForPiece(piece) <span class="operator">=</span><span class="operator">=</span> <span class="number">0</span>) {
+          <span class="comment">// Ask the file manager to verify the newly downloaded piece</span>
+          d<span class="operator">-</span><span class="operator">&gt;</span>fileManager<span class="operator">.</span>verifyPiece(piece<span class="operator">-</span><span class="operator">&gt;</span>index);
+
+          <span class="comment">// Remove this piece from all payloads</span>
+          <span class="type"><a href="../qtcore/qmultimap.html">QMultiMap</a></span><span class="operator">&lt;</span>PeerWireClient <span class="operator">*</span><span class="operator">,</span> TorrentPiece <span class="operator">*</span><span class="operator">&gt;</span><span class="operator">::</span>Iterator it <span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>payloads<span class="operator">.</span>begin();
+          <span class="keyword">while</span> (it <span class="operator">!</span><span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>payloads<span class="operator">.</span>end()) {
+              <span class="keyword">if</span> (<span class="operator">!</span>it<span class="operator">.</span>value() <span class="operator">|</span><span class="operator">|</span> it<span class="operator">.</span>value()<span class="operator">-</span><span class="operator">&gt;</span>index <span class="operator">=</span><span class="operator">=</span> piece<span class="operator">-</span><span class="operator">&gt;</span>index)
+                  it <span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>payloads<span class="operator">.</span>erase(it);
+              <span class="keyword">else</span>
+                  <span class="operator">+</span><span class="operator">+</span>it;
+          }
+      }
+
+      <span class="comment">// Fill up the pipeline.</span>
+      requestMore(client);
+  }
+
+  <span class="type">void</span> TorrentClient<span class="operator">::</span>peerWireBytesWritten(<span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> size)
+  {
+      <span class="keyword">if</span> (<span class="operator">!</span>d<span class="operator">-</span><span class="operator">&gt;</span>transferRateTimer)
+          d<span class="operator">-</span><span class="operator">&gt;</span>transferRateTimer <span class="operator">=</span> startTimer(RateControlTimerDelay);
+
+      d<span class="operator">-</span><span class="operator">&gt;</span>uploadRate<span class="operator">[</span><span class="number">0</span><span class="operator">]</span> <span class="operator">+</span><span class="operator">=</span> size;
+      d<span class="operator">-</span><span class="operator">&gt;</span>uploadedBytes <span class="operator">+</span><span class="operator">=</span> size;
+      <span class="keyword">emit</span> dataSent(size);
+  }
+
+  <span class="type">void</span> TorrentClient<span class="operator">::</span>peerWireBytesReceived(<span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> size)
+  {
+      <span class="keyword">if</span> (<span class="operator">!</span>d<span class="operator">-</span><span class="operator">&gt;</span>transferRateTimer)
+          d<span class="operator">-</span><span class="operator">&gt;</span>transferRateTimer <span class="operator">=</span> startTimer(RateControlTimerDelay);
+
+      d<span class="operator">-</span><span class="operator">&gt;</span>downloadRate<span class="operator">[</span><span class="number">0</span><span class="operator">]</span> <span class="operator">+</span><span class="operator">=</span> size;
+      d<span class="operator">-</span><span class="operator">&gt;</span>downloadedBytes <span class="operator">+</span><span class="operator">=</span> size;
+      <span class="keyword">emit</span> dataSent(size);
+  }
+
+  <span class="type">int</span> TorrentClient<span class="operator">::</span>blocksLeftForPiece(<span class="keyword">const</span> TorrentPiece <span class="operator">*</span>piece) <span class="keyword">const</span>
+  {
+      <span class="type">int</span> blocksLeft <span class="operator">=</span> <span class="number">0</span>;
+      <span class="type">int</span> completedBlocksSize <span class="operator">=</span> piece<span class="operator">-</span><span class="operator">&gt;</span>completedBlocks<span class="operator">.</span>size();
+      <span class="keyword">for</span> (<span class="type">int</span> i <span class="operator">=</span> <span class="number">0</span>; i <span class="operator">&lt;</span> completedBlocksSize; <span class="operator">+</span><span class="operator">+</span>i) {
+          <span class="keyword">if</span> (<span class="operator">!</span>piece<span class="operator">-</span><span class="operator">&gt;</span>completedBlocks<span class="operator">.</span>testBit(i))
+              <span class="operator">+</span><span class="operator">+</span>blocksLeft;
+      }
+      <span class="keyword">return</span> blocksLeft;
+  }
+
+  <span class="type">void</span> TorrentClient<span class="operator">::</span>scheduleUploads()
+  {
+      <span class="comment">// Generate a list of clients sorted by their transfer</span>
+      <span class="comment">// speeds.  When leeching, we sort by download speed, and when</span>
+      <span class="comment">// seeding, we sort by upload speed. Seeds are left out; there's</span>
+      <span class="comment">// no use in unchoking them.</span>
+      <span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span>PeerWireClient <span class="operator">*</span><span class="operator">&gt;</span> allClients <span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>connections;
+      <span class="type"><a href="../qtcore/qmultimap.html">QMultiMap</a></span><span class="operator">&lt;</span><span class="type">int</span><span class="operator">,</span> PeerWireClient <span class="operator">*</span><span class="operator">&gt;</span> transferSpeeds;
+      foreach (PeerWireClient <span class="operator">*</span>client<span class="operator">,</span> allClients) {
+          <span class="keyword">if</span> (client<span class="operator">-</span><span class="operator">&gt;</span>state() <span class="operator">=</span><span class="operator">=</span> <span class="type"><a href="qabstractsocket.html">QAbstractSocket</a></span><span class="operator">::</span>ConnectedState
+              <span class="operator">&amp;</span><span class="operator">&amp;</span> client<span class="operator">-</span><span class="operator">&gt;</span>availablePieces()<span class="operator">.</span>count(<span class="keyword">true</span>) <span class="operator">!</span><span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>pieceCount) {
+              <span class="keyword">if</span> (d<span class="operator">-</span><span class="operator">&gt;</span>state <span class="operator">=</span><span class="operator">=</span> Seeding) {
+                  transferSpeeds<span class="operator">.</span>insert(client<span class="operator">-</span><span class="operator">&gt;</span>uploadSpeed()<span class="operator">,</span> client);
+              } <span class="keyword">else</span> {
+                  transferSpeeds<span class="operator">.</span>insert(client<span class="operator">-</span><span class="operator">&gt;</span>downloadSpeed()<span class="operator">,</span> client);
+              }
+          }
+      }
+
+      <span class="comment">// Unchoke the top 'MaxUploads' downloaders (peers that we are</span>
+      <span class="comment">// uploading to) and choke all others.</span>
+      <span class="type">int</span> maxUploaders <span class="operator">=</span> MaxUploads;
+      <span class="type"><a href="../qtcore/qmapiterator.html">QMapIterator</a></span><span class="operator">&lt;</span><span class="type">int</span><span class="operator">,</span> PeerWireClient <span class="operator">*</span><span class="operator">&gt;</span> it(transferSpeeds);
+      it<span class="operator">.</span>toBack();
+      <span class="keyword">while</span> (it<span class="operator">.</span>hasPrevious()) {
+          PeerWireClient <span class="operator">*</span>client <span class="operator">=</span> it<span class="operator">.</span>previous()<span class="operator">.</span>value();
+          bool interested <span class="operator">=</span> (client<span class="operator">-</span><span class="operator">&gt;</span>peerWireState() <span class="operator">&amp;</span> PeerWireClient<span class="operator">::</span>PeerIsInterested);
+
+          <span class="keyword">if</span> (maxUploaders) {
+              allClients<span class="operator">.</span>removeAll(client);
+              <span class="keyword">if</span> (client<span class="operator">-</span><span class="operator">&gt;</span>peerWireState() <span class="operator">&amp;</span> PeerWireClient<span class="operator">::</span>ChokingPeer)
+                  client<span class="operator">-</span><span class="operator">&gt;</span>unchokePeer();
+              <span class="operator">-</span><span class="operator">-</span>maxUploaders;
+              <span class="keyword">continue</span>;
+          }
+
+          <span class="keyword">if</span> ((client<span class="operator">-</span><span class="operator">&gt;</span>peerWireState() <span class="operator">&amp;</span> PeerWireClient<span class="operator">::</span>ChokingPeer) <span class="operator">=</span><span class="operator">=</span> <span class="number">0</span>) {
+              <span class="keyword">if</span> ((qrand() <span class="operator">%</span> <span class="number">10</span>) <span class="operator">=</span><span class="operator">=</span> <span class="number">0</span>)
+                  client<span class="operator">-</span><span class="operator">&gt;</span>abort();
+              <span class="keyword">else</span>
+                  client<span class="operator">-</span><span class="operator">&gt;</span>chokePeer();
+              allClients<span class="operator">.</span>removeAll(client);
+          }
+          <span class="keyword">if</span> (<span class="operator">!</span>interested)
+              allClients<span class="operator">.</span>removeAll(client);
+      }
+
+      <span class="comment">// Only interested peers are left in allClients. Unchoke one</span>
+      <span class="comment">// random peer to allow it to compete for a position among the</span>
+      <span class="comment">// downloaders.  (This is known as an &quot;optimistic unchoke&quot;.)</span>
+      <span class="keyword">if</span> (<span class="operator">!</span>allClients<span class="operator">.</span>isEmpty()) {
+          PeerWireClient <span class="operator">*</span>client <span class="operator">=</span> allClients<span class="operator">[</span>qrand() <span class="operator">%</span> allClients<span class="operator">.</span>size()<span class="operator">]</span>;
+          <span class="keyword">if</span> (client<span class="operator">-</span><span class="operator">&gt;</span>peerWireState() <span class="operator">&amp;</span> PeerWireClient<span class="operator">::</span>ChokingPeer)
+              client<span class="operator">-</span><span class="operator">&gt;</span>unchokePeer();
+      }
+  }
+
+  <span class="type">void</span> TorrentClient<span class="operator">::</span>scheduleDownloads()
+  {
+      d<span class="operator">-</span><span class="operator">&gt;</span>schedulerCalled <span class="operator">=</span> <span class="keyword">false</span>;
+
+      <span class="keyword">if</span> (d<span class="operator">-</span><span class="operator">&gt;</span>state <span class="operator">=</span><span class="operator">=</span> Stopping <span class="operator">|</span><span class="operator">|</span> d<span class="operator">-</span><span class="operator">&gt;</span>state <span class="operator">=</span><span class="operator">=</span> Paused <span class="operator">|</span><span class="operator">|</span> d<span class="operator">-</span><span class="operator">&gt;</span>state <span class="operator">=</span><span class="operator">=</span> Idle)
+          <span class="keyword">return</span>;
+
+      <span class="comment">// Check what each client is doing, and assign payloads to those</span>
+      <span class="comment">// who are either idle or done.</span>
+      foreach (PeerWireClient <span class="operator">*</span>client<span class="operator">,</span> d<span class="operator">-</span><span class="operator">&gt;</span>connections)
+          schedulePieceForClient(client);
+  }
+
+  <span class="type">void</span> TorrentClient<span class="operator">::</span>schedulePieceForClient(PeerWireClient <span class="operator">*</span>client)
+  {
+      <span class="comment">// Only schedule connected clients.</span>
+      <span class="keyword">if</span> (client<span class="operator">-</span><span class="operator">&gt;</span>state() <span class="operator">!</span><span class="operator">=</span> <span class="type"><a href="qtcpsocket.html">QTcpSocket</a></span><span class="operator">::</span>ConnectedState)
+          <span class="keyword">return</span>;
+
+      <span class="comment">// The peer has choked us; try again later.</span>
+      <span class="keyword">if</span> (client<span class="operator">-</span><span class="operator">&gt;</span>peerWireState() <span class="operator">&amp;</span> PeerWireClient<span class="operator">::</span>ChokedByPeer)
+          <span class="keyword">return</span>;
+
+      <span class="comment">// Make a list of all the client's pending pieces, and count how</span>
+      <span class="comment">// many blocks have been requested.</span>
+      <span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span><span class="type">int</span><span class="operator">&gt;</span> currentPieces;
+      bool somePiecesAreNotInProgress <span class="operator">=</span> <span class="keyword">false</span>;
+      TorrentPiece <span class="operator">*</span>lastPendingPiece <span class="operator">=</span> <span class="number">0</span>;
+      <span class="type"><a href="../qtcore/qmultimap.html">QMultiMap</a></span><span class="operator">&lt;</span>PeerWireClient <span class="operator">*</span><span class="operator">,</span> TorrentPiece <span class="operator">*</span><span class="operator">&gt;</span><span class="operator">::</span>Iterator it <span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>payloads<span class="operator">.</span>find(client);
+      <span class="keyword">while</span> (it <span class="operator">!</span><span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>payloads<span class="operator">.</span>end() <span class="operator">&amp;</span><span class="operator">&amp;</span> it<span class="operator">.</span>key() <span class="operator">=</span><span class="operator">=</span> client) {
+          lastPendingPiece <span class="operator">=</span> it<span class="operator">.</span>value();
+          <span class="keyword">if</span> (lastPendingPiece<span class="operator">-</span><span class="operator">&gt;</span>inProgress) {
+              currentPieces <span class="operator">&lt;</span><span class="operator">&lt;</span> lastPendingPiece<span class="operator">-</span><span class="operator">&gt;</span>index;
+          } <span class="keyword">else</span> {
+              somePiecesAreNotInProgress <span class="operator">=</span> <span class="keyword">true</span>;
+          }
+          <span class="operator">+</span><span class="operator">+</span>it;
+      }
+
+      <span class="comment">// Skip clients that already have too many blocks in progress.</span>
+      <span class="keyword">if</span> (client<span class="operator">-</span><span class="operator">&gt;</span>incomingBlocks()<span class="operator">.</span>size() <span class="operator">&gt;</span><span class="operator">=</span> ((d<span class="operator">-</span><span class="operator">&gt;</span>state <span class="operator">=</span><span class="operator">=</span> Endgame <span class="operator">|</span><span class="operator">|</span> d<span class="operator">-</span><span class="operator">&gt;</span>state <span class="operator">=</span><span class="operator">=</span> WarmingUp)
+                                              <span class="operator">?</span> MaxBlocksInMultiMode : MaxBlocksInProgress))
+          <span class="keyword">return</span>;
+
+      <span class="comment">// If all pieces are in progress, but we haven't filled up our</span>
+      <span class="comment">// block requesting quota, then we need to schedule another piece.</span>
+      <span class="keyword">if</span> (<span class="operator">!</span>somePiecesAreNotInProgress <span class="operator">|</span><span class="operator">|</span> client<span class="operator">-</span><span class="operator">&gt;</span>incomingBlocks()<span class="operator">.</span>size() <span class="operator">&gt;</span> <span class="number">0</span>)
+          lastPendingPiece <span class="operator">=</span> <span class="number">0</span>;
+      TorrentPiece <span class="operator">*</span>piece <span class="operator">=</span> lastPendingPiece;
+
+      <span class="comment">// In warmup state, all clients request blocks from the same pieces.</span>
+      <span class="keyword">if</span> (d<span class="operator">-</span><span class="operator">&gt;</span>state <span class="operator">=</span><span class="operator">=</span> WarmingUp <span class="operator">&amp;</span><span class="operator">&amp;</span> d<span class="operator">-</span><span class="operator">&gt;</span>pendingPieces<span class="operator">.</span>size() <span class="operator">&gt;</span><span class="operator">=</span> <span class="number">4</span>) {
+          piece <span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>payloads<span class="operator">.</span>value(client);
+          <span class="keyword">if</span> (<span class="operator">!</span>piece) {
+              <span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span>TorrentPiece <span class="operator">*</span><span class="operator">&gt;</span> values <span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>pendingPieces<span class="operator">.</span>values();
+              piece <span class="operator">=</span> values<span class="operator">.</span>value(qrand() <span class="operator">%</span> values<span class="operator">.</span>size());
+              piece<span class="operator">-</span><span class="operator">&gt;</span>inProgress <span class="operator">=</span> <span class="keyword">true</span>;
+              d<span class="operator">-</span><span class="operator">&gt;</span>payloads<span class="operator">.</span>insert(client<span class="operator">,</span> piece);
+          }
+          <span class="keyword">if</span> (piece<span class="operator">-</span><span class="operator">&gt;</span>completedBlocks<span class="operator">.</span>count(<span class="keyword">false</span>) <span class="operator">=</span><span class="operator">=</span> client<span class="operator">-</span><span class="operator">&gt;</span>incomingBlocks()<span class="operator">.</span>size())
+              <span class="keyword">return</span>;
+      }
+
+      <span class="comment">// If no pieces are currently in progress, schedule a new one.</span>
+      <span class="keyword">if</span> (<span class="operator">!</span>piece) {
+          <span class="comment">// Build up a list of what pieces that we have not completed</span>
+          <span class="comment">// are available to this client.</span>
+          <span class="type"><a href="../qtcore/qbitarray.html">QBitArray</a></span> incompletePiecesAvailableToClient <span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>incompletePieces;
+
+          <span class="comment">// Remove all pieces that are marked as being in progress</span>
+          <span class="comment">// already (i.e., pieces that this or other clients are</span>
+          <span class="comment">// already waiting for). A special rule applies to warmup and</span>
+          <span class="comment">// endgame mode; there, we allow several clients to request</span>
+          <span class="comment">// the same piece. In endgame mode, this only applies to</span>
+          <span class="comment">// clients that are currently uploading (more than 1.0KB/s).</span>
+          <span class="keyword">if</span> ((d<span class="operator">-</span><span class="operator">&gt;</span>state <span class="operator">=</span><span class="operator">=</span> Endgame <span class="operator">&amp;</span><span class="operator">&amp;</span> client<span class="operator">-</span><span class="operator">&gt;</span>uploadSpeed() <span class="operator">&lt;</span> <span class="number">1024</span>) <span class="operator">|</span><span class="operator">|</span> d<span class="operator">-</span><span class="operator">&gt;</span>state <span class="operator">!</span><span class="operator">=</span> WarmingUp) {
+              <span class="type"><a href="../qtcore/qmap.html">QMap</a></span><span class="operator">&lt;</span><span class="type">int</span><span class="operator">,</span> TorrentPiece <span class="operator">*</span><span class="operator">&gt;</span><span class="operator">::</span>ConstIterator it <span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>pendingPieces<span class="operator">.</span>constBegin();
+              <span class="keyword">while</span> (it <span class="operator">!</span><span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>pendingPieces<span class="operator">.</span>constEnd()) {
+                  <span class="keyword">if</span> (it<span class="operator">.</span>value()<span class="operator">-</span><span class="operator">&gt;</span>inProgress)
+                      incompletePiecesAvailableToClient<span class="operator">.</span>clearBit(it<span class="operator">.</span>key());
+                  <span class="operator">+</span><span class="operator">+</span>it;
+              }
+          }
+
+          <span class="comment">// Remove all pieces that the client cannot download.</span>
+          incompletePiecesAvailableToClient <span class="operator">&amp;</span><span class="operator">=</span> client<span class="operator">-</span><span class="operator">&gt;</span>availablePieces();
+
+          <span class="comment">// Remove all pieces that this client has already requested.</span>
+          foreach (<span class="type">int</span> i<span class="operator">,</span> currentPieces)
+              incompletePiecesAvailableToClient<span class="operator">.</span>clearBit(i);
+
+          <span class="comment">// Only continue if more pieces can be scheduled. If no pieces</span>
+          <span class="comment">// are available and no blocks are in progress, just leave</span>
+          <span class="comment">// the connection idle; it might become interesting later.</span>
+          <span class="keyword">if</span> (incompletePiecesAvailableToClient<span class="operator">.</span>count(<span class="keyword">true</span>) <span class="operator">=</span><span class="operator">=</span> <span class="number">0</span>)
+              <span class="keyword">return</span>;
+
+          <span class="comment">// Check if any of the partially completed pieces can be</span>
+          <span class="comment">// recovered, and if so, pick a random one of them.</span>
+          <span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span>TorrentPiece <span class="operator">*</span><span class="operator">&gt;</span> partialPieces;
+          <span class="type"><a href="../qtcore/qmap.html">QMap</a></span><span class="operator">&lt;</span><span class="type">int</span><span class="operator">,</span> TorrentPiece <span class="operator">*</span><span class="operator">&gt;</span><span class="operator">::</span>ConstIterator it <span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>pendingPieces<span class="operator">.</span>constBegin();
+          <span class="keyword">while</span> (it <span class="operator">!</span><span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>pendingPieces<span class="operator">.</span>constEnd()) {
+              TorrentPiece <span class="operator">*</span>tmp <span class="operator">=</span> it<span class="operator">.</span>value();
+              <span class="keyword">if</span> (incompletePiecesAvailableToClient<span class="operator">.</span>testBit(it<span class="operator">.</span>key())) {
+                  <span class="keyword">if</span> (<span class="operator">!</span>tmp<span class="operator">-</span><span class="operator">&gt;</span>inProgress <span class="operator">|</span><span class="operator">|</span> d<span class="operator">-</span><span class="operator">&gt;</span>state <span class="operator">=</span><span class="operator">=</span> WarmingUp <span class="operator">|</span><span class="operator">|</span> d<span class="operator">-</span><span class="operator">&gt;</span>state <span class="operator">=</span><span class="operator">=</span> Endgame) {
+                      partialPieces <span class="operator">&lt;</span><span class="operator">&lt;</span> tmp;
+                      <span class="keyword">break</span>;
+                  }
+              }
+              <span class="operator">+</span><span class="operator">+</span>it;
+          }
+          <span class="keyword">if</span> (<span class="operator">!</span>partialPieces<span class="operator">.</span>isEmpty())
+              piece <span class="operator">=</span> partialPieces<span class="operator">.</span>value(qrand() <span class="operator">%</span> partialPieces<span class="operator">.</span>size());
+
+          <span class="keyword">if</span> (<span class="operator">!</span>piece) {
+              <span class="comment">// Pick a random piece 3 out of 4 times; otherwise, pick either</span>
+              <span class="comment">// one of the most common or the least common pieces available,</span>
+              <span class="comment">// depending on the state we're in.</span>
+              <span class="type">int</span> pieceIndex <span class="operator">=</span> <span class="number">0</span>;
+              <span class="keyword">if</span> (d<span class="operator">-</span><span class="operator">&gt;</span>state <span class="operator">=</span><span class="operator">=</span> WarmingUp <span class="operator">|</span><span class="operator">|</span> (qrand() <span class="operator">&amp;</span> <span class="number">4</span>) <span class="operator">=</span><span class="operator">=</span> <span class="number">0</span>) {
+                  <span class="type">int</span> <span class="operator">*</span>occurrences <span class="operator">=</span> <span class="keyword">new</span> <span class="type">int</span><span class="operator">[</span>d<span class="operator">-</span><span class="operator">&gt;</span>pieceCount<span class="operator">]</span>;
+                  memset(occurrences<span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> d<span class="operator">-</span><span class="operator">&gt;</span>pieceCount <span class="operator">*</span> <span class="keyword">sizeof</span>(<span class="type">int</span>));
+
+                  <span class="comment">// Count how many of each piece are available.</span>
+                  foreach (PeerWireClient <span class="operator">*</span>peer<span class="operator">,</span> d<span class="operator">-</span><span class="operator">&gt;</span>connections) {
+                      <span class="type"><a href="../qtcore/qbitarray.html">QBitArray</a></span> peerPieces <span class="operator">=</span> peer<span class="operator">-</span><span class="operator">&gt;</span>availablePieces();
+                      <span class="type">int</span> peerPiecesSize <span class="operator">=</span> peerPieces<span class="operator">.</span>size();
+                      <span class="keyword">for</span> (<span class="type">int</span> i <span class="operator">=</span> <span class="number">0</span>; i <span class="operator">&lt;</span> peerPiecesSize; <span class="operator">+</span><span class="operator">+</span>i) {
+                          <span class="keyword">if</span> (peerPieces<span class="operator">.</span>testBit(i))
+                              <span class="operator">+</span><span class="operator">+</span>occurrences<span class="operator">[</span>i<span class="operator">]</span>;
+                      }
+                  }
+
+                  <span class="comment">// Find the rarest or most common pieces.</span>
+                  <span class="type">int</span> numOccurrences <span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>state <span class="operator">=</span><span class="operator">=</span> WarmingUp <span class="operator">?</span> <span class="number">0</span> : <span class="number">99999</span>;
+                  <span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span><span class="type">int</span><span class="operator">&gt;</span> piecesReadyForDownload;
+                  <span class="keyword">for</span> (<span class="type">int</span> i <span class="operator">=</span> <span class="number">0</span>; i <span class="operator">&lt;</span> d<span class="operator">-</span><span class="operator">&gt;</span>pieceCount; <span class="operator">+</span><span class="operator">+</span>i) {
+                      <span class="keyword">if</span> (d<span class="operator">-</span><span class="operator">&gt;</span>state <span class="operator">=</span><span class="operator">=</span> WarmingUp) {
+                          <span class="comment">// Add common pieces</span>
+                          <span class="keyword">if</span> (occurrences<span class="operator">[</span>i<span class="operator">]</span> <span class="operator">&gt;</span><span class="operator">=</span> numOccurrences
+                              <span class="operator">&amp;</span><span class="operator">&amp;</span> incompletePiecesAvailableToClient<span class="operator">.</span>testBit(i)) {
+                              <span class="keyword">if</span> (occurrences<span class="operator">[</span>i<span class="operator">]</span> <span class="operator">&gt;</span> numOccurrences)
+                                  piecesReadyForDownload<span class="operator">.</span>clear();
+                              piecesReadyForDownload<span class="operator">.</span>append(i);
+                              numOccurrences <span class="operator">=</span> occurrences<span class="operator">[</span>i<span class="operator">]</span>;
+                          }
+                      } <span class="keyword">else</span> {
+                          <span class="comment">// Add rare pieces</span>
+                          <span class="keyword">if</span> (occurrences<span class="operator">[</span>i<span class="operator">]</span> <span class="operator">&lt;</span><span class="operator">=</span> numOccurrences
+                              <span class="operator">&amp;</span><span class="operator">&amp;</span> incompletePiecesAvailableToClient<span class="operator">.</span>testBit(i)) {
+                              <span class="keyword">if</span> (occurrences<span class="operator">[</span>i<span class="operator">]</span> <span class="operator">&lt;</span> numOccurrences)
+                                  piecesReadyForDownload<span class="operator">.</span>clear();
+                              piecesReadyForDownload<span class="operator">.</span>append(i);
+                              numOccurrences <span class="operator">=</span> occurrences<span class="operator">[</span>i<span class="operator">]</span>;
+                          }
+                      }
+                  }
+
+                  <span class="comment">// Select one piece randomly</span>
+                  pieceIndex <span class="operator">=</span> piecesReadyForDownload<span class="operator">.</span>at(qrand() <span class="operator">%</span> piecesReadyForDownload<span class="operator">.</span>size());
+                  <span class="keyword">delete</span> <span class="operator">[</span><span class="operator">]</span> occurrences;
+              } <span class="keyword">else</span> {
+                  <span class="comment">// Make up a list of available piece indices, and pick</span>
+                  <span class="comment">// a random one.</span>
+                  <span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span><span class="type">int</span><span class="operator">&gt;</span> values;
+                  <span class="type">int</span> incompletePiecesAvailableToClientSize <span class="operator">=</span> incompletePiecesAvailableToClient<span class="operator">.</span>size();
+                  <span class="keyword">for</span> (<span class="type">int</span> i <span class="operator">=</span> <span class="number">0</span>; i <span class="operator">&lt;</span> incompletePiecesAvailableToClientSize; <span class="operator">+</span><span class="operator">+</span>i) {
+                      <span class="keyword">if</span> (incompletePiecesAvailableToClient<span class="operator">.</span>testBit(i))
+                          values <span class="operator">&lt;</span><span class="operator">&lt;</span> i;
+                  }
+                  pieceIndex <span class="operator">=</span> values<span class="operator">.</span>at(qrand() <span class="operator">%</span> values<span class="operator">.</span>size());
+              }
+
+              <span class="comment">// Create a new TorrentPiece and fill in all initial</span>
+              <span class="comment">// properties.</span>
+              piece <span class="operator">=</span> <span class="keyword">new</span> TorrentPiece;
+              piece<span class="operator">-</span><span class="operator">&gt;</span>index <span class="operator">=</span> pieceIndex;
+              piece<span class="operator">-</span><span class="operator">&gt;</span>length <span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>fileManager<span class="operator">.</span>pieceLengthAt(pieceIndex);
+              <span class="type">int</span> numBlocks <span class="operator">=</span> piece<span class="operator">-</span><span class="operator">&gt;</span>length <span class="operator">/</span> BlockSize;
+              <span class="keyword">if</span> (piece<span class="operator">-</span><span class="operator">&gt;</span>length <span class="operator">%</span> BlockSize)
+                  <span class="operator">+</span><span class="operator">+</span>numBlocks;
+              piece<span class="operator">-</span><span class="operator">&gt;</span>completedBlocks<span class="operator">.</span>resize(numBlocks);
+              piece<span class="operator">-</span><span class="operator">&gt;</span>requestedBlocks<span class="operator">.</span>resize(numBlocks);
+              d<span class="operator">-</span><span class="operator">&gt;</span>pendingPieces<span class="operator">.</span>insert(pieceIndex<span class="operator">,</span> piece);
+          }
+
+          piece<span class="operator">-</span><span class="operator">&gt;</span>inProgress <span class="operator">=</span> <span class="keyword">true</span>;
+          d<span class="operator">-</span><span class="operator">&gt;</span>payloads<span class="operator">.</span>insert(client<span class="operator">,</span> piece);
+      }
+
+      <span class="comment">// Request more blocks from all pending pieces.</span>
+      requestMore(client);
+  }
+
+  <span class="type">void</span> TorrentClient<span class="operator">::</span>requestMore(PeerWireClient <span class="operator">*</span>client)
+  {
+      <span class="comment">// Make a list of all pieces this client is currently waiting for,</span>
+      <span class="comment">// and count the number of blocks in progress.</span>
+      <span class="type"><a href="../qtcore/qmultimap.html">QMultiMap</a></span><span class="operator">&lt;</span>PeerWireClient <span class="operator">*</span><span class="operator">,</span> TorrentPiece <span class="operator">*</span><span class="operator">&gt;</span><span class="operator">::</span>Iterator it <span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>payloads<span class="operator">.</span>find(client);
+      <span class="type">int</span> numBlocksInProgress <span class="operator">=</span> client<span class="operator">-</span><span class="operator">&gt;</span>incomingBlocks()<span class="operator">.</span>size();
+      <span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span>TorrentPiece <span class="operator">*</span><span class="operator">&gt;</span> piecesInProgress;
+      <span class="keyword">while</span> (it <span class="operator">!</span><span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>payloads<span class="operator">.</span>end() <span class="operator">&amp;</span><span class="operator">&amp;</span> it<span class="operator">.</span>key() <span class="operator">=</span><span class="operator">=</span> client) {
+          TorrentPiece <span class="operator">*</span>piece <span class="operator">=</span> it<span class="operator">.</span>value();
+          <span class="keyword">if</span> (piece<span class="operator">-</span><span class="operator">&gt;</span>inProgress <span class="operator">|</span><span class="operator">|</span> (d<span class="operator">-</span><span class="operator">&gt;</span>state <span class="operator">=</span><span class="operator">=</span> WarmingUp <span class="operator">|</span><span class="operator">|</span> d<span class="operator">-</span><span class="operator">&gt;</span>state <span class="operator">=</span><span class="operator">=</span> Endgame))
+              piecesInProgress <span class="operator">&lt;</span><span class="operator">&lt;</span> piece;
+          <span class="operator">+</span><span class="operator">+</span>it;
+      }
+
+      <span class="comment">// If no pieces are in progress, call the scheduler.</span>
+      <span class="keyword">if</span> (piecesInProgress<span class="operator">.</span>isEmpty() <span class="operator">&amp;</span><span class="operator">&amp;</span> d<span class="operator">-</span><span class="operator">&gt;</span>incompletePieces<span class="operator">.</span>count(<span class="keyword">true</span>)) {
+          d<span class="operator">-</span><span class="operator">&gt;</span>callScheduler();
+          <span class="keyword">return</span>;
+      }
+
+      <span class="comment">// If too many pieces are in progress, there's nothing to do.</span>
+      <span class="type">int</span> maxInProgress <span class="operator">=</span> ((d<span class="operator">-</span><span class="operator">&gt;</span>state <span class="operator">=</span><span class="operator">=</span> Endgame <span class="operator">|</span><span class="operator">|</span> d<span class="operator">-</span><span class="operator">&gt;</span>state <span class="operator">=</span><span class="operator">=</span> WarmingUp)
+                           <span class="operator">?</span> MaxBlocksInMultiMode : MaxBlocksInProgress);
+      <span class="keyword">if</span> (numBlocksInProgress <span class="operator">=</span><span class="operator">=</span> maxInProgress)
+          <span class="keyword">return</span>;
+
+      <span class="comment">// Starting with the first piece that we're waiting for, request</span>
+      <span class="comment">// blocks until the quota is filled up.</span>
+      foreach (TorrentPiece <span class="operator">*</span>piece<span class="operator">,</span> piecesInProgress) {
+          numBlocksInProgress <span class="operator">+</span><span class="operator">=</span> requestBlocks(client<span class="operator">,</span> piece<span class="operator">,</span> maxInProgress <span class="operator">-</span> numBlocksInProgress);
+          <span class="keyword">if</span> (numBlocksInProgress <span class="operator">=</span><span class="operator">=</span> maxInProgress)
+              <span class="keyword">break</span>;
+      }
+
+      <span class="comment">// If we still didn't fill up the quota, we need to schedule more</span>
+      <span class="comment">// pieces.</span>
+      <span class="keyword">if</span> (numBlocksInProgress <span class="operator">&lt;</span> maxInProgress <span class="operator">&amp;</span><span class="operator">&amp;</span> d<span class="operator">-</span><span class="operator">&gt;</span>state <span class="operator">!</span><span class="operator">=</span> WarmingUp)
+          d<span class="operator">-</span><span class="operator">&gt;</span>callScheduler();
+  }
+
+  <span class="type">int</span> TorrentClient<span class="operator">::</span>requestBlocks(PeerWireClient <span class="operator">*</span>client<span class="operator">,</span> TorrentPiece <span class="operator">*</span>piece<span class="operator">,</span> <span class="type">int</span> maxBlocks)
+  {
+      <span class="comment">// Generate the list of incomplete blocks for this piece.</span>
+      <span class="type"><a href="../qtcore/qvector.html">QVector</a></span><span class="operator">&lt;</span><span class="type">int</span><span class="operator">&gt;</span> bits;
+      <span class="type">int</span> completedBlocksSize <span class="operator">=</span> piece<span class="operator">-</span><span class="operator">&gt;</span>completedBlocks<span class="operator">.</span>size();
+      <span class="keyword">for</span> (<span class="type">int</span> i <span class="operator">=</span> <span class="number">0</span>; i <span class="operator">&lt;</span> completedBlocksSize; <span class="operator">+</span><span class="operator">+</span>i) {
+          <span class="keyword">if</span> (<span class="operator">!</span>piece<span class="operator">-</span><span class="operator">&gt;</span>completedBlocks<span class="operator">.</span>testBit(i) <span class="operator">&amp;</span><span class="operator">&amp;</span> <span class="operator">!</span>piece<span class="operator">-</span><span class="operator">&gt;</span>requestedBlocks<span class="operator">.</span>testBit(i))
+              bits <span class="operator">&lt;</span><span class="operator">&lt;</span> i;
+      }
+
+      <span class="comment">// Nothing more to request.</span>
+      <span class="keyword">if</span> (bits<span class="operator">.</span>size() <span class="operator">=</span><span class="operator">=</span> <span class="number">0</span>) {
+          <span class="keyword">if</span> (d<span class="operator">-</span><span class="operator">&gt;</span>state <span class="operator">!</span><span class="operator">=</span> WarmingUp <span class="operator">&amp;</span><span class="operator">&amp;</span> d<span class="operator">-</span><span class="operator">&gt;</span>state <span class="operator">!</span><span class="operator">=</span> Endgame)
+              <span class="keyword">return</span> <span class="number">0</span>;
+          bits<span class="operator">.</span>clear();
+          <span class="keyword">for</span> (<span class="type">int</span> i <span class="operator">=</span> <span class="number">0</span>; i <span class="operator">&lt;</span> completedBlocksSize; <span class="operator">+</span><span class="operator">+</span>i) {
+              <span class="keyword">if</span> (<span class="operator">!</span>piece<span class="operator">-</span><span class="operator">&gt;</span>completedBlocks<span class="operator">.</span>testBit(i))
+                  bits <span class="operator">&lt;</span><span class="operator">&lt;</span> i;
+          }
+      }
+
+      <span class="keyword">if</span> (d<span class="operator">-</span><span class="operator">&gt;</span>state <span class="operator">=</span><span class="operator">=</span> WarmingUp <span class="operator">|</span><span class="operator">|</span> d<span class="operator">-</span><span class="operator">&gt;</span>state <span class="operator">=</span><span class="operator">=</span> Endgame) {
+          <span class="comment">// By randomizing the list of blocks to request, we</span>
+          <span class="comment">// significantly speed up the warmup and endgame modes, where</span>
+          <span class="comment">// the same blocks are requested from multiple peers. The</span>
+          <span class="comment">// speedup comes from an increased chance of receiving</span>
+          <span class="comment">// different blocks from the different peers.</span>
+          <span class="keyword">for</span> (<span class="type">int</span> i <span class="operator">=</span> <span class="number">0</span>; i <span class="operator">&lt;</span> bits<span class="operator">.</span>size(); <span class="operator">+</span><span class="operator">+</span>i) {
+              <span class="type">int</span> a <span class="operator">=</span> qrand() <span class="operator">%</span> bits<span class="operator">.</span>size();
+              <span class="type">int</span> b <span class="operator">=</span> qrand() <span class="operator">%</span> bits<span class="operator">.</span>size();
+              <span class="type">int</span> tmp <span class="operator">=</span> bits<span class="operator">[</span>a<span class="operator">]</span>;
+              bits<span class="operator">[</span>a<span class="operator">]</span> <span class="operator">=</span> bits<span class="operator">[</span>b<span class="operator">]</span>;
+              bits<span class="operator">[</span>b<span class="operator">]</span> <span class="operator">=</span> tmp;
+          }
+      }
+
+      <span class="comment">// Request no more blocks than we've been asked to.</span>
+      <span class="type">int</span> blocksToRequest <span class="operator">=</span> <a href="../qtcore/qtglobal.html#qMin">qMin</a>(maxBlocks<span class="operator">,</span> bits<span class="operator">.</span>size());
+
+      <span class="comment">// Calculate the offset and size of each block, and send requests.</span>
+      <span class="keyword">for</span> (<span class="type">int</span> i <span class="operator">=</span> <span class="number">0</span>; i <span class="operator">&lt;</span> blocksToRequest; <span class="operator">+</span><span class="operator">+</span>i) {
+          <span class="type">int</span> blockSize <span class="operator">=</span> BlockSize;
+          <span class="keyword">if</span> ((piece<span class="operator">-</span><span class="operator">&gt;</span>length <span class="operator">%</span> BlockSize) <span class="operator">&amp;</span><span class="operator">&amp;</span> bits<span class="operator">.</span>at(i) <span class="operator">=</span><span class="operator">=</span> completedBlocksSize <span class="operator">-</span> <span class="number">1</span>)
+              blockSize <span class="operator">=</span> piece<span class="operator">-</span><span class="operator">&gt;</span>length <span class="operator">%</span> BlockSize;
+          client<span class="operator">-</span><span class="operator">&gt;</span>requestBlock(piece<span class="operator">-</span><span class="operator">&gt;</span>index<span class="operator">,</span> bits<span class="operator">.</span>at(i) <span class="operator">*</span> BlockSize<span class="operator">,</span> blockSize);
+          piece<span class="operator">-</span><span class="operator">&gt;</span>requestedBlocks<span class="operator">.</span>setBit(bits<span class="operator">.</span>at(i));
+      }
+
+      <span class="keyword">return</span> blocksToRequest;
+  }
+
+  <span class="type">void</span> TorrentClient<span class="operator">::</span>peerChoked()
+  {
+      PeerWireClient <span class="operator">*</span>client <span class="operator">=</span> qobject_cast<span class="operator">&lt;</span>PeerWireClient <span class="operator">*</span><span class="operator">&gt;</span>(sender());
+      <span class="keyword">if</span> (<span class="operator">!</span>client)
+          <span class="keyword">return</span>;
+
+      <span class="comment">// When the peer chokes us, we immediately forget about all blocks</span>
+      <span class="comment">// we've requested from it. We also remove the piece from out</span>
+      <span class="comment">// payload, making it available to other clients.</span>
+      <span class="type"><a href="../qtcore/qmultimap.html">QMultiMap</a></span><span class="operator">&lt;</span>PeerWireClient <span class="operator">*</span><span class="operator">,</span> TorrentPiece <span class="operator">*</span><span class="operator">&gt;</span><span class="operator">::</span>Iterator it <span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>payloads<span class="operator">.</span>find(client);
+      <span class="keyword">while</span> (it <span class="operator">!</span><span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>payloads<span class="operator">.</span>end() <span class="operator">&amp;</span><span class="operator">&amp;</span> it<span class="operator">.</span>key() <span class="operator">=</span><span class="operator">=</span> client) {
+          it<span class="operator">.</span>value()<span class="operator">-</span><span class="operator">&gt;</span>inProgress <span class="operator">=</span> <span class="keyword">false</span>;
+          it<span class="operator">.</span>value()<span class="operator">-</span><span class="operator">&gt;</span>requestedBlocks<span class="operator">.</span>fill(<span class="keyword">false</span>);
+          it <span class="operator">=</span> d<span class="operator">-</span><span class="operator">&gt;</span>payloads<span class="operator">.</span>erase(it);
+      }
+  }
+
+  <span class="type">void</span> TorrentClient<span class="operator">::</span>peerUnchoked()
+  {
+      PeerWireClient <span class="operator">*</span>client <span class="operator">=</span> qobject_cast<span class="operator">&lt;</span>PeerWireClient <span class="operator">*</span><span class="operator">&gt;</span>(sender());
+      <span class="keyword">if</span> (<span class="operator">!</span>client)
+          <span class="keyword">return</span>;
+
+      <span class="comment">// We got unchoked, which means we can request more blocks.</span>
+      <span class="keyword">if</span> (d<span class="operator">-</span><span class="operator">&gt;</span>state <span class="operator">!</span><span class="operator">=</span> Seeding)
+          d<span class="operator">-</span><span class="operator">&gt;</span>callScheduler();
+  }
+
+  <span class="type">void</span> TorrentClient<span class="operator">::</span>addToPeerList(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span>TorrentPeer<span class="operator">&gt;</span> <span class="operator">&amp;</span>peerList)
+  {
+      <span class="comment">// Add peers we don't already know of to our list of peers.</span>
+      <span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span><span class="type"><a href="qhostaddress.html">QHostAddress</a></span><span class="operator">&gt;</span> addresses <span class="operator">=</span>  <span class="type"><a href="qnetworkinterface.html">QNetworkInterface</a></span><span class="operator">::</span>allAddresses();
+      foreach (TorrentPeer peer<span class="operator">,</span> peerList) {
+          <span class="keyword">if</span> (addresses<span class="operator">.</span>contains(peer<span class="operator">.</span>address)
+              <span class="operator">&amp;</span><span class="operator">&amp;</span> peer<span class="operator">.</span>port <span class="operator">=</span><span class="operator">=</span> TorrentServer<span class="operator">::</span>instance()<span class="operator">-</span><span class="operator">&gt;</span>serverPort()) {
+              <span class="comment">// Skip our own server.</span>
+              <span class="keyword">continue</span>;
+          }
+
+          bool known <span class="operator">=</span> <span class="keyword">false</span>;
+          foreach (TorrentPeer <span class="operator">*</span>knownPeer<span class="operator">,</span> d<span class="operator">-</span><span class="operator">&gt;</span>peers) {
+              <span class="keyword">if</span> (knownPeer<span class="operator">-</span><span class="operator">&gt;</span>port <span class="operator">=</span><span class="operator">=</span> peer<span class="operator">.</span>port
+                  <span class="operator">&amp;</span><span class="operator">&amp;</span> knownPeer<span class="operator">-</span><span class="operator">&gt;</span>address <span class="operator">=</span><span class="operator">=</span> peer<span class="operator">.</span>address) {
+                  known <span class="operator">=</span> <span class="keyword">true</span>;
+                  <span class="keyword">break</span>;
+              }
+          }
+          <span class="keyword">if</span> (<span class="operator">!</span>known) {
+              TorrentPeer <span class="operator">*</span>newPeer <span class="operator">=</span> <span class="keyword">new</span> TorrentPeer;
+              <span class="operator">*</span>newPeer <span class="operator">=</span> peer;
+              newPeer<span class="operator">-</span><span class="operator">&gt;</span>interesting <span class="operator">=</span> <span class="keyword">true</span>;
+              newPeer<span class="operator">-</span><span class="operator">&gt;</span>seed <span class="operator">=</span> <span class="keyword">false</span>;
+              newPeer<span class="operator">-</span><span class="operator">&gt;</span>lastVisited <span class="operator">=</span> <span class="number">0</span>;
+              newPeer<span class="operator">-</span><span class="operator">&gt;</span>connectStart <span class="operator">=</span> <span class="number">0</span>;
+              newPeer<span class="operator">-</span><span class="operator">&gt;</span>connectTime <span class="operator">=</span> <span class="number">999999</span>;
+              newPeer<span class="operator">-</span><span class="operator">&gt;</span>pieces<span class="operator">.</span>resize(d<span class="operator">-</span><span class="operator">&gt;</span>pieceCount);
+              newPeer<span class="operator">-</span><span class="operator">&gt;</span>numCompletedPieces <span class="operator">=</span> <span class="number">0</span>;
+              d<span class="operator">-</span><span class="operator">&gt;</span>peers <span class="operator">&lt;</span><span class="operator">&lt;</span> newPeer;
+          }
+      }
+
+      <span class="comment">// If we've got more peers than we can connect to, we remove some</span>
+      <span class="comment">// of the peers that have no (or low) activity.</span>
+      <span class="type">int</span> maxPeers <span class="operator">=</span> ConnectionManager<span class="operator">::</span>instance()<span class="operator">-</span><span class="operator">&gt;</span>maxConnections() <span class="operator">*</span> <span class="number">3</span>;
+      <span class="keyword">if</span> (d<span class="operator">-</span><span class="operator">&gt;</span>peers<span class="operator">.</span>size() <span class="operator">&gt;</span> maxPeers) {
+          <span class="comment">// Find what peers are currently connected &amp; active</span>
+          <span class="type"><a href="../qtcore/qset.html">QSet</a></span><span class="operator">&lt;</span>TorrentPeer <span class="operator">*</span><span class="operator">&gt;</span> activePeers;
+          foreach (TorrentPeer <span class="operator">*</span>peer<span class="operator">,</span> d<span class="operator">-</span><span class="operator">&gt;</span>peers) {
+              foreach (PeerWireClient <span class="operator">*</span>client<span class="operator">,</span> d<span class="operator">-</span><span class="operator">&gt;</span>connections) {
+                  <span class="keyword">if</span> (client<span class="operator">-</span><span class="operator">&gt;</span>peer() <span class="operator">=</span><span class="operator">=</span> peer <span class="operator">&amp;</span><span class="operator">&amp;</span> (client<span class="operator">-</span><span class="operator">&gt;</span>downloadSpeed() <span class="operator">+</span> client<span class="operator">-</span><span class="operator">&gt;</span>uploadSpeed()) <span class="operator">&gt;</span> <span class="number">1024</span>)
+                      activePeers <span class="operator">&lt;</span><span class="operator">&lt;</span> peer;
+              }
+          }
+
+          <span class="comment">// Remove inactive peers from the peer list until we're below</span>
+          <span class="comment">// the max connections count.</span>
+          <span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span><span class="type">int</span><span class="operator">&gt;</span> toRemove;
+          <span class="keyword">for</span> (<span class="type">int</span> i <span class="operator">=</span> <span class="number">0</span>; i <span class="operator">&lt;</span> d<span class="operator">-</span><span class="operator">&gt;</span>peers<span class="operator">.</span>size() <span class="operator">&amp;</span><span class="operator">&amp;</span> (d<span class="operator">-</span><span class="operator">&gt;</span>peers<span class="operator">.</span>size() <span class="operator">-</span> toRemove<span class="operator">.</span>size()) <span class="operator">&gt;</span> maxPeers; <span class="operator">+</span><span class="operator">+</span>i) {
+              <span class="keyword">if</span> (<span class="operator">!</span>activePeers<span class="operator">.</span>contains(d<span class="operator">-</span><span class="operator">&gt;</span>peers<span class="operator">.</span>at(i)))
+                  toRemove <span class="operator">&lt;</span><span class="operator">&lt;</span> i;
+          }
+          <span class="type"><a href="../qtcore/qlistiterator.html">QListIterator</a></span><span class="operator">&lt;</span><span class="type">int</span><span class="operator">&gt;</span> toRemoveIterator(toRemove);
+          toRemoveIterator<span class="operator">.</span>toBack();
+          <span class="keyword">while</span> (toRemoveIterator<span class="operator">.</span>hasPrevious())
+              d<span class="operator">-</span><span class="operator">&gt;</span>peers<span class="operator">.</span>removeAt(toRemoveIterator<span class="operator">.</span>previous());
+
+          <span class="comment">// If we still have too many peers, remove the oldest ones.</span>
+          <span class="keyword">while</span> (d<span class="operator">-</span><span class="operator">&gt;</span>peers<span class="operator">.</span>size() <span class="operator">&gt;</span> maxPeers)
+              d<span class="operator">-</span><span class="operator">&gt;</span>peers<span class="operator">.</span>takeFirst();
+      }
+
+      <span class="keyword">if</span> (d<span class="operator">-</span><span class="operator">&gt;</span>state <span class="operator">!</span><span class="operator">=</span> Paused <span class="operator">&amp;</span><span class="operator">&amp;</span> d<span class="operator">-</span><span class="operator">&gt;</span>state <span class="operator">!</span><span class="operator">=</span> Stopping <span class="operator">&amp;</span><span class="operator">&amp;</span> d<span class="operator">-</span><span class="operator">&gt;</span>state <span class="operator">!</span><span class="operator">=</span> Idle) {
+          <span class="keyword">if</span> (d<span class="operator">-</span><span class="operator">&gt;</span>state <span class="operator">=</span><span class="operator">=</span> Searching <span class="operator">|</span><span class="operator">|</span> d<span class="operator">-</span><span class="operator">&gt;</span>state <span class="operator">=</span><span class="operator">=</span> WarmingUp)
+              connectToPeers();
+          <span class="keyword">else</span>
+              d<span class="operator">-</span><span class="operator">&gt;</span>callPeerConnector();
+      }
+  }
+
+  <span class="type">void</span> TorrentClient<span class="operator">::</span>trackerStopped()
+  {
+      d<span class="operator">-</span><span class="operator">&gt;</span>setState(Idle);
+      <span class="keyword">emit</span> stopped();
+  }
+
+  <span class="type">void</span> TorrentClient<span class="operator">::</span>updateProgress(<span class="type">int</span> progress)
+  {
+      <span class="keyword">if</span> (progress <span class="operator">=</span><span class="operator">=</span> <span class="operator">-</span><span class="number">1</span> <span class="operator">&amp;</span><span class="operator">&amp;</span> d<span class="operator">-</span><span class="operator">&gt;</span>pieceCount <span class="operator">&gt;</span> <span class="number">0</span>) {
+          <span class="type">int</span> newProgress <span class="operator">=</span> (d<span class="operator">-</span><span class="operator">&gt;</span>completedPieces<span class="operator">.</span>count(<span class="keyword">true</span>) <span class="operator">*</span> <span class="number">100</span>) <span class="operator">/</span> d<span class="operator">-</span><span class="operator">&gt;</span>pieceCount;
+          <span class="keyword">if</span> (d<span class="operator">-</span><span class="operator">&gt;</span>lastProgressValue <span class="operator">!</span><span class="operator">=</span> newProgress) {
+              d<span class="operator">-</span><span class="operator">&gt;</span>lastProgressValue <span class="operator">=</span> newProgress;
+              <span class="keyword">emit</span> progressUpdated(newProgress);
+          }
+      } <span class="keyword">else</span> <span class="keyword">if</span> (d<span class="operator">-</span><span class="operator">&gt;</span>lastProgressValue <span class="operator">!</span><span class="operator">=</span> progress) {
+          d<span class="operator">-</span><span class="operator">&gt;</span>lastProgressValue <span class="operator">=</span> progress;
+          <span class="keyword">emit</span> progressUpdated(progress);
+      }
+  }
+
+</pre>
+</div>
+<!-- @@@torrent/torrentclient.cpp -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

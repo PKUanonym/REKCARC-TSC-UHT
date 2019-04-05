@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qauthenticator.cpp -->
+  <title>QAuthenticator Class | Qt Network 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtnetwork-index.html">Qt Network</a></td><td ><a href="qtnetwork-module.html">C++ Classes</a></td><td >QAuthenticator</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+<li class="level2"><a href="#options">Options</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">QAuthenticator Class</h1>
+<!-- $$$QAuthenticator-brief -->
+<p>The <a href="qauthenticator.html">QAuthenticator</a> class provides an authentication object. <a href="#details">More...</a></p>
+<!-- @@@QAuthenticator -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign">   <span class="preprocessor">#include &lt;QAuthenticator&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> qmake:</td><td class="memItemRight bottomAlign"> QT += network</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Since:</td><td class="memItemRight bottomAlign">  Qt 4.3</td></tr></table></div><ul>
+<li><a href="qauthenticator-members.html">List of all members, including inherited members</a></li>
+</ul>
+<p><b>Note:</b> All functions in this class are <a href="../qtdoc/threads-reentrancy.html">reentrant</a>.</p>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qauthenticator.html#QAuthenticator">QAuthenticator</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qauthenticator.html#QAuthenticator-1">QAuthenticator</a></b>(const QAuthenticator &amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qauthenticator.html#dtor.QAuthenticator">~QAuthenticator</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qauthenticator.html#isNull">isNull</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariant </td><td class="memItemRight bottomAlign"><b><a href="qauthenticator.html#option">option</a></b>(const QString &amp;<i>opt</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariantHash </td><td class="memItemRight bottomAlign"><b><a href="qauthenticator.html#options">options</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qauthenticator.html#password">password</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qauthenticator.html#realm">realm</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qauthenticator.html#setOption">setOption</a></b>(const QString &amp;<i>opt</i>, const QVariant &amp;<i>value</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qauthenticator.html#setPassword">setPassword</a></b>(const QString &amp;<i>password</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qauthenticator.html#setUser">setUser</a></b>(const QString &amp;<i>user</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qauthenticator.html#user">user</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qauthenticator.html#operator-not-eq">operator!=</a></b>(const QAuthenticator &amp;<i>other</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QAuthenticator &amp;</td><td class="memItemRight bottomAlign"><b><a href="qauthenticator.html#operator-eq">operator=</a></b>(const QAuthenticator &amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qauthenticator.html#operator-eq-eq">operator==</a></b>(const QAuthenticator &amp;<i>other</i>) const</td></tr>
+</table></div>
+<a name="details"></a>
+<!-- $$$QAuthenticator-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="qauthenticator.html">QAuthenticator</a> class provides an authentication object.</p>
+<p>The <a href="qauthenticator.html">QAuthenticator</a> class is usually used in the <a href="qnetworkaccessmanager.html#authenticationRequired">authenticationRequired()</a> and <a href="qnetworkaccessmanager.html#proxyAuthenticationRequired">proxyAuthenticationRequired()</a> signals of <a href="qnetworkaccessmanager.html">QNetworkAccessManager</a> and <a href="qabstractsocket.html">QAbstractSocket</a>. The class provides a way to pass back the required authentication information to the socket when accessing services that require authentication.</p>
+<p><a href="qauthenticator.html">QAuthenticator</a> supports the following authentication methods:</p>
+<ul>
+<li>Basic</li>
+<li>NTLM version 2</li>
+<li>Digest-MD5</li>
+</ul>
+<a name="qauthenticator-options"></a><a name="options"></a>
+<h3 >Options</h3>
+<p>In addition to the username and password required for authentication, a <a href="qauthenticator.html">QAuthenticator</a> object can also contain additional options. The <a href="qauthenticator.html#options">options</a>() function can be used to query incoming options sent by the server; the <a href="qauthenticator.html#setOption">setOption</a>() function can be used to set outgoing options, to be processed by the authenticator calculation. The options accepted and provided depend on the authentication type (see method()).</p>
+<p>The following tables list known incoming options as well as accepted outgoing options. The list of incoming options is not exhaustive, since servers may include additional information at any time. The list of outgoing options is exhaustive, however, and no unknown options will be treated or sent back to the server.</p>
+<a name="basic"></a>
+<h4 >Basic</h4>
+<div class="table"><table class="generic">
+ <thead><tr class="qt-style"><th >Option</th><th >Direction</th><th >Type</th><th >Description</th></tr></thead>
+<tr valign="top" class="odd"><td ><code>realm</code></td><td >Incoming</td><td ><a href="../qtcore/qstring.html">QString</a></td><td >Contains the realm of the authentication, the same as <a href="qauthenticator.html#realm">realm</a>()</td></tr>
+</table></div>
+<p>The Basic authentication mechanism supports no outgoing options.</p>
+<a name="ntlm-version-2"></a>
+<h4 >NTLM version 2</h4>
+<p>The NTLM authentication mechanism currently supports no incoming or outgoing options. On Windows, if no <i>user</i> has been set, domain\user credentials will be searched for on the local system to enable Single-Sign-On functionality.</p>
+<a name="digest-md5"></a>
+<h4 >Digest-MD5</h4>
+<div class="table"><table class="generic">
+ <thead><tr class="qt-style"><th >Option</th><th >Direction</th><th >Type</th><th >Description</th></tr></thead>
+<tr valign="top" class="odd"><td ><code>realm</code></td><td >Incoming</td><td ><a href="../qtcore/qstring.html">QString</a></td><td >Contains the realm of the authentication, the same as <a href="qauthenticator.html#realm">realm</a>()</td></tr>
+</table></div>
+<p>The Digest-MD5 authentication mechanism supports no outgoing options.</p>
+</div>
+<p><b>See also </b><a href="qsslsocket.html">QSslSocket</a>.</p>
+<!-- @@@QAuthenticator -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$QAuthenticator[overload1]$$$QAuthenticator -->
+<h3 class="fn" id="QAuthenticator"><a name="QAuthenticator"></a>QAuthenticator::<span class="name">QAuthenticator</span>()</h3>
+<p>Constructs an empty authentication object.</p>
+<!-- @@@QAuthenticator -->
+<!-- $$$QAuthenticator$$$QAuthenticatorconstQAuthenticator& -->
+<h3 class="fn" id="QAuthenticator-1"><a name="QAuthenticator-1"></a>QAuthenticator::<span class="name">QAuthenticator</span>(const <span class="type"><a href="qauthenticator.html#QAuthenticator">QAuthenticator</a></span> &amp;<i>other</i>)</h3>
+<p>Constructs a copy of <i>other</i>.</p>
+<!-- @@@QAuthenticator -->
+<!-- $$$~QAuthenticator[overload1]$$$~QAuthenticator -->
+<h3 class="fn" id="dtor.QAuthenticator"><a name="dtor.QAuthenticator"></a>QAuthenticator::<span class="name">~QAuthenticator</span>()</h3>
+<p>Destructs the object.</p>
+<!-- @@@~QAuthenticator -->
+<!-- $$$isNull[overload1]$$$isNull -->
+<h3 class="fn" id="isNull"><a name="isNull"></a><span class="type">bool</span> QAuthenticator::<span class="name">isNull</span>() const</h3>
+<p>Returns <code>true</code> if the object has not been initialized. Returns <code>false</code> if non-const member functions have been called, or the content was constructed or copied from another initialized <a href="qauthenticator.html">QAuthenticator</a> object.</p>
+<!-- @@@isNull -->
+<!-- $$$option[overload1]$$$optionconstQString& -->
+<h3 class="fn" id="option"><a name="option"></a><span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span> QAuthenticator::<span class="name">option</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>opt</i>) const</h3>
+<p>Returns the value related to option <i>opt</i> if it was set by the server. See the <a href="qauthenticator.html#qauthenticator-options">Options section</a> for more information on incoming options. If option <i>opt</i> isn't found, an invalid <a href="../qtcore/qvariant.html">QVariant</a> will be returned.</p>
+<p>This function was introduced in  Qt 4.7.</p>
+<p><b>See also </b><a href="qauthenticator.html#setOption">setOption</a>(), <a href="qauthenticator.html#options">options</a>(), and <a href="qauthenticator.html#qauthenticator-options">QAuthenticator options</a>.</p>
+<!-- @@@option -->
+<!-- $$$options[overload1]$$$options -->
+<h3 class="fn" id="options"><a name="options"></a><span class="type"><a href="../qtcore/qvariant.html#QVariantHash-typedef">QVariantHash</a></span> QAuthenticator::<span class="name">options</span>() const</h3>
+<p>Returns all incoming options set in this <a href="qauthenticator.html">QAuthenticator</a> object by parsing the server reply. See the <a href="qauthenticator.html#qauthenticator-options">Options section</a> for more information on incoming options.</p>
+<p>This function was introduced in  Qt 4.7.</p>
+<p><b>See also </b><a href="qauthenticator.html#option">option</a>() and <a href="qauthenticator.html#qauthenticator-options">QAuthenticator options</a>.</p>
+<!-- @@@options -->
+<!-- $$$password[overload1]$$$password -->
+<h3 class="fn" id="password"><a name="password"></a><span class="type"><a href="../qtcore/qstring.html">QString</a></span> QAuthenticator::<span class="name">password</span>() const</h3>
+<p>Returns the password used for authentication.</p>
+<p><b>See also </b><a href="qauthenticator.html#setPassword">setPassword</a>().</p>
+<!-- @@@password -->
+<!-- $$$realm[overload1]$$$realm -->
+<h3 class="fn" id="realm"><a name="realm"></a><span class="type"><a href="../qtcore/qstring.html">QString</a></span> QAuthenticator::<span class="name">realm</span>() const</h3>
+<p>Returns the realm requiring authentication.</p>
+<!-- @@@realm -->
+<!-- $$$setOption[overload1]$$$setOptionconstQString&constQVariant& -->
+<h3 class="fn" id="setOption"><a name="setOption"></a><span class="type">void</span> QAuthenticator::<span class="name">setOption</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>opt</i>, const <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span> &amp;<i>value</i>)</h3>
+<p>Sets the outgoing option <i>opt</i> to value <i>value</i>. See the <a href="qauthenticator.html#qauthenticator-options">Options section</a> for more information on outgoing options.</p>
+<p>This function was introduced in  Qt 4.7.</p>
+<p><b>See also </b><a href="qauthenticator.html#options">options</a>(), <a href="qauthenticator.html#option">option</a>(), and <a href="qauthenticator.html#qauthenticator-options">QAuthenticator options</a>.</p>
+<!-- @@@setOption -->
+<!-- $$$setPassword[overload1]$$$setPasswordconstQString& -->
+<h3 class="fn" id="setPassword"><a name="setPassword"></a><span class="type">void</span> QAuthenticator::<span class="name">setPassword</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>password</i>)</h3>
+<p>Sets the <i>password</i> used for authentication.</p>
+<p><b>See also </b><a href="qauthenticator.html#password">password</a>() and <a href="qnetworkaccessmanager.html#authenticationRequired">QNetworkAccessManager::authenticationRequired</a>().</p>
+<!-- @@@setPassword -->
+<!-- $$$setUser[overload1]$$$setUserconstQString& -->
+<h3 class="fn" id="setUser"><a name="setUser"></a><span class="type">void</span> QAuthenticator::<span class="name">setUser</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>user</i>)</h3>
+<p>Sets the <i>user</i> used for authentication.</p>
+<p><b>See also </b><a href="qauthenticator.html#user">user</a>() and <a href="qnetworkaccessmanager.html#authenticationRequired">QNetworkAccessManager::authenticationRequired</a>().</p>
+<!-- @@@setUser -->
+<!-- $$$user[overload1]$$$user -->
+<h3 class="fn" id="user"><a name="user"></a><span class="type"><a href="../qtcore/qstring.html">QString</a></span> QAuthenticator::<span class="name">user</span>() const</h3>
+<p>Returns the user used for authentication.</p>
+<p><b>See also </b><a href="qauthenticator.html#setUser">setUser</a>().</p>
+<!-- @@@user -->
+<!-- $$$operator!=[overload1]$$$operator!=constQAuthenticator& -->
+<h3 class="fn" id="operator-not-eq"><a name="operator-not-eq"></a><span class="type">bool</span> QAuthenticator::<span class="name">operator!=</span>(const <span class="type"><a href="qauthenticator.html#QAuthenticator">QAuthenticator</a></span> &amp;<i>other</i>) const</h3>
+<p>Returns <code>true</code> if this authenticator is different from <i>other</i>; otherwise returns <code>false</code>.</p>
+<!-- @@@operator!= -->
+<!-- $$$operator=[overload1]$$$operator=constQAuthenticator& -->
+<h3 class="fn" id="operator-eq"><a name="operator-eq"></a><span class="type"><a href="qauthenticator.html#QAuthenticator">QAuthenticator</a></span> &amp;QAuthenticator::<span class="name">operator=</span>(const <span class="type"><a href="qauthenticator.html#QAuthenticator">QAuthenticator</a></span> &amp;<i>other</i>)</h3>
+<p>Assigns the contents of <i>other</i> to this authenticator.</p>
+<!-- @@@operator= -->
+<!-- $$$operator==[overload1]$$$operator==constQAuthenticator& -->
+<h3 class="fn" id="operator-eq-eq"><a name="operator-eq-eq"></a><span class="type">bool</span> QAuthenticator::<span class="name">operator==</span>(const <span class="type"><a href="qauthenticator.html#QAuthenticator">QAuthenticator</a></span> &amp;<i>other</i>) const</h3>
+<p>Returns <code>true</code> if this authenticator is identical to <i>other</i>; otherwise returns <code>false</code>.</p>
+<!-- @@@operator== -->
+</div>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

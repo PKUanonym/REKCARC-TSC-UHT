@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- sql-programming.qdoc -->
+  <title>Connecting to Databases | Qt SQL 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtsql-index.html">Qt SQL</a></td><td >Connecting to Databases</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+  <link rel="prev" href="sql-programming.html" />
+  <link rel="next" href="sql-sqlstatements.html" />
+<p class="naviNextPrevious headerNavi">
+<a class="prevPage" href="sql-programming.html">SQL Programming</a>
+<span class="naviSeparator">  &#9702;  </span>
+<a class="nextPage" href="sql-sqlstatements.html">Executing SQL Statements</a>
+</p><p/>
+<div class="sidebar"><div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">Connecting to Databases</h1>
+<span class="subtitle"></span>
+<!-- $$$sql-connecting.html-description -->
+<div class="descr"> <a name="details"></a>
+<p>To access a database with <a href="qsqlquery.html">QSqlQuery</a> or <a href="qsqlquerymodel.html">QSqlQueryModel</a>, create and open one or more database connections. Database connections are normally identified by connection name, <i>not</i> by database name. You can have multiple connections to the same database. <a href="qsqldatabase.html">QSqlDatabase</a> also supports the concept of a <i>default</i> connection, which is an unnamed connection. When calling <a href="qsqlquery.html">QSqlQuery</a> or <a href="qsqlquerymodel.html">QSqlQueryModel</a> member functions that take a connection name argument, if you don't pass a connection name, the default connection will be used. Creating a default connection is convenient when your application only requires one database connection.</p>
+<p>Note the difference between creating a connection and opening it. Creating a connection involves creating an instance of class <a href="qsqldatabase.html">QSqlDatabase</a>. The connection is not usable until it is opened. The following snippet shows how to create a <i>default</i> connection and then open it:</p>
+<pre class="cpp">
+
+      <span class="type"><a href="qsqldatabase.html">QSqlDatabase</a></span> db <span class="operator">=</span> <span class="type"><a href="qsqldatabase.html">QSqlDatabase</a></span><span class="operator">::</span>addDatabase(<span class="string">&quot;QMYSQL&quot;</span>);
+      db<span class="operator">.</span>setHostName(<span class="string">&quot;bigblue&quot;</span>);
+      db<span class="operator">.</span>setDatabaseName(<span class="string">&quot;flightdb&quot;</span>);
+      db<span class="operator">.</span>setUserName(<span class="string">&quot;acarlson&quot;</span>);
+      db<span class="operator">.</span>setPassword(<span class="string">&quot;1uTbSbAs&quot;</span>);
+      bool ok <span class="operator">=</span> db<span class="operator">.</span>open();
+
+</pre>
+<p>The first line creates the connection object, and the last line opens it for use. In between, we initialize some connection information, including the <a href="qsqldatabase.html#setDatabaseName">database name</a>, the <a href="qsqldatabase.html#setHostName">host name</a>, the <a href="qsqldatabase.html#setUserName">user name</a>, and the <a href="qsqldatabase.html#setPassword">password</a>. In this case, we are connecting to the MySQL database <code>flightdb</code> on the host <code>bigblue</code>. The <code>&quot;QMYSQL&quot;</code> argument to <a href="qsqldatabase.html#addDatabase">addDatabase()</a> specifies the type of database driver to use for the connection. The set of database drivers included with Qt are shown in the table of <a href="sql-driver.html#supported-databases">supported database drivers</a>.</p>
+<p>The connection in the snippet will be the <i>default</i> connection, because we don't pass the second argument to <a href="qsqldatabase.html#addDatabase">addDatabase()</a>, which is the connection name. For example, here we establish two MySQL database connections named <code>&quot;first&quot;</code> and <code>&quot;second&quot;</code>:</p>
+<pre class="cpp">
+
+      <span class="type"><a href="qsqldatabase.html">QSqlDatabase</a></span> firstDB <span class="operator">=</span> <span class="type"><a href="qsqldatabase.html">QSqlDatabase</a></span><span class="operator">::</span>addDatabase(<span class="string">&quot;QMYSQL&quot;</span><span class="operator">,</span> <span class="string">&quot;first&quot;</span>);
+      <span class="type"><a href="qsqldatabase.html">QSqlDatabase</a></span> secondDB <span class="operator">=</span> <span class="type"><a href="qsqldatabase.html">QSqlDatabase</a></span><span class="operator">::</span>addDatabase(<span class="string">&quot;QMYSQL&quot;</span><span class="operator">,</span> <span class="string">&quot;second&quot;</span>);
+
+</pre>
+<p>After these connections have been initialized, <a href="qsqldatabase.html#open">open()</a> for each one to establish the live connections. If the <a href="qsqldatabase.html#open">open()</a> fails, it returns <code>false</code>. In that case, call <a href="qsqldatabase.html#lastError">QSqlDatabase::lastError</a>() to get error information.</p>
+<p>Once a connection is established, we can call the static function <a href="qsqldatabase.html#database">QSqlDatabase::database</a>() from anywhere with a connection name to get a pointer to that database connection. If we don't pass a connection name, it will return the default connection. For example:</p>
+<pre class="cpp">
+
+      <span class="type"><a href="qsqldatabase.html">QSqlDatabase</a></span> defaultDB <span class="operator">=</span> <span class="type"><a href="qsqldatabase.html">QSqlDatabase</a></span><span class="operator">::</span>database();
+      <span class="type"><a href="qsqldatabase.html">QSqlDatabase</a></span> firstDB <span class="operator">=</span> <span class="type"><a href="qsqldatabase.html">QSqlDatabase</a></span><span class="operator">::</span>database(<span class="string">&quot;first&quot;</span>);
+      <span class="type"><a href="qsqldatabase.html">QSqlDatabase</a></span> secondDB <span class="operator">=</span> <span class="type"><a href="qsqldatabase.html">QSqlDatabase</a></span><span class="operator">::</span>database(<span class="string">&quot;second&quot;</span>);
+
+</pre>
+<p>To remove a database connection, first close the database using <a href="qsqldatabase.html#close">QSqlDatabase::close</a>(), then remove it using the static method <a href="qsqldatabase.html#removeDatabase">QSqlDatabase::removeDatabase</a>().</p>
+</div>
+<!-- @@@sql-connecting.html -->
+<p class="naviNextPrevious footerNavi">
+<a class="prevPage" href="sql-programming.html">SQL Programming</a>
+<span class="naviSeparator">  &#9702;  </span>
+<a class="nextPage" href="sql-sqlstatements.html">Executing SQL Statements</a>
+</p>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

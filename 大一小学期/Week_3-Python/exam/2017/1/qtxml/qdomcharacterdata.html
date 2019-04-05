@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qdom.cpp -->
+  <title>QDomCharacterData Class | Qt XML 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtxml-index.html">Qt XML</a></td><td ><a href="qtxml-module.html">C++ Classes</a></td><td >QDomCharacterData</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">QDomCharacterData Class</h1>
+<!-- $$$QDomCharacterData-brief -->
+<p>The <a href="qdomcharacterdata.html">QDomCharacterData</a> class represents a generic string in the DOM. <a href="#details">More...</a></p>
+<!-- @@@QDomCharacterData -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign">   <span class="preprocessor">#include &lt;QDomCharacterData&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> qmake:</td><td class="memItemRight bottomAlign"> QT += xml</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Inherits:</td><td class="memItemRight bottomAlign"> <a href="qdomnode.html">QDomNode</a></td></tr><tr><td class="memItemLeft rightAlign topAlign"> Inherited By:</td><td class="memItemRight bottomAlign"> <p><a href="qdomcomment.html">QDomComment</a> and <a href="qdomtext.html">QDomText</a></p>
+</td></tr></table></div><ul>
+<li><a href="qdomcharacterdata-members.html">List of all members, including inherited members</a></li>
+</ul>
+<p><b>Note:</b> All functions in this class are <a href="../qtdoc/threads-reentrancy.html">reentrant</a>.</p>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qdomcharacterdata.html#QDomCharacterData">QDomCharacterData</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qdomcharacterdata.html#QDomCharacterData-1">QDomCharacterData</a></b>(const QDomCharacterData &amp;<i>x</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qdomcharacterdata.html#appendData">appendData</a></b>(const QString &amp;<i>arg</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qdomcharacterdata.html#data">data</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qdomcharacterdata.html#deleteData">deleteData</a></b>(unsigned long <i>offset</i>, unsigned long <i>count</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qdomcharacterdata.html#insertData">insertData</a></b>(unsigned long <i>offset</i>, const QString &amp;<i>arg</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="qdomcharacterdata.html#length">length</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QDomNode::NodeType </td><td class="memItemRight bottomAlign"><b><a href="qdomcharacterdata.html#nodeType">nodeType</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qdomcharacterdata.html#replaceData">replaceData</a></b>(unsigned long <i>offset</i>, unsigned long <i>count</i>, const QString &amp;<i>arg</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qdomcharacterdata.html#setData">setData</a></b>(const QString &amp;<i>v</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qdomcharacterdata.html#substringData">substringData</a></b>(unsigned long <i>offset</i>, unsigned long <i>count</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QDomCharacterData &amp;</td><td class="memItemRight bottomAlign"><b><a href="qdomcharacterdata.html#operator-eq">operator=</a></b>(const QDomCharacterData &amp;<i>x</i>)</td></tr>
+</table></div>
+<ul>
+<li class="fn">65 public functions inherited from <a href="qdomnode.html#public-functions">QDomNode</a></li>
+</ul>
+<a name="details"></a>
+<!-- $$$QDomCharacterData-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="qdomcharacterdata.html">QDomCharacterData</a> class represents a generic string in the DOM.</p>
+<p>Character data as used in XML specifies a generic data string. More specialized versions of this class are <a href="qdomtext.html">QDomText</a>, <a href="qdomcomment.html">QDomComment</a> and <a href="qdomcdatasection.html">QDomCDATASection</a>.</p>
+<p>The data string is set with <a href="qdomcharacterdata.html#setData">setData</a>() and retrieved with <a href="qdomcharacterdata.html#data">data</a>(). You can retrieve a portion of the data string using <a href="qdomcharacterdata.html#substringData">substringData</a>(). Extra data can be appended with <a href="qdomcharacterdata.html#appendData">appendData</a>(), or inserted with <a href="qdomcharacterdata.html#insertData">insertData</a>(). Portions of the data string can be deleted with <a href="qdomcharacterdata.html#deleteData">deleteData</a>() or replaced with <a href="qdomcharacterdata.html#replaceData">replaceData</a>(). The length of the data string is returned by <a href="qdomcharacterdata.html#length">length</a>().</p>
+<p>The node type of the node containing this character data is returned by <a href="qdomcharacterdata.html#nodeType">nodeType</a>().</p>
+</div>
+<p><b>See also </b><a href="qdomtext.html">QDomText</a>, <a href="qdomcomment.html">QDomComment</a>, and <a href="qdomcdatasection.html">QDomCDATASection</a>.</p>
+<!-- @@@QDomCharacterData -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$QDomCharacterData[overload1]$$$QDomCharacterData -->
+<h3 class="fn" id="QDomCharacterData"><a name="QDomCharacterData"></a>QDomCharacterData::<span class="name">QDomCharacterData</span>()</h3>
+<p>Constructs an empty character data object.</p>
+<!-- @@@QDomCharacterData -->
+<!-- $$$QDomCharacterData$$$QDomCharacterDataconstQDomCharacterData& -->
+<h3 class="fn" id="QDomCharacterData-1"><a name="QDomCharacterData-1"></a>QDomCharacterData::<span class="name">QDomCharacterData</span>(const <span class="type"><a href="qdomcharacterdata.html#QDomCharacterData">QDomCharacterData</a></span> &amp;<i>x</i>)</h3>
+<p>Constructs a copy of <i>x</i>.</p>
+<p>The data of the copy is shared (shallow copy): modifying one node will also change the other. If you want to make a deep copy, use <a href="qdomnode.html#cloneNode">cloneNode</a>().</p>
+<!-- @@@QDomCharacterData -->
+<!-- $$$appendData[overload1]$$$appendDataconstQString& -->
+<h3 class="fn" id="appendData"><a name="appendData"></a><span class="type">void</span> QDomCharacterData::<span class="name">appendData</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>arg</i>)</h3>
+<p>Appends the string <i>arg</i> to the stored string.</p>
+<!-- @@@appendData -->
+<!-- $$$data[overload1]$$$data -->
+<h3 class="fn" id="data"><a name="data"></a><span class="type"><a href="../qtcore/qstring.html">QString</a></span> QDomCharacterData::<span class="name">data</span>() const</h3>
+<p>Returns the string stored in this object.</p>
+<p>If the node is a <a href="qdomnode.html#isNull">null node</a>, it will return an empty string.</p>
+<p><b>See also </b><a href="qdomcharacterdata.html#setData">setData</a>().</p>
+<!-- @@@data -->
+<!-- $$$deleteData[overload1]$$$deleteDataunsignedlongunsignedlong -->
+<h3 class="fn" id="deleteData"><a name="deleteData"></a><span class="type">void</span> QDomCharacterData::<span class="name">deleteData</span>(<span class="type">unsigned</span> <span class="type">long</span> <i>offset</i>, <span class="type">unsigned</span> <span class="type">long</span> <i>count</i>)</h3>
+<p>Deletes a substring of length <i>count</i> from position <i>offset</i>.</p>
+<!-- @@@deleteData -->
+<!-- $$$insertData[overload1]$$$insertDataunsignedlongconstQString& -->
+<h3 class="fn" id="insertData"><a name="insertData"></a><span class="type">void</span> QDomCharacterData::<span class="name">insertData</span>(<span class="type">unsigned</span> <span class="type">long</span> <i>offset</i>, const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>arg</i>)</h3>
+<p>Inserts the string <i>arg</i> into the stored string at position <i>offset</i>.</p>
+<!-- @@@insertData -->
+<!-- $$$length[overload1]$$$length -->
+<h3 class="fn" id="length"><a name="length"></a><span class="type">int</span> QDomCharacterData::<span class="name">length</span>() const</h3>
+<p>Returns the length of the stored string.</p>
+<!-- @@@length -->
+<!-- $$$nodeType[overload1]$$$nodeType -->
+<h3 class="fn" id="nodeType"><a name="nodeType"></a><span class="type"><a href="qdomnode.html#NodeType-enum">QDomNode::NodeType</a></span> QDomCharacterData::<span class="name">nodeType</span>() const</h3>
+<p>Returns the type of node this object refers to (i.e&#x2e; <code>TextNode</code>, <code>CDATASectionNode</code>, <code>CommentNode</code> or <code>CharacterDataNode</code>). For a <a href="qdomnode.html#isNull">null node</a>, returns <code>CharacterDataNode</code>.</p>
+<!-- @@@nodeType -->
+<!-- $$$replaceData[overload1]$$$replaceDataunsignedlongunsignedlongconstQString& -->
+<h3 class="fn" id="replaceData"><a name="replaceData"></a><span class="type">void</span> QDomCharacterData::<span class="name">replaceData</span>(<span class="type">unsigned</span> <span class="type">long</span> <i>offset</i>, <span class="type">unsigned</span> <span class="type">long</span> <i>count</i>, const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>arg</i>)</h3>
+<p>Replaces the substring of length <i>count</i> starting at position <i>offset</i> with the string <i>arg</i>.</p>
+<!-- @@@replaceData -->
+<!-- $$$setData[overload1]$$$setDataconstQString& -->
+<h3 class="fn" id="setData"><a name="setData"></a><span class="type">void</span> QDomCharacterData::<span class="name">setData</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>v</i>)</h3>
+<p>Sets this object's string to <i>v</i>.</p>
+<p><b>See also </b><a href="qdomcharacterdata.html#data">data</a>().</p>
+<!-- @@@setData -->
+<!-- $$$substringData[overload1]$$$substringDataunsignedlongunsignedlong -->
+<h3 class="fn" id="substringData"><a name="substringData"></a><span class="type"><a href="../qtcore/qstring.html">QString</a></span> QDomCharacterData::<span class="name">substringData</span>(<span class="type">unsigned</span> <span class="type">long</span> <i>offset</i>, <span class="type">unsigned</span> <span class="type">long</span> <i>count</i>)</h3>
+<p>Returns the substring of length <i>count</i> from position <i>offset</i>.</p>
+<!-- @@@substringData -->
+<!-- $$$operator=[overload1]$$$operator=constQDomCharacterData& -->
+<h3 class="fn" id="operator-eq"><a name="operator-eq"></a><span class="type"><a href="qdomcharacterdata.html#QDomCharacterData">QDomCharacterData</a></span> &amp;QDomCharacterData::<span class="name">operator=</span>(const <span class="type"><a href="qdomcharacterdata.html#QDomCharacterData">QDomCharacterData</a></span> &amp;<i>x</i>)</h3>
+<p>Assigns <i>x</i> to this character data.</p>
+<p>The data of the copy is shared (shallow copy): modifying one node will also change the other. If you want to make a deep copy, use <a href="qdomnode.html#cloneNode">cloneNode</a>().</p>
+<!-- @@@operator= -->
+</div>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

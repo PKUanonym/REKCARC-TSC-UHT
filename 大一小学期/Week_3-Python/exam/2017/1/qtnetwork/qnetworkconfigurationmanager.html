@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qnetworkconfigmanager.cpp -->
+  <title>QNetworkConfigurationManager Class | Qt Network 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtnetwork-index.html">Qt Network</a></td><td ><a href="qtnetwork-module.html">C++ Classes</a></td><td >QNetworkConfigurationManager</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-types">Public Types</a></li>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#public-slots">Public Slots</a></li>
+<li class="level1"><a href="#signals">Signals</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">QNetworkConfigurationManager Class</h1>
+<!-- $$$QNetworkConfigurationManager-brief -->
+<p>The <a href="qnetworkconfigurationmanager.html">QNetworkConfigurationManager</a> class manages the network configurations provided by the system. <a href="#details">More...</a></p>
+<!-- @@@QNetworkConfigurationManager -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign">   <span class="preprocessor">#include &lt;QNetworkConfigurationManager&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> qmake:</td><td class="memItemRight bottomAlign"> QT += network</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Since:</td><td class="memItemRight bottomAlign">  Qt 4.7</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Inherits:</td><td class="memItemRight bottomAlign"> <a href="../qtcore/qobject.html">QObject</a></td></tr></table></div><ul>
+<li><a href="qnetworkconfigurationmanager-members.html">List of all members, including inherited members</a></li>
+</ul>
+<a name="public-types"></a>
+<h2 id="public-types">Public Types</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> flags </td><td class="memItemRight bottomAlign"><b><a href="qnetworkconfigurationmanager.html#Capability-enum">Capabilities</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="qnetworkconfigurationmanager.html#Capability-enum">Capability</a></b> { CanStartAndStopInterfaces, DirectConnectionRouting, SystemSessionSupport, ApplicationLevelRoaming, ..., NetworkSessionRequired }</td></tr>
+</table></div>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qnetworkconfigurationmanager.html#QNetworkConfigurationManager">QNetworkConfigurationManager</a></b>(QObject *<i>parent</i> = Q_NULLPTR)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual </td><td class="memItemRight bottomAlign"><b><a href="qnetworkconfigurationmanager.html#dtor.QNetworkConfigurationManager">~QNetworkConfigurationManager</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QList&lt;QNetworkConfiguration&gt; </td><td class="memItemRight bottomAlign"><b><a href="qnetworkconfigurationmanager.html#allConfigurations">allConfigurations</a></b>(QNetworkConfiguration::StateFlags <i>filter</i> = QNetworkConfiguration::StateFlags()) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QNetworkConfigurationManager::Capabilities </td><td class="memItemRight bottomAlign"><b><a href="qnetworkconfigurationmanager.html#capabilities">capabilities</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QNetworkConfiguration </td><td class="memItemRight bottomAlign"><b><a href="qnetworkconfigurationmanager.html#configurationFromIdentifier">configurationFromIdentifier</a></b>(const QString &amp;<i>identifier</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QNetworkConfiguration </td><td class="memItemRight bottomAlign"><b><a href="qnetworkconfigurationmanager.html#defaultConfiguration">defaultConfiguration</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qnetworkconfigurationmanager.html#isOnline">isOnline</a></b>() const</td></tr>
+</table></div>
+<ul>
+<li class="fn">31 public functions inherited from <a href="../qtcore/qobject.html#public-functions">QObject</a></li>
+</ul>
+<a name="public-slots"></a>
+<h2 id="public-slots">Public Slots</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qnetworkconfigurationmanager.html#updateConfigurations">updateConfigurations</a></b>()</td></tr>
+</table></div>
+<ul>
+<li class="fn">1 public slot inherited from <a href="../qtcore/qobject.html#public-slots">QObject</a></li>
+</ul>
+<a name="signals"></a>
+<h2 id="signals">Signals</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qnetworkconfigurationmanager.html#configurationAdded">configurationAdded</a></b>(const QNetworkConfiguration &amp;<i>config</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qnetworkconfigurationmanager.html#configurationChanged">configurationChanged</a></b>(const QNetworkConfiguration &amp;<i>config</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qnetworkconfigurationmanager.html#configurationRemoved">configurationRemoved</a></b>(const QNetworkConfiguration &amp;<i>config</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qnetworkconfigurationmanager.html#onlineStateChanged">onlineStateChanged</a></b>(bool <i>isOnline</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qnetworkconfigurationmanager.html#updateCompleted">updateCompleted</a></b>()</td></tr>
+</table></div>
+<ul>
+<li class="fn">2 signals inherited from <a href="../qtcore/qobject.html#signals">QObject</a></li>
+</ul>
+<h3>Additional Inherited Members</h3>
+<ul>
+<li class="fn">1 property inherited from <a href="../qtcore/qobject.html#properties">QObject</a></li>
+<li class="fn">1 public variable inherited from <a href="../qtcore/qobject.html#public-variables">QObject</a></li>
+<li class="fn">10 static public members inherited from <a href="../qtcore/qobject.html#static-public-members">QObject</a></li>
+<li class="fn">9 protected functions inherited from <a href="../qtcore/qobject.html#protected-functions">QObject</a></li>
+<li class="fn">2 protected variables inherited from <a href="../qtcore/qobject.html#protected-variables">QObject</a></li>
+</ul>
+<a name="details"></a>
+<!-- $$$QNetworkConfigurationManager-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="qnetworkconfigurationmanager.html">QNetworkConfigurationManager</a> class manages the network configurations provided by the system.</p>
+<p><a href="qnetworkconfigurationmanager.html">QNetworkConfigurationManager</a> provides access to the network configurations known to the system and enables applications to detect the system capabilities (with regards to network sessions) at runtime.</p>
+<p>A <a href="qnetworkconfiguration.html">QNetworkConfiguration</a> abstracts a set of configuration options describing how a network interface has to be configured to connect to a particular target network. <a href="qnetworkconfigurationmanager.html">QNetworkConfigurationManager</a> maintains and updates the global list of QNetworkConfigurations. Applications can access and filter this list via <a href="qnetworkconfigurationmanager.html#allConfigurations">allConfigurations</a>(). If a new configuration is added or an existing one is removed or changed the <a href="qnetworkconfigurationmanager.html#configurationAdded">configurationAdded</a>(), <a href="qnetworkconfigurationmanager.html#configurationRemoved">configurationRemoved</a>() and <a href="qnetworkconfigurationmanager.html#configurationChanged">configurationChanged</a>() signals are emitted respectively.</p>
+<p>The <a href="qnetworkconfigurationmanager.html#defaultConfiguration">defaultConfiguration</a>() can be used when intending to immediately create a new network session without caring about the particular configuration. It returns a <a href="qnetworkconfiguration.html#StateFlag-enum">QNetworkConfiguration::Discovered</a> configuration. If there are not any discovered ones an invalid configuration is returned.</p>
+<p>Some configuration updates may require some time to perform updates. A WLAN scan is such an example. Unless the platform performs internal updates it may be required to manually trigger configuration updates via <a href="qnetworkconfigurationmanager.html#updateConfigurations">QNetworkConfigurationManager::updateConfigurations</a>(). The completion of the update process is indicated by emitting the <a href="qnetworkconfigurationmanager.html#updateCompleted">updateCompleted</a>() signal. The update process ensures that every existing <a href="qnetworkconfiguration.html">QNetworkConfiguration</a> instance is updated. There is no need to ask for a renewed configuration list via <a href="qnetworkconfigurationmanager.html#allConfigurations">allConfigurations</a>().</p>
+</div>
+<p><b>See also </b><a href="qnetworkconfiguration.html">QNetworkConfiguration</a>.</p>
+<!-- @@@QNetworkConfigurationManager -->
+<div class="types">
+<h2>Member Type Documentation</h2>
+<!-- $$$Capability$$$CanStartAndStopInterfaces$$$DirectConnectionRouting$$$SystemSessionSupport$$$ApplicationLevelRoaming$$$ForcedRoaming$$$DataStatistics$$$NetworkSessionRequired -->
+<h3 class="flags" id="Capability-enum"><a name="Capability-enum"></a>enum QNetworkConfigurationManager::<span class="name">Capability</span><br/>flags QNetworkConfigurationManager::<span class="name">Capabilities</span></h3>
+<p>Specifies the system capabilities of the bearer API. The possible values are:</p>
+<div class="table"><table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td class="topAlign"><code>QNetworkConfigurationManager::CanStartAndStopInterfaces</code></td><td class="topAlign tblval"><code>0x00000001</code></td><td class="topAlign">Network sessions and their underlying access points can be started and stopped. If this flag is not set <a href="qnetworksession.html">QNetworkSession</a> can only monitor but not influence the state of access points. On some platforms this feature may require elevated user permissions. This option is platform specific and may not always be available.</td></tr>
+<tr><td class="topAlign"><code>QNetworkConfigurationManager::DirectConnectionRouting</code></td><td class="topAlign tblval"><code>0x00000002</code></td><td class="topAlign">Network sessions and their sockets can be bound to a particular network interface. Any packet that passes through the socket goes to the specified network interface and thus disregards standard routing table entries. This may be useful when two interfaces can reach overlapping IP ranges or an application has specific needs in regards to target networks. This option is platform specific and may not always be available.</td></tr>
+<tr><td class="topAlign"><code>QNetworkConfigurationManager::SystemSessionSupport</code></td><td class="topAlign tblval"><code>0x00000004</code></td><td class="topAlign">If this flag is set the underlying platform ensures that a network interface is not shut down until the last network session has been <a href="qnetworksession.html#close">closed()</a>. This works across multiple processes. If the platform session support is missing this API can only ensure the above behavior for network sessions within the same process. In general mobile platforms have such support whereas most desktop platform lack this capability.</td></tr>
+<tr><td class="topAlign"><code>QNetworkConfigurationManager::ApplicationLevelRoaming</code></td><td class="topAlign tblval"><code>0x00000008</code></td><td class="topAlign">The system gives applications control over the systems roaming behavior. Applications can initiate roaming (in case the current link is not suitable) and are consulted if the system has identified a more suitable access point.</td></tr>
+<tr><td class="topAlign"><code>QNetworkConfigurationManager::ForcedRoaming</code></td><td class="topAlign tblval"><code>0x00000010</code></td><td class="topAlign">The system disconnects an existing access point and reconnects via a more suitable one. The application does not have any control over this process and has to reconnect its active sockets.</td></tr>
+<tr><td class="topAlign"><code>QNetworkConfigurationManager::DataStatistics</code></td><td class="topAlign tblval"><code>0x00000020</code></td><td class="topAlign">If this flag is set <a href="qnetworksession.html">QNetworkSession</a> can provide statistics about transmitted and received data.</td></tr>
+<tr><td class="topAlign"><code>QNetworkConfigurationManager::NetworkSessionRequired</code></td><td class="topAlign tblval"><code>0x00000040</code></td><td class="topAlign">If this flag is set the platform requires that a network session is created before network operations can be performed.</td></tr>
+</table></div>
+<p>The Capabilities type is a typedef for <a href="../qtcore/qflags.html">QFlags</a>&lt;Capability&gt;. It stores an OR combination of Capability values.</p>
+<!-- @@@Capability -->
+</div>
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$QNetworkConfigurationManager[overload1]$$$QNetworkConfigurationManagerQObject* -->
+<h3 class="fn" id="QNetworkConfigurationManager"><a name="QNetworkConfigurationManager"></a>QNetworkConfigurationManager::<span class="name">QNetworkConfigurationManager</span>(<span class="type"><a href="../qtcore/qobject.html#QObject">QObject</a></span> *<i>parent</i> = Q_NULLPTR)</h3>
+<p>Constructs a <a href="qnetworkconfigurationmanager.html">QNetworkConfigurationManager</a> with the given <i>parent</i>.</p>
+<p>Note that to ensure a valid list of current configurations immediately available, updating is done during construction which causes some delay.</p>
+<!-- @@@QNetworkConfigurationManager -->
+<!-- $$$~QNetworkConfigurationManager[overload1]$$$~QNetworkConfigurationManager -->
+<h3 class="fn" id="dtor.QNetworkConfigurationManager"><a name="dtor.QNetworkConfigurationManager"></a><code>[virtual] </code>QNetworkConfigurationManager::<span class="name">~QNetworkConfigurationManager</span>()</h3>
+<p>Frees the resources associated with the <a href="qnetworkconfigurationmanager.html">QNetworkConfigurationManager</a> object.</p>
+<!-- @@@~QNetworkConfigurationManager -->
+<!-- $$$allConfigurations[overload1]$$$allConfigurationsQNetworkConfiguration::StateFlags -->
+<h3 class="fn" id="allConfigurations"><a name="allConfigurations"></a><span class="type"><a href="../qtcore/qlist.html">QList</a></span>&lt;<span class="type"><a href="qnetworkconfiguration.html">QNetworkConfiguration</a></span>&gt; QNetworkConfigurationManager::<span class="name">allConfigurations</span>(<span class="type"><a href="qnetworkconfiguration.html#StateFlag-enum">QNetworkConfiguration::StateFlags</a></span> <i>filter</i> = QNetworkConfiguration::StateFlags()) const</h3>
+<p>Returns the list of configurations which comply with the given <i>filter</i>.</p>
+<p>By default this function returns all (defined and undefined) configurations.</p>
+<p>A wireless network with a particular SSID may only be accessible in a certain area despite the fact that the system has a valid configuration for it. Therefore the filter flag may be used to limit the list to discovered and possibly connected configurations only.</p>
+<p>If <i>filter</i> is set to zero this function returns all possible configurations.</p>
+<p>Note that this function returns the states for all configurations as they are known at the time of this function call. If for instance a configuration of type WLAN is defined the system may have to perform a WLAN scan in order to determine whether it is actually available. To obtain the most accurate state <a href="qnetworkconfigurationmanager.html#updateConfigurations">updateConfigurations</a>() should be used to update each configuration's state. Note that such an update may require some time. It's completion is signalled by <a href="qnetworkconfigurationmanager.html#updateCompleted">updateCompleted</a>(). In the absence of a configuration update this function returns the best estimate at the time of the call. Therefore, if WLAN configurations are of interest, it is recommended that <a href="qnetworkconfigurationmanager.html#updateConfigurations">updateConfigurations</a>() is called once after <a href="qnetworkconfigurationmanager.html">QNetworkConfigurationManager</a> instantiation (WLAN scans are too time consuming to perform in constructor). After this the data is kept automatically up-to-date as the system reports any changes.</p>
+<!-- @@@allConfigurations -->
+<!-- $$$capabilities[overload1]$$$capabilities -->
+<h3 class="fn" id="capabilities"><a name="capabilities"></a><span class="type"><a href="qnetworkconfigurationmanager.html#Capability-enum">QNetworkConfigurationManager::Capabilities</a></span> QNetworkConfigurationManager::<span class="name">capabilities</span>() const</h3>
+<p>Returns the capabilities supported by the current platform.</p>
+<!-- @@@capabilities -->
+<!-- $$$configurationAdded[overload1]$$$configurationAddedconstQNetworkConfiguration& -->
+<h3 class="fn" id="configurationAdded"><a name="configurationAdded"></a><code>[signal] </code><span class="type">void</span> QNetworkConfigurationManager::<span class="name">configurationAdded</span>(const <span class="type"><a href="qnetworkconfiguration.html">QNetworkConfiguration</a></span> &amp;<i>config</i>)</h3>
+<p>This signal is emitted whenever a new network configuration is added to the system. The new configuration is specified by <i>config</i>.</p>
+<!-- @@@configurationAdded -->
+<!-- $$$configurationChanged[overload1]$$$configurationChangedconstQNetworkConfiguration& -->
+<h3 class="fn" id="configurationChanged"><a name="configurationChanged"></a><code>[signal] </code><span class="type">void</span> QNetworkConfigurationManager::<span class="name">configurationChanged</span>(const <span class="type"><a href="qnetworkconfiguration.html">QNetworkConfiguration</a></span> &amp;<i>config</i>)</h3>
+<p>This signal is emitted when the <a href="qnetworkconfiguration.html#state">state</a> of <i>config</i> changes.</p>
+<!-- @@@configurationChanged -->
+<!-- $$$configurationFromIdentifier[overload1]$$$configurationFromIdentifierconstQString& -->
+<h3 class="fn" id="configurationFromIdentifier"><a name="configurationFromIdentifier"></a><span class="type"><a href="qnetworkconfiguration.html">QNetworkConfiguration</a></span> QNetworkConfigurationManager::<span class="name">configurationFromIdentifier</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>identifier</i>) const</h3>
+<p>Returns the <a href="qnetworkconfiguration.html">QNetworkConfiguration</a> for <i>identifier</i>; otherwise returns an invalid <a href="qnetworkconfiguration.html">QNetworkConfiguration</a>.</p>
+<p><b>See also </b><a href="qnetworkconfiguration.html#identifier">QNetworkConfiguration::identifier</a>().</p>
+<!-- @@@configurationFromIdentifier -->
+<!-- $$$configurationRemoved[overload1]$$$configurationRemovedconstQNetworkConfiguration& -->
+<h3 class="fn" id="configurationRemoved"><a name="configurationRemoved"></a><code>[signal] </code><span class="type">void</span> QNetworkConfigurationManager::<span class="name">configurationRemoved</span>(const <span class="type"><a href="qnetworkconfiguration.html">QNetworkConfiguration</a></span> &amp;<i>config</i>)</h3>
+<p>This signal is emitted when a configuration is about to be removed from the system. The removed configuration, specified by <i>config</i>, is invalid but retains name and identifier.</p>
+<!-- @@@configurationRemoved -->
+<!-- $$$defaultConfiguration[overload1]$$$defaultConfiguration -->
+<h3 class="fn" id="defaultConfiguration"><a name="defaultConfiguration"></a><span class="type"><a href="qnetworkconfiguration.html">QNetworkConfiguration</a></span> QNetworkConfigurationManager::<span class="name">defaultConfiguration</span>() const</h3>
+<p>Returns the default configuration to be used. This function always returns a discovered configuration; otherwise an invalid configuration.</p>
+<p>In some cases it may be required to call <a href="qnetworkconfigurationmanager.html#updateConfigurations">updateConfigurations</a>() and wait for the <a href="qnetworkconfigurationmanager.html#updateCompleted">updateCompleted</a>() signal before calling this function.</p>
+<p><b>See also </b><a href="qnetworkconfigurationmanager.html#allConfigurations">allConfigurations</a>().</p>
+<!-- @@@defaultConfiguration -->
+<!-- $$$isOnline[overload1]$$$isOnline -->
+<h3 class="fn" id="isOnline"><a name="isOnline"></a><span class="type">bool</span> QNetworkConfigurationManager::<span class="name">isOnline</span>() const</h3>
+<p>Returns <code>true</code> if the system is considered to be connected to another device via an active network interface; otherwise returns <code>false</code>.</p>
+<p>This is equivalent to the following code snippet:</p>
+<pre class="cpp">
+
+  <span class="type"><a href="qnetworkconfigurationmanager.html#QNetworkConfigurationManager">QNetworkConfigurationManager</a></span> mgr;
+  <span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span><span class="type"><a href="qnetworkconfiguration.html">QNetworkConfiguration</a></span><span class="operator">&gt;</span> activeConfigs <span class="operator">=</span> mgr<span class="operator">.</span>allConfigurations(<span class="type"><a href="qnetworkconfiguration.html">QNetworkConfiguration</a></span><span class="operator">::</span>Active);
+  <span class="keyword">if</span> (activeConfigs<span class="operator">.</span>count() <span class="operator">&gt;</span> <span class="number">0</span>)
+      Q_ASSERT(mgr<span class="operator">.</span>isOnline());
+  <span class="keyword">else</span>
+      Q_ASSERT(<span class="operator">!</span>mgr<span class="operator">.</span>isOnline());
+
+</pre>
+<p><b>See also </b><a href="qnetworkconfigurationmanager.html#onlineStateChanged">onlineStateChanged</a>().</p>
+<!-- @@@isOnline -->
+<!-- $$$onlineStateChanged[overload1]$$$onlineStateChangedbool -->
+<h3 class="fn" id="onlineStateChanged"><a name="onlineStateChanged"></a><code>[signal] </code><span class="type">void</span> QNetworkConfigurationManager::<span class="name">onlineStateChanged</span>(<span class="type">bool</span> <i>isOnline</i>)</h3>
+<p>This signal is emitted when the device changes from online to offline mode or vice versa. <i>isOnline</i> represents the new state of the device.</p>
+<p>The state is considered to be online for as long as <a href="qnetworkconfigurationmanager.html#allConfigurations">allConfigurations</a>(<a href="qnetworkconfiguration.html#StateFlag-enum">QNetworkConfiguration::Active</a>) returns a list with at least one entry.</p>
+<!-- @@@onlineStateChanged -->
+<!-- $$$updateCompleted[overload1]$$$updateCompleted -->
+<h3 class="fn" id="updateCompleted"><a name="updateCompleted"></a><code>[signal] </code><span class="type">void</span> QNetworkConfigurationManager::<span class="name">updateCompleted</span>()</h3>
+<p>This signal is emitted when the configuration update has been completed. Such an update can be initiated via <a href="qnetworkconfigurationmanager.html#updateConfigurations">updateConfigurations</a>().</p>
+<!-- @@@updateCompleted -->
+<!-- $$$updateConfigurations[overload1]$$$updateConfigurations -->
+<h3 class="fn" id="updateConfigurations"><a name="updateConfigurations"></a><code>[slot] </code><span class="type">void</span> QNetworkConfigurationManager::<span class="name">updateConfigurations</span>()</h3>
+<p>Initiates an update of all configurations. This may be used to initiate WLAN scans or other time consuming updates which may be required to obtain the correct state for configurations.</p>
+<p>This call is asynchronous. On completion of this update the <a href="qnetworkconfigurationmanager.html#updateCompleted">updateCompleted</a>() signal is emitted. If new configurations are discovered or old ones were removed or changed the update process may trigger the emission of one or multiple <a href="qnetworkconfigurationmanager.html#configurationAdded">configurationAdded</a>(), <a href="qnetworkconfigurationmanager.html#configurationRemoved">configurationRemoved</a>() and <a href="qnetworkconfigurationmanager.html#configurationChanged">configurationChanged</a>() signals.</p>
+<p>If a configuration state changes as a result of this update all existing <a href="qnetworkconfiguration.html">QNetworkConfiguration</a> instances are updated automatically.</p>
+<p><b>See also </b><a href="qnetworkconfigurationmanager.html#allConfigurations">allConfigurations</a>().</p>
+<!-- @@@updateConfigurations -->
+</div>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

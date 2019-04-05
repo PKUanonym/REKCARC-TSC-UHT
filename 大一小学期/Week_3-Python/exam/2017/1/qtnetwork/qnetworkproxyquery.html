@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qnetworkproxy.cpp -->
+  <title>QNetworkProxyQuery Class | Qt Network 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtnetwork-index.html">Qt Network</a></td><td ><a href="qtnetwork-module.html">C++ Classes</a></td><td >QNetworkProxyQuery</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-types">Public Types</a></li>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">QNetworkProxyQuery Class</h1>
+<!-- $$$QNetworkProxyQuery-brief -->
+<p>The <a href="qnetworkproxyquery.html">QNetworkProxyQuery</a> class is used to query the proxy settings for a socket. <a href="#details">More...</a></p>
+<!-- @@@QNetworkProxyQuery -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign">   <span class="preprocessor">#include &lt;QNetworkProxyQuery&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> qmake:</td><td class="memItemRight bottomAlign"> QT += network</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Since:</td><td class="memItemRight bottomAlign">  Qt 4.5</td></tr></table></div><ul>
+<li><a href="qnetworkproxyquery-members.html">List of all members, including inherited members</a></li>
+</ul>
+<a name="public-types"></a>
+<h2 id="public-types">Public Types</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxyquery.html#QueryType-enum">QueryType</a></b> { TcpSocket, UdpSocket, TcpServer, UrlRequest }</td></tr>
+</table></div>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxyquery.html#QNetworkProxyQuery">QNetworkProxyQuery</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxyquery.html#QNetworkProxyQuery-1">QNetworkProxyQuery</a></b>(const QUrl &amp;<i>requestUrl</i>, QueryType <i>queryType</i> = UrlRequest)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxyquery.html#QNetworkProxyQuery-2">QNetworkProxyQuery</a></b>(const QString &amp;<i>hostname</i>, int <i>port</i>, const QString &amp;<i>protocolTag</i> = QString(), QueryType <i>queryType</i> = TcpSocket)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxyquery.html#QNetworkProxyQuery-3">QNetworkProxyQuery</a></b>(quint16 <i>bindPort</i>, const QString &amp;<i>protocolTag</i> = QString(), QueryType <i>queryType</i> = TcpServer)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxyquery.html#QNetworkProxyQuery-4">QNetworkProxyQuery</a></b>(const QNetworkConfiguration &amp;<i>networkConfiguration</i>, const QUrl &amp;<i>requestUrl</i>, QueryType <i>queryType</i> = UrlRequest)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxyquery.html#QNetworkProxyQuery-5">QNetworkProxyQuery</a></b>(const QNetworkConfiguration &amp;<i>networkConfiguration</i>, const QString &amp;<i>hostname</i>, int <i>port</i>, const QString &amp;<i>protocolTag</i> = QString(), QueryType <i>queryType</i> = TcpSocket)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxyquery.html#QNetworkProxyQuery-6">QNetworkProxyQuery</a></b>(const QNetworkConfiguration &amp;<i>networkConfiguration</i>, quint16 <i>bindPort</i>, const QString &amp;<i>protocolTag</i> = QString(), QueryType <i>queryType</i> = TcpServer)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxyquery.html#QNetworkProxyQuery-7">QNetworkProxyQuery</a></b>(const QNetworkProxyQuery &amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxyquery.html#dtor.QNetworkProxyQuery">~QNetworkProxyQuery</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxyquery.html#localPort">localPort</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QNetworkConfiguration </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxyquery.html#networkConfiguration">networkConfiguration</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxyquery.html#peerHostName">peerHostName</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxyquery.html#peerPort">peerPort</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxyquery.html#protocolTag">protocolTag</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QueryType </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxyquery.html#queryType">queryType</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxyquery.html#setLocalPort">setLocalPort</a></b>(int <i>port</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxyquery.html#setNetworkConfiguration">setNetworkConfiguration</a></b>(const QNetworkConfiguration &amp;<i>networkConfiguration</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxyquery.html#setPeerHostName">setPeerHostName</a></b>(const QString &amp;<i>hostname</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxyquery.html#setPeerPort">setPeerPort</a></b>(int <i>port</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxyquery.html#setProtocolTag">setProtocolTag</a></b>(const QString &amp;<i>protocolTag</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxyquery.html#setQueryType">setQueryType</a></b>(QueryType <i>type</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxyquery.html#setUrl">setUrl</a></b>(const QUrl &amp;<i>url</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxyquery.html#swap">swap</a></b>(QNetworkProxyQuery &amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QUrl </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxyquery.html#url">url</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxyquery.html#operator-not-eq">operator!=</a></b>(const QNetworkProxyQuery &amp;<i>other</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QNetworkProxyQuery &amp;</td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxyquery.html#operator-eq">operator=</a></b>(QNetworkProxyQuery &amp;&amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QNetworkProxyQuery &amp;</td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxyquery.html#operator-eq-1">operator=</a></b>(const QNetworkProxyQuery &amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxyquery.html#operator-eq-eq">operator==</a></b>(const QNetworkProxyQuery &amp;<i>other</i>) const</td></tr>
+</table></div>
+<a name="details"></a>
+<!-- $$$QNetworkProxyQuery-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="qnetworkproxyquery.html">QNetworkProxyQuery</a> class is used to query the proxy settings for a socket.</p>
+<p><a href="qnetworkproxyquery.html">QNetworkProxyQuery</a> holds the details of a socket being created or request being made. It is used by <a href="qnetworkproxy.html">QNetworkProxy</a> and <a href="qnetworkproxyfactory.html">QNetworkProxyFactory</a> to allow applications to have a more fine-grained control over which proxy servers are used, depending on the details of the query. This allows an application to apply different settings, according to the protocol or destination hostname, for instance.</p>
+<p><a href="qnetworkproxyquery.html">QNetworkProxyQuery</a> supports the following criteria for selecting the proxy:</p>
+<ul>
+<li>the type of query</li>
+<li>the local port number to use</li>
+<li>the destination host name</li>
+<li>the destination port number</li>
+<li>the protocol name, such as &quot;http&quot; or &quot;ftp&quot;</li>
+<li>the URL being requested</li>
+</ul>
+<p>The destination host name is the host in the connection in the case of outgoing connection sockets. It is the <code>hostName</code> parameter passed to <a href="qabstractsocket.html#connectToHost">QTcpSocket::connectToHost</a>() or the host component of a URL requested with <a href="qnetworkrequest.html">QNetworkRequest</a>.</p>
+<p>The destination port number is the requested port to connect to in the case of outgoing sockets, while the local port number is the port the socket wishes to use locally before attempting the external connection. In most cases, the local port number is used by listening sockets only (<a href="qtcpsocket.html">QTcpSocket</a>) or by datagram sockets (<a href="qudpsocket.html">QUdpSocket</a>).</p>
+<p>The protocol name is an arbitrary string that indicates the type of connection being attempted. For example, it can match the scheme of a URL, like &quot;http&quot;, &quot;https&quot; and &quot;ftp&quot;. In most cases, the proxy selection will not change depending on the protocol, but this information is provided in case a better choice can be made, like choosing an caching HTTP proxy for HTTP-based connections, but a more powerful SOCKSv5 proxy for all others.</p>
+<p>The network configuration specifies which configuration to use, when bearer management is used. For example on a mobile phone the proxy settings are likely to be different for the cellular network vs WLAN.</p>
+<p>Some of the criteria may not make sense in all of the types of query. The following table lists the criteria that are most commonly used, according to the type of query.</p>
+<div class="table"><table class="generic">
+ <thead><tr class="qt-style"><th >Query type</th><th >Description</th></tr></thead>
+<tr valign="top" class="odd"><td ><a href="qnetworkproxyquery.html#QueryType-enum">TcpSocket</a></td><td >Normal sockets requesting a connection to a remote server, like <a href="qtcpsocket.html">QTcpSocket</a>. The peer hostname and peer port match the values passed to <a href="qabstractsocket.html#connectToHost">QTcpSocket::connectToHost</a>(). The local port is usually -1, indicating the socket has no preference in which port should be used. The URL component is not used.</td></tr>
+<tr valign="top" class="even"><td ><a href="qnetworkproxyquery.html#QueryType-enum">UdpSocket</a></td><td >Datagram-based sockets, which can both send and receive. The local port, remote host or remote port fields can all be used or be left unused, depending on the characteristics of the socket. The URL component is not used.</td></tr>
+<tr valign="top" class="odd"><td ><a href="qnetworkproxyquery.html#QueryType-enum">TcpServer</a></td><td >Passive server sockets that listen on a port and await incoming connections from the network. Normally, only the local port is used, but the remote address could be used in specific circumstances, for example to indicate which remote host a connection is expected from. The URL component is not used.</td></tr>
+<tr valign="top" class="even"><td ><a href="qnetworkproxyquery.html#QueryType-enum">UrlRequest</a></td><td >A more high-level request, such as those coming from <a href="qnetworkaccessmanager.html">QNetworkAccessManager</a>. These requests will inevitably use an outgoing TCP socket, but the this query type is provided to indicate that more detailed information is present in the URL component. For ease of implementation, the URL's host and port are set as the destination address.</td></tr>
+</table></div>
+<p>It should be noted that any of the criteria may be missing or unknown (an empty <a href="../qtcore/qstring.html">QString</a> for the hostname or protocol name, -1 for the port numbers). If that happens, the functions executing the query should make their best guess or apply some implementation-defined default values.</p>
+</div>
+<p><b>See also </b><a href="qnetworkproxy.html">QNetworkProxy</a>, <a href="qnetworkproxyfactory.html">QNetworkProxyFactory</a>, <a href="qnetworkaccessmanager.html">QNetworkAccessManager</a>, and <a href="qabstractsocket.html#setProxy">QAbstractSocket::setProxy</a>().</p>
+<!-- @@@QNetworkProxyQuery -->
+<div class="types">
+<h2>Member Type Documentation</h2>
+<!-- $$$QueryType$$$TcpSocket$$$UdpSocket$$$TcpServer$$$UrlRequest -->
+<h3 class="fn" id="QueryType-enum"><a name="QueryType-enum"></a>enum QNetworkProxyQuery::<span class="name">QueryType</span></h3>
+<p>Describes the type of one <a href="qnetworkproxyquery.html">QNetworkProxyQuery</a> query.</p>
+<div class="table"><table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td class="topAlign"><code>QNetworkProxyQuery::TcpSocket</code></td><td class="topAlign tblval"><code>0</code></td><td class="topAlign">a normal, outgoing TCP socket</td></tr>
+<tr><td class="topAlign"><code>QNetworkProxyQuery::UdpSocket</code></td><td class="topAlign tblval"><code>1</code></td><td class="topAlign">a datagram-based UDP socket, which could send to multiple destinations</td></tr>
+<tr><td class="topAlign"><code>QNetworkProxyQuery::TcpServer</code></td><td class="topAlign tblval"><code>100</code></td><td class="topAlign">a TCP server that listens for incoming connections from the network</td></tr>
+<tr><td class="topAlign"><code>QNetworkProxyQuery::UrlRequest</code></td><td class="topAlign tblval"><code>101</code></td><td class="topAlign">a more complex request which involves loading of a URL</td></tr>
+</table></div>
+<p><b>See also </b><a href="qnetworkproxyquery.html#queryType">queryType</a>() and <a href="qnetworkproxyquery.html#setQueryType">setQueryType</a>().</p>
+<!-- @@@QueryType -->
+</div>
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$QNetworkProxyQuery[overload1]$$$QNetworkProxyQuery -->
+<h3 class="fn" id="QNetworkProxyQuery"><a name="QNetworkProxyQuery"></a>QNetworkProxyQuery::<span class="name">QNetworkProxyQuery</span>()</h3>
+<p>Constructs a default <a href="qnetworkproxyquery.html">QNetworkProxyQuery</a> object. By default, the query type will be <a href="qnetworkproxyquery.html#QueryType-enum">QNetworkProxyQuery::TcpSocket</a>.</p>
+<!-- @@@QNetworkProxyQuery -->
+<!-- $$$QNetworkProxyQuery$$$QNetworkProxyQueryconstQUrl&QueryType -->
+<h3 class="fn" id="QNetworkProxyQuery-1"><a name="QNetworkProxyQuery-1"></a>QNetworkProxyQuery::<span class="name">QNetworkProxyQuery</span>(const <span class="type"><a href="../qtcore/qurl.html">QUrl</a></span> &amp;<i>requestUrl</i>, <span class="type"><a href="qnetworkproxyquery.html#QueryType-enum">QueryType</a></span> <i>queryType</i> = UrlRequest)</h3>
+<p>Constructs a <a href="qnetworkproxyquery.html">QNetworkProxyQuery</a> with the URL <i>requestUrl</i> and sets the query type to <i>queryType</i>.</p>
+<p><b>See also </b><a href="qnetworkproxyquery.html#protocolTag">protocolTag</a>(), <a href="qnetworkproxyquery.html#peerHostName">peerHostName</a>(), and <a href="qnetworkproxyquery.html#peerPort">peerPort</a>().</p>
+<!-- @@@QNetworkProxyQuery -->
+<!-- $$$QNetworkProxyQuery$$$QNetworkProxyQueryconstQString&intconstQString&QueryType -->
+<h3 class="fn" id="QNetworkProxyQuery-2"><a name="QNetworkProxyQuery-2"></a>QNetworkProxyQuery::<span class="name">QNetworkProxyQuery</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>hostname</i>, <span class="type">int</span> <i>port</i>, const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>protocolTag</i> = QString(), <span class="type"><a href="qnetworkproxyquery.html#QueryType-enum">QueryType</a></span> <i>queryType</i> = TcpSocket)</h3>
+<p>Constructs a <a href="qnetworkproxyquery.html">QNetworkProxyQuery</a> of type <i>queryType</i> and sets the protocol tag to be <i>protocolTag</i>. This constructor is suitable for <a href="qnetworkproxyquery.html#QueryType-enum">QNetworkProxyQuery::TcpSocket</a> queries, because it sets the peer hostname to <i>hostname</i> and the peer's port number to <i>port</i>.</p>
+<!-- @@@QNetworkProxyQuery -->
+<!-- $$$QNetworkProxyQuery$$$QNetworkProxyQueryquint16constQString&QueryType -->
+<h3 class="fn" id="QNetworkProxyQuery-3"><a name="QNetworkProxyQuery-3"></a>QNetworkProxyQuery::<span class="name">QNetworkProxyQuery</span>(<span class="type"><a href="../qtcore/qtglobal.html#quint16-typedef">quint16</a></span> <i>bindPort</i>, const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>protocolTag</i> = QString(), <span class="type"><a href="qnetworkproxyquery.html#QueryType-enum">QueryType</a></span> <i>queryType</i> = TcpServer)</h3>
+<p>Constructs a <a href="qnetworkproxyquery.html">QNetworkProxyQuery</a> of type <i>queryType</i> and sets the protocol tag to be <i>protocolTag</i>. This constructor is suitable for <a href="qnetworkproxyquery.html#QueryType-enum">QNetworkProxyQuery::TcpSocket</a> queries because it sets the local port number to <i>bindPort</i>.</p>
+<p>Note that <i>bindPort</i> is of type quint16 to indicate the exact port number that is requested. The value of -1 (unknown) is not allowed in this context.</p>
+<p><b>See also </b><a href="qnetworkproxyquery.html#localPort">localPort</a>().</p>
+<!-- @@@QNetworkProxyQuery -->
+<!-- $$$QNetworkProxyQuery$$$QNetworkProxyQueryconstQNetworkConfiguration&constQUrl&QueryType -->
+<h3 class="fn" id="QNetworkProxyQuery-4"><a name="QNetworkProxyQuery-4"></a>QNetworkProxyQuery::<span class="name">QNetworkProxyQuery</span>(const <span class="type"><a href="qnetworkconfiguration.html">QNetworkConfiguration</a></span> &amp;<i>networkConfiguration</i>, const <span class="type"><a href="../qtcore/qurl.html">QUrl</a></span> &amp;<i>requestUrl</i>, <span class="type"><a href="qnetworkproxyquery.html#QueryType-enum">QueryType</a></span> <i>queryType</i> = UrlRequest)</h3>
+<p>Constructs a <a href="qnetworkproxyquery.html">QNetworkProxyQuery</a> with the URL <i>requestUrl</i> and sets the query type to <i>queryType</i>. The specified <i>networkConfiguration</i> is used to resolve the proxy settings.</p>
+<p><b>See also </b><a href="qnetworkproxyquery.html#protocolTag">protocolTag</a>(), <a href="qnetworkproxyquery.html#peerHostName">peerHostName</a>(), <a href="qnetworkproxyquery.html#peerPort">peerPort</a>(), and <a href="qnetworkproxyquery.html#networkConfiguration">networkConfiguration</a>().</p>
+<!-- @@@QNetworkProxyQuery -->
+<!-- $$$QNetworkProxyQuery$$$QNetworkProxyQueryconstQNetworkConfiguration&constQString&intconstQString&QueryType -->
+<h3 class="fn" id="QNetworkProxyQuery-5"><a name="QNetworkProxyQuery-5"></a>QNetworkProxyQuery::<span class="name">QNetworkProxyQuery</span>(const <span class="type"><a href="qnetworkconfiguration.html">QNetworkConfiguration</a></span> &amp;<i>networkConfiguration</i>, const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>hostname</i>, <span class="type">int</span> <i>port</i>, const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>protocolTag</i> = QString(), <span class="type"><a href="qnetworkproxyquery.html#QueryType-enum">QueryType</a></span> <i>queryType</i> = TcpSocket)</h3>
+<p>Constructs a <a href="qnetworkproxyquery.html">QNetworkProxyQuery</a> of type <i>queryType</i> and sets the protocol tag to be <i>protocolTag</i>. This constructor is suitable for <a href="qnetworkproxyquery.html#QueryType-enum">QNetworkProxyQuery::TcpSocket</a> queries, because it sets the peer hostname to <i>hostname</i> and the peer's port number to <i>port</i>. The specified <i>networkConfiguration</i> is used to resolve the proxy settings.</p>
+<p><b>See also </b><a href="qnetworkproxyquery.html#networkConfiguration">networkConfiguration</a>().</p>
+<!-- @@@QNetworkProxyQuery -->
+<!-- $$$QNetworkProxyQuery$$$QNetworkProxyQueryconstQNetworkConfiguration&quint16constQString&QueryType -->
+<h3 class="fn" id="QNetworkProxyQuery-6"><a name="QNetworkProxyQuery-6"></a>QNetworkProxyQuery::<span class="name">QNetworkProxyQuery</span>(const <span class="type"><a href="qnetworkconfiguration.html">QNetworkConfiguration</a></span> &amp;<i>networkConfiguration</i>, <span class="type"><a href="../qtcore/qtglobal.html#quint16-typedef">quint16</a></span> <i>bindPort</i>, const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>protocolTag</i> = QString(), <span class="type"><a href="qnetworkproxyquery.html#QueryType-enum">QueryType</a></span> <i>queryType</i> = TcpServer)</h3>
+<p>Constructs a <a href="qnetworkproxyquery.html">QNetworkProxyQuery</a> of type <i>queryType</i> and sets the protocol tag to be <i>protocolTag</i>. This constructor is suitable for <a href="qnetworkproxyquery.html#QueryType-enum">QNetworkProxyQuery::TcpSocket</a> queries because it sets the local port number to <i>bindPort</i>. The specified <i>networkConfiguration</i> is used to resolve the proxy settings.</p>
+<p>Note that <i>bindPort</i> is of type quint16 to indicate the exact port number that is requested. The value of -1 (unknown) is not allowed in this context.</p>
+<p><b>See also </b><a href="qnetworkproxyquery.html#localPort">localPort</a>() and <a href="qnetworkproxyquery.html#networkConfiguration">networkConfiguration</a>().</p>
+<!-- @@@QNetworkProxyQuery -->
+<!-- $$$QNetworkProxyQuery$$$QNetworkProxyQueryconstQNetworkProxyQuery& -->
+<h3 class="fn" id="QNetworkProxyQuery-7"><a name="QNetworkProxyQuery-7"></a>QNetworkProxyQuery::<span class="name">QNetworkProxyQuery</span>(const <span class="type"><a href="qnetworkproxyquery.html#QNetworkProxyQuery">QNetworkProxyQuery</a></span> &amp;<i>other</i>)</h3>
+<p>Constructs a <a href="qnetworkproxyquery.html">QNetworkProxyQuery</a> object that is a copy of <i>other</i>.</p>
+<!-- @@@QNetworkProxyQuery -->
+<!-- $$$~QNetworkProxyQuery[overload1]$$$~QNetworkProxyQuery -->
+<h3 class="fn" id="dtor.QNetworkProxyQuery"><a name="dtor.QNetworkProxyQuery"></a>QNetworkProxyQuery::<span class="name">~QNetworkProxyQuery</span>()</h3>
+<p>Destroys this <a href="qnetworkproxyquery.html">QNetworkProxyQuery</a> object.</p>
+<!-- @@@~QNetworkProxyQuery -->
+<!-- $$$localPort[overload1]$$$localPort -->
+<h3 class="fn" id="localPort"><a name="localPort"></a><span class="type">int</span> QNetworkProxyQuery::<span class="name">localPort</span>() const</h3>
+<p>Returns the port number of the socket that will accept incoming packets from remote servers or -1 if the port is not known.</p>
+<p><b>See also </b><a href="qnetworkproxyquery.html#peerPort">peerPort</a>(), <a href="qnetworkproxyquery.html#peerHostName">peerHostName</a>(), and <a href="qnetworkproxyquery.html#setLocalPort">setLocalPort</a>().</p>
+<!-- @@@localPort -->
+<!-- $$$networkConfiguration[overload1]$$$networkConfiguration -->
+<h3 class="fn" id="networkConfiguration"><a name="networkConfiguration"></a><span class="type"><a href="qnetworkconfiguration.html">QNetworkConfiguration</a></span> QNetworkProxyQuery::<span class="name">networkConfiguration</span>() const</h3>
+<p>Returns the network configuration component of the query.</p>
+<p><b>See also </b><a href="qnetworkproxyquery.html#setNetworkConfiguration">setNetworkConfiguration</a>().</p>
+<!-- @@@networkConfiguration -->
+<!-- $$$peerHostName[overload1]$$$peerHostName -->
+<h3 class="fn" id="peerHostName"><a name="peerHostName"></a><span class="type"><a href="../qtcore/qstring.html">QString</a></span> QNetworkProxyQuery::<span class="name">peerHostName</span>() const</h3>
+<p>Returns the host name or IP address being of the outgoing connection being requested, or an empty string if the remote hostname is not known.</p>
+<p>If the query type is <a href="qnetworkproxyquery.html#QueryType-enum">QNetworkProxyQuery::UrlRequest</a>, this function returns the host component of the URL being requested.</p>
+<p><b>See also </b><a href="qnetworkproxyquery.html#peerPort">peerPort</a>(), <a href="qnetworkproxyquery.html#localPort">localPort</a>(), and <a href="qnetworkproxyquery.html#setPeerHostName">setPeerHostName</a>().</p>
+<!-- @@@peerHostName -->
+<!-- $$$peerPort[overload1]$$$peerPort -->
+<h3 class="fn" id="peerPort"><a name="peerPort"></a><span class="type">int</span> QNetworkProxyQuery::<span class="name">peerPort</span>() const</h3>
+<p>Returns the port number for the outgoing request or -1 if the port number is not known.</p>
+<p>If the query type is <a href="qnetworkproxyquery.html#QueryType-enum">QNetworkProxyQuery::UrlRequest</a>, this function returns the port number of the URL being requested. In general, frameworks will fill in the port number from their default values.</p>
+<p><b>See also </b><a href="qnetworkproxyquery.html#peerHostName">peerHostName</a>(), <a href="qnetworkproxyquery.html#localPort">localPort</a>(), and <a href="qnetworkproxyquery.html#setPeerPort">setPeerPort</a>().</p>
+<!-- @@@peerPort -->
+<!-- $$$protocolTag[overload1]$$$protocolTag -->
+<h3 class="fn" id="protocolTag"><a name="protocolTag"></a><span class="type"><a href="../qtcore/qstring.html">QString</a></span> QNetworkProxyQuery::<span class="name">protocolTag</span>() const</h3>
+<p>Returns the protocol tag for this <a href="qnetworkproxyquery.html">QNetworkProxyQuery</a> object, or an empty <a href="../qtcore/qstring.html">QString</a> in case the protocol tag is unknown.</p>
+<p>In the case of queries of type <a href="qnetworkproxyquery.html#QueryType-enum">QNetworkProxyQuery::UrlRequest</a>, this function returns the value of the scheme component of the URL.</p>
+<p><b>See also </b><a href="qnetworkproxyquery.html#setProtocolTag">setProtocolTag</a>() and <a href="qnetworkproxyquery.html#url">url</a>().</p>
+<!-- @@@protocolTag -->
+<!-- $$$queryType[overload1]$$$queryType -->
+<h3 class="fn" id="queryType"><a name="queryType"></a><span class="type"><a href="qnetworkproxyquery.html#QueryType-enum">QueryType</a></span> QNetworkProxyQuery::<span class="name">queryType</span>() const</h3>
+<p>Returns the query type.</p>
+<p><b>See also </b><a href="qnetworkproxyquery.html#setQueryType">setQueryType</a>().</p>
+<!-- @@@queryType -->
+<!-- $$$setLocalPort[overload1]$$$setLocalPortint -->
+<h3 class="fn" id="setLocalPort"><a name="setLocalPort"></a><span class="type">void</span> QNetworkProxyQuery::<span class="name">setLocalPort</span>(<span class="type">int</span> <i>port</i>)</h3>
+<p>Sets the port number that the socket wishes to use locally to accept incoming packets from remote servers to <i>port</i>. The local port is most often used with the <a href="qnetworkproxyquery.html#QueryType-enum">QNetworkProxyQuery::TcpServer</a> and <a href="qnetworkproxyquery.html#QueryType-enum">QNetworkProxyQuery::UdpSocket</a> query types.</p>
+<p>Valid values are 0 to 65535 (with 0 indicating that any port number will be acceptable) or -1, which means the local port number is unknown or not applicable.</p>
+<p>In some circumstances, for special protocols, it's the local port number can also be used with a query of type <a href="qnetworkproxyquery.html#QueryType-enum">QNetworkProxyQuery::TcpSocket</a>. When that happens, the socket is indicating it wishes to use the port number <i>port</i> when connecting to a remote host.</p>
+<p><b>See also </b><a href="qnetworkproxyquery.html#localPort">localPort</a>(), <a href="qnetworkproxyquery.html#setPeerPort">setPeerPort</a>(), and <a href="qnetworkproxyquery.html#setPeerHostName">setPeerHostName</a>().</p>
+<!-- @@@setLocalPort -->
+<!-- $$$setNetworkConfiguration[overload1]$$$setNetworkConfigurationconstQNetworkConfiguration& -->
+<h3 class="fn" id="setNetworkConfiguration"><a name="setNetworkConfiguration"></a><span class="type">void</span> QNetworkProxyQuery::<span class="name">setNetworkConfiguration</span>(const <span class="type"><a href="qnetworkconfiguration.html">QNetworkConfiguration</a></span> &amp;<i>networkConfiguration</i>)</h3>
+<p>Sets the network configuration component of this <a href="qnetworkproxyquery.html">QNetworkProxyQuery</a> object to be <i>networkConfiguration</i>. The network configuration can be used to return different proxy settings based on the network in use, for example WLAN vs cellular networks on a mobile phone.</p>
+<p>In the case of &quot;user choice&quot; or &quot;service network&quot; configurations, you should first start the <a href="qnetworksession.html">QNetworkSession</a> and obtain the active configuration from its properties.</p>
+<p><b>See also </b><a href="qnetworkproxyquery.html#networkConfiguration">networkConfiguration</a>().</p>
+<!-- @@@setNetworkConfiguration -->
+<!-- $$$setPeerHostName[overload1]$$$setPeerHostNameconstQString& -->
+<h3 class="fn" id="setPeerHostName"><a name="setPeerHostName"></a><span class="type">void</span> QNetworkProxyQuery::<span class="name">setPeerHostName</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>hostname</i>)</h3>
+<p>Sets the hostname of the outgoing connection being requested to <i>hostname</i>. An empty hostname can be used to indicate that the remote host is unknown.</p>
+<p>The peer host name can also be used to indicate the expected source address of an incoming connection in the case of <a href="qnetworkproxyquery.html#QueryType-enum">QNetworkProxyQuery::UdpSocket</a> or <a href="qnetworkproxyquery.html#QueryType-enum">QNetworkProxyQuery::TcpServer</a> query types.</p>
+<p><b>See also </b><a href="qnetworkproxyquery.html#peerHostName">peerHostName</a>(), <a href="qnetworkproxyquery.html#setPeerPort">setPeerPort</a>(), and <a href="qnetworkproxyquery.html#setLocalPort">setLocalPort</a>().</p>
+<!-- @@@setPeerHostName -->
+<!-- $$$setPeerPort[overload1]$$$setPeerPortint -->
+<h3 class="fn" id="setPeerPort"><a name="setPeerPort"></a><span class="type">void</span> QNetworkProxyQuery::<span class="name">setPeerPort</span>(<span class="type">int</span> <i>port</i>)</h3>
+<p>Sets the requested port number for the outgoing connection to be <i>port</i>. Valid values are 1 to 65535, or -1 to indicate that the remote port number is unknown.</p>
+<p>The peer port number can also be used to indicate the expected port number of an incoming connection in the case of <a href="qnetworkproxyquery.html#QueryType-enum">QNetworkProxyQuery::UdpSocket</a> or <a href="qnetworkproxyquery.html#QueryType-enum">QNetworkProxyQuery::TcpServer</a> query types.</p>
+<p><b>See also </b><a href="qnetworkproxyquery.html#peerPort">peerPort</a>(), <a href="qnetworkproxyquery.html#setPeerHostName">setPeerHostName</a>(), and <a href="qnetworkproxyquery.html#setLocalPort">setLocalPort</a>().</p>
+<!-- @@@setPeerPort -->
+<!-- $$$setProtocolTag[overload1]$$$setProtocolTagconstQString& -->
+<h3 class="fn" id="setProtocolTag"><a name="setProtocolTag"></a><span class="type">void</span> QNetworkProxyQuery::<span class="name">setProtocolTag</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>protocolTag</i>)</h3>
+<p>Sets the protocol tag for this <a href="qnetworkproxyquery.html">QNetworkProxyQuery</a> object to be <i>protocolTag</i>.</p>
+<p>The protocol tag is an arbitrary string that indicates which protocol is being talked over the socket, such as &quot;http&quot;, &quot;xmpp&quot;, &quot;telnet&quot;, etc. The protocol tag is used by the backend to return a request that is more specific to the protocol in question: for example, a HTTP connection could be use a caching HTTP proxy server, while all other connections use a more powerful SOCKSv5 proxy server.</p>
+<p><b>See also </b><a href="qnetworkproxyquery.html#protocolTag">protocolTag</a>().</p>
+<!-- @@@setProtocolTag -->
+<!-- $$$setQueryType[overload1]$$$setQueryTypeQueryType -->
+<h3 class="fn" id="setQueryType"><a name="setQueryType"></a><span class="type">void</span> QNetworkProxyQuery::<span class="name">setQueryType</span>(<span class="type"><a href="qnetworkproxyquery.html#QueryType-enum">QueryType</a></span> <i>type</i>)</h3>
+<p>Sets the query type of this object to be <i>type</i>.</p>
+<p><b>See also </b><a href="qnetworkproxyquery.html#queryType">queryType</a>().</p>
+<!-- @@@setQueryType -->
+<!-- $$$setUrl[overload1]$$$setUrlconstQUrl& -->
+<h3 class="fn" id="setUrl"><a name="setUrl"></a><span class="type">void</span> QNetworkProxyQuery::<span class="name">setUrl</span>(const <span class="type"><a href="../qtcore/qurl.html">QUrl</a></span> &amp;<i>url</i>)</h3>
+<p>Sets the URL component of this <a href="qnetworkproxyquery.html">QNetworkProxyQuery</a> object to be <i>url</i>. Setting the URL will also set the protocol tag, the remote host name and port number. This is done so as to facilitate the implementation of the code that determines the proxy server to be used.</p>
+<p><b>See also </b><a href="qnetworkproxyquery.html#url">url</a>(), <a href="qnetworkproxyquery.html#peerHostName">peerHostName</a>(), and <a href="qnetworkproxyquery.html#peerPort">peerPort</a>().</p>
+<!-- @@@setUrl -->
+<!-- $$$swap[overload1]$$$swapQNetworkProxyQuery& -->
+<h3 class="fn" id="swap"><a name="swap"></a><span class="type">void</span> QNetworkProxyQuery::<span class="name">swap</span>(<span class="type"><a href="qnetworkproxyquery.html#QNetworkProxyQuery">QNetworkProxyQuery</a></span> &amp;<i>other</i>)</h3>
+<p>Swaps this network proxy query instance with <i>other</i>. This function is very fast and never fails.</p>
+<p>This function was introduced in  Qt 5.0.</p>
+<!-- @@@swap -->
+<!-- $$$url[overload1]$$$url -->
+<h3 class="fn" id="url"><a name="url"></a><span class="type"><a href="../qtcore/qurl.html">QUrl</a></span> QNetworkProxyQuery::<span class="name">url</span>() const</h3>
+<p>Returns the URL component of this <a href="qnetworkproxyquery.html">QNetworkProxyQuery</a> object in case of a query of type <a href="qnetworkproxyquery.html#QueryType-enum">QNetworkProxyQuery::UrlRequest</a>.</p>
+<p><b>See also </b><a href="qnetworkproxyquery.html#setUrl">setUrl</a>().</p>
+<!-- @@@url -->
+<!-- $$$operator!=[overload1]$$$operator!=constQNetworkProxyQuery& -->
+<h3 class="fn" id="operator-not-eq"><a name="operator-not-eq"></a><span class="type">bool</span> QNetworkProxyQuery::<span class="name">operator!=</span>(const <span class="type"><a href="qnetworkproxyquery.html#QNetworkProxyQuery">QNetworkProxyQuery</a></span> &amp;<i>other</i>) const</h3>
+<p>Returns <code>true</code> if this <a href="qnetworkproxyquery.html">QNetworkProxyQuery</a> object does not contain the same data as <i>other</i>.</p>
+<!-- @@@operator!= -->
+<!-- $$$operator=[overload1]$$$operator=QNetworkProxyQuery&& -->
+<h3 class="fn" id="operator-eq"><a name="operator-eq"></a><span class="type"><a href="qnetworkproxyquery.html#QNetworkProxyQuery">QNetworkProxyQuery</a></span> &amp;QNetworkProxyQuery::<span class="name">operator=</span>(<span class="type"><a href="qnetworkproxyquery.html#QNetworkProxyQuery">QNetworkProxyQuery</a></span> &amp;&amp;<i>other</i>)</h3>
+<p>Move-assignment operator.</p><!-- @@@operator= -->
+<!-- $$$operator=$$$operator=constQNetworkProxyQuery& -->
+<h3 class="fn" id="operator-eq-1"><a name="operator-eq-1"></a><span class="type"><a href="qnetworkproxyquery.html#QNetworkProxyQuery">QNetworkProxyQuery</a></span> &amp;QNetworkProxyQuery::<span class="name">operator=</span>(const <span class="type"><a href="qnetworkproxyquery.html#QNetworkProxyQuery">QNetworkProxyQuery</a></span> &amp;<i>other</i>)</h3>
+<p>Copies the contents of <i>other</i>.</p>
+<!-- @@@operator= -->
+<!-- $$$operator==[overload1]$$$operator==constQNetworkProxyQuery& -->
+<h3 class="fn" id="operator-eq-eq"><a name="operator-eq-eq"></a><span class="type">bool</span> QNetworkProxyQuery::<span class="name">operator==</span>(const <span class="type"><a href="qnetworkproxyquery.html#QNetworkProxyQuery">QNetworkProxyQuery</a></span> &amp;<i>other</i>) const</h3>
+<p>Returns <code>true</code> if this <a href="qnetworkproxyquery.html">QNetworkProxyQuery</a> object contains the same data as <i>other</i>.</p>
+<!-- @@@operator== -->
+</div>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

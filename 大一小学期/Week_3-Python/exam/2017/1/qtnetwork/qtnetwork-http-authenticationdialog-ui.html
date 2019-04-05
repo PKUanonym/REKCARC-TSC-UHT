@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>authenticationdialog.ui Example File | Qt Network 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtnetwork-index.html">Qt Network</a></td><td ><a href="qtnetwork-http-example.html">HTTP Example</a></td><td >authenticationdialog.ui Example File</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar"><div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">authenticationdialog.ui Example File</h1>
+<span class="subtitle">http/authenticationdialog.ui</span>
+<!-- $$$http/authenticationdialog.ui-description -->
+<div class="descr"> <a name="details"></a>
+<pre class="cpp">
+
+  &lt;ui version=&quot;4.0&quot; &gt;
+   &lt;class&gt;Dialog&lt;/class&gt;
+   &lt;widget class=&quot;QDialog&quot; name=&quot;Dialog&quot; &gt;
+    &lt;property name=&quot;geometry&quot; &gt;
+     &lt;rect&gt;
+      &lt;x&gt;0&lt;/x&gt;
+      &lt;y&gt;0&lt;/y&gt;
+      &lt;width&gt;389&lt;/width&gt;
+      &lt;height&gt;243&lt;/height&gt;
+     &lt;/rect&gt;
+    &lt;/property&gt;
+    &lt;property name=&quot;windowTitle&quot; &gt;
+     &lt;string&gt;Http authentication required&lt;/string&gt;
+    &lt;/property&gt;
+    &lt;layout class=&quot;QGridLayout&quot; &gt;
+     &lt;item row=&quot;0&quot; column=&quot;0&quot; colspan=&quot;2&quot; &gt;
+      &lt;widget class=&quot;QLabel&quot; name=&quot;label&quot; &gt;
+       &lt;property name=&quot;text&quot; &gt;
+        &lt;string&gt;You need to supply a Username and a Password to access this site&lt;/string&gt;
+       &lt;/property&gt;
+       &lt;property name=&quot;wordWrap&quot; &gt;
+        &lt;bool&gt;false&lt;/bool&gt;
+       &lt;/property&gt;
+      &lt;/widget&gt;
+     &lt;/item&gt;
+     &lt;item row=&quot;2&quot; column=&quot;0&quot; &gt;
+      &lt;widget class=&quot;QLabel&quot; name=&quot;label_2&quot; &gt;
+       &lt;property name=&quot;text&quot; &gt;
+        &lt;string&gt;Username:&lt;/string&gt;
+       &lt;/property&gt;
+      &lt;/widget&gt;
+     &lt;/item&gt;
+     &lt;item row=&quot;2&quot; column=&quot;1&quot; &gt;
+      &lt;widget class=&quot;QLineEdit&quot; name=&quot;userEdit&quot; /&gt;
+     &lt;/item&gt;
+     &lt;item row=&quot;3&quot; column=&quot;0&quot; &gt;
+      &lt;widget class=&quot;QLabel&quot; name=&quot;label_3&quot; &gt;
+       &lt;property name=&quot;text&quot; &gt;
+        &lt;string&gt;Password:&lt;/string&gt;
+       &lt;/property&gt;
+      &lt;/widget&gt;
+     &lt;/item&gt;
+     &lt;item row=&quot;3&quot; column=&quot;1&quot; &gt;
+      &lt;widget class=&quot;QLineEdit&quot; name=&quot;passwordEdit&quot;&gt;
+       &lt;property name=&quot;echoMode&quot;&gt;
+        &lt;enum&gt;QLineEdit::Password&lt;/enum&gt;
+       &lt;/property&gt;
+      &lt;/widget&gt;
+     &lt;/item&gt;
+     &lt;item row=&quot;5&quot; column=&quot;0&quot; colspan=&quot;2&quot; &gt;
+      &lt;widget class=&quot;QDialogButtonBox&quot; name=&quot;buttonBox&quot; &gt;
+       &lt;property name=&quot;orientation&quot; &gt;
+        &lt;enum&gt;Qt::Horizontal&lt;/enum&gt;
+       &lt;/property&gt;
+       &lt;property name=&quot;standardButtons&quot; &gt;
+        &lt;set&gt;QDialogButtonBox::Cancel|QDialogButtonBox::Ok&lt;/set&gt;
+       &lt;/property&gt;
+      &lt;/widget&gt;
+     &lt;/item&gt;
+     &lt;item row=&quot;1&quot; column=&quot;0&quot; &gt;
+      &lt;widget class=&quot;QLabel&quot; name=&quot;label_4&quot; &gt;
+       &lt;property name=&quot;text&quot; &gt;
+        &lt;string&gt;Site:&lt;/string&gt;
+       &lt;/property&gt;
+      &lt;/widget&gt;
+     &lt;/item&gt;
+     &lt;item row=&quot;1&quot; column=&quot;1&quot; &gt;
+      &lt;widget class=&quot;QLabel&quot; name=&quot;siteDescription&quot; &gt;
+       &lt;property name=&quot;font&quot; &gt;
+        &lt;font&gt;
+         &lt;weight&gt;75&lt;/weight&gt;
+         &lt;bold&gt;true&lt;/bold&gt;
+        &lt;/font&gt;
+       &lt;/property&gt;
+       &lt;property name=&quot;text&quot; &gt;
+        &lt;string&gt;%1 at %2&lt;/string&gt;
+       &lt;/property&gt;
+       &lt;property name=&quot;wordWrap&quot; &gt;
+        &lt;bool&gt;true&lt;/bool&gt;
+       &lt;/property&gt;
+      &lt;/widget&gt;
+     &lt;/item&gt;
+     &lt;item row=&quot;4&quot; column=&quot;0&quot; &gt;
+      &lt;spacer&gt;
+       &lt;property name=&quot;orientation&quot; &gt;
+        &lt;enum&gt;Qt::Vertical&lt;/enum&gt;
+       &lt;/property&gt;
+       &lt;property name=&quot;sizeHint&quot; &gt;
+        &lt;size&gt;
+         &lt;width&gt;20&lt;/width&gt;
+         &lt;height&gt;40&lt;/height&gt;
+        &lt;/size&gt;
+       &lt;/property&gt;
+      &lt;/spacer&gt;
+     &lt;/item&gt;
+    &lt;/layout&gt;
+   &lt;/widget&gt;
+   &lt;resources/&gt;
+   &lt;connections&gt;
+    &lt;connection&gt;
+     &lt;sender&gt;buttonBox&lt;/sender&gt;
+     &lt;signal&gt;accepted()&lt;/signal&gt;
+     &lt;receiver&gt;Dialog&lt;/receiver&gt;
+     &lt;slot&gt;accept()&lt;/slot&gt;
+     &lt;hints&gt;
+      &lt;hint type=&quot;sourcelabel&quot; &gt;
+       &lt;x&gt;248&lt;/x&gt;
+       &lt;y&gt;254&lt;/y&gt;
+      &lt;/hint&gt;
+      &lt;hint type=&quot;destinationlabel&quot; &gt;
+       &lt;x&gt;157&lt;/x&gt;
+       &lt;y&gt;274&lt;/y&gt;
+      &lt;/hint&gt;
+     &lt;/hints&gt;
+    &lt;/connection&gt;
+    &lt;connection&gt;
+     &lt;sender&gt;buttonBox&lt;/sender&gt;
+     &lt;signal&gt;rejected()&lt;/signal&gt;
+     &lt;receiver&gt;Dialog&lt;/receiver&gt;
+     &lt;slot&gt;reject()&lt;/slot&gt;
+     &lt;hints&gt;
+      &lt;hint type=&quot;sourcelabel&quot; &gt;
+       &lt;x&gt;316&lt;/x&gt;
+       &lt;y&gt;260&lt;/y&gt;
+      &lt;/hint&gt;
+      &lt;hint type=&quot;destinationlabel&quot; &gt;
+       &lt;x&gt;286&lt;/x&gt;
+       &lt;y&gt;274&lt;/y&gt;
+      &lt;/hint&gt;
+     &lt;/hints&gt;
+    &lt;/connection&gt;
+   &lt;/connections&gt;
+  &lt;/ui&gt;
+
+</pre>
+</div>
+<!-- @@@http/authenticationdialog.ui -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

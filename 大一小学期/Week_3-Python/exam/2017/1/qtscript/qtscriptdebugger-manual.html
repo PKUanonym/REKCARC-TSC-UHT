@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qtscriptdebugger-manual.qdoc -->
+  <title>Qt Script Debugger Manual | Qt Script</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtscript-index.html">Qt Script</a></td><td >Qt Script Debugger Manual</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#getting-started">Getting Started</a></li>
+<li class="level1"><a href="#overview-of-debugger-components">Overview of Debugger Components</a></li>
+<li class="level2"><a href="#resuming-script-evaluation">Resuming Script Evaluation</a></li>
+<li class="level2"><a href="#resuming-after-an-uncaught-exception">Resuming After an Uncaught Exception</a></li>
+<li class="level1"><a href="#console-command-reference">Console Command Reference</a></li>
+<li class="level2"><a href="#breakpoint-related-commands">Breakpoint-related Commands</a></li>
+<li class="level2"><a href="#file-related-commands">File-related Commands</a></li>
+<li class="level2"><a href="#execution-related-commands">Execution-related Commands</a></li>
+<li class="level2"><a href="#stack-related-commands">Stack-related Commands</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">Qt Script Debugger Manual</h1>
+<span class="subtitle"></span>
+<!-- $$$qtscriptdebugger-manual.html-description -->
+<div class="descr"> <a name="details"></a>
+<p>The <a href="../qtscripttools/qtscripttools-index.html">Qt Script Tools</a> module provides a debugger for script execution in Qt applications that use <a href="qtscript-index.html">Qt Script</a>. Application developers can embed the debugger into their application through the <a href="../qtscripttools/qscriptenginedebugger.html">QScriptEngineDebugger</a> class. This manual describes how to use the debugger. We assume that the reader is somewhat familiar with general debugging concepts and existing debugging tools.</p>
+<p>We assume that the debugger has been integrated into the application through the <a href="../qtscripttools/qscriptenginedebugger.html#standardWindow">QScriptEngineDebugger::standardWindow</a>() function, which provides the standard debugger configuration.</p>
+<a name="getting-started"></a>
+<h2 id="getting-started">Getting Started</h2>
+<p>The following image shows the debugger as created with <a href="../qtscripttools/qscriptenginedebugger.html#standardWindow">standardWindow()</a>:</p>
+<p class="centerAlign"><img src="images/qtscript-debugger.png" alt="Running a script under the Qt Script debugger." /></p><p>The debugger will start, i.e&#x2e;, take control over the script's execution when any of these conditions are met:</p>
+<ul>
+<li>The <code>debugger</code> statement is encountered in the script.</li>
+<li>Clicking the <b>Interrupt</b> menu item from the <b>Debug</b> menu in the main window.</li>
+<li>A breakpoint is reached.</li>
+<li>An uncaught script exception is thrown.</li>
+</ul>
+<p>Once the debugger is started, the execution state can be inspected, e.g&#x2e;, the value of variables can be queried and the current program stack shown. New breakpoints can be set.</p>
+<p>The debugger will resume, i.e&#x2e;, give the control back to the script engine, when the user clicks <b>Continue</b> menu item from the <b>Debug</b> menu. It will be invoked again if one of the conditions described in the list above is met.</p>
+<a name="overview-of-debugger-components"></a>
+<h2 id="overview-of-debugger-components">Overview of Debugger Components</h2>
+<p>The debugger's functionality is divided into a series of components, each being a widget that can be shown in the main window of the debugger. The following table describes each component and how they relate to each other.</p>
+<div class="table"><table class="generic">
+ <thead><tr class="qt-style"><th >Component</th><th >Description</th></tr></thead>
+<tr valign="top" class="odd"><td >Console Widget</td><td >The console widget provides a command-line interface to the debugger's functionality, and also serves as an interactive script interpreter. The set of commands and their syntax is inspired by GDB, the GNU Debugger. Commands and script variables are auto-completed through the TAB key.<p>Any console command that causes a change in the debugger or debugger target's state will immediately be reflected in the other debugger components (e.g&#x2e; breakpoints or local variables changed).</p>
+<p>The console provides a simple and powerful way of manipulating the script environment. For example, typing &quot;x&quot; and hitting enter will evaluate &quot;x&quot; in the current stack frame and display the result. Typing &quot;x = 123&quot; will assign the value 123 to the variable <code>x</code> in the current scope (or create a global variable <code>x</code> if there isn't one -- scripts evaluated through the console can have arbitrary side effects, so be careful).</p>
+</td></tr>
+<tr valign="top" class="even"><td >Stack Widget</td><td >The stack widget shows a backtrace of the script execution state. Each row represents one frame in the stack. A row contains the frame index (0 being the inner-most frame), the name of the script function, and the location (file name and line number). To select a particular stack frame to inspect, click on its row.</td></tr>
+<tr valign="top" class="odd"><td >Locals Widget</td><td >The locals widget shows the variables that are local to the currently selected stack frame; that is, the properties of the objects in the scope chain and the <code>this</code>-object. Objects can be expanded, so that their properties can be examined, recursively. Properties whose value has changed are shown in bold font.<p>Properties that are not read-only can be edited. Double-click on the value and type in the new value; the value can be an arbitrary expression. The expression will be evaluated in the associated stack frame. While typing, you can press the TAB key to get possible completions for the expression.</p>
+</td></tr>
+<tr valign="top" class="even"><td >Code Widget</td><td >The code widget shows the code of the currently selected script. The widget displays an arrow in the left margin, marking the code line that is being executed. Clicking in the margin of a line will cause a breakpoint to be toggled at that line. A breakpoint has to be set on a line that contains an actual statement in order to be useful.When an uncaught script exception occurs, the offending line will be shown with a red background.<p>The code widget is read-only; it cannot currently be used to edit and (re)evaluate scripts. This is however possible from the command-line interface, see <a href="qtscriptdebugger-manual.html#console-command-reference">Console Command Reference</a>.</p>
+</td></tr>
+<tr valign="top" class="odd"><td >Scripts Widget</td><td >The scripts widget shows the scripts that are currently loaded in the script engine. Clicking on a script will cause its code to be shown in the code widget. When a script is no longer referenced by the debugger target it is removed from the scripts widget. Code evaluated through <a href="qscriptengine.html#evaluate">QScriptEngine::evaluate</a>() without a name specified, will be displayed in the widget as Anonymous.</td></tr>
+<tr valign="top" class="even"><td >Breakpoints Widget</td><td >The breakpoints widget shows all the breakpoints that are set. A breakpoint can be disabled or enabled by clicking the checkbox next to the breakpoint's ID (the ID is provided so that the breakpoint can be manipulated through the console widget as well).<p>A condition can be associated with the breakpoint; the condition can be an arbitrary expression that should evaluate to true or false. The breakpoint will only be triggered when its location is reached <b>and</b> the condition evaluates to true.</p>
+<p>Similarly, if the breakpoint's ignore-count is set to N, the breakpoint will be ignored the next N times it is hit.</p>
+<p>A new breakpoint can be set by clicking the New Breakpoint button and typing in a location of the form &lt;filename&gt;<b>:</b>&lt;linenumber&gt;. The breakpoint location can refer to an already loaded script, or one that has not been loaded yet.</p>
+</td></tr>
+<tr valign="top" class="odd"><td >Debug Output Widget</td><td >The debug output widget shows messages generated by the print() script function. Scripts can use the special variables <code>__FILE__</code> and <code>__LINE__</code> to include the current location information in the messages.</td></tr>
+<tr valign="top" class="even"><td >Error Log Widget</td><td >The error log widget shows error messages that have been generated. All uncaught exceptions that occur in the engine will appear here.</td></tr>
+</table></div>
+<a name="resuming-script-evaluation"></a>
+<h3 >Resuming Script Evaluation</h3>
+<p>Script evaluation can be resumed in one of the following ways:</p>
+<ul>
+<li><b>Continue</b>: Evaluation will resume normally.</li>
+<li><b>Step Into</b>: Evaluation will resume until the next statement is reached.</li>
+<li><b>Step Over</b>: Evaluation will resume until the next statement is reached; but if the current statement is a function call, the debugger will treat it as a single statement.</li>
+<li><b>Step Out</b>: Evaluation will resume until the current function exits and the next statement is reached.</li>
+<li><b>Run to Cursor</b>: Run until the statement at the cursor is reached.</li>
+<li><b>Run to New Script</b>: Run until the first statement of a new script is reached.</li>
+</ul>
+<p>In any case, script evaluation can also be stopped due to either of the following reasons:</p>
+<ul>
+<li>A <code>debugger</code> statement is encountered.</li>
+<li>A breakpoint is hit.</li>
+<li>An uncaught script exception occurs.</li>
+</ul>
+<a name="resuming-after-an-uncaught-exception"></a>
+<h3 >Resuming After an Uncaught Exception</h3>
+<p>When an uncaught script exception occurs, it is not possible to continue evaluating the current function normally. However, you can use the console command <b>return</b> to catch the exception and return a value to the calling function.</p>
+<a name="console-command-reference"></a>
+<h2 id="console-command-reference">Console Command Reference</h2>
+<p>Note that you can also get help on the available commands by typing &quot;.help&quot; in the console.</p>
+<a name="breakpoint-related-commands"></a>
+<h3 >Breakpoint-related Commands</h3>
+<p>Break points is set</p>
+<a name="break-location"></a>
+<h4 >break &lt;location&gt;</h4>
+<p>Sets a breakpoint at a given code line.</p>
+<pre class="cpp">
+
+  <span class="operator">.</span><span class="keyword">break</span> foo<span class="operator">.</span>qs:<span class="number">123</span>
+
+</pre>
+<p>This command sets a breakpoint at <code>foo.qs</code>, line 123.</p>
+<pre class="cpp">
+
+  <span class="operator">.</span><span class="keyword">break</span> <span class="number">123</span>
+
+</pre>
+<p>This command sets a breakpoint at line 123 in the current script; the current script is the script associated with the current stack frame.</p>
+<p>Each breakpoint has a unique identifier (an integer) associated with it. This identifier is needed by other breakpoint-related commands.</p>
+<a name="clear-location"></a>
+<h4 >clear &lt;location&gt;</h4>
+<pre class="cpp">
+
+  <span class="operator">.</span>clear foo<span class="operator">.</span>qs:<span class="number">123</span>
+
+</pre>
+<p>clears (deletes) the breakpoint at <code>foo.qs</code>, line 123.</p>
+<pre class="cpp">
+
+  clear <span class="number">123</span>
+
+</pre>
+<p>clears (deletes) the breakpoint at line 123 in the current script; the current script is the script associated with the current stack frame.</p>
+<a name="condition-breakpoint-id-expression"></a>
+<h4 >condition &lt;breakpoint-id&gt; &lt;expression&gt;</h4>
+<p>Sets a condition for a breakpoint.</p>
+<pre class="cpp">
+
+  <span class="operator">.</span>condition <span class="number">1</span> i <span class="operator">&gt;</span> <span class="number">42</span>
+
+</pre>
+<p>specifies that breakpoint 1 should only be triggered if the variable <code>i</code> is greater than 42.</p>
+<p>The expression can be an arbitrary one, i.e&#x2e; it can have side-effects. It can be any valid QScript conditional expression.</p>
+<a name="delete-breakpoint-id"></a>
+<h4 >delete &lt;breakpoint-id&gt;</h4>
+<p>Deletes a breakpoint, i.e&#x2e;, removes it from the current debugging session.</p>
+<a name="disable-breakpoint-id"></a>
+<h4 >disable &lt;breakpoint-id&gt;</h4>
+<p>Disables a breakpoint. The breakpoint will continue to exist, but will not stop program execution.</p>
+<a name="enable-breakpoint-id"></a>
+<h4 >enable &lt;breakpoint-id&gt;</h4>
+<p>Enables a breakpoint. Breakpoints are enabled by default, so you only need to use this command if you have disabled to breakpoint previously.</p>
+<a name="ignore-breakpoint-id-count"></a>
+<h4 >ignore &lt;breakpoint-id&gt; &lt;count&gt;</h4>
+<p>Sets the ignore-count of a breakpoint, i.e&#x2e;, the breakpoint will not stop the program execution unless it have been reached <code>count</code> times. This can, for instance, be useful in loops to stop at a specific iteration.</p>
+<pre class="cpp">
+
+  <span class="operator">.</span>ignore <span class="number">1</span> <span class="number">5</span>
+
+</pre>
+<p>Specifies that breakpoint 1 should be ignored the next 5 times it is hit.</p>
+<a name="info-breakpoints"></a>
+<h4 >info breakpoints</h4>
+<p>Lists the breakpoints that are set.</p>
+<pre class="cpp">
+
+  <span class="operator">.</span>info breakpoints
+
+</pre>
+<a name="tbreak-location"></a>
+<h4 >tbreak &lt;location&gt;</h4>
+<p>Sets a temporary breakpoint. This command is identical to the <code>break</code> command, only the breakpoint will be automatically deleted the first time it is hit.</p>
+<a name="file-related-commands"></a>
+<h3 >File-related Commands</h3>
+<a name="list-location"></a>
+<h4 >list &lt;location&gt;</h4>
+<p>Lists the contents of a script around a given location, where the location is given as a line number and, optionally, the name of the file from which you will print. If only a line number is given, <code>.list</code> will use the file of the current stack frame.</p>
+<pre class="cpp">
+
+  <span class="operator">.</span>list foo<span class="operator">.</span>qs:<span class="number">125</span>
+
+</pre>
+<p>When no arguments are given, <code>list</code> will incrementally list sections of the current script.</p>
+<a name="info-scripts"></a>
+<h4 >info scripts</h4>
+<p>Lists the scripts that are currently loaded.</p>
+<a name="execution-related-commands"></a>
+<h3 >Execution-related Commands</h3>
+<a name="advance-location"></a>
+<h4 >advance &lt;location&gt;</h4>
+<p>Advances execution to a given location. The syntax of the location is the same as for setting breakpoints. For example:</p>
+<pre class="cpp">
+
+  <span class="operator">.</span>advance foo<span class="operator">.</span>qs:<span class="number">125</span>
+
+</pre>
+<a name="continue"></a>
+<h4 >continue</h4>
+<p>Continues execution normally, i.e, gives the execution control over the script back to the <a href="qscriptengine.html">QScriptEngine</a>.</p>
+<a name="eval-program"></a>
+<h4 >eval &lt;program&gt;</h4>
+<p>Evaluates a program.</p>
+<a name="finish"></a>
+<h4 >finish</h4>
+<p>Continues execution until the current function exits and the next statement is reached (i.e&#x2e;, the statement after the call to the function).</p>
+<a name="interrupt"></a>
+<h4 >interrupt</h4>
+<p>Requests that execution should be interrupted. Interruption will occur as soon as a new script statement is reached.</p>
+<a name="next-count-1"></a>
+<h4 >next &lt;count = 1&gt;</h4>
+<p>Continues execution until a new statement is reached; but if the current statement is a function call, the function call will be treated as a single statement. This will be done <code>count</code> times before execution is stopped; the default is one.</p>
+<a name="return-expression"></a>
+<h4 >return &lt;expression&gt;</h4>
+<p>Makes the current frame return to its caller. If <code>expression</code> is given, it will sent as the result of the function (i.e&#x2e;, replacing the functions return value). <code>expression</code> can be any valid QScript expression.</p>
+<a name="step-count-1"></a>
+<h4 >step &lt;count = 1&gt;</h4>
+<p>Continues execution until a new statement is reached. If the number <code>count</code> is given as argument, this will be done <code>count</code> times before execution is stopped. As opposed to <a href="qtscriptdebugger-manual.html#next-count-1">next &lt;count = 1&gt;</a>, <code>step</code> will enter functions when encountering a function call statement.</p>
+<a name="stack-related-commands"></a>
+<h3 >Stack-related Commands</h3>
+<a name="backtrace"></a>
+<h4 >backtrace</h4>
+<p>Shows a backtrace of the current execution. The trace will list the function name and its position in the script for each stack frame.</p>
+<a name="down"></a>
+<h4 >down</h4>
+<p>Selects the previous (inner) stack frame. The execution will not return to this frame, but you will get access to its local variables.</p>
+<a name="frame-index"></a>
+<h4 >frame &lt;index&gt;</h4>
+<p>This command moves to the stack frame with the given <code>index</code>. The index of the frame on the top of the stack is 0. Previous frames are numbered from 1 and upwards (the bottom frame in the stack has the largest index).</p>
+<a name="info-locals"></a>
+<h4 >info locals</h4>
+<p>Lists the variables that are in the scope of the current frame.</p>
+<a name="up"></a>
+<h4 >up</h4>
+<p>Selects the next (outer) stack frame.</p>
+</div>
+<!-- @@@qtscriptdebugger-manual.html -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

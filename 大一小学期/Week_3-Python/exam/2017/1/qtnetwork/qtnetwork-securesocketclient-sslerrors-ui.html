@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>sslerrors.ui Example File | Qt Network 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtnetwork-index.html">Qt Network</a></td><td ><a href="qtnetwork-securesocketclient-example.html">Secure Socket Client Example</a></td><td >sslerrors.ui Example File</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar"><div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">sslerrors.ui Example File</h1>
+<span class="subtitle">securesocketclient/sslerrors.ui</span>
+<!-- $$$securesocketclient/sslerrors.ui-description -->
+<div class="descr"> <a name="details"></a>
+<pre class="cpp">
+
+  &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+  &lt;ui version=&quot;4.0&quot;&gt;
+   &lt;class&gt;SslErrors&lt;/class&gt;
+   &lt;widget class=&quot;QDialog&quot; name=&quot;SslErrors&quot;&gt;
+    &lt;property name=&quot;geometry&quot;&gt;
+     &lt;rect&gt;
+      &lt;x&gt;0&lt;/x&gt;
+      &lt;y&gt;0&lt;/y&gt;
+      &lt;width&gt;371&lt;/width&gt;
+      &lt;height&gt;216&lt;/height&gt;
+     &lt;/rect&gt;
+    &lt;/property&gt;
+    &lt;property name=&quot;windowTitle&quot;&gt;
+     &lt;string&gt;Unable To Validate The Connection&lt;/string&gt;
+    &lt;/property&gt;
+    &lt;layout class=&quot;QVBoxLayout&quot;&gt;
+     &lt;item&gt;
+      &lt;widget class=&quot;QLabel&quot; name=&quot;label&quot;&gt;
+       &lt;property name=&quot;text&quot;&gt;
+        &lt;string&gt;&amp;lt;html&amp;gt;&amp;lt;head&amp;gt;&amp;lt;meta name=&amp;quot;qrichtext&amp;quot; content=&amp;quot;1&amp;quot; /&amp;gt;&amp;lt;style type=&amp;quot;text/css&amp;quot;&amp;gt;
+  p, li { white-space: pre-wrap; }
+  &amp;lt;/style&amp;gt;&amp;lt;/head&amp;gt;&amp;lt;body style=&amp;quot; font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;&amp;quot;&amp;gt;
+  &amp;lt;p style=&amp;quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&amp;quot;&amp;gt;&amp;lt;span style=&amp;quot; font-weight:600; color:#ff0000;&amp;quot;&amp;gt;Warning&amp;lt;/span&amp;gt;&amp;lt;span style=&amp;quot; color:#ff0000;&amp;quot;&amp;gt;:&amp;lt;/span&amp;gt;&amp;lt;span style=&amp;quot; color:#000000;&amp;quot;&amp;gt; One or more errors with this connection prevent validating the authenticity of the host you are connecting to. Please review the following list of errors, and click &amp;lt;/span&amp;gt;&amp;lt;span style=&amp;quot; color:#000000;&amp;quot;&amp;gt;Ignore&amp;lt;/span&amp;gt;&amp;lt;span style=&amp;quot; color:#000000;&amp;quot;&amp;gt; to continue, or &amp;lt;/span&amp;gt;&amp;lt;span style=&amp;quot; color:#000000;&amp;quot;&amp;gt;Cancel&amp;lt;/span&amp;gt;&amp;lt;span style=&amp;quot; color:#000000;&amp;quot;&amp;gt; to abort the connection.&amp;lt;/span&amp;gt;&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&lt;/string&gt;
+       &lt;/property&gt;
+       &lt;property name=&quot;wordWrap&quot;&gt;
+        &lt;bool&gt;true&lt;/bool&gt;
+       &lt;/property&gt;
+      &lt;/widget&gt;
+     &lt;/item&gt;
+     &lt;item&gt;
+      &lt;widget class=&quot;QListWidget&quot; name=&quot;sslErrorList&quot;&gt;
+       &lt;property name=&quot;wordWrap&quot;&gt;
+        &lt;bool&gt;true&lt;/bool&gt;
+       &lt;/property&gt;
+      &lt;/widget&gt;
+     &lt;/item&gt;
+     &lt;item&gt;
+      &lt;layout class=&quot;QHBoxLayout&quot;&gt;
+       &lt;item&gt;
+        &lt;widget class=&quot;QPushButton&quot; name=&quot;certificateChainButton&quot;&gt;
+         &lt;property name=&quot;text&quot;&gt;
+          &lt;string&gt;View Certificate Chain&lt;/string&gt;
+         &lt;/property&gt;
+         &lt;property name=&quot;autoDefault&quot;&gt;
+          &lt;bool&gt;false&lt;/bool&gt;
+         &lt;/property&gt;
+        &lt;/widget&gt;
+       &lt;/item&gt;
+       &lt;item&gt;
+        &lt;spacer&gt;
+         &lt;property name=&quot;orientation&quot;&gt;
+          &lt;enum&gt;Qt::Horizontal&lt;/enum&gt;
+         &lt;/property&gt;
+         &lt;property name=&quot;sizeHint&quot; stdset=&quot;0&quot;&gt;
+          &lt;size&gt;
+           &lt;width&gt;40&lt;/width&gt;
+           &lt;height&gt;20&lt;/height&gt;
+          &lt;/size&gt;
+         &lt;/property&gt;
+        &lt;/spacer&gt;
+       &lt;/item&gt;
+       &lt;item&gt;
+        &lt;widget class=&quot;QPushButton&quot; name=&quot;pushButton&quot;&gt;
+         &lt;property name=&quot;text&quot;&gt;
+          &lt;string&gt;Ignore&lt;/string&gt;
+         &lt;/property&gt;
+        &lt;/widget&gt;
+       &lt;/item&gt;
+       &lt;item&gt;
+        &lt;widget class=&quot;QPushButton&quot; name=&quot;pushButton_2&quot;&gt;
+         &lt;property name=&quot;text&quot;&gt;
+          &lt;string&gt;Cancel&lt;/string&gt;
+         &lt;/property&gt;
+        &lt;/widget&gt;
+       &lt;/item&gt;
+      &lt;/layout&gt;
+     &lt;/item&gt;
+    &lt;/layout&gt;
+   &lt;/widget&gt;
+   &lt;resources/&gt;
+   &lt;connections&gt;
+    &lt;connection&gt;
+     &lt;sender&gt;pushButton&lt;/sender&gt;
+     &lt;signal&gt;clicked()&lt;/signal&gt;
+     &lt;receiver&gt;SslErrors&lt;/receiver&gt;
+     &lt;slot&gt;accept()&lt;/slot&gt;
+     &lt;hints&gt;
+      &lt;hint type=&quot;sourcelabel&quot;&gt;
+       &lt;x&gt;235&lt;/x&gt;
+       &lt;y&gt;185&lt;/y&gt;
+      &lt;/hint&gt;
+      &lt;hint type=&quot;destinationlabel&quot;&gt;
+       &lt;x&gt;228&lt;/x&gt;
+       &lt;y&gt;287&lt;/y&gt;
+      &lt;/hint&gt;
+     &lt;/hints&gt;
+    &lt;/connection&gt;
+    &lt;connection&gt;
+     &lt;sender&gt;pushButton_2&lt;/sender&gt;
+     &lt;signal&gt;clicked()&lt;/signal&gt;
+     &lt;receiver&gt;SslErrors&lt;/receiver&gt;
+     &lt;slot&gt;reject()&lt;/slot&gt;
+     &lt;hints&gt;
+      &lt;hint type=&quot;sourcelabel&quot;&gt;
+       &lt;x&gt;325&lt;/x&gt;
+       &lt;y&gt;192&lt;/y&gt;
+      &lt;/hint&gt;
+      &lt;hint type=&quot;destinationlabel&quot;&gt;
+       &lt;x&gt;333&lt;/x&gt;
+       &lt;y&gt;231&lt;/y&gt;
+      &lt;/hint&gt;
+     &lt;/hints&gt;
+    &lt;/connection&gt;
+   &lt;/connections&gt;
+  &lt;/ui&gt;
+
+</pre>
+</div>
+<!-- @@@securesocketclient/sslerrors.ui -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

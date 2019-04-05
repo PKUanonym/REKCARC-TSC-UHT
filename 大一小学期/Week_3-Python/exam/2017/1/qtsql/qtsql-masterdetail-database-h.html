@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>database.h Example File | Qt SQL 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtsql-index.html">Qt SQL</a></td><td ><a href="qtsql-masterdetail-example.html">Master Detail Example</a></td><td >database.h Example File</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar"><div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">database.h Example File</h1>
+<span class="subtitle">masterdetail/database.h</span>
+<!-- $$$masterdetail/database.h-description -->
+<div class="descr"> <a name="details"></a>
+<pre class="cpp">
+
+  <span class="comment">/****************************************************************************
+  **
+  ** Copyright (C) 2015 The Qt Company Ltd.
+  ** Contact: http://www.qt.io/licensing/
+  **
+  ** This file is part of the examples of the Qt Toolkit.
+  **
+  ** $QT_BEGIN_LICENSE:BSD$
+  ** You may use this file under the terms of the BSD license as follows:
+  **
+  ** &quot;Redistribution and use in source and binary forms, with or without
+  ** modification, are permitted provided that the following conditions are
+  ** met:
+  **   * Redistributions of source code must retain the above copyright
+  **     notice, this list of conditions and the following disclaimer.
+  **   * Redistributions in binary form must reproduce the above copyright
+  **     notice, this list of conditions and the following disclaimer in
+  **     the documentation and/or other materials provided with the
+  **     distribution.
+  **   * Neither the name of The Qt Company Ltd nor the names of its
+  **     contributors may be used to endorse or promote products derived
+  **     from this software without specific prior written permission.
+  **
+  **
+  ** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  ** &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  ** LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  ** A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  ** OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  ** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  ** LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  ** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  ** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  ** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.&quot;
+  **
+  ** $QT_END_LICENSE$
+  **
+  ****************************************************************************/</span>
+
+  <span class="preprocessor">#ifndef DATABASE_H</span>
+  <span class="preprocessor">#define DATABASE_H</span>
+
+  <span class="preprocessor">#include &lt;QMessageBox&gt;</span>
+  <span class="preprocessor">#include &lt;QSqlDatabase&gt;</span>
+  <span class="preprocessor">#include &lt;QSqlError&gt;</span>
+  <span class="preprocessor">#include &lt;QSqlQuery&gt;</span>
+
+  <span class="keyword">static</span> bool createConnection()
+  {
+      <span class="type"><a href="qsqldatabase.html">QSqlDatabase</a></span> db <span class="operator">=</span> <span class="type"><a href="qsqldatabase.html">QSqlDatabase</a></span><span class="operator">::</span>addDatabase(<span class="string">&quot;QSQLITE&quot;</span>);
+      db<span class="operator">.</span>setDatabaseName(<span class="string">&quot;:memory:&quot;</span>);
+      <span class="keyword">if</span> (<span class="operator">!</span>db<span class="operator">.</span>open()) {
+          <span class="type"><a href="../qtwidgets/qmessagebox.html">QMessageBox</a></span><span class="operator">::</span>critical(<span class="number">0</span><span class="operator">,</span> qApp<span class="operator">-</span><span class="operator">&gt;</span>tr(<span class="string">&quot;Cannot open database&quot;</span>)<span class="operator">,</span>
+              qApp<span class="operator">-</span><span class="operator">&gt;</span>tr(<span class="string">&quot;Unable to establish a database connection.\n&quot;</span>
+                       <span class="string">&quot;This example needs SQLite support. Please read &quot;</span>
+                       <span class="string">&quot;the Qt SQL driver documentation for information how &quot;</span>
+                       <span class="string">&quot;to build it.\n\n&quot;</span>
+                       <span class="string">&quot;Click Cancel to exit.&quot;</span>)<span class="operator">,</span> <span class="type"><a href="../qtwidgets/qmessagebox.html">QMessageBox</a></span><span class="operator">::</span>Cancel);
+          <span class="keyword">return</span> <span class="keyword">false</span>;
+      }
+
+      <span class="type"><a href="qsqlquery.html">QSqlQuery</a></span> query;
+
+      query<span class="operator">.</span>exec(<span class="string">&quot;create table artists (id int primary key, &quot;</span>
+                                       <span class="string">&quot;artist varchar(40), &quot;</span>
+                                       <span class="string">&quot;albumcount int)&quot;</span>);
+
+      query<span class="operator">.</span>exec(<span class="string">&quot;insert into artists values(0, '&lt;all&gt;', 0)&quot;</span>);
+      query<span class="operator">.</span>exec(<span class="string">&quot;insert into artists values(1, 'Ane Brun', 2)&quot;</span>);
+      query<span class="operator">.</span>exec(<span class="string">&quot;insert into artists values(2, 'Thomas Dybdahl', 3)&quot;</span>);
+      query<span class="operator">.</span>exec(<span class="string">&quot;insert into artists values(3, 'Kaizers Orchestra', 3)&quot;</span>);
+
+      query<span class="operator">.</span>exec(<span class="string">&quot;create table albums (albumid int primary key, &quot;</span>
+                                       <span class="string">&quot;title varchar(50), &quot;</span>
+                                       <span class="string">&quot;artistid int, &quot;</span>
+                                       <span class="string">&quot;year int)&quot;</span>);
+
+      query<span class="operator">.</span>exec(<span class="string">&quot;insert into albums values(1, 'Spending Time With Morgan', 1, &quot;</span>
+                         <span class="string">&quot;2003)&quot;</span>);
+      query<span class="operator">.</span>exec(<span class="string">&quot;insert into albums values(2, 'A Temporary Dive', 1, 2005)&quot;</span>);
+      query<span class="operator">.</span>exec(<span class="string">&quot;insert into albums values(3, '...The Great October Sound', 2, &quot;</span>
+                         <span class="string">&quot;2002)&quot;</span>);
+      query<span class="operator">.</span>exec(<span class="string">&quot;insert into albums values(4, 'Stray Dogs', 2, 2003)&quot;</span>);
+      query<span class="operator">.</span>exec(<span class="string">&quot;insert into albums values(5, &quot;</span>
+          <span class="string">&quot;'One day you`ll dance for me, New York City', 2, 2004)&quot;</span>);
+      query<span class="operator">.</span>exec(<span class="string">&quot;insert into albums values(6, 'Ompa Til Du D\xc3\xb8r', 3, 2001)&quot;</span>);
+      query<span class="operator">.</span>exec(<span class="string">&quot;insert into albums values(7, 'Evig Pint', 3, 2002)&quot;</span>);
+      query<span class="operator">.</span>exec(<span class="string">&quot;insert into albums values(8, 'Maestro', 3, 2005)&quot;</span>);
+
+      <span class="keyword">return</span> <span class="keyword">true</span>;
+  }
+
+  <span class="preprocessor">#endif</span>
+
+</pre>
+</div>
+<!-- @@@masterdetail/database.h -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

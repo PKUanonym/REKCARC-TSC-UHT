@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>connectionwidget.cpp Example File | Qt SQL 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtsql-index.html">Qt SQL</a></td><td ><a href="qtsql-sqlbrowser-example.html">SQL Browser</a></td><td >connectionwidget.cpp Example File</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar"><div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">connectionwidget.cpp Example File</h1>
+<span class="subtitle">sqlbrowser/connectionwidget.cpp</span>
+<!-- $$$sqlbrowser/connectionwidget.cpp-description -->
+<div class="descr"> <a name="details"></a>
+<pre class="cpp">
+
+  <span class="comment">/****************************************************************************
+  **
+  ** Copyright (C) 2015 The Qt Company Ltd.
+  ** Contact: http://www.qt.io/licensing/
+  **
+  ** This file is part of the demonstration applications of the Qt Toolkit.
+  **
+  ** $QT_BEGIN_LICENSE:LGPL21$
+  ** Commercial License Usage
+  ** Licensees holding valid commercial Qt licenses may use this file in
+  ** accordance with the commercial license agreement provided with the
+  ** Software or, alternatively, in accordance with the terms contained in
+  ** a written agreement between you and The Qt Company. For licensing terms
+  ** and conditions see http://www.qt.io/terms-conditions. For further
+  ** information use the contact form at http://www.qt.io/contact-us.
+  **
+  ** GNU Lesser General Public License Usage
+  ** Alternatively, this file may be used under the terms of the GNU Lesser
+  ** General Public License version 2.1 or version 3 as published by the Free
+  ** Software Foundation and appearing in the file LICENSE.LGPLv21 and
+  ** LICENSE.LGPLv3 included in the packaging of this file. Please review the
+  ** following information to ensure the GNU Lesser General Public License
+  ** requirements will be met: https://www.gnu.org/licenses/lgpl.html and
+  ** http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
+  **
+  ** As a special exception, The Qt Company gives you certain additional
+  ** rights. These rights are described in The Qt Company LGPL Exception
+  ** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
+  **
+  ** $QT_END_LICENSE$
+  **
+  ****************************************************************************/</span>
+
+  <span class="preprocessor">#include &quot;connectionwidget.h&quot;</span>
+
+  <span class="preprocessor">#include &lt;QtWidgets&gt;</span>
+  <span class="preprocessor">#include &lt;QtSql&gt;</span>
+
+  ConnectionWidget<span class="operator">::</span>ConnectionWidget(<span class="type"><a href="../qtwidgets/qwidget.html">QWidget</a></span> <span class="operator">*</span>parent)
+      : <span class="type"><a href="../qtwidgets/qwidget.html">QWidget</a></span>(parent)
+  {
+      <span class="type"><a href="../qtwidgets/qvboxlayout.html">QVBoxLayout</a></span> <span class="operator">*</span>layout <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qvboxlayout.html">QVBoxLayout</a></span>(<span class="keyword">this</span>);
+      tree <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qtreewidget.html">QTreeWidget</a></span>(<span class="keyword">this</span>);
+      tree<span class="operator">-</span><span class="operator">&gt;</span>setObjectName(QLatin1String(<span class="string">&quot;tree&quot;</span>));
+      tree<span class="operator">-</span><span class="operator">&gt;</span>setHeaderLabels(<span class="type"><a href="../qtcore/qstringlist.html">QStringList</a></span>(tr(<span class="string">&quot;database&quot;</span>)));
+      tree<span class="operator">-</span><span class="operator">&gt;</span>header()<span class="operator">-</span><span class="operator">&gt;</span>setSectionResizeMode(<span class="type"><a href="../qtwidgets/qheaderview.html">QHeaderView</a></span><span class="operator">::</span>Stretch);
+      <span class="type"><a href="../qtwidgets/qaction.html">QAction</a></span> <span class="operator">*</span>refreshAction <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qaction.html">QAction</a></span>(tr(<span class="string">&quot;Refresh&quot;</span>)<span class="operator">,</span> tree);
+      metaDataAction <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qaction.html">QAction</a></span>(tr(<span class="string">&quot;Show Schema&quot;</span>)<span class="operator">,</span> tree);
+      connect(refreshAction<span class="operator">,</span> SIGNAL(triggered())<span class="operator">,</span> SLOT(refresh()));
+      connect(metaDataAction<span class="operator">,</span> SIGNAL(triggered())<span class="operator">,</span> SLOT(showMetaData()));
+      tree<span class="operator">-</span><span class="operator">&gt;</span>addAction(refreshAction);
+      tree<span class="operator">-</span><span class="operator">&gt;</span>addAction(metaDataAction);
+      tree<span class="operator">-</span><span class="operator">&gt;</span>setContextMenuPolicy(<span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>ActionsContextMenu);
+
+      layout<span class="operator">-</span><span class="operator">&gt;</span>addWidget(tree);
+
+      <span class="type"><a href="../qtcore/qmetaobject.html">QMetaObject</a></span><span class="operator">::</span>connectSlotsByName(<span class="keyword">this</span>);
+  }
+
+  ConnectionWidget<span class="operator">::</span><span class="operator">~</span>ConnectionWidget()
+  {
+  }
+
+  <span class="keyword">static</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> qDBCaption(<span class="keyword">const</span> <span class="type"><a href="qsqldatabase.html">QSqlDatabase</a></span> <span class="operator">&amp;</span>db)
+  {
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> nm <span class="operator">=</span> db<span class="operator">.</span>driverName();
+      nm<span class="operator">.</span>append(QLatin1Char(<span class="char">':'</span>));
+      <span class="keyword">if</span> (<span class="operator">!</span>db<span class="operator">.</span>userName()<span class="operator">.</span>isEmpty())
+          nm<span class="operator">.</span>append(db<span class="operator">.</span>userName())<span class="operator">.</span>append(QLatin1Char(<span class="char">'@'</span>));
+      nm<span class="operator">.</span>append(db<span class="operator">.</span>databaseName());
+      <span class="keyword">return</span> nm;
+  }
+
+  <span class="type">void</span> ConnectionWidget<span class="operator">::</span>refresh()
+  {
+      tree<span class="operator">-</span><span class="operator">&gt;</span>clear();
+      <span class="type"><a href="../qtcore/qstringlist.html">QStringList</a></span> connectionNames <span class="operator">=</span> <span class="type"><a href="qsqldatabase.html">QSqlDatabase</a></span><span class="operator">::</span>connectionNames();
+
+      bool gotActiveDb <span class="operator">=</span> <span class="keyword">false</span>;
+      <span class="keyword">for</span> (<span class="type">int</span> i <span class="operator">=</span> <span class="number">0</span>; i <span class="operator">&lt;</span> connectionNames<span class="operator">.</span>count(); <span class="operator">+</span><span class="operator">+</span>i) {
+          <span class="type"><a href="../qtwidgets/qtreewidgetitem.html">QTreeWidgetItem</a></span> <span class="operator">*</span>root <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qtreewidgetitem.html">QTreeWidgetItem</a></span>(tree);
+          <span class="type"><a href="qsqldatabase.html">QSqlDatabase</a></span> db <span class="operator">=</span> <span class="type"><a href="qsqldatabase.html">QSqlDatabase</a></span><span class="operator">::</span>database(connectionNames<span class="operator">.</span>at(i)<span class="operator">,</span> <span class="keyword">false</span>);
+          root<span class="operator">-</span><span class="operator">&gt;</span>setText(<span class="number">0</span><span class="operator">,</span> qDBCaption(db));
+          <span class="keyword">if</span> (connectionNames<span class="operator">.</span>at(i) <span class="operator">=</span><span class="operator">=</span> activeDb) {
+              gotActiveDb <span class="operator">=</span> <span class="keyword">true</span>;
+              setActive(root);
+          }
+          <span class="keyword">if</span> (db<span class="operator">.</span>isOpen()) {
+              <span class="type"><a href="../qtcore/qstringlist.html">QStringList</a></span> tables <span class="operator">=</span> db<span class="operator">.</span>tables();
+              <span class="keyword">for</span> (<span class="type">int</span> t <span class="operator">=</span> <span class="number">0</span>; t <span class="operator">&lt;</span> tables<span class="operator">.</span>count(); <span class="operator">+</span><span class="operator">+</span>t) {
+                  <span class="type"><a href="../qtwidgets/qtreewidgetitem.html">QTreeWidgetItem</a></span> <span class="operator">*</span>table <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qtreewidgetitem.html">QTreeWidgetItem</a></span>(root);
+                  table<span class="operator">-</span><span class="operator">&gt;</span>setText(<span class="number">0</span><span class="operator">,</span> tables<span class="operator">.</span>at(t));
+              }
+          }
+      }
+      <span class="keyword">if</span> (<span class="operator">!</span>gotActiveDb) {
+          activeDb <span class="operator">=</span> connectionNames<span class="operator">.</span>value(<span class="number">0</span>);
+          setActive(tree<span class="operator">-</span><span class="operator">&gt;</span>topLevelItem(<span class="number">0</span>));
+      }
+
+      tree<span class="operator">-</span><span class="operator">&gt;</span>doItemsLayout(); <span class="comment">// HACK</span>
+  }
+
+  <span class="type"><a href="qsqldatabase.html">QSqlDatabase</a></span> ConnectionWidget<span class="operator">::</span>currentDatabase() <span class="keyword">const</span>
+  {
+      <span class="keyword">return</span> <span class="type"><a href="qsqldatabase.html">QSqlDatabase</a></span><span class="operator">::</span>database(activeDb);
+  }
+
+  <span class="keyword">static</span> <span class="type">void</span> qSetBold(<span class="type"><a href="../qtwidgets/qtreewidgetitem.html">QTreeWidgetItem</a></span> <span class="operator">*</span>item<span class="operator">,</span> bool bold)
+  {
+      <span class="type">QFont</span> font <span class="operator">=</span> item<span class="operator">-</span><span class="operator">&gt;</span>font(<span class="number">0</span>);
+      font<span class="operator">.</span>setBold(bold);
+      item<span class="operator">-</span><span class="operator">&gt;</span>setFont(<span class="number">0</span><span class="operator">,</span> font);
+  }
+
+  <span class="type">void</span> ConnectionWidget<span class="operator">::</span>setActive(<span class="type"><a href="../qtwidgets/qtreewidgetitem.html">QTreeWidgetItem</a></span> <span class="operator">*</span>item)
+  {
+      <span class="keyword">for</span> (<span class="type">int</span> i <span class="operator">=</span> <span class="number">0</span>; i <span class="operator">&lt;</span> tree<span class="operator">-</span><span class="operator">&gt;</span>topLevelItemCount(); <span class="operator">+</span><span class="operator">+</span>i) {
+          <span class="keyword">if</span> (tree<span class="operator">-</span><span class="operator">&gt;</span>topLevelItem(i)<span class="operator">-</span><span class="operator">&gt;</span>font(<span class="number">0</span>)<span class="operator">.</span>bold())
+              qSetBold(tree<span class="operator">-</span><span class="operator">&gt;</span>topLevelItem(i)<span class="operator">,</span> <span class="keyword">false</span>);
+      }
+
+      <span class="keyword">if</span> (<span class="operator">!</span>item)
+          <span class="keyword">return</span>;
+
+      qSetBold(item<span class="operator">,</span> <span class="keyword">true</span>);
+      activeDb <span class="operator">=</span> <span class="type"><a href="qsqldatabase.html">QSqlDatabase</a></span><span class="operator">::</span>connectionNames()<span class="operator">.</span>value(tree<span class="operator">-</span><span class="operator">&gt;</span>indexOfTopLevelItem(item));
+  }
+
+  <span class="type">void</span> ConnectionWidget<span class="operator">::</span>on_tree_itemActivated(<span class="type"><a href="../qtwidgets/qtreewidgetitem.html">QTreeWidgetItem</a></span> <span class="operator">*</span>item<span class="operator">,</span> <span class="type">int</span> <span class="comment">/* column */</span>)
+  {
+
+      <span class="keyword">if</span> (<span class="operator">!</span>item)
+          <span class="keyword">return</span>;
+
+      <span class="keyword">if</span> (<span class="operator">!</span>item<span class="operator">-</span><span class="operator">&gt;</span>parent()) {
+          setActive(item);
+      } <span class="keyword">else</span> {
+          setActive(item<span class="operator">-</span><span class="operator">&gt;</span>parent());
+          <span class="keyword">emit</span> tableActivated(item<span class="operator">-</span><span class="operator">&gt;</span>text(<span class="number">0</span>));
+      }
+  }
+
+  <span class="type">void</span> ConnectionWidget<span class="operator">::</span>showMetaData()
+  {
+      <span class="type"><a href="../qtwidgets/qtreewidgetitem.html">QTreeWidgetItem</a></span> <span class="operator">*</span>cItem <span class="operator">=</span> tree<span class="operator">-</span><span class="operator">&gt;</span>currentItem();
+      <span class="keyword">if</span> (<span class="operator">!</span>cItem <span class="operator">|</span><span class="operator">|</span> <span class="operator">!</span>cItem<span class="operator">-</span><span class="operator">&gt;</span>parent())
+          <span class="keyword">return</span>;
+      setActive(cItem<span class="operator">-</span><span class="operator">&gt;</span>parent());
+      <span class="keyword">emit</span> metaDataRequested(cItem<span class="operator">-</span><span class="operator">&gt;</span>text(<span class="number">0</span>));
+  }
+
+  <span class="type">void</span> ConnectionWidget<span class="operator">::</span>on_tree_currentItemChanged(<span class="type"><a href="../qtwidgets/qtreewidgetitem.html">QTreeWidgetItem</a></span> <span class="operator">*</span>current<span class="operator">,</span> <span class="type"><a href="../qtwidgets/qtreewidgetitem.html">QTreeWidgetItem</a></span> <span class="operator">*</span>)
+  {
+      metaDataAction<span class="operator">-</span><span class="operator">&gt;</span>setEnabled(current <span class="operator">&amp;</span><span class="operator">&amp;</span> current<span class="operator">-</span><span class="operator">&gt;</span>parent());
+  }
+
+</pre>
+</div>
+<!-- @@@sqlbrowser/connectionwidget.cpp -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qsslerror.cpp -->
+  <title>QSslError Class | Qt Network 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtnetwork-index.html">Qt Network</a></td><td ><a href="qtnetwork-module.html">C++ Classes</a></td><td >QSslError</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-types">Public Types</a></li>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">QSslError Class</h1>
+<!-- $$$QSslError-brief -->
+<p>The <a href="qsslerror.html">QSslError</a> class provides an SSL error. <a href="#details">More...</a></p>
+<!-- @@@QSslError -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign">   <span class="preprocessor">#include &lt;QSslError&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> qmake:</td><td class="memItemRight bottomAlign"> QT += network</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Since:</td><td class="memItemRight bottomAlign">  Qt 4.3</td></tr></table></div><ul>
+<li><a href="qsslerror-members.html">List of all members, including inherited members</a></li>
+</ul>
+<p><b>Note:</b> All functions in this class are <a href="../qtdoc/threads-reentrancy.html">reentrant</a>.</p>
+<a name="public-types"></a>
+<h2 id="public-types">Public Types</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="qsslerror.html#SslError-enum">SslError</a></b> { NoError, UnableToGetIssuerCertificate, UnableToDecryptCertificateSignature, UnableToDecodeIssuerPublicKey, ..., CertificateBlacklisted }</td></tr>
+</table></div>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qsslerror.html#QSslError">QSslError</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qsslerror.html#QSslError-1">QSslError</a></b>(SslError <i>error</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qsslerror.html#QSslError-2">QSslError</a></b>(SslError <i>error</i>, const QSslCertificate &amp;<i>certificate</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qsslerror.html#QSslError-3">QSslError</a></b>(const QSslError &amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qsslerror.html#dtor.QSslError">~QSslError</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QSslCertificate </td><td class="memItemRight bottomAlign"><b><a href="qsslerror.html#certificate">certificate</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> SslError </td><td class="memItemRight bottomAlign"><b><a href="qsslerror.html#error">error</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qsslerror.html#errorString">errorString</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qsslerror.html#swap">swap</a></b>(QSslError &amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qsslerror.html#operator-not-eq">operator!=</a></b>(const QSslError &amp;<i>other</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QSslError &amp;</td><td class="memItemRight bottomAlign"><b><a href="qsslerror.html#operator-eq">operator=</a></b>(QSslError &amp;&amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QSslError &amp;</td><td class="memItemRight bottomAlign"><b><a href="qsslerror.html#operator-eq-1">operator=</a></b>(const QSslError &amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qsslerror.html#operator-eq-eq">operator==</a></b>(const QSslError &amp;<i>other</i>) const</td></tr>
+</table></div>
+<a name="details"></a>
+<!-- $$$QSslError-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="qsslerror.html">QSslError</a> class provides an SSL error.</p>
+<p><a href="qsslerror.html">QSslError</a> provides a simple API for managing errors during <a href="qsslsocket.html">QSslSocket</a>'s SSL handshake.</p>
+</div>
+<p><b>See also </b><a href="qsslsocket.html">QSslSocket</a>, <a href="qsslcertificate.html">QSslCertificate</a>, and <a href="qsslcipher.html">QSslCipher</a>.</p>
+<!-- @@@QSslError -->
+<div class="types">
+<h2>Member Type Documentation</h2>
+<!-- $$$SslError$$$NoError$$$UnableToGetIssuerCertificate$$$UnableToDecryptCertificateSignature$$$UnableToDecodeIssuerPublicKey$$$CertificateSignatureFailed$$$CertificateNotYetValid$$$CertificateExpired$$$InvalidNotBeforeField$$$InvalidNotAfterField$$$SelfSignedCertificate$$$SelfSignedCertificateInChain$$$UnableToGetLocalIssuerCertificate$$$UnableToVerifyFirstCertificate$$$CertificateRevoked$$$InvalidCaCertificate$$$PathLengthExceeded$$$InvalidPurpose$$$CertificateUntrusted$$$CertificateRejected$$$SubjectIssuerMismatch$$$AuthorityIssuerSerialNumberMismatch$$$NoPeerCertificate$$$HostNameMismatch$$$NoSslSupport$$$CertificateBlacklisted$$$UnspecifiedError -->
+<h3 class="fn" id="SslError-enum"><a name="SslError-enum"></a>enum QSslError::<span class="name">SslError</span></h3>
+<p>Describes all recognized errors that can occur during an SSL handshake.</p>
+<div class="table"><table class="valuelist"><tr><th class="tblConst">Constant</th><th class="tblVal">Value</th></tr>
+<tr><td class="topAlign"><code>QSslError::NoError</code></td><td class="topAlign tblval"><code>0</code></td></tr>
+<tr><td class="topAlign"><code>QSslError::UnableToGetIssuerCertificate</code></td><td class="topAlign tblval"><code>1</code></td></tr>
+<tr><td class="topAlign"><code>QSslError::UnableToDecryptCertificateSignature</code></td><td class="topAlign tblval"><code>2</code></td></tr>
+<tr><td class="topAlign"><code>QSslError::UnableToDecodeIssuerPublicKey</code></td><td class="topAlign tblval"><code>3</code></td></tr>
+<tr><td class="topAlign"><code>QSslError::CertificateSignatureFailed</code></td><td class="topAlign tblval"><code>4</code></td></tr>
+<tr><td class="topAlign"><code>QSslError::CertificateNotYetValid</code></td><td class="topAlign tblval"><code>5</code></td></tr>
+<tr><td class="topAlign"><code>QSslError::CertificateExpired</code></td><td class="topAlign tblval"><code>6</code></td></tr>
+<tr><td class="topAlign"><code>QSslError::InvalidNotBeforeField</code></td><td class="topAlign tblval"><code>7</code></td></tr>
+<tr><td class="topAlign"><code>QSslError::InvalidNotAfterField</code></td><td class="topAlign tblval"><code>8</code></td></tr>
+<tr><td class="topAlign"><code>QSslError::SelfSignedCertificate</code></td><td class="topAlign tblval"><code>9</code></td></tr>
+<tr><td class="topAlign"><code>QSslError::SelfSignedCertificateInChain</code></td><td class="topAlign tblval"><code>10</code></td></tr>
+<tr><td class="topAlign"><code>QSslError::UnableToGetLocalIssuerCertificate</code></td><td class="topAlign tblval"><code>11</code></td></tr>
+<tr><td class="topAlign"><code>QSslError::UnableToVerifyFirstCertificate</code></td><td class="topAlign tblval"><code>12</code></td></tr>
+<tr><td class="topAlign"><code>QSslError::CertificateRevoked</code></td><td class="topAlign tblval"><code>13</code></td></tr>
+<tr><td class="topAlign"><code>QSslError::InvalidCaCertificate</code></td><td class="topAlign tblval"><code>14</code></td></tr>
+<tr><td class="topAlign"><code>QSslError::PathLengthExceeded</code></td><td class="topAlign tblval"><code>15</code></td></tr>
+<tr><td class="topAlign"><code>QSslError::InvalidPurpose</code></td><td class="topAlign tblval"><code>16</code></td></tr>
+<tr><td class="topAlign"><code>QSslError::CertificateUntrusted</code></td><td class="topAlign tblval"><code>17</code></td></tr>
+<tr><td class="topAlign"><code>QSslError::CertificateRejected</code></td><td class="topAlign tblval"><code>18</code></td></tr>
+<tr><td class="topAlign"><code>QSslError::SubjectIssuerMismatch</code></td><td class="topAlign tblval"><code>19</code></td></tr>
+<tr><td class="topAlign"><code>QSslError::AuthorityIssuerSerialNumberMismatch</code></td><td class="topAlign tblval"><code>20</code></td></tr>
+<tr><td class="topAlign"><code>QSslError::NoPeerCertificate</code></td><td class="topAlign tblval"><code>21</code></td></tr>
+<tr><td class="topAlign"><code>QSslError::HostNameMismatch</code></td><td class="topAlign tblval"><code>22</code></td></tr>
+<tr><td class="topAlign"><code>QSslError::UnspecifiedError</code></td><td class="topAlign tblval"><code>-1</code></td></tr>
+<tr><td class="topAlign"><code>QSslError::NoSslSupport</code></td><td class="topAlign tblval"><code>23</code></td></tr>
+<tr><td class="topAlign"><code>QSslError::CertificateBlacklisted</code></td><td class="topAlign tblval"><code>24</code></td></tr>
+</table></div>
+<p><b>See also </b><a href="qsslerror.html#errorString">QSslError::errorString</a>().</p>
+<!-- @@@SslError -->
+</div>
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$QSslError[overload1]$$$QSslError -->
+<h3 class="fn" id="QSslError"><a name="QSslError"></a>QSslError::<span class="name">QSslError</span>()</h3>
+<p>Constructs a <a href="qsslerror.html">QSslError</a> object with no error and default certificate.</p>
+<!-- @@@QSslError -->
+<!-- $$$QSslError$$$QSslErrorSslError -->
+<h3 class="fn" id="QSslError-1"><a name="QSslError-1"></a>QSslError::<span class="name">QSslError</span>(<span class="type"><a href="qsslerror.html#SslError-enum">SslError</a></span> <i>error</i>)</h3>
+<p>Constructs a <a href="qsslerror.html">QSslError</a> object. The argument specifies the <i>error</i> that occurred.</p>
+<!-- @@@QSslError -->
+<!-- $$$QSslError$$$QSslErrorSslErrorconstQSslCertificate& -->
+<h3 class="fn" id="QSslError-2"><a name="QSslError-2"></a>QSslError::<span class="name">QSslError</span>(<span class="type"><a href="qsslerror.html#SslError-enum">SslError</a></span> <i>error</i>, const <span class="type"><a href="qsslcertificate.html">QSslCertificate</a></span> &amp;<i>certificate</i>)</h3>
+<p>Constructs a <a href="qsslerror.html">QSslError</a> object. The two arguments specify the <i>error</i> that occurred, and which <i>certificate</i> the error relates to.</p>
+<p><b>See also </b><a href="qsslcertificate.html">QSslCertificate</a>.</p>
+<!-- @@@QSslError -->
+<!-- $$$QSslError$$$QSslErrorconstQSslError& -->
+<h3 class="fn" id="QSslError-3"><a name="QSslError-3"></a>QSslError::<span class="name">QSslError</span>(const <span class="type"><a href="qsslerror.html#QSslError">QSslError</a></span> &amp;<i>other</i>)</h3>
+<p>Constructs an identical copy of <i>other</i>.</p>
+<!-- @@@QSslError -->
+<!-- $$$~QSslError[overload1]$$$~QSslError -->
+<h3 class="fn" id="dtor.QSslError"><a name="dtor.QSslError"></a>QSslError::<span class="name">~QSslError</span>()</h3>
+<p>Destroys the <a href="qsslerror.html">QSslError</a> object.</p>
+<!-- @@@~QSslError -->
+<!-- $$$certificate[overload1]$$$certificate -->
+<h3 class="fn" id="certificate"><a name="certificate"></a><span class="type"><a href="qsslcertificate.html">QSslCertificate</a></span> QSslError::<span class="name">certificate</span>() const</h3>
+<p>Returns the certificate associated with this error, or a null certificate if the error does not relate to any certificate.</p>
+<p><b>See also </b><a href="qsslerror.html#error">error</a>() and <a href="qsslerror.html#errorString">errorString</a>().</p>
+<!-- @@@certificate -->
+<!-- $$$error[overload1]$$$error -->
+<h3 class="fn" id="error"><a name="error"></a><span class="type"><a href="qsslerror.html#SslError-enum">SslError</a></span> QSslError::<span class="name">error</span>() const</h3>
+<p>Returns the type of the error.</p>
+<p><b>See also </b><a href="qsslerror.html#errorString">errorString</a>() and <a href="qsslerror.html#certificate">certificate</a>().</p>
+<!-- @@@error -->
+<!-- $$$errorString[overload1]$$$errorString -->
+<h3 class="fn" id="errorString"><a name="errorString"></a><span class="type"><a href="../qtcore/qstring.html">QString</a></span> QSslError::<span class="name">errorString</span>() const</h3>
+<p>Returns a short localized human-readable description of the error.</p>
+<p><b>See also </b><a href="qsslerror.html#error">error</a>() and <a href="qsslerror.html#certificate">certificate</a>().</p>
+<!-- @@@errorString -->
+<!-- $$$swap[overload1]$$$swapQSslError& -->
+<h3 class="fn" id="swap"><a name="swap"></a><span class="type">void</span> QSslError::<span class="name">swap</span>(<span class="type"><a href="qsslerror.html#QSslError">QSslError</a></span> &amp;<i>other</i>)</h3>
+<p>Swaps this error instance with <i>other</i>. This function is very fast and never fails.</p>
+<p>This function was introduced in  Qt 5.0.</p>
+<!-- @@@swap -->
+<!-- $$$operator!=[overload1]$$$operator!=constQSslError& -->
+<h3 class="fn" id="operator-not-eq"><a name="operator-not-eq"></a><span class="type">bool</span> QSslError::<span class="name">operator!=</span>(const <span class="type"><a href="qsslerror.html#QSslError">QSslError</a></span> &amp;<i>other</i>) const</h3>
+<p>Returns <code>true</code> if this error is not equal to <i>other</i>; otherwise returns false.</p>
+<p>This function was introduced in  Qt 4.4.</p>
+<!-- @@@operator!= -->
+<!-- $$$operator=[overload1]$$$operator=QSslError&& -->
+<h3 class="fn" id="operator-eq"><a name="operator-eq"></a><span class="type"><a href="qsslerror.html#QSslError">QSslError</a></span> &amp;QSslError::<span class="name">operator=</span>(<span class="type"><a href="qsslerror.html#QSslError">QSslError</a></span> &amp;&amp;<i>other</i>)</h3>
+<p>Move-assignment operator.</p><!-- @@@operator= -->
+<!-- $$$operator=$$$operator=constQSslError& -->
+<h3 class="fn" id="operator-eq-1"><a name="operator-eq-1"></a><span class="type"><a href="qsslerror.html#QSslError">QSslError</a></span> &amp;QSslError::<span class="name">operator=</span>(const <span class="type"><a href="qsslerror.html#QSslError">QSslError</a></span> &amp;<i>other</i>)</h3>
+<p>Assigns the contents of <i>other</i> to this error.</p>
+<p>This function was introduced in  Qt 4.4.</p>
+<!-- @@@operator= -->
+<!-- $$$operator==[overload1]$$$operator==constQSslError& -->
+<h3 class="fn" id="operator-eq-eq"><a name="operator-eq-eq"></a><span class="type">bool</span> QSslError::<span class="name">operator==</span>(const <span class="type"><a href="qsslerror.html#QSslError">QSslError</a></span> &amp;<i>other</i>) const</h3>
+<p>Returns <code>true</code> if this error is equal to <i>other</i>; otherwise returns <code>false</code>.</p>
+<p>This function was introduced in  Qt 4.4.</p>
+<!-- @@@operator== -->
+</div>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

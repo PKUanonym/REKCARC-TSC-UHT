@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>httpwindow.cpp Example File | Qt Network 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtnetwork-index.html">Qt Network</a></td><td ><a href="qtnetwork-http-example.html">HTTP Example</a></td><td >httpwindow.cpp Example File</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar"><div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">httpwindow.cpp Example File</h1>
+<span class="subtitle">http/httpwindow.cpp</span>
+<!-- $$$http/httpwindow.cpp-description -->
+<div class="descr"> <a name="details"></a>
+<pre class="cpp">
+
+  <span class="comment">/****************************************************************************
+  **
+  ** Copyright (C) 2015 The Qt Company Ltd.
+  ** Contact: http://www.qt.io/licensing/
+  **
+  ** This file is part of the examples of the Qt Toolkit.
+  **
+  ** $QT_BEGIN_LICENSE:BSD$
+  ** You may use this file under the terms of the BSD license as follows:
+  **
+  ** &quot;Redistribution and use in source and binary forms, with or without
+  ** modification, are permitted provided that the following conditions are
+  ** met:
+  **   * Redistributions of source code must retain the above copyright
+  **     notice, this list of conditions and the following disclaimer.
+  **   * Redistributions in binary form must reproduce the above copyright
+  **     notice, this list of conditions and the following disclaimer in
+  **     the documentation and/or other materials provided with the
+  **     distribution.
+  **   * Neither the name of The Qt Company Ltd nor the names of its
+  **     contributors may be used to endorse or promote products derived
+  **     from this software without specific prior written permission.
+  **
+  **
+  ** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  ** &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  ** LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  ** A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  ** OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  ** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  ** LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  ** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  ** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  ** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.&quot;
+  **
+  ** $QT_END_LICENSE$
+  **
+  ****************************************************************************/</span>
+
+  <span class="preprocessor">#include &lt;QtWidgets&gt;</span>
+  <span class="preprocessor">#include &lt;QtNetwork&gt;</span>
+  <span class="preprocessor">#include &lt;QUrl&gt;</span>
+
+  <span class="preprocessor">#include &quot;httpwindow.h&quot;</span>
+  <span class="preprocessor">#include &quot;ui_authenticationdialog.h&quot;</span>
+
+  <span class="preprocessor">#ifndef QT_NO_SSL</span>
+  <span class="keyword">static</span> <span class="keyword">const</span> <span class="type">char</span> defaultUrl<span class="operator">[</span><span class="operator">]</span> <span class="operator">=</span> <span class="string">&quot;https://qt-project.org/&quot;</span>;
+  <span class="preprocessor">#else</span>
+  <span class="keyword">static</span> <span class="keyword">const</span> <span class="type">char</span> defaultUrl<span class="operator">[</span><span class="operator">]</span> <span class="operator">=</span> <span class="string">&quot;http://qt-project.org/&quot;</span>;
+  <span class="preprocessor">#endif</span>
+  <span class="keyword">static</span> <span class="keyword">const</span> <span class="type">char</span> defaultFileName<span class="operator">[</span><span class="operator">]</span> <span class="operator">=</span> <span class="string">&quot;index.html&quot;</span>;
+
+  ProgressDialog<span class="operator">::</span>ProgressDialog(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qurl.html">QUrl</a></span> <span class="operator">&amp;</span>url<span class="operator">,</span> <span class="type">QWidget</span> <span class="operator">*</span>parent)
+    : <span class="type">QProgressDialog</span>(parent)
+  {
+      setWindowTitle(tr(<span class="string">&quot;Download Progress&quot;</span>));
+      setWindowFlags(windowFlags() <span class="operator">&amp;</span> <span class="operator">~</span><span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>WindowContextHelpButtonHint);
+      setLabelText(tr(<span class="string">&quot;Downloading %1.&quot;</span>)<span class="operator">.</span>arg(url<span class="operator">.</span>toDisplayString()));
+      setMinimum(<span class="number">0</span>);
+      setValue(<span class="number">0</span>);
+      setMinimumDuration(<span class="number">0</span>);
+  }
+
+  <span class="type">void</span> ProgressDialog<span class="operator">::</span>networkReplyProgress(<span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> bytesRead<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> totalBytes)
+  {
+      setMaximum(totalBytes);
+      setValue(bytesRead);
+  }
+
+  HttpWindow<span class="operator">::</span>HttpWindow(<span class="type">QWidget</span> <span class="operator">*</span>parent)
+      : <span class="type">QDialog</span>(parent)
+      <span class="operator">,</span> statusLabel(<span class="keyword">new</span> <span class="type">QLabel</span>(tr(<span class="string">&quot;Please enter the URL of a file you want to download.\n\n&quot;</span>)<span class="operator">,</span> <span class="keyword">this</span>))
+      <span class="operator">,</span> urlLineEdit(<span class="keyword">new</span> <span class="type">QLineEdit</span>(defaultUrl))
+      <span class="operator">,</span> downloadButton(<span class="keyword">new</span> <span class="type">QPushButton</span>(tr(<span class="string">&quot;Download&quot;</span>)))
+      <span class="operator">,</span> launchCheckBox(<span class="keyword">new</span> <span class="type">QCheckBox</span>(<span class="string">&quot;Launch file&quot;</span>))
+      <span class="operator">,</span> defaultFileLineEdit(<span class="keyword">new</span> <span class="type">QLineEdit</span>(defaultFileName))
+      <span class="operator">,</span> downloadDirectoryLineEdit(<span class="keyword">new</span> <span class="type">QLineEdit</span>)
+      <span class="operator">,</span> reply(Q_NULLPTR)
+      <span class="operator">,</span> file(Q_NULLPTR)
+      <span class="operator">,</span> httpRequestAborted(<span class="keyword">false</span>)
+  {
+      setWindowFlags(windowFlags() <span class="operator">&amp;</span> <span class="operator">~</span><span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>WindowContextHelpButtonHint);
+      setWindowTitle(tr(<span class="string">&quot;HTTP&quot;</span>));
+
+      connect(<span class="operator">&amp;</span>qnam<span class="operator">,</span> <span class="operator">&amp;</span><span class="type"><a href="qnetworkaccessmanager.html">QNetworkAccessManager</a></span><span class="operator">::</span>authenticationRequired<span class="operator">,</span>
+              <span class="keyword">this</span><span class="operator">,</span> <span class="operator">&amp;</span>HttpWindow<span class="operator">::</span>slotAuthenticationRequired);
+  <span class="preprocessor">#ifndef QT_NO_SSL</span>
+      connect(<span class="operator">&amp;</span>qnam<span class="operator">,</span> <span class="operator">&amp;</span><span class="type"><a href="qnetworkaccessmanager.html">QNetworkAccessManager</a></span><span class="operator">::</span>sslErrors<span class="operator">,</span>
+              <span class="keyword">this</span><span class="operator">,</span> <span class="operator">&amp;</span>HttpWindow<span class="operator">::</span>sslErrors);
+  <span class="preprocessor">#endif</span>
+
+      <span class="type">QFormLayout</span> <span class="operator">*</span>formLayout <span class="operator">=</span> <span class="keyword">new</span> <span class="type">QFormLayout</span>;
+      urlLineEdit<span class="operator">-</span><span class="operator">&gt;</span>setClearButtonEnabled(<span class="keyword">true</span>);
+      connect(urlLineEdit<span class="operator">,</span> <span class="operator">&amp;</span><span class="type">QLineEdit</span><span class="operator">::</span>textChanged<span class="operator">,</span>
+              <span class="keyword">this</span><span class="operator">,</span> <span class="operator">&amp;</span>HttpWindow<span class="operator">::</span>enableDownloadButton);
+      formLayout<span class="operator">-</span><span class="operator">&gt;</span>addRow(tr(<span class="string">&quot;&amp;URL:&quot;</span>)<span class="operator">,</span> urlLineEdit);
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> downloadDirectory <span class="operator">=</span> <span class="type"><a href="../qtcore/qstandardpaths.html">QStandardPaths</a></span><span class="operator">::</span>writableLocation(<span class="type"><a href="../qtcore/qstandardpaths.html">QStandardPaths</a></span><span class="operator">::</span>DownloadLocation);
+      <span class="keyword">if</span> (downloadDirectory<span class="operator">.</span>isEmpty() <span class="operator">|</span><span class="operator">|</span> <span class="operator">!</span><span class="type"><a href="../qtcore/qfileinfo.html">QFileInfo</a></span>(downloadDirectory)<span class="operator">.</span>isDir())
+          downloadDirectory <span class="operator">=</span> <span class="type"><a href="../qtcore/qdir.html">QDir</a></span><span class="operator">::</span>currentPath();
+      downloadDirectoryLineEdit<span class="operator">-</span><span class="operator">&gt;</span>setText(<span class="type"><a href="../qtcore/qdir.html">QDir</a></span><span class="operator">::</span>toNativeSeparators(downloadDirectory));
+      formLayout<span class="operator">-</span><span class="operator">&gt;</span>addRow(tr(<span class="string">&quot;&amp;Download directory:&quot;</span>)<span class="operator">,</span> downloadDirectoryLineEdit);
+      formLayout<span class="operator">-</span><span class="operator">&gt;</span>addRow(tr(<span class="string">&quot;Default &amp;file:&quot;</span>)<span class="operator">,</span> defaultFileLineEdit);
+      launchCheckBox<span class="operator">-</span><span class="operator">&gt;</span>setChecked(<span class="keyword">true</span>);
+      formLayout<span class="operator">-</span><span class="operator">&gt;</span>addRow(launchCheckBox);
+
+      <span class="type">QVBoxLayout</span> <span class="operator">*</span>mainLayout <span class="operator">=</span> <span class="keyword">new</span> <span class="type">QVBoxLayout</span>(<span class="keyword">this</span>);
+      mainLayout<span class="operator">-</span><span class="operator">&gt;</span>addLayout(formLayout);
+
+      mainLayout<span class="operator">-</span><span class="operator">&gt;</span>addItem(<span class="keyword">new</span> <span class="type">QSpacerItem</span>(<span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="type">QSizePolicy</span><span class="operator">::</span>Ignored<span class="operator">,</span> <span class="type">QSizePolicy</span><span class="operator">::</span>MinimumExpanding));
+
+      statusLabel<span class="operator">-</span><span class="operator">&gt;</span>setWordWrap(<span class="keyword">true</span>);
+      mainLayout<span class="operator">-</span><span class="operator">&gt;</span>addWidget(statusLabel);
+
+      downloadButton<span class="operator">-</span><span class="operator">&gt;</span>setDefault(<span class="keyword">true</span>);
+      connect(downloadButton<span class="operator">,</span> <span class="operator">&amp;</span><span class="type">QAbstractButton</span><span class="operator">::</span>clicked<span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> <span class="operator">&amp;</span>HttpWindow<span class="operator">::</span>downloadFile);
+      <span class="type">QPushButton</span> <span class="operator">*</span>quitButton <span class="operator">=</span> <span class="keyword">new</span> <span class="type">QPushButton</span>(tr(<span class="string">&quot;Quit&quot;</span>));
+      quitButton<span class="operator">-</span><span class="operator">&gt;</span>setAutoDefault(<span class="keyword">false</span>);
+      connect(quitButton<span class="operator">,</span> <span class="operator">&amp;</span><span class="type">QAbstractButton</span><span class="operator">::</span>clicked<span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> <span class="operator">&amp;</span><span class="type">QWidget</span><span class="operator">::</span>close);
+      <span class="type">QDialogButtonBox</span> <span class="operator">*</span>buttonBox <span class="operator">=</span> <span class="keyword">new</span> <span class="type">QDialogButtonBox</span>;
+      buttonBox<span class="operator">-</span><span class="operator">&gt;</span>addButton(downloadButton<span class="operator">,</span> <span class="type">QDialogButtonBox</span><span class="operator">::</span>ActionRole);
+      buttonBox<span class="operator">-</span><span class="operator">&gt;</span>addButton(quitButton<span class="operator">,</span> <span class="type">QDialogButtonBox</span><span class="operator">::</span>RejectRole);
+      mainLayout<span class="operator">-</span><span class="operator">&gt;</span>addWidget(buttonBox);
+
+      urlLineEdit<span class="operator">-</span><span class="operator">&gt;</span>setFocus();
+  }
+
+  <span class="type">void</span> HttpWindow<span class="operator">::</span>startRequest(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qurl.html">QUrl</a></span> <span class="operator">&amp;</span>requestedUrl)
+  {
+      url <span class="operator">=</span> requestedUrl;
+      httpRequestAborted <span class="operator">=</span> <span class="keyword">false</span>;
+
+      reply <span class="operator">=</span> qnam<span class="operator">.</span>get(<span class="type"><a href="qnetworkrequest.html">QNetworkRequest</a></span>(url));
+      connect(reply<span class="operator">,</span> <span class="operator">&amp;</span><span class="type"><a href="qnetworkreply.html">QNetworkReply</a></span><span class="operator">::</span>finished<span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> <span class="operator">&amp;</span>HttpWindow<span class="operator">::</span>httpFinished);
+      connect(reply<span class="operator">,</span> <span class="operator">&amp;</span><span class="type"><a href="../qtcore/qiodevice.html">QIODevice</a></span><span class="operator">::</span>readyRead<span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> <span class="operator">&amp;</span>HttpWindow<span class="operator">::</span>httpReadyRead);
+
+      ProgressDialog <span class="operator">*</span>progressDialog <span class="operator">=</span> <span class="keyword">new</span> ProgressDialog(url<span class="operator">,</span> <span class="keyword">this</span>);
+      progressDialog<span class="operator">-</span><span class="operator">&gt;</span>setAttribute(<span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>WA_DeleteOnClose);
+      connect(progressDialog<span class="operator">,</span> <span class="operator">&amp;</span><span class="type">QProgressDialog</span><span class="operator">::</span>canceled<span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> <span class="operator">&amp;</span>HttpWindow<span class="operator">::</span>cancelDownload);
+      connect(reply<span class="operator">,</span> <span class="operator">&amp;</span><span class="type"><a href="qnetworkreply.html">QNetworkReply</a></span><span class="operator">::</span>downloadProgress<span class="operator">,</span> progressDialog<span class="operator">,</span> <span class="operator">&amp;</span>ProgressDialog<span class="operator">::</span>networkReplyProgress);
+      connect(reply<span class="operator">,</span> <span class="operator">&amp;</span><span class="type"><a href="qnetworkreply.html">QNetworkReply</a></span><span class="operator">::</span>finished<span class="operator">,</span> progressDialog<span class="operator">,</span> <span class="operator">&amp;</span>ProgressDialog<span class="operator">::</span>hide);
+      progressDialog<span class="operator">-</span><span class="operator">&gt;</span>show();
+
+      statusLabel<span class="operator">-</span><span class="operator">&gt;</span>setText(tr(<span class="string">&quot;Downloading %1...&quot;</span>)<span class="operator">.</span>arg(url<span class="operator">.</span>toString()));
+  }
+
+  <span class="type">void</span> HttpWindow<span class="operator">::</span>downloadFile()
+  {
+      <span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> urlSpec <span class="operator">=</span> urlLineEdit<span class="operator">-</span><span class="operator">&gt;</span>text()<span class="operator">.</span>trimmed();
+      <span class="keyword">if</span> (urlSpec<span class="operator">.</span>isEmpty())
+          <span class="keyword">return</span>;
+
+      <span class="keyword">const</span> <span class="type"><a href="../qtcore/qurl.html">QUrl</a></span> newUrl <span class="operator">=</span> <span class="type"><a href="../qtcore/qurl.html">QUrl</a></span><span class="operator">::</span>fromUserInput(urlSpec);
+      <span class="keyword">if</span> (<span class="operator">!</span>newUrl<span class="operator">.</span>isValid()) {
+          <span class="type">QMessageBox</span><span class="operator">::</span>information(<span class="keyword">this</span><span class="operator">,</span> tr(<span class="string">&quot;Error&quot;</span>)<span class="operator">,</span>
+                                   tr(<span class="string">&quot;Invalid URL: %1: %2&quot;</span>)<span class="operator">.</span>arg(urlSpec<span class="operator">,</span> newUrl<span class="operator">.</span>errorString()));
+          <span class="keyword">return</span>;
+      }
+
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> fileName <span class="operator">=</span> newUrl<span class="operator">.</span>fileName();
+      <span class="keyword">if</span> (fileName<span class="operator">.</span>isEmpty())
+          fileName <span class="operator">=</span> defaultFileLineEdit<span class="operator">-</span><span class="operator">&gt;</span>text()<span class="operator">.</span>trimmed();
+      <span class="keyword">if</span> (fileName<span class="operator">.</span>isEmpty())
+          fileName <span class="operator">=</span> defaultFileName;
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> downloadDirectory <span class="operator">=</span> <span class="type"><a href="../qtcore/qdir.html">QDir</a></span><span class="operator">::</span>cleanPath(downloadDirectoryLineEdit<span class="operator">-</span><span class="operator">&gt;</span>text()<span class="operator">.</span>trimmed());
+      <span class="keyword">if</span> (<span class="operator">!</span>downloadDirectory<span class="operator">.</span>isEmpty() <span class="operator">&amp;</span><span class="operator">&amp;</span> <span class="type"><a href="../qtcore/qfileinfo.html">QFileInfo</a></span>(downloadDirectory)<span class="operator">.</span>isDir())
+          fileName<span class="operator">.</span>prepend(downloadDirectory <span class="operator">+</span> <span class="char">'/'</span>);
+      <span class="keyword">if</span> (<span class="type"><a href="../qtcore/qfile.html">QFile</a></span><span class="operator">::</span>exists(fileName)) {
+          <span class="keyword">if</span> (<span class="type">QMessageBox</span><span class="operator">::</span>question(<span class="keyword">this</span><span class="operator">,</span> tr(<span class="string">&quot;Overwrite Existing File&quot;</span>)<span class="operator">,</span>
+                                    tr(<span class="string">&quot;There already exists a file called %1 in &quot;</span>
+                                       <span class="string">&quot;the current directory. Overwrite?&quot;</span>)<span class="operator">.</span>arg(fileName)<span class="operator">,</span>
+                                    <span class="type">QMessageBox</span><span class="operator">::</span>Yes<span class="operator">|</span><span class="type">QMessageBox</span><span class="operator">::</span>No<span class="operator">,</span> <span class="type">QMessageBox</span><span class="operator">::</span>No)
+              <span class="operator">=</span><span class="operator">=</span> <span class="type">QMessageBox</span><span class="operator">::</span>No)
+              <span class="keyword">return</span>;
+          <span class="type"><a href="../qtcore/qfile.html">QFile</a></span><span class="operator">::</span>remove(fileName);
+      }
+
+      file <span class="operator">=</span> openFileForWrite(fileName);
+      <span class="keyword">if</span> (<span class="operator">!</span>file)
+          <span class="keyword">return</span>;
+
+      downloadButton<span class="operator">-</span><span class="operator">&gt;</span>setEnabled(<span class="keyword">false</span>);
+
+      <span class="comment">// schedule the request</span>
+      startRequest(newUrl);
+  }
+
+  <span class="type"><a href="../qtcore/qfile.html">QFile</a></span> <span class="operator">*</span>HttpWindow<span class="operator">::</span>openFileForWrite(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>fileName)
+  {
+      <span class="type"><a href="../qtcore/qscopedpointer.html">QScopedPointer</a></span><span class="operator">&lt;</span><span class="type"><a href="../qtcore/qfile.html">QFile</a></span><span class="operator">&gt;</span> file(<span class="keyword">new</span> <span class="type"><a href="../qtcore/qfile.html">QFile</a></span>(fileName));
+      <span class="keyword">if</span> (<span class="operator">!</span>file<span class="operator">-</span><span class="operator">&gt;</span>open(<span class="type"><a href="../qtcore/qiodevice.html">QIODevice</a></span><span class="operator">::</span>WriteOnly)) {
+          <span class="type">QMessageBox</span><span class="operator">::</span>information(<span class="keyword">this</span><span class="operator">,</span> tr(<span class="string">&quot;Error&quot;</span>)<span class="operator">,</span>
+                                   tr(<span class="string">&quot;Unable to save the file %1: %2.&quot;</span>)
+                                   <span class="operator">.</span>arg(<span class="type"><a href="../qtcore/qdir.html">QDir</a></span><span class="operator">::</span>toNativeSeparators(fileName)<span class="operator">,</span>
+                                        file<span class="operator">-</span><span class="operator">&gt;</span>errorString()));
+          <span class="keyword">return</span> Q_NULLPTR;
+      }
+      <span class="keyword">return</span> file<span class="operator">.</span>take();
+  }
+
+  <span class="type">void</span> HttpWindow<span class="operator">::</span>cancelDownload()
+  {
+      statusLabel<span class="operator">-</span><span class="operator">&gt;</span>setText(tr(<span class="string">&quot;Download canceled.&quot;</span>));
+      httpRequestAborted <span class="operator">=</span> <span class="keyword">true</span>;
+      reply<span class="operator">-</span><span class="operator">&gt;</span>abort();
+      downloadButton<span class="operator">-</span><span class="operator">&gt;</span>setEnabled(<span class="keyword">true</span>);
+  }
+
+  <span class="type">void</span> HttpWindow<span class="operator">::</span>httpFinished()
+  {
+      <span class="type"><a href="../qtcore/qfileinfo.html">QFileInfo</a></span> fi;
+      <span class="keyword">if</span> (file) {
+          fi<span class="operator">.</span>setFile(file<span class="operator">-</span><span class="operator">&gt;</span>fileName());
+          file<span class="operator">-</span><span class="operator">&gt;</span>close();
+          <span class="keyword">delete</span> file;
+          file <span class="operator">=</span> Q_NULLPTR;
+      }
+
+      <span class="keyword">if</span> (httpRequestAborted) {
+          reply<span class="operator">-</span><span class="operator">&gt;</span>deleteLater();
+          reply <span class="operator">=</span> Q_NULLPTR;
+          <span class="keyword">return</span>;
+      }
+
+      <span class="keyword">if</span> (reply<span class="operator">-</span><span class="operator">&gt;</span>error()) {
+          <span class="type"><a href="../qtcore/qfile.html">QFile</a></span><span class="operator">::</span>remove(fi<span class="operator">.</span>absoluteFilePath());
+          statusLabel<span class="operator">-</span><span class="operator">&gt;</span>setText(tr(<span class="string">&quot;Download failed:\n%1.&quot;</span>)<span class="operator">.</span>arg(reply<span class="operator">-</span><span class="operator">&gt;</span>errorString()));
+          downloadButton<span class="operator">-</span><span class="operator">&gt;</span>setEnabled(<span class="keyword">true</span>);
+          reply<span class="operator">-</span><span class="operator">&gt;</span>deleteLater();
+          reply <span class="operator">=</span> Q_NULLPTR;
+          <span class="keyword">return</span>;
+      }
+
+      <span class="keyword">const</span> <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span> redirectionTarget <span class="operator">=</span> reply<span class="operator">-</span><span class="operator">&gt;</span>attribute(<span class="type"><a href="qnetworkrequest.html">QNetworkRequest</a></span><span class="operator">::</span>RedirectionTargetAttribute);
+
+      reply<span class="operator">-</span><span class="operator">&gt;</span>deleteLater();
+      reply <span class="operator">=</span> Q_NULLPTR;
+
+      <span class="keyword">if</span> (<span class="operator">!</span>redirectionTarget<span class="operator">.</span>isNull()) {
+          <span class="keyword">const</span> <span class="type"><a href="../qtcore/qurl.html">QUrl</a></span> redirectedUrl <span class="operator">=</span> url<span class="operator">.</span>resolved(redirectionTarget<span class="operator">.</span>toUrl());
+          <span class="keyword">if</span> (<span class="type">QMessageBox</span><span class="operator">::</span>question(<span class="keyword">this</span><span class="operator">,</span> tr(<span class="string">&quot;Redirect&quot;</span>)<span class="operator">,</span>
+                                    tr(<span class="string">&quot;Redirect to %1 ?&quot;</span>)<span class="operator">.</span>arg(redirectedUrl<span class="operator">.</span>toString())<span class="operator">,</span>
+                                    <span class="type">QMessageBox</span><span class="operator">::</span>Yes <span class="operator">|</span> <span class="type">QMessageBox</span><span class="operator">::</span>No) <span class="operator">=</span><span class="operator">=</span> <span class="type">QMessageBox</span><span class="operator">::</span>No) {
+              downloadButton<span class="operator">-</span><span class="operator">&gt;</span>setEnabled(<span class="keyword">true</span>);
+              <span class="keyword">return</span>;
+          }
+          file <span class="operator">=</span> openFileForWrite(fi<span class="operator">.</span>absoluteFilePath());
+          <span class="keyword">if</span> (<span class="operator">!</span>file) {
+              downloadButton<span class="operator">-</span><span class="operator">&gt;</span>setEnabled(<span class="keyword">true</span>);
+              <span class="keyword">return</span>;
+          }
+          startRequest(redirectedUrl);
+          <span class="keyword">return</span>;
+      }
+
+      statusLabel<span class="operator">-</span><span class="operator">&gt;</span>setText(tr(<span class="string">&quot;Downloaded %1 bytes to %2\nin\n%3&quot;</span>)
+                           <span class="operator">.</span>arg(fi<span class="operator">.</span>size())<span class="operator">.</span>arg(fi<span class="operator">.</span>fileName()<span class="operator">,</span> <span class="type"><a href="../qtcore/qdir.html">QDir</a></span><span class="operator">::</span>toNativeSeparators(fi<span class="operator">.</span>absolutePath())));
+      <span class="keyword">if</span> (launchCheckBox<span class="operator">-</span><span class="operator">&gt;</span>isChecked())
+          <span class="type"><a href="../qtgui/qdesktopservices.html">QDesktopServices</a></span><span class="operator">::</span>openUrl(<span class="type"><a href="../qtcore/qurl.html">QUrl</a></span><span class="operator">::</span>fromLocalFile(fi<span class="operator">.</span>absoluteFilePath()));
+      downloadButton<span class="operator">-</span><span class="operator">&gt;</span>setEnabled(<span class="keyword">true</span>);
+  }
+
+  <span class="type">void</span> HttpWindow<span class="operator">::</span>httpReadyRead()
+  {
+      <span class="comment">// this slot gets called every time the QNetworkReply has new data.</span>
+      <span class="comment">// We read all of its new data and write it into the file.</span>
+      <span class="comment">// That way we use less RAM than when reading it at the finished()</span>
+      <span class="comment">// signal of the QNetworkReply</span>
+      <span class="keyword">if</span> (file)
+          file<span class="operator">-</span><span class="operator">&gt;</span>write(reply<span class="operator">-</span><span class="operator">&gt;</span>readAll());
+  }
+
+  <span class="type">void</span> HttpWindow<span class="operator">::</span>enableDownloadButton()
+  {
+      downloadButton<span class="operator">-</span><span class="operator">&gt;</span>setEnabled(<span class="operator">!</span>urlLineEdit<span class="operator">-</span><span class="operator">&gt;</span>text()<span class="operator">.</span>isEmpty());
+  }
+
+  <span class="type">void</span> HttpWindow<span class="operator">::</span>slotAuthenticationRequired(<span class="type"><a href="qnetworkreply.html">QNetworkReply</a></span><span class="operator">*</span><span class="operator">,</span><span class="type"><a href="qauthenticator.html">QAuthenticator</a></span> <span class="operator">*</span>authenticator)
+  {
+      <span class="type">QDialog</span> authenticationDialog;
+      Ui<span class="operator">::</span>Dialog ui;
+      ui<span class="operator">.</span>setupUi(<span class="operator">&amp;</span>authenticationDialog);
+      authenticationDialog<span class="operator">.</span>adjustSize();
+      ui<span class="operator">.</span>siteDescription<span class="operator">-</span><span class="operator">&gt;</span>setText(tr(<span class="string">&quot;%1 at %2&quot;</span>)<span class="operator">.</span>arg(authenticator<span class="operator">-</span><span class="operator">&gt;</span>realm()<span class="operator">,</span> url<span class="operator">.</span>host()));
+
+      <span class="comment">// Did the URL have information? Fill the UI</span>
+      <span class="comment">// This is only relevant if the URL-supplied credentials were wrong</span>
+      ui<span class="operator">.</span>userEdit<span class="operator">-</span><span class="operator">&gt;</span>setText(url<span class="operator">.</span>userName());
+      ui<span class="operator">.</span>passwordEdit<span class="operator">-</span><span class="operator">&gt;</span>setText(url<span class="operator">.</span>password());
+
+      <span class="keyword">if</span> (authenticationDialog<span class="operator">.</span>exec() <span class="operator">=</span><span class="operator">=</span> <span class="type">QDialog</span><span class="operator">::</span>Accepted) {
+          authenticator<span class="operator">-</span><span class="operator">&gt;</span>setUser(ui<span class="operator">.</span>userEdit<span class="operator">-</span><span class="operator">&gt;</span>text());
+          authenticator<span class="operator">-</span><span class="operator">&gt;</span>setPassword(ui<span class="operator">.</span>passwordEdit<span class="operator">-</span><span class="operator">&gt;</span>text());
+      }
+  }
+
+  <span class="preprocessor">#ifndef QT_NO_SSL</span>
+  <span class="type">void</span> HttpWindow<span class="operator">::</span>sslErrors(<span class="type"><a href="qnetworkreply.html">QNetworkReply</a></span><span class="operator">*</span><span class="operator">,</span><span class="keyword">const</span> <span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span><span class="type"><a href="qsslerror.html">QSslError</a></span><span class="operator">&gt;</span> <span class="operator">&amp;</span>errors)
+  {
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> errorString;
+      foreach (<span class="keyword">const</span> <span class="type"><a href="qsslerror.html">QSslError</a></span> <span class="operator">&amp;</span>error<span class="operator">,</span> errors) {
+          <span class="keyword">if</span> (<span class="operator">!</span>errorString<span class="operator">.</span>isEmpty())
+              errorString <span class="operator">+</span><span class="operator">=</span> <span class="char">'\n'</span>;
+          errorString <span class="operator">+</span><span class="operator">=</span> error<span class="operator">.</span>errorString();
+      }
+
+      <span class="keyword">if</span> (<span class="type">QMessageBox</span><span class="operator">::</span>warning(<span class="keyword">this</span><span class="operator">,</span> tr(<span class="string">&quot;SSL Errors&quot;</span>)<span class="operator">,</span>
+                               tr(<span class="string">&quot;One or more SSL errors has occurred:\n%1&quot;</span>)<span class="operator">.</span>arg(errorString)<span class="operator">,</span>
+                               <span class="type">QMessageBox</span><span class="operator">::</span>Ignore <span class="operator">|</span> <span class="type">QMessageBox</span><span class="operator">::</span>Abort) <span class="operator">=</span><span class="operator">=</span> <span class="type">QMessageBox</span><span class="operator">::</span>Ignore) {
+          reply<span class="operator">-</span><span class="operator">&gt;</span>ignoreSslErrors();
+      }
+  }
+  <span class="preprocessor">#endif</span>
+
+</pre>
+</div>
+<!-- @@@http/httpwindow.cpp -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

@@ -1,0 +1,466 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qxmlstreambookmarks.qdoc -->
+  <title>QXmlStream Bookmarks Example | Qt XML 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtxml-index.html">Qt XML</a></td><td >QXmlStream Bookmarks Example</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#xbelwriter-class-definition">XbelWriter Class Definition</a></li>
+<li class="level1"><a href="#xbelwriter-class-implementation">XbelWriter Class Implementation</a></li>
+<li class="level1"><a href="#xbelreader-class-definition">XbelReader Class Definition</a></li>
+<li class="level1"><a href="#xbelreader-class-implementation">XbelReader Class Implementation</a></li>
+<li class="level1"><a href="#mainwindow-class-definition">MainWindow Class Definition</a></li>
+<li class="level1"><a href="#mainwindow-class-implementation">MainWindow Class Implementation</a></li>
+<li class="level1"><a href="#main-function"><code>main()</code> Function</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">QXmlStream Bookmarks Example</h1>
+<span class="subtitle"></span>
+<!-- $$$streambookmarks-description -->
+<div class="descr"> <a name="details"></a>
+<p>The QXmlStream Bookmarks example provides a reader for XML Bookmark Exchange Language (XBEL) files using Qt's <a href="../qtcore/qxmlstreamreader.html">QXmlStreamReader</a> class for reading, and <a href="../qtcore/qxmlstreamwriter.html">QXmlStreamWriter</a> class for writing the files.</p>
+<p class="centerAlign"><img src="images/xmlstreamexample-screenshot.png" alt="" /></p><a name="xbelwriter-class-definition"></a>
+<h2 id="xbelwriter-class-definition">XbelWriter Class Definition</h2>
+<p>The <code>XbelWriter</code> class contains a private instance of <a href="../qtcore/qxmlstreamwriter.html">QXmlStreamWriter</a>, which provides an XML writer with a streaming API. <code>XbelWriter</code> also has a reference to the <a href="../qtwidgets/qtreewidget.html">QTreeWidget</a> instance where the bookmark hierarchy is stored.</p>
+<pre class="cpp">
+
+  <span class="keyword">class</span> XbelWriter
+  {
+  <span class="keyword">public</span>:
+      XbelWriter(<span class="type"><a href="../qtwidgets/qtreewidget.html">QTreeWidget</a></span> <span class="operator">*</span>treeWidget);
+      bool writeFile(<span class="type"><a href="../qtcore/qiodevice.html">QIODevice</a></span> <span class="operator">*</span>device);
+
+  <span class="keyword">private</span>:
+      <span class="type">void</span> writeItem(<span class="type"><a href="../qtwidgets/qtreewidgetitem.html">QTreeWidgetItem</a></span> <span class="operator">*</span>item);
+      <span class="type"><a href="../qtcore/qxmlstreamwriter.html">QXmlStreamWriter</a></span> xml;
+      <span class="type"><a href="../qtwidgets/qtreewidget.html">QTreeWidget</a></span> <span class="operator">*</span>treeWidget;
+  };
+
+</pre>
+<a name="xbelwriter-class-implementation"></a>
+<h2 id="xbelwriter-class-implementation">XbelWriter Class Implementation</h2>
+<p>The <code>XbelWriter</code> constructor accepts a <i>treeWidget</i> to initialize within its definition. We enable <a href="../qtcore/qxmlstreamwriter.html">QXmlStreamWriter</a>'s auto-formatting property to ensure line-breaks and indentations are added automatically to empty sections between elements, increasing readability as the data is split into several lines.</p>
+<pre class="cpp">
+
+  XbelWriter<span class="operator">::</span>XbelWriter(<span class="type"><a href="../qtwidgets/qtreewidget.html">QTreeWidget</a></span> <span class="operator">*</span>treeWidget)
+      : treeWidget(treeWidget)
+  {
+      xml<span class="operator">.</span>setAutoFormatting(<span class="keyword">true</span>);
+  }
+
+</pre>
+<p>The <code>writeFile()</code> function accepts a <a href="../qtcore/qiodevice.html">QIODevice</a> object and sets it using <code>setDevice()</code>. This function then writes the document type definition(DTD), the start element, the version, and <code>treeWidget</code>'s top-level items.</p>
+<pre class="cpp">
+
+  bool XbelWriter<span class="operator">::</span>writeFile(<span class="type"><a href="../qtcore/qiodevice.html">QIODevice</a></span> <span class="operator">*</span>device)
+  {
+      xml<span class="operator">.</span>setDevice(device);
+
+      xml<span class="operator">.</span>writeStartDocument();
+      xml<span class="operator">.</span>writeDTD(<span class="string">&quot;&lt;!DOCTYPE xbel&gt;&quot;</span>);
+      xml<span class="operator">.</span>writeStartElement(<span class="string">&quot;xbel&quot;</span>);
+      xml<span class="operator">.</span>writeAttribute(<span class="string">&quot;version&quot;</span><span class="operator">,</span> <span class="string">&quot;1.0&quot;</span>);
+      <span class="keyword">for</span> (<span class="type">int</span> i <span class="operator">=</span> <span class="number">0</span>; i <span class="operator">&lt;</span> treeWidget<span class="operator">-</span><span class="operator">&gt;</span>topLevelItemCount(); <span class="operator">+</span><span class="operator">+</span>i)
+          writeItem(treeWidget<span class="operator">-</span><span class="operator">&gt;</span>topLevelItem(i));
+
+      xml<span class="operator">.</span>writeEndDocument();
+      <span class="keyword">return</span> <span class="keyword">true</span>;
+  }
+
+</pre>
+<p>The <code>writeItem()</code> function accepts a <a href="../qtwidgets/qtreewidgetitem.html">QTreeWidgetItem</a> object and writes it to the stream, depending on its <code>tagName</code>, which can either be a &quot;folder&quot;, &quot;bookmark&quot;, or &quot;separator&quot;.</p>
+<pre class="cpp">
+
+  <span class="type">void</span> XbelWriter<span class="operator">::</span>writeItem(<span class="type"><a href="../qtwidgets/qtreewidgetitem.html">QTreeWidgetItem</a></span> <span class="operator">*</span>item)
+  {
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> tagName <span class="operator">=</span> item<span class="operator">-</span><span class="operator">&gt;</span>data(<span class="number">0</span><span class="operator">,</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>UserRole)<span class="operator">.</span>toString();
+      <span class="keyword">if</span> (tagName <span class="operator">=</span><span class="operator">=</span> <span class="string">&quot;folder&quot;</span>) {
+          bool folded <span class="operator">=</span> <span class="operator">!</span>treeWidget<span class="operator">-</span><span class="operator">&gt;</span>isItemExpanded(item);
+          xml<span class="operator">.</span>writeStartElement(tagName);
+          xml<span class="operator">.</span>writeAttribute(<span class="string">&quot;folded&quot;</span><span class="operator">,</span> folded <span class="operator">?</span> <span class="string">&quot;yes&quot;</span> : <span class="string">&quot;no&quot;</span>);
+          xml<span class="operator">.</span>writeTextElement(<span class="string">&quot;title&quot;</span><span class="operator">,</span> item<span class="operator">-</span><span class="operator">&gt;</span>text(<span class="number">0</span>));
+          <span class="keyword">for</span> (<span class="type">int</span> i <span class="operator">=</span> <span class="number">0</span>; i <span class="operator">&lt;</span> item<span class="operator">-</span><span class="operator">&gt;</span>childCount(); <span class="operator">+</span><span class="operator">+</span>i)
+              writeItem(item<span class="operator">-</span><span class="operator">&gt;</span>child(i));
+          xml<span class="operator">.</span>writeEndElement();
+      } <span class="keyword">else</span> <span class="keyword">if</span> (tagName <span class="operator">=</span><span class="operator">=</span> <span class="string">&quot;bookmark&quot;</span>) {
+          xml<span class="operator">.</span>writeStartElement(tagName);
+          <span class="keyword">if</span> (<span class="operator">!</span>item<span class="operator">-</span><span class="operator">&gt;</span>text(<span class="number">1</span>)<span class="operator">.</span>isEmpty())
+              xml<span class="operator">.</span>writeAttribute(<span class="string">&quot;href&quot;</span><span class="operator">,</span> item<span class="operator">-</span><span class="operator">&gt;</span>text(<span class="number">1</span>));
+          xml<span class="operator">.</span>writeTextElement(<span class="string">&quot;title&quot;</span><span class="operator">,</span> item<span class="operator">-</span><span class="operator">&gt;</span>text(<span class="number">0</span>));
+          xml<span class="operator">.</span>writeEndElement();
+      } <span class="keyword">else</span> <span class="keyword">if</span> (tagName <span class="operator">=</span><span class="operator">=</span> <span class="string">&quot;separator&quot;</span>) {
+          xml<span class="operator">.</span>writeEmptyElement(tagName);
+      }
+  }
+
+</pre>
+<a name="xbelreader-class-definition"></a>
+<h2 id="xbelreader-class-definition">XbelReader Class Definition</h2>
+<p>The <code>XbelReader</code> contains a private instance of <a href="../qtcore/qxmlstreamreader.html">QXmlStreamReader</a>, the companion class to <a href="../qtcore/qxmlstreamwriter.html">QXmlStreamWriter</a>. <code>XbelReader</code> also contains a reference to the <a href="../qtwidgets/qtreewidget.html">QTreeWidget</a> that is used to group the bookmarks according to their hierarchy.</p>
+<pre class="cpp">
+
+  <span class="keyword">class</span> XbelReader
+  {
+  <span class="keyword">public</span>:
+      XbelReader(<span class="type"><a href="../qtwidgets/qtreewidget.html">QTreeWidget</a></span> <span class="operator">*</span>treeWidget);
+
+      bool read(<span class="type"><a href="../qtcore/qiodevice.html">QIODevice</a></span> <span class="operator">*</span>device);
+
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> errorString() <span class="keyword">const</span>;
+
+  <span class="keyword">private</span>:
+      <span class="type">void</span> readXBEL();
+      <span class="type">void</span> readTitle(<span class="type"><a href="../qtwidgets/qtreewidgetitem.html">QTreeWidgetItem</a></span> <span class="operator">*</span>item);
+      <span class="type">void</span> readSeparator(<span class="type"><a href="../qtwidgets/qtreewidgetitem.html">QTreeWidgetItem</a></span> <span class="operator">*</span>item);
+      <span class="type">void</span> readFolder(<span class="type"><a href="../qtwidgets/qtreewidgetitem.html">QTreeWidgetItem</a></span> <span class="operator">*</span>item);
+      <span class="type">void</span> readBookmark(<span class="type"><a href="../qtwidgets/qtreewidgetitem.html">QTreeWidgetItem</a></span> <span class="operator">*</span>item);
+
+      <span class="type"><a href="../qtwidgets/qtreewidgetitem.html">QTreeWidgetItem</a></span> <span class="operator">*</span>createChildItem(<span class="type"><a href="../qtwidgets/qtreewidgetitem.html">QTreeWidgetItem</a></span> <span class="operator">*</span>item);
+
+      <span class="type"><a href="../qtcore/qxmlstreamreader.html">QXmlStreamReader</a></span> xml;
+      <span class="type"><a href="../qtwidgets/qtreewidget.html">QTreeWidget</a></span> <span class="operator">*</span>treeWidget;
+
+      <span class="type">QIcon</span> folderIcon;
+      <span class="type">QIcon</span> bookmarkIcon;
+  };
+
+</pre>
+<a name="xbelreader-class-implementation"></a>
+<h2 id="xbelreader-class-implementation">XbelReader Class Implementation</h2>
+<p>The <code>XbelReader</code> constructor accepts a <a href="../qtwidgets/qtreewidget.html">QTreeWidget</a> to initialize the <code>treeWidget</code> within its definition. A <a href="../qtwidgets/qstyle.html">QStyle</a> object is used to set <code>treeWidget</code>'s style property. The <code>folderIcon</code> is set to QIcon::Normal mode where the pixmap is only displayed when the user is not interacting with the icon. The <a href="../qtwidgets/qstyle.html#StandardPixmap-enum">QStyle::SP_DirClosedIcon</a>, <a href="../qtwidgets/qstyle.html#StandardPixmap-enum">QStyle::SP_DirOpenIcon</a>, and <a href="../qtwidgets/qstyle.html#StandardPixmap-enum">QStyle::SP_FileIcon</a> correspond to standard pixmaps that follow the style of your GUI.</p>
+<pre class="cpp">
+
+  XbelReader<span class="operator">::</span>XbelReader(<span class="type"><a href="../qtwidgets/qtreewidget.html">QTreeWidget</a></span> <span class="operator">*</span>treeWidget)
+      : treeWidget(treeWidget)
+  {
+      <span class="type"><a href="../qtwidgets/qstyle.html">QStyle</a></span> <span class="operator">*</span>style <span class="operator">=</span> treeWidget<span class="operator">-</span><span class="operator">&gt;</span>style();
+
+      folderIcon<span class="operator">.</span>addPixmap(style<span class="operator">-</span><span class="operator">&gt;</span>standardPixmap(<span class="type"><a href="../qtwidgets/qstyle.html">QStyle</a></span><span class="operator">::</span>SP_DirClosedIcon)<span class="operator">,</span>
+                           <span class="type">QIcon</span><span class="operator">::</span>Normal<span class="operator">,</span> <span class="type">QIcon</span><span class="operator">::</span>Off);
+      folderIcon<span class="operator">.</span>addPixmap(style<span class="operator">-</span><span class="operator">&gt;</span>standardPixmap(<span class="type"><a href="../qtwidgets/qstyle.html">QStyle</a></span><span class="operator">::</span>SP_DirOpenIcon)<span class="operator">,</span>
+                           <span class="type">QIcon</span><span class="operator">::</span>Normal<span class="operator">,</span> <span class="type">QIcon</span><span class="operator">::</span>On);
+      bookmarkIcon<span class="operator">.</span>addPixmap(style<span class="operator">-</span><span class="operator">&gt;</span>standardPixmap(<span class="type"><a href="../qtwidgets/qstyle.html">QStyle</a></span><span class="operator">::</span>SP_FileIcon));
+  }
+
+</pre>
+<p>The <code>read()</code> function accepts a <a href="../qtcore/qiodevice.html">QIODevice</a> and sets it using <a href="../qtcore/qxmlstreamreader.html#setDevice">setDevice()</a>. The actual process of reading only takes place if the file is a valid XBEL 1.0 file. Note that the XML input needs to be well-formed to be accepted by <a href="../qtcore/qxmlstreamreader.html">QXmlStreamReader</a>. Otherwise, the <a href="../qtcore/qxmlstreamreader.html#raiseError">raiseError()</a> function is used to display an error message. Since the XBEL reader is only concerned with reading XML elements, it makes extensive use of the <a href="../qtcore/qxmlstreamreader.html#readNextStartElement">readNextStartElement()</a> convenience function.</p>
+<pre class="cpp">
+
+  bool XbelReader<span class="operator">::</span>read(<span class="type"><a href="../qtcore/qiodevice.html">QIODevice</a></span> <span class="operator">*</span>device)
+  {
+      xml<span class="operator">.</span>setDevice(device);
+
+      <span class="keyword">if</span> (xml<span class="operator">.</span>readNextStartElement()) {
+          <span class="keyword">if</span> (xml<span class="operator">.</span>name() <span class="operator">=</span><span class="operator">=</span> <span class="string">&quot;xbel&quot;</span> <span class="operator">&amp;</span><span class="operator">&amp;</span> xml<span class="operator">.</span>attributes()<span class="operator">.</span>value(<span class="string">&quot;version&quot;</span>) <span class="operator">=</span><span class="operator">=</span> <span class="string">&quot;1.0&quot;</span>)
+              readXBEL();
+          <span class="keyword">else</span>
+              xml<span class="operator">.</span>raiseError(<span class="type"><a href="../qtcore/qobject.html">QObject</a></span><span class="operator">::</span>tr(<span class="string">&quot;The file is not an XBEL version 1.0 file.&quot;</span>));
+      }
+
+      <span class="keyword">return</span> <span class="operator">!</span>xml<span class="operator">.</span>error();
+  }
+
+</pre>
+<p>The <code>errorString()</code> function is used if an error occurred, in order to obtain a description of the error complete with line and column number information.</p>
+<pre class="cpp">
+
+  <span class="type"><a href="../qtcore/qstring.html">QString</a></span> XbelReader<span class="operator">::</span>errorString() <span class="keyword">const</span>
+  {
+      <span class="keyword">return</span> <span class="type"><a href="../qtcore/qobject.html">QObject</a></span><span class="operator">::</span>tr(<span class="string">&quot;%1\nLine %2, column %3&quot;</span>)
+              <span class="operator">.</span>arg(xml<span class="operator">.</span>errorString())
+              <span class="operator">.</span>arg(xml<span class="operator">.</span>lineNumber())
+              <span class="operator">.</span>arg(xml<span class="operator">.</span>columnNumber());
+  }
+
+</pre>
+<p>The <code>readXBEL()</code> function reads the name of a startElement and calls the appropriate function to read it, depending on whether if its a &quot;folder&quot;, &quot;bookmark&quot; or &quot;separator&quot;. Otherwise, it calls <a href="../qtcore/qxmlstreamreader.html#skipCurrentElement">skipCurrentElement()</a>. The <a href="../qtcore/qtglobal.html#Q_ASSERT">Q_ASSERT</a>() macro is used to provide a pre-condition for the function.</p>
+<pre class="cpp">
+
+  <span class="type">void</span> XbelReader<span class="operator">::</span>readXBEL()
+  {
+      Q_ASSERT(xml<span class="operator">.</span>isStartElement() <span class="operator">&amp;</span><span class="operator">&amp;</span> xml<span class="operator">.</span>name() <span class="operator">=</span><span class="operator">=</span> <span class="string">&quot;xbel&quot;</span>);
+
+      <span class="keyword">while</span> (xml<span class="operator">.</span>readNextStartElement()) {
+          <span class="keyword">if</span> (xml<span class="operator">.</span>name() <span class="operator">=</span><span class="operator">=</span> <span class="string">&quot;folder&quot;</span>)
+              readFolder(<span class="number">0</span>);
+          <span class="keyword">else</span> <span class="keyword">if</span> (xml<span class="operator">.</span>name() <span class="operator">=</span><span class="operator">=</span> <span class="string">&quot;bookmark&quot;</span>)
+              readBookmark(<span class="number">0</span>);
+          <span class="keyword">else</span> <span class="keyword">if</span> (xml<span class="operator">.</span>name() <span class="operator">=</span><span class="operator">=</span> <span class="string">&quot;separator&quot;</span>)
+              readSeparator(<span class="number">0</span>);
+          <span class="keyword">else</span>
+              xml<span class="operator">.</span>skipCurrentElement();
+      }
+  }
+
+</pre>
+<p>The <code>readTitle()</code> function reads the bookmark's title.</p>
+<pre class="cpp">
+
+  <span class="type">void</span> XbelReader<span class="operator">::</span>readTitle(<span class="type"><a href="../qtwidgets/qtreewidgetitem.html">QTreeWidgetItem</a></span> <span class="operator">*</span>item)
+  {
+      Q_ASSERT(xml<span class="operator">.</span>isStartElement() <span class="operator">&amp;</span><span class="operator">&amp;</span> xml<span class="operator">.</span>name() <span class="operator">=</span><span class="operator">=</span> <span class="string">&quot;title&quot;</span>);
+
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> title <span class="operator">=</span> xml<span class="operator">.</span>readElementText();
+      item<span class="operator">-</span><span class="operator">&gt;</span>setText(<span class="number">0</span><span class="operator">,</span> title);
+  }
+
+</pre>
+<p>The <code>readSeparator()</code> function creates a separator and sets its flags. The text is set to 30 &quot;0xB7&quot;, the HEX equivalent for period. The element is then skipped using <a href="../qtcore/qxmlstreamreader.html#skipCurrentElement">skipCurrentElement()</a>.</p>
+<pre class="cpp">
+
+  <span class="type">void</span> XbelReader<span class="operator">::</span>readSeparator(<span class="type"><a href="../qtwidgets/qtreewidgetitem.html">QTreeWidgetItem</a></span> <span class="operator">*</span>item)
+  {
+      Q_ASSERT(xml<span class="operator">.</span>isStartElement() <span class="operator">&amp;</span><span class="operator">&amp;</span> xml<span class="operator">.</span>name() <span class="operator">=</span><span class="operator">=</span> <span class="string">&quot;separator&quot;</span>);
+
+      <span class="type"><a href="../qtwidgets/qtreewidgetitem.html">QTreeWidgetItem</a></span> <span class="operator">*</span>separator <span class="operator">=</span> createChildItem(item);
+      separator<span class="operator">-</span><span class="operator">&gt;</span>setFlags(item<span class="operator">-</span><span class="operator">&gt;</span>flags() <span class="operator">&amp;</span> <span class="operator">~</span><span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>ItemIsSelectable);
+      separator<span class="operator">-</span><span class="operator">&gt;</span>setText(<span class="number">0</span><span class="operator">,</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span>(<span class="number">30</span><span class="operator">,</span> <span class="number">0xB7</span>));
+      xml<span class="operator">.</span>skipCurrentElement();
+  }
+
+</pre>
+<a name="mainwindow-class-definition"></a>
+<h2 id="mainwindow-class-definition">MainWindow Class Definition</h2>
+<p>The <code>MainWindow</code> class is a subclass of <a href="../qtwidgets/qmainwindow.html">QMainWindow</a>, with a <code>File</code> menu and a <code>Help</code> menu.</p>
+<pre class="cpp">
+
+  <span class="keyword">class</span> MainWindow : <span class="keyword">public</span> <span class="type"><a href="../qtwidgets/qmainwindow.html">QMainWindow</a></span>
+  {
+      Q_OBJECT
+
+  <span class="keyword">public</span>:
+      MainWindow();
+
+  <span class="keyword">public</span> <span class="keyword">slots</span>:
+      <span class="type">void</span> open();
+      <span class="type">void</span> saveAs();
+      <span class="type">void</span> about();
+
+  <span class="keyword">private</span>:
+      <span class="type">void</span> createActions();
+      <span class="type">void</span> createMenus();
+
+      <span class="type"><a href="../qtwidgets/qtreewidget.html">QTreeWidget</a></span> <span class="operator">*</span>treeWidget;
+
+      <span class="type"><a href="../qtwidgets/qmenu.html">QMenu</a></span> <span class="operator">*</span>fileMenu;
+      <span class="type"><a href="../qtwidgets/qmenu.html">QMenu</a></span> <span class="operator">*</span>helpMenu;
+      <span class="type"><a href="../qtwidgets/qaction.html">QAction</a></span> <span class="operator">*</span>openAct;
+      <span class="type"><a href="../qtwidgets/qaction.html">QAction</a></span> <span class="operator">*</span>saveAsAct;
+      <span class="type"><a href="../qtwidgets/qaction.html">QAction</a></span> <span class="operator">*</span>exitAct;
+      <span class="type"><a href="../qtwidgets/qaction.html">QAction</a></span> <span class="operator">*</span>aboutAct;
+      <span class="type"><a href="../qtwidgets/qaction.html">QAction</a></span> <span class="operator">*</span>aboutQtAct;
+  };
+
+</pre>
+<a name="mainwindow-class-implementation"></a>
+<h2 id="mainwindow-class-implementation">MainWindow Class Implementation</h2>
+<p>The <code>MainWindow</code> constructor instantiates the <a href="../qtwidgets/qtreewidget.html">QTreeWidget</a> object, <code>treeWidget</code> and sets its header with a <a href="../qtcore/qstringlist.html">QStringList</a> object, <code>labels</code>. The constructor also invokes <code>createActions()</code> and <code>createMenus()</code> to set up the menus and their corresponding actions. The <code>statusBar()</code> is used to display the message &quot;Ready&quot; and the window's size is fixed to 480x320 pixels.</p>
+<pre class="cpp">
+
+  MainWindow<span class="operator">::</span>MainWindow()
+  {
+      <span class="type"><a href="../qtcore/qstringlist.html">QStringList</a></span> labels;
+      labels <span class="operator">&lt;</span><span class="operator">&lt;</span> tr(<span class="string">&quot;Title&quot;</span>) <span class="operator">&lt;</span><span class="operator">&lt;</span> tr(<span class="string">&quot;Location&quot;</span>);
+
+      treeWidget <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qtreewidget.html">QTreeWidget</a></span>;
+      treeWidget<span class="operator">-</span><span class="operator">&gt;</span>header()<span class="operator">-</span><span class="operator">&gt;</span>setSectionResizeMode(<span class="type"><a href="../qtwidgets/qheaderview.html">QHeaderView</a></span><span class="operator">::</span>Stretch);
+      treeWidget<span class="operator">-</span><span class="operator">&gt;</span>setHeaderLabels(labels);
+      setCentralWidget(treeWidget);
+
+      createActions();
+      createMenus();
+
+      statusBar()<span class="operator">-</span><span class="operator">&gt;</span>showMessage(tr(<span class="string">&quot;Ready&quot;</span>));
+
+      setWindowTitle(tr(<span class="string">&quot;QXmlStream Bookmarks&quot;</span>));
+      resize(<span class="number">480</span><span class="operator">,</span> <span class="number">320</span>);
+  }
+
+</pre>
+<p>The <code>open()</code> function enables the user to open an XBEL file using <a href="../qtwidgets/qfiledialog.html#getOpenFileName">QFileDialog::getOpenFileName</a>(). A warning message is displayed along with the <code>fileName</code> and <code>errorString</code> if the file cannot be read or if there is a parse error.</p>
+<pre class="cpp">
+
+  <span class="type">void</span> MainWindow<span class="operator">::</span>open()
+  {
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> fileName <span class="operator">=</span>
+              <span class="type"><a href="../qtwidgets/qfiledialog.html">QFileDialog</a></span><span class="operator">::</span>getOpenFileName(<span class="keyword">this</span><span class="operator">,</span> tr(<span class="string">&quot;Open Bookmark File&quot;</span>)<span class="operator">,</span>
+                                           <span class="type"><a href="../qtcore/qdir.html">QDir</a></span><span class="operator">::</span>currentPath()<span class="operator">,</span>
+                                           tr(<span class="string">&quot;XBEL Files (*.xbel *.xml)&quot;</span>));
+      <span class="keyword">if</span> (fileName<span class="operator">.</span>isEmpty())
+          <span class="keyword">return</span>;
+
+      treeWidget<span class="operator">-</span><span class="operator">&gt;</span>clear();
+
+      <span class="type"><a href="../qtcore/qfile.html">QFile</a></span> file(fileName);
+      <span class="keyword">if</span> (<span class="operator">!</span>file<span class="operator">.</span>open(<span class="type"><a href="../qtcore/qfile.html">QFile</a></span><span class="operator">::</span>ReadOnly <span class="operator">|</span> <span class="type"><a href="../qtcore/qfile.html">QFile</a></span><span class="operator">::</span>Text)) {
+          <span class="type"><a href="../qtwidgets/qmessagebox.html">QMessageBox</a></span><span class="operator">::</span>warning(<span class="keyword">this</span><span class="operator">,</span> tr(<span class="string">&quot;QXmlStream Bookmarks&quot;</span>)<span class="operator">,</span>
+                               tr(<span class="string">&quot;Cannot read file %1:\n%2.&quot;</span>)
+                               <span class="operator">.</span>arg(fileName)
+                               <span class="operator">.</span>arg(file<span class="operator">.</span>errorString()));
+          <span class="keyword">return</span>;
+      }
+
+      XbelReader reader(treeWidget);
+      <span class="keyword">if</span> (<span class="operator">!</span>reader<span class="operator">.</span>read(<span class="operator">&amp;</span>file)) {
+          <span class="type"><a href="../qtwidgets/qmessagebox.html">QMessageBox</a></span><span class="operator">::</span>warning(<span class="keyword">this</span><span class="operator">,</span> tr(<span class="string">&quot;QXmlStream Bookmarks&quot;</span>)<span class="operator">,</span>
+                               tr(<span class="string">&quot;Parse error in file %1:\n\n%2&quot;</span>)
+                               <span class="operator">.</span>arg(fileName)
+                               <span class="operator">.</span>arg(reader<span class="operator">.</span>errorString()));
+      } <span class="keyword">else</span> {
+          statusBar()<span class="operator">-</span><span class="operator">&gt;</span>showMessage(tr(<span class="string">&quot;File loaded&quot;</span>)<span class="operator">,</span> <span class="number">2000</span>);
+      }
+
+  }
+
+</pre>
+<p>The <code>saveAs()</code> function displays a <a href="../qtwidgets/qfiledialog.html">QFileDialog</a>, prompting the user for a <code>fileName</code> using <a href="../qtwidgets/qfiledialog.html#getSaveFileName">QFileDialog::getSaveFileName</a>(). Similar to the <code>open()</code> function, this function also displays a warning message if the file cannot be written to.</p>
+<pre class="cpp">
+
+  <span class="type">void</span> MainWindow<span class="operator">::</span>saveAs()
+  {
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> fileName <span class="operator">=</span>
+              <span class="type"><a href="../qtwidgets/qfiledialog.html">QFileDialog</a></span><span class="operator">::</span>getSaveFileName(<span class="keyword">this</span><span class="operator">,</span> tr(<span class="string">&quot;Save Bookmark File&quot;</span>)<span class="operator">,</span>
+                                           <span class="type"><a href="../qtcore/qdir.html">QDir</a></span><span class="operator">::</span>currentPath()<span class="operator">,</span>
+                                           tr(<span class="string">&quot;XBEL Files (*.xbel *.xml)&quot;</span>));
+      <span class="keyword">if</span> (fileName<span class="operator">.</span>isEmpty())
+          <span class="keyword">return</span>;
+
+      <span class="type"><a href="../qtcore/qfile.html">QFile</a></span> file(fileName);
+      <span class="keyword">if</span> (<span class="operator">!</span>file<span class="operator">.</span>open(<span class="type"><a href="../qtcore/qfile.html">QFile</a></span><span class="operator">::</span>WriteOnly <span class="operator">|</span> <span class="type"><a href="../qtcore/qfile.html">QFile</a></span><span class="operator">::</span>Text)) {
+          <span class="type"><a href="../qtwidgets/qmessagebox.html">QMessageBox</a></span><span class="operator">::</span>warning(<span class="keyword">this</span><span class="operator">,</span> tr(<span class="string">&quot;QXmlStream Bookmarks&quot;</span>)<span class="operator">,</span>
+                               tr(<span class="string">&quot;Cannot write file %1:\n%2.&quot;</span>)
+                               <span class="operator">.</span>arg(fileName)
+                               <span class="operator">.</span>arg(file<span class="operator">.</span>errorString()));
+          <span class="keyword">return</span>;
+      }
+
+      XbelWriter writer(treeWidget);
+      <span class="keyword">if</span> (writer<span class="operator">.</span>writeFile(<span class="operator">&amp;</span>file))
+          statusBar()<span class="operator">-</span><span class="operator">&gt;</span>showMessage(tr(<span class="string">&quot;File saved&quot;</span>)<span class="operator">,</span> <span class="number">2000</span>);
+  }
+
+</pre>
+<p>The <code>about()</code> function displays a <a href="../qtwidgets/qmessagebox.html">QMessageBox</a> with a brief description of the example.</p>
+<pre class="cpp">
+
+  <span class="type">void</span> MainWindow<span class="operator">::</span>about()
+  {
+     <span class="type"><a href="../qtwidgets/qmessagebox.html">QMessageBox</a></span><span class="operator">::</span>about(<span class="keyword">this</span><span class="operator">,</span> tr(<span class="string">&quot;About QXmlStream Bookmarks&quot;</span>)<span class="operator">,</span>
+              tr(<span class="string">&quot;The &lt;b&gt;QXmlStream Bookmarks&lt;/b&gt; example demonstrates how to use Qt's &quot;</span>
+                 <span class="string">&quot;QXmlStream classes to read and write XML documents.&quot;</span>));
+  }
+
+</pre>
+<p>In order to implement the <code>open()</code>, <code>saveAs()</code>, <code>exit()</code>, <code>about()</code> and <code>aboutQt()</code> functions, we connect them to <a href="../qtwidgets/qaction.html">QAction</a> objects and add them to the <code>fileMenu</code> and <code>helpMenu</code>. The connections are as shown below:</p>
+<pre class="cpp">
+
+  <span class="type">void</span> MainWindow<span class="operator">::</span>createActions()
+  {
+      openAct <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qaction.html">QAction</a></span>(tr(<span class="string">&quot;&amp;Open...&quot;</span>)<span class="operator">,</span> <span class="keyword">this</span>);
+      openAct<span class="operator">-</span><span class="operator">&gt;</span>setShortcuts(<span class="type">QKeySequence</span><span class="operator">::</span>Open);
+      connect(openAct<span class="operator">,</span> SIGNAL(triggered())<span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> SLOT(open()));
+
+      saveAsAct <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qaction.html">QAction</a></span>(tr(<span class="string">&quot;&amp;Save As...&quot;</span>)<span class="operator">,</span> <span class="keyword">this</span>);
+      saveAsAct<span class="operator">-</span><span class="operator">&gt;</span>setShortcuts(<span class="type">QKeySequence</span><span class="operator">::</span>SaveAs);
+      connect(saveAsAct<span class="operator">,</span> SIGNAL(triggered())<span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> SLOT(saveAs()));
+
+      exitAct <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qaction.html">QAction</a></span>(tr(<span class="string">&quot;E&amp;xit&quot;</span>)<span class="operator">,</span> <span class="keyword">this</span>);
+      exitAct<span class="operator">-</span><span class="operator">&gt;</span>setShortcuts(<span class="type">QKeySequence</span><span class="operator">::</span>Quit);
+      connect(exitAct<span class="operator">,</span> SIGNAL(triggered())<span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> SLOT(close()));
+
+      aboutAct <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qaction.html">QAction</a></span>(tr(<span class="string">&quot;&amp;About&quot;</span>)<span class="operator">,</span> <span class="keyword">this</span>);
+      connect(aboutAct<span class="operator">,</span> SIGNAL(triggered())<span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> SLOT(about()));
+
+      aboutQtAct <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qaction.html">QAction</a></span>(tr(<span class="string">&quot;About &amp;Qt&quot;</span>)<span class="operator">,</span> <span class="keyword">this</span>);
+      connect(aboutQtAct<span class="operator">,</span> SIGNAL(triggered())<span class="operator">,</span> qApp<span class="operator">,</span> SLOT(aboutQt()));
+  }
+
+</pre>
+<p>The <code>createMenus()</code> function creates the <code>fileMenu</code> and <code>helpMenu</code> and adds the <a href="../qtwidgets/qaction.html">QAction</a> objects to them in order to create the menu shown in the screenshot below:</p>
+<div class="table"><table class="generic">
+ <tr valign="top" class="odd"><td ><img src="images/xmlstreamexample-filemenu.png" alt="" /></td><td ><img src="images/xmlstreamexample-helpmenu.png" alt="" /></td></tr>
+</table></div>
+<pre class="cpp">
+
+  <span class="type">void</span> MainWindow<span class="operator">::</span>createMenus()
+  {
+      fileMenu <span class="operator">=</span> menuBar()<span class="operator">-</span><span class="operator">&gt;</span>addMenu(tr(<span class="string">&quot;&amp;File&quot;</span>));
+      fileMenu<span class="operator">-</span><span class="operator">&gt;</span>addAction(openAct);
+      fileMenu<span class="operator">-</span><span class="operator">&gt;</span>addAction(saveAsAct);
+      fileMenu<span class="operator">-</span><span class="operator">&gt;</span>addAction(exitAct);
+
+      menuBar()<span class="operator">-</span><span class="operator">&gt;</span>addSeparator();
+
+      helpMenu <span class="operator">=</span> menuBar()<span class="operator">-</span><span class="operator">&gt;</span>addMenu(tr(<span class="string">&quot;&amp;Help&quot;</span>));
+      helpMenu<span class="operator">-</span><span class="operator">&gt;</span>addAction(aboutAct);
+      helpMenu<span class="operator">-</span><span class="operator">&gt;</span>addAction(aboutQtAct);
+  }
+
+</pre>
+<a name="main-function"></a>
+<h2 id="main-function"><code>main()</code> Function</h2>
+<p>The <code>main()</code> function instantiates <code>MainWindow</code> and invokes the <code>show()</code> function.</p>
+<pre class="cpp">
+
+  <span class="type">int</span> main(<span class="type">int</span> argc<span class="operator">,</span> <span class="type">char</span> <span class="operator">*</span>argv<span class="operator">[</span><span class="operator">]</span>)
+  {
+      <span class="type"><a href="../qtwidgets/qapplication.html">QApplication</a></span> app(argc<span class="operator">,</span> argv);
+      MainWindow mainWin;
+      mainWin<span class="operator">.</span>show();
+      mainWin<span class="operator">.</span>open();
+      <span class="keyword">return</span> app<span class="operator">.</span>exec();
+  }
+
+</pre>
+<p>See the <a href="http://pyxml.sourceforge.net/topics/xbel/">XML Bookmark Exchange Language Resource Page</a> for more information about XBEL files.</p>
+<p>Files:</p>
+<ul>
+<li><a href="qtxml-streambookmarks-mainwindow-cpp.html">streambookmarks/mainwindow.cpp</a></li>
+<li><a href="qtxml-streambookmarks-mainwindow-h.html">streambookmarks/mainwindow.h</a></li>
+<li><a href="qtxml-streambookmarks-xbelreader-cpp.html">streambookmarks/xbelreader.cpp</a></li>
+<li><a href="qtxml-streambookmarks-xbelreader-h.html">streambookmarks/xbelreader.h</a></li>
+<li><a href="qtxml-streambookmarks-xbelwriter-cpp.html">streambookmarks/xbelwriter.cpp</a></li>
+<li><a href="qtxml-streambookmarks-xbelwriter-h.html">streambookmarks/xbelwriter.h</a></li>
+<li><a href="qtxml-streambookmarks-main-cpp.html">streambookmarks/main.cpp</a></li>
+<li><a href="qtxml-streambookmarks-streambookmarks-pro.html">streambookmarks/streambookmarks.pro</a></li>
+</ul>
+</div>
+<!-- @@@streambookmarks -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

@@ -1,0 +1,614 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- drilldown.qdoc -->
+  <title>Drill Down Example | Qt SQL 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtsql-index.html">Qt SQL</a></td><td >Drill Down Example</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#informationwindow-class-definition">InformationWindow Class Definition</a></li>
+<li class="level1"><a href="#informationwindow-class-implementation">InformationWindow Class Implementation</a></li>
+<li class="level1"><a href="#view-class-definition">View Class Definition</a></li>
+<li class="level1"><a href="#view-class-implementation">View Class Implementation</a></li>
+<li class="level1"><a href="#imageitem-class-definition">ImageItem Class Definition</a></li>
+<li class="level1"><a href="#imageitem-class-implementation">ImageItem Class Implementation</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">Drill Down Example</h1>
+<span class="subtitle"></span>
+<!-- $$$drilldown-description -->
+<div class="descr"> <a name="details"></a>
+<p class="centerAlign"><img src="images/drilldown-example.png" alt="Screenshot of the Drill Down Example" /></p><p>When running the example application, a user can retrieve information about each item by clicking the corresponding image. The application pops up an information window displaying the data, and allows the users to alter the description as well as the image. The main view will be updated when the users submit their changes.</p>
+<p>The example consists of three classes:</p>
+<ul>
+<li><code>ImageItem</code> is a custom graphics item class used to display the images.</li>
+<li><code>View</code> is the main application widget allowing the user to browse through the various items.</li>
+<li><code>InformationWindow</code> displays the requested information, allowing the users to alter it and submit their changes to the database.</li>
+</ul>
+<p>We will first take a look at the <code>InformationWindow</code> class to see how you can read and modify data from a database. Then we will review the main application widget, i.e&#x2e;, the <code>View</code> class, and the associated <code>ImageItem</code> class.</p>
+<a name="informationwindow-class-definition"></a>
+<h2 id="informationwindow-class-definition">InformationWindow Class Definition</h2>
+<p>The <code>InformationWindow</code> class is a custom widget inheriting <a href="../qtwidgets/qwidget.html">QWidget</a>:</p>
+<pre class="cpp">
+
+  <span class="keyword">class</span> InformationWindow : <span class="keyword">public</span> <span class="type"><a href="../qtwidgets/qdialog.html">QDialog</a></span>
+  {
+      Q_OBJECT
+
+  <span class="keyword">public</span>:
+      InformationWindow(<span class="type">int</span> id<span class="operator">,</span> <span class="type"><a href="qsqlrelationaltablemodel.html">QSqlRelationalTableModel</a></span> <span class="operator">*</span>items<span class="operator">,</span>
+                        <span class="type"><a href="../qtwidgets/qwidget.html">QWidget</a></span> <span class="operator">*</span>parent <span class="operator">=</span> <span class="number">0</span>);
+
+      <span class="type">int</span> id();
+
+  <span class="keyword">signals</span>:
+      <span class="type">void</span> imageChanged(<span class="type">int</span> id<span class="operator">,</span> <span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>fileName);
+
+</pre>
+<p>When we create an information window, we pass the associated item ID, a parent, and a pointer to the database, to the constructor. We will use the database pointer to populate our window with data, while passing the parent parameter on to the base class. The ID is stored for future reference.</p>
+<p>Once a window is created, we will use the public <code>id()</code> function to locate it whenever information for the given location is requested. We will also use the ID to update the main application widget when the users submit their changes to the database, i.e&#x2e;, we will emit a signal carrying the ID and file name as parameters whenever the users changes the associated image.</p>
+<pre class="cpp">
+
+  <span class="keyword">private</span> <span class="keyword">slots</span>:
+      <span class="type">void</span> revert();
+      <span class="type">void</span> submit();
+      <span class="type">void</span> enableButtons(bool enable <span class="operator">=</span> <span class="keyword">true</span>);
+
+</pre>
+<p>Since we allow the users to alter some of the data, we must provide functionality for reverting and submitting their changes. The <code>enableButtons()</code> slot is provided for convenience to enable and disable the various buttons when required.</p>
+<pre class="cpp">
+
+  <span class="keyword">private</span>:
+      <span class="type">void</span> createButtons();
+
+      <span class="type">int</span> itemId;
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> displayedImage;
+
+      <span class="type"><a href="../qtwidgets/qcombobox.html">QComboBox</a></span> <span class="operator">*</span>imageFileEditor;
+      <span class="type"><a href="../qtwidgets/qlabel.html">QLabel</a></span> <span class="operator">*</span>itemText;
+      <span class="type"><a href="../qtwidgets/qtextedit.html">QTextEdit</a></span> <span class="operator">*</span>descriptionEditor;
+
+      <span class="type"><a href="../qtwidgets/qpushbutton.html">QPushButton</a></span> <span class="operator">*</span>closeButton;
+      <span class="type"><a href="../qtwidgets/qpushbutton.html">QPushButton</a></span> <span class="operator">*</span>submitButton;
+      <span class="type"><a href="../qtwidgets/qpushbutton.html">QPushButton</a></span> <span class="operator">*</span>revertButton;
+      <span class="type"><a href="../qtwidgets/qdialogbuttonbox.html">QDialogButtonBox</a></span> <span class="operator">*</span>buttonBox;
+
+      <span class="type"><a href="../qtwidgets/qdatawidgetmapper.html">QDataWidgetMapper</a></span> <span class="operator">*</span>mapper;
+  };
+
+</pre>
+<p>The <code>createButtons()</code> function is also a convenience function, provided to simplify the constructor. As mentioned above we store the item ID for future reference. We also store the name of the currently displayed image file to be able to determine when to emit the <code>imageChanged()</code> signal.</p>
+<p>The information window uses the <a href="../qtwidgets/qlabel.html">QLabel</a> class to display the name of an item. The associated image file is displayed using a <a href="../qtwidgets/qcombobox.html">QComboBox</a> instance while the description is displayed using <a href="../qtwidgets/qtextedit.html">QTextEdit</a>. In addition, the window has three buttons to control the data flow and whether the window is shown or not.</p>
+<p>Finally, we declare a <i>mapper</i>. The <a href="../qtwidgets/qdatawidgetmapper.html">QDataWidgetMapper</a> class provides mapping between a section of a data model to widgets. We will use the mapper to extract data from the given database, updating the database whenever the user modifies the data.</p>
+<a name="informationwindow-class-implementation"></a>
+<h2 id="informationwindow-class-implementation">InformationWindow Class Implementation</h2>
+<p>The constructor takes three arguments: an item ID, a database pointer and a parent widget. The database pointer is actually a pointer to a <a href="qsqlrelationaltablemodel.html">QSqlRelationalTableModel</a> object providing an editable data model (with foreign key support) for our database table.</p>
+<pre class="cpp">
+
+  InformationWindow<span class="operator">::</span>InformationWindow(<span class="type">int</span> id<span class="operator">,</span> <span class="type"><a href="qsqlrelationaltablemodel.html">QSqlRelationalTableModel</a></span> <span class="operator">*</span>items<span class="operator">,</span>
+                                       <span class="type"><a href="../qtwidgets/qwidget.html">QWidget</a></span> <span class="operator">*</span>parent)
+      : <span class="type"><a href="../qtwidgets/qdialog.html">QDialog</a></span>(parent)
+  {
+      <span class="type"><a href="../qtwidgets/qlabel.html">QLabel</a></span> <span class="operator">*</span>itemLabel <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qlabel.html">QLabel</a></span>(tr(<span class="string">&quot;Item: &quot;</span>));
+      <span class="type"><a href="../qtwidgets/qlabel.html">QLabel</a></span> <span class="operator">*</span>descriptionLabel <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qlabel.html">QLabel</a></span>(tr(<span class="string">&quot;Description: &quot;</span>));
+      <span class="type"><a href="../qtwidgets/qlabel.html">QLabel</a></span> <span class="operator">*</span>imageFileLabel <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qlabel.html">QLabel</a></span>(tr(<span class="string">&quot;Image file: &quot;</span>));
+
+      createButtons();
+
+      itemText <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qlabel.html">QLabel</a></span>;
+      descriptionEditor <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qtextedit.html">QTextEdit</a></span>;
+
+</pre>
+<p>First we create the various widgets required to display the data contained in the database. Most of the widgets are created in a straight forward manner. But note the combobox displaying the name of the image file:</p>
+<pre class="cpp">
+
+      imageFileEditor <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qcombobox.html">QComboBox</a></span>;
+      imageFileEditor<span class="operator">-</span><span class="operator">&gt;</span>setModel(items<span class="operator">-</span><span class="operator">&gt;</span>relationModel(<span class="number">1</span>));
+      imageFileEditor<span class="operator">-</span><span class="operator">&gt;</span>setModelColumn(items<span class="operator">-</span><span class="operator">&gt;</span>relationModel(<span class="number">1</span>)<span class="operator">-</span><span class="operator">&gt;</span>fieldIndex(<span class="string">&quot;file&quot;</span>));
+
+</pre>
+<p>In this example, information about the items are stored in a database table called &quot;items&quot;. When creating the model, we will use a foreign key to establish a relation between this table and a second data base table, &quot;images&quot;, containing the names of the available image files. We will get back to how this is done when reviewing the <code>View</code> class. The rationale for creating such a relation though, is that we want to ensure that the user only can choose between predefined image files.</p>
+<p>The model corresponding to the &quot;images&quot; database table, is available through the <a href="qsqlrelationaltablemodel.html">QSqlRelationalTableModel</a>'s <a href="qsqlrelationaltablemodel.html#relationModel">relationModel()</a> function, requiring the foreign key (in this case the &quot;imagefile&quot; column number) as argument. We use <a href="../qtwidgets/qcombobox.html">QComboBox</a>'s <a href="../qtwidgets/qcombobox.html#setModel">setModel()</a> function to make the combobox use the &quot;images&quot; model. And, since this model has two columns (&quot;itemid&quot; and &quot;file&quot;), we also specify which column we want to be visible using the <a href="../qtwidgets/qcombobox.html#modelColumn-prop">QComboBox::setModelColumn</a>() function.</p>
+<pre class="cpp">
+
+      mapper <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qdatawidgetmapper.html">QDataWidgetMapper</a></span>(<span class="keyword">this</span>);
+      mapper<span class="operator">-</span><span class="operator">&gt;</span>setModel(items);
+      mapper<span class="operator">-</span><span class="operator">&gt;</span>setSubmitPolicy(<span class="type"><a href="../qtwidgets/qdatawidgetmapper.html">QDataWidgetMapper</a></span><span class="operator">::</span>ManualSubmit);
+      mapper<span class="operator">-</span><span class="operator">&gt;</span>setItemDelegate(<span class="keyword">new</span> <span class="type"><a href="qsqlrelationaldelegate.html">QSqlRelationalDelegate</a></span>(mapper));
+      mapper<span class="operator">-</span><span class="operator">&gt;</span>addMapping(imageFileEditor<span class="operator">,</span> <span class="number">1</span>);
+      mapper<span class="operator">-</span><span class="operator">&gt;</span>addMapping(itemText<span class="operator">,</span> <span class="number">2</span><span class="operator">,</span> <span class="string">&quot;text&quot;</span>);
+      mapper<span class="operator">-</span><span class="operator">&gt;</span>addMapping(descriptionEditor<span class="operator">,</span> <span class="number">3</span>);
+      mapper<span class="operator">-</span><span class="operator">&gt;</span>setCurrentIndex(id);
+
+</pre>
+<p>Then we create the mapper. The <a href="../qtwidgets/qdatawidgetmapper.html">QDataWidgetMapper</a> class allows us to create data-aware widgets by mapping them to sections of an item model.</p>
+<p>The <a href="../qtwidgets/qdatawidgetmapper.html#addMapping">addMapping()</a> function adds a mapping between the given widget and the specified section of the model. If the mapper's orientation is horizontal (the default) the section is a column in the model, otherwise it is a row. We call the <a href="../qtwidgets/qdatawidgetmapper.html#currentIndex-prop">setCurrentIndex()</a> function to initialize the widgets with the data associated with the given item ID. Every time the current index changes, all the widgets are updated with the contents from the model.</p>
+<p>We also set the mapper's submit policy to <a href="../qtwidgets/qdatawidgetmapper.html#SubmitPolicy-enum">QDataWidgetMapper::ManualSubmit</a>. This means that no data is submitted to the database until the user expliclity requests a submit (the alternative is <a href="../qtwidgets/qdatawidgetmapper.html#SubmitPolicy-enum">QDataWidgetMapper::AutoSubmit</a>, automatically submitting changes when the corresponding widget looses focus). Finally, we specify the item delegate the mapper view should use for its items. The <a href="qsqlrelationaldelegate.html">QSqlRelationalDelegate</a> class represents a delegate that unlike the default delegate, enables combobox functionality for fields that are foreign keys into other tables (like &quot;imagefile&quot; in our &quot;items&quot; table).</p>
+<pre class="cpp">
+
+      connect(descriptionEditor<span class="operator">,</span> SIGNAL(textChanged())<span class="operator">,</span>
+              <span class="keyword">this</span><span class="operator">,</span> SLOT(enableButtons()));
+      connect(imageFileEditor<span class="operator">,</span> SIGNAL(currentIndexChanged(<span class="type">int</span>))<span class="operator">,</span>
+              <span class="keyword">this</span><span class="operator">,</span> SLOT(enableButtons()));
+
+      <span class="type"><a href="../qtwidgets/qformlayout.html">QFormLayout</a></span> <span class="operator">*</span>formLayout <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qformlayout.html">QFormLayout</a></span>;
+      formLayout<span class="operator">-</span><span class="operator">&gt;</span>addRow(itemLabel<span class="operator">,</span> itemText);
+      formLayout<span class="operator">-</span><span class="operator">&gt;</span>addRow(imageFileLabel<span class="operator">,</span> imageFileEditor);
+      formLayout<span class="operator">-</span><span class="operator">&gt;</span>addRow(descriptionLabel<span class="operator">,</span> descriptionEditor);
+
+      <span class="type"><a href="../qtwidgets/qvboxlayout.html">QVBoxLayout</a></span> <span class="operator">*</span>layout <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qvboxlayout.html">QVBoxLayout</a></span>;
+      layout<span class="operator">-</span><span class="operator">&gt;</span>addLayout(formLayout);
+      layout<span class="operator">-</span><span class="operator">&gt;</span>addWidget(buttonBox);
+      setLayout(layout);
+
+      itemId <span class="operator">=</span> id;
+      displayedImage <span class="operator">=</span> imageFileEditor<span class="operator">-</span><span class="operator">&gt;</span>currentText();
+
+      setWindowFlags(<span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Window);
+      enableButtons(<span class="keyword">false</span>);
+      setWindowTitle(itemText<span class="operator">-</span><span class="operator">&gt;</span>text());
+  }
+
+</pre>
+<p>Finally, we connect the &quot;something's changed&quot; signals in the editors to our custom <code>enableButtons()</code> slot, enabling the users to either submit or revert their changes. We add all the widgets into a layout, store the item ID and the name of the displayed image file for future reference, and set the window title and initial size.</p>
+<p>Note that we also set the <a href="../qtcore/qt.html#WindowType-enum">Qt::Window</a> window flag to indicate that our widget is in fact a window, with a window system frame and a title bar.</p>
+<pre class="cpp">
+
+  <span class="type">int</span> InformationWindow<span class="operator">::</span>id()
+  {
+      <span class="keyword">return</span> itemId;
+  }
+
+</pre>
+<p>When a window is created, it is not deleted until the main application exits (i.e&#x2e;, if the user closes the information window, it is only hidden). For this reason we do not want to create more than one <code>InformationWindow</code> object for each item, and we provide the public <code>id()</code> function to be able to determine whether a window already exists for a given location when the user requests information about it.</p>
+<pre class="cpp">
+
+  <span class="type">void</span> InformationWindow<span class="operator">::</span>revert()
+  {
+      mapper<span class="operator">-</span><span class="operator">&gt;</span>revert();
+      enableButtons(<span class="keyword">false</span>);
+  }
+
+</pre>
+<p>The <code>revert()</code> slot is triggered whenever the user hits the <b>Revert</b> button.</p>
+<p>Since we set the <a href="../qtwidgets/qdatawidgetmapper.html#SubmitPolicy-enum">QDataWidgetMapper::ManualSubmit</a> submit policy, none of the user's changes are written back to the model unless the user expliclity choose to submit all of them. Nevertheless, we can use the <a href="../qtwidgets/qdatawidgetmapper.html">QDataWidgetMapper</a>'s <a href="../qtwidgets/qdatawidgetmapper.html#revert">revert()</a> slot to reset the editor widgets, repopulating all widgets with the current data of the model.</p>
+<pre class="cpp">
+
+  <span class="type">void</span> InformationWindow<span class="operator">::</span>submit()
+  {
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> newImage(imageFileEditor<span class="operator">-</span><span class="operator">&gt;</span>currentText());
+
+      <span class="keyword">if</span> (displayedImage <span class="operator">!</span><span class="operator">=</span> newImage) {
+          displayedImage <span class="operator">=</span> newImage;
+          <span class="keyword">emit</span> imageChanged(itemId<span class="operator">,</span> newImage);
+      }
+
+      mapper<span class="operator">-</span><span class="operator">&gt;</span>submit();
+      mapper<span class="operator">-</span><span class="operator">&gt;</span>setCurrentIndex(itemId);
+
+      enableButtons(<span class="keyword">false</span>);
+  }
+
+</pre>
+<p>Likewise, the <code>submit()</code> slot is triggered whenever the users decide to submit their changes by pressing the <b>Submit</b> button.</p>
+<p>We use <a href="../qtwidgets/qdatawidgetmapper.html">QDataWidgetMapper</a>'s <a href="../qtwidgets/qdatawidgetmapper.html#submit">submit()</a> slot to submit all changes from the mapped widgets to the model, i.e&#x2e; to the database. For every mapped section, the item delegate will then read the current value from the widget and set it in the model. Finally, the <i>model</i>'s <a href="../qtcore/qabstractitemmodel.html#submit">submit()</a> function is invoked to let the model know that it should submit whatever it has cached to the permanent storage.</p>
+<p>Note that before any data is submitted, we check if the user has chosen another image file using the previously stored <code>displayedImage</code> variable as reference. If the current and stored file names differ, we store the new file name and emit the <code>imageChanged()</code> signal.</p>
+<pre class="cpp">
+
+  <span class="type">void</span> InformationWindow<span class="operator">::</span>createButtons()
+  {
+      closeButton <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qpushbutton.html">QPushButton</a></span>(tr(<span class="string">&quot;&amp;Close&quot;</span>));
+      revertButton <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qpushbutton.html">QPushButton</a></span>(tr(<span class="string">&quot;&amp;Revert&quot;</span>));
+      submitButton <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qpushbutton.html">QPushButton</a></span>(tr(<span class="string">&quot;&amp;Submit&quot;</span>));
+
+      closeButton<span class="operator">-</span><span class="operator">&gt;</span>setDefault(<span class="keyword">true</span>);
+
+      connect(closeButton<span class="operator">,</span> SIGNAL(clicked())<span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> SLOT(close()));
+      connect(revertButton<span class="operator">,</span> SIGNAL(clicked())<span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> SLOT(revert()));
+      connect(submitButton<span class="operator">,</span> SIGNAL(clicked())<span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> SLOT(submit()));
+
+</pre>
+<p>The <code>createButtons()</code> function is provided for convenience, i.e&#x2e;, to simplify the constructor.</p>
+<p>We make the <b>Close</b> button the default button, i.e&#x2e;, the button that is pressed when the user presses <b>Enter</b>, and connect its <a href="../qtwidgets/qabstractbutton.html#clicked">clicked()</a> signal to the widget's <a href="../qtwidgets/qwidget.html#close">close()</a> slot. As mentioned above closing the window only hides the widget; it is not deleted. We also connect the <b>Submit</b> and <b>Revert</b> buttons to the corresponding <code>submit()</code> and <code>revert()</code> slots.</p>
+<pre class="cpp">
+
+      buttonBox <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qdialogbuttonbox.html">QDialogButtonBox</a></span>(<span class="keyword">this</span>);
+      buttonBox<span class="operator">-</span><span class="operator">&gt;</span>addButton(submitButton<span class="operator">,</span> <span class="type"><a href="../qtwidgets/qdialogbuttonbox.html">QDialogButtonBox</a></span><span class="operator">::</span>AcceptRole);
+      buttonBox<span class="operator">-</span><span class="operator">&gt;</span>addButton(revertButton<span class="operator">,</span> <span class="type"><a href="../qtwidgets/qdialogbuttonbox.html">QDialogButtonBox</a></span><span class="operator">::</span>ResetRole);
+      buttonBox<span class="operator">-</span><span class="operator">&gt;</span>addButton(closeButton<span class="operator">,</span> <span class="type"><a href="../qtwidgets/qdialogbuttonbox.html">QDialogButtonBox</a></span><span class="operator">::</span>RejectRole);
+  }
+
+</pre>
+<p>The <a href="../qtwidgets/qdialogbuttonbox.html">QDialogButtonBox</a> class is a widget that presents buttons in a layout that is appropriate to the current widget style. Dialogs like our information window, typically present buttons in a layout that conforms to the interface guidelines for that platform. Invariably, different platforms have different layouts for their dialogs. <a href="../qtwidgets/qdialogbuttonbox.html">QDialogButtonBox</a> allows us to add buttons, automatically using the appropriate layout for the user's desktop environment.</p>
+<p>Most buttons for a dialog follow certain roles. We give the <b>Submit</b> and <b>Revert</b> buttons the <a href="../qtwidgets/qdialogbuttonbox.html#ButtonRole-enum">reset</a> role, i.e&#x2e;, indicating that pressing the button resets the fields to the default values (in our case the information contained in the database). The <a href="../qtwidgets/qdialogbuttonbox.html#ButtonRole-enum">reject</a> role indicates that clicking the button causes the dialog to be rejected. On the other hand, since we only hide the information window, any changes that the user has made will be preserved until the user explicitly reverts or submits them.</p>
+<pre class="cpp">
+
+  <span class="type">void</span> InformationWindow<span class="operator">::</span>enableButtons(bool enable)
+  {
+      revertButton<span class="operator">-</span><span class="operator">&gt;</span>setEnabled(enable);
+      submitButton<span class="operator">-</span><span class="operator">&gt;</span>setEnabled(enable);
+  }
+
+</pre>
+<p>The <code>enableButtons()</code> slot is called to enable the buttons whenever the user changes the presented data. Likewise, when the user chooses to submit the changes, the buttons are disabled to indicate that the current data is stored in the database.</p>
+<p>This completes the <code>InformationWindow</code> class. Let's take a look at how we have used it in our example application.</p>
+<a name="view-class-definition"></a>
+<h2 id="view-class-definition">View Class Definition</h2>
+<p>The <code>View</code> class represents the main application window and inherits <a href="../qtwidgets/qgraphicsview.html">QGraphicsView</a>:</p>
+<pre class="cpp">
+
+  <span class="keyword">class</span> View : <span class="keyword">public</span> <span class="type"><a href="../qtwidgets/qgraphicsview.html">QGraphicsView</a></span>
+  {
+      Q_OBJECT
+
+  <span class="keyword">public</span>:
+      View(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>items<span class="operator">,</span> <span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>images<span class="operator">,</span> <span class="type"><a href="../qtwidgets/qwidget.html">QWidget</a></span> <span class="operator">*</span>parent <span class="operator">=</span> <span class="number">0</span>);
+
+  <span class="keyword">protected</span>:
+      <span class="type">void</span> mouseReleaseEvent(<span class="type">QMouseEvent</span> <span class="operator">*</span>event) Q_DECL_OVERRIDE;
+
+  <span class="keyword">private</span> <span class="keyword">slots</span>:
+      <span class="type">void</span> updateImage(<span class="type">int</span> id<span class="operator">,</span> <span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>fileName);
+
+</pre>
+<p>The <a href="../qtwidgets/qgraphicsview.html">QGraphicsView</a> class is part of the <a href="../qtwidgets/graphicsview.html">Graphics View Framework</a> which we will use to display the images. To be able to respond to user interaction by displaying the appropriate information window when the image is clicked, we reimplement <a href="../qtwidgets/qgraphicsview.html">QGraphicsView</a>'s <a href="../qtwidgets/qgraphicsview.html#mouseReleaseEvent">mouseReleaseEvent()</a> function.</p>
+<p>Note that the constructor expects the names of two database tables: One containing the detailed information about the items, and another containing the names of the available image files. We also provide a private <code>updateImage()</code> slot to catch <code>InformationWindow</code>'s <code>imageChanged()</code> signal that is emitted whenever the user changes an image associated with the item.</p>
+<pre class="cpp">
+
+  <span class="keyword">private</span>:
+      <span class="type">void</span> addItems();
+      InformationWindow<span class="operator">*</span> findWindow(<span class="type">int</span> id);
+      <span class="type">void</span> showInformation(ImageItem <span class="operator">*</span>image);
+
+      <span class="type"><a href="../qtwidgets/qgraphicsscene.html">QGraphicsScene</a></span> <span class="operator">*</span>scene;
+      <span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span>InformationWindow <span class="operator">*</span><span class="operator">&gt;</span> informationWindows;
+
+</pre>
+<p>The <code>addItems()</code> function is a convenience function provided to simplify the constructor. It is called only once, creating the various items and adding them to the view.</p>
+<p>The <code>findWindow()</code> function, on the other hand, is frequently used. It is called from the <code>showInformation()</code> function to detemine whether a window is already created for the given item (whenever we create an <code>InformationWindow</code> object, we store a reference to it in the <code>informationWindows</code> list). The latter function is in turn called from our custom <code>mouseReleaseEvent()</code> implementation.</p>
+<pre class="cpp">
+
+      <span class="type"><a href="qsqlrelationaltablemodel.html">QSqlRelationalTableModel</a></span> <span class="operator">*</span>itemTable;
+  };
+
+</pre>
+<p>Finally, we declare a <a href="qsqlrelationaltablemodel.html">QSqlRelationalTableModel</a> pointer. As previously mentioned, the <a href="qsqlrelationaltablemodel.html">QSqlRelationalTableModel</a> class provides an editable data model with foreign key support. There are a couple of things you should keep in mind when using the <a href="qsqlrelationaltablemodel.html">QSqlRelationalTableModel</a> class: The table must have a primary key declared and this key cannot contain a relation to another table, that is, it cannot be a foreign key. Also note that if a relational table contains keys that refer to non-existent rows in the referenced table, the rows containing the invalid keys will not be exposed through the model. It is the user's or the database's responsibility to maintain referential integrity.</p>
+<a name="view-class-implementation"></a>
+<h2 id="view-class-implementation">View Class Implementation</h2>
+<p>Although the constructor requests the names of both the table containing office details as well as the table containing the names of the available image files, we only have to create a <a href="qsqlrelationaltablemodel.html">QSqlRelationalTableModel</a> object for the &quot;items&quot; table:</p>
+<pre class="cpp">
+
+  View<span class="operator">::</span>View(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>items<span class="operator">,</span> <span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>images<span class="operator">,</span> <span class="type"><a href="../qtwidgets/qwidget.html">QWidget</a></span> <span class="operator">*</span>parent)
+      : <span class="type"><a href="../qtwidgets/qgraphicsview.html">QGraphicsView</a></span>(parent)
+  {
+      itemTable <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="qsqlrelationaltablemodel.html">QSqlRelationalTableModel</a></span>(<span class="keyword">this</span>);
+      itemTable<span class="operator">-</span><span class="operator">&gt;</span>setTable(items);
+      itemTable<span class="operator">-</span><span class="operator">&gt;</span>setRelation(<span class="number">1</span><span class="operator">,</span> <span class="type"><a href="qsqlrelation.html">QSqlRelation</a></span>(images<span class="operator">,</span> <span class="string">&quot;itemid&quot;</span><span class="operator">,</span> <span class="string">&quot;file&quot;</span>));
+      itemTable<span class="operator">-</span><span class="operator">&gt;</span>select();
+
+</pre>
+<p>The reason is that once we have a model with the item details, we can create a relation to the available image files using <a href="qsqlrelationaltablemodel.html">QSqlRelationalTableModel</a>'s <a href="qsqlrelationaltablemodel.html#setRelation">setRelation()</a> function. This function creates a foreign key for the given model column. The key is specified by the provided <a href="qsqlrelation.html">QSqlRelation</a> object constructed by the name of the table the key refers to, the field the key is mapping to and the field that should be presented to the user.</p>
+<p>Note that setting the table only specifies which table the model operates on, i.e&#x2e;, we must explicitly call the model's <a href="qsqlrelationaltablemodel.html#select">select()</a> function to populate our model.</p>
+<pre class="cpp">
+
+      scene <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qgraphicsscene.html">QGraphicsScene</a></span>(<span class="keyword">this</span>);
+      scene<span class="operator">-</span><span class="operator">&gt;</span>setSceneRect(<span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">465</span><span class="operator">,</span> <span class="number">365</span>);
+      setScene(scene);
+
+      addItems();
+
+      setMinimumSize(<span class="number">470</span><span class="operator">,</span> <span class="number">370</span>);
+      setMaximumSize(<span class="number">470</span><span class="operator">,</span> <span class="number">370</span>);
+
+      <span class="type">QLinearGradient</span> gradient(<span class="type"><a href="../qtcore/qpointf.html">QPointF</a></span>(<span class="number">0</span><span class="operator">,</span> <span class="number">0</span>)<span class="operator">,</span> <span class="type"><a href="../qtcore/qpointf.html">QPointF</a></span>(<span class="number">0</span><span class="operator">,</span> <span class="number">370</span>));
+      gradient<span class="operator">.</span>setColorAt(<span class="number">0</span><span class="operator">,</span> <span class="type">QColor</span>(<span class="string">&quot;#868482&quot;</span>));
+      gradient<span class="operator">.</span>setColorAt(<span class="number">1</span><span class="operator">,</span> <span class="type">QColor</span>(<span class="string">&quot;#5d5b59&quot;</span>));
+      setBackgroundBrush(gradient);
+  }
+
+</pre>
+<p>Then we create the contents of our view, i.e&#x2e;, the scene and its items. The labels are regular <a href="../qtwidgets/qgraphicstextitem.html">QGraphicsTextItem</a> objects, whereas the images are instances of the <code>ImageItem</code> class, derived from <a href="../qtwidgets/qgraphicspixmapitem.html">QGraphicsPixmapItem</a>. We will get back to this shortly when reviewing the <code>addItems()</code> function.</p>
+<p>Finally, we set the main application widget's size constraints and window title.</p>
+<pre class="cpp">
+
+  <span class="type">void</span> View<span class="operator">::</span>addItems()
+  {
+      <span class="type">int</span> itemCount <span class="operator">=</span> itemTable<span class="operator">-</span><span class="operator">&gt;</span>rowCount();
+
+      <span class="type">int</span> imageOffset <span class="operator">=</span> <span class="number">150</span>;
+      <span class="type">int</span> leftMargin <span class="operator">=</span> <span class="number">70</span>;
+      <span class="type">int</span> topMargin <span class="operator">=</span> <span class="number">40</span>;
+
+      <span class="keyword">for</span> (<span class="type">int</span> i <span class="operator">=</span> <span class="number">0</span>; i <span class="operator">&lt;</span> itemCount; i<span class="operator">+</span><span class="operator">+</span>) {
+          ImageItem <span class="operator">*</span>image;
+          <span class="type"><a href="../qtwidgets/qgraphicstextitem.html">QGraphicsTextItem</a></span> <span class="operator">*</span>label;
+          <span class="type"><a href="qsqlrecord.html">QSqlRecord</a></span> record <span class="operator">=</span> itemTable<span class="operator">-</span><span class="operator">&gt;</span>record(i);
+
+          <span class="type">int</span> id <span class="operator">=</span> record<span class="operator">.</span>value(<span class="string">&quot;id&quot;</span>)<span class="operator">.</span>toInt();
+          <span class="type"><a href="../qtcore/qstring.html">QString</a></span> file <span class="operator">=</span> record<span class="operator">.</span>value(<span class="string">&quot;file&quot;</span>)<span class="operator">.</span>toString();
+          <span class="type"><a href="../qtcore/qstring.html">QString</a></span> item <span class="operator">=</span> record<span class="operator">.</span>value(<span class="string">&quot;itemtype&quot;</span>)<span class="operator">.</span>toString();
+
+          <span class="type">int</span> columnOffset <span class="operator">=</span> ((i <span class="operator">%</span> <span class="number">2</span>) <span class="operator">*</span> <span class="number">37</span>);
+          <span class="type">int</span> x <span class="operator">=</span> ((i <span class="operator">%</span> <span class="number">2</span>) <span class="operator">*</span> imageOffset) <span class="operator">+</span> leftMargin <span class="operator">+</span> columnOffset;
+          <span class="type">int</span> y <span class="operator">=</span> ((i <span class="operator">/</span> <span class="number">2</span>) <span class="operator">*</span> imageOffset) <span class="operator">+</span> topMargin;
+
+          image <span class="operator">=</span> <span class="keyword">new</span> ImageItem(id<span class="operator">,</span> <span class="type">QPixmap</span>(<span class="string">&quot;:/&quot;</span> <span class="operator">+</span> file));
+          image<span class="operator">-</span><span class="operator">&gt;</span>setData(<span class="number">0</span><span class="operator">,</span> i);
+          image<span class="operator">-</span><span class="operator">&gt;</span>setPos(x<span class="operator">,</span> y);
+          scene<span class="operator">-</span><span class="operator">&gt;</span>addItem(image);
+
+          label <span class="operator">=</span> scene<span class="operator">-</span><span class="operator">&gt;</span>addText(item);
+          label<span class="operator">-</span><span class="operator">&gt;</span>setDefaultTextColor(<span class="type">QColor</span>(<span class="string">&quot;#d7d6d5&quot;</span>));
+          <span class="type"><a href="../qtcore/qpointf.html">QPointF</a></span> labelOffset((<span class="number">120</span> <span class="operator">-</span> label<span class="operator">-</span><span class="operator">&gt;</span>boundingRect()<span class="operator">.</span>width()) <span class="operator">/</span> <span class="number">2</span><span class="operator">,</span> <span class="number">120.0</span>);
+          label<span class="operator">-</span><span class="operator">&gt;</span>setPos(<span class="type"><a href="../qtcore/qpointf.html">QPointF</a></span>(x<span class="operator">,</span> y) <span class="operator">+</span> labelOffset);
+      }
+  }
+
+</pre>
+<p>The <code>addItems()</code> function is called only once when creating the main application window. For each row in the database table, we first extract the corresponding record using the model's <a href="qsqltablemodel.html#record">record()</a> function. The <a href="qsqlrecord.html">QSqlRecord</a> class encapsulates both the functionality and characteristics of a database record, and supports adding and removing fields as well as setting and retrieving field values. The <a href="qsqlrecord.html#value">QSqlRecord::value</a>() function returns the value of the field with the given name or index as a <a href="../qtcore/qvariant.html">QVariant</a> object.</p>
+<p>For each record, we create a label item as well as an image item, calculate their position and add them to the scene. The image items are represented by instances of the <code>ImageItem</code> class. The reason we must create a custom item class is that we want to catch the item's hover events, animating the item when the mouse cursor is hovering over the image (by default, no items accept hover events). Please see the <a href="../qtwidgets/graphicsview.html">Graphics View Framework</a> documentation and the <a href="../qtwidgets/examples-graphicsview.html">Graphics View Examples</a> for more details.</p>
+<pre class="cpp">
+
+  <span class="type">void</span> View<span class="operator">::</span>mouseReleaseEvent(<span class="type">QMouseEvent</span> <span class="operator">*</span>event)
+  {
+      <span class="keyword">if</span> (<span class="type"><a href="../qtwidgets/qgraphicsitem.html">QGraphicsItem</a></span> <span class="operator">*</span>item <span class="operator">=</span> itemAt(event<span class="operator">-</span><span class="operator">&gt;</span>pos())) {
+          <span class="keyword">if</span> (ImageItem <span class="operator">*</span>image <span class="operator">=</span> qgraphicsitem_cast<span class="operator">&lt;</span>ImageItem <span class="operator">*</span><span class="operator">&gt;</span>(item))
+              showInformation(image);
+      }
+      <span class="type"><a href="../qtwidgets/qgraphicsview.html">QGraphicsView</a></span><span class="operator">::</span>mouseReleaseEvent(event);
+  }
+
+</pre>
+<p>We reimplement <a href="../qtwidgets/qgraphicsview.html">QGraphicsView</a>'s <a href="../qtwidgets/qgraphicsview.html#mouseReleaseEvent">mouseReleaseEvent()</a> event handler to respond to user interaction. If the user clicks any of the image items, this function calls the private <code>showInformation()</code> function to pop up the associated information window.</p>
+<p>The <a href="../qtwidgets/graphicsview.html">Graphics View Framework</a> provides the <a href="../qtwidgets/qgraphicsitem.html#qgraphicsitem_cast">qgraphicsitem_cast</a>() function to determine whether the given <a href="../qtwidgets/qgraphicsitem.html">QGraphicsItem</a> instance is of a given type. Note that if the event is not related to any of our image items, we pass it on to the base class implementation.</p>
+<pre class="cpp">
+
+  <span class="type">void</span> View<span class="operator">::</span>showInformation(ImageItem <span class="operator">*</span>image)
+  {
+      <span class="type">int</span> id <span class="operator">=</span> image<span class="operator">-</span><span class="operator">&gt;</span>id();
+      <span class="keyword">if</span> (id <span class="operator">&lt;</span> <span class="number">0</span> <span class="operator">|</span><span class="operator">|</span> id <span class="operator">&gt;</span><span class="operator">=</span> itemTable<span class="operator">-</span><span class="operator">&gt;</span>rowCount())
+          <span class="keyword">return</span>;
+
+      InformationWindow <span class="operator">*</span>window <span class="operator">=</span> findWindow(id);
+      <span class="keyword">if</span> (window <span class="operator">&amp;</span><span class="operator">&amp;</span> window<span class="operator">-</span><span class="operator">&gt;</span>isVisible()) {
+          window<span class="operator">-</span><span class="operator">&gt;</span>raise();
+          window<span class="operator">-</span><span class="operator">&gt;</span>activateWindow();
+      } <span class="keyword">else</span> <span class="keyword">if</span> (window <span class="operator">&amp;</span><span class="operator">&amp;</span> <span class="operator">!</span>window<span class="operator">-</span><span class="operator">&gt;</span>isVisible()) {
+          window<span class="operator">-</span><span class="operator">&gt;</span>show();
+      } <span class="keyword">else</span> {
+          InformationWindow <span class="operator">*</span>window;
+          window <span class="operator">=</span> <span class="keyword">new</span> InformationWindow(id<span class="operator">,</span> itemTable<span class="operator">,</span> <span class="keyword">this</span>);
+
+          connect(window<span class="operator">,</span> SIGNAL(imageChanged(<span class="type">int</span><span class="operator">,</span><span class="type"><a href="../qtcore/qstring.html">QString</a></span>))<span class="operator">,</span>
+                  <span class="keyword">this</span><span class="operator">,</span> SLOT(updateImage(<span class="type">int</span><span class="operator">,</span><span class="type"><a href="../qtcore/qstring.html">QString</a></span>)));
+
+          window<span class="operator">-</span><span class="operator">&gt;</span>move(pos() <span class="operator">+</span> <span class="type"><a href="../qtcore/qpoint.html">QPoint</a></span>(<span class="number">20</span><span class="operator">,</span> <span class="number">40</span>));
+          window<span class="operator">-</span><span class="operator">&gt;</span>show();
+          informationWindows<span class="operator">.</span>append(window);
+      }
+  }
+
+</pre>
+<p>The <code>showInformation()</code> function is given an <code>ImageItem</code> object as argument, and starts off by extracting the item's item ID. Then it determines if there already is created an information window for this location. If it is, and the window is visible, it ensures that the window is raised to the top of the widget stack and activated. If the window exists but is hidden, calling its <a href="../qtwidgets/qwidget.html#show">show()</a> slot gives the same result.</p>
+<p>If no window for the given location exists, we create one by passing the item ID, a pointer to the model, and our view as a parent, to the <code>InformationWindow</code> constructor. Note that we connect the information window's <code>imageChanged()</code> signal to <i>this</i> widget's <code>updateImage()</code> slot, before we give it a suitable position and add it to the list of existing windows.</p>
+<pre class="cpp">
+
+  <span class="type">void</span> View<span class="operator">::</span>updateImage(<span class="type">int</span> id<span class="operator">,</span> <span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>fileName)
+  {
+      <span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span><span class="type"><a href="../qtwidgets/qgraphicsitem.html">QGraphicsItem</a></span> <span class="operator">*</span><span class="operator">&gt;</span> items <span class="operator">=</span> scene<span class="operator">-</span><span class="operator">&gt;</span>items();
+
+      <span class="keyword">while</span>(<span class="operator">!</span>items<span class="operator">.</span>empty()) {
+          <span class="type"><a href="../qtwidgets/qgraphicsitem.html">QGraphicsItem</a></span> <span class="operator">*</span>item <span class="operator">=</span> items<span class="operator">.</span>takeFirst();
+
+          <span class="keyword">if</span> (ImageItem <span class="operator">*</span>image <span class="operator">=</span> qgraphicsitem_cast<span class="operator">&lt;</span>ImageItem <span class="operator">*</span><span class="operator">&gt;</span>(item)) {
+              <span class="keyword">if</span> (image<span class="operator">-</span><span class="operator">&gt;</span>id() <span class="operator">=</span><span class="operator">=</span> id){
+                  image<span class="operator">-</span><span class="operator">&gt;</span>setPixmap(<span class="type">QPixmap</span>(<span class="string">&quot;:/&quot;</span> <span class="operator">+</span>fileName));
+                  image<span class="operator">-</span><span class="operator">&gt;</span>adjust();
+                  <span class="keyword">break</span>;
+              }
+          }
+      }
+  }
+
+</pre>
+<p>The <code>updateImage()</code> slot takes an item ID and the name of an image file as arguments. It filters out the image items, and updates the one that correspond to the given item ID, with the provided image file.</p>
+<pre class="cpp">
+
+  InformationWindow<span class="operator">*</span> View<span class="operator">::</span>findWindow(<span class="type">int</span> id)
+  {
+      <span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span>InformationWindow<span class="operator">*</span><span class="operator">&gt;</span><span class="operator">::</span>iterator i<span class="operator">,</span> beginning<span class="operator">,</span> end;
+
+      beginning <span class="operator">=</span> informationWindows<span class="operator">.</span>begin();
+      end <span class="operator">=</span> informationWindows<span class="operator">.</span>end();
+
+      <span class="keyword">for</span> (i <span class="operator">=</span> beginning; i <span class="operator">!</span><span class="operator">=</span> end; <span class="operator">+</span><span class="operator">+</span>i) {
+          InformationWindow <span class="operator">*</span>window <span class="operator">=</span> (<span class="operator">*</span>i);
+          <span class="keyword">if</span> (window <span class="operator">&amp;</span><span class="operator">&amp;</span> (window<span class="operator">-</span><span class="operator">&gt;</span>id() <span class="operator">=</span><span class="operator">=</span> id))
+              <span class="keyword">return</span> window;
+      }
+      <span class="keyword">return</span> <span class="number">0</span>;
+  }
+
+</pre>
+<p>The <code>findWindow()</code> function simply searches through the list of existing windows, returning a pointer to the window that matches the given item ID, or 0 if the window doesn't exists.</p>
+<p>Finally, let's take a quick look at our custom <code>ImageItem</code> class:</p>
+<a name="imageitem-class-definition"></a>
+<h2 id="imageitem-class-definition">ImageItem Class Definition</h2>
+<p>The <code>ImageItem</code> class is provided to facilitate animation of the image items. It inherits <a href="../qtwidgets/qgraphicspixmapitem.html">QGraphicsPixmapItem</a> and reimplements its hover event handlers:</p>
+<pre class="cpp">
+
+  <span class="keyword">class</span> ImageItem : <span class="keyword">public</span> <span class="type"><a href="../qtcore/qobject.html">QObject</a></span><span class="operator">,</span> <span class="keyword">public</span> <span class="type"><a href="../qtwidgets/qgraphicspixmapitem.html">QGraphicsPixmapItem</a></span>
+  {
+      Q_OBJECT
+
+  <span class="keyword">public</span>:
+      ImageItem(<span class="type">int</span> id<span class="operator">,</span> <span class="keyword">const</span> <span class="type">QPixmap</span> <span class="operator">&amp;</span>pixmap<span class="operator">,</span> <span class="type"><a href="../qtwidgets/qgraphicsitem.html">QGraphicsItem</a></span> <span class="operator">*</span>parent <span class="operator">=</span> <span class="number">0</span>);
+
+      <span class="type">void</span> adjust();
+      <span class="type">int</span> id();
+
+  <span class="keyword">protected</span>:
+      <span class="type">void</span> hoverEnterEvent(<span class="type"><a href="../qtwidgets/qgraphicsscenehoverevent.html">QGraphicsSceneHoverEvent</a></span> <span class="operator">*</span>event) Q_DECL_OVERRIDE;
+      <span class="type">void</span> hoverLeaveEvent(<span class="type"><a href="../qtwidgets/qgraphicsscenehoverevent.html">QGraphicsSceneHoverEvent</a></span> <span class="operator">*</span>event) Q_DECL_OVERRIDE;
+
+  <span class="keyword">private</span> <span class="keyword">slots</span>:
+      <span class="type">void</span> setFrame(<span class="type">int</span> frame);
+      <span class="type">void</span> updateItemPosition();
+
+  <span class="keyword">private</span>:
+      <span class="type"><a href="../qtcore/qtimeline.html">QTimeLine</a></span> timeLine;
+      <span class="type">int</span> recordId;
+      <span class="type">double</span> z;
+  };
+
+</pre>
+<p>In addition, we implement a public <code>id()</code> function to be able to identify the associated location and a public <code>adjust()</code> function that can be called to ensure that the image item is given the preferred size regardless of the original image file.</p>
+<p>The animation is implemented using the <a href="../qtcore/qtimeline.html">QTimeLine</a> class together with the event handlers and the private <code>setFrame()</code> slot: The image item will expand when the mouse cursor hovers over it, returning back to its original size when the cursor leaves its borders.</p>
+<p>Finally, we store the item ID that this particular record is associated with as well as a z-value. In the <a href="../qtwidgets/graphicsview.html">Graphics View Framework</a>, an item's z-value determines its position in the item stack. An item of high z-value will be drawn on top of an item with a lower z-value if they share the same parent item. We also provide an <code>updateItemPosition()</code> function to refresh the view when required.</p>
+<a name="imageitem-class-implementation"></a>
+<h2 id="imageitem-class-implementation">ImageItem Class Implementation</h2>
+<p>The <code>ImageItem</code> class is really only a <a href="../qtwidgets/qgraphicspixmapitem.html">QGraphicsPixmapItem</a> with some additional features, i.e&#x2e;, we can pass most of the constructor's arguments (the pixmap, parent and scene) on to the base class constructor:</p>
+<pre class="cpp">
+
+  ImageItem<span class="operator">::</span>ImageItem(<span class="type">int</span> id<span class="operator">,</span> <span class="keyword">const</span> <span class="type">QPixmap</span> <span class="operator">&amp;</span>pixmap<span class="operator">,</span> <span class="type"><a href="../qtwidgets/qgraphicsitem.html">QGraphicsItem</a></span> <span class="operator">*</span>parent)
+      : <span class="type"><a href="../qtwidgets/qgraphicspixmapitem.html">QGraphicsPixmapItem</a></span>(pixmap<span class="operator">,</span> parent)
+  {
+      recordId <span class="operator">=</span> id;
+      setAcceptHoverEvents(<span class="keyword">true</span>);
+
+      timeLine<span class="operator">.</span>setDuration(<span class="number">150</span>);
+      timeLine<span class="operator">.</span>setFrameRange(<span class="number">0</span><span class="operator">,</span> <span class="number">150</span>);
+
+      connect(<span class="operator">&amp;</span>timeLine<span class="operator">,</span> SIGNAL(frameChanged(<span class="type">int</span>))<span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> SLOT(setFrame(<span class="type">int</span>)));
+      connect(<span class="operator">&amp;</span>timeLine<span class="operator">,</span> SIGNAL(finished())<span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> SLOT(updateItemPosition()));
+
+      adjust();
+  }
+
+</pre>
+<p>Then we store the ID for future reference, and ensure that our image item will accept hover events. Hover events are delivered when there is no current mouse grabber item. They are sent when the mouse cursor enters an item, when it moves around inside the item, and when the cursor leaves an item. As we mentioned earlier, none of the <a href="../qtwidgets/graphicsview.html">Graphics View Framework</a>'s items accept hover event's by default.</p>
+<p>The <a href="../qtcore/qtimeline.html">QTimeLine</a> class provides a timeline for controlling animations. Its <a href="../qtcore/qtimeline.html#duration-prop">duration</a> property holds the total duration of the timeline in milliseconds. By default, the time line runs once from the beginning and towards the end. The <a href="../qtcore/qtimeline.html#setFrameRange">QTimeLine::setFrameRange</a>() function sets the timeline's frame counter; when the timeline is running, the <a href="../qtcore/qtimeline.html#frameChanged">frameChanged()</a> signal is emitted each time the frame changes. We set the duration and frame range for our animation, and connect the time line's <a href="../qtcore/qtimeline.html#frameChanged">frameChanged()</a> and <a href="../qtcore/qtimeline.html#finished">finished()</a> signals to our private <code>setFrame()</code> and <code>updateItemPosition()</code> slots.</p>
+<p>Finally, we call <code>adjust()</code> to ensure that the item is given the preferred size.</p>
+<pre class="cpp">
+
+  <span class="type">void</span> ImageItem<span class="operator">::</span>hoverEnterEvent(<span class="type"><a href="../qtwidgets/qgraphicsscenehoverevent.html">QGraphicsSceneHoverEvent</a></span> <span class="operator">*</span> <span class="comment">/*event*/</span>)
+  {
+      timeLine<span class="operator">.</span>setDirection(<span class="type"><a href="../qtcore/qtimeline.html">QTimeLine</a></span><span class="operator">::</span>Forward);
+
+      <span class="keyword">if</span> (z <span class="operator">!</span><span class="operator">=</span> <span class="number">1.0</span>) {
+          z <span class="operator">=</span> <span class="number">1.0</span>;
+          updateItemPosition();
+      }
+
+      <span class="keyword">if</span> (timeLine<span class="operator">.</span>state() <span class="operator">=</span><span class="operator">=</span> <span class="type"><a href="../qtcore/qtimeline.html">QTimeLine</a></span><span class="operator">::</span>NotRunning)
+          timeLine<span class="operator">.</span>start();
+  }
+
+  <span class="type">void</span> ImageItem<span class="operator">::</span>hoverLeaveEvent(<span class="type"><a href="../qtwidgets/qgraphicsscenehoverevent.html">QGraphicsSceneHoverEvent</a></span> <span class="operator">*</span> <span class="comment">/*event*/</span>)
+  {
+      timeLine<span class="operator">.</span>setDirection(<span class="type"><a href="../qtcore/qtimeline.html">QTimeLine</a></span><span class="operator">::</span>Backward);
+      <span class="keyword">if</span> (z <span class="operator">!</span><span class="operator">=</span> <span class="number">0.0</span>)
+          z <span class="operator">=</span> <span class="number">0.0</span>;
+
+      <span class="keyword">if</span> (timeLine<span class="operator">.</span>state() <span class="operator">=</span><span class="operator">=</span> <span class="type"><a href="../qtcore/qtimeline.html">QTimeLine</a></span><span class="operator">::</span>NotRunning)
+          timeLine<span class="operator">.</span>start();
+  }
+
+</pre>
+<p>Whenever the mouse cursor enters or leaves the image item, the corresponding event handlers are triggered: We first set the time line's direction, making the item expand or shrink, respectively. Then we alter the item's z-value if it is not already set to the expected value.</p>
+<p>In the case of hover <i>enter</i> events, we immediately update the item's position since we want the item to appear on top of all other items as soon as it starts expanding. In the case of hover <i>leave</i> events, on the other hand, we postpone the actual update to achieve the same result. But remember that when we constructed our item, we connected the time line's <a href="../qtcore/qtimeline.html#finished">finished()</a> signal to the <code>updateItemPosition()</code> slot. In this way the item is given the correct position in the item stack once the animation is completed. Finally, if the time line is not already running, we start it.</p>
+<pre class="cpp">
+
+  <span class="type">void</span> ImageItem<span class="operator">::</span>setFrame(<span class="type">int</span> frame)
+  {
+      adjust();
+      <span class="type"><a href="../qtcore/qpointf.html">QPointF</a></span> center <span class="operator">=</span> boundingRect()<span class="operator">.</span>center();
+
+      setTransform(<span class="type">QTransform</span><span class="operator">::</span>fromTranslate(center<span class="operator">.</span>x()<span class="operator">,</span> center<span class="operator">.</span>y())<span class="operator">,</span> <span class="keyword">true</span>);
+      setTransform(<span class="type">QTransform</span><span class="operator">::</span>fromScale(<span class="number">1</span> <span class="operator">+</span> frame <span class="operator">/</span> <span class="number">330.0</span><span class="operator">,</span> <span class="number">1</span> <span class="operator">+</span> frame <span class="operator">/</span> <span class="number">330.0</span>)<span class="operator">,</span> <span class="keyword">true</span>);
+      setTransform(<span class="type">QTransform</span><span class="operator">::</span>fromTranslate(<span class="operator">-</span>center<span class="operator">.</span>x()<span class="operator">,</span> <span class="operator">-</span>center<span class="operator">.</span>y())<span class="operator">,</span> <span class="keyword">true</span>);
+  }
+
+</pre>
+<p>When the time line is running, it triggers the <code>setFrame()</code> slot whenever the current frame changes due to the connection we created in the item constructor. It is this slot that controls the animation, expanding or shrinking the image item step by step.</p>
+<p>We first call the <code>adjust()</code> function to ensure that we start off with the item's original size. Then we scale the item with a factor depending on the animation's progress (using the <code>frame</code> parameter). Note that by default, the transformation will be relative to the item's top-left corner. Since we want the item to be transformed relative to its center, we must translate the coordinate system before we scale the item.</p>
+<p>In the end, only the following convenience functions remain:</p>
+<pre class="cpp">
+
+  <span class="type">void</span> ImageItem<span class="operator">::</span>adjust()
+  {
+      <span class="type">QMatrix</span> matrix;
+      matrix<span class="operator">.</span>scale(<span class="number">120</span><span class="operator">/</span> boundingRect()<span class="operator">.</span>width()<span class="operator">,</span> <span class="number">120</span><span class="operator">/</span> boundingRect()<span class="operator">.</span>height());
+      setMatrix(matrix);
+  }
+
+  <span class="type">int</span> ImageItem<span class="operator">::</span>id()
+  {
+      <span class="keyword">return</span> recordId;
+  }
+
+  <span class="type">void</span> ImageItem<span class="operator">::</span>updateItemPosition()
+  {
+      setZValue(z);
+  }
+
+</pre>
+<p>The <code>adjust()</code> function defines and applies a transformation matrix, ensuring that our image item appears with the preferred size regardless of the size of the source image. The <code>id()</code> function is trivial, and is simply provided to be able to identify the item. In the <code>updateItemPosition()</code> slot we call the <a href="../qtwidgets/qgraphicsitem.html#setZValue">QGraphicsItem::setZValue</a>() function, setting the elevation of the item.</p>
+<p>Files:</p>
+<ul>
+<li><a href="qtsql-drilldown-imageitem-cpp.html">drilldown/imageitem.cpp</a></li>
+<li><a href="qtsql-drilldown-imageitem-h.html">drilldown/imageitem.h</a></li>
+<li><a href="qtsql-drilldown-informationwindow-cpp.html">drilldown/informationwindow.cpp</a></li>
+<li><a href="qtsql-drilldown-informationwindow-h.html">drilldown/informationwindow.h</a></li>
+<li><a href="qtsql-drilldown-view-cpp.html">drilldown/view.cpp</a></li>
+<li><a href="qtsql-drilldown-view-h.html">drilldown/view.h</a></li>
+<li><a href="qtsql-drilldown-main-cpp.html">drilldown/main.cpp</a></li>
+<li><a href="qtsql-drilldown-drilldown-pro.html">drilldown/drilldown.pro</a></li>
+<li><a href="qtsql-drilldown-drilldown-qrc.html">drilldown/drilldown.qrc</a></li>
+</ul>
+<p>Images:</p>
+<ul>
+<li><a href="images/used-in-examples/drilldown/images/qt-creator.png">drilldown/images/qt-creator.png</a></li>
+<li><a href="images/used-in-examples/drilldown/images/qt-logo.png">drilldown/images/qt-logo.png</a></li>
+<li><a href="images/used-in-examples/drilldown/images/qt-project.png">drilldown/images/qt-project.png</a></li>
+<li><a href="images/used-in-examples/drilldown/images/qt-quick.png">drilldown/images/qt-quick.png</a></li>
+</ul>
+</div>
+<!-- @@@drilldown -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

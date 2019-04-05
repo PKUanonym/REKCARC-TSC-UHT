@@ -1,0 +1,136 @@
+=====================
+Installing SpatiaLite
+=====================
+
+`SpatiaLite`__ adds spatial support to SQLite, turning it into a full-featured
+spatial database.
+
+First, check if you can install SpatiaLite from system packages or binaries.
+
+For example, on Debian-based distributions, try to install the
+``spatialite-bin`` package. For distributions that package SpatiaLite 4.2+,
+install ``libsqlite3-mod-spatialite``.
+
+For Mac OS X, follow the :ref:`instructions below<spatialite_macosx>`.
+
+For Windows, you may find binaries on the `Gaia-SINS`__ home page.
+
+In any case, you should always be able to :ref:`install from source
+<spatialite_source>`.
+
+__ https://www.gaia-gis.it/fossil/libspatialite
+__ http://www.gaia-gis.it/gaia-sins/
+
+.. _spatialite_source:
+
+.. admonition:: ``SPATIALITE_LIBRARY_PATH`` setting required for SpatiaLite 4.2+
+
+    If you're using SpatiaLite 4.2+, you must put this in your settings::
+
+        SPATIALITE_LIBRARY_PATH = 'mod_spatialite'
+
+Installing from source
+======================
+
+:doc:`GEOS and PROJ.4</ref/contrib/gis/install/geolibs>` should be installed
+prior to building SpatiaLite.
+
+SQLite
+------
+
+Check first if SQLite is compiled with the `R*Tree module`__. Run the sqlite3
+command line interface and enter the following query::
+
+    sqlite> CREATE VIRTUAL TABLE testrtree USING rtree(id,minX,maxX,minY,maxY);
+
+If you obtain an error, you will have to recompile SQLite from source. Otherwise,
+just skip this section.
+
+To install from sources, download the latest amalgamation source archive from
+the `SQLite download page`__, and extract::
+
+    $ wget https://sqlite.org/sqlite-amalgamation-3.6.23.1.tar.gz
+    $ tar xzf sqlite-amalgamation-3.6.23.1.tar.gz
+    $ cd sqlite-3.6.23.1
+
+Next, run the ``configure`` script -- however the ``CFLAGS`` environment variable
+needs to be customized so that SQLite knows to build the R*Tree module::
+
+    $ CFLAGS="-DSQLITE_ENABLE_RTREE=1" ./configure
+    $ make
+    $ sudo make install
+    $ cd ..
+
+__ https://www.sqlite.org/rtree.html
+__ https://www.sqlite.org/download.html
+
+.. _spatialitebuild:
+
+SpatiaLite library (``libspatialite``)
+--------------------------------------
+
+Get the latest SpatiaLite library source bundle from the
+`download page`__::
+
+    $ wget http://www.gaia-gis.it/gaia-sins/libspatialite-sources/libspatialite-4.1.0.tar.gz
+    $ tar xaf libspatialite-4.1.0.tar.gz
+    $ cd libspatialite-4.1.0
+    $ ./configure
+    $ make
+    $ sudo make install
+
+.. note::
+
+    For Mac OS X users building from source, the SpatiaLite library *and* tools
+    need to have their ``target`` configured::
+
+        $ ./configure --target=macosx
+
+__ http://www.gaia-gis.it/gaia-sins/libspatialite-sources/
+
+.. _spatialite_macosx:
+
+Mac OS X-specific instructions
+==============================
+
+To install the SpatiaLite library and tools, Mac OS X users can choose between
+:ref:`kyngchaos` and `Homebrew`_.
+
+KyngChaos
+---------
+
+First, follow the instructions in the :ref:`kyngchaos` section.
+
+When creating a SpatiaLite database, the ``spatialite`` program is required.
+However, instead of attempting to compile the SpatiaLite tools from source,
+download the `SpatiaLite Binaries`__ for OS X, and install ``spatialite`` in a
+location available in your ``PATH``.  For example::
+
+    $ curl -O http://www.gaia-gis.it/spatialite/spatialite-tools-osx-x86-2.3.1.tar.gz
+    $ tar xzf spatialite-tools-osx-x86-2.3.1.tar.gz
+    $ cd spatialite-tools-osx-x86-2.3.1/bin
+    $ sudo cp spatialite /Library/Frameworks/SQLite3.framework/Programs
+
+Finally, for GeoDjango to be able to find the KyngChaos SpatiaLite library,
+add the following to your ``settings.py``::
+
+    SPATIALITE_LIBRARY_PATH='/Library/Frameworks/SQLite3.framework/SQLite3'
+
+__ http://www.gaia-gis.it/spatialite-2.3.1/binaries.html
+
+Homebrew
+--------
+
+`Homebrew`_ handles all the SpatiaLite related packages on your behalf,
+including SQLite3, SpatiaLite, PROJ, and GEOS. Install them like this::
+
+    $ brew update
+    $ brew install spatialite-tools
+    $ brew install gdal
+
+Finally, for GeoDjango to be able to find the SpatiaLite library, add the
+following to your ``settings.py``::
+
+    SPATIALITE_LIBRARY_PATH='/usr/local/lib/mod_spatialite.dylib'
+
+.. _Homebrew: http://brew.sh/

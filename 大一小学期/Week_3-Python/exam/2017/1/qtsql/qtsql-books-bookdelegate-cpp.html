@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>bookdelegate.cpp Example File | Qt SQL 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtsql-index.html">Qt SQL</a></td><td ><a href="qtsql-books-example.html">Books</a></td><td >bookdelegate.cpp Example File</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar"><div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">bookdelegate.cpp Example File</h1>
+<span class="subtitle">books/bookdelegate.cpp</span>
+<!-- $$$books/bookdelegate.cpp-description -->
+<div class="descr"> <a name="details"></a>
+<pre class="cpp">
+
+  <span class="comment">/****************************************************************************
+  **
+  ** Copyright (C) 2015 The Qt Company Ltd.
+  ** Contact: http://www.qt.io/licensing/
+  **
+  ** This file is part of the demonstration applications of the Qt Toolkit.
+  **
+  ** $QT_BEGIN_LICENSE:LGPL21$
+  ** Commercial License Usage
+  ** Licensees holding valid commercial Qt licenses may use this file in
+  ** accordance with the commercial license agreement provided with the
+  ** Software or, alternatively, in accordance with the terms contained in
+  ** a written agreement between you and The Qt Company. For licensing terms
+  ** and conditions see http://www.qt.io/terms-conditions. For further
+  ** information use the contact form at http://www.qt.io/contact-us.
+  **
+  ** GNU Lesser General Public License Usage
+  ** Alternatively, this file may be used under the terms of the GNU Lesser
+  ** General Public License version 2.1 or version 3 as published by the Free
+  ** Software Foundation and appearing in the file LICENSE.LGPLv21 and
+  ** LICENSE.LGPLv3 included in the packaging of this file. Please review the
+  ** following information to ensure the GNU Lesser General Public License
+  ** requirements will be met: https://www.gnu.org/licenses/lgpl.html and
+  ** http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
+  **
+  ** As a special exception, The Qt Company gives you certain additional
+  ** rights. These rights are described in The Qt Company LGPL Exception
+  ** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
+  **
+  ** $QT_END_LICENSE$
+  **
+  ****************************************************************************/</span>
+
+  <span class="preprocessor">#include &quot;bookdelegate.h&quot;</span>
+
+  <span class="preprocessor">#include &lt;QtWidgets&gt;</span>
+
+  BookDelegate<span class="operator">::</span>BookDelegate(<span class="type"><a href="../qtcore/qobject.html">QObject</a></span> <span class="operator">*</span>parent)
+      : <span class="type"><a href="qsqlrelationaldelegate.html">QSqlRelationalDelegate</a></span>(parent)<span class="operator">,</span> star(<span class="type">QPixmap</span>(<span class="string">&quot;:images/star.png&quot;</span>))
+  {
+  }
+
+  <span class="type">void</span> BookDelegate<span class="operator">::</span>paint(<span class="type">QPainter</span> <span class="operator">*</span>painter<span class="operator">,</span> <span class="keyword">const</span> <span class="type"><a href="../qtwidgets/qstyleoptionviewitem.html">QStyleOptionViewItem</a></span> <span class="operator">&amp;</span>option<span class="operator">,</span>
+                             <span class="keyword">const</span> <span class="type"><a href="../qtcore/qmodelindex.html">QModelIndex</a></span> <span class="operator">&amp;</span>index) <span class="keyword">const</span>
+  {
+      <span class="keyword">if</span> (index<span class="operator">.</span>column() <span class="operator">!</span><span class="operator">=</span> <span class="number">5</span>) {
+          <span class="type"><a href="../qtwidgets/qstyleoptionviewitem.html">QStyleOptionViewItem</a></span> opt <span class="operator">=</span> option;
+          opt<span class="operator">.</span>rect<span class="operator">.</span>adjust(<span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="operator">-</span><span class="number">1</span><span class="operator">,</span> <span class="operator">-</span><span class="number">1</span>); <span class="comment">// since we draw the grid ourselves</span>
+          <span class="type"><a href="qsqlrelationaldelegate.html">QSqlRelationalDelegate</a></span><span class="operator">::</span>paint(painter<span class="operator">,</span> opt<span class="operator">,</span> index);
+      } <span class="keyword">else</span> {
+          <span class="keyword">const</span> <span class="type"><a href="../qtcore/qabstractitemmodel.html">QAbstractItemModel</a></span> <span class="operator">*</span>model <span class="operator">=</span> index<span class="operator">.</span>model();
+          <span class="type">QPalette</span><span class="operator">::</span>ColorGroup cg <span class="operator">=</span> (option<span class="operator">.</span>state <span class="operator">&amp;</span> <span class="type"><a href="../qtwidgets/qstyle.html">QStyle</a></span><span class="operator">::</span>State_Enabled) <span class="operator">?</span>
+              (option<span class="operator">.</span>state <span class="operator">&amp;</span> <span class="type"><a href="../qtwidgets/qstyle.html">QStyle</a></span><span class="operator">::</span>State_Active) <span class="operator">?</span> <span class="type">QPalette</span><span class="operator">::</span>Normal : <span class="type">QPalette</span><span class="operator">::</span>Inactive : <span class="type">QPalette</span><span class="operator">::</span>Disabled;
+
+          <span class="keyword">if</span> (option<span class="operator">.</span>state <span class="operator">&amp;</span> <span class="type"><a href="../qtwidgets/qstyle.html">QStyle</a></span><span class="operator">::</span>State_Selected)
+              painter<span class="operator">-</span><span class="operator">&gt;</span>fillRect(option<span class="operator">.</span>rect<span class="operator">,</span> option<span class="operator">.</span>palette<span class="operator">.</span>color(cg<span class="operator">,</span> <span class="type">QPalette</span><span class="operator">::</span>Highlight));
+
+          <span class="type">int</span> rating <span class="operator">=</span> model<span class="operator">-</span><span class="operator">&gt;</span>data(index<span class="operator">,</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>DisplayRole)<span class="operator">.</span>toInt();
+          <span class="type">int</span> width <span class="operator">=</span> star<span class="operator">.</span>width();
+          <span class="type">int</span> height <span class="operator">=</span> star<span class="operator">.</span>height();
+          <span class="type">int</span> x <span class="operator">=</span> option<span class="operator">.</span>rect<span class="operator">.</span>x();
+          <span class="type">int</span> y <span class="operator">=</span> option<span class="operator">.</span>rect<span class="operator">.</span>y() <span class="operator">+</span> (option<span class="operator">.</span>rect<span class="operator">.</span>height() <span class="operator">/</span> <span class="number">2</span>) <span class="operator">-</span> (height <span class="operator">/</span> <span class="number">2</span>);
+          <span class="keyword">for</span> (<span class="type">int</span> i <span class="operator">=</span> <span class="number">0</span>; i <span class="operator">&lt;</span> rating; <span class="operator">+</span><span class="operator">+</span>i) {
+              painter<span class="operator">-</span><span class="operator">&gt;</span>drawPixmap(x<span class="operator">,</span> y<span class="operator">,</span> star);
+              x <span class="operator">+</span><span class="operator">=</span> width;
+          }
+          drawFocus(painter<span class="operator">,</span> option<span class="operator">,</span> option<span class="operator">.</span>rect<span class="operator">.</span>adjusted(<span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="operator">-</span><span class="number">1</span><span class="operator">,</span> <span class="operator">-</span><span class="number">1</span>)); <span class="comment">// since we draw the grid ourselves</span>
+      }
+
+      <span class="type">QPen</span> pen <span class="operator">=</span> painter<span class="operator">-</span><span class="operator">&gt;</span>pen();
+      painter<span class="operator">-</span><span class="operator">&gt;</span>setPen(option<span class="operator">.</span>palette<span class="operator">.</span>color(<span class="type">QPalette</span><span class="operator">::</span>Mid));
+      painter<span class="operator">-</span><span class="operator">&gt;</span>drawLine(option<span class="operator">.</span>rect<span class="operator">.</span>bottomLeft()<span class="operator">,</span> option<span class="operator">.</span>rect<span class="operator">.</span>bottomRight());
+      painter<span class="operator">-</span><span class="operator">&gt;</span>drawLine(option<span class="operator">.</span>rect<span class="operator">.</span>topRight()<span class="operator">,</span> option<span class="operator">.</span>rect<span class="operator">.</span>bottomRight());
+      painter<span class="operator">-</span><span class="operator">&gt;</span>setPen(pen);
+  }
+
+  <span class="type"><a href="../qtcore/qsize.html">QSize</a></span> BookDelegate<span class="operator">::</span>sizeHint(<span class="keyword">const</span> <span class="type"><a href="../qtwidgets/qstyleoptionviewitem.html">QStyleOptionViewItem</a></span> <span class="operator">&amp;</span>option<span class="operator">,</span>
+                                   <span class="keyword">const</span> <span class="type"><a href="../qtcore/qmodelindex.html">QModelIndex</a></span> <span class="operator">&amp;</span>index) <span class="keyword">const</span>
+  {
+      <span class="keyword">if</span> (index<span class="operator">.</span>column() <span class="operator">=</span><span class="operator">=</span> <span class="number">5</span>)
+          <span class="keyword">return</span> <span class="type"><a href="../qtcore/qsize.html">QSize</a></span>(<span class="number">5</span> <span class="operator">*</span> star<span class="operator">.</span>width()<span class="operator">,</span> star<span class="operator">.</span>height()) <span class="operator">+</span> <span class="type"><a href="../qtcore/qsize.html">QSize</a></span>(<span class="number">1</span><span class="operator">,</span> <span class="number">1</span>);
+
+      <span class="keyword">return</span> <span class="type"><a href="qsqlrelationaldelegate.html">QSqlRelationalDelegate</a></span><span class="operator">::</span>sizeHint(option<span class="operator">,</span> index) <span class="operator">+</span> <span class="type"><a href="../qtcore/qsize.html">QSize</a></span>(<span class="number">1</span><span class="operator">,</span> <span class="number">1</span>); <span class="comment">// since we draw the grid ourselves</span>
+  }
+
+  bool BookDelegate<span class="operator">::</span>editorEvent(<span class="type"><a href="../qtcore/qevent.html">QEvent</a></span> <span class="operator">*</span>event<span class="operator">,</span> <span class="type"><a href="../qtcore/qabstractitemmodel.html">QAbstractItemModel</a></span> <span class="operator">*</span>model<span class="operator">,</span>
+                                 <span class="keyword">const</span> <span class="type"><a href="../qtwidgets/qstyleoptionviewitem.html">QStyleOptionViewItem</a></span> <span class="operator">&amp;</span>option<span class="operator">,</span>
+                                 <span class="keyword">const</span> <span class="type"><a href="../qtcore/qmodelindex.html">QModelIndex</a></span> <span class="operator">&amp;</span>index)
+  {
+      <span class="keyword">if</span> (index<span class="operator">.</span>column() <span class="operator">!</span><span class="operator">=</span> <span class="number">5</span>)
+          <span class="keyword">return</span> <span class="type"><a href="qsqlrelationaldelegate.html">QSqlRelationalDelegate</a></span><span class="operator">::</span>editorEvent(event<span class="operator">,</span> model<span class="operator">,</span> option<span class="operator">,</span> index);
+
+      <span class="keyword">if</span> (event<span class="operator">-</span><span class="operator">&gt;</span>type() <span class="operator">=</span><span class="operator">=</span> <span class="type"><a href="../qtcore/qevent.html">QEvent</a></span><span class="operator">::</span>MouseButtonPress) {
+          <span class="type">QMouseEvent</span> <span class="operator">*</span>mouseEvent <span class="operator">=</span> <span class="keyword">static_cast</span><span class="operator">&lt;</span><span class="type">QMouseEvent</span><span class="operator">*</span><span class="operator">&gt;</span>(event);
+          <span class="type">int</span> stars <span class="operator">=</span> <a href="../qtcore/qtglobal.html#qBound">qBound</a>(<span class="number">0</span><span class="operator">,</span> <span class="type">int</span>(<span class="number">0.7</span> <span class="operator">+</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span>(mouseEvent<span class="operator">-</span><span class="operator">&gt;</span>pos()<span class="operator">.</span>x()
+              <span class="operator">-</span> option<span class="operator">.</span>rect<span class="operator">.</span>x()) <span class="operator">/</span> star<span class="operator">.</span>width())<span class="operator">,</span> <span class="number">5</span>);
+          model<span class="operator">-</span><span class="operator">&gt;</span>setData(index<span class="operator">,</span> <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span>(stars));
+          <span class="keyword">return</span> <span class="keyword">false</span>; <span class="comment">//so that the selection can change</span>
+      }
+
+      <span class="keyword">return</span> <span class="keyword">true</span>;
+  }
+
+  <span class="type"><a href="../qtwidgets/qwidget.html">QWidget</a></span> <span class="operator">*</span>BookDelegate<span class="operator">::</span>createEditor(<span class="type"><a href="../qtwidgets/qwidget.html">QWidget</a></span> <span class="operator">*</span>parent<span class="operator">,</span> <span class="keyword">const</span> <span class="type"><a href="../qtwidgets/qstyleoptionviewitem.html">QStyleOptionViewItem</a></span> <span class="operator">&amp;</span>option<span class="operator">,</span>
+                                      <span class="keyword">const</span> <span class="type"><a href="../qtcore/qmodelindex.html">QModelIndex</a></span> <span class="operator">&amp;</span>index) <span class="keyword">const</span>
+  {
+      <span class="keyword">if</span> (index<span class="operator">.</span>column() <span class="operator">!</span><span class="operator">=</span> <span class="number">4</span>)
+          <span class="keyword">return</span> <span class="type"><a href="qsqlrelationaldelegate.html">QSqlRelationalDelegate</a></span><span class="operator">::</span>createEditor(parent<span class="operator">,</span> option<span class="operator">,</span> index);
+
+      <span class="comment">// for editing the year, return a spinbox with a range from -1000 to 2100.</span>
+      <span class="type"><a href="../qtwidgets/qspinbox.html">QSpinBox</a></span> <span class="operator">*</span>sb <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qspinbox.html">QSpinBox</a></span>(parent);
+      sb<span class="operator">-</span><span class="operator">&gt;</span>setFrame(<span class="keyword">false</span>);
+      sb<span class="operator">-</span><span class="operator">&gt;</span>setMaximum(<span class="number">2100</span>);
+      sb<span class="operator">-</span><span class="operator">&gt;</span>setMinimum(<span class="operator">-</span><span class="number">1000</span>);
+
+      <span class="keyword">return</span> sb;
+  }
+
+</pre>
+</div>
+<!-- @@@books/bookdelegate.cpp -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

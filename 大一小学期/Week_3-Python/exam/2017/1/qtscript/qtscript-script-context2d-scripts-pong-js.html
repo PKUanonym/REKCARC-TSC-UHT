@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>pong.js Example File | Qt Script</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtscript-index.html">Qt Script</a></td><td ><a href="qtscript-script-context2d-example.html">Context2D Example</a></td><td >pong.js Example File</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar"><div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">pong.js Example File</h1>
+<span class="subtitle">script/context2d/scripts/pong.js</span>
+<!-- $$$script/context2d/scripts/pong.js-description -->
+<div class="descr"> <a name="details"></a>
+<pre class="js">
+
+  <span class="comment">// globals</span>
+  <span class="name">playarea_canvas</span> <span class="operator">=</span> <span class="name">document</span>.<span class="name">getElementById</span>(<span class="string">'tutorial'</span>);
+  <span class="name">playarea_canvas</span>.<span class="name">resize</span>(<span class="number">320</span>,<span class="number">200</span>);
+  <span class="name">playarea</span> <span class="operator">=</span> <span class="name">playarea_canvas</span>.<span class="name">getContext</span>(<span class="string">'2d'</span>);
+  <span class="comment">//p1_scr = document.getElementById('p1_scr');</span>
+  <span class="comment">//p2_scr = document.getElementById('p2_scr');</span>
+  <span class="comment">//status_msg = document.getElementById('status');</span>
+  <span class="comment">//debug = document.getElementById('debug');</span>
+  <span class="name">ball_direction</span> <span class="operator">=</span> <span class="number">0</span>;
+  <span class="name">up</span> <span class="operator">=</span> -<span class="number">1</span>;
+  <span class="name">down</span> <span class="operator">=</span> <span class="number">1</span>;
+
+  <span class="comment">//key codes</span>
+  <span class="name">key_up</span> <span class="operator">=</span> <span class="number">38</span>;
+  <span class="name">key_down</span> <span class="operator">=</span> <span class="number">40</span>;
+  <span class="name">key_W</span> <span class="operator">=</span> <span class="number">87</span>;
+  <span class="name">key_S</span> <span class="operator">=</span> <span class="number">83</span>;
+  <span class="name">key_pause</span> <span class="operator">=</span> <span class="number">32</span>;
+
+  <span class="name">speed</span> <span class="operator">=</span> <span class="number">2</span>;                      <span class="comment">//controls the speed of the ball</span>
+  <span class="name">paddle_inc</span> <span class="operator">=</span> <span class="number">10</span>;        <span class="comment">//how many pixels paddle can move in either direction</span>
+  <span class="name">pause</span> <span class="operator">=</span> <span class="number">false</span>;
+
+  <span class="name">player_1</span> <span class="operator">=</span> <span class="number">0</span>;           <span class="comment">//player IDs</span>
+  <span class="name">player_2</span> <span class="operator">=</span> <span class="number">1</span>;
+  <span class="name">player_1_scr</span> <span class="operator">=</span> <span class="number">0</span>;       <span class="comment">//player scores</span>
+  <span class="name">player_2_scr</span> <span class="operator">=</span> <span class="number">0</span>;
+  <span class="name">player_1_direction</span> <span class="operator">=</span> <span class="number">null</span>;      <span class="comment">//null = no movement whatsoever</span>
+  <span class="name">player_2_direction</span> <span class="operator">=</span> <span class="number">null</span>;
+
+  <span class="name">pa</span> <span class="operator">=</span> new <span class="name">Array</span>();
+  <span class="name">divider</span> <span class="operator">=</span> new <span class="name">Array</span>();
+  <span class="name">paddle_1</span> <span class="operator">=</span> new <span class="name">Array</span>();
+  <span class="name">paddle_2</span> <span class="operator">=</span> new <span class="name">Array</span>();
+  <span class="name">ball</span> <span class="operator">=</span> new <span class="name">Array</span>();
+
+  <span class="keyword">function</span> <span class="name">sleep</span>(<span class="name">numberMillis</span>)
+  {
+      var <span class="name">now</span> = new <span class="name">Date</span>();
+      var <span class="name">exitTime</span> = <span class="name">now</span>.<span class="name">getTime</span>() <span class="operator">+</span> <span class="name">numberMillis</span>;
+      <span class="keyword">while</span> (<span class="number">true</span>) {
+          <span class="name">now</span> <span class="operator">=</span> new <span class="name">Date</span>();
+          <span class="keyword">if</span> (<span class="name">now</span>.<span class="name">getTime</span>() <span class="operator">&gt;</span> <span class="name">exitTime</span>)
+              <span class="keyword">return</span>;
+      }
+  }
+
+  <span class="keyword">function</span> <span class="name">init</span>()
+  {
+      <span class="name">pa</span>[<span class="string">'width'</span>] <span class="operator">=</span> <span class="number">150</span>;
+      <span class="name">pa</span>[<span class="string">'height'</span>] <span class="operator">=</span> <span class="number">140</span>;
+      <span class="name">pa</span>[<span class="string">'player_margin'</span>] <span class="operator">=</span> <span class="number">10</span>;           <span class="comment">//area behind player paddles</span>
+      <span class="name">pa</span>[<span class="string">'foreground'</span>] <span class="operator">=</span> <span class="string">&quot;#FFFFFF&quot;</span>;
+      <span class="name">pa</span>[<span class="string">'background'</span>] <span class="operator">=</span> <span class="string">&quot;#000000&quot;</span>;
+
+      <span class="name">divider</span>[<span class="string">'pos'</span>] <span class="operator">=</span> <span class="name">pa</span>[<span class="string">'width'</span>]<span class="operator">/</span><span class="number">2</span>;
+      <span class="name">divider</span>[<span class="string">'width'</span>] <span class="operator">=</span> <span class="number">4</span>;
+
+      <span class="name">paddle_1</span>[<span class="string">'width'</span>] <span class="operator">=</span> <span class="number">8</span>;
+      <span class="name">paddle_1</span>[<span class="string">'height'</span>] <span class="operator">=</span> <span class="number">64</span>;
+      <span class="name">paddle_1</span>[<span class="string">'x'</span>] <span class="operator">=</span> <span class="name">pa</span>[<span class="string">'player_margin'</span>];
+      <span class="name">paddle_1</span>[<span class="string">'y'</span>] <span class="operator">=</span> (<span class="name">pa</span>[<span class="string">'height'</span>] <span class="operator">/</span><span class="number">2</span> ) <span class="operator">-</span> (<span class="name">paddle_1</span>[<span class="string">'height'</span>] <span class="operator">/</span> <span class="number">2</span>);
+
+      <span class="name">paddle_2</span>[<span class="string">'width'</span>] <span class="operator">=</span> <span class="number">8</span>;
+      <span class="name">paddle_2</span>[<span class="string">'height'</span>] <span class="operator">=</span> <span class="number">64</span>;
+      <span class="name">paddle_2</span>[<span class="string">'x'</span>] <span class="operator">=</span> (<span class="name">pa</span>[<span class="string">'width'</span>] <span class="operator">-</span> <span class="name">pa</span>[<span class="string">'player_margin'</span>] <span class="operator">-</span> <span class="name">paddle_2</span>[<span class="string">'width'</span>]);
+      <span class="name">paddle_2</span>[<span class="string">'y'</span>] <span class="operator">=</span> (<span class="name">pa</span>[<span class="string">'height'</span>] <span class="operator">/</span><span class="number">2</span> ) <span class="operator">-</span> (<span class="name">paddle_2</span>[<span class="string">'height'</span>] <span class="operator">/</span> <span class="number">2</span>);
+
+      <span class="name">ball</span>[<span class="string">'width'</span>] <span class="operator">=</span> <span class="number">10</span>;
+      <span class="name">ball</span>[<span class="string">'height'</span>] <span class="operator">=</span> <span class="number">10</span>;
+      <span class="name">ball</span>[<span class="string">'x'</span>] <span class="operator">=</span> (<span class="name">pa</span>[<span class="string">'width'</span>]<span class="operator">/</span><span class="number">2</span>) <span class="operator">-</span> (<span class="name">ball</span>[<span class="string">'width'</span>] <span class="operator">/</span> <span class="number">2</span>);
+      <span class="name">ball</span>[<span class="string">'y'</span>] <span class="operator">=</span> (<span class="name">pa</span>[<span class="string">'height'</span>]<span class="operator">/</span><span class="number">2</span>) <span class="operator">-</span> (<span class="name">ball</span>[<span class="string">'height'</span>] <span class="operator">/</span> <span class="number">2</span>);
+
+      <span class="name">ball_direction</span> <span class="operator">=</span> <span class="name">Math</span>.<span class="name">random</span>() <span class="operator">*</span> <span class="number">360</span>;       <span class="comment">//initialize ball direction, which is determined by angle, at random</span>
+      <span class="name">speed</span> <span class="operator">=</span> <span class="number">2</span>;
+  }
+
+  <span class="keyword">function</span> <span class="name">renderPlayarea</span>()
+  {
+      <span class="name">playarea</span>.<span class="name">beginPath</span>();
+
+      <span class="name">playarea</span>.<span class="name">clearRect</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="name">pa</span>[<span class="string">'width'</span>],<span class="name">pa</span>[<span class="string">'height'</span>]);
+      <span class="name">playarea</span>.<span class="name">fillStyle</span> <span class="operator">=</span> <span class="name">pa</span>[<span class="string">'background'</span>];
+      <span class="name">playarea</span>.<span class="name">strokeStyle</span> <span class="operator">=</span> <span class="name">pa</span>[<span class="string">'foreground'</span>];
+      <span class="name">playarea</span>.<span class="name">fillRect</span>(<span class="number">0</span>,<span class="number">0</span>, <span class="name">pa</span>[<span class="string">'width'</span>], <span class="name">pa</span>[<span class="string">'height'</span>]);
+
+      <span class="comment">//move paddles</span>
+      <span class="keyword">if</span>(<span class="name">player_1_direction</span> <span class="operator">!=</span> <span class="number">null</span>)
+          {
+              <span class="keyword">if</span>(<span class="name">player_1_direction</span> <span class="operator">==</span> <span class="name">up</span>)
+                  <span class="name">paddle_1</span>[<span class="string">'y'</span>] <span class="operator">=</span> <span class="name">paddle_1</span>[<span class="string">'y'</span>] <span class="operator">-</span> <span class="name">paddle_inc</span>;
+              <span class="keyword">else</span>
+                  <span class="name">paddle_1</span>[<span class="string">'y'</span>] <span class="operator">=</span> <span class="name">paddle_1</span>[<span class="string">'y'</span>] <span class="operator">+</span> <span class="name">paddle_inc</span>;
+          }
+      <span class="keyword">if</span>(<span class="name">player_2_direction</span> <span class="operator">!=</span> <span class="number">null</span>)
+          {
+              <span class="keyword">if</span>(<span class="name">player_2_direction</span> <span class="operator">==</span> <span class="name">up</span>)
+                  <span class="name">paddle_2</span>[<span class="string">'y'</span>] <span class="operator">=</span> <span class="name">paddle_2</span>[<span class="string">'y'</span>] <span class="operator">-</span> <span class="name">paddle_inc</span>;
+              <span class="keyword">else</span>
+                  <span class="name">paddle_2</span>[<span class="string">'y'</span>] <span class="operator">=</span> <span class="name">paddle_2</span>[<span class="string">'y'</span>] <span class="operator">+</span> <span class="name">paddle_inc</span>;
+          }
+      <span class="name">playarea</span>.<span class="name">rect</span>(<span class="name">paddle_1</span>[<span class="string">'x'</span>],<span class="name">paddle_1</span>[<span class="string">'y'</span>],<span class="name">paddle_1</span>[<span class="string">'width'</span>],<span class="name">paddle_1</span>[<span class="string">'height'</span>]);
+      <span class="name">playarea</span>.<span class="name">rect</span>(<span class="name">paddle_2</span>[<span class="string">'x'</span>],<span class="name">paddle_2</span>[<span class="string">'y'</span>],<span class="name">paddle_2</span>[<span class="string">'width'</span>],<span class="name">paddle_2</span>[<span class="string">'height'</span>]);
+
+      <span class="comment">//move ball</span>
+      <span class="name">playarea</span>.<span class="name">rect</span>(<span class="name">ball</span>[<span class="string">'x'</span>], <span class="name">ball</span>[<span class="string">'y'</span>], <span class="name">ball</span>[<span class="string">'width'</span>], <span class="name">ball</span>[<span class="string">'height'</span>]);
+      <span class="name">ball</span>[<span class="string">'x'</span>] <span class="operator">=</span> <span class="name">ball</span>[<span class="string">'x'</span>] <span class="operator">+</span> <span class="name">Math</span>.<span class="name">cos</span>((<span class="name">ball_direction</span>)<span class="operator">*</span><span class="name">Math</span>.<span class="name">PI</span><span class="operator">/</span><span class="number">180</span>) <span class="operator">*</span> <span class="name">speed</span>;
+      <span class="name">ball</span>[<span class="string">'y'</span>] <span class="operator">=</span> <span class="name">ball</span>[<span class="string">'y'</span>] <span class="operator">+</span> <span class="name">Math</span>.<span class="name">sin</span>((<span class="name">ball_direction</span>)<span class="operator">*</span><span class="name">Math</span>.<span class="name">PI</span><span class="operator">/</span><span class="number">180</span>) <span class="operator">*</span> <span class="name">speed</span>;
+
+      <span class="name">playarea</span>.<span class="name">fillStyle</span> <span class="operator">=</span> <span class="name">pa</span>[<span class="string">'foreground'</span>];
+      <span class="name">playarea</span>.<span class="name">fill</span>();
+
+      <span class="name">playarea</span>.<span class="name">beginPath</span>();
+      <span class="comment">//redraw divider</span>
+      <span class="name">playarea</span>.<span class="name">lineWidth</span> <span class="operator">=</span> <span class="name">divider</span>[<span class="string">'width'</span>];
+      <span class="name">playarea</span>.<span class="name">lineTo</span>(<span class="name">divider</span>[<span class="string">'pos'</span>], <span class="number">0</span>);
+      <span class="name">playarea</span>.<span class="name">lineTo</span>(<span class="name">divider</span>[<span class="string">'pos'</span>], <span class="name">pa</span>[<span class="string">'height'</span>] <span class="operator">=</span> <span class="number">200</span>);
+      <span class="name">playarea</span>.<span class="name">lineWidth</span> <span class="operator">=</span> <span class="number">1</span>;
+
+      <span class="name">playarea</span>.<span class="name">stroke</span>();
+      <span class="name">playarea</span>.<span class="name">closePath</span>();
+  }
+
+  <span class="keyword">function</span> <span class="name">testCollisions</span>()
+  {
+      <span class="comment">//make sure paddles don't go beyond play area</span>
+      <span class="keyword">if</span>(((<span class="name">paddle_1</span>[<span class="string">'y'</span>] <span class="operator">&lt;=</span> <span class="number">0</span>) <span class="operator">&amp;&amp;</span> (<span class="name">player_1_direction</span> <span class="operator">==</span> <span class="name">up</span>)) <span class="operator">||</span> ((<span class="name">paddle_1</span>[<span class="string">'y'</span>] <span class="operator">&gt;=</span> (<span class="name">pa</span>[<span class="string">'height'</span>] <span class="operator">-</span> <span class="name">paddle_1</span>[<span class="string">'height'</span>])) <span class="operator">&amp;&amp;</span> (<span class="name">player_1_direction</span> <span class="operator">==</span> <span class="name">down</span>)))
+          <span class="name">player_1_direction</span> <span class="operator">=</span> <span class="number">null</span>;
+      <span class="keyword">if</span>(((<span class="name">paddle_2</span>[<span class="string">'y'</span>] <span class="operator">&lt;=</span> <span class="number">0</span>) <span class="operator">&amp;&amp;</span> (<span class="name">player_2_direction</span> <span class="operator">==</span> <span class="name">up</span>)) <span class="operator">||</span> ((<span class="name">paddle_2</span>[<span class="string">'y'</span>] <span class="operator">&gt;=</span> (<span class="name">pa</span>[<span class="string">'height'</span>] <span class="operator">-</span> <span class="name">paddle_2</span>[<span class="string">'height'</span>])) <span class="operator">&amp;&amp;</span> (<span class="name">player_2_direction</span> <span class="operator">==</span> <span class="name">down</span>)))
+          <span class="name">player_2_direction</span> <span class="operator">=</span> <span class="number">null</span>;
+
+      <span class="comment">//check to see if ball went beyond paddles, and if so, score accordingly and reset playarea</span>
+      <span class="keyword">if</span>(<span class="name">ball</span>[<span class="string">'x'</span>] <span class="operator">&lt;=</span> <span class="number">0</span>)
+          {
+              <span class="name">setScore</span>(<span class="name">player_2</span>);
+              <span class="name">init</span>()
+                  <span class="name">sleep</span>(<span class="number">1000</span>);
+          }
+      <span class="keyword">if</span>(<span class="name">ball</span>[<span class="string">'x'</span>] <span class="operator">&gt;=</span> (<span class="name">pa</span>[<span class="string">'width'</span>] <span class="operator">-</span> <span class="name">ball</span>[<span class="string">'width'</span>]))
+          {
+              <span class="name">setScore</span>(<span class="name">player_1</span>);
+              <span class="name">init</span>();
+              <span class="name">sleep</span>(<span class="number">1000</span>);
+          }
+
+      <span class="comment">//check to see if ball hit top or bottom wall. if so, change direction</span>
+      <span class="keyword">if</span>((<span class="name">ball</span>[<span class="string">'y'</span>] <span class="operator">&gt;=</span> (<span class="name">pa</span>[<span class="string">'height'</span>] <span class="operator">-</span> <span class="name">ball</span>[<span class="string">'height'</span>])) <span class="operator">||</span> <span class="name">ball</span>[<span class="string">'y'</span>] <span class="operator">&lt;=</span> <span class="number">0</span>)
+          <span class="name">ball_direction</span> <span class="operator">=</span> -<span class="name">ball_direction</span>;
+
+      <span class="comment">//check to see if the ball hit a paddle, and if so, change ball angle dependant on where it hit the paddle</span>
+      <span class="keyword">if</span>((<span class="name">ball</span>[<span class="string">'x'</span>] <span class="operator">&lt;=</span> (<span class="name">paddle_1</span>[<span class="string">'x'</span>] <span class="operator">+</span> <span class="name">paddle_1</span>[<span class="string">'width'</span>])) <span class="operator">&amp;&amp;</span> (<span class="name">ball</span>[<span class="string">'y'</span>] <span class="operator">&gt;=</span> <span class="name">paddle_1</span>[<span class="string">'y'</span>]) <span class="operator">&amp;&amp;</span> (<span class="name">ball</span>[<span class="string">'y'</span>] <span class="operator">&lt;=</span> (<span class="name">paddle_1</span>[<span class="string">'y'</span>] <span class="operator">+</span> <span class="name">paddle_1</span>[<span class="string">'height'</span>])))
+          {
+              <span class="name">ball_direction</span> <span class="operator">=</span> -<span class="name">ball_direction</span><span class="operator">/</span><span class="number">2</span>;
+              <span class="name">speed</span> <span class="operator">+=</span> <span class="number">.5</span>;
+          }
+      <span class="keyword">if</span>(((<span class="name">ball</span>[<span class="string">'x'</span>] <span class="operator">+</span> <span class="name">ball</span>[<span class="string">'width'</span>]) <span class="operator">&gt;=</span> <span class="name">paddle_2</span>[<span class="string">'x'</span>]) <span class="operator">&amp;&amp;</span> (<span class="name">ball</span>[<span class="string">'y'</span>] <span class="operator">&gt;=</span> <span class="name">paddle_2</span>[<span class="string">'y'</span>]) <span class="operator">&amp;&amp;</span> (<span class="name">ball</span>[<span class="string">'y'</span>] <span class="operator">&lt;=</span> (<span class="name">paddle_2</span>[<span class="string">'y'</span>] <span class="operator">+</span> <span class="name">paddle_2</span>[<span class="string">'height'</span>])))
+          {
+              <span class="name">ball_direction</span> <span class="operator">=</span> (<span class="number">180</span><span class="operator">+</span><span class="name">ball_direction</span>)<span class="operator">/</span><span class="number">2</span>;
+              <span class="name">speed</span> <span class="operator">+=</span> <span class="number">.5</span>;
+          }
+  }
+
+  <span class="keyword">function</span> <span class="name">setScore</span>(<span class="name">p</span>)
+  {
+      <span class="keyword">if</span>(<span class="name">p</span> <span class="operator">==</span> <span class="name">player_1</span>)
+          {
+              player_1_scr++;
+              <span class="comment">//p1_scr.firstChild.nodeValue = player_1_scr;</span>
+          }
+      <span class="keyword">if</span>(<span class="name">p</span> <span class="operator">==</span> <span class="name">player_2</span>)
+          {
+              player_2_scr++;
+              <span class="comment">//p2_scr.firstChild.nodeValue = player_2_scr;</span>
+          }
+  }
+
+  <span class="comment">//handle input</span>
+  <span class="name">document</span>.<span class="name">onkeydown</span> <span class="operator">=</span> <span class="keyword">function</span>(<span class="name">ev</span>)
+  {
+      <span class="keyword">switch</span>(<span class="name">ev</span>.<span class="name">keyCode</span>)
+      {
+          <span class="keyword">case</span> <span class="name">key_W</span>:
+          <span class="name">player_1_direction</span> <span class="operator">=</span> <span class="name">up</span>;
+          <span class="keyword">break</span>;
+          <span class="keyword">case</span> <span class="name">key_S</span>:
+          <span class="name">player_1_direction</span> <span class="operator">=</span> <span class="name">down</span>;
+          <span class="keyword">break</span>;
+          <span class="keyword">case</span> <span class="name">key_up</span>:
+          <span class="name">player_2_direction</span> <span class="operator">=</span> <span class="name">up</span>;
+          <span class="keyword">break</span>;
+          <span class="keyword">case</span> <span class="name">key_down</span>:
+          <span class="name">player_2_direction</span> <span class="operator">=</span> <span class="name">down</span>;
+          <span class="keyword">break</span>;
+      }
+  }
+
+  <span class="name">document</span>.<span class="name">onkeyup</span> <span class="operator">=</span> <span class="keyword">function</span>(<span class="name">ev</span>)
+  {
+      <span class="keyword">switch</span>(<span class="name">ev</span>.<span class="name">keyCode</span>)
+      {
+          <span class="keyword">case</span> <span class="name">key_W</span>:
+          <span class="keyword">case</span> <span class="name">key_S</span>:
+          <span class="name">player_1_direction</span> <span class="operator">=</span> <span class="number">null</span>;
+          <span class="keyword">break</span>;
+          <span class="keyword">case</span> <span class="name">key_up</span>:
+          <span class="keyword">case</span> <span class="name">key_down</span>:
+          <span class="name">player_2_direction</span> <span class="operator">=</span> <span class="number">null</span>;
+          <span class="keyword">break</span>;
+          <span class="keyword">case</span> <span class="name">key_pause</span>:
+          <span class="keyword">if</span>(<span class="name">pause</span> <span class="operator">==</span> <span class="number">false</span>)
+          {
+              <span class="name">clearInterval</span>(<span class="name">game</span>);
+              <span class="comment">//status_msg.style.visibility = &quot;visible&quot;;</span>
+              <span class="name">pause</span> <span class="operator">=</span> <span class="number">true</span>;
+          }
+          <span class="keyword">else</span>
+          {
+              <span class="name">game</span> <span class="operator">=</span> <span class="name">setInterval</span>(<span class="name">main</span>, <span class="number">25</span>);
+              <span class="comment">//status_msg.style.visibility = &quot;hidden&quot;;</span>
+              <span class="name">pause</span> <span class="operator">=</span> <span class="number">false</span>;
+          }
+          <span class="keyword">break</span>;
+      }
+  }
+
+  <span class="keyword">function</span> <span class="name">main</span>()
+  {
+      <span class="name">testCollisions</span>();
+      <span class="name">renderPlayarea</span>();
+  }
+
+  <span class="name">init</span>();
+  <span class="name">game</span> <span class="operator">=</span> <span class="name">setInterval</span>(<span class="name">main</span>, <span class="number">25</span>);
+
+</pre>
+</div>
+<!-- @@@script/context2d/scripts/pong.js -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

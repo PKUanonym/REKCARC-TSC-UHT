@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qxml.cpp -->
+  <title>QXmlSimpleReader Class | Qt XML 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtxml-index.html">Qt XML</a></td><td ><a href="qtxml-module.html">C++ Classes</a></td><td >QXmlSimpleReader</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#reimplemented-public-functions">Reimplemented Public Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">QXmlSimpleReader Class</h1>
+<!-- $$$QXmlSimpleReader-brief -->
+<p>The <a href="qxmlsimplereader.html">QXmlSimpleReader</a> class provides an implementation of a simple XML parser. <a href="#details">More...</a></p>
+<!-- @@@QXmlSimpleReader -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign">   <span class="preprocessor">#include &lt;QXmlSimpleReader&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> qmake:</td><td class="memItemRight bottomAlign"> QT += xml</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Inherits:</td><td class="memItemRight bottomAlign"> <a href="qxmlreader.html">QXmlReader</a></td></tr></table></div><ul>
+<li><a href="qxmlsimplereader-members.html">List of all members, including inherited members</a></li>
+</ul>
+<p><b>Warning:</b> This class is not <a href="../qtdoc/threads-reentrancy.html">reentrant</a>.</p>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qxmlsimplereader.html#QXmlSimpleReader">QXmlSimpleReader</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual </td><td class="memItemRight bottomAlign"><b><a href="qxmlsimplereader.html#dtor.QXmlSimpleReader">~QXmlSimpleReader</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="qxmlsimplereader.html#parse-2">parse</a></b>(const QXmlInputSource *<i>input</i>, bool <i>incremental</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="qxmlsimplereader.html#parseContinue">parseContinue</a></b>()</td></tr>
+</table></div>
+<a name="reimplemented-public-functions"></a>
+<h2 id="reimplemented-public-functions">Reimplemented Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QXmlDTDHandler *</td><td class="memItemRight bottomAlign"><b><a href="qxmlsimplereader.html#DTDHandler">DTDHandler</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QXmlContentHandler *</td><td class="memItemRight bottomAlign"><b><a href="qxmlsimplereader.html#contentHandler">contentHandler</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QXmlDeclHandler *</td><td class="memItemRight bottomAlign"><b><a href="qxmlsimplereader.html#declHandler">declHandler</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QXmlEntityResolver *</td><td class="memItemRight bottomAlign"><b><a href="qxmlsimplereader.html#entityResolver">entityResolver</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QXmlErrorHandler *</td><td class="memItemRight bottomAlign"><b><a href="qxmlsimplereader.html#errorHandler">errorHandler</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="qxmlsimplereader.html#feature">feature</a></b>(const QString &amp;<i>name</i>, bool *<i>ok</i> = Q_NULLPTR) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="qxmlsimplereader.html#hasFeature">hasFeature</a></b>(const QString &amp;<i>name</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="qxmlsimplereader.html#hasProperty">hasProperty</a></b>(const QString &amp;<i>name</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QXmlLexicalHandler *</td><td class="memItemRight bottomAlign"><b><a href="qxmlsimplereader.html#lexicalHandler">lexicalHandler</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="qxmlsimplereader.html#parse">parse</a></b>(const QXmlInputSource &amp;<i>input</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="qxmlsimplereader.html#parse-1">parse</a></b>(const QXmlInputSource *<i>input</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void *</td><td class="memItemRight bottomAlign"><b><a href="qxmlsimplereader.html#property">property</a></b>(const QString &amp;<i>name</i>, bool *<i>ok</i> = Q_NULLPTR) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="qxmlsimplereader.html#setContentHandler">setContentHandler</a></b>(QXmlContentHandler *<i>handler</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="qxmlsimplereader.html#setDTDHandler">setDTDHandler</a></b>(QXmlDTDHandler *<i>handler</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="qxmlsimplereader.html#setDeclHandler">setDeclHandler</a></b>(QXmlDeclHandler *<i>handler</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="qxmlsimplereader.html#setEntityResolver">setEntityResolver</a></b>(QXmlEntityResolver *<i>handler</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="qxmlsimplereader.html#setErrorHandler">setErrorHandler</a></b>(QXmlErrorHandler *<i>handler</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="qxmlsimplereader.html#setFeature">setFeature</a></b>(const QString &amp;<i>name</i>, bool <i>enable</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="qxmlsimplereader.html#setLexicalHandler">setLexicalHandler</a></b>(QXmlLexicalHandler *<i>handler</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="qxmlsimplereader.html#setProperty">setProperty</a></b>(const QString &amp;<i>name</i>, void *<i>value</i>)</td></tr>
+</table></div>
+<ul>
+<li class="fn">19 public functions inherited from <a href="qxmlreader.html#public-functions">QXmlReader</a></li>
+</ul>
+<a name="details"></a>
+<!-- $$$QXmlSimpleReader-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="qxmlsimplereader.html">QXmlSimpleReader</a> class provides an implementation of a simple XML parser.</p>
+<p>This XML reader is suitable for a wide range of applications. It is able to parse well-formed XML and can report the namespaces of elements to a content handler; however, it does not parse any external entities. For historical reasons, Attribute Value Normalization and End-of-Line Handling as described in the XML 1.0 specification is not performed.</p>
+<p>The easiest pattern of use for this class is to create a reader instance, define an input source, specify the handlers to be used by the reader, and parse the data.</p>
+<p>For example, we could use a <a href="../qtcore/qfile.html">QFile</a> to supply the input. Here, we create a reader, and define an input source to be used by the reader:</p>
+<pre class="cpp">
+
+      <span class="type"><a href="qxmlsimplereader.html#QXmlSimpleReader">QXmlSimpleReader</a></span> xmlReader;
+      <span class="type"><a href="qxmlinputsource.html">QXmlInputSource</a></span> <span class="operator">*</span>source <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="qxmlinputsource.html">QXmlInputSource</a></span>(file);
+
+</pre>
+<p>A handler lets us perform actions when the reader encounters certain types of content, or if errors in the input are found. The reader must be told which handler to use for each type of event. For many common applications, we can create a custom handler by subclassing <a href="qxmldefaulthandler.html">QXmlDefaultHandler</a>, and use this to handle both error and content events:</p>
+<pre class="cpp">
+
+      Handler <span class="operator">*</span>handler <span class="operator">=</span> <span class="keyword">new</span> Handler;
+      xmlReader<span class="operator">.</span>setContentHandler(handler);
+      xmlReader<span class="operator">.</span>setErrorHandler(handler);
+
+</pre>
+<p>If you don't set at least the content and error handlers, the parser will fall back on its default behavior---and will do nothing.</p>
+<p>The most convenient way to handle the input is to read it in a single pass using the <a href="qxmlsimplereader.html#parse">parse</a>() function with an argument that specifies the input source:</p>
+<pre class="cpp">
+
+      bool ok <span class="operator">=</span> xmlReader<span class="operator">.</span>parse(source);
+
+      <span class="keyword">if</span> (<span class="operator">!</span>ok)
+          std<span class="operator">::</span>cout <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">&quot;Parsing failed.&quot;</span> <span class="operator">&lt;</span><span class="operator">&lt;</span> std<span class="operator">::</span>endl;
+
+</pre>
+<p>If you can't parse the entire input in one go (for example, it is huge, or is being delivered over a network connection), data can be fed to the parser in pieces. This is achieved by telling <a href="qxmlsimplereader.html#parse">parse</a>() to work incrementally, and making subsequent calls to the <a href="qxmlsimplereader.html#parseContinue">parseContinue</a>() function, until all the data has been processed.</p>
+<p>A common way to perform incremental parsing is to connect the <code>readyRead()</code> signal of a <a href="../qtnetwork/qnetworkreply.html">network reply</a> a slot, and handle the incoming data there. See <a href="../qtnetwork/qnetworkaccessmanager.html">QNetworkAccessManager</a>.</p>
+<p>Aspects of the parsing behavior can be adapted using <a href="qxmlsimplereader.html#setFeature">setFeature</a>() and <a href="qxmlsimplereader.html#setProperty">setProperty</a>().</p>
+<pre class="cpp">
+
+  xmlReader<span class="operator">.</span>setFeature(<span class="string">&quot;http://xml.org/sax/features/namespace-prefixes&quot;</span><span class="operator">,</span> <span class="keyword">true</span>);
+
+</pre>
+<p><a href="qxmlsimplereader.html">QXmlSimpleReader</a> is not reentrant. If you want to use the class in threaded code, lock the code using <a href="qxmlsimplereader.html">QXmlSimpleReader</a> with a locking mechanism, such as a <a href="../qtcore/qmutex.html">QMutex</a>.</p>
+</div>
+<!-- @@@QXmlSimpleReader -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$QXmlSimpleReader[overload1]$$$QXmlSimpleReader -->
+<h3 class="fn" id="QXmlSimpleReader"><a name="QXmlSimpleReader"></a>QXmlSimpleReader::<span class="name">QXmlSimpleReader</span>()</h3>
+<p>Constructs a simple XML reader.</p>
+<!-- @@@QXmlSimpleReader -->
+<!-- $$$~QXmlSimpleReader[overload1]$$$~QXmlSimpleReader -->
+<h3 class="fn" id="dtor.QXmlSimpleReader"><a name="dtor.QXmlSimpleReader"></a><code>[virtual] </code>QXmlSimpleReader::<span class="name">~QXmlSimpleReader</span>()</h3>
+<p>Destroys the simple XML reader.</p>
+<!-- @@@~QXmlSimpleReader -->
+<!-- $$$DTDHandler[overload1]$$$DTDHandler -->
+<h3 class="fn" id="DTDHandler"><a name="DTDHandler"></a><code>[virtual] </code><span class="type"><a href="qxmldtdhandler.html">QXmlDTDHandler</a></span> *QXmlSimpleReader::<span class="name">DTDHandler</span>() const</h3>
+<p>Reimplemented from <a href="qxmlreader.html#DTDHandler">QXmlReader::DTDHandler</a>().</p>
+<p><b>See also </b><a href="qxmlsimplereader.html#setDTDHandler">setDTDHandler</a>().</p>
+<!-- @@@DTDHandler -->
+<!-- $$$contentHandler[overload1]$$$contentHandler -->
+<h3 class="fn" id="contentHandler"><a name="contentHandler"></a><code>[virtual] </code><span class="type"><a href="qxmlcontenthandler.html">QXmlContentHandler</a></span> *QXmlSimpleReader::<span class="name">contentHandler</span>() const</h3>
+<p>Reimplemented from <a href="qxmlreader.html#contentHandler">QXmlReader::contentHandler</a>().</p>
+<p><b>See also </b><a href="qxmlsimplereader.html#setContentHandler">setContentHandler</a>().</p>
+<!-- @@@contentHandler -->
+<!-- $$$declHandler[overload1]$$$declHandler -->
+<h3 class="fn" id="declHandler"><a name="declHandler"></a><code>[virtual] </code><span class="type"><a href="qxmldeclhandler.html">QXmlDeclHandler</a></span> *QXmlSimpleReader::<span class="name">declHandler</span>() const</h3>
+<p>Reimplemented from <a href="qxmlreader.html#declHandler">QXmlReader::declHandler</a>().</p>
+<p><b>See also </b><a href="qxmlsimplereader.html#setDeclHandler">setDeclHandler</a>().</p>
+<!-- @@@declHandler -->
+<!-- $$$entityResolver[overload1]$$$entityResolver -->
+<h3 class="fn" id="entityResolver"><a name="entityResolver"></a><code>[virtual] </code><span class="type"><a href="qxmlentityresolver.html">QXmlEntityResolver</a></span> *QXmlSimpleReader::<span class="name">entityResolver</span>() const</h3>
+<p>Reimplemented from <a href="qxmlreader.html#entityResolver">QXmlReader::entityResolver</a>().</p>
+<p><b>See also </b><a href="qxmlsimplereader.html#setEntityResolver">setEntityResolver</a>().</p>
+<!-- @@@entityResolver -->
+<!-- $$$errorHandler[overload1]$$$errorHandler -->
+<h3 class="fn" id="errorHandler"><a name="errorHandler"></a><code>[virtual] </code><span class="type"><a href="qxmlerrorhandler.html">QXmlErrorHandler</a></span> *QXmlSimpleReader::<span class="name">errorHandler</span>() const</h3>
+<p>Reimplemented from <a href="qxmlreader.html#errorHandler">QXmlReader::errorHandler</a>().</p>
+<p><b>See also </b><a href="qxmlsimplereader.html#setErrorHandler">setErrorHandler</a>().</p>
+<!-- @@@errorHandler -->
+<!-- $$$feature[overload1]$$$featureconstQString&bool* -->
+<h3 class="fn" id="feature"><a name="feature"></a><code>[virtual] </code><span class="type">bool</span> QXmlSimpleReader::<span class="name">feature</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>name</i>, <span class="type">bool</span> *<i>ok</i> = Q_NULLPTR) const</h3>
+<p>Reimplemented from <a href="qxmlreader.html#feature">QXmlReader::feature</a>().</p>
+<p><b>See also </b><a href="qxmlsimplereader.html#setFeature">setFeature</a>().</p>
+<!-- @@@feature -->
+<!-- $$$hasFeature[overload1]$$$hasFeatureconstQString& -->
+<h3 class="fn" id="hasFeature"><a name="hasFeature"></a><code>[virtual] </code><span class="type">bool</span> QXmlSimpleReader::<span class="name">hasFeature</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>name</i>) const</h3>
+<p>Reimplemented from <a href="qxmlreader.html#hasFeature">QXmlReader::hasFeature</a>().</p>
+<!-- @@@hasFeature -->
+<!-- $$$hasProperty[overload1]$$$hasPropertyconstQString& -->
+<h3 class="fn" id="hasProperty"><a name="hasProperty"></a><code>[virtual] </code><span class="type">bool</span> QXmlSimpleReader::<span class="name">hasProperty</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>name</i>) const</h3>
+<p>Reimplemented from <a href="qxmlreader.html#hasProperty">QXmlReader::hasProperty</a>().</p>
+<!-- @@@hasProperty -->
+<!-- $$$lexicalHandler[overload1]$$$lexicalHandler -->
+<h3 class="fn" id="lexicalHandler"><a name="lexicalHandler"></a><code>[virtual] </code><span class="type"><a href="qxmllexicalhandler.html">QXmlLexicalHandler</a></span> *QXmlSimpleReader::<span class="name">lexicalHandler</span>() const</h3>
+<p>Reimplemented from <a href="qxmlreader.html#lexicalHandler">QXmlReader::lexicalHandler</a>().</p>
+<p><b>See also </b><a href="qxmlsimplereader.html#setLexicalHandler">setLexicalHandler</a>().</p>
+<!-- @@@lexicalHandler -->
+<!-- $$$parse[overload1]$$$parseconstQXmlInputSource& -->
+<h3 class="fn" id="parse"><a name="parse"></a><code>[virtual] </code><span class="type">bool</span> QXmlSimpleReader::<span class="name">parse</span>(const <span class="type"><a href="qxmlinputsource.html">QXmlInputSource</a></span> &amp;<i>input</i>)</h3>
+<p>Reimplemented from <a href="qxmlreader-obsolete.html#parse-1" class="obsolete">QXmlReader::parse</a>().</p>
+<!-- @@@parse -->
+<!-- $$$parse$$$parseconstQXmlInputSource* -->
+<h3 class="fn" id="parse-1"><a name="parse-1"></a><code>[virtual] </code><span class="type">bool</span> QXmlSimpleReader::<span class="name">parse</span>(const <span class="type"><a href="qxmlinputsource.html">QXmlInputSource</a></span> *<i>input</i>)</h3>
+<p>Reimplemented from <a href="qxmlreader.html#parse">QXmlReader::parse</a>().</p>
+<p>Reads an XML document from <i>input</i> and parses it in one pass (non-incrementally). Returns <code>true</code> if the parsing was successful; otherwise returns <code>false</code>.</p>
+<!-- @@@parse -->
+<!-- $$$parse$$$parseconstQXmlInputSource*bool -->
+<h3 class="fn" id="parse-2"><a name="parse-2"></a><code>[virtual] </code><span class="type">bool</span> QXmlSimpleReader::<span class="name">parse</span>(const <span class="type"><a href="qxmlinputsource.html">QXmlInputSource</a></span> *<i>input</i>, <span class="type">bool</span> <i>incremental</i>)</h3>
+<p>Reads an XML document from <i>input</i> and parses it. Returns <code>true</code> if the parsing is completed successfully; otherwise returns <code>false</code>, indicating that an error occurred.</p>
+<p>If <i>incremental</i> is false, this function will return false if the XML file is not read completely. The parsing cannot be continued in this case.</p>
+<p>If <i>incremental</i> is true, the parser does not return false if it reaches the end of the <i>input</i> before reaching the end of the XML file. Instead, it stores the state of the parser so that parsing can be continued later when more data is available. In such a case, you can use the function <a href="qxmlsimplereader.html#parseContinue">parseContinue</a>() to continue with parsing. This class stores a pointer to the input source <i>input</i> and the <a href="qxmlsimplereader.html#parseContinue">parseContinue</a>() function tries to read from that input source. Therefore, you should not delete the input source <i>input</i> until you no longer need to call <a href="qxmlsimplereader.html#parseContinue">parseContinue</a>().</p>
+<p>If this function is called with <i>incremental</i> set to true while an incremental parse is in progress, a new parsing session will be started, and the previous session will be lost.</p>
+<p><b>See also </b><a href="qxmlsimplereader.html#parseContinue">parseContinue</a>() and <a href="../qtnetwork/qtcpsocket.html">QTcpSocket</a>.</p>
+<!-- @@@parse -->
+<!-- $$$parseContinue[overload1]$$$parseContinue -->
+<h3 class="fn" id="parseContinue"><a name="parseContinue"></a><code>[virtual] </code><span class="type">bool</span> QXmlSimpleReader::<span class="name">parseContinue</span>()</h3>
+<p>Continues incremental parsing, taking input from the <a href="qxmlinputsource.html">QXmlInputSource</a> that was specified with the most recent call to <a href="qxmlsimplereader.html#parse">parse</a>(). To use this function, you <i>must</i> have called <a href="qxmlsimplereader.html#parse">parse</a>() with the incremental argument set to true.</p>
+<p>Returns <code>false</code> if a parsing error occurs; otherwise returns <code>true</code>, even if the end of the XML file has not been reached. You can continue parsing at a later stage by calling this function again when there is more data available to parse.</p>
+<p>Calling this function when there is no data available in the input source indicates to the reader that the end of the XML file has been reached. If the input supplied up to this point was not well-formed then a parsing error occurs, and false is returned. If the input supplied was well-formed, true is returned. It is important to end the input in this way because it allows you to reuse the reader to parse other XML files.</p>
+<p>Calling this function after the end of file has been reached, but without available data will cause false to be returned whether the previous input was well-formed or not.</p>
+<p><b>See also </b><a href="qxmlsimplereader.html#parse">parse</a>(), <a href="qxmlinputsource.html#data">QXmlInputSource::data</a>(), and <a href="qxmlinputsource.html#next">QXmlInputSource::next</a>().</p>
+<!-- @@@parseContinue -->
+<!-- $$$property[overload1]$$$propertyconstQString&bool* -->
+<h3 class="fn" id="property"><a name="property"></a><code>[virtual] </code><span class="type">void</span> *QXmlSimpleReader::<span class="name">property</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>name</i>, <span class="type">bool</span> *<i>ok</i> = Q_NULLPTR) const</h3>
+<p>Reimplemented from <a href="qxmlreader.html#property">QXmlReader::property</a>().</p>
+<p><b>See also </b><a href="qxmlsimplereader.html#setProperty">setProperty</a>().</p>
+<!-- @@@property -->
+<!-- $$$setContentHandler[overload1]$$$setContentHandlerQXmlContentHandler* -->
+<h3 class="fn" id="setContentHandler"><a name="setContentHandler"></a><code>[virtual] </code><span class="type">void</span> QXmlSimpleReader::<span class="name">setContentHandler</span>(<span class="type"><a href="qxmlcontenthandler.html">QXmlContentHandler</a></span> *<i>handler</i>)</h3>
+<p>Reimplemented from <a href="qxmlreader.html#setContentHandler">QXmlReader::setContentHandler</a>().</p>
+<p><b>See also </b><a href="qxmlsimplereader.html#contentHandler">contentHandler</a>().</p>
+<!-- @@@setContentHandler -->
+<!-- $$$setDTDHandler[overload1]$$$setDTDHandlerQXmlDTDHandler* -->
+<h3 class="fn" id="setDTDHandler"><a name="setDTDHandler"></a><code>[virtual] </code><span class="type">void</span> QXmlSimpleReader::<span class="name">setDTDHandler</span>(<span class="type"><a href="qxmldtdhandler.html">QXmlDTDHandler</a></span> *<i>handler</i>)</h3>
+<p>Reimplemented from <a href="qxmlreader.html#setDTDHandler">QXmlReader::setDTDHandler</a>().</p>
+<!-- @@@setDTDHandler -->
+<!-- $$$setDeclHandler[overload1]$$$setDeclHandlerQXmlDeclHandler* -->
+<h3 class="fn" id="setDeclHandler"><a name="setDeclHandler"></a><code>[virtual] </code><span class="type">void</span> QXmlSimpleReader::<span class="name">setDeclHandler</span>(<span class="type"><a href="qxmldeclhandler.html">QXmlDeclHandler</a></span> *<i>handler</i>)</h3>
+<p>Reimplemented from <a href="qxmlreader.html#setDeclHandler">QXmlReader::setDeclHandler</a>().</p>
+<p><b>See also </b><a href="qxmlsimplereader.html#declHandler">declHandler</a>().</p>
+<!-- @@@setDeclHandler -->
+<!-- $$$setEntityResolver[overload1]$$$setEntityResolverQXmlEntityResolver* -->
+<h3 class="fn" id="setEntityResolver"><a name="setEntityResolver"></a><code>[virtual] </code><span class="type">void</span> QXmlSimpleReader::<span class="name">setEntityResolver</span>(<span class="type"><a href="qxmlentityresolver.html">QXmlEntityResolver</a></span> *<i>handler</i>)</h3>
+<p>Reimplemented from <a href="qxmlreader.html#setEntityResolver">QXmlReader::setEntityResolver</a>().</p>
+<p><b>See also </b><a href="qxmlsimplereader.html#entityResolver">entityResolver</a>().</p>
+<!-- @@@setEntityResolver -->
+<!-- $$$setErrorHandler[overload1]$$$setErrorHandlerQXmlErrorHandler* -->
+<h3 class="fn" id="setErrorHandler"><a name="setErrorHandler"></a><code>[virtual] </code><span class="type">void</span> QXmlSimpleReader::<span class="name">setErrorHandler</span>(<span class="type"><a href="qxmlerrorhandler.html">QXmlErrorHandler</a></span> *<i>handler</i>)</h3>
+<p>Reimplemented from <a href="qxmlreader.html#setErrorHandler">QXmlReader::setErrorHandler</a>().</p>
+<p><b>See also </b><a href="qxmlsimplereader.html#errorHandler">errorHandler</a>().</p>
+<!-- @@@setErrorHandler -->
+<!-- $$$setFeature[overload1]$$$setFeatureconstQString&bool -->
+<h3 class="fn" id="setFeature"><a name="setFeature"></a><code>[virtual] </code><span class="type">void</span> QXmlSimpleReader::<span class="name">setFeature</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>name</i>, <span class="type">bool</span> <i>enable</i>)</h3>
+<p>Reimplemented from <a href="qxmlreader.html#setFeature">QXmlReader::setFeature</a>().</p>
+<p>Turns on the feature <i>name</i> if <i>enable</i> is true; otherwise turns it off.</p>
+<p>The <i>name</i> parameter must be one of the following strings:</p>
+<div class="table"><table class="generic">
+ <thead><tr class="qt-style"><th >Feature</th><th >Default</th><th >Notes</th></tr></thead>
+<tr valign="top" class="odd"><td ><i>http://xml.org/sax/features/namespaces</i></td><td >true</td><td >If enabled, namespaces are reported to the content handler.</td></tr>
+<tr valign="top" class="even"><td ><i>http://xml.org/sax/features/namespace-prefixes</i></td><td >false</td><td >If enabled, the original prefixed names and attributes used for namespace declarations are reported.</td></tr>
+<tr valign="top" class="odd"><td ><i>http://qt-project.org/xml/features/report-whitespace-only-CharData</i></td><td >true</td><td >If enabled, CharData that consist of only whitespace characters are reported using <a href="qxmlcontenthandler.html#characters">QXmlContentHandler::characters</a>(). If disabled, whitespace is silently discarded.</td></tr>
+<tr valign="top" class="even"><td ><i>http://qt-project.org/xml/features/report-start-end-entity</i></td><td >false</td><td >If enabled, the parser reports QXmlContentHandler::startEntity() and QXmlContentHandler::endEntity() events, so character data might be reported in chunks. If disabled, the parser does not report these events, but silently substitutes the entities, and reports the character data in one chunk.</td></tr>
+</table></div>
+<p><b>See also </b><a href="qxmlsimplereader.html#feature">feature</a>(), <a href="qxmlsimplereader.html#hasFeature">hasFeature</a>(), and <a href="xml-sax.html#sax2-features">SAX2 Features</a>.</p>
+<!-- @@@setFeature -->
+<!-- $$$setLexicalHandler[overload1]$$$setLexicalHandlerQXmlLexicalHandler* -->
+<h3 class="fn" id="setLexicalHandler"><a name="setLexicalHandler"></a><code>[virtual] </code><span class="type">void</span> QXmlSimpleReader::<span class="name">setLexicalHandler</span>(<span class="type"><a href="qxmllexicalhandler.html">QXmlLexicalHandler</a></span> *<i>handler</i>)</h3>
+<p>Reimplemented from <a href="qxmlreader.html#setLexicalHandler">QXmlReader::setLexicalHandler</a>().</p>
+<p><b>See also </b><a href="qxmlsimplereader.html#lexicalHandler">lexicalHandler</a>().</p>
+<!-- @@@setLexicalHandler -->
+<!-- $$$setProperty[overload1]$$$setPropertyconstQString&void* -->
+<h3 class="fn" id="setProperty"><a name="setProperty"></a><code>[virtual] </code><span class="type">void</span> QXmlSimpleReader::<span class="name">setProperty</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>name</i>, <span class="type">void</span> *<i>value</i>)</h3>
+<p>Reimplemented from <a href="qxmlreader.html#setProperty">QXmlReader::setProperty</a>().</p>
+<p><b>See also </b><a href="qxmlsimplereader.html#property">property</a>().</p>
+<!-- @@@setProperty -->
+</div>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

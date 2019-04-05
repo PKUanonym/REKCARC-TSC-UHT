@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qdnslookup.cpp -->
+  <title>QDnsServiceRecord Class | Qt Network 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtnetwork-index.html">Qt Network</a></td><td ><a href="qtnetwork-module.html">C++ Classes</a></td><td >QDnsServiceRecord</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">QDnsServiceRecord Class</h1>
+<!-- $$$QDnsServiceRecord-brief -->
+<p>The <a href="qdnsservicerecord.html">QDnsServiceRecord</a> class stores information about a DNS SRV record. <a href="#details">More...</a></p>
+<!-- @@@QDnsServiceRecord -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign">   <span class="preprocessor">#include &lt;QDnsServiceRecord&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> qmake:</td><td class="memItemRight bottomAlign"> QT += network</td></tr></table></div><ul>
+<li><a href="qdnsservicerecord-members.html">List of all members, including inherited members</a></li>
+</ul>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qdnsservicerecord.html#QDnsServiceRecord">QDnsServiceRecord</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qdnsservicerecord.html#QDnsServiceRecord-1">QDnsServiceRecord</a></b>(const QDnsServiceRecord &amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qdnsservicerecord.html#dtor.QDnsServiceRecord">~QDnsServiceRecord</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qdnsservicerecord.html#name">name</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> quint16 </td><td class="memItemRight bottomAlign"><b><a href="qdnsservicerecord.html#port">port</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> quint16 </td><td class="memItemRight bottomAlign"><b><a href="qdnsservicerecord.html#priority">priority</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qdnsservicerecord.html#swap">swap</a></b>(QDnsServiceRecord &amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qdnsservicerecord.html#target">target</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> quint32 </td><td class="memItemRight bottomAlign"><b><a href="qdnsservicerecord.html#timeToLive">timeToLive</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> quint16 </td><td class="memItemRight bottomAlign"><b><a href="qdnsservicerecord.html#weight">weight</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QDnsServiceRecord &amp;</td><td class="memItemRight bottomAlign"><b><a href="qdnsservicerecord.html#operator-eq">operator=</a></b>(QDnsServiceRecord &amp;&amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QDnsServiceRecord &amp;</td><td class="memItemRight bottomAlign"><b><a href="qdnsservicerecord.html#operator-eq-1">operator=</a></b>(const QDnsServiceRecord &amp;<i>other</i>)</td></tr>
+</table></div>
+<a name="details"></a>
+<!-- $$$QDnsServiceRecord-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="qdnsservicerecord.html">QDnsServiceRecord</a> class stores information about a DNS SRV record.</p>
+<p>When performing a lookup on a service, zero or more records will be returned. Each record is represented by a <a href="qdnsservicerecord.html">QDnsServiceRecord</a> instance.</p>
+<p>The meaning of the fields is defined in <a href="http://www.rfc-editor.org/rfc/rfc2782.txt">RFC 2782</a>.</p>
+</div>
+<p><b>See also </b><a href="qdnslookup.html">QDnsLookup</a>.</p>
+<!-- @@@QDnsServiceRecord -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$QDnsServiceRecord[overload1]$$$QDnsServiceRecord -->
+<h3 class="fn" id="QDnsServiceRecord"><a name="QDnsServiceRecord"></a>QDnsServiceRecord::<span class="name">QDnsServiceRecord</span>()</h3>
+<p>Constructs an empty service record object.</p>
+<!-- @@@QDnsServiceRecord -->
+<!-- $$$QDnsServiceRecord$$$QDnsServiceRecordconstQDnsServiceRecord& -->
+<h3 class="fn" id="QDnsServiceRecord-1"><a name="QDnsServiceRecord-1"></a>QDnsServiceRecord::<span class="name">QDnsServiceRecord</span>(const <span class="type"><a href="qdnsservicerecord.html#QDnsServiceRecord">QDnsServiceRecord</a></span> &amp;<i>other</i>)</h3>
+<p>Constructs a copy of <i>other</i>.</p>
+<!-- @@@QDnsServiceRecord -->
+<!-- $$$~QDnsServiceRecord[overload1]$$$~QDnsServiceRecord -->
+<h3 class="fn" id="dtor.QDnsServiceRecord"><a name="dtor.QDnsServiceRecord"></a>QDnsServiceRecord::<span class="name">~QDnsServiceRecord</span>()</h3>
+<p>Destroys a service record.</p>
+<!-- @@@~QDnsServiceRecord -->
+<!-- $$$name[overload1]$$$name -->
+<h3 class="fn" id="name"><a name="name"></a><span class="type"><a href="../qtcore/qstring.html">QString</a></span> QDnsServiceRecord::<span class="name">name</span>() const</h3>
+<p>Returns the name for this record.</p>
+<!-- @@@name -->
+<!-- $$$port[overload1]$$$port -->
+<h3 class="fn" id="port"><a name="port"></a><span class="type"><a href="../qtcore/qtglobal.html#quint16-typedef">quint16</a></span> QDnsServiceRecord::<span class="name">port</span>() const</h3>
+<p>Returns the port on the target host for this service record.</p>
+<!-- @@@port -->
+<!-- $$$priority[overload1]$$$priority -->
+<h3 class="fn" id="priority"><a name="priority"></a><span class="type"><a href="../qtcore/qtglobal.html#quint16-typedef">quint16</a></span> QDnsServiceRecord::<span class="name">priority</span>() const</h3>
+<p>Returns the priority for this service record.</p>
+<p>A client must attempt to contact the target host with the lowest-numbered priority.</p>
+<!-- @@@priority -->
+<!-- $$$swap[overload1]$$$swapQDnsServiceRecord& -->
+<h3 class="fn" id="swap"><a name="swap"></a><span class="type">void</span> QDnsServiceRecord::<span class="name">swap</span>(<span class="type"><a href="qdnsservicerecord.html#QDnsServiceRecord">QDnsServiceRecord</a></span> &amp;<i>other</i>)</h3>
+<p>Swaps this service record instance with <i>other</i>. This function is very fast and never fails.</p>
+<!-- @@@swap -->
+<!-- $$$target[overload1]$$$target -->
+<h3 class="fn" id="target"><a name="target"></a><span class="type"><a href="../qtcore/qstring.html">QString</a></span> QDnsServiceRecord::<span class="name">target</span>() const</h3>
+<p>Returns the domain name of the target host for this service record.</p>
+<!-- @@@target -->
+<!-- $$$timeToLive[overload1]$$$timeToLive -->
+<h3 class="fn" id="timeToLive"><a name="timeToLive"></a><span class="type"><a href="../qtcore/qtglobal.html#quint32-typedef">quint32</a></span> QDnsServiceRecord::<span class="name">timeToLive</span>() const</h3>
+<p>Returns the duration in seconds for which this record is valid.</p>
+<!-- @@@timeToLive -->
+<!-- $$$weight[overload1]$$$weight -->
+<h3 class="fn" id="weight"><a name="weight"></a><span class="type"><a href="../qtcore/qtglobal.html#quint16-typedef">quint16</a></span> QDnsServiceRecord::<span class="name">weight</span>() const</h3>
+<p>Returns the weight for this service record.</p>
+<p>The weight field specifies a relative weight for entries with the same priority. Entries with higher weights should be selected with a higher probability.</p>
+<!-- @@@weight -->
+<!-- $$$operator=[overload1]$$$operator=QDnsServiceRecord&& -->
+<h3 class="fn" id="operator-eq"><a name="operator-eq"></a><span class="type"><a href="qdnsservicerecord.html#QDnsServiceRecord">QDnsServiceRecord</a></span> &amp;QDnsServiceRecord::<span class="name">operator=</span>(<span class="type"><a href="qdnsservicerecord.html#QDnsServiceRecord">QDnsServiceRecord</a></span> &amp;&amp;<i>other</i>)</h3>
+<p>Move-assignment operator.</p><!-- @@@operator= -->
+<!-- $$$operator=$$$operator=constQDnsServiceRecord& -->
+<h3 class="fn" id="operator-eq-1"><a name="operator-eq-1"></a><span class="type"><a href="qdnsservicerecord.html#QDnsServiceRecord">QDnsServiceRecord</a></span> &amp;QDnsServiceRecord::<span class="name">operator=</span>(const <span class="type"><a href="qdnsservicerecord.html#QDnsServiceRecord">QDnsServiceRecord</a></span> &amp;<i>other</i>)</h3>
+<p>Assigns the data of the <i>other</i> object to this record object, and returns a reference to it.</p>
+<!-- @@@operator= -->
+</div>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

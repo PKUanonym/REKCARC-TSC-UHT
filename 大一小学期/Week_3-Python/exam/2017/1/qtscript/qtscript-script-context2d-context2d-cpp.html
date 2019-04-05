@@ -1,0 +1,837 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>context2d.cpp Example File | Qt Script</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtscript-index.html">Qt Script</a></td><td ><a href="qtscript-script-context2d-example.html">Context2D Example</a></td><td >context2d.cpp Example File</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar"><div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">context2d.cpp Example File</h1>
+<span class="subtitle">script/context2d/context2d.cpp</span>
+<!-- $$$script/context2d/context2d.cpp-description -->
+<div class="descr"> <a name="details"></a>
+<pre class="cpp">
+
+  <span class="comment">/****************************************************************************
+  **
+  ** Copyright (C) 2015 The Qt Company Ltd.
+  ** Contact: http://www.qt.io/licensing/
+  **
+  ** This file is part of the examples of the Qt Toolkit.
+  **
+  ** $QT_BEGIN_LICENSE:BSD$
+  ** You may use this file under the terms of the BSD license as follows:
+  **
+  ** &quot;Redistribution and use in source and binary forms, with or without
+  ** modification, are permitted provided that the following conditions are
+  ** met:
+  **   * Redistributions of source code must retain the above copyright
+  **     notice, this list of conditions and the following disclaimer.
+  **   * Redistributions in binary form must reproduce the above copyright
+  **     notice, this list of conditions and the following disclaimer in
+  **     the documentation and/or other materials provided with the
+  **     distribution.
+  **   * Neither the name of The Qt Company Ltd nor the names of its
+  **     contributors may be used to endorse or promote products derived
+  **     from this software without specific prior written permission.
+  **
+  **
+  ** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  ** &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  ** LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  ** A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  ** OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  ** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  ** LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  ** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  ** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  ** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.&quot;
+  **
+  ** $QT_END_LICENSE$
+  **
+  ****************************************************************************/</span>
+
+  <span class="preprocessor">#include &quot;context2d.h&quot;</span>
+
+  <span class="preprocessor">#include &lt;QVariant&gt;</span>
+
+  <span class="preprocessor">#include &lt;math.h&gt;</span>
+  <span class="keyword">static</span> <span class="keyword">const</span> <span class="type">double</span> Q_PI   <span class="operator">=</span> <span class="number">3.14159265358979323846</span>;   <span class="comment">// pi</span>
+
+  <span class="preprocessor">#define DEGREES(t) ((t) * 180.0 / Q_PI)</span>
+
+  <span class="preprocessor">#define qClamp(val, min, max) qMin(qMax(val, min), max)</span>
+  <span class="keyword">static</span> <span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span><span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span><span class="operator">&gt;</span> parseNumbersList(<span class="type"><a href="../qtcore/qstring.html">QString</a></span><span class="operator">::</span>const_iterator <span class="operator">&amp;</span>itr)
+  {
+      <span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span><span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span><span class="operator">&gt;</span> points;
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> temp;
+      <span class="keyword">while</span> ((<span class="operator">*</span>itr)<span class="operator">.</span>isSpace())
+          <span class="operator">+</span><span class="operator">+</span>itr;
+      <span class="keyword">while</span> ((<span class="operator">*</span>itr)<span class="operator">.</span>isNumber() <span class="operator">|</span><span class="operator">|</span>
+             (<span class="operator">*</span>itr) <span class="operator">=</span><span class="operator">=</span> <span class="char">'-'</span> <span class="operator">|</span><span class="operator">|</span> (<span class="operator">*</span>itr) <span class="operator">=</span><span class="operator">=</span> <span class="char">'+'</span> <span class="operator">|</span><span class="operator">|</span> (<span class="operator">*</span>itr) <span class="operator">=</span><span class="operator">=</span> <span class="char">'.'</span>) {
+          temp <span class="operator">=</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span>();
+
+          <span class="keyword">if</span> ((<span class="operator">*</span>itr) <span class="operator">=</span><span class="operator">=</span> <span class="char">'-'</span>)
+              temp <span class="operator">+</span><span class="operator">=</span> <span class="operator">*</span>itr<span class="operator">+</span><span class="operator">+</span>;
+          <span class="keyword">else</span> <span class="keyword">if</span> ((<span class="operator">*</span>itr) <span class="operator">=</span><span class="operator">=</span> <span class="char">'+'</span>)
+              temp <span class="operator">+</span><span class="operator">=</span> <span class="operator">*</span>itr<span class="operator">+</span><span class="operator">+</span>;
+          <span class="keyword">while</span> ((<span class="operator">*</span>itr)<span class="operator">.</span>isDigit())
+              temp <span class="operator">+</span><span class="operator">=</span> <span class="operator">*</span>itr<span class="operator">+</span><span class="operator">+</span>;
+          <span class="keyword">if</span> ((<span class="operator">*</span>itr) <span class="operator">=</span><span class="operator">=</span> <span class="char">'.'</span>)
+              temp <span class="operator">+</span><span class="operator">=</span> <span class="operator">*</span>itr<span class="operator">+</span><span class="operator">+</span>;
+          <span class="keyword">while</span> ((<span class="operator">*</span>itr)<span class="operator">.</span>isDigit())
+              temp <span class="operator">+</span><span class="operator">=</span> <span class="operator">*</span>itr<span class="operator">+</span><span class="operator">+</span>;
+          <span class="keyword">while</span> ((<span class="operator">*</span>itr)<span class="operator">.</span>isSpace())
+              <span class="operator">+</span><span class="operator">+</span>itr;
+          <span class="keyword">if</span> ((<span class="operator">*</span>itr) <span class="operator">=</span><span class="operator">=</span> <span class="char">','</span>)
+              <span class="operator">+</span><span class="operator">+</span>itr;
+          points<span class="operator">.</span>append(temp<span class="operator">.</span>toDouble());
+          <span class="comment">//eat spaces</span>
+          <span class="keyword">while</span> ((<span class="operator">*</span>itr)<span class="operator">.</span>isSpace())
+              <span class="operator">+</span><span class="operator">+</span>itr;
+      }
+
+      <span class="keyword">return</span> points;
+  }
+
+  <span class="type">QColor</span> colorFromString(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>name)
+  {
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span><span class="operator">::</span>const_iterator itr <span class="operator">=</span> name<span class="operator">.</span>constBegin();
+      <span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span><span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span><span class="operator">&gt;</span> compo;
+      <span class="keyword">if</span> (name<span class="operator">.</span>startsWith(<span class="string">&quot;rgba(&quot;</span>)) {
+          <span class="operator">+</span><span class="operator">+</span>itr; <span class="operator">+</span><span class="operator">+</span>itr; <span class="operator">+</span><span class="operator">+</span>itr; <span class="operator">+</span><span class="operator">+</span>itr; <span class="operator">+</span><span class="operator">+</span>itr;
+          compo <span class="operator">=</span> parseNumbersList(itr);
+          <span class="keyword">if</span> (compo<span class="operator">.</span>size() <span class="operator">!</span><span class="operator">=</span> <span class="number">4</span>) {
+              <span class="keyword">return</span> <span class="type">QColor</span>();
+          }
+          <span class="comment">//alpha seems to be always between 0-1</span>
+          compo<span class="operator">[</span><span class="number">3</span><span class="operator">]</span> <span class="operator">*</span><span class="operator">=</span> <span class="number">255</span>;
+          <span class="keyword">return</span> <span class="type">QColor</span>((<span class="type">int</span>)compo<span class="operator">[</span><span class="number">0</span><span class="operator">]</span><span class="operator">,</span> (<span class="type">int</span>)compo<span class="operator">[</span><span class="number">1</span><span class="operator">]</span><span class="operator">,</span>
+                        (<span class="type">int</span>)compo<span class="operator">[</span><span class="number">2</span><span class="operator">]</span><span class="operator">,</span> (<span class="type">int</span>)compo<span class="operator">[</span><span class="number">3</span><span class="operator">]</span>);
+      } <span class="keyword">else</span> <span class="keyword">if</span> (name<span class="operator">.</span>startsWith(<span class="string">&quot;rgb(&quot;</span>)) {
+          <span class="operator">+</span><span class="operator">+</span>itr; <span class="operator">+</span><span class="operator">+</span>itr; <span class="operator">+</span><span class="operator">+</span>itr; <span class="operator">+</span><span class="operator">+</span>itr;
+          compo <span class="operator">=</span> parseNumbersList(itr);
+          <span class="keyword">if</span> (compo<span class="operator">.</span>size() <span class="operator">!</span><span class="operator">=</span> <span class="number">3</span>) {
+              <span class="keyword">return</span> <span class="type">QColor</span>();
+          }
+          <span class="keyword">return</span> <span class="type">QColor</span>((<span class="type">int</span>)qClamp(compo<span class="operator">[</span><span class="number">0</span><span class="operator">]</span><span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span>(<span class="number">0</span>)<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span>(<span class="number">255</span>))<span class="operator">,</span>
+                        (<span class="type">int</span>)qClamp(compo<span class="operator">[</span><span class="number">1</span><span class="operator">]</span><span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span>(<span class="number">0</span>)<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span>(<span class="number">255</span>))<span class="operator">,</span>
+                        (<span class="type">int</span>)qClamp(compo<span class="operator">[</span><span class="number">2</span><span class="operator">]</span><span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span>(<span class="number">0</span>)<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span>(<span class="number">255</span>)));
+      } <span class="keyword">else</span> {
+          <span class="comment">//QRgb color;</span>
+          <span class="comment">//CSSParser::parseColor(name, color);</span>
+          <span class="keyword">return</span> <span class="type">QColor</span>(name);
+      }
+  }
+
+  <span class="keyword">static</span> <span class="type">QPainter</span><span class="operator">::</span>CompositionMode compositeOperatorFromString(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>compositeOperator)
+  {
+      <span class="keyword">if</span> ( compositeOperator <span class="operator">=</span><span class="operator">=</span> <span class="string">&quot;source-over&quot;</span> ) {
+          <span class="keyword">return</span> <span class="type">QPainter</span><span class="operator">::</span>CompositionMode_SourceOver;
+      } <span class="keyword">else</span> <span class="keyword">if</span> ( compositeOperator <span class="operator">=</span><span class="operator">=</span> <span class="string">&quot;source-out&quot;</span> ) {
+          <span class="keyword">return</span> <span class="type">QPainter</span><span class="operator">::</span>CompositionMode_SourceOut;
+      } <span class="keyword">else</span> <span class="keyword">if</span> ( compositeOperator <span class="operator">=</span><span class="operator">=</span> <span class="string">&quot;source-in&quot;</span> ) {
+          <span class="keyword">return</span> <span class="type">QPainter</span><span class="operator">::</span>CompositionMode_SourceIn;
+      } <span class="keyword">else</span> <span class="keyword">if</span> ( compositeOperator <span class="operator">=</span><span class="operator">=</span> <span class="string">&quot;source-atop&quot;</span> ) {
+          <span class="keyword">return</span> <span class="type">QPainter</span><span class="operator">::</span>CompositionMode_SourceAtop;
+      } <span class="keyword">else</span> <span class="keyword">if</span> ( compositeOperator <span class="operator">=</span><span class="operator">=</span> <span class="string">&quot;destination-atop&quot;</span> ) {
+          <span class="keyword">return</span> <span class="type">QPainter</span><span class="operator">::</span>CompositionMode_DestinationAtop;
+      } <span class="keyword">else</span> <span class="keyword">if</span> ( compositeOperator <span class="operator">=</span><span class="operator">=</span> <span class="string">&quot;destination-in&quot;</span> ) {
+          <span class="keyword">return</span> <span class="type">QPainter</span><span class="operator">::</span>CompositionMode_DestinationIn;
+      } <span class="keyword">else</span> <span class="keyword">if</span> ( compositeOperator <span class="operator">=</span><span class="operator">=</span> <span class="string">&quot;destination-out&quot;</span> ) {
+          <span class="keyword">return</span> <span class="type">QPainter</span><span class="operator">::</span>CompositionMode_DestinationOut;
+      } <span class="keyword">else</span> <span class="keyword">if</span> ( compositeOperator <span class="operator">=</span><span class="operator">=</span> <span class="string">&quot;destination-over&quot;</span> ) {
+          <span class="keyword">return</span> <span class="type">QPainter</span><span class="operator">::</span>CompositionMode_DestinationOver;
+      } <span class="keyword">else</span> <span class="keyword">if</span> ( compositeOperator <span class="operator">=</span><span class="operator">=</span> <span class="string">&quot;darker&quot;</span> ) {
+          <span class="keyword">return</span> <span class="type">QPainter</span><span class="operator">::</span>CompositionMode_SourceOver;
+      } <span class="keyword">else</span> <span class="keyword">if</span> ( compositeOperator <span class="operator">=</span><span class="operator">=</span> <span class="string">&quot;lighter&quot;</span> ) {
+          <span class="keyword">return</span> <span class="type">QPainter</span><span class="operator">::</span>CompositionMode_SourceOver;
+      } <span class="keyword">else</span> <span class="keyword">if</span> ( compositeOperator <span class="operator">=</span><span class="operator">=</span> <span class="string">&quot;copy&quot;</span> ) {
+          <span class="keyword">return</span> <span class="type">QPainter</span><span class="operator">::</span>CompositionMode_Source;
+      } <span class="keyword">else</span> <span class="keyword">if</span> ( compositeOperator <span class="operator">=</span><span class="operator">=</span> <span class="string">&quot;xor&quot;</span> ) {
+          <span class="keyword">return</span> <span class="type">QPainter</span><span class="operator">::</span>CompositionMode_Xor;
+      }
+
+      <span class="keyword">return</span> <span class="type">QPainter</span><span class="operator">::</span>CompositionMode_SourceOver;
+  }
+
+  <span class="keyword">static</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> compositeOperatorToString(<span class="type">QPainter</span><span class="operator">::</span>CompositionMode op)
+  {
+      <span class="keyword">switch</span> (op) {
+      <span class="keyword">case</span> <span class="type">QPainter</span><span class="operator">::</span>CompositionMode_SourceOver:
+          <span class="keyword">return</span> <span class="string">&quot;source-over&quot;</span>;
+      <span class="keyword">case</span> <span class="type">QPainter</span><span class="operator">::</span>CompositionMode_DestinationOver:
+          <span class="keyword">return</span> <span class="string">&quot;destination-over&quot;</span>;
+      <span class="keyword">case</span> <span class="type">QPainter</span><span class="operator">::</span>CompositionMode_Clear:
+          <span class="keyword">return</span> <span class="string">&quot;clear&quot;</span>;
+      <span class="keyword">case</span> <span class="type">QPainter</span><span class="operator">::</span>CompositionMode_Source:
+          <span class="keyword">return</span> <span class="string">&quot;source&quot;</span>;
+      <span class="keyword">case</span> <span class="type">QPainter</span><span class="operator">::</span>CompositionMode_Destination:
+          <span class="keyword">return</span> <span class="string">&quot;destination&quot;</span>;
+      <span class="keyword">case</span> <span class="type">QPainter</span><span class="operator">::</span>CompositionMode_SourceIn:
+          <span class="keyword">return</span> <span class="string">&quot;source-in&quot;</span>;
+      <span class="keyword">case</span> <span class="type">QPainter</span><span class="operator">::</span>CompositionMode_DestinationIn:
+          <span class="keyword">return</span> <span class="string">&quot;destination-in&quot;</span>;
+      <span class="keyword">case</span> <span class="type">QPainter</span><span class="operator">::</span>CompositionMode_SourceOut:
+          <span class="keyword">return</span> <span class="string">&quot;source-out&quot;</span>;
+      <span class="keyword">case</span> <span class="type">QPainter</span><span class="operator">::</span>CompositionMode_DestinationOut:
+          <span class="keyword">return</span> <span class="string">&quot;destination-out&quot;</span>;
+      <span class="keyword">case</span> <span class="type">QPainter</span><span class="operator">::</span>CompositionMode_SourceAtop:
+          <span class="keyword">return</span> <span class="string">&quot;source-atop&quot;</span>;
+      <span class="keyword">case</span> <span class="type">QPainter</span><span class="operator">::</span>CompositionMode_DestinationAtop:
+          <span class="keyword">return</span> <span class="string">&quot;destination-atop&quot;</span>;
+      <span class="keyword">case</span> <span class="type">QPainter</span><span class="operator">::</span>CompositionMode_Xor:
+          <span class="keyword">return</span> <span class="string">&quot;xor&quot;</span>;
+      <span class="keyword">case</span> <span class="type">QPainter</span><span class="operator">::</span>CompositionMode_Plus:
+          <span class="keyword">return</span> <span class="string">&quot;plus&quot;</span>;
+      <span class="keyword">case</span> <span class="type">QPainter</span><span class="operator">::</span>CompositionMode_Multiply:
+          <span class="keyword">return</span> <span class="string">&quot;multiply&quot;</span>;
+      <span class="keyword">case</span> <span class="type">QPainter</span><span class="operator">::</span>CompositionMode_Screen:
+          <span class="keyword">return</span> <span class="string">&quot;screen&quot;</span>;
+      <span class="keyword">case</span> <span class="type">QPainter</span><span class="operator">::</span>CompositionMode_Overlay:
+          <span class="keyword">return</span> <span class="string">&quot;overlay&quot;</span>;
+      <span class="keyword">case</span> <span class="type">QPainter</span><span class="operator">::</span>CompositionMode_Darken:
+          <span class="keyword">return</span> <span class="string">&quot;darken&quot;</span>;
+      <span class="keyword">case</span> <span class="type">QPainter</span><span class="operator">::</span>CompositionMode_Lighten:
+          <span class="keyword">return</span> <span class="string">&quot;lighten&quot;</span>;
+      <span class="keyword">case</span> <span class="type">QPainter</span><span class="operator">::</span>CompositionMode_ColorDodge:
+          <span class="keyword">return</span> <span class="string">&quot;color-dodge&quot;</span>;
+      <span class="keyword">case</span> <span class="type">QPainter</span><span class="operator">::</span>CompositionMode_ColorBurn:
+          <span class="keyword">return</span> <span class="string">&quot;color-burn&quot;</span>;
+      <span class="keyword">case</span> <span class="type">QPainter</span><span class="operator">::</span>CompositionMode_HardLight:
+          <span class="keyword">return</span> <span class="string">&quot;hard-light&quot;</span>;
+      <span class="keyword">case</span> <span class="type">QPainter</span><span class="operator">::</span>CompositionMode_SoftLight:
+          <span class="keyword">return</span> <span class="string">&quot;soft-light&quot;</span>;
+      <span class="keyword">case</span> <span class="type">QPainter</span><span class="operator">::</span>CompositionMode_Difference:
+          <span class="keyword">return</span> <span class="string">&quot;difference&quot;</span>;
+      <span class="keyword">case</span> <span class="type">QPainter</span><span class="operator">::</span>CompositionMode_Exclusion:
+          <span class="keyword">return</span> <span class="string">&quot;exclusion&quot;</span>;
+      <span class="keyword">default</span>:
+          <span class="keyword">break</span>;
+      }
+      <span class="keyword">return</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span>();
+  }
+
+  <span class="type">void</span> Context2D<span class="operator">::</span>save()
+  {
+      m_stateStack<span class="operator">.</span>push(m_state);
+  }
+
+  <span class="type">void</span> Context2D<span class="operator">::</span>restore()
+  {
+      <span class="keyword">if</span> (<span class="operator">!</span>m_stateStack<span class="operator">.</span>isEmpty()) {
+          m_state <span class="operator">=</span> m_stateStack<span class="operator">.</span>pop();
+          m_state<span class="operator">.</span>flags <span class="operator">=</span> AllIsFullOfDirt;
+      }
+  }
+
+  <span class="type">void</span> Context2D<span class="operator">::</span>scale(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> x<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> y)
+  {
+      m_state<span class="operator">.</span>matrix<span class="operator">.</span>scale(x<span class="operator">,</span> y);
+      m_state<span class="operator">.</span>flags <span class="operator">|</span><span class="operator">=</span> DirtyTransformationMatrix;
+  }
+
+  <span class="type">void</span> Context2D<span class="operator">::</span>rotate(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> angle)
+  {
+      m_state<span class="operator">.</span>matrix<span class="operator">.</span>rotate(DEGREES(angle));
+      m_state<span class="operator">.</span>flags <span class="operator">|</span><span class="operator">=</span> DirtyTransformationMatrix;
+  }
+
+  <span class="type">void</span> Context2D<span class="operator">::</span>translate(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> x<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> y)
+  {
+      m_state<span class="operator">.</span>matrix<span class="operator">.</span>translate(x<span class="operator">,</span> y);
+      m_state<span class="operator">.</span>flags <span class="operator">|</span><span class="operator">=</span> DirtyTransformationMatrix;
+  }
+
+  <span class="type">void</span> Context2D<span class="operator">::</span>transform(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> m11<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> m12<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> m21<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> m22<span class="operator">,</span>
+                            <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> dx<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> dy)
+  {
+      <span class="type">QMatrix</span> mat(m11<span class="operator">,</span> m12<span class="operator">,</span>
+                  m21<span class="operator">,</span> m22<span class="operator">,</span>
+                  dx<span class="operator">,</span> dy);
+      m_state<span class="operator">.</span>matrix <span class="operator">*</span><span class="operator">=</span> mat;
+      m_state<span class="operator">.</span>flags <span class="operator">|</span><span class="operator">=</span> DirtyTransformationMatrix;
+  }
+
+  <span class="type">void</span> Context2D<span class="operator">::</span>setTransform(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> m11<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> m12<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> m21<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> m22<span class="operator">,</span>
+                               <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> dx<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> dy)
+  {
+      <span class="type">QMatrix</span> mat(m11<span class="operator">,</span> m12<span class="operator">,</span>
+                  m21<span class="operator">,</span> m22<span class="operator">,</span>
+                  dx<span class="operator">,</span> dy);
+      m_state<span class="operator">.</span>matrix <span class="operator">=</span> mat;
+      m_state<span class="operator">.</span>flags <span class="operator">|</span><span class="operator">=</span> DirtyTransformationMatrix;
+  }
+
+  <span class="type"><a href="../qtcore/qstring.html">QString</a></span> Context2D<span class="operator">::</span>globalCompositeOperation() <span class="keyword">const</span>
+  {
+      <span class="keyword">return</span> compositeOperatorToString(m_state<span class="operator">.</span>globalCompositeOperation);
+  }
+
+  <span class="type">void</span> Context2D<span class="operator">::</span>setGlobalCompositeOperation(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>op)
+  {
+      <span class="type">QPainter</span><span class="operator">::</span>CompositionMode mode <span class="operator">=</span>
+          compositeOperatorFromString(op);
+      m_state<span class="operator">.</span>globalCompositeOperation <span class="operator">=</span> mode;
+      m_state<span class="operator">.</span>flags <span class="operator">|</span><span class="operator">=</span> DirtyGlobalCompositeOperation;
+  }
+
+  <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span> Context2D<span class="operator">::</span>strokeStyle() <span class="keyword">const</span>
+  {
+      <span class="keyword">return</span> m_state<span class="operator">.</span>strokeStyle;
+  }
+
+  <span class="type">void</span> Context2D<span class="operator">::</span>setStrokeStyle(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span> <span class="operator">&amp;</span>style)
+  {
+      <span class="keyword">if</span> (style<span class="operator">.</span>canConvert<span class="operator">&lt;</span>CanvasGradient<span class="operator">&gt;</span>()) {
+          CanvasGradient cg <span class="operator">=</span> qvariant_cast<span class="operator">&lt;</span>CanvasGradient<span class="operator">&gt;</span>(style);
+          m_state<span class="operator">.</span>strokeStyle <span class="operator">=</span> cg<span class="operator">.</span>value;
+      } <span class="keyword">else</span> {
+          <span class="type">QColor</span> color <span class="operator">=</span> colorFromString(style<span class="operator">.</span>toString());
+          m_state<span class="operator">.</span>strokeStyle <span class="operator">=</span> color;
+      }
+      m_state<span class="operator">.</span>flags <span class="operator">|</span><span class="operator">=</span> DirtyStrokeStyle;
+  }
+
+  <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span> Context2D<span class="operator">::</span>fillStyle() <span class="keyword">const</span>
+  {
+      <span class="keyword">return</span> m_state<span class="operator">.</span>fillStyle;
+  }
+
+  <span class="type">void</span> Context2D<span class="operator">::</span>setFillStyle(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span> <span class="operator">&amp;</span>style)
+  {
+      <span class="keyword">if</span> (style<span class="operator">.</span>canConvert<span class="operator">&lt;</span>CanvasGradient<span class="operator">&gt;</span>()) {
+          CanvasGradient cg <span class="operator">=</span> qvariant_cast<span class="operator">&lt;</span>CanvasGradient<span class="operator">&gt;</span>(style);
+          m_state<span class="operator">.</span>fillStyle <span class="operator">=</span> cg<span class="operator">.</span>value;
+      } <span class="keyword">else</span> {
+          <span class="type">QColor</span> color <span class="operator">=</span> colorFromString(style<span class="operator">.</span>toString());
+          m_state<span class="operator">.</span>fillStyle <span class="operator">=</span> color;
+      }
+      m_state<span class="operator">.</span>flags <span class="operator">|</span><span class="operator">=</span> DirtyFillStyle;
+  }
+
+  <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> Context2D<span class="operator">::</span>globalAlpha() <span class="keyword">const</span>
+  {
+      <span class="keyword">return</span> m_state<span class="operator">.</span>globalAlpha;
+  }
+
+  <span class="type">void</span> Context2D<span class="operator">::</span>setGlobalAlpha(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> alpha)
+  {
+      m_state<span class="operator">.</span>globalAlpha <span class="operator">=</span> alpha;
+      m_state<span class="operator">.</span>flags <span class="operator">|</span><span class="operator">=</span> DirtyGlobalAlpha;
+  }
+
+  CanvasGradient Context2D<span class="operator">::</span>createLinearGradient(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> x0<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> y0<span class="operator">,</span>
+                                                 <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> x1<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> y1)
+  {
+      <span class="type">QLinearGradient</span> g(x0<span class="operator">,</span> y0<span class="operator">,</span> x1<span class="operator">,</span> y1);
+      <span class="keyword">return</span> CanvasGradient(g);
+  }
+
+  CanvasGradient Context2D<span class="operator">::</span>createRadialGradient(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> x0<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> y0<span class="operator">,</span>
+                                                 <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> r0<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> x1<span class="operator">,</span>
+                                                 <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> y1<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> r1)
+  {
+      <span class="type">QRadialGradient</span> g(<span class="type"><a href="../qtcore/qpointf.html">QPointF</a></span>(x1<span class="operator">,</span> y1)<span class="operator">,</span> r0<span class="operator">+</span>r1<span class="operator">,</span> <span class="type"><a href="../qtcore/qpointf.html">QPointF</a></span>(x0<span class="operator">,</span> y0));
+      <span class="keyword">return</span> CanvasGradient(g);
+  }
+
+  <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> Context2D<span class="operator">::</span>lineWidth() <span class="keyword">const</span>
+  {
+      <span class="keyword">return</span> m_state<span class="operator">.</span>lineWidth;
+  }
+
+  <span class="type">void</span> Context2D<span class="operator">::</span>setLineWidth(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> w)
+  {
+      m_state<span class="operator">.</span>lineWidth <span class="operator">=</span> w;
+      m_state<span class="operator">.</span>flags <span class="operator">|</span><span class="operator">=</span> DirtyLineWidth;
+  }
+
+  <span class="type"><a href="../qtcore/qstring.html">QString</a></span> Context2D<span class="operator">::</span>lineCap() <span class="keyword">const</span>
+  {
+      <span class="keyword">switch</span> (m_state<span class="operator">.</span>lineCap) {
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>FlatCap:
+          <span class="keyword">return</span> <span class="string">&quot;butt&quot;</span>;
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>SquareCap:
+          <span class="keyword">return</span> <span class="string">&quot;square&quot;</span>;
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>RoundCap:
+          <span class="keyword">return</span> <span class="string">&quot;round&quot;</span>;
+      <span class="keyword">default</span>: ;
+      }
+      <span class="keyword">return</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span>();
+  }
+
+  <span class="type">void</span> Context2D<span class="operator">::</span>setLineCap(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>capString)
+  {
+      <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>PenCapStyle style;
+      <span class="keyword">if</span> (capString <span class="operator">=</span><span class="operator">=</span> <span class="string">&quot;round&quot;</span>)
+          style <span class="operator">=</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>RoundCap;
+      <span class="keyword">else</span> <span class="keyword">if</span> (capString <span class="operator">=</span><span class="operator">=</span> <span class="string">&quot;square&quot;</span>)
+          style <span class="operator">=</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>SquareCap;
+      <span class="keyword">else</span> <span class="comment">//if (capString == &quot;butt&quot;)</span>
+          style <span class="operator">=</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>FlatCap;
+      m_state<span class="operator">.</span>lineCap <span class="operator">=</span> style;
+      m_state<span class="operator">.</span>flags <span class="operator">|</span><span class="operator">=</span> DirtyLineCap;
+  }
+
+  <span class="type"><a href="../qtcore/qstring.html">QString</a></span> Context2D<span class="operator">::</span>lineJoin() <span class="keyword">const</span>
+  {
+      <span class="keyword">switch</span> (m_state<span class="operator">.</span>lineJoin) {
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>RoundJoin:
+          <span class="keyword">return</span> <span class="string">&quot;round&quot;</span>;
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>BevelJoin:
+          <span class="keyword">return</span> <span class="string">&quot;bevel&quot;</span>;
+      <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>MiterJoin:
+          <span class="keyword">return</span> <span class="string">&quot;miter&quot;</span>;
+      <span class="keyword">default</span>: ;
+      }
+      <span class="keyword">return</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span>();
+  }
+
+  <span class="type">void</span> Context2D<span class="operator">::</span>setLineJoin(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>joinString)
+  {
+      <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>PenJoinStyle style;
+      <span class="keyword">if</span> (joinString <span class="operator">=</span><span class="operator">=</span> <span class="string">&quot;round&quot;</span>)
+          style <span class="operator">=</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>RoundJoin;
+      <span class="keyword">else</span> <span class="keyword">if</span> (joinString <span class="operator">=</span><span class="operator">=</span> <span class="string">&quot;bevel&quot;</span>)
+          style <span class="operator">=</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>BevelJoin;
+      <span class="keyword">else</span> <span class="comment">//if (joinString == &quot;miter&quot;)</span>
+          style <span class="operator">=</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>MiterJoin;
+      m_state<span class="operator">.</span>lineJoin <span class="operator">=</span> style;
+      m_state<span class="operator">.</span>flags <span class="operator">|</span><span class="operator">=</span> DirtyLineJoin;
+  }
+
+  <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> Context2D<span class="operator">::</span>miterLimit() <span class="keyword">const</span>
+  {
+      <span class="keyword">return</span> m_state<span class="operator">.</span>miterLimit;
+  }
+
+  <span class="type">void</span> Context2D<span class="operator">::</span>setMiterLimit(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> m)
+  {
+      m_state<span class="operator">.</span>miterLimit <span class="operator">=</span> m;
+      m_state<span class="operator">.</span>flags <span class="operator">|</span><span class="operator">=</span> DirtyMiterLimit;
+  }
+
+  <span class="type">void</span> Context2D<span class="operator">::</span>setShadowOffsetX(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> x)
+  {
+      m_state<span class="operator">.</span>shadowOffsetX <span class="operator">=</span> x;
+      m_state<span class="operator">.</span>flags <span class="operator">|</span><span class="operator">=</span> DirtyShadowOffsetX;
+  }
+
+  <span class="type">void</span> Context2D<span class="operator">::</span>setShadowOffsetY(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> y)
+  {
+      m_state<span class="operator">.</span>shadowOffsetY <span class="operator">=</span> y;
+      m_state<span class="operator">.</span>flags <span class="operator">|</span><span class="operator">=</span> DirtyShadowOffsetY;
+  }
+
+  <span class="type">void</span> Context2D<span class="operator">::</span>setShadowBlur(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> b)
+  {
+      m_state<span class="operator">.</span>shadowBlur <span class="operator">=</span> b;
+      m_state<span class="operator">.</span>flags <span class="operator">|</span><span class="operator">=</span> DirtyShadowBlur;
+  }
+
+  <span class="type">void</span> Context2D<span class="operator">::</span>setShadowColor(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>str)
+  {
+      m_state<span class="operator">.</span>shadowColor <span class="operator">=</span> colorFromString(str);
+      m_state<span class="operator">.</span>flags <span class="operator">|</span><span class="operator">=</span> DirtyShadowColor;
+  }
+
+  <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> Context2D<span class="operator">::</span>shadowOffsetX() <span class="keyword">const</span>
+  {
+      <span class="keyword">return</span> m_state<span class="operator">.</span>shadowOffsetX;
+  }
+
+  <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> Context2D<span class="operator">::</span>shadowOffsetY() <span class="keyword">const</span>
+  {
+      <span class="keyword">return</span> m_state<span class="operator">.</span>shadowOffsetY;
+  }
+
+  <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> Context2D<span class="operator">::</span>shadowBlur() <span class="keyword">const</span>
+  {
+      <span class="keyword">return</span> m_state<span class="operator">.</span>shadowBlur;
+  }
+
+  <span class="type"><a href="../qtcore/qstring.html">QString</a></span> Context2D<span class="operator">::</span>shadowColor() <span class="keyword">const</span>
+  {
+      <span class="keyword">return</span> m_state<span class="operator">.</span>shadowColor<span class="operator">.</span>name();
+  }
+
+  <span class="type">void</span> Context2D<span class="operator">::</span>clearRect(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> x<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> y<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> w<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> h)
+  {
+      beginPainting();
+      m_painter<span class="operator">.</span>save();
+      m_painter<span class="operator">.</span>setMatrix(m_state<span class="operator">.</span>matrix<span class="operator">,</span> <span class="keyword">false</span>);
+      m_painter<span class="operator">.</span>setCompositionMode(<span class="type">QPainter</span><span class="operator">::</span>CompositionMode_Source);
+      m_painter<span class="operator">.</span>fillRect(<span class="type"><a href="../qtcore/qrectf.html">QRectF</a></span>(x<span class="operator">,</span> y<span class="operator">,</span> w<span class="operator">,</span> h)<span class="operator">,</span> <span class="type">QColor</span>(<span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">0</span>));
+      m_painter<span class="operator">.</span>restore();
+      scheduleChange();
+  }
+
+  <span class="type">void</span> Context2D<span class="operator">::</span>fillRect(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> x<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> y<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> w<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> h)
+  {
+      beginPainting();
+      m_painter<span class="operator">.</span>save();
+      m_painter<span class="operator">.</span>setMatrix(m_state<span class="operator">.</span>matrix<span class="operator">,</span> <span class="keyword">false</span>);
+      m_painter<span class="operator">.</span>fillRect(<span class="type"><a href="../qtcore/qrectf.html">QRectF</a></span>(x<span class="operator">,</span> y<span class="operator">,</span> w<span class="operator">,</span> h)<span class="operator">,</span> m_painter<span class="operator">.</span>brush());
+      m_painter<span class="operator">.</span>restore();
+      scheduleChange();
+  }
+
+  <span class="type">void</span> Context2D<span class="operator">::</span>strokeRect(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> x<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> y<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> w<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> h)
+  {
+      <span class="type">QPainterPath</span> path;
+      path<span class="operator">.</span>addRect(x<span class="operator">,</span> y<span class="operator">,</span> w<span class="operator">,</span> h);
+      beginPainting();
+      m_painter<span class="operator">.</span>save();
+      m_painter<span class="operator">.</span>setMatrix(m_state<span class="operator">.</span>matrix<span class="operator">,</span> <span class="keyword">false</span>);
+      m_painter<span class="operator">.</span>strokePath(path<span class="operator">,</span> m_painter<span class="operator">.</span>pen());
+      m_painter<span class="operator">.</span>restore();
+      scheduleChange();
+  }
+
+  <span class="type">void</span> Context2D<span class="operator">::</span>beginPath()
+  {
+      m_path <span class="operator">=</span> <span class="type">QPainterPath</span>();
+  }
+
+  <span class="type">void</span> Context2D<span class="operator">::</span>closePath()
+  {
+      m_path<span class="operator">.</span>closeSubpath();
+  }
+
+  <span class="type">void</span> Context2D<span class="operator">::</span>moveTo(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> x<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> y)
+  {
+      <span class="type"><a href="../qtcore/qpointf.html">QPointF</a></span> pt <span class="operator">=</span> m_state<span class="operator">.</span>matrix<span class="operator">.</span>map(<span class="type"><a href="../qtcore/qpointf.html">QPointF</a></span>(x<span class="operator">,</span> y));
+      m_path<span class="operator">.</span>moveTo(pt);
+  }
+
+  <span class="type">void</span> Context2D<span class="operator">::</span>lineTo(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> x<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> y)
+  {
+      <span class="type"><a href="../qtcore/qpointf.html">QPointF</a></span> pt <span class="operator">=</span> m_state<span class="operator">.</span>matrix<span class="operator">.</span>map(<span class="type"><a href="../qtcore/qpointf.html">QPointF</a></span>(x<span class="operator">,</span> y));
+      m_path<span class="operator">.</span>lineTo(pt);
+  }
+
+  <span class="type">void</span> Context2D<span class="operator">::</span>quadraticCurveTo(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> cpx<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> cpy<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> x<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> y)
+  {
+      <span class="type"><a href="../qtcore/qpointf.html">QPointF</a></span> cp <span class="operator">=</span> m_state<span class="operator">.</span>matrix<span class="operator">.</span>map(<span class="type"><a href="../qtcore/qpointf.html">QPointF</a></span>(cpx<span class="operator">,</span> cpy));
+      <span class="type"><a href="../qtcore/qpointf.html">QPointF</a></span> xy <span class="operator">=</span> m_state<span class="operator">.</span>matrix<span class="operator">.</span>map(<span class="type"><a href="../qtcore/qpointf.html">QPointF</a></span>(x<span class="operator">,</span> y));
+      m_path<span class="operator">.</span>quadTo(cp<span class="operator">,</span> xy);
+  }
+
+  <span class="type">void</span> Context2D<span class="operator">::</span>bezierCurveTo(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> cp1x<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> cp1y<span class="operator">,</span>
+                                <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> cp2x<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> cp2y<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> x<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> y)
+  {
+      <span class="type"><a href="../qtcore/qpointf.html">QPointF</a></span> cp1 <span class="operator">=</span> m_state<span class="operator">.</span>matrix<span class="operator">.</span>map(<span class="type"><a href="../qtcore/qpointf.html">QPointF</a></span>(cp1x<span class="operator">,</span> cp1y));
+      <span class="type"><a href="../qtcore/qpointf.html">QPointF</a></span> cp2 <span class="operator">=</span> m_state<span class="operator">.</span>matrix<span class="operator">.</span>map(<span class="type"><a href="../qtcore/qpointf.html">QPointF</a></span>(cp2x<span class="operator">,</span> cp2y));
+      <span class="type"><a href="../qtcore/qpointf.html">QPointF</a></span> end <span class="operator">=</span> m_state<span class="operator">.</span>matrix<span class="operator">.</span>map(<span class="type"><a href="../qtcore/qpointf.html">QPointF</a></span>(x<span class="operator">,</span> y));
+      m_path<span class="operator">.</span>cubicTo(cp1<span class="operator">,</span> cp2<span class="operator">,</span> end);
+  }
+
+  <span class="type">void</span> Context2D<span class="operator">::</span>arcTo(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> x1<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> y1<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> x2<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> y2<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> radius)
+  {
+      <span class="comment">//FIXME: this is surely busted</span>
+      <span class="type"><a href="../qtcore/qpointf.html">QPointF</a></span> st  <span class="operator">=</span> m_state<span class="operator">.</span>matrix<span class="operator">.</span>map(<span class="type"><a href="../qtcore/qpointf.html">QPointF</a></span>(x1<span class="operator">,</span> y1));
+      <span class="type"><a href="../qtcore/qpointf.html">QPointF</a></span> end <span class="operator">=</span> m_state<span class="operator">.</span>matrix<span class="operator">.</span>map(<span class="type"><a href="../qtcore/qpointf.html">QPointF</a></span>(x2<span class="operator">,</span> y2));
+      m_path<span class="operator">.</span>arcTo(st<span class="operator">.</span>x()<span class="operator">,</span> st<span class="operator">.</span>y()<span class="operator">,</span>
+                   end<span class="operator">.</span>x()<span class="operator">-</span>st<span class="operator">.</span>x()<span class="operator">,</span> end<span class="operator">.</span>y()<span class="operator">-</span>st<span class="operator">.</span>y()<span class="operator">,</span>
+                   radius<span class="operator">,</span> <span class="number">90</span>);
+  }
+
+  <span class="type">void</span> Context2D<span class="operator">::</span>rect(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> x<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> y<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> w<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> h)
+  {
+      <span class="type">QPainterPath</span> path; path<span class="operator">.</span>addRect(x<span class="operator">,</span> y<span class="operator">,</span> w<span class="operator">,</span> h);
+      path <span class="operator">=</span> m_state<span class="operator">.</span>matrix<span class="operator">.</span>map(path);
+      m_path<span class="operator">.</span>addPath(path);
+  }
+
+  <span class="type">void</span> Context2D<span class="operator">::</span>arc(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> xc<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> yc<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> radius<span class="operator">,</span>
+                      <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> sar<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> ear<span class="operator">,</span>
+                      bool anticlockwise)
+  {
+      <span class="comment">//### HACK</span>
+      <span class="comment">// In Qt we don't switch the coordinate system for degrees</span>
+      <span class="comment">// and still use the 0,0 as bottom left for degrees so we need</span>
+      <span class="comment">// to switch</span>
+      sar <span class="operator">=</span> <span class="operator">-</span>sar;
+      ear <span class="operator">=</span> <span class="operator">-</span>ear;
+      anticlockwise <span class="operator">=</span> <span class="operator">!</span>anticlockwise;
+      <span class="comment">//end hack</span>
+
+      <span class="type">float</span> sa <span class="operator">=</span> DEGREES(sar);
+      <span class="type">float</span> ea <span class="operator">=</span> DEGREES(ear);
+
+      <span class="type">double</span> span <span class="operator">=</span> <span class="number">0</span>;
+
+      <span class="type">double</span> xs     <span class="operator">=</span> xc <span class="operator">-</span> radius;
+      <span class="type">double</span> ys     <span class="operator">=</span> yc <span class="operator">-</span> radius;
+      <span class="type">double</span> width  <span class="operator">=</span> radius<span class="operator">*</span><span class="number">2</span>;
+      <span class="type">double</span> height <span class="operator">=</span> radius<span class="operator">*</span><span class="number">2</span>;
+
+      <span class="keyword">if</span> (<span class="operator">!</span>anticlockwise <span class="operator">&amp;</span><span class="operator">&amp;</span> (ea <span class="operator">&lt;</span> sa)) {
+          span <span class="operator">+</span><span class="operator">=</span> <span class="number">360</span>;
+      } <span class="keyword">else</span> <span class="keyword">if</span> (anticlockwise <span class="operator">&amp;</span><span class="operator">&amp;</span> (sa <span class="operator">&lt;</span> ea)) {
+          span <span class="operator">-</span><span class="operator">=</span> <span class="number">360</span>;
+      }
+
+      <span class="comment">//### this is also due to switched coordinate system</span>
+      <span class="comment">// we would end up with a 0 span instead of 360</span>
+      <span class="keyword">if</span> (<span class="operator">!</span>(<a href="../qtcore/qtglobal.html#qFuzzyCompare">qFuzzyCompare</a>(span <span class="operator">+</span> (ea <span class="operator">-</span> sa) <span class="operator">+</span> <span class="number">1</span><span class="operator">,</span> <span class="number">1</span>) <span class="operator">&amp;</span><span class="operator">&amp;</span>
+            <a href="../qtcore/qtglobal.html#qFuzzyCompare">qFuzzyCompare</a>(<a href="../qtcore/qtglobal.html#qAbs">qAbs</a>(span)<span class="operator">,</span> <span class="number">360</span>))) {
+          span   <span class="operator">+</span><span class="operator">=</span> ea <span class="operator">-</span> sa;
+      }
+
+      <span class="type">QPainterPath</span> path;
+      path<span class="operator">.</span>moveTo(<span class="type"><a href="../qtcore/qpointf.html">QPointF</a></span>(xc <span class="operator">+</span> radius  <span class="operator">*</span> cos(sar)<span class="operator">,</span>
+                                  yc <span class="operator">-</span> radius  <span class="operator">*</span> sin(sar)));
+
+      path<span class="operator">.</span>arcTo(xs<span class="operator">,</span> ys<span class="operator">,</span> width<span class="operator">,</span> height<span class="operator">,</span> sa<span class="operator">,</span> span);
+      path <span class="operator">=</span> m_state<span class="operator">.</span>matrix<span class="operator">.</span>map(path);
+      m_path<span class="operator">.</span>addPath(path);
+  }
+
+  <span class="type">void</span> Context2D<span class="operator">::</span>fill()
+  {
+      beginPainting();
+      m_painter<span class="operator">.</span>fillPath(m_path<span class="operator">,</span> m_painter<span class="operator">.</span>brush());
+      scheduleChange();
+  }
+
+  <span class="type">void</span> Context2D<span class="operator">::</span>stroke()
+  {
+      beginPainting();
+      m_painter<span class="operator">.</span>save();
+      m_painter<span class="operator">.</span>setMatrix(m_state<span class="operator">.</span>matrix<span class="operator">,</span> <span class="keyword">false</span>);
+      <span class="type">QPainterPath</span> tmp <span class="operator">=</span> m_state<span class="operator">.</span>matrix<span class="operator">.</span>inverted()<span class="operator">.</span>map(m_path);
+      m_painter<span class="operator">.</span>strokePath(tmp<span class="operator">,</span> m_painter<span class="operator">.</span>pen());
+      m_painter<span class="operator">.</span>restore();
+      scheduleChange();
+  }
+
+  <span class="type">void</span> Context2D<span class="operator">::</span>clip()
+  {
+      m_state<span class="operator">.</span>clipPath <span class="operator">=</span> m_path;
+      m_state<span class="operator">.</span>flags <span class="operator">|</span><span class="operator">=</span> DirtyClippingRegion;
+  }
+
+  bool Context2D<span class="operator">::</span>isPointInPath(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> x<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> y) <span class="keyword">const</span>
+  {
+      <span class="keyword">return</span> m_path<span class="operator">.</span>contains(<span class="type"><a href="../qtcore/qpointf.html">QPointF</a></span>(x<span class="operator">,</span> y));
+  }
+
+  ImageData Context2D<span class="operator">::</span>getImageData(<span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> sx<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> sy<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> sw<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> sh)
+  {
+      Q_UNUSED(sx);
+      Q_UNUSED(sy);
+      Q_UNUSED(sw);
+      Q_UNUSED(sh);
+      <span class="keyword">return</span> ImageData();
+  }
+
+  <span class="type">void</span> Context2D<span class="operator">::</span>putImageData(ImageData image<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> dx<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> dy)
+  {
+      Q_UNUSED(image);
+      Q_UNUSED(dx);
+      Q_UNUSED(dy);
+  }
+
+  Context2D<span class="operator">::</span>Context2D(<span class="type"><a href="../qtcore/qobject.html">QObject</a></span> <span class="operator">*</span>parent)
+      : <span class="type"><a href="../qtcore/qobject.html">QObject</a></span>(parent)<span class="operator">,</span> m_changeTimerId(<span class="operator">-</span><span class="number">1</span>)
+  {
+      reset();
+  }
+
+  <span class="keyword">const</span> <span class="type">QImage</span> <span class="operator">&amp;</span>Context2D<span class="operator">::</span>endPainting()
+  {
+      <span class="keyword">if</span> (m_painter<span class="operator">.</span>isActive())
+          m_painter<span class="operator">.</span>end();
+      <span class="keyword">return</span> m_image;
+  }
+
+  <span class="type">void</span> Context2D<span class="operator">::</span>beginPainting()
+  {
+      <span class="keyword">if</span> (<span class="operator">!</span>m_painter<span class="operator">.</span>isActive()) {
+          m_painter<span class="operator">.</span>begin(<span class="operator">&amp;</span>m_image);
+          m_painter<span class="operator">.</span>setRenderHint(<span class="type">QPainter</span><span class="operator">::</span>Antialiasing);
+          <span class="keyword">if</span> (<span class="operator">!</span>m_state<span class="operator">.</span>clipPath<span class="operator">.</span>isEmpty())
+              m_painter<span class="operator">.</span>setClipPath(m_state<span class="operator">.</span>clipPath);
+          m_painter<span class="operator">.</span>setBrush(m_state<span class="operator">.</span>fillStyle);
+          m_painter<span class="operator">.</span>setOpacity(m_state<span class="operator">.</span>globalAlpha);
+          <span class="type">QPen</span> pen;
+          pen<span class="operator">.</span>setBrush(m_state<span class="operator">.</span>strokeStyle);
+          <span class="keyword">if</span> (pen<span class="operator">.</span>style() <span class="operator">=</span><span class="operator">=</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>NoPen)
+              pen<span class="operator">.</span>setStyle(<span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>SolidLine);
+          pen<span class="operator">.</span>setCapStyle(m_state<span class="operator">.</span>lineCap);
+          pen<span class="operator">.</span>setJoinStyle(m_state<span class="operator">.</span>lineJoin);
+          pen<span class="operator">.</span>setWidthF(m_state<span class="operator">.</span>lineWidth);
+          pen<span class="operator">.</span>setMiterLimit(m_state<span class="operator">.</span>miterLimit);
+          m_painter<span class="operator">.</span>setPen(pen);
+      } <span class="keyword">else</span> {
+          <span class="keyword">if</span> ((m_state<span class="operator">.</span>flags <span class="operator">&amp;</span> DirtyClippingRegion) <span class="operator">&amp;</span><span class="operator">&amp;</span> <span class="operator">!</span>m_state<span class="operator">.</span>clipPath<span class="operator">.</span>isEmpty())
+              m_painter<span class="operator">.</span>setClipPath(m_state<span class="operator">.</span>clipPath);
+          <span class="keyword">if</span> (m_state<span class="operator">.</span>flags <span class="operator">&amp;</span> DirtyFillStyle)
+              m_painter<span class="operator">.</span>setBrush(m_state<span class="operator">.</span>fillStyle);
+          <span class="keyword">if</span> (m_state<span class="operator">.</span>flags <span class="operator">&amp;</span> DirtyGlobalAlpha)
+              m_painter<span class="operator">.</span>setOpacity(m_state<span class="operator">.</span>globalAlpha);
+          <span class="keyword">if</span> (m_state<span class="operator">.</span>flags <span class="operator">&amp;</span> DirtyGlobalCompositeOperation)
+              m_painter<span class="operator">.</span>setCompositionMode(m_state<span class="operator">.</span>globalCompositeOperation);
+          <span class="keyword">if</span> (m_state<span class="operator">.</span>flags <span class="operator">&amp;</span> MDirtyPen) {
+              <span class="type">QPen</span> pen <span class="operator">=</span> m_painter<span class="operator">.</span>pen();
+              <span class="keyword">if</span> (m_state<span class="operator">.</span>flags <span class="operator">&amp;</span> DirtyStrokeStyle)
+                  pen<span class="operator">.</span>setBrush(m_state<span class="operator">.</span>strokeStyle);
+              <span class="keyword">if</span> (m_state<span class="operator">.</span>flags <span class="operator">&amp;</span> DirtyLineWidth)
+                  pen<span class="operator">.</span>setWidthF(m_state<span class="operator">.</span>lineWidth);
+              <span class="keyword">if</span> (m_state<span class="operator">.</span>flags <span class="operator">&amp;</span> DirtyLineCap)
+                  pen<span class="operator">.</span>setCapStyle(m_state<span class="operator">.</span>lineCap);
+              <span class="keyword">if</span> (m_state<span class="operator">.</span>flags <span class="operator">&amp;</span> DirtyLineJoin)
+                  pen<span class="operator">.</span>setJoinStyle(m_state<span class="operator">.</span>lineJoin);
+              <span class="keyword">if</span> (m_state<span class="operator">.</span>flags <span class="operator">&amp;</span> DirtyMiterLimit)
+                  pen<span class="operator">.</span>setMiterLimit(m_state<span class="operator">.</span>miterLimit);
+              m_painter<span class="operator">.</span>setPen(pen);
+          }
+          m_state<span class="operator">.</span>flags <span class="operator">=</span> <span class="number">0</span>;
+      }
+  }
+
+  <span class="type">void</span> Context2D<span class="operator">::</span>clear()
+  {
+      endPainting();
+      m_image<span class="operator">.</span>fill(qRgba(<span class="number">0</span><span class="operator">,</span><span class="number">0</span><span class="operator">,</span><span class="number">0</span><span class="operator">,</span><span class="number">0</span>));
+      scheduleChange();
+  }
+
+  <span class="type">void</span> Context2D<span class="operator">::</span>reset()
+  {
+      m_stateStack<span class="operator">.</span>clear();
+      m_state<span class="operator">.</span>matrix <span class="operator">=</span> <span class="type">QMatrix</span>();
+      m_state<span class="operator">.</span>clipPath <span class="operator">=</span> <span class="type">QPainterPath</span>();
+      m_state<span class="operator">.</span>globalAlpha <span class="operator">=</span> <span class="number">1.0</span>;
+      m_state<span class="operator">.</span>globalCompositeOperation <span class="operator">=</span> <span class="type">QPainter</span><span class="operator">::</span>CompositionMode_SourceOver;
+      m_state<span class="operator">.</span>strokeStyle <span class="operator">=</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>black;
+      m_state<span class="operator">.</span>fillStyle <span class="operator">=</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>black;
+      m_state<span class="operator">.</span>lineWidth <span class="operator">=</span> <span class="number">1</span>;
+      m_state<span class="operator">.</span>lineCap <span class="operator">=</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>FlatCap;
+      m_state<span class="operator">.</span>lineJoin <span class="operator">=</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>MiterJoin;
+      m_state<span class="operator">.</span>miterLimit <span class="operator">=</span> <span class="number">10</span>;
+      m_state<span class="operator">.</span>shadowOffsetX <span class="operator">=</span> <span class="number">0</span>;
+      m_state<span class="operator">.</span>shadowOffsetY <span class="operator">=</span> <span class="number">0</span>;
+      m_state<span class="operator">.</span>shadowBlur <span class="operator">=</span> <span class="number">0</span>;
+      m_state<span class="operator">.</span>shadowColor <span class="operator">=</span> qRgba(<span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">0</span>);
+      m_state<span class="operator">.</span>flags <span class="operator">=</span> AllIsFullOfDirt;
+      clear();
+  }
+
+  <span class="type">void</span> Context2D<span class="operator">::</span>setSize(<span class="type">int</span> width<span class="operator">,</span> <span class="type">int</span> height)
+  {
+      endPainting();
+      <span class="type">QImage</span> newi(width<span class="operator">,</span> height<span class="operator">,</span> <span class="type">QImage</span><span class="operator">::</span>Format_ARGB32_Premultiplied);
+      newi<span class="operator">.</span>fill(qRgba(<span class="number">0</span><span class="operator">,</span><span class="number">0</span><span class="operator">,</span><span class="number">0</span><span class="operator">,</span><span class="number">0</span>));
+      <span class="type">QPainter</span> p(<span class="operator">&amp;</span>newi);
+      p<span class="operator">.</span>drawImage(<span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> m_image);
+      p<span class="operator">.</span>end();
+      m_image <span class="operator">=</span> newi;
+      scheduleChange();
+  }
+
+  <span class="type">void</span> Context2D<span class="operator">::</span>setSize(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qsize.html">QSize</a></span> <span class="operator">&amp;</span>size)
+  {
+      setSize(size<span class="operator">.</span>width()<span class="operator">,</span> size<span class="operator">.</span>height());
+  }
+
+  <span class="type"><a href="../qtcore/qsize.html">QSize</a></span> Context2D<span class="operator">::</span>size() <span class="keyword">const</span>
+  {
+      <span class="keyword">return</span> m_image<span class="operator">.</span>size();
+  }
+
+  <span class="type">void</span> Context2D<span class="operator">::</span>drawImage(DomImage <span class="operator">*</span>image<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> dx<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> dy)
+  {
+      <span class="keyword">if</span> (<span class="operator">!</span>image)
+          <span class="keyword">return</span>;
+      <span class="keyword">if</span> (dx <span class="operator">&lt;</span> <span class="number">0</span>) {
+          <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> sx <span class="operator">=</span> <a href="../qtcore/qtglobal.html#qAbs">qAbs</a>(dx);
+          <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> sy <span class="operator">=</span> <a href="../qtcore/qtglobal.html#qAbs">qAbs</a>(dy);
+          <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> sw <span class="operator">=</span> image<span class="operator">-</span><span class="operator">&gt;</span>width() <span class="operator">-</span> sx;
+          <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> sh <span class="operator">=</span> image<span class="operator">-</span><span class="operator">&gt;</span>height() <span class="operator">-</span> sy;
+
+          drawImage(image<span class="operator">,</span> sx<span class="operator">,</span> sy<span class="operator">,</span> sw<span class="operator">,</span> sh<span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> sw<span class="operator">,</span> sh);
+      } <span class="keyword">else</span> {
+          beginPainting();
+          m_painter<span class="operator">.</span>drawImage(<span class="type"><a href="../qtcore/qpointf.html">QPointF</a></span>(dx<span class="operator">,</span> dy)<span class="operator">,</span> image<span class="operator">-</span><span class="operator">&gt;</span>image());
+          scheduleChange();
+      }
+  }
+
+  <span class="type">void</span> Context2D<span class="operator">::</span>drawImage(DomImage <span class="operator">*</span>image<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> dx<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> dy<span class="operator">,</span>
+                            <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> dw<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> dh)
+  {
+      <span class="keyword">if</span> (<span class="operator">!</span>image)
+          <span class="keyword">return</span>;
+      beginPainting();
+      m_painter<span class="operator">.</span>drawImage(<span class="type"><a href="../qtcore/qrectf.html">QRectF</a></span>(dx<span class="operator">,</span> dy<span class="operator">,</span> dw<span class="operator">,</span> dh)<span class="operator">.</span>toRect()<span class="operator">,</span> image<span class="operator">-</span><span class="operator">&gt;</span>image());
+      scheduleChange();
+  }
+
+  <span class="type">void</span> Context2D<span class="operator">::</span>drawImage(DomImage <span class="operator">*</span>image<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> sx<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> sy<span class="operator">,</span>
+                            <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> sw<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> sh<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> dx<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> dy<span class="operator">,</span>
+                            <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> dw<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qreal-typedef">qreal</a></span> dh)
+  {
+      <span class="keyword">if</span> (<span class="operator">!</span>image)
+          <span class="keyword">return</span>;
+      beginPainting();
+      m_painter<span class="operator">.</span>drawImage(<span class="type"><a href="../qtcore/qrectf.html">QRectF</a></span>(dx<span class="operator">,</span> dy<span class="operator">,</span> dw<span class="operator">,</span> dh)<span class="operator">,</span> image<span class="operator">-</span><span class="operator">&gt;</span>image()<span class="operator">,</span>
+                          <span class="type"><a href="../qtcore/qrectf.html">QRectF</a></span>(sx<span class="operator">,</span> sy<span class="operator">,</span> sw<span class="operator">,</span> sh));
+      scheduleChange();
+  }
+
+  <span class="type">void</span> Context2D<span class="operator">::</span>scheduleChange()
+  {
+      <span class="keyword">if</span> (m_changeTimerId <span class="operator">=</span><span class="operator">=</span> <span class="operator">-</span><span class="number">1</span>)
+          m_changeTimerId <span class="operator">=</span> startTimer(<span class="number">0</span>);
+  }
+
+  <span class="type">void</span> Context2D<span class="operator">::</span>timerEvent(<span class="type"><a href="../qtcore/qtimerevent.html">QTimerEvent</a></span> <span class="operator">*</span>e)
+  {
+      <span class="keyword">if</span> (e<span class="operator">-</span><span class="operator">&gt;</span>timerId() <span class="operator">=</span><span class="operator">=</span> m_changeTimerId) {
+          killTimer(m_changeTimerId);
+          m_changeTimerId <span class="operator">=</span> <span class="operator">-</span><span class="number">1</span>;
+          <span class="keyword">emit</span> changed(endPainting());
+      } <span class="keyword">else</span> {
+          <span class="type"><a href="../qtcore/qobject.html">QObject</a></span><span class="operator">::</span>timerEvent(e);
+      }
+  }
+
+</pre>
+</div>
+<!-- @@@script/context2d/context2d.cpp -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

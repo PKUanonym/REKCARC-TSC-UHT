@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qsslellipticcurve.cpp -->
+  <title>QSslEllipticCurve Class | Qt Network 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtnetwork-index.html">Qt Network</a></td><td ><a href="qtnetwork-module.html">C++ Classes</a></td><td >QSslEllipticCurve</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#static-public-members">Static Public Members</a></li>
+<li class="level1"><a href="#related-non-members">Related Non-Members</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">QSslEllipticCurve Class</h1>
+<!-- $$$QSslEllipticCurve-brief -->
+<p>Represents an elliptic curve for use by elliptic-curve cipher algorithms. <a href="#details">More...</a></p>
+<!-- @@@QSslEllipticCurve -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign">   <span class="preprocessor">#include &lt;QSslEllipticCurve&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> qmake:</td><td class="memItemRight bottomAlign"> QT += network</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Since:</td><td class="memItemRight bottomAlign">  Qt 5.5</td></tr></table></div><ul>
+<li><a href="qsslellipticcurve-members.html">List of all members, including inherited members</a></li>
+</ul>
+<p><b>Note:</b> All functions in this class are <a href="../qtdoc/threads-reentrancy.html">reentrant</a>.</p>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qsslellipticcurve.html#QSslEllipticCurve">QSslEllipticCurve</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qsslellipticcurve.html#isTlsNamedCurve">isTlsNamedCurve</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qsslellipticcurve.html#isValid">isValid</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qsslellipticcurve.html#longName">longName</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qsslellipticcurve.html#shortName">shortName</a></b>() const</td></tr>
+</table></div>
+<a name="static-public-members"></a>
+<h2 id="static-public-members">Static Public Members</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> QSslEllipticCurve </td><td class="memItemRight bottomAlign"><b><a href="qsslellipticcurve.html#fromLongName">fromLongName</a></b>(const QString &amp;<i>name</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QSslEllipticCurve </td><td class="memItemRight bottomAlign"><b><a href="qsslellipticcurve.html#fromShortName">fromShortName</a></b>(const QString &amp;<i>name</i>)</td></tr>
+</table></div>
+<a name="related-non-members"></a>
+<h2 id="related-non-members">Related Non-Members</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qsslellipticcurve.html#operator-not-eq">operator!=</a></b>(QSslEllipticCurve <i>lhs</i>, QSslEllipticCurve <i>rhs</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QDebug </td><td class="memItemRight bottomAlign"><b><a href="qsslellipticcurve.html#operator-lt-lt">operator&lt;&lt;</a></b>(QDebug <i>debug</i>, QSslEllipticCurve <i>curve</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qsslellipticcurve.html#operator-eq-eq">operator==</a></b>(QSslEllipticCurve <i>lhs</i>, QSslEllipticCurve <i>rhs</i>)</td></tr>
+</table></div>
+<a name="details"></a>
+<!-- $$$QSslEllipticCurve-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>Represents an elliptic curve for use by elliptic-curve cipher algorithms.</p>
+<p>The class <a href="qsslellipticcurve.html">QSslEllipticCurve</a> represents an elliptic curve for use by elliptic-curve cipher algorithms.</p>
+<p>Elliptic curves can be constructed from a &quot;short name&quot; (SN) (<a href="qsslellipticcurve.html#fromShortName">fromShortName</a>()), and by a call to <a href="qsslconfiguration.html#supportedEllipticCurves">QSslConfiguration::supportedEllipticCurves</a>().</p>
+<p><a href="qsslellipticcurve.html">QSslEllipticCurve</a> instances can be compared for equality and can be used as keys in <a href="../qtcore/qhash.html#qhash">QHash</a> and <a href="../qtcore/qset.html">QSet</a>. They cannot be used as key in a <a href="../qtcore/qmap.html">QMap</a>.</p>
+</div>
+<!-- @@@QSslEllipticCurve -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$QSslEllipticCurve[overload1]$$$QSslEllipticCurve -->
+<h3 class="fn" id="QSslEllipticCurve"><a name="QSslEllipticCurve"></a>QSslEllipticCurve::<span class="name">QSslEllipticCurve</span>()</h3>
+<p>Constructs an invalid elliptic curve.</p>
+<p><b>See also </b><a href="qsslellipticcurve.html#isValid">isValid</a>() and <a href="qsslconfiguration.html#supportedEllipticCurves">QSslConfiguration::supportedEllipticCurves</a>().</p>
+<!-- @@@QSslEllipticCurve -->
+<!-- $$$fromLongName[overload1]$$$fromLongNameconstQString& -->
+<h3 class="fn" id="fromLongName"><a name="fromLongName"></a><code>[static] </code><span class="type"><a href="qsslellipticcurve.html#QSslEllipticCurve">QSslEllipticCurve</a></span> QSslEllipticCurve::<span class="name">fromLongName</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>name</i>)</h3>
+<p>Returns an <a href="qsslellipticcurve.html">QSslEllipticCurve</a> instance representing the named curve <i>name</i>. The <i>name</i> is a long name for the curve, whose exact spelling depends on the SSL implementation.</p>
+<p>If the given <i>name</i> is not supported, returns an invalid <a href="qsslellipticcurve.html">QSslEllipticCurve</a> instance.</p>
+<p><b>Note: </b>The OpenSSL implementation of this function treats the name case-sensitively.</p><p><b>See also </b><a href="qsslellipticcurve.html#longName">longName</a>().</p>
+<!-- @@@fromLongName -->
+<!-- $$$fromShortName[overload1]$$$fromShortNameconstQString& -->
+<h3 class="fn" id="fromShortName"><a name="fromShortName"></a><code>[static] </code><span class="type"><a href="qsslellipticcurve.html#QSslEllipticCurve">QSslEllipticCurve</a></span> QSslEllipticCurve::<span class="name">fromShortName</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>name</i>)</h3>
+<p>Returns an <a href="qsslellipticcurve.html">QSslEllipticCurve</a> instance representing the named curve <i>name</i>. The <i>name</i> is the conventional short name for the curve, as represented by RFC 4492 (for instance <code>secp521r1</code>), or as NIST short names (for instance <code>P-256</code>). The actual set of recognized names depends on the SSL implementation.</p>
+<p>If the given <i>name</i> is not supported, returns an invalid <a href="qsslellipticcurve.html">QSslEllipticCurve</a> instance.</p>
+<p><b>Note: </b>The OpenSSL implementation of this function treats the name case-sensitively.</p><p><b>See also </b><a href="qsslellipticcurve.html#shortName">shortName</a>().</p>
+<!-- @@@fromShortName -->
+<!-- $$$isTlsNamedCurve[overload1]$$$isTlsNamedCurve -->
+<h3 class="fn" id="isTlsNamedCurve"><a name="isTlsNamedCurve"></a><span class="type">bool</span> QSslEllipticCurve::<span class="name">isTlsNamedCurve</span>() const</h3>
+<p>Returns true if this elliptic curve is one of the named curves that can be used in the key exchange when using an elliptic curve cipher with TLS; false otherwise.</p>
+<!-- @@@isTlsNamedCurve -->
+<!-- $$$isValid[overload1]$$$isValid -->
+<h3 class="fn" id="isValid"><a name="isValid"></a><span class="type">bool</span> QSslEllipticCurve::<span class="name">isValid</span>() const</h3>
+<p>Returns true if this elliptic curve is a valid curve, false otherwise.</p>
+<!-- @@@isValid -->
+<!-- $$$longName[overload1]$$$longName -->
+<h3 class="fn" id="longName"><a name="longName"></a><span class="type"><a href="../qtcore/qstring.html">QString</a></span> QSslEllipticCurve::<span class="name">longName</span>() const</h3>
+<p>Returns the conventional long name for this curve. If this curve is invalid, returns an empty string.</p>
+<p><b>See also </b><a href="qsslellipticcurve.html#shortName">shortName</a>().</p>
+<!-- @@@longName -->
+<!-- $$$shortName[overload1]$$$shortName -->
+<h3 class="fn" id="shortName"><a name="shortName"></a><span class="type"><a href="../qtcore/qstring.html">QString</a></span> QSslEllipticCurve::<span class="name">shortName</span>() const</h3>
+<p>Returns the conventional short name for this curve. If this curve is invalid, returns an empty string.</p>
+<p><b>See also </b><a href="qsslellipticcurve.html#longName">longName</a>().</p>
+<!-- @@@shortName -->
+</div>
+<div class="relnonmem">
+<h2>Related Non-Members</h2>
+<!-- $$$operator!=[overload1]$$$operator!=QSslEllipticCurveQSslEllipticCurve -->
+<h3 class="fn" id="operator-not-eq"><a name="operator-not-eq"></a><span class="type">bool</span> <span class="name">operator!=</span>(<span class="type"><a href="qsslellipticcurve.html#QSslEllipticCurve">QSslEllipticCurve</a></span> <i>lhs</i>, <span class="type"><a href="qsslellipticcurve.html#QSslEllipticCurve">QSslEllipticCurve</a></span> <i>rhs</i>)</h3>
+<p>Returns true if the curve <i>lhs</i> represents a different curve than <i>rhs</i>; false otherwise.</p>
+<p>This function was introduced in  Qt 5.5.</p>
+<!-- @@@operator!= -->
+<!-- $$$operator<<[overload1]$$$operator<<QDebugQSslEllipticCurve -->
+<h3 class="fn" id="operator-lt-lt"><a name="operator-lt-lt"></a><span class="type"><a href="../qtcore/qdebug.html">QDebug</a></span> <span class="name">operator&lt;&lt;</span>(<span class="type"><a href="../qtcore/qdebug.html">QDebug</a></span> <i>debug</i>, <span class="type"><a href="qsslellipticcurve.html#QSslEllipticCurve">QSslEllipticCurve</a></span> <i>curve</i>)</h3>
+<p>Writes the elliptic curve <i>curve</i> into the debug object <i>debug</i> for debugging purposes.</p>
+<p>This function was introduced in  Qt 5.5.</p>
+<p><b>See also </b><a href="../qtdoc/testing-and-debugging.html#debugging-techniques">Debugging Techniques</a>.</p>
+<!-- @@@operator<< -->
+<!-- $$$operator==[overload1]$$$operator==QSslEllipticCurveQSslEllipticCurve -->
+<h3 class="fn" id="operator-eq-eq"><a name="operator-eq-eq"></a><span class="type">bool</span> <span class="name">operator==</span>(<span class="type"><a href="qsslellipticcurve.html#QSslEllipticCurve">QSslEllipticCurve</a></span> <i>lhs</i>, <span class="type"><a href="qsslellipticcurve.html#QSslEllipticCurve">QSslEllipticCurve</a></span> <i>rhs</i>)</h3>
+<p>Returns true if the curve <i>lhs</i> represents the same curve of <i>rhs</i>;</p>
+<p>This function was introduced in  Qt 5.5.</p>
+<!-- @@@operator== -->
+</div>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

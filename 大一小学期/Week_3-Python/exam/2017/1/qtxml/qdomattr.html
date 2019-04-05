@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qdom.cpp -->
+  <title>QDomAttr Class | Qt XML 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtxml-index.html">Qt XML</a></td><td ><a href="qtxml-module.html">C++ Classes</a></td><td >QDomAttr</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">QDomAttr Class</h1>
+<!-- $$$QDomAttr-brief -->
+<p>The <a href="qdomattr.html">QDomAttr</a> class represents one attribute of a <a href="qdomelement.html">QDomElement</a>. <a href="#details">More...</a></p>
+<!-- @@@QDomAttr -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign">   <span class="preprocessor">#include &lt;QDomAttr&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> qmake:</td><td class="memItemRight bottomAlign"> QT += xml</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Inherits:</td><td class="memItemRight bottomAlign"> <a href="qdomnode.html">QDomNode</a></td></tr></table></div><ul>
+<li><a href="qdomattr-members.html">List of all members, including inherited members</a></li>
+</ul>
+<p><b>Note:</b> All functions in this class are <a href="../qtdoc/threads-reentrancy.html">reentrant</a>.</p>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qdomattr.html#QDomAttr">QDomAttr</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qdomattr.html#QDomAttr-1">QDomAttr</a></b>(const QDomAttr &amp;<i>x</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qdomattr.html#name">name</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QDomNode::NodeType </td><td class="memItemRight bottomAlign"><b><a href="qdomattr.html#nodeType">nodeType</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QDomElement </td><td class="memItemRight bottomAlign"><b><a href="qdomattr.html#ownerElement">ownerElement</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qdomattr.html#setValue">setValue</a></b>(const QString &amp;<i>v</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qdomattr.html#specified">specified</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qdomattr.html#value">value</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QDomAttr &amp;</td><td class="memItemRight bottomAlign"><b><a href="qdomattr.html#operator-eq">operator=</a></b>(const QDomAttr &amp;<i>x</i>)</td></tr>
+</table></div>
+<ul>
+<li class="fn">65 public functions inherited from <a href="qdomnode.html#public-functions">QDomNode</a></li>
+</ul>
+<a name="details"></a>
+<!-- $$$QDomAttr-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="qdomattr.html">QDomAttr</a> class represents one attribute of a <a href="qdomelement.html">QDomElement</a>.</p>
+<p>For example, the following piece of XML produces an element with no children, but two attributes:</p>
+<pre class="cpp">
+
+  <span class="operator">&lt;</span>link href<span class="operator">=</span><span class="string">&quot;http://qt-project.org&quot;</span> color<span class="operator">=</span><span class="string">&quot;red&quot;</span> <span class="operator">/</span><span class="operator">&gt;</span>
+
+</pre>
+<p>You can access the attributes of an element with code like this:</p>
+<pre class="cpp">
+
+  <span class="type"><a href="qdomelement.html">QDomElement</a></span> e <span class="operator">=</span> <span class="comment">//...</span>
+  <span class="comment">//...</span>
+  <span class="type"><a href="qdomattr.html#QDomAttr">QDomAttr</a></span> a <span class="operator">=</span> e<span class="operator">.</span>attributeNode(<span class="string">&quot;href&quot;</span>);
+  cout <span class="operator">&lt;</span><span class="operator">&lt;</span> a<span class="operator">.</span>value() <span class="operator">&lt;</span><span class="operator">&lt;</span> endl;                <span class="comment">// prints &quot;http://qt-project.org&quot;</span>
+  a<span class="operator">.</span>setValue(<span class="string">&quot;http://qt-project.org/doc&quot;</span>); <span class="comment">// change the node's attribute</span>
+  <span class="type"><a href="qdomattr.html#QDomAttr">QDomAttr</a></span> a2 <span class="operator">=</span> e<span class="operator">.</span>attributeNode(<span class="string">&quot;href&quot;</span>);
+  cout <span class="operator">&lt;</span><span class="operator">&lt;</span> a2<span class="operator">.</span>value() <span class="operator">&lt;</span><span class="operator">&lt;</span> endl;               <span class="comment">// prints &quot;http://qt-project.org/doc&quot;</span>
+
+</pre>
+<p>This example also shows that changing an attribute received from an element changes the attribute of the element. If you do not want to change the value of the element's attribute you must use <a href="qdomnode.html#cloneNode">cloneNode</a>() to get an independent copy of the attribute.</p>
+<p><a href="qdomattr.html">QDomAttr</a> can return the <a href="qdomattr.html#name">name</a>() and <a href="qdomattr.html#value">value</a>() of an attribute. An attribute's value is set with <a href="qdomattr.html#setValue">setValue</a>(). If <a href="qdomattr.html#specified">specified</a>() returns true the value was set with <a href="qdomattr.html#setValue">setValue</a>(). The node this attribute is attached to (if any) is returned by <a href="qdomattr.html#ownerElement">ownerElement</a>().</p>
+<p>For further information about the Document Object Model see <a href="http://www.w3.org/TR/REC-DOM-Level-1/">http://www.w3.org/TR/REC-DOM-Level-1/</a> and <a href="http://www.w3.org/TR/DOM-Level-2-Core/">http://www.w3.org/TR/DOM-Level-2-Core/</a>. For a more general introduction of the DOM implementation see the <a href="qdomdocument.html">QDomDocument</a> documentation.</p>
+</div>
+<!-- @@@QDomAttr -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$QDomAttr[overload1]$$$QDomAttr -->
+<h3 class="fn" id="QDomAttr"><a name="QDomAttr"></a>QDomAttr::<span class="name">QDomAttr</span>()</h3>
+<p>Constructs an empty attribute.</p>
+<!-- @@@QDomAttr -->
+<!-- $$$QDomAttr$$$QDomAttrconstQDomAttr& -->
+<h3 class="fn" id="QDomAttr-1"><a name="QDomAttr-1"></a>QDomAttr::<span class="name">QDomAttr</span>(const <span class="type"><a href="qdomattr.html#QDomAttr">QDomAttr</a></span> &amp;<i>x</i>)</h3>
+<p>Constructs a copy of <i>x</i>.</p>
+<p>The data of the copy is shared (shallow copy): modifying one node will also change the other. If you want to make a deep copy, use <a href="qdomnode.html#cloneNode">cloneNode</a>().</p>
+<!-- @@@QDomAttr -->
+<!-- $$$name[overload1]$$$name -->
+<h3 class="fn" id="name"><a name="name"></a><span class="type"><a href="../qtcore/qstring.html">QString</a></span> QDomAttr::<span class="name">name</span>() const</h3>
+<p>Returns the attribute's name.</p>
+<!-- @@@name -->
+<!-- $$$nodeType[overload1]$$$nodeType -->
+<h3 class="fn" id="nodeType"><a name="nodeType"></a><span class="type"><a href="qdomnode.html#NodeType-enum">QDomNode::NodeType</a></span> QDomAttr::<span class="name">nodeType</span>() const</h3>
+<p>Returns <a href="qdomnode.html#NodeType-enum">AttributeNode</a>.</p>
+<!-- @@@nodeType -->
+<!-- $$$ownerElement[overload1]$$$ownerElement -->
+<h3 class="fn" id="ownerElement"><a name="ownerElement"></a><span class="type"><a href="qdomelement.html">QDomElement</a></span> QDomAttr::<span class="name">ownerElement</span>() const</h3>
+<p>Returns the element node this attribute is attached to or a <a href="qdomnode.html#isNull">null node</a> if this attribute is not attached to any element.</p>
+<!-- @@@ownerElement -->
+<!-- $$$setValue[overload1]$$$setValueconstQString& -->
+<h3 class="fn" id="setValue"><a name="setValue"></a><span class="type">void</span> QDomAttr::<span class="name">setValue</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>v</i>)</h3>
+<p>Sets the attribute's value to <i>v</i>.</p>
+<p><b>See also </b><a href="qdomattr.html#value">value</a>().</p>
+<!-- @@@setValue -->
+<!-- $$$specified[overload1]$$$specified -->
+<h3 class="fn" id="specified"><a name="specified"></a><span class="type">bool</span> QDomAttr::<span class="name">specified</span>() const</h3>
+<p>Returns <code>true</code> if the attribute has been set by the user with <a href="qdomattr.html#setValue">setValue</a>(). Returns <code>false</code> if the value hasn't been specified or set.</p>
+<p><b>See also </b><a href="qdomattr.html#setValue">setValue</a>().</p>
+<!-- @@@specified -->
+<!-- $$$value[overload1]$$$value -->
+<h3 class="fn" id="value"><a name="value"></a><span class="type"><a href="../qtcore/qstring.html">QString</a></span> QDomAttr::<span class="name">value</span>() const</h3>
+<p>Returns the value of the attribute or an empty string if the attribute has not been specified.</p>
+<p><b>See also </b><a href="qdomattr.html#specified">specified</a>() and <a href="qdomattr.html#setValue">setValue</a>().</p>
+<!-- @@@value -->
+<!-- $$$operator=[overload1]$$$operator=constQDomAttr& -->
+<h3 class="fn" id="operator-eq"><a name="operator-eq"></a><span class="type"><a href="qdomattr.html#QDomAttr">QDomAttr</a></span> &amp;QDomAttr::<span class="name">operator=</span>(const <span class="type"><a href="qdomattr.html#QDomAttr">QDomAttr</a></span> &amp;<i>x</i>)</h3>
+<p>Assigns <i>x</i> to this DOM attribute.</p>
+<p>The data of the copy is shared (shallow copy): modifying one node will also change the other. If you want to make a deep copy, use <a href="qdomnode.html#cloneNode">cloneNode</a>().</p>
+<!-- @@@operator= -->
+</div>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qnetworkconfiguration.cpp -->
+  <title>QNetworkConfiguration Class | Qt Network 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtnetwork-index.html">Qt Network</a></td><td ><a href="qtnetwork-module.html">C++ Classes</a></td><td >QNetworkConfiguration</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-types">Public Types</a></li>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+<li class="level2"><a href="#configuration-states">Configuration States</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">QNetworkConfiguration Class</h1>
+<!-- $$$QNetworkConfiguration-brief -->
+<p>The <a href="qnetworkconfiguration.html">QNetworkConfiguration</a> class provides an abstraction of one or more access point configurations. <a href="#details">More...</a></p>
+<!-- @@@QNetworkConfiguration -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign">   <span class="preprocessor">#include &lt;QNetworkConfiguration&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> qmake:</td><td class="memItemRight bottomAlign"> QT += network</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Since:</td><td class="memItemRight bottomAlign">  Qt 4.7</td></tr></table></div><ul>
+<li><a href="qnetworkconfiguration-members.html">List of all members, including inherited members</a></li>
+</ul>
+<a name="public-types"></a>
+<h2 id="public-types">Public Types</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="qnetworkconfiguration.html#BearerType-enum">BearerType</a></b> { BearerUnknown, BearerEthernet, BearerWLAN, Bearer2G, ..., BearerLTE }</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="qnetworkconfiguration.html#Purpose-enum">Purpose</a></b> { UnknownPurpose, PublicPurpose, PrivatePurpose, ServiceSpecificPurpose }</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="qnetworkconfiguration.html#StateFlag-enum">StateFlag</a></b> { Undefined, Defined, Discovered, Active }</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> flags </td><td class="memItemRight bottomAlign"><b><a href="qnetworkconfiguration.html#StateFlag-enum">StateFlags</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="qnetworkconfiguration.html#Type-enum">Type</a></b> { InternetAccessPoint, ServiceNetwork, UserChoice, Invalid }</td></tr>
+</table></div>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qnetworkconfiguration.html#QNetworkConfiguration">QNetworkConfiguration</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qnetworkconfiguration.html#QNetworkConfiguration-1">QNetworkConfiguration</a></b>(const QNetworkConfiguration &amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qnetworkconfiguration.html#dtor.QNetworkConfiguration">~QNetworkConfiguration</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> BearerType </td><td class="memItemRight bottomAlign"><b><a href="qnetworkconfiguration.html#bearerType">bearerType</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> BearerType </td><td class="memItemRight bottomAlign"><b><a href="qnetworkconfiguration.html#bearerTypeFamily">bearerTypeFamily</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qnetworkconfiguration.html#bearerTypeName">bearerTypeName</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QList&lt;QNetworkConfiguration&gt; </td><td class="memItemRight bottomAlign"><b><a href="qnetworkconfiguration.html#children">children</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qnetworkconfiguration.html#identifier">identifier</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qnetworkconfiguration.html#isRoamingAvailable">isRoamingAvailable</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qnetworkconfiguration.html#isValid">isValid</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qnetworkconfiguration.html#name">name</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> Purpose </td><td class="memItemRight bottomAlign"><b><a href="qnetworkconfiguration.html#purpose">purpose</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> StateFlags </td><td class="memItemRight bottomAlign"><b><a href="qnetworkconfiguration.html#state">state</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qnetworkconfiguration.html#swap">swap</a></b>(QNetworkConfiguration &amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> Type </td><td class="memItemRight bottomAlign"><b><a href="qnetworkconfiguration.html#type">type</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qnetworkconfiguration.html#operator-not-eq">operator!=</a></b>(const QNetworkConfiguration &amp;<i>other</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QNetworkConfiguration &amp;</td><td class="memItemRight bottomAlign"><b><a href="qnetworkconfiguration.html#operator-eq">operator=</a></b>(QNetworkConfiguration &amp;&amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QNetworkConfiguration &amp;</td><td class="memItemRight bottomAlign"><b><a href="qnetworkconfiguration.html#operator-eq-1">operator=</a></b>(const QNetworkConfiguration &amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qnetworkconfiguration.html#operator-eq-eq">operator==</a></b>(const QNetworkConfiguration &amp;<i>other</i>) const</td></tr>
+</table></div>
+<a name="details"></a>
+<!-- $$$QNetworkConfiguration-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="qnetworkconfiguration.html">QNetworkConfiguration</a> class provides an abstraction of one or more access point configurations.</p>
+<p><a href="qnetworkconfiguration.html">QNetworkConfiguration</a> encapsulates a single access point or service network. In most cases a single access point configuration can be mapped to one network interface. However a single network interface may not always map to only one access point configuration. Multiple configurations for the same network device may enable multiple access points. An example device that could exhibit such a configuration might be a Smartphone which allows the user to manage multiple WLAN configurations while the device itself has only one WLAN network device.</p>
+<p>The <a href="qnetworkconfiguration.html">QNetworkConfiguration</a> also supports the concept of service networks. This concept allows the grouping of multiple access point configurations into one entity. Such a group is called service network and can be beneficial in cases whereby a network session to a particular destination network is required (e.g&#x2e; a company network). When using a service network the user doesn't usually care which one of the connectivity options is chosen (e.g&#x2e; corporate WLAN or VPN via GPRS) as long as he can reach the company's target server. Depending on the current position and time some of the access points that make up the service network may not even be available. Furthermore automated access point roaming can be enabled which enables the device to change the network interface configuration dynamically while maintaining the applications connection to the target network. It allows adaption to the changing environment and may enable optimization with regards to cost, speed or other network parameters.</p>
+<p>Special configurations of type <a href="qnetworkconfiguration.html#Type-enum">UserChoice</a> provide a placeholder configuration which is resolved to an actual network configuration by the platform when a <a href="qnetworksession.html">session</a> is <a href="qnetworksession.html#open">opened</a>. Not all platforms support the concept of a user choice configuration.</p>
+<a name="configuration-states"></a>
+<h3 >Configuration States</h3>
+<p>The list of available configurations can be obtained via <a href="qnetworkconfigurationmanager.html#allConfigurations">QNetworkConfigurationManager::allConfigurations</a>(). A configuration can have multiple states. The <a href="qnetworkconfiguration.html#StateFlag-enum">Defined</a> configuration state indicates that the configuration is stored on the device. However the configuration is not yet ready to be activated as e.g&#x2e; a WLAN may not be available at the current time.</p>
+<p>The <a href="qnetworkconfiguration.html#StateFlag-enum">Discovered</a> state implies that the configuration is <a href="qnetworkconfiguration.html#StateFlag-enum">Defined</a> and the outside conditions are such that the configuration can be used immediately to open a new network session. An example of such an outside condition may be that the Ethernet cable is actually connected to the device or that the WLAN with the specified SSID is in range.</p>
+<p>The <a href="qnetworkconfiguration.html#StateFlag-enum">Active</a> state implies that the configuration is <a href="qnetworkconfiguration.html#StateFlag-enum">Discovered</a>. A configuration in this state is currently being used by an application. The underlying network interface has a valid IP configuration and can transfer IP packets between the device and the target network.</p>
+<p>The <a href="qnetworkconfiguration.html#StateFlag-enum">Undefined</a> state indicates that the system has knowledge of possible target networks but cannot actually use that knowledge to connect to it. An example for such a state could be an encrypted WLAN that has been discovered but the user hasn't actually saved a configuration including the required password which would allow the device to connect to it.</p>
+<p>Depending on the type of configuration some states are transient in nature. A GPRS/UMTS connection may almost always be <a href="qnetworkconfiguration.html#StateFlag-enum">Discovered</a> if the GSM/UMTS network is available. However if the GSM/UMTS network looses the connection the associated configuration may change its state from <a href="qnetworkconfiguration.html#StateFlag-enum">Discovered</a> to <a href="qnetworkconfiguration.html#StateFlag-enum">Defined</a> as well. A similar use case might be triggered by WLAN availability. <a href="qnetworkconfigurationmanager.html#updateConfigurations">QNetworkConfigurationManager::updateConfigurations</a>() can be used to manually trigger updates of states. Note that some platforms do not require such updates as they implicitly change the state once it has been discovered. If the state of a configuration changes all related <a href="qnetworkconfiguration.html">QNetworkConfiguration</a> instances change their state automatically.</p>
+</div>
+<p><b>See also </b><a href="qnetworksession.html">QNetworkSession</a> and <a href="qnetworkconfigurationmanager.html">QNetworkConfigurationManager</a>.</p>
+<!-- @@@QNetworkConfiguration -->
+<div class="types">
+<h2>Member Type Documentation</h2>
+<!-- $$$BearerType$$$BearerUnknown$$$BearerEthernet$$$BearerWLAN$$$Bearer2G$$$BearerCDMA2000$$$BearerWCDMA$$$BearerHSPA$$$BearerBluetooth$$$BearerWiMAX$$$BearerEVDO$$$BearerLTE$$$Bearer3G$$$Bearer4G -->
+<h3 class="fn" id="BearerType-enum"><a name="BearerType-enum"></a>enum QNetworkConfiguration::<span class="name">BearerType</span></h3>
+<p>Specifies the type of bearer used by a configuration.</p>
+<div class="table"><table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td class="topAlign"><code>QNetworkConfiguration::BearerUnknown</code></td><td class="topAlign tblval"><code>0</code></td><td class="topAlign">The type of bearer is unknown or unspecified. The <a href="qnetworkconfiguration.html#bearerTypeName">bearerTypeName</a>() function may return additional information.</td></tr>
+<tr><td class="topAlign"><code>QNetworkConfiguration::BearerEthernet</code></td><td class="topAlign tblval"><code>1</code></td><td class="topAlign">The configuration is for an Ethernet interfaces.</td></tr>
+<tr><td class="topAlign"><code>QNetworkConfiguration::BearerWLAN</code></td><td class="topAlign tblval"><code>2</code></td><td class="topAlign">The configuration is for a Wireless LAN interface.</td></tr>
+<tr><td class="topAlign"><code>QNetworkConfiguration::Bearer2G</code></td><td class="topAlign tblval"><code>3</code></td><td class="topAlign">The configuration is for a CSD, GPRS, HSCSD, EDGE or cdmaOne interface.</td></tr>
+<tr><td class="topAlign"><code>QNetworkConfiguration::Bearer3G</code></td><td class="topAlign tblval"><code>11</code></td><td class="topAlign">The configuration is for a 3G interface.</td></tr>
+<tr><td class="topAlign"><code>QNetworkConfiguration::Bearer4G</code></td><td class="topAlign tblval"><code>12</code></td><td class="topAlign">The configuration is for a 4G interface.</td></tr>
+<tr><td class="topAlign"><code>QNetworkConfiguration::BearerCDMA2000</code></td><td class="topAlign tblval"><code>4</code></td><td class="topAlign">The configuration is for CDMA interface.</td></tr>
+<tr><td class="topAlign"><code>QNetworkConfiguration::BearerWCDMA</code></td><td class="topAlign tblval"><code>5</code></td><td class="topAlign">The configuration is for W-CDMA/UMTS interface.</td></tr>
+<tr><td class="topAlign"><code>QNetworkConfiguration::BearerHSPA</code></td><td class="topAlign tblval"><code>6</code></td><td class="topAlign">The configuration is for High Speed Packet Access (HSPA) interface.</td></tr>
+<tr><td class="topAlign"><code>QNetworkConfiguration::BearerBluetooth</code></td><td class="topAlign tblval"><code>7</code></td><td class="topAlign">The configuration is for a Bluetooth interface.</td></tr>
+<tr><td class="topAlign"><code>QNetworkConfiguration::BearerWiMAX</code></td><td class="topAlign tblval"><code>8</code></td><td class="topAlign">The configuration is for a WiMAX interface.</td></tr>
+<tr><td class="topAlign"><code>QNetworkConfiguration::BearerEVDO</code></td><td class="topAlign tblval"><code>9</code></td><td class="topAlign">The configuration is for an EVDO (3G) interface.</td></tr>
+<tr><td class="topAlign"><code>QNetworkConfiguration::BearerLTE</code></td><td class="topAlign tblval"><code>10</code></td><td class="topAlign">The configuration is for a LTE (4G) interface.</td></tr>
+</table></div>
+<!-- @@@BearerType -->
+<!-- $$$Purpose$$$UnknownPurpose$$$PublicPurpose$$$PrivatePurpose$$$ServiceSpecificPurpose -->
+<h3 class="fn" id="Purpose-enum"><a name="Purpose-enum"></a>enum QNetworkConfiguration::<span class="name">Purpose</span></h3>
+<p>Specifies the purpose of the configuration.</p>
+<div class="table"><table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td class="topAlign"><code>QNetworkConfiguration::UnknownPurpose</code></td><td class="topAlign tblval"><code>0</code></td><td class="topAlign">The configuration doesn't specify any purpose. This is the default value.</td></tr>
+<tr><td class="topAlign"><code>QNetworkConfiguration::PublicPurpose</code></td><td class="topAlign tblval"><code>1</code></td><td class="topAlign">The configuration can be used for general purpose internet access.</td></tr>
+<tr><td class="topAlign"><code>QNetworkConfiguration::PrivatePurpose</code></td><td class="topAlign tblval"><code>2</code></td><td class="topAlign">The configuration is suitable to access a private network such as an office Intranet.</td></tr>
+<tr><td class="topAlign"><code>QNetworkConfiguration::ServiceSpecificPurpose</code></td><td class="topAlign tblval"><code>3</code></td><td class="topAlign">The configuration can be used for operator specific services (e.g&#x2e; receiving MMS messages or content streaming).</td></tr>
+</table></div>
+<!-- @@@Purpose -->
+<!-- $$$StateFlag$$$Undefined$$$Defined$$$Discovered$$$Active -->
+<h3 class="flags" id="StateFlag-enum"><a name="StateFlag-enum"></a>enum QNetworkConfiguration::<span class="name">StateFlag</span><br/>flags QNetworkConfiguration::<span class="name">StateFlags</span></h3>
+<p>Specifies the configuration states.</p>
+<div class="table"><table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td class="topAlign"><code>QNetworkConfiguration::Undefined</code></td><td class="topAlign tblval"><code>0x0000001</code></td><td class="topAlign">This state is used for transient configurations such as newly discovered WLANs for which the user has not actually created a configuration yet.</td></tr>
+<tr><td class="topAlign"><code>QNetworkConfiguration::Defined</code></td><td class="topAlign tblval"><code>0x0000002</code></td><td class="topAlign">Defined configurations are known to the system but are not immediately usable (e.g&#x2e; a configured WLAN is not within range or the Ethernet cable is currently not plugged into the machine).</td></tr>
+<tr><td class="topAlign"><code>QNetworkConfiguration::Discovered</code></td><td class="topAlign tblval"><code>0x0000006</code></td><td class="topAlign">A discovered configuration can be immediately used to create a new <a href="qnetworksession.html">QNetworkSession</a>. An example of a discovered configuration could be a WLAN which is within in range. If the device moves out of range the discovered flag is dropped. A second example is a GPRS configuration which generally remains discovered for as long as the device has network coverage. A configuration that has this state is also in state QNetworkConfiguration::Defined. If the configuration is a service network this flag is set if at least one of the underlying access points configurations has the Discovered state.</td></tr>
+<tr><td class="topAlign"><code>QNetworkConfiguration::Active</code></td><td class="topAlign tblval"><code>0x000000e</code></td><td class="topAlign">The configuration is currently used by an open network session (see <a href="qnetworksession.html#isOpen">QNetworkSession::isOpen</a>()). However this does not mean that the current process is the entity that created the open session. It merely indicates that if a new <a href="qnetworksession.html">QNetworkSession</a> were to be constructed based on this configuration <a href="qnetworksession.html#state">QNetworkSession::state</a>() would return <a href="qnetworksession.html#State-enum">QNetworkSession::Connected</a>. This state implies the QNetworkConfiguration::Discovered state.</td></tr>
+</table></div>
+<p>The StateFlags type is a typedef for <a href="../qtcore/qflags.html">QFlags</a>&lt;StateFlag&gt;. It stores an OR combination of StateFlag values.</p>
+<!-- @@@StateFlag -->
+<!-- $$$Type$$$InternetAccessPoint$$$ServiceNetwork$$$UserChoice$$$Invalid -->
+<h3 class="fn" id="Type-enum"><a name="Type-enum"></a>enum QNetworkConfiguration::<span class="name">Type</span></h3>
+<p>This enum describes the type of configuration.</p>
+<div class="table"><table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td class="topAlign"><code>QNetworkConfiguration::InternetAccessPoint</code></td><td class="topAlign tblval"><code>0</code></td><td class="topAlign">The configuration specifies the details for a single access point. Note that configurations of type InternetAccessPoint may be part of other QNetworkConfigurations of type ServiceNetwork.</td></tr>
+<tr><td class="topAlign"><code>QNetworkConfiguration::ServiceNetwork</code></td><td class="topAlign tblval"><code>1</code></td><td class="topAlign">The configuration is based on a group of QNetworkConfigurations of type InternetAccessPoint. All group members can reach the same target network. This type of configuration is a mandatory requirement for roaming enabled network sessions. On some platforms this form of configuration may also be called Service Network Access Point (SNAP).</td></tr>
+<tr><td class="topAlign"><code>QNetworkConfiguration::UserChoice</code></td><td class="topAlign tblval"><code>2</code></td><td class="topAlign">The configuration is a placeholder which will be resolved to an actual configuration by the platform when a session is opened. Depending on the platform the selection may generate a popup dialog asking the user for his preferred choice.</td></tr>
+<tr><td class="topAlign"><code>QNetworkConfiguration::Invalid</code></td><td class="topAlign tblval"><code>3</code></td><td class="topAlign">The configuration is invalid.</td></tr>
+</table></div>
+<!-- @@@Type -->
+</div>
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$QNetworkConfiguration[overload1]$$$QNetworkConfiguration -->
+<h3 class="fn" id="QNetworkConfiguration"><a name="QNetworkConfiguration"></a>QNetworkConfiguration::<span class="name">QNetworkConfiguration</span>()</h3>
+<p>Constructs an invalid configuration object.</p>
+<p><b>See also </b><a href="qnetworkconfiguration.html#isValid">isValid</a>().</p>
+<!-- @@@QNetworkConfiguration -->
+<!-- $$$QNetworkConfiguration$$$QNetworkConfigurationconstQNetworkConfiguration& -->
+<h3 class="fn" id="QNetworkConfiguration-1"><a name="QNetworkConfiguration-1"></a>QNetworkConfiguration::<span class="name">QNetworkConfiguration</span>(const <span class="type"><a href="qnetworkconfiguration.html#QNetworkConfiguration">QNetworkConfiguration</a></span> &amp;<i>other</i>)</h3>
+<p>Creates a copy of the <a href="qnetworkconfiguration.html">QNetworkConfiguration</a> object contained in <i>other</i>.</p>
+<!-- @@@QNetworkConfiguration -->
+<!-- $$$~QNetworkConfiguration[overload1]$$$~QNetworkConfiguration -->
+<h3 class="fn" id="dtor.QNetworkConfiguration"><a name="dtor.QNetworkConfiguration"></a>QNetworkConfiguration::<span class="name">~QNetworkConfiguration</span>()</h3>
+<p>Frees the resources associated with the <a href="qnetworkconfiguration.html">QNetworkConfiguration</a> object.</p>
+<!-- @@@~QNetworkConfiguration -->
+<!-- $$$bearerType[overload1]$$$bearerType -->
+<h3 class="fn" id="bearerType"><a name="bearerType"></a><span class="type"><a href="qnetworkconfiguration.html#BearerType-enum">BearerType</a></span> QNetworkConfiguration::<span class="name">bearerType</span>() const</h3>
+<p>Returns the type of bearer used by this network configuration.</p>
+<p>If the bearer type is <a href="qnetworkconfiguration.html#BearerType-enum">unknown</a> the <a href="qnetworkconfiguration.html#bearerTypeName">bearerTypeName</a>() function can be used to retrieve a textural type name for the bearer.</p>
+<p>An invalid network configuration always returns the <a href="qnetworkconfiguration.html#BearerType-enum">BearerUnknown</a> value.</p>
+<p><b>See also </b><a href="qnetworkconfiguration.html#bearerTypeName">bearerTypeName</a>() and <a href="qnetworkconfiguration.html#bearerTypeFamily">bearerTypeFamily</a>().</p>
+<!-- @@@bearerType -->
+<!-- $$$bearerTypeFamily[overload1]$$$bearerTypeFamily -->
+<h3 class="fn" id="bearerTypeFamily"><a name="bearerTypeFamily"></a><span class="type"><a href="qnetworkconfiguration.html#BearerType-enum">BearerType</a></span> QNetworkConfiguration::<span class="name">bearerTypeFamily</span>() const</h3>
+<p>Returns the bearer type family used by this network configuration. The following table lists how <a href="qnetworkconfiguration.html#bearerType">bearerType</a>() values map to bearerTypeFamily() values:</p>
+<div class="table"><table class="generic">
+ <thead><tr class="qt-style"><th >bearer type</th><th >bearer type family</th></tr></thead>
+<tr valign="top" class="odd"><td ><a href="qnetworkconfiguration.html#BearerType-enum">BearerUnknown</a>, <a href="qnetworkconfiguration.html#BearerType-enum">Bearer2G</a>, <a href="qnetworkconfiguration.html#BearerType-enum">BearerEthernet</a>, <a href="qnetworkconfiguration.html#BearerType-enum">BearerWLAN</a>, <a href="qnetworkconfiguration.html#BearerType-enum">BearerBluetooth</a></td><td >(same type)</td></tr>
+<tr valign="top" class="even"><td ><a href="qnetworkconfiguration.html#BearerType-enum">BearerCDMA2000</a>, <a href="qnetworkconfiguration.html#BearerType-enum">BearerEVDO</a>, <a href="qnetworkconfiguration.html#BearerType-enum">BearerWCDMA</a>, <a href="qnetworkconfiguration.html#BearerType-enum">BearerHSPA</a>, <a href="qnetworkconfiguration.html#BearerType-enum">Bearer3G</a></td><td ><a href="qnetworkconfiguration.html#BearerType-enum">Bearer3G</a></td></tr>
+<tr valign="top" class="odd"><td ><a href="qnetworkconfiguration.html#BearerType-enum">BearerWiMAX</a>, <a href="qnetworkconfiguration.html#BearerType-enum">BearerLTE</a>, <a href="qnetworkconfiguration.html#BearerType-enum">Bearer4G</a></td><td ><a href="qnetworkconfiguration.html#BearerType-enum">Bearer4G</a></td></tr>
+</table></div>
+<p>An invalid network configuration always returns the <a href="qnetworkconfiguration.html#BearerType-enum">BearerUnknown</a> value.</p>
+<p>This function was introduced in  Qt 5.2.</p>
+<p><b>See also </b><a href="qnetworkconfiguration.html#bearerType">bearerType</a>() and <a href="qnetworkconfiguration.html#bearerTypeName">bearerTypeName</a>().</p>
+<!-- @@@bearerTypeFamily -->
+<!-- $$$bearerTypeName[overload1]$$$bearerTypeName -->
+<h3 class="fn" id="bearerTypeName"><a name="bearerTypeName"></a><span class="type"><a href="../qtcore/qstring.html">QString</a></span> QNetworkConfiguration::<span class="name">bearerTypeName</span>() const</h3>
+<p>Returns the type of bearer used by this network configuration as a string.</p>
+<p>The string is not translated and therefore can not be shown to the user. The subsequent table shows the fixed mappings between <a href="qnetworkconfiguration.html#BearerType-enum">BearerType</a> and the bearer type name for known types. If the <a href="qnetworkconfiguration.html#BearerType-enum">BearerType</a> is unknown this function may return additional information if it is available; otherwise an empty string will be returned.</p>
+<div class="table"><table class="generic">
+ <thead><tr class="qt-style"><th ><a href="qnetworkconfiguration.html#BearerType-enum">BearerType</a></th><th >Value</th></tr></thead>
+<tr valign="top" class="odd"><td ><a href="qnetworkconfiguration.html#BearerType-enum">BearerUnknown</a></td><td >The session is based on an unknown or unspecified bearer type. The value of the string returned describes the bearer type.</td></tr>
+<tr valign="top" class="even"><td ><a href="qnetworkconfiguration.html#BearerType-enum">BearerEthernet</a></td><td >Ethernet</td></tr>
+<tr valign="top" class="odd"><td ><a href="qnetworkconfiguration.html#BearerType-enum">BearerWLAN</a></td><td >WLAN</td></tr>
+<tr valign="top" class="even"><td ><a href="qnetworkconfiguration.html#BearerType-enum">Bearer2G</a></td><td >2G</td></tr>
+<tr valign="top" class="odd"><td ><a href="qnetworkconfiguration.html#BearerType-enum">Bearer3G</a></td><td >3G</td></tr>
+<tr valign="top" class="even"><td ><a href="qnetworkconfiguration.html#BearerType-enum">Bearer4G</a></td><td >4G</td></tr>
+<tr valign="top" class="odd"><td ><a href="qnetworkconfiguration.html#BearerType-enum">BearerCDMA2000</a></td><td >CDMA2000</td></tr>
+<tr valign="top" class="even"><td ><a href="qnetworkconfiguration.html#BearerType-enum">BearerWCDMA</a></td><td >WCDMA</td></tr>
+<tr valign="top" class="odd"><td ><a href="qnetworkconfiguration.html#BearerType-enum">BearerHSPA</a></td><td >HSPA</td></tr>
+<tr valign="top" class="even"><td ><a href="qnetworkconfiguration.html#BearerType-enum">BearerBluetooth</a></td><td >Bluetooth</td></tr>
+<tr valign="top" class="odd"><td ><a href="qnetworkconfiguration.html#BearerType-enum">BearerWiMAX</a></td><td >WiMAX</td></tr>
+<tr valign="top" class="even"><td ><a href="qnetworkconfiguration.html#BearerType-enum">BearerEVDO</a></td><td >EVDO</td></tr>
+<tr valign="top" class="odd"><td ><a href="qnetworkconfiguration.html#BearerType-enum">BearerLTE</a></td><td >LTE</td></tr>
+</table></div>
+<p>This function returns an empty string if this is an invalid configuration, a network configuration of type <a href="qnetworkconfiguration.html#Type-enum">QNetworkConfiguration::ServiceNetwork</a> or <a href="qnetworkconfiguration.html#Type-enum">QNetworkConfiguration::UserChoice</a>.</p>
+<p><b>See also </b><a href="qnetworkconfiguration.html#bearerType">bearerType</a>() and <a href="qnetworkconfiguration.html#bearerTypeFamily">bearerTypeFamily</a>().</p>
+<!-- @@@bearerTypeName -->
+<!-- $$$children[overload1]$$$children -->
+<h3 class="fn" id="children"><a name="children"></a><span class="type"><a href="../qtcore/qlist.html">QList</a></span>&lt;<span class="type"><a href="qnetworkconfiguration.html#QNetworkConfiguration">QNetworkConfiguration</a></span>&gt; QNetworkConfiguration::<span class="name">children</span>() const</h3>
+<p>Returns all sub configurations of this network configuration in priority order. The first sub configuration in the list has the highest priority.</p>
+<p>Only network configurations of type <a href="qnetworkconfiguration.html#Type-enum">ServiceNetwork</a> can have children. Otherwise this function returns an empty list.</p>
+<!-- @@@children -->
+<!-- $$$identifier[overload1]$$$identifier -->
+<h3 class="fn" id="identifier"><a name="identifier"></a><span class="type"><a href="../qtcore/qstring.html">QString</a></span> QNetworkConfiguration::<span class="name">identifier</span>() const</h3>
+<p>Returns the unique and platform specific identifier for this network configuration; otherwise an empty string.</p>
+<!-- @@@identifier -->
+<!-- $$$isRoamingAvailable[overload1]$$$isRoamingAvailable -->
+<h3 class="fn" id="isRoamingAvailable"><a name="isRoamingAvailable"></a><span class="type">bool</span> QNetworkConfiguration::<span class="name">isRoamingAvailable</span>() const</h3>
+<p>Returns <code>true</code> if this configuration supports roaming; otherwise false.</p>
+<!-- @@@isRoamingAvailable -->
+<!-- $$$isValid[overload1]$$$isValid -->
+<h3 class="fn" id="isValid"><a name="isValid"></a><span class="type">bool</span> QNetworkConfiguration::<span class="name">isValid</span>() const</h3>
+<p>Returns <code>true</code> if this <a href="qnetworkconfiguration.html">QNetworkConfiguration</a> object is valid. A configuration may become invalid if the user deletes the configuration or the configuration was default-constructed.</p>
+<p>The addition and removal of configurations can be monitored via the <a href="qnetworkconfigurationmanager.html">QNetworkConfigurationManager</a>.</p>
+<p><b>See also </b><a href="qnetworkconfigurationmanager.html">QNetworkConfigurationManager</a>.</p>
+<!-- @@@isValid -->
+<!-- $$$name[overload1]$$$name -->
+<h3 class="fn" id="name"><a name="name"></a><span class="type"><a href="../qtcore/qstring.html">QString</a></span> QNetworkConfiguration::<span class="name">name</span>() const</h3>
+<p>Returns the user visible name of this configuration.</p>
+<p>The name may either be the name of the underlying access point or the name for service network that this configuration represents.</p>
+<!-- @@@name -->
+<!-- $$$purpose[overload1]$$$purpose -->
+<h3 class="fn" id="purpose"><a name="purpose"></a><span class="type"><a href="qnetworkconfiguration.html#Purpose-enum">Purpose</a></span> QNetworkConfiguration::<span class="name">purpose</span>() const</h3>
+<p>Returns the purpose of this configuration.</p>
+<p>The purpose field may be used to programmatically determine the purpose of a configuration. Such information is usually part of the access point or service network meta data.</p>
+<!-- @@@purpose -->
+<!-- $$$state[overload1]$$$state -->
+<h3 class="fn" id="state"><a name="state"></a><span class="type"><a href="qnetworkconfiguration.html#StateFlag-enum">StateFlags</a></span> QNetworkConfiguration::<span class="name">state</span>() const</h3>
+<p>Returns the current state of the configuration.</p>
+<!-- @@@state -->
+<!-- $$$swap[overload1]$$$swapQNetworkConfiguration& -->
+<h3 class="fn" id="swap"><a name="swap"></a><span class="type">void</span> QNetworkConfiguration::<span class="name">swap</span>(<span class="type"><a href="qnetworkconfiguration.html#QNetworkConfiguration">QNetworkConfiguration</a></span> &amp;<i>other</i>)</h3>
+<p>Swaps this network configuration with <i>other</i>. This function is very fast and never fails.</p>
+<p>This function was introduced in  Qt 5.0.</p>
+<!-- @@@swap -->
+<!-- $$$type[overload1]$$$type -->
+<h3 class="fn" id="type"><a name="type"></a><span class="type"><a href="qnetworkconfiguration.html#Type-enum">Type</a></span> QNetworkConfiguration::<span class="name">type</span>() const</h3>
+<p>Returns the type of the configuration.</p>
+<p>A configuration can represent a single access point configuration or a set of access point configurations. Such a set is called service network. A configuration that is based on a service network can potentially support roaming of network sessions.</p>
+<!-- @@@type -->
+<!-- $$$operator!=[overload1]$$$operator!=constQNetworkConfiguration& -->
+<h3 class="fn" id="operator-not-eq"><a name="operator-not-eq"></a><span class="type">bool</span> QNetworkConfiguration::<span class="name">operator!=</span>(const <span class="type"><a href="qnetworkconfiguration.html#QNetworkConfiguration">QNetworkConfiguration</a></span> &amp;<i>other</i>) const</h3>
+<p>Returns <code>true</code> if this configuration is not the same as the <i>other</i> configuration given; otherwise returns <code>false</code>.</p>
+<!-- @@@operator!= -->
+<!-- $$$operator=[overload1]$$$operator=QNetworkConfiguration&& -->
+<h3 class="fn" id="operator-eq"><a name="operator-eq"></a><span class="type"><a href="qnetworkconfiguration.html#QNetworkConfiguration">QNetworkConfiguration</a></span> &amp;QNetworkConfiguration::<span class="name">operator=</span>(<span class="type"><a href="qnetworkconfiguration.html#QNetworkConfiguration">QNetworkConfiguration</a></span> &amp;&amp;<i>other</i>)</h3>
+<p>Move-assignment operator.</p><!-- @@@operator= -->
+<!-- $$$operator=$$$operator=constQNetworkConfiguration& -->
+<h3 class="fn" id="operator-eq-1"><a name="operator-eq-1"></a><span class="type"><a href="qnetworkconfiguration.html#QNetworkConfiguration">QNetworkConfiguration</a></span> &amp;QNetworkConfiguration::<span class="name">operator=</span>(const <span class="type"><a href="qnetworkconfiguration.html#QNetworkConfiguration">QNetworkConfiguration</a></span> &amp;<i>other</i>)</h3>
+<p>Copies the content of the <a href="qnetworkconfiguration.html">QNetworkConfiguration</a> object contained in <i>other</i> into this one.</p>
+<!-- @@@operator= -->
+<!-- $$$operator==[overload1]$$$operator==constQNetworkConfiguration& -->
+<h3 class="fn" id="operator-eq-eq"><a name="operator-eq-eq"></a><span class="type">bool</span> QNetworkConfiguration::<span class="name">operator==</span>(const <span class="type"><a href="qnetworkconfiguration.html#QNetworkConfiguration">QNetworkConfiguration</a></span> &amp;<i>other</i>) const</h3>
+<p>Returns <code>true</code>, if this configuration is the same as the <i>other</i> configuration given; otherwise returns <code>false</code>.</p>
+<!-- @@@operator== -->
+</div>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

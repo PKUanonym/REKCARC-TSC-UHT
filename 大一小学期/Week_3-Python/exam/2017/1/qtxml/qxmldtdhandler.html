@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qxml.cpp -->
+  <title>QXmlDTDHandler Class | Qt XML 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtxml-index.html">Qt XML</a></td><td ><a href="qtxml-module.html">C++ Classes</a></td><td >QXmlDTDHandler</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">QXmlDTDHandler Class</h1>
+<!-- $$$QXmlDTDHandler-brief -->
+<p>The <a href="qxmldtdhandler.html">QXmlDTDHandler</a> class provides an interface to report DTD content of XML data. <a href="#details">More...</a></p>
+<!-- @@@QXmlDTDHandler -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign">   <span class="preprocessor">#include &lt;QXmlDTDHandler&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> qmake:</td><td class="memItemRight bottomAlign"> QT += xml</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Inherited By:</td><td class="memItemRight bottomAlign"> <p><a href="qxmldefaulthandler.html">QXmlDefaultHandler</a></p>
+</td></tr></table></div><ul>
+<li><a href="qxmldtdhandler-members.html">List of all members, including inherited members</a></li>
+</ul>
+<p><b>Note:</b> All functions in this class are <a href="../qtdoc/threads-reentrancy.html">reentrant</a>.</p>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> virtual </td><td class="memItemRight bottomAlign"><b><a href="qxmldtdhandler.html#dtor.QXmlDTDHandler">~QXmlDTDHandler</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QString </td><td class="memItemRight bottomAlign"><b><a href="qxmldtdhandler.html#errorString">errorString</a></b>() const = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="qxmldtdhandler.html#notationDecl">notationDecl</a></b>(const QString &amp;<i>name</i>, const QString &amp;<i>publicId</i>, const QString &amp;<i>systemId</i>) = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="qxmldtdhandler.html#unparsedEntityDecl">unparsedEntityDecl</a></b>(const QString &amp;<i>name</i>, const QString &amp;<i>publicId</i>, const QString &amp;<i>systemId</i>, const QString &amp;<i>notationName</i>) = 0</td></tr>
+</table></div>
+<a name="details"></a>
+<!-- $$$QXmlDTDHandler-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="qxmldtdhandler.html">QXmlDTDHandler</a> class provides an interface to report DTD content of XML data.</p>
+<p>If an application needs information about notations and unparsed entities, it can implement this interface and register an instance with <a href="qxmlreader.html#setDTDHandler">QXmlReader::setDTDHandler</a>().</p>
+<p>Note that this interface includes only those DTD events that the XML recommendation requires processors to report, i.e&#x2e; notation and unparsed entity declarations using <a href="qxmldtdhandler.html#notationDecl">notationDecl</a>() and <a href="qxmldtdhandler.html#unparsedEntityDecl">unparsedEntityDecl</a>() respectively.</p>
+</div>
+<p><b>See also </b><a href="qxmldeclhandler.html">QXmlDeclHandler</a>, <a href="qxmlcontenthandler.html">QXmlContentHandler</a>, <a href="qxmlentityresolver.html">QXmlEntityResolver</a>, <a href="qxmlerrorhandler.html">QXmlErrorHandler</a>, <a href="qxmllexicalhandler.html">QXmlLexicalHandler</a>, and <a href="xml-sax.html#introduction-to-sax2">Introduction to SAX2</a>.</p>
+<!-- @@@QXmlDTDHandler -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$~QXmlDTDHandler[overload1]$$$~QXmlDTDHandler -->
+<h3 class="fn" id="dtor.QXmlDTDHandler"><a name="dtor.QXmlDTDHandler"></a><code>[virtual] </code>QXmlDTDHandler::<span class="name">~QXmlDTDHandler</span>()</h3>
+<p>Destroys the DTD handler.</p>
+<!-- @@@~QXmlDTDHandler -->
+<!-- $$$errorString[overload1]$$$errorString -->
+<h3 class="fn" id="errorString"><a name="errorString"></a><code>[pure virtual] </code><span class="type"><a href="../qtcore/qstring.html">QString</a></span> QXmlDTDHandler::<span class="name">errorString</span>() const</h3>
+<p>The reader calls this function to get an error string if any of the handler functions returns <code>false</code>.</p>
+<!-- @@@errorString -->
+<!-- $$$notationDecl[overload1]$$$notationDeclconstQString&constQString&constQString& -->
+<h3 class="fn" id="notationDecl"><a name="notationDecl"></a><code>[pure virtual] </code><span class="type">bool</span> QXmlDTDHandler::<span class="name">notationDecl</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>name</i>, const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>publicId</i>, const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>systemId</i>)</h3>
+<p>The reader calls this function when it has parsed a notation declaration.</p>
+<p>The argument <i>name</i> is the notation name, <i>publicId</i> is the notation's public identifier and <i>systemId</i> is the notation's system identifier.</p>
+<p>If this function returns <code>false</code> the reader stops parsing and reports an error. The reader uses the function <a href="qxmldtdhandler.html#errorString">errorString</a>() to get the error message.</p>
+<!-- @@@notationDecl -->
+<!-- $$$unparsedEntityDecl[overload1]$$$unparsedEntityDeclconstQString&constQString&constQString&constQString& -->
+<h3 class="fn" id="unparsedEntityDecl"><a name="unparsedEntityDecl"></a><code>[pure virtual] </code><span class="type">bool</span> QXmlDTDHandler::<span class="name">unparsedEntityDecl</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>name</i>, const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>publicId</i>, const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>systemId</i>, const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>notationName</i>)</h3>
+<p>The reader calls this function when it finds an unparsed entity declaration.</p>
+<p>The argument <i>name</i> is the unparsed entity's name, <i>publicId</i> is the entity's public identifier, <i>systemId</i> is the entity's system identifier and <i>notationName</i> is the name of the associated notation.</p>
+<p>If this function returns <code>false</code> the reader stops parsing and reports an error. The reader uses the function <a href="qxmldtdhandler.html#errorString">errorString</a>() to get the error message.</p>
+<!-- @@@unparsedEntityDecl -->
+</div>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

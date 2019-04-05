@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>trackerclient.cpp Example File | Qt Network 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtnetwork-index.html">Qt Network</a></td><td ><a href="qtnetwork-torrent-example.html">Torrent Example</a></td><td >trackerclient.cpp Example File</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar"><div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">trackerclient.cpp Example File</h1>
+<span class="subtitle">torrent/trackerclient.cpp</span>
+<!-- $$$torrent/trackerclient.cpp-description -->
+<div class="descr"> <a name="details"></a>
+<pre class="cpp">
+
+  <span class="comment">/****************************************************************************
+  **
+  ** Copyright (C) 2015 The Qt Company Ltd.
+  ** Contact: http://www.qt.io/licensing/
+  **
+  ** This file is part of the examples of the Qt Toolkit.
+  **
+  ** $QT_BEGIN_LICENSE:BSD$
+  ** You may use this file under the terms of the BSD license as follows:
+  **
+  ** &quot;Redistribution and use in source and binary forms, with or without
+  ** modification, are permitted provided that the following conditions are
+  ** met:
+  **   * Redistributions of source code must retain the above copyright
+  **     notice, this list of conditions and the following disclaimer.
+  **   * Redistributions in binary form must reproduce the above copyright
+  **     notice, this list of conditions and the following disclaimer in
+  **     the documentation and/or other materials provided with the
+  **     distribution.
+  **   * Neither the name of The Qt Company Ltd nor the names of its
+  **     contributors may be used to endorse or promote products derived
+  **     from this software without specific prior written permission.
+  **
+  **
+  ** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  ** &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  ** LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  ** A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  ** OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  ** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  ** LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  ** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  ** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  ** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.&quot;
+  **
+  ** $QT_END_LICENSE$
+  **
+  ****************************************************************************/</span>
+
+  <span class="preprocessor">#include &quot;bencodeparser.h&quot;</span>
+  <span class="preprocessor">#include &quot;connectionmanager.h&quot;</span>
+  <span class="preprocessor">#include &quot;torrentclient.h&quot;</span>
+  <span class="preprocessor">#include &quot;torrentserver.h&quot;</span>
+  <span class="preprocessor">#include &quot;trackerclient.h&quot;</span>
+
+  <span class="preprocessor">#include &lt;QtCore&gt;</span>
+  <span class="preprocessor">#include &lt;QNetworkRequest&gt;</span>
+
+  TrackerClient<span class="operator">::</span>TrackerClient(TorrentClient <span class="operator">*</span>downloader<span class="operator">,</span> <span class="type"><a href="../qtcore/qobject.html">QObject</a></span> <span class="operator">*</span>parent)
+      : <span class="type"><a href="../qtcore/qobject.html">QObject</a></span>(parent)<span class="operator">,</span> torrentDownloader(downloader)
+  {
+      length <span class="operator">=</span> <span class="number">0</span>;
+      requestInterval <span class="operator">=</span> <span class="number">5</span> <span class="operator">*</span> <span class="number">60</span>;
+      requestIntervalTimer <span class="operator">=</span> <span class="operator">-</span><span class="number">1</span>;
+      firstTrackerRequest <span class="operator">=</span> <span class="keyword">true</span>;
+      lastTrackerRequest <span class="operator">=</span> <span class="keyword">false</span>;
+      firstSeeding <span class="operator">=</span> <span class="keyword">true</span>;
+
+      connect(<span class="operator">&amp;</span>http<span class="operator">,</span> SIGNAL(finished(<span class="type"><a href="qnetworkreply.html">QNetworkReply</a></span><span class="operator">*</span>))<span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> SLOT(httpRequestDone(<span class="type"><a href="qnetworkreply.html">QNetworkReply</a></span><span class="operator">*</span>)));
+  }
+
+  <span class="type">void</span> TrackerClient<span class="operator">::</span>start(<span class="keyword">const</span> MetaInfo <span class="operator">&amp;</span>info)
+  {
+      metaInfo <span class="operator">=</span> info;
+      <span class="type"><a href="../qtcore/qtimer.html">QTimer</a></span><span class="operator">::</span>singleShot(<span class="number">0</span><span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> SLOT(fetchPeerList()));
+
+      <span class="keyword">if</span> (metaInfo<span class="operator">.</span>fileForm() <span class="operator">=</span><span class="operator">=</span> MetaInfo<span class="operator">::</span>SingleFileForm) {
+          length <span class="operator">=</span> metaInfo<span class="operator">.</span>singleFile()<span class="operator">.</span>length;
+      } <span class="keyword">else</span> {
+          <span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span>MetaInfoMultiFile<span class="operator">&gt;</span> files <span class="operator">=</span> metaInfo<span class="operator">.</span>multiFiles();
+          <span class="keyword">for</span> (<span class="type">int</span> i <span class="operator">=</span> <span class="number">0</span>; i <span class="operator">&lt;</span> files<span class="operator">.</span>size(); <span class="operator">+</span><span class="operator">+</span>i)
+              length <span class="operator">+</span><span class="operator">=</span> files<span class="operator">.</span>at(i)<span class="operator">.</span>length;
+      }
+  }
+
+  <span class="type">void</span> TrackerClient<span class="operator">::</span>startSeeding()
+  {
+      firstSeeding <span class="operator">=</span> <span class="keyword">true</span>;
+      fetchPeerList();
+  }
+
+  <span class="type">void</span> TrackerClient<span class="operator">::</span>stop()
+  {
+      lastTrackerRequest <span class="operator">=</span> <span class="keyword">true</span>;
+      fetchPeerList();
+  }
+
+  <span class="type">void</span> TrackerClient<span class="operator">::</span>timerEvent(<span class="type"><a href="../qtcore/qtimerevent.html">QTimerEvent</a></span> <span class="operator">*</span>event)
+  {
+      <span class="keyword">if</span> (event<span class="operator">-</span><span class="operator">&gt;</span>timerId() <span class="operator">=</span><span class="operator">=</span> requestIntervalTimer) {
+          fetchPeerList();
+      } <span class="keyword">else</span> {
+          <span class="type"><a href="../qtcore/qobject.html">QObject</a></span><span class="operator">::</span>timerEvent(event);
+      }
+  }
+
+  <span class="type">void</span> TrackerClient<span class="operator">::</span>fetchPeerList()
+  {
+      <span class="type"><a href="../qtcore/qurl.html">QUrl</a></span> url(metaInfo<span class="operator">.</span>announceUrl());
+
+      <span class="comment">// Base the query on announce url to include a passkey (if any)</span>
+      <span class="type"><a href="../qtcore/qurlquery.html">QUrlQuery</a></span> query(url);
+
+      <span class="comment">// Percent encode the hash</span>
+      <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> infoHash <span class="operator">=</span> torrentDownloader<span class="operator">-</span><span class="operator">&gt;</span>infoHash();
+      <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> encodedSum;
+      <span class="keyword">for</span> (<span class="type">int</span> i <span class="operator">=</span> <span class="number">0</span>; i <span class="operator">&lt;</span> infoHash<span class="operator">.</span>size(); <span class="operator">+</span><span class="operator">+</span>i) {
+          encodedSum <span class="operator">+</span><span class="operator">=</span> <span class="char">'%'</span>;
+          encodedSum <span class="operator">+</span><span class="operator">=</span> <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span><span class="operator">::</span>number(infoHash<span class="operator">[</span>i<span class="operator">]</span><span class="operator">,</span> <span class="number">16</span>)<span class="operator">.</span>right(<span class="number">2</span>)<span class="operator">.</span>rightJustified(<span class="number">2</span><span class="operator">,</span> <span class="char">'0'</span>);
+      }
+
+      bool seeding <span class="operator">=</span> (torrentDownloader<span class="operator">-</span><span class="operator">&gt;</span>state() <span class="operator">=</span><span class="operator">=</span> TorrentClient<span class="operator">::</span>Seeding);
+
+      query<span class="operator">.</span>addQueryItem(<span class="string">&quot;info_hash&quot;</span><span class="operator">,</span> encodedSum);
+      query<span class="operator">.</span>addQueryItem(<span class="string">&quot;peer_id&quot;</span><span class="operator">,</span> ConnectionManager<span class="operator">::</span>instance()<span class="operator">-</span><span class="operator">&gt;</span>clientId());
+      query<span class="operator">.</span>addQueryItem(<span class="string">&quot;port&quot;</span><span class="operator">,</span> <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span><span class="operator">::</span>number(TorrentServer<span class="operator">::</span>instance()<span class="operator">-</span><span class="operator">&gt;</span>serverPort()));
+      query<span class="operator">.</span>addQueryItem(<span class="string">&quot;compact&quot;</span><span class="operator">,</span> <span class="string">&quot;1&quot;</span>);
+      query<span class="operator">.</span>addQueryItem(<span class="string">&quot;uploaded&quot;</span><span class="operator">,</span> <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span><span class="operator">::</span>number(torrentDownloader<span class="operator">-</span><span class="operator">&gt;</span>uploadedBytes()));
+
+      <span class="keyword">if</span> (<span class="operator">!</span>firstSeeding) {
+          query<span class="operator">.</span>addQueryItem(<span class="string">&quot;downloaded&quot;</span><span class="operator">,</span> <span class="string">&quot;0&quot;</span>);
+          query<span class="operator">.</span>addQueryItem(<span class="string">&quot;left&quot;</span><span class="operator">,</span> <span class="string">&quot;0&quot;</span>);
+      } <span class="keyword">else</span> {
+          query<span class="operator">.</span>addQueryItem(<span class="string">&quot;downloaded&quot;</span><span class="operator">,</span>
+                             <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span><span class="operator">::</span>number(torrentDownloader<span class="operator">-</span><span class="operator">&gt;</span>downloadedBytes()));
+          <span class="type">int</span> left <span class="operator">=</span> <a href="../qtcore/qtglobal.html#qMax">qMax</a><span class="operator">&lt;</span><span class="type">int</span><span class="operator">&gt;</span>(<span class="number">0</span><span class="operator">,</span> metaInfo<span class="operator">.</span>totalSize() <span class="operator">-</span> torrentDownloader<span class="operator">-</span><span class="operator">&gt;</span>downloadedBytes());
+          query<span class="operator">.</span>addQueryItem(<span class="string">&quot;left&quot;</span><span class="operator">,</span> <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span><span class="operator">::</span>number(seeding <span class="operator">?</span> <span class="number">0</span> : left));
+      }
+
+      <span class="keyword">if</span> (seeding <span class="operator">&amp;</span><span class="operator">&amp;</span> firstSeeding) {
+          query<span class="operator">.</span>addQueryItem(<span class="string">&quot;event&quot;</span><span class="operator">,</span> <span class="string">&quot;completed&quot;</span>);
+          firstSeeding <span class="operator">=</span> <span class="keyword">false</span>;
+      } <span class="keyword">else</span> <span class="keyword">if</span> (firstTrackerRequest) {
+          firstTrackerRequest <span class="operator">=</span> <span class="keyword">false</span>;
+          query<span class="operator">.</span>addQueryItem(<span class="string">&quot;event&quot;</span><span class="operator">,</span> <span class="string">&quot;started&quot;</span>);
+      } <span class="keyword">else</span> <span class="keyword">if</span>(lastTrackerRequest) {
+          query<span class="operator">.</span>addQueryItem(<span class="string">&quot;event&quot;</span><span class="operator">,</span> <span class="string">&quot;stopped&quot;</span>);
+      }
+
+      <span class="keyword">if</span> (<span class="operator">!</span>trackerId<span class="operator">.</span>isEmpty())
+          query<span class="operator">.</span>addQueryItem(<span class="string">&quot;trackerid&quot;</span><span class="operator">,</span> trackerId);
+
+      url<span class="operator">.</span>setQuery(query);
+
+      <span class="type"><a href="qnetworkrequest.html">QNetworkRequest</a></span> req(url);
+      <span class="keyword">if</span> (<span class="operator">!</span>url<span class="operator">.</span>userName()<span class="operator">.</span>isEmpty()) {
+          uname <span class="operator">=</span> url<span class="operator">.</span>userName();
+          pwd <span class="operator">=</span> url<span class="operator">.</span>password();
+          connect(<span class="operator">&amp;</span>http<span class="operator">,</span> SIGNAL(authenticationRequired(<span class="type"><a href="qnetworkreply.html">QNetworkReply</a></span><span class="operator">*</span><span class="operator">,</span><span class="type"><a href="qauthenticator.html">QAuthenticator</a></span><span class="operator">*</span>))<span class="operator">,</span>
+                  <span class="keyword">this</span><span class="operator">,</span> SLOT(provideAuthentication(<span class="type"><a href="qnetworkreply.html">QNetworkReply</a></span><span class="operator">*</span><span class="operator">,</span><span class="type"><a href="qauthenticator.html">QAuthenticator</a></span><span class="operator">*</span>)));
+      }
+      http<span class="operator">.</span>get(req);
+  }
+
+  <span class="type">void</span> TrackerClient<span class="operator">::</span>httpRequestDone(<span class="type"><a href="qnetworkreply.html">QNetworkReply</a></span> <span class="operator">*</span>reply)
+  {
+      reply<span class="operator">-</span><span class="operator">&gt;</span>deleteLater();
+      <span class="keyword">if</span> (lastTrackerRequest) {
+          <span class="keyword">emit</span> stopped();
+          <span class="keyword">return</span>;
+      }
+
+      <span class="keyword">if</span> (reply<span class="operator">-</span><span class="operator">&gt;</span>error() <span class="operator">!</span><span class="operator">=</span> <span class="type"><a href="qnetworkreply.html">QNetworkReply</a></span><span class="operator">::</span>NoError) {
+          <span class="keyword">emit</span> connectionError(reply<span class="operator">-</span><span class="operator">&gt;</span>error());
+          <span class="keyword">return</span>;
+      }
+
+      <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> response <span class="operator">=</span> reply<span class="operator">-</span><span class="operator">&gt;</span>readAll();
+      reply<span class="operator">-</span><span class="operator">&gt;</span>abort();
+
+      BencodeParser parser;
+      <span class="keyword">if</span> (<span class="operator">!</span>parser<span class="operator">.</span>parse(response)) {
+          <a href="../qtcore/qtglobal.html#qWarning">qWarning</a>(<span class="string">&quot;Error parsing bencode response from tracker: %s&quot;</span><span class="operator">,</span>
+                   <a href="../qtcore/qtglobal.html#qPrintable">qPrintable</a>(parser<span class="operator">.</span>errorString()));
+          <span class="keyword">return</span>;
+      }
+
+      <span class="type"><a href="../qtcore/qmap.html">QMap</a></span><span class="operator">&lt;</span><span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span><span class="operator">,</span> <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span><span class="operator">&gt;</span> dict <span class="operator">=</span> parser<span class="operator">.</span>dictionary();
+
+      <span class="keyword">if</span> (dict<span class="operator">.</span>contains(<span class="string">&quot;failure reason&quot;</span>)) {
+          <span class="comment">// no other items are present</span>
+          <span class="keyword">emit</span> failure(<span class="type"><a href="../qtcore/qstring.html">QString</a></span><span class="operator">::</span>fromUtf8(dict<span class="operator">.</span>value(<span class="string">&quot;failure reason&quot;</span>)<span class="operator">.</span>toByteArray()));
+          <span class="keyword">return</span>;
+      }
+
+      <span class="keyword">if</span> (dict<span class="operator">.</span>contains(<span class="string">&quot;warning message&quot;</span>)) {
+          <span class="comment">// continue processing</span>
+          <span class="keyword">emit</span> warning(<span class="type"><a href="../qtcore/qstring.html">QString</a></span><span class="operator">::</span>fromUtf8(dict<span class="operator">.</span>value(<span class="string">&quot;warning message&quot;</span>)<span class="operator">.</span>toByteArray()));
+      }
+
+      <span class="keyword">if</span> (dict<span class="operator">.</span>contains(<span class="string">&quot;tracker id&quot;</span>)) {
+          <span class="comment">// store it</span>
+          trackerId <span class="operator">=</span> dict<span class="operator">.</span>value(<span class="string">&quot;tracker id&quot;</span>)<span class="operator">.</span>toByteArray();
+      }
+
+      <span class="keyword">if</span> (dict<span class="operator">.</span>contains(<span class="string">&quot;interval&quot;</span>)) {
+          <span class="comment">// Mandatory item</span>
+          <span class="keyword">if</span> (requestIntervalTimer <span class="operator">!</span><span class="operator">=</span> <span class="operator">-</span><span class="number">1</span>)
+              killTimer(requestIntervalTimer);
+          requestIntervalTimer <span class="operator">=</span> startTimer(dict<span class="operator">.</span>value(<span class="string">&quot;interval&quot;</span>)<span class="operator">.</span>toInt() <span class="operator">*</span> <span class="number">1000</span>);
+      }
+
+      <span class="keyword">if</span> (dict<span class="operator">.</span>contains(<span class="string">&quot;peers&quot;</span>)) {
+          <span class="comment">// store it</span>
+          peers<span class="operator">.</span>clear();
+          <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span> peerEntry <span class="operator">=</span> dict<span class="operator">.</span>value(<span class="string">&quot;peers&quot;</span>);
+          <span class="keyword">if</span> (peerEntry<span class="operator">.</span>type() <span class="operator">=</span><span class="operator">=</span> <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span><span class="operator">::</span>List) {
+              <span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span><span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span><span class="operator">&gt;</span> peerTmp <span class="operator">=</span> peerEntry<span class="operator">.</span>toList();
+              <span class="keyword">for</span> (<span class="type">int</span> i <span class="operator">=</span> <span class="number">0</span>; i <span class="operator">&lt;</span> peerTmp<span class="operator">.</span>size(); <span class="operator">+</span><span class="operator">+</span>i) {
+                  TorrentPeer tmp;
+                  <span class="type"><a href="../qtcore/qmap.html">QMap</a></span><span class="operator">&lt;</span><span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span><span class="operator">,</span> <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span><span class="operator">&gt;</span> peer <span class="operator">=</span> qvariant_cast<span class="operator">&lt;</span><span class="type"><a href="../qtcore/qmap.html">QMap</a></span><span class="operator">&lt;</span><span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span><span class="operator">,</span> <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span><span class="operator">&gt;</span> <span class="operator">&gt;</span>(peerTmp<span class="operator">.</span>at(i));
+                  tmp<span class="operator">.</span>id <span class="operator">=</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span><span class="operator">::</span>fromUtf8(peer<span class="operator">.</span>value(<span class="string">&quot;peer id&quot;</span>)<span class="operator">.</span>toByteArray());
+                  tmp<span class="operator">.</span>address<span class="operator">.</span>setAddress(<span class="type"><a href="../qtcore/qstring.html">QString</a></span><span class="operator">::</span>fromUtf8(peer<span class="operator">.</span>value(<span class="string">&quot;ip&quot;</span>)<span class="operator">.</span>toByteArray()));
+                  tmp<span class="operator">.</span>port <span class="operator">=</span> peer<span class="operator">.</span>value(<span class="string">&quot;port&quot;</span>)<span class="operator">.</span>toInt();
+                  peers <span class="operator">&lt;</span><span class="operator">&lt;</span> tmp;
+              }
+          } <span class="keyword">else</span> {
+              <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> peerTmp <span class="operator">=</span> peerEntry<span class="operator">.</span>toByteArray();
+              <span class="keyword">for</span> (<span class="type">int</span> i <span class="operator">=</span> <span class="number">0</span>; i <span class="operator">&lt;</span> peerTmp<span class="operator">.</span>size(); i <span class="operator">+</span><span class="operator">=</span> <span class="number">6</span>) {
+                  TorrentPeer tmp;
+                  <span class="type"><a href="../qtcore/qtglobal.html#uchar-typedef">uchar</a></span> <span class="operator">*</span>data <span class="operator">=</span> (<span class="type"><a href="../qtcore/qtglobal.html#uchar-typedef">uchar</a></span> <span class="operator">*</span>)peerTmp<span class="operator">.</span>constData() <span class="operator">+</span> i;
+                  tmp<span class="operator">.</span>port <span class="operator">=</span> (<span class="type">int</span>(data<span class="operator">[</span><span class="number">4</span><span class="operator">]</span>) <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="number">8</span>) <span class="operator">+</span> data<span class="operator">[</span><span class="number">5</span><span class="operator">]</span>;
+                  <span class="type"><a href="../qtcore/qtglobal.html#uint-typedef">uint</a></span> ipAddress <span class="operator">=</span> <span class="number">0</span>;
+                  ipAddress <span class="operator">+</span><span class="operator">=</span> <span class="type"><a href="../qtcore/qtglobal.html#uint-typedef">uint</a></span>(data<span class="operator">[</span><span class="number">0</span><span class="operator">]</span>) <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="number">24</span>;
+                  ipAddress <span class="operator">+</span><span class="operator">=</span> <span class="type"><a href="../qtcore/qtglobal.html#uint-typedef">uint</a></span>(data<span class="operator">[</span><span class="number">1</span><span class="operator">]</span>) <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="number">16</span>;
+                  ipAddress <span class="operator">+</span><span class="operator">=</span> <span class="type"><a href="../qtcore/qtglobal.html#uint-typedef">uint</a></span>(data<span class="operator">[</span><span class="number">2</span><span class="operator">]</span>) <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="number">8</span>;
+                  ipAddress <span class="operator">+</span><span class="operator">=</span> <span class="type"><a href="../qtcore/qtglobal.html#uint-typedef">uint</a></span>(data<span class="operator">[</span><span class="number">3</span><span class="operator">]</span>);
+                  tmp<span class="operator">.</span>address<span class="operator">.</span>setAddress(ipAddress);
+                  peers <span class="operator">&lt;</span><span class="operator">&lt;</span> tmp;
+              }
+          }
+          <span class="keyword">emit</span> peerListUpdated(peers);
+      }
+  }
+
+  <span class="type">void</span> TrackerClient<span class="operator">::</span>provideAuthentication(<span class="type"><a href="qnetworkreply.html">QNetworkReply</a></span> <span class="operator">*</span>reply<span class="operator">,</span> <span class="type"><a href="qauthenticator.html">QAuthenticator</a></span> <span class="operator">*</span>auth)
+  {
+      Q_UNUSED(reply);
+      auth<span class="operator">-</span><span class="operator">&gt;</span>setUser(uname);
+      auth<span class="operator">-</span><span class="operator">&gt;</span>setPassword(pwd);
+  }
+
+</pre>
+</div>
+<!-- @@@torrent/trackerclient.cpp -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

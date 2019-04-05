@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qtcpsocket.cpp -->
+  <title>QTcpSocket Class | Qt Network 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtnetwork-index.html">Qt Network</a></td><td ><a href="qtnetwork-module.html">C++ Classes</a></td><td >QTcpSocket</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">QTcpSocket Class</h1>
+<!-- $$$QTcpSocket-brief -->
+<p>The <a href="qtcpsocket.html">QTcpSocket</a> class provides a TCP socket. <a href="#details">More...</a></p>
+<!-- @@@QTcpSocket -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign">   <span class="preprocessor">#include &lt;QTcpSocket&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> qmake:</td><td class="memItemRight bottomAlign"> QT += network</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Inherits:</td><td class="memItemRight bottomAlign"> <a href="qabstractsocket.html">QAbstractSocket</a></td></tr><tr><td class="memItemLeft rightAlign topAlign"> Inherited By:</td><td class="memItemRight bottomAlign"> <p><a href="qsslsocket.html">QSslSocket</a></p>
+</td></tr></table></div><ul>
+<li><a href="qtcpsocket-members.html">List of all members, including inherited members</a></li>
+</ul>
+<p><b>Note:</b> All functions in this class are <a href="../qtdoc/threads-reentrancy.html">reentrant</a>.</p>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qtcpsocket.html#QTcpSocket">QTcpSocket</a></b>(QObject *<i>parent</i> = Q_NULLPTR)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual </td><td class="memItemRight bottomAlign"><b><a href="qtcpsocket.html#dtor.QTcpSocket">~QTcpSocket</a></b>()</td></tr>
+</table></div>
+<ul>
+<li class="fn">37 public functions inherited from <a href="qabstractsocket.html#public-functions">QAbstractSocket</a></li>
+<li class="fn">33 public functions inherited from <a href="../qtcore/qiodevice.html#public-functions">QIODevice</a></li>
+<li class="fn">31 public functions inherited from <a href="../qtcore/qobject.html#public-functions">QObject</a></li>
+</ul>
+<h3>Additional Inherited Members</h3>
+<ul>
+<li class="fn">1 property inherited from <a href="../qtcore/qobject.html#properties">QObject</a></li>
+<li class="fn">1 public slot inherited from <a href="../qtcore/qobject.html#public-slots">QObject</a></li>
+<li class="fn">6 signals inherited from <a href="qabstractsocket.html#signals">QAbstractSocket</a></li>
+<li class="fn">4 signals inherited from <a href="../qtcore/qiodevice.html#signals">QIODevice</a></li>
+<li class="fn">2 signals inherited from <a href="../qtcore/qobject.html#signals">QObject</a></li>
+<li class="fn">1 public variable inherited from <a href="../qtcore/qobject.html#public-variables">QObject</a></li>
+<li class="fn">10 static public members inherited from <a href="../qtcore/qobject.html#static-public-members">QObject</a></li>
+<li class="fn">10 protected functions inherited from <a href="qabstractsocket.html#protected-functions">QAbstractSocket</a></li>
+<li class="fn">5 protected functions inherited from <a href="../qtcore/qiodevice.html#protected-functions">QIODevice</a></li>
+<li class="fn">9 protected functions inherited from <a href="../qtcore/qobject.html#protected-functions">QObject</a></li>
+<li class="fn">2 protected variables inherited from <a href="../qtcore/qobject.html#protected-variables">QObject</a></li>
+</ul>
+<a name="details"></a>
+<!-- $$$QTcpSocket-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="qtcpsocket.html">QTcpSocket</a> class provides a TCP socket.</p>
+<p>TCP (Transmission Control Protocol) is a reliable, stream-oriented, connection-oriented transport protocol. It is especially well suited for continuous transmission of data.</p>
+<p><a href="qtcpsocket.html">QTcpSocket</a> is a convenience subclass of <a href="qabstractsocket.html">QAbstractSocket</a> that allows you to establish a TCP connection and transfer streams of data. See the <a href="qabstractsocket.html">QAbstractSocket</a> documentation for details.</p>
+<p><b>Note: </b>TCP sockets cannot be opened in <a href="../qtcore/qiodevice.html#OpenModeFlag-enum">QIODevice::Unbuffered</a> mode.</p></div>
+<p><b>See also </b><a href="qtcpserver.html">QTcpServer</a>, <a href="qudpsocket.html">QUdpSocket</a>, <a href="qnetworkaccessmanager.html">QNetworkAccessManager</a>, <a href="qtnetwork-fortuneserver-example.html">Fortune Server Example</a>, <a href="qtnetwork-fortuneclient-example.html">Fortune Client Example</a>, <a href="qtnetwork-threadedfortuneserver-example.html">Threaded Fortune Server Example</a>, <a href="qtnetwork-blockingfortuneclient-example.html">Blocking Fortune Client Example</a>, <a href="qtnetwork-loopback-example.html">Loopback Example</a>, and <a href="qtnetwork-torrent-example.html">Torrent Example</a>.</p>
+<!-- @@@QTcpSocket -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$QTcpSocket[overload1]$$$QTcpSocketQObject* -->
+<h3 class="fn" id="QTcpSocket"><a name="QTcpSocket"></a>QTcpSocket::<span class="name">QTcpSocket</span>(<span class="type"><a href="../qtcore/qobject.html#QObject">QObject</a></span> *<i>parent</i> = Q_NULLPTR)</h3>
+<p>Creates a <a href="qtcpsocket.html">QTcpSocket</a> object in state <code>UnconnectedState</code>.</p>
+<p><i>parent</i> is passed on to the <a href="../qtcore/qobject.html">QObject</a> constructor.</p>
+<p><b>See also </b><a href="qabstractsocket.html#socketType">socketType</a>().</p>
+<!-- @@@QTcpSocket -->
+<!-- $$$~QTcpSocket[overload1]$$$~QTcpSocket -->
+<h3 class="fn" id="dtor.QTcpSocket"><a name="dtor.QTcpSocket"></a><code>[virtual] </code>QTcpSocket::<span class="name">~QTcpSocket</span>()</h3>
+<p>Destroys the socket, closing the connection if necessary.</p>
+<p><b>See also </b><a href="qabstractsocket.html#close">close</a>().</p>
+<!-- @@@~QTcpSocket -->
+</div>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

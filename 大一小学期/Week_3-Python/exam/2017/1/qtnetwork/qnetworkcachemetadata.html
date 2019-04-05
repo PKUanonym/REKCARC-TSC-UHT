@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qabstractnetworkcache.cpp -->
+  <title>QNetworkCacheMetaData Class | Qt Network 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtnetwork-index.html">Qt Network</a></td><td ><a href="qtnetwork-module.html">C++ Classes</a></td><td >QNetworkCacheMetaData</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-types">Public Types</a></li>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#related-non-members">Related Non-Members</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">QNetworkCacheMetaData Class</h1>
+<!-- $$$QNetworkCacheMetaData-brief -->
+<p>The <a href="qnetworkcachemetadata.html">QNetworkCacheMetaData</a> class provides cache information. <a href="#details">More...</a></p>
+<!-- @@@QNetworkCacheMetaData -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign">   <span class="preprocessor">#include &lt;QNetworkCacheMetaData&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> qmake:</td><td class="memItemRight bottomAlign"> QT += network</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Since:</td><td class="memItemRight bottomAlign">  Qt 4.5</td></tr></table></div><ul>
+<li><a href="qnetworkcachemetadata-members.html">List of all members, including inherited members</a></li>
+</ul>
+<a name="public-types"></a>
+<h2 id="public-types">Public Types</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> typedef </td><td class="memItemRight bottomAlign"><b><a href="qnetworkcachemetadata.html#AttributesMap-typedef">AttributesMap</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> typedef </td><td class="memItemRight bottomAlign"><b><a href="qnetworkcachemetadata.html#RawHeader-typedef">RawHeader</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> typedef </td><td class="memItemRight bottomAlign"><b><a href="qnetworkcachemetadata.html#RawHeaderList-typedef">RawHeaderList</a></b></td></tr>
+</table></div>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qnetworkcachemetadata.html#QNetworkCacheMetaData">QNetworkCacheMetaData</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qnetworkcachemetadata.html#QNetworkCacheMetaData-1">QNetworkCacheMetaData</a></b>(const QNetworkCacheMetaData &amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qnetworkcachemetadata.html#dtor.QNetworkCacheMetaData">~QNetworkCacheMetaData</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> AttributesMap </td><td class="memItemRight bottomAlign"><b><a href="qnetworkcachemetadata.html#attributes">attributes</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QDateTime </td><td class="memItemRight bottomAlign"><b><a href="qnetworkcachemetadata.html#expirationDate">expirationDate</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qnetworkcachemetadata.html#isValid">isValid</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QDateTime </td><td class="memItemRight bottomAlign"><b><a href="qnetworkcachemetadata.html#lastModified">lastModified</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> RawHeaderList </td><td class="memItemRight bottomAlign"><b><a href="qnetworkcachemetadata.html#rawHeaders">rawHeaders</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qnetworkcachemetadata.html#saveToDisk">saveToDisk</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qnetworkcachemetadata.html#setAttributes">setAttributes</a></b>(const AttributesMap &amp;<i>attributes</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qnetworkcachemetadata.html#setExpirationDate">setExpirationDate</a></b>(const QDateTime &amp;<i>dateTime</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qnetworkcachemetadata.html#setLastModified">setLastModified</a></b>(const QDateTime &amp;<i>dateTime</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qnetworkcachemetadata.html#setRawHeaders">setRawHeaders</a></b>(const RawHeaderList &amp;<i>list</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qnetworkcachemetadata.html#setSaveToDisk">setSaveToDisk</a></b>(bool <i>allow</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qnetworkcachemetadata.html#setUrl">setUrl</a></b>(const QUrl &amp;<i>url</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qnetworkcachemetadata.html#swap">swap</a></b>(QNetworkCacheMetaData &amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QUrl </td><td class="memItemRight bottomAlign"><b><a href="qnetworkcachemetadata.html#url">url</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qnetworkcachemetadata.html#operator-not-eq">operator!=</a></b>(const QNetworkCacheMetaData &amp;<i>other</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QNetworkCacheMetaData &amp;</td><td class="memItemRight bottomAlign"><b><a href="qnetworkcachemetadata.html#operator-eq">operator=</a></b>(QNetworkCacheMetaData &amp;&amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QNetworkCacheMetaData &amp;</td><td class="memItemRight bottomAlign"><b><a href="qnetworkcachemetadata.html#operator-eq-1">operator=</a></b>(const QNetworkCacheMetaData &amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qnetworkcachemetadata.html#operator-eq-eq">operator==</a></b>(const QNetworkCacheMetaData &amp;<i>other</i>) const</td></tr>
+</table></div>
+<a name="related-non-members"></a>
+<h2 id="related-non-members">Related Non-Members</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> QDataStream &amp;</td><td class="memItemRight bottomAlign"><b><a href="qnetworkcachemetadata.html#operator-lt-lt">operator&lt;&lt;</a></b>(QDataStream &amp;<i>out</i>, const QNetworkCacheMetaData &amp;<i>metaData</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QDataStream &amp;</td><td class="memItemRight bottomAlign"><b><a href="qnetworkcachemetadata.html#operator-gt-gt">operator&gt;&gt;</a></b>(QDataStream &amp;<i>in</i>, QNetworkCacheMetaData &amp;<i>metaData</i>)</td></tr>
+</table></div>
+<a name="details"></a>
+<!-- $$$QNetworkCacheMetaData-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="qnetworkcachemetadata.html">QNetworkCacheMetaData</a> class provides cache information.</p>
+<p><a href="qnetworkcachemetadata.html">QNetworkCacheMetaData</a> provides information about a cache file including the url, when it was last modified, when the cache file was created, headers for file and if the file should be saved onto a disk.</p>
+</div>
+<p><b>See also </b><a href="qabstractnetworkcache.html">QAbstractNetworkCache</a>.</p>
+<!-- @@@QNetworkCacheMetaData -->
+<div class="types">
+<h2>Member Type Documentation</h2>
+<!-- $$$AttributesMap -->
+<h3 class="fn" id="AttributesMap-typedef"><a name="AttributesMap-typedef"></a>typedef QNetworkCacheMetaData::<span class="name">AttributesMap</span></h3>
+<p>Synonym for <a href="../qtcore/qhash.html#qhash">QHash</a>&lt;<a href="qnetworkrequest.html#Attribute-enum">QNetworkRequest::Attribute</a>, <a href="../qtcore/qvariant.html">QVariant</a>&gt;</p>
+<!-- @@@AttributesMap -->
+<!-- $$$RawHeader -->
+<h3 class="fn" id="RawHeader-typedef"><a name="RawHeader-typedef"></a>typedef QNetworkCacheMetaData::<span class="name">RawHeader</span></h3>
+<p>Synonym for <a href="../qtcore/qpair.html">QPair</a>&lt;<a href="../qtcore/qbytearray.html">QByteArray</a>, <a href="../qtcore/qbytearray.html">QByteArray</a>&gt;</p>
+<!-- @@@RawHeader -->
+<!-- $$$RawHeaderList -->
+<h3 class="fn" id="RawHeaderList-typedef"><a name="RawHeaderList-typedef"></a>typedef QNetworkCacheMetaData::<span class="name">RawHeaderList</span></h3>
+<p>Synonym for <a href="../qtcore/qlist.html">QList</a>&lt;<a href="qnetworkcachemetadata.html#RawHeader-typedef">RawHeader</a>&gt;</p>
+<!-- @@@RawHeaderList -->
+</div>
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$QNetworkCacheMetaData[overload1]$$$QNetworkCacheMetaData -->
+<h3 class="fn" id="QNetworkCacheMetaData"><a name="QNetworkCacheMetaData"></a>QNetworkCacheMetaData::<span class="name">QNetworkCacheMetaData</span>()</h3>
+<p>Constructs an invalid network cache meta data.</p>
+<p><b>See also </b><a href="qnetworkcachemetadata.html#isValid">isValid</a>().</p>
+<!-- @@@QNetworkCacheMetaData -->
+<!-- $$$QNetworkCacheMetaData$$$QNetworkCacheMetaDataconstQNetworkCacheMetaData& -->
+<h3 class="fn" id="QNetworkCacheMetaData-1"><a name="QNetworkCacheMetaData-1"></a>QNetworkCacheMetaData::<span class="name">QNetworkCacheMetaData</span>(const <span class="type"><a href="qnetworkcachemetadata.html#QNetworkCacheMetaData">QNetworkCacheMetaData</a></span> &amp;<i>other</i>)</h3>
+<p>Constructs a copy of the <i>other</i> <a href="qnetworkcachemetadata.html">QNetworkCacheMetaData</a>.</p>
+<!-- @@@QNetworkCacheMetaData -->
+<!-- $$$~QNetworkCacheMetaData[overload1]$$$~QNetworkCacheMetaData -->
+<h3 class="fn" id="dtor.QNetworkCacheMetaData"><a name="dtor.QNetworkCacheMetaData"></a>QNetworkCacheMetaData::<span class="name">~QNetworkCacheMetaData</span>()</h3>
+<p>Destroys the network cache meta data.</p>
+<!-- @@@~QNetworkCacheMetaData -->
+<!-- $$$attributes[overload1]$$$attributes -->
+<h3 class="fn" id="attributes"><a name="attributes"></a><span class="type"><a href="qnetworkcachemetadata.html#AttributesMap-typedef">AttributesMap</a></span> QNetworkCacheMetaData::<span class="name">attributes</span>() const</h3>
+<p>Returns all the attributes stored with this cache item.</p>
+<p>This function was introduced in  Qt 4.6.</p>
+<p><b>See also </b><a href="qnetworkcachemetadata.html#setAttributes">setAttributes</a>() and <a href="qnetworkrequest.html#Attribute-enum">QNetworkRequest::Attribute</a>.</p>
+<!-- @@@attributes -->
+<!-- $$$expirationDate[overload1]$$$expirationDate -->
+<h3 class="fn" id="expirationDate"><a name="expirationDate"></a><span class="type"><a href="../qtcore/qdatetime.html">QDateTime</a></span> QNetworkCacheMetaData::<span class="name">expirationDate</span>() const</h3>
+<p>Returns the date and time when the meta data expires.</p>
+<p><b>See also </b><a href="qnetworkcachemetadata.html#setExpirationDate">setExpirationDate</a>().</p>
+<!-- @@@expirationDate -->
+<!-- $$$isValid[overload1]$$$isValid -->
+<h3 class="fn" id="isValid"><a name="isValid"></a><span class="type">bool</span> QNetworkCacheMetaData::<span class="name">isValid</span>() const</h3>
+<p>Returns <code>true</code> if this network cache meta data has attributes that have been set otherwise false.</p>
+<!-- @@@isValid -->
+<!-- $$$lastModified[overload1]$$$lastModified -->
+<h3 class="fn" id="lastModified"><a name="lastModified"></a><span class="type"><a href="../qtcore/qdatetime.html">QDateTime</a></span> QNetworkCacheMetaData::<span class="name">lastModified</span>() const</h3>
+<p>Returns the date and time when the meta data was last modified.</p>
+<p><b>See also </b><a href="qnetworkcachemetadata.html#setLastModified">setLastModified</a>().</p>
+<!-- @@@lastModified -->
+<!-- $$$rawHeaders[overload1]$$$rawHeaders -->
+<h3 class="fn" id="rawHeaders"><a name="rawHeaders"></a><span class="type"><a href="qnetworkcachemetadata.html#RawHeaderList-typedef">RawHeaderList</a></span> QNetworkCacheMetaData::<span class="name">rawHeaders</span>() const</h3>
+<p>Returns a list of all raw headers that are set in this meta data. The list is in the same order that the headers were set.</p>
+<p><b>See also </b><a href="qnetworkcachemetadata.html#setRawHeaders">setRawHeaders</a>().</p>
+<!-- @@@rawHeaders -->
+<!-- $$$saveToDisk[overload1]$$$saveToDisk -->
+<h3 class="fn" id="saveToDisk"><a name="saveToDisk"></a><span class="type">bool</span> QNetworkCacheMetaData::<span class="name">saveToDisk</span>() const</h3>
+<p>Returns is this cache should be allowed to be stored on disk.</p>
+<p>Some cache implementations can keep these cache items in memory for performance reasons, but for security reasons they should not be written to disk.</p>
+<p>Specifically with http, documents marked with Pragma: no-cache, or have a Cache-control set to no-store or no-cache or any https document that doesn't have &quot;Cache-control: public&quot; set will set the saveToDisk to false.</p>
+<p><b>See also </b><a href="qnetworkcachemetadata.html#setSaveToDisk">setSaveToDisk</a>().</p>
+<!-- @@@saveToDisk -->
+<!-- $$$setAttributes[overload1]$$$setAttributesconstAttributesMap& -->
+<h3 class="fn" id="setAttributes"><a name="setAttributes"></a><span class="type">void</span> QNetworkCacheMetaData::<span class="name">setAttributes</span>(const <span class="type"><a href="qnetworkcachemetadata.html#AttributesMap-typedef">AttributesMap</a></span> &amp;<i>attributes</i>)</h3>
+<p>Sets all attributes of this cache item to be the map <i>attributes</i>.</p>
+<p>This function was introduced in  Qt 4.6.</p>
+<p><b>See also </b><a href="qnetworkcachemetadata.html#attributes">attributes</a>() and <a href="qnetworkrequest.html#setAttribute">QNetworkRequest::setAttribute</a>().</p>
+<!-- @@@setAttributes -->
+<!-- $$$setExpirationDate[overload1]$$$setExpirationDateconstQDateTime& -->
+<h3 class="fn" id="setExpirationDate"><a name="setExpirationDate"></a><span class="type">void</span> QNetworkCacheMetaData::<span class="name">setExpirationDate</span>(const <span class="type"><a href="../qtcore/qdatetime.html">QDateTime</a></span> &amp;<i>dateTime</i>)</h3>
+<p>Sets the date and time when the meta data expires to <i>dateTime</i>.</p>
+<p><b>See also </b><a href="qnetworkcachemetadata.html#expirationDate">expirationDate</a>().</p>
+<!-- @@@setExpirationDate -->
+<!-- $$$setLastModified[overload1]$$$setLastModifiedconstQDateTime& -->
+<h3 class="fn" id="setLastModified"><a name="setLastModified"></a><span class="type">void</span> QNetworkCacheMetaData::<span class="name">setLastModified</span>(const <span class="type"><a href="../qtcore/qdatetime.html">QDateTime</a></span> &amp;<i>dateTime</i>)</h3>
+<p>Sets the date and time when the meta data was last modified to <i>dateTime</i>.</p>
+<p><b>See also </b><a href="qnetworkcachemetadata.html#lastModified">lastModified</a>().</p>
+<!-- @@@setLastModified -->
+<!-- $$$setRawHeaders[overload1]$$$setRawHeadersconstRawHeaderList& -->
+<h3 class="fn" id="setRawHeaders"><a name="setRawHeaders"></a><span class="type">void</span> QNetworkCacheMetaData::<span class="name">setRawHeaders</span>(const <span class="type"><a href="qnetworkcachemetadata.html#RawHeaderList-typedef">RawHeaderList</a></span> &amp;<i>list</i>)</h3>
+<p>Sets the raw headers to <i>list</i>.</p>
+<p><b>See also </b><a href="qnetworkcachemetadata.html#rawHeaders">rawHeaders</a>().</p>
+<!-- @@@setRawHeaders -->
+<!-- $$$setSaveToDisk[overload1]$$$setSaveToDiskbool -->
+<h3 class="fn" id="setSaveToDisk"><a name="setSaveToDisk"></a><span class="type">void</span> QNetworkCacheMetaData::<span class="name">setSaveToDisk</span>(<span class="type">bool</span> <i>allow</i>)</h3>
+<p>Sets whether this network cache meta data and associated content should be allowed to be stored on disk to <i>allow</i>.</p>
+<p><b>See also </b><a href="qnetworkcachemetadata.html#saveToDisk">saveToDisk</a>().</p>
+<!-- @@@setSaveToDisk -->
+<!-- $$$setUrl[overload1]$$$setUrlconstQUrl& -->
+<h3 class="fn" id="setUrl"><a name="setUrl"></a><span class="type">void</span> QNetworkCacheMetaData::<span class="name">setUrl</span>(const <span class="type"><a href="../qtcore/qurl.html">QUrl</a></span> &amp;<i>url</i>)</h3>
+<p>Sets the URL this network cache meta data to be <i>url</i>.</p>
+<p>The password and fragment are removed from the url.</p>
+<p><b>See also </b><a href="qnetworkcachemetadata.html#url">url</a>().</p>
+<!-- @@@setUrl -->
+<!-- $$$swap[overload1]$$$swapQNetworkCacheMetaData& -->
+<h3 class="fn" id="swap"><a name="swap"></a><span class="type">void</span> QNetworkCacheMetaData::<span class="name">swap</span>(<span class="type"><a href="qnetworkcachemetadata.html#QNetworkCacheMetaData">QNetworkCacheMetaData</a></span> &amp;<i>other</i>)</h3>
+<p>Swaps this metadata instance with <i>other</i>. This function is very fast and never fails.</p>
+<p>This function was introduced in  Qt 5.0.</p>
+<!-- @@@swap -->
+<!-- $$$url[overload1]$$$url -->
+<h3 class="fn" id="url"><a name="url"></a><span class="type"><a href="../qtcore/qurl.html">QUrl</a></span> QNetworkCacheMetaData::<span class="name">url</span>() const</h3>
+<p>Returns the URL this network cache meta data is referring to.</p>
+<p><b>See also </b><a href="qnetworkcachemetadata.html#setUrl">setUrl</a>().</p>
+<!-- @@@url -->
+<!-- $$$operator!=[overload1]$$$operator!=constQNetworkCacheMetaData& -->
+<h3 class="fn" id="operator-not-eq"><a name="operator-not-eq"></a><span class="type">bool</span> QNetworkCacheMetaData::<span class="name">operator!=</span>(const <span class="type"><a href="qnetworkcachemetadata.html#QNetworkCacheMetaData">QNetworkCacheMetaData</a></span> &amp;<i>other</i>) const</h3>
+<p>Returns <code>true</code> if this meta data is not equal to the <i>other</i> meta data; otherwise returns <code>false</code>.</p>
+<p><b>See also </b><a href="qnetworkcachemetadata.html#operator-eq-eq">operator==</a>().</p>
+<!-- @@@operator!= -->
+<!-- $$$operator=[overload1]$$$operator=QNetworkCacheMetaData&& -->
+<h3 class="fn" id="operator-eq"><a name="operator-eq"></a><span class="type"><a href="qnetworkcachemetadata.html#QNetworkCacheMetaData">QNetworkCacheMetaData</a></span> &amp;QNetworkCacheMetaData::<span class="name">operator=</span>(<span class="type"><a href="qnetworkcachemetadata.html#QNetworkCacheMetaData">QNetworkCacheMetaData</a></span> &amp;&amp;<i>other</i>)</h3>
+<p>Move-assignment operator.</p><!-- @@@operator= -->
+<!-- $$$operator=$$$operator=constQNetworkCacheMetaData& -->
+<h3 class="fn" id="operator-eq-1"><a name="operator-eq-1"></a><span class="type"><a href="qnetworkcachemetadata.html#QNetworkCacheMetaData">QNetworkCacheMetaData</a></span> &amp;QNetworkCacheMetaData::<span class="name">operator=</span>(const <span class="type"><a href="qnetworkcachemetadata.html#QNetworkCacheMetaData">QNetworkCacheMetaData</a></span> &amp;<i>other</i>)</h3>
+<p>Makes a copy of the <i>other</i> <a href="qnetworkcachemetadata.html">QNetworkCacheMetaData</a> and returns a reference to the copy.</p>
+<!-- @@@operator= -->
+<!-- $$$operator==[overload1]$$$operator==constQNetworkCacheMetaData& -->
+<h3 class="fn" id="operator-eq-eq"><a name="operator-eq-eq"></a><span class="type">bool</span> QNetworkCacheMetaData::<span class="name">operator==</span>(const <span class="type"><a href="qnetworkcachemetadata.html#QNetworkCacheMetaData">QNetworkCacheMetaData</a></span> &amp;<i>other</i>) const</h3>
+<p>Returns <code>true</code> if this meta data is equal to the <i>other</i> meta data; otherwise returns <code>false</code>.</p>
+<p><b>See also </b><a href="qnetworkcachemetadata.html#operator-not-eq">operator!=</a>().</p>
+<!-- @@@operator== -->
+</div>
+<div class="relnonmem">
+<h2>Related Non-Members</h2>
+<!-- $$$operator<<[overload1]$$$operator<<QDataStream&constQNetworkCacheMetaData& -->
+<h3 class="fn" id="operator-lt-lt"><a name="operator-lt-lt"></a><span class="type"><a href="../qtcore/qdatastream.html">QDataStream</a></span> &amp;<span class="name">operator&lt;&lt;</span>(<span class="type"><a href="../qtcore/qdatastream.html">QDataStream</a></span> &amp;<i>out</i>, const <span class="type"><a href="qnetworkcachemetadata.html#QNetworkCacheMetaData">QNetworkCacheMetaData</a></span> &amp;<i>metaData</i>)</h3>
+<p>Writes <i>metaData</i> to the <i>out</i> stream.</p>
+<p>This function was introduced in  Qt 4.5.</p>
+<p><b>See also </b><a href="../qtcore/datastreamformat.html">Serializing Qt Data Types</a>.</p>
+<!-- @@@operator<< -->
+<!-- $$$operator>>[overload1]$$$operator>>QDataStream&QNetworkCacheMetaData& -->
+<h3 class="fn" id="operator-gt-gt"><a name="operator-gt-gt"></a><span class="type"><a href="../qtcore/qdatastream.html">QDataStream</a></span> &amp;<span class="name">operator&gt;&gt;</span>(<span class="type"><a href="../qtcore/qdatastream.html">QDataStream</a></span> &amp;<i>in</i>, <span class="type"><a href="qnetworkcachemetadata.html#QNetworkCacheMetaData">QNetworkCacheMetaData</a></span> &amp;<i>metaData</i>)</h3>
+<p>Reads a <a href="qnetworkcachemetadata.html">QNetworkCacheMetaData</a> from the stream <i>in</i> into <i>metaData</i>.</p>
+<p>This function was introduced in  Qt 4.5.</p>
+<p><b>See also </b><a href="../qtcore/datastreamformat.html">Serializing Qt Data Types</a>.</p>
+<!-- @@@operator>> -->
+</div>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

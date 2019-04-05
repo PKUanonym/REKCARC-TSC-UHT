@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qabstractnetworkcache.cpp -->
+  <title>QAbstractNetworkCache Class | Qt Network 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtnetwork-index.html">Qt Network</a></td><td ><a href="qtnetwork-module.html">C++ Classes</a></td><td >QAbstractNetworkCache</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#public-slots">Public Slots</a></li>
+<li class="level1"><a href="#protected-functions">Protected Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">QAbstractNetworkCache Class</h1>
+<!-- $$$QAbstractNetworkCache-brief -->
+<p>The <a href="qabstractnetworkcache.html">QAbstractNetworkCache</a> class provides the interface for cache implementations. <a href="#details">More...</a></p>
+<!-- @@@QAbstractNetworkCache -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign">   <span class="preprocessor">#include &lt;QAbstractNetworkCache&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> qmake:</td><td class="memItemRight bottomAlign"> QT += network</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Since:</td><td class="memItemRight bottomAlign">  Qt 4.5</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Inherits:</td><td class="memItemRight bottomAlign"> <a href="../qtcore/qobject.html">QObject</a></td></tr><tr><td class="memItemLeft rightAlign topAlign"> Inherited By:</td><td class="memItemRight bottomAlign"> <p><a href="qnetworkdiskcache.html">QNetworkDiskCache</a></p>
+</td></tr></table></div><ul>
+<li><a href="qabstractnetworkcache-members.html">List of all members, including inherited members</a></li>
+</ul>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> virtual </td><td class="memItemRight bottomAlign"><b><a href="qabstractnetworkcache.html#dtor.QAbstractNetworkCache">~QAbstractNetworkCache</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual qint64 </td><td class="memItemRight bottomAlign"><b><a href="qabstractnetworkcache.html#cacheSize">cacheSize</a></b>() const = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QIODevice *</td><td class="memItemRight bottomAlign"><b><a href="qabstractnetworkcache.html#data">data</a></b>(const QUrl &amp;<i>url</i>) = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="qabstractnetworkcache.html#insert">insert</a></b>(QIODevice *<i>device</i>) = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QNetworkCacheMetaData </td><td class="memItemRight bottomAlign"><b><a href="qabstractnetworkcache.html#metaData">metaData</a></b>(const QUrl &amp;<i>url</i>) = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QIODevice *</td><td class="memItemRight bottomAlign"><b><a href="qabstractnetworkcache.html#prepare">prepare</a></b>(const QNetworkCacheMetaData &amp;<i>metaData</i>) = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="qabstractnetworkcache.html#remove">remove</a></b>(const QUrl &amp;<i>url</i>) = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="qabstractnetworkcache.html#updateMetaData">updateMetaData</a></b>(const QNetworkCacheMetaData &amp;<i>metaData</i>) = 0</td></tr>
+</table></div>
+<ul>
+<li class="fn">31 public functions inherited from <a href="../qtcore/qobject.html#public-functions">QObject</a></li>
+</ul>
+<a name="public-slots"></a>
+<h2 id="public-slots">Public Slots</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="qabstractnetworkcache.html#clear">clear</a></b>() = 0</td></tr>
+</table></div>
+<ul>
+<li class="fn">1 public slot inherited from <a href="../qtcore/qobject.html#public-slots">QObject</a></li>
+</ul>
+<a name="protected-functions"></a>
+<h2 id="protected-functions">Protected Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qabstractnetworkcache.html#QAbstractNetworkCache">QAbstractNetworkCache</a></b>(QObject *<i>parent</i> = Q_NULLPTR)</td></tr>
+</table></div>
+<ul>
+<li class="fn">9 protected functions inherited from <a href="../qtcore/qobject.html#protected-functions">QObject</a></li>
+</ul>
+<h3>Additional Inherited Members</h3>
+<ul>
+<li class="fn">1 property inherited from <a href="../qtcore/qobject.html#properties">QObject</a></li>
+<li class="fn">2 signals inherited from <a href="../qtcore/qobject.html#signals">QObject</a></li>
+<li class="fn">1 public variable inherited from <a href="../qtcore/qobject.html#public-variables">QObject</a></li>
+<li class="fn">10 static public members inherited from <a href="../qtcore/qobject.html#static-public-members">QObject</a></li>
+<li class="fn">2 protected variables inherited from <a href="../qtcore/qobject.html#protected-variables">QObject</a></li>
+</ul>
+<a name="details"></a>
+<!-- $$$QAbstractNetworkCache-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="qabstractnetworkcache.html">QAbstractNetworkCache</a> class provides the interface for cache implementations.</p>
+<p><a href="qabstractnetworkcache.html">QAbstractNetworkCache</a> is the base class for every standard cache that is used by <a href="qnetworkaccessmanager.html">QNetworkAccessManager</a>. <a href="qabstractnetworkcache.html">QAbstractNetworkCache</a> is an abstract class and cannot be instantiated.</p>
+</div>
+<p><b>See also </b><a href="qnetworkdiskcache.html">QNetworkDiskCache</a>.</p>
+<!-- @@@QAbstractNetworkCache -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$QAbstractNetworkCache[overload1]$$$QAbstractNetworkCacheQObject* -->
+<h3 class="fn" id="QAbstractNetworkCache"><a name="QAbstractNetworkCache"></a><code>[protected] </code>QAbstractNetworkCache::<span class="name">QAbstractNetworkCache</span>(<span class="type"><a href="../qtcore/qobject.html#QObject">QObject</a></span> *<i>parent</i> = Q_NULLPTR)</h3>
+<p>Constructs an abstract network cache with the given <i>parent</i>.</p>
+<!-- @@@QAbstractNetworkCache -->
+<!-- $$$~QAbstractNetworkCache[overload1]$$$~QAbstractNetworkCache -->
+<h3 class="fn" id="dtor.QAbstractNetworkCache"><a name="dtor.QAbstractNetworkCache"></a><code>[virtual] </code>QAbstractNetworkCache::<span class="name">~QAbstractNetworkCache</span>()</h3>
+<p>Destroys the cache.</p>
+<p>Any operations that have not been inserted are discarded.</p>
+<p><b>See also </b><a href="qabstractnetworkcache.html#insert">insert</a>().</p>
+<!-- @@@~QAbstractNetworkCache -->
+<!-- $$$cacheSize[overload1]$$$cacheSize -->
+<h3 class="fn" id="cacheSize"><a name="cacheSize"></a><code>[pure virtual] </code><span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> QAbstractNetworkCache::<span class="name">cacheSize</span>() const</h3>
+<p>Returns the current size taken up by the cache. Depending upon the cache implementation this might be disk or memory size.</p>
+<p>In the base class this is a pure virtual function.</p>
+<p><b>See also </b><a href="qabstractnetworkcache.html#clear">clear</a>().</p>
+<!-- @@@cacheSize -->
+<!-- $$$clear[overload1]$$$clear -->
+<h3 class="fn" id="clear"><a name="clear"></a><code>[pure virtual slot] </code><span class="type">void</span> QAbstractNetworkCache::<span class="name">clear</span>()</h3>
+<p>Removes all items from the cache. Unless there was failures clearing the cache <a href="qabstractnetworkcache.html#cacheSize">cacheSize</a>() should return 0 after a call to clear.</p>
+<p>In the base class this is a pure virtual function.</p>
+<p><b>See also </b><a href="qabstractnetworkcache.html#cacheSize">cacheSize</a>() and <a href="qabstractnetworkcache.html#remove">remove</a>().</p>
+<!-- @@@clear -->
+<!-- $$$data[overload1]$$$dataconstQUrl& -->
+<h3 class="fn" id="data"><a name="data"></a><code>[pure virtual] </code><span class="type"><a href="../qtcore/qiodevice.html">QIODevice</a></span> *QAbstractNetworkCache::<span class="name">data</span>(const <span class="type"><a href="../qtcore/qurl.html">QUrl</a></span> &amp;<i>url</i>)</h3>
+<p>Returns the data associated with <i>url</i>.</p>
+<p>It is up to the application that requests the data to delete the <a href="../qtcore/qiodevice.html">QIODevice</a> when done with it.</p>
+<p>If there is no cache for <i>url</i>, the url is invalid, or if there is an internal cache error 0 is returned.</p>
+<p>In the base class this is a pure virtual function.</p>
+<p><b>See also </b><a href="qabstractnetworkcache.html#metaData">metaData</a>() and <a href="qabstractnetworkcache.html#prepare">prepare</a>().</p>
+<!-- @@@data -->
+<!-- $$$insert[overload1]$$$insertQIODevice* -->
+<h3 class="fn" id="insert"><a name="insert"></a><code>[pure virtual] </code><span class="type">void</span> QAbstractNetworkCache::<span class="name">insert</span>(<span class="type"><a href="../qtcore/qiodevice.html">QIODevice</a></span> *<i>device</i>)</h3>
+<p>Inserts the data in <i>device</i> and the prepared meta data into the cache. After this function is called the data and meta data should be retrievable using <a href="qabstractnetworkcache.html#data">data</a>() and <a href="qabstractnetworkcache.html#metaData">metaData</a>().</p>
+<p>To cancel a prepared inserted call <a href="qabstractnetworkcache.html#remove">remove</a>() on the metadata's url.</p>
+<p>In the base class this is a pure virtual function.</p>
+<p><b>See also </b><a href="qabstractnetworkcache.html#prepare">prepare</a>() and <a href="qabstractnetworkcache.html#remove">remove</a>().</p>
+<!-- @@@insert -->
+<!-- $$$metaData[overload1]$$$metaDataconstQUrl& -->
+<h3 class="fn" id="metaData"><a name="metaData"></a><code>[pure virtual] </code><span class="type"><a href="qnetworkcachemetadata.html">QNetworkCacheMetaData</a></span> QAbstractNetworkCache::<span class="name">metaData</span>(const <span class="type"><a href="../qtcore/qurl.html">QUrl</a></span> &amp;<i>url</i>)</h3>
+<p>Returns the meta data for the url <i>url</i>.</p>
+<p>If the url is valid and the cache contains the data for url, a valid <a href="qnetworkcachemetadata.html">QNetworkCacheMetaData</a> is returned.</p>
+<p>In the base class this is a pure virtual function.</p>
+<p><b>See also </b><a href="qabstractnetworkcache.html#updateMetaData">updateMetaData</a>() and <a href="qabstractnetworkcache.html#data">data</a>().</p>
+<!-- @@@metaData -->
+<!-- $$$prepare[overload1]$$$prepareconstQNetworkCacheMetaData& -->
+<h3 class="fn" id="prepare"><a name="prepare"></a><code>[pure virtual] </code><span class="type"><a href="../qtcore/qiodevice.html">QIODevice</a></span> *QAbstractNetworkCache::<span class="name">prepare</span>(const <span class="type"><a href="qnetworkcachemetadata.html">QNetworkCacheMetaData</a></span> &amp;<i>metaData</i>)</h3>
+<p>Returns the device that should be populated with the data for the cache item <i>metaData</i>. When all of the data has been written <a href="qabstractnetworkcache.html#insert">insert</a>() should be called. If <a href="qabstractnetworkcache.html#metaData">metaData</a> is invalid or the url in the metadata is invalid 0 is returned.</p>
+<p>The cache owns the device and will take care of deleting it when it is inserted or removed.</p>
+<p>To cancel a prepared inserted call <a href="qabstractnetworkcache.html#remove">remove</a>() on the metadata's url.</p>
+<p>In the base class this is a pure virtual function.</p>
+<p><b>See also </b><a href="qabstractnetworkcache.html#remove">remove</a>(), <a href="qabstractnetworkcache.html#updateMetaData">updateMetaData</a>(), and <a href="qabstractnetworkcache.html#insert">insert</a>().</p>
+<!-- @@@prepare -->
+<!-- $$$remove[overload1]$$$removeconstQUrl& -->
+<h3 class="fn" id="remove"><a name="remove"></a><code>[pure virtual] </code><span class="type">bool</span> QAbstractNetworkCache::<span class="name">remove</span>(const <span class="type"><a href="../qtcore/qurl.html">QUrl</a></span> &amp;<i>url</i>)</h3>
+<p>Removes the cache entry for <i>url</i>, returning true if success otherwise false.</p>
+<p>In the base class this is a pure virtual function.</p>
+<p><b>See also </b><a href="qabstractnetworkcache.html#clear">clear</a>() and <a href="qabstractnetworkcache.html#prepare">prepare</a>().</p>
+<!-- @@@remove -->
+<!-- $$$updateMetaData[overload1]$$$updateMetaDataconstQNetworkCacheMetaData& -->
+<h3 class="fn" id="updateMetaData"><a name="updateMetaData"></a><code>[pure virtual] </code><span class="type">void</span> QAbstractNetworkCache::<span class="name">updateMetaData</span>(const <span class="type"><a href="qnetworkcachemetadata.html">QNetworkCacheMetaData</a></span> &amp;<i>metaData</i>)</h3>
+<p>Updates the cache meta date for the <a href="qabstractnetworkcache.html#metaData">metaData</a>'s url to <i>metaData</i></p>
+<p>If the cache does not contains a cache item for the url then no action is taken.</p>
+<p>In the base class this is a pure virtual function.</p>
+<p><b>See also </b><a href="qabstractnetworkcache.html#metaData">metaData</a>() and <a href="qabstractnetworkcache.html#prepare">prepare</a>().</p>
+<!-- @@@updateMetaData -->
+</div>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

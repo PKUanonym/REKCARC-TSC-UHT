@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qsqlresult.cpp -->
+  <title>List of All Members for QSqlResult | Qt SQL 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtsql-index.html">Qt SQL</a></td><td ><a href="qtsql-module.html">C++ Classes</a></td><td >QSqlResult</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar"><div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">List of All Members for QSqlResult</h1>
+<p>This is the complete list of members for <a href="qsqlresult.html">QSqlResult</a>, including inherited members.</p>
+<div class="table"><table class="propsummary">
+<tr><td class="topAlign"><ul>
+<li class="fn">enum <span class="name"><b><a href="qsqlresult.html#BindingSyntax-enum">BindingSyntax</a></b></span></li>
+<li class="fn"><span class="name"><b><a href="qsqlresult.html#QSqlResult">QSqlResult</a></b></span>(const QSqlDriver *)</li>
+<li class="fn"><span class="name"><b><a href="qsqlresult.html#dtor.QSqlResult">~QSqlResult</a></b></span>()</li>
+<li class="fn"><span class="name"><b><a href="qsqlresult.html#addBindValue">addBindValue</a></b></span>(const QVariant &amp;, QSql::ParamType )</li>
+<li class="fn"><span class="name"><b><a href="qsqlresult.html#at">at</a></b></span>() const : int</li>
+<li class="fn"><span class="name"><b><a href="qsqlresult.html#bindValue">bindValue</a></b></span>(int , const QVariant &amp;, QSql::ParamType )</li>
+<li class="fn"><span class="name"><b><a href="qsqlresult.html#bindValue-1">bindValue</a></b></span>(const QString &amp;, const QVariant &amp;, QSql::ParamType )</li>
+<li class="fn"><span class="name"><b><a href="qsqlresult.html#bindValueType">bindValueType</a></b></span>(int ) const : QSql::ParamType</li>
+<li class="fn"><span class="name"><b><a href="qsqlresult.html#bindValueType-1">bindValueType</a></b></span>(const QString &amp;) const : QSql::ParamType</li>
+<li class="fn"><span class="name"><b><a href="qsqlresult.html#bindingSyntax">bindingSyntax</a></b></span>() const : BindingSyntax</li>
+<li class="fn"><span class="name"><b><a href="qsqlresult.html#boundValue">boundValue</a></b></span>(int ) const : QVariant</li>
+<li class="fn"><span class="name"><b><a href="qsqlresult.html#boundValue-1">boundValue</a></b></span>(const QString &amp;) const : QVariant</li>
+<li class="fn"><span class="name"><b><a href="qsqlresult.html#boundValueCount">boundValueCount</a></b></span>() const : int</li>
+<li class="fn"><span class="name"><b><a href="qsqlresult.html#boundValueName">boundValueName</a></b></span>(int ) const : QString</li>
+<li class="fn"><span class="name"><b><a href="qsqlresult.html#boundValues">boundValues</a></b></span>() const : QVector&lt;QVariant&gt; &amp;</li>
+<li class="fn"><span class="name"><b><a href="qsqlresult.html#clear">clear</a></b></span>()</li>
+<li class="fn"><span class="name"><b><a href="qsqlresult.html#d_ptr-var">d_ptr</a></b></span> : QSqlResultPrivate *</li>
+<li class="fn"><span class="name"><b><a href="qsqlresult.html#data">data</a></b></span>(int ) : QVariant</li>
+<li class="fn"><span class="name"><b><a href="qsqlresult.html#driver">driver</a></b></span>() const : const QSqlDriver *</li>
+<li class="fn"><span class="name"><b><a href="qsqlresult.html#exec">exec</a></b></span>() : bool</li>
+<li class="fn"><span class="name"><b><a href="qsqlresult.html#executedQuery">executedQuery</a></b></span>() const : QString</li>
+<li class="fn"><span class="name"><b><a href="qsqlresult.html#fetch">fetch</a></b></span>(int ) : bool</li>
+<li class="fn"><span class="name"><b><a href="qsqlresult.html#fetchFirst">fetchFirst</a></b></span>() : bool</li>
+<li class="fn"><span class="name"><b><a href="qsqlresult.html#fetchLast">fetchLast</a></b></span>() : bool</li>
+<li class="fn"><span class="name"><b><a href="qsqlresult.html#fetchNext">fetchNext</a></b></span>() : bool</li>
+</ul></td><td class="topAlign"><ul>
+<li class="fn"><span class="name"><b><a href="qsqlresult.html#fetchPrevious">fetchPrevious</a></b></span>() : bool</li>
+<li class="fn"><span class="name"><b><a href="qsqlresult.html#handle">handle</a></b></span>() const : QVariant</li>
+<li class="fn"><span class="name"><b><a href="qsqlresult.html#hasOutValues">hasOutValues</a></b></span>() const : bool</li>
+<li class="fn"><span class="name"><b><a href="qsqlresult.html#isActive">isActive</a></b></span>() const : bool</li>
+<li class="fn"><span class="name"><b><a href="qsqlresult.html#isForwardOnly">isForwardOnly</a></b></span>() const : bool</li>
+<li class="fn"><span class="name"><b><a href="qsqlresult.html#isNull">isNull</a></b></span>(int ) : bool</li>
+<li class="fn"><span class="name"><b><a href="qsqlresult.html#isSelect">isSelect</a></b></span>() const : bool</li>
+<li class="fn"><span class="name"><b><a href="qsqlresult.html#isValid">isValid</a></b></span>() const : bool</li>
+<li class="fn"><span class="name"><b><a href="qsqlresult.html#lastError">lastError</a></b></span>() const : QSqlError</li>
+<li class="fn"><span class="name"><b><a href="qsqlresult.html#lastInsertId">lastInsertId</a></b></span>() const : QVariant</li>
+<li class="fn"><span class="name"><b><a href="qsqlresult.html#lastQuery">lastQuery</a></b></span>() const : QString</li>
+<li class="fn"><span class="name"><b><a href="qsqlresult.html#numRowsAffected">numRowsAffected</a></b></span>() : int</li>
+<li class="fn"><span class="name"><b><a href="qsqlresult.html#prepare">prepare</a></b></span>(const QString &amp;) : bool</li>
+<li class="fn"><span class="name"><b><a href="qsqlresult.html#record">record</a></b></span>() const : QSqlRecord</li>
+<li class="fn"><span class="name"><b><a href="qsqlresult.html#reset">reset</a></b></span>(const QString &amp;) : bool</li>
+<li class="fn"><span class="name"><b><a href="qsqlresult.html#resetBindCount">resetBindCount</a></b></span>()</li>
+<li class="fn"><span class="name"><b><a href="qsqlresult.html#savePrepare">savePrepare</a></b></span>(const QString &amp;) : bool</li>
+<li class="fn"><span class="name"><b><a href="qsqlresult.html#setActive">setActive</a></b></span>(bool )</li>
+<li class="fn"><span class="name"><b><a href="qsqlresult.html#setAt">setAt</a></b></span>(int )</li>
+<li class="fn"><span class="name"><b><a href="qsqlresult.html#setForwardOnly">setForwardOnly</a></b></span>(bool )</li>
+<li class="fn"><span class="name"><b><a href="qsqlresult.html#setLastError">setLastError</a></b></span>(const QSqlError &amp;)</li>
+<li class="fn"><span class="name"><b><a href="qsqlresult.html#setQuery">setQuery</a></b></span>(const QString &amp;)</li>
+<li class="fn"><span class="name"><b><a href="qsqlresult.html#setSelect">setSelect</a></b></span>(bool )</li>
+<li class="fn"><span class="name"><b><a href="qsqlresult.html#size">size</a></b></span>() : int</li>
+</ul>
+</td></tr>
+</table></div>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

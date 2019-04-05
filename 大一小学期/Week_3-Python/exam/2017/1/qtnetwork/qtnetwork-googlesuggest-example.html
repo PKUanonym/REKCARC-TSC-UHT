@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- googlesuggest.qdoc -->
+  <title>Google Suggest Example | Qt Network 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtnetwork-index.html">Qt Network</a></td><td >Google Suggest Example</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#gsuggestcompletion-class-declaration">GSuggestCompletion Class Declaration</a></li>
+<li class="level1"><a href="#gsuggestcompletion-class-implementation">GSuggestCompletion Class Implementation</a></li>
+<li class="level1"><a href="#searchbox-class-declaration">SearchBox Class Declaration</a></li>
+<li class="level1"><a href="#searchbox-class-implementation">SearchBox Class Implementation</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">Google Suggest Example</h1>
+<span class="subtitle"></span>
+<!-- $$$googlesuggest-description -->
+<div class="descr"> <a name="details"></a>
+<p>The example uses the <a href="qnetworkaccessmanager.html">QNetworkAccessManager</a> to obtain the list of search recommendations by Google as the user types into a QLineEdit.</p>
+<p class="centerAlign"><img src="images/googlesuggest-example.png" alt="" /></p><p>The application makes use of the <code>get</code> function in <a href="qnetworkaccessmanager.html">QNetworkAccessManager</a> to post a request and obtain the result of the search query sent to the Google search engine. The results returned are listed as clickable links appearing below the search box as a drop-down menu.</p>
+<p>The widget is built up by a QLineEdit as the search box, and a QTreeView used as a popup menu below the search box.</p>
+<a name="gsuggestcompletion-class-declaration"></a>
+<h2 id="gsuggestcompletion-class-declaration">GSuggestCompletion Class Declaration</h2>
+<p>This class implements an event filter and a number of functions to display the search results and to determent when and how to perform the search.</p>
+<pre class="cpp">
+
+  <span class="keyword">class</span> GSuggestCompletion : <span class="keyword">public</span> <span class="type"><a href="../qtcore/qobject.html">QObject</a></span>
+  {
+      Q_OBJECT
+
+  <span class="keyword">public</span>:
+      GSuggestCompletion(<span class="type">QLineEdit</span> <span class="operator">*</span>parent <span class="operator">=</span> <span class="number">0</span>);
+      <span class="operator">~</span>GSuggestCompletion();
+      bool eventFilter(<span class="type"><a href="../qtcore/qobject.html">QObject</a></span> <span class="operator">*</span>obj<span class="operator">,</span> <span class="type"><a href="../qtcore/qevent.html">QEvent</a></span> <span class="operator">*</span>ev) Q_DECL_OVERRIDE;
+      <span class="type">void</span> showCompletion(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstringlist.html">QStringList</a></span> <span class="operator">&amp;</span>choices);
+
+  <span class="keyword">public</span> <span class="keyword">slots</span>:
+
+      <span class="type">void</span> doneCompletion();
+      <span class="type">void</span> preventSuggest();
+      <span class="type">void</span> autoSuggest();
+      <span class="type">void</span> handleNetworkData(<span class="type"><a href="qnetworkreply.html">QNetworkReply</a></span> <span class="operator">*</span>networkReply);
+
+  <span class="keyword">private</span>:
+      <span class="type">QLineEdit</span> <span class="operator">*</span>editor;
+      <span class="type">QTreeWidget</span> <span class="operator">*</span>popup;
+      <span class="type"><a href="../qtcore/qtimer.html">QTimer</a></span> <span class="operator">*</span>timer;
+      <span class="type"><a href="qnetworkaccessmanager.html">QNetworkAccessManager</a></span> networkManager;
+  };
+
+</pre>
+<p>The class connects to a QLineEdit and uses a QTreeWidget to display the results. A <a href="../qtcore/qtimer.html">QTimer</a> controls the start of the network requests that are executed using a <a href="qnetworkaccessmanager.html">QNetworkAccessManager</a>.</p>
+<a name="gsuggestcompletion-class-implementation"></a>
+<h2 id="gsuggestcompletion-class-implementation">GSuggestCompletion Class Implementation</h2>
+<p>We start by defining a constant containing the URL to be used in the Google queries. This is the basis for the query. The letters typed into the search box will be added to the query to perform the search itself.</p>
+<pre class="cpp">
+
+  <span class="preprocessor">#include &quot;googlesuggest.h&quot;</span>
+
+  <span class="preprocessor">#define GSUGGEST_URL &quot;http://google.com/complete/search?output=toolbar&amp;q=%1&quot;</span>
+
+</pre>
+<p>In the constructor, we set the parent of this GSuggestCompletion instance to be the QLineEdit passed in. For simplicity, the QLineEdit is also stored in the explicit <code>editor</code> member variable.</p>
+<p>We then create a QTreeWidget as a toplevel widget and configure the various properties to give it the look of a popup widget. The widget is populated with the results by Google Suggest API request.</p>
+<p>Furthermore, we install the GSuggestCompletion instance as an event filter on the QTreeWidget, and connect the <code>itemClicked()</code> signal with the <code>doneCompletion()</code> slot.</p>
+<p>A single-shot <a href="../qtcore/qtimer.html">QTimer</a> is used to start the request when the user has stopped typing for 500 ms.</p>
+<p>Finally, we connect the networkManagers <code>finished()</code> signal with the <code>handleNetworkData()</code> slot to handle the incoming data.</p>
+<pre class="cpp">
+
+  GSuggestCompletion<span class="operator">::</span>GSuggestCompletion(<span class="type">QLineEdit</span> <span class="operator">*</span>parent): <span class="type"><a href="../qtcore/qobject.html">QObject</a></span>(parent)<span class="operator">,</span> editor(parent)
+  {
+      popup <span class="operator">=</span> <span class="keyword">new</span> <span class="type">QTreeWidget</span>;
+      popup<span class="operator">-</span><span class="operator">&gt;</span>setWindowFlags(<span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Popup);
+      popup<span class="operator">-</span><span class="operator">&gt;</span>setFocusPolicy(<span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>NoFocus);
+      popup<span class="operator">-</span><span class="operator">&gt;</span>setFocusProxy(parent);
+      popup<span class="operator">-</span><span class="operator">&gt;</span>setMouseTracking(<span class="keyword">true</span>);
+
+      popup<span class="operator">-</span><span class="operator">&gt;</span>setColumnCount(<span class="number">1</span>);
+      popup<span class="operator">-</span><span class="operator">&gt;</span>setUniformRowHeights(<span class="keyword">true</span>);
+      popup<span class="operator">-</span><span class="operator">&gt;</span>setRootIsDecorated(<span class="keyword">false</span>);
+      popup<span class="operator">-</span><span class="operator">&gt;</span>setEditTriggers(<span class="type">QTreeWidget</span><span class="operator">::</span>NoEditTriggers);
+      popup<span class="operator">-</span><span class="operator">&gt;</span>setSelectionBehavior(<span class="type">QTreeWidget</span><span class="operator">::</span>SelectRows);
+      popup<span class="operator">-</span><span class="operator">&gt;</span>setFrameStyle(<span class="type">QFrame</span><span class="operator">::</span>Box <span class="operator">|</span> <span class="type">QFrame</span><span class="operator">::</span>Plain);
+      popup<span class="operator">-</span><span class="operator">&gt;</span>setHorizontalScrollBarPolicy(<span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>ScrollBarAlwaysOff);
+      popup<span class="operator">-</span><span class="operator">&gt;</span>header()<span class="operator">-</span><span class="operator">&gt;</span>hide();
+
+      popup<span class="operator">-</span><span class="operator">&gt;</span>installEventFilter(<span class="keyword">this</span>);
+
+      connect(popup<span class="operator">,</span> SIGNAL(itemClicked(<span class="type">QTreeWidgetItem</span><span class="operator">*</span><span class="operator">,</span><span class="type">int</span>))<span class="operator">,</span>
+              SLOT(doneCompletion()));
+
+      timer <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtcore/qtimer.html">QTimer</a></span>(<span class="keyword">this</span>);
+      timer<span class="operator">-</span><span class="operator">&gt;</span>setSingleShot(<span class="keyword">true</span>);
+      timer<span class="operator">-</span><span class="operator">&gt;</span>setInterval(<span class="number">500</span>);
+      connect(timer<span class="operator">,</span> SIGNAL(timeout())<span class="operator">,</span> SLOT(autoSuggest()));
+      connect(editor<span class="operator">,</span> SIGNAL(textEdited(<span class="type"><a href="../qtcore/qstring.html">QString</a></span>))<span class="operator">,</span> timer<span class="operator">,</span> SLOT(start()));
+
+      connect(<span class="operator">&amp;</span>networkManager<span class="operator">,</span> SIGNAL(finished(<span class="type"><a href="qnetworkreply.html">QNetworkReply</a></span><span class="operator">*</span>))<span class="operator">,</span>
+              <span class="keyword">this</span><span class="operator">,</span> SLOT(handleNetworkData(<span class="type"><a href="qnetworkreply.html">QNetworkReply</a></span><span class="operator">*</span>)));
+
+  }
+
+</pre>
+<p>Since the QTreeWidget popup has been instantiated as a toplevel widget, the destructor has to delete it explicitly from memory to avoid a memory leak.</p>
+<pre class="cpp">
+
+  GSuggestCompletion<span class="operator">::</span><span class="operator">~</span>GSuggestCompletion()
+  {
+      <span class="keyword">delete</span> popup;
+  }
+
+</pre>
+<p>The event filter handles mouse press and key press events that are delivered to the popup. For mouse press events we just hide the popup and return focus to the editor widget, and then return true to prevent further event processing.</p>
+<p>Key event handling is implemented so that Enter and Return execute the selected link, while the Escape key hides the popup. Since we want to be able to navigate the list of suggestions using the different navigation keys on the keyboard we let Qt continue regular event processing for those by returning false from the eventFilter reimplementation.</p>
+<p>For all other keys, the event will be passed on to the editor widget and the popup is hidden. This way the user's typing will not be interrupted by the popping up of the completion list.</p>
+<pre class="cpp">
+
+  bool GSuggestCompletion<span class="operator">::</span>eventFilter(<span class="type"><a href="../qtcore/qobject.html">QObject</a></span> <span class="operator">*</span>obj<span class="operator">,</span> <span class="type"><a href="../qtcore/qevent.html">QEvent</a></span> <span class="operator">*</span>ev)
+  {
+      <span class="keyword">if</span> (obj <span class="operator">!</span><span class="operator">=</span> popup)
+          <span class="keyword">return</span> <span class="keyword">false</span>;
+
+      <span class="keyword">if</span> (ev<span class="operator">-</span><span class="operator">&gt;</span>type() <span class="operator">=</span><span class="operator">=</span> <span class="type"><a href="../qtcore/qevent.html">QEvent</a></span><span class="operator">::</span>MouseButtonPress) {
+          popup<span class="operator">-</span><span class="operator">&gt;</span>hide();
+          editor<span class="operator">-</span><span class="operator">&gt;</span>setFocus();
+          <span class="keyword">return</span> <span class="keyword">true</span>;
+      }
+
+      <span class="keyword">if</span> (ev<span class="operator">-</span><span class="operator">&gt;</span>type() <span class="operator">=</span><span class="operator">=</span> <span class="type"><a href="../qtcore/qevent.html">QEvent</a></span><span class="operator">::</span>KeyPress) {
+
+          bool consumed <span class="operator">=</span> <span class="keyword">false</span>;
+          <span class="type">int</span> key <span class="operator">=</span> <span class="keyword">static_cast</span><span class="operator">&lt;</span><span class="type"><a href="../qtgui/qkeyevent.html">QKeyEvent</a></span><span class="operator">*</span><span class="operator">&gt;</span>(ev)<span class="operator">-</span><span class="operator">&gt;</span>key();
+          <span class="keyword">switch</span> (key) {
+          <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Key_Enter:
+          <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Key_Return:
+              doneCompletion();
+              consumed <span class="operator">=</span> <span class="keyword">true</span>;
+
+          <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Key_Escape:
+              editor<span class="operator">-</span><span class="operator">&gt;</span>setFocus();
+              popup<span class="operator">-</span><span class="operator">&gt;</span>hide();
+              consumed <span class="operator">=</span> <span class="keyword">true</span>;
+
+          <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Key_Up:
+          <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Key_Down:
+          <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Key_Home:
+          <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Key_End:
+          <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Key_PageUp:
+          <span class="keyword">case</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>Key_PageDown:
+              <span class="keyword">break</span>;
+
+          <span class="keyword">default</span>:
+              editor<span class="operator">-</span><span class="operator">&gt;</span>setFocus();
+              editor<span class="operator">-</span><span class="operator">&gt;</span>event(ev);
+              popup<span class="operator">-</span><span class="operator">&gt;</span>hide();
+              <span class="keyword">break</span>;
+          }
+
+          <span class="keyword">return</span> consumed;
+      }
+
+      <span class="keyword">return</span> <span class="keyword">false</span>;
+  }
+
+</pre>
+<p>The <code>showCompletion()</code> function populates the QTreeWidget with the results returned from the query. It takes a <a href="../qtcore/qstringlist.html">QStringList</a> of the suggested search terms.</p>
+<pre class="cpp">
+
+  <span class="type">void</span> GSuggestCompletion<span class="operator">::</span>showCompletion(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstringlist.html">QStringList</a></span> <span class="operator">&amp;</span>choices)
+  {
+
+      <span class="keyword">if</span> (choices<span class="operator">.</span>isEmpty())
+          <span class="keyword">return</span>;
+
+      <span class="keyword">const</span> <span class="type"><a href="../qtgui/qpalette.html">QPalette</a></span> <span class="operator">&amp;</span>pal <span class="operator">=</span> editor<span class="operator">-</span><span class="operator">&gt;</span>palette();
+      <span class="type"><a href="../qtgui/qcolor.html">QColor</a></span> color <span class="operator">=</span> pal<span class="operator">.</span>color(<span class="type"><a href="../qtgui/qpalette.html">QPalette</a></span><span class="operator">::</span>Disabled<span class="operator">,</span> <span class="type"><a href="../qtgui/qpalette.html">QPalette</a></span><span class="operator">::</span>WindowText);
+
+      popup<span class="operator">-</span><span class="operator">&gt;</span>setUpdatesEnabled(<span class="keyword">false</span>);
+      popup<span class="operator">-</span><span class="operator">&gt;</span>clear();
+      <span class="keyword">for</span> (<span class="type">int</span> i <span class="operator">=</span> <span class="number">0</span>; i <span class="operator">&lt;</span> choices<span class="operator">.</span>count(); <span class="operator">+</span><span class="operator">+</span>i) {
+          <span class="type">QTreeWidgetItem</span> <span class="operator">*</span> item;
+          item <span class="operator">=</span> <span class="keyword">new</span> <span class="type">QTreeWidgetItem</span>(popup);
+          item<span class="operator">-</span><span class="operator">&gt;</span>setText(<span class="number">0</span><span class="operator">,</span> choices<span class="operator">[</span>i<span class="operator">]</span>);
+          item<span class="operator">-</span><span class="operator">&gt;</span>setTextColor(<span class="number">0</span><span class="operator">,</span> color);
+      }
+      popup<span class="operator">-</span><span class="operator">&gt;</span>setCurrentItem(popup<span class="operator">-</span><span class="operator">&gt;</span>topLevelItem(<span class="number">0</span>));
+      popup<span class="operator">-</span><span class="operator">&gt;</span>resizeColumnToContents(<span class="number">0</span>);
+      popup<span class="operator">-</span><span class="operator">&gt;</span>setUpdatesEnabled(<span class="keyword">true</span>);
+
+      popup<span class="operator">-</span><span class="operator">&gt;</span>move(editor<span class="operator">-</span><span class="operator">&gt;</span>mapToGlobal(<span class="type"><a href="../qtcore/qpoint.html">QPoint</a></span>(<span class="number">0</span><span class="operator">,</span> editor<span class="operator">-</span><span class="operator">&gt;</span>height())));
+      popup<span class="operator">-</span><span class="operator">&gt;</span>setFocus();
+      popup<span class="operator">-</span><span class="operator">&gt;</span>show();
+  }
+
+</pre>
+<p>A QTreeWidgetItem is created for each index in the list and inserted into the QTreeWidget. Finally, we adjust position and size of the popup to make sure that it pops up in the correct position below the editor, and show it.</p>
+<p>The <code>doneCompletion()</code> function, which is called by the event filter when either Enter or Return keys are pressed, stops the timer to prevent further requests and passes the text of the selected item to the editor. We then make the <code>editor</code> QLineEdit emit the returnPressed() signal, to which the application can connect to open the respective web page.</p>
+<pre class="cpp">
+
+  <span class="type">void</span> GSuggestCompletion<span class="operator">::</span>doneCompletion()
+  {
+      timer<span class="operator">-</span><span class="operator">&gt;</span>stop();
+      popup<span class="operator">-</span><span class="operator">&gt;</span>hide();
+      editor<span class="operator">-</span><span class="operator">&gt;</span>setFocus();
+      <span class="type">QTreeWidgetItem</span> <span class="operator">*</span>item <span class="operator">=</span> popup<span class="operator">-</span><span class="operator">&gt;</span>currentItem();
+      <span class="keyword">if</span> (item) {
+          editor<span class="operator">-</span><span class="operator">&gt;</span>setText(item<span class="operator">-</span><span class="operator">&gt;</span>text(<span class="number">0</span>));
+          <span class="type"><a href="../qtcore/qmetaobject.html">QMetaObject</a></span><span class="operator">::</span>invokeMethod(editor<span class="operator">,</span> <span class="string">&quot;returnPressed&quot;</span>);
+      }
+  }
+
+</pre>
+<p>The <code>autoSuggest()</code> slot is called when the timer times out, and uses the text in the editor to build the complete search query. The query is then passed to the <a href="qnetworkaccessmanager.html">QNetworkAccessManager</a>'s <code>get()</code> function to start the request.</p>
+<pre class="cpp">
+
+  <span class="type">void</span> GSuggestCompletion<span class="operator">::</span>autoSuggest()
+  {
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> str <span class="operator">=</span> editor<span class="operator">-</span><span class="operator">&gt;</span>text();
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> url <span class="operator">=</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span>(GSUGGEST_URL)<span class="operator">.</span>arg(str);
+      networkManager<span class="operator">.</span>get(<span class="type"><a href="qnetworkrequest.html">QNetworkRequest</a></span>(<span class="type"><a href="../qtcore/qstring.html">QString</a></span>(url)));
+  }
+
+</pre>
+<p>The function <code>preventSuggest()</code> stops the timer to prevent further requests from being started.</p>
+<pre class="cpp">
+
+  <span class="type">void</span> GSuggestCompletion<span class="operator">::</span>preventSuggest()
+  {
+      timer<span class="operator">-</span><span class="operator">&gt;</span>stop();
+  }
+
+</pre>
+<p>When the network request is finished, the <a href="qnetworkaccessmanager.html">QNetworkAccessManager</a> delivers the data received from the server through the networkReply object.</p>
+<pre class="cpp">
+
+  <span class="type">void</span> GSuggestCompletion<span class="operator">::</span>handleNetworkData(<span class="type"><a href="qnetworkreply.html">QNetworkReply</a></span> <span class="operator">*</span>networkReply)
+  {
+      <span class="type"><a href="../qtcore/qurl.html">QUrl</a></span> url <span class="operator">=</span> networkReply<span class="operator">-</span><span class="operator">&gt;</span>url();
+      <span class="keyword">if</span> (<span class="operator">!</span>networkReply<span class="operator">-</span><span class="operator">&gt;</span>error()) {
+          <span class="type"><a href="../qtcore/qstringlist.html">QStringList</a></span> choices;
+
+          <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> response(networkReply<span class="operator">-</span><span class="operator">&gt;</span>readAll());
+          <span class="type"><a href="../qtcore/qxmlstreamreader.html">QXmlStreamReader</a></span> xml(response);
+          <span class="keyword">while</span> (<span class="operator">!</span>xml<span class="operator">.</span>atEnd()) {
+              xml<span class="operator">.</span>readNext();
+              <span class="keyword">if</span> (xml<span class="operator">.</span>tokenType() <span class="operator">=</span><span class="operator">=</span> <span class="type"><a href="../qtcore/qxmlstreamreader.html">QXmlStreamReader</a></span><span class="operator">::</span>StartElement)
+                  <span class="keyword">if</span> (xml<span class="operator">.</span>name() <span class="operator">=</span><span class="operator">=</span> <span class="string">&quot;suggestion&quot;</span>) {
+                      <span class="type"><a href="../qtcore/qstringref.html">QStringRef</a></span> str <span class="operator">=</span> xml<span class="operator">.</span>attributes()<span class="operator">.</span>value(<span class="string">&quot;data&quot;</span>);
+                      choices <span class="operator">&lt;</span><span class="operator">&lt;</span> str<span class="operator">.</span>toString();
+                  }
+          }
+
+          showCompletion(choices);
+      }
+
+      networkReply<span class="operator">-</span><span class="operator">&gt;</span>deleteLater();
+  }
+
+</pre>
+<p>To extract the data from the reply we use the <code>readAll()</code> function, which is inherited from <a href="../qtcore/qiodevice.html">QIODevice</a> and returns a <a href="../qtcore/qbytearray.html">QByteArray</a>. Since this data is encoded in XML we can use a <a href="../qtcore/qxmlstreamreader.html">QXmlStreamReader</a> to traverse the data and extract the search result as QStrings, which we can stream into two QStringLists used to populate the popup.</p>
+<p>Finally, we schedule the <a href="qnetworkreply.html">QNetworkReply</a> object for deletion using the <code>deleteLater</code> function.</p>
+<a name="searchbox-class-declaration"></a>
+<h2 id="searchbox-class-declaration">SearchBox Class Declaration</h2>
+<p>The SearchBox class inherits QLineEdit and adds the protected slot <code>doSearch()</code>.</p>
+<p>A <code>GSuggestCompletion</code> member provides the SearchBox with the request functionality and the suggestions returned from the Google search engine.</p>
+<pre class="cpp">
+
+  <span class="preprocessor">#include &lt;QLineEdit&gt;</span>
+
+  <span class="keyword">class</span> GSuggestCompletion;
+
+  <span class="keyword">class</span> SearchBox: <span class="keyword">public</span> <span class="type">QLineEdit</span>
+  {
+      Q_OBJECT
+
+  <span class="keyword">public</span>:
+      SearchBox(<span class="type">QWidget</span> <span class="operator">*</span>parent <span class="operator">=</span> <span class="number">0</span>);
+
+  <span class="keyword">protected</span> <span class="keyword">slots</span>:
+      <span class="type">void</span> doSearch();
+
+  <span class="keyword">private</span>:
+      GSuggestCompletion <span class="operator">*</span>completer;
+
+</pre>
+<a name="searchbox-class-implementation"></a>
+<h2 id="searchbox-class-implementation">SearchBox Class Implementation</h2>
+<p>The search box constructor instantiates the GSuggestCompletion object and connects the returnPressed() signal to the doSearch() slot.</p>
+<pre class="cpp">
+
+  SearchBox<span class="operator">::</span>SearchBox(<span class="type">QWidget</span> <span class="operator">*</span>parent): <span class="type">QLineEdit</span>(parent)
+  {
+      completer <span class="operator">=</span> <span class="keyword">new</span> GSuggestCompletion(<span class="keyword">this</span>);
+
+      connect(<span class="keyword">this</span><span class="operator">,</span> SIGNAL(returnPressed())<span class="operator">,</span><span class="keyword">this</span><span class="operator">,</span> SLOT(doSearch()));
+
+      setWindowTitle(<span class="string">&quot;Search with Google&quot;</span>);
+
+      adjustSize();
+      resize(<span class="number">400</span><span class="operator">,</span> height());
+      setFocus();
+  }
+
+</pre>
+<p>The function <code>doSearch()</code> stops the completer from sending any further queries to the search engine.</p>
+<p>Further, the function extracts the selected search phrase and opens it in the default web browser using <a href="../qtgui/qdesktopservices.html">QDesktopServices</a>.</p>
+<pre class="cpp">
+
+  <span class="type">void</span> SearchBox<span class="operator">::</span>doSearch()
+  {
+      completer<span class="operator">-</span><span class="operator">&gt;</span>preventSuggest();
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> url <span class="operator">=</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span>(GSEARCH_URL)<span class="operator">.</span>arg(text());
+      <span class="type"><a href="../qtgui/qdesktopservices.html">QDesktopServices</a></span><span class="operator">::</span>openUrl(<span class="type"><a href="../qtcore/qurl.html">QUrl</a></span>(url));
+  }
+
+</pre>
+<p>Files:</p>
+<ul>
+<li><a href="qtnetwork-googlesuggest-googlesuggest-cpp.html">googlesuggest/googlesuggest.cpp</a></li>
+<li><a href="qtnetwork-googlesuggest-googlesuggest-h.html">googlesuggest/googlesuggest.h</a></li>
+<li><a href="qtnetwork-googlesuggest-searchbox-cpp.html">googlesuggest/searchbox.cpp</a></li>
+<li><a href="qtnetwork-googlesuggest-searchbox-h.html">googlesuggest/searchbox.h</a></li>
+<li><a href="qtnetwork-googlesuggest-main-cpp.html">googlesuggest/main.cpp</a></li>
+<li><a href="qtnetwork-googlesuggest-googlesuggest-pro.html">googlesuggest/googlesuggest.pro</a></li>
+</ul>
+</div>
+<!-- @@@googlesuggest -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

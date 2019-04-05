@@ -1,0 +1,23 @@
+
+<html>
+<center>
+    <form method="post" action="/">
+        {% csrf_token %}
+        <table>
+        <tr><td>n: </td><td><input type="number" name="n" value=""></td></tr>
+        <tr><td>m: </td><td><input type="number" name="m" value=""></td></tr>
+        <tr><td><input type="submit" value="calc" name="calc"></td></tr>
+        </table>
+    </form>
+    <table>
+        <tr><td>d0 = 0</td></tr>
+        <tr><td>gx = 0</td></tr>
+        <tr><td>gy = 0</td></tr>
+        <tr><td>Total Length: 0</td></tr>
+        <tr><td>CPU Time: 0.000000</td></tr>
+        <tr><td>Output Result: <a href="path.txt">Routing Result</a></td></tr>
+        <tr><td>Output Image: <img src="image.png"></td></tr>
+    </table>
+    
+</center>
+</html>

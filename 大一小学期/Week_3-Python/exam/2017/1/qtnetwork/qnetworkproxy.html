@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qnetworkproxy.cpp -->
+  <title>QNetworkProxy Class | Qt Network 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtnetwork-index.html">Qt Network</a></td><td ><a href="qtnetwork-module.html">C++ Classes</a></td><td >QNetworkProxy</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-types">Public Types</a></li>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#static-public-members">Static Public Members</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+<li class="level2"><a href="#socks5">SOCKS5</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">QNetworkProxy Class</h1>
+<!-- $$$QNetworkProxy-brief -->
+<p>The <a href="qnetworkproxy.html">QNetworkProxy</a> class provides a network layer proxy. <a href="#details">More...</a></p>
+<!-- @@@QNetworkProxy -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign">   <span class="preprocessor">#include &lt;QNetworkProxy&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> qmake:</td><td class="memItemRight bottomAlign"> QT += network</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Since:</td><td class="memItemRight bottomAlign">  Qt 4.1</td></tr></table></div><ul>
+<li><a href="qnetworkproxy-members.html">List of all members, including inherited members</a></li>
+</ul>
+<p><b>Note:</b> All functions in this class are <a href="../qtdoc/threads-reentrancy.html">reentrant</a>.</p>
+<a name="public-types"></a>
+<h2 id="public-types">Public Types</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> flags </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxy.html#Capability-enum">Capabilities</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxy.html#Capability-enum">Capability</a></b> { TunnelingCapability, ListeningCapability, UdpTunnelingCapability, CachingCapability, HostNameLookupCapability }</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxy.html#ProxyType-enum">ProxyType</a></b> { NoProxy, DefaultProxy, Socks5Proxy, HttpProxy, HttpCachingProxy, FtpCachingProxy }</td></tr>
+</table></div>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxy.html#QNetworkProxy">QNetworkProxy</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxy.html#QNetworkProxy-1">QNetworkProxy</a></b>(ProxyType <i>type</i>, const QString &amp;<i>hostName</i> = QString(), quint16 <i>port</i> = 0, const QString &amp;<i>user</i> = QString(), const QString &amp;<i>password</i> = QString())</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxy.html#QNetworkProxy-2">QNetworkProxy</a></b>(const QNetworkProxy &amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxy.html#dtor.QNetworkProxy">~QNetworkProxy</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> Capabilities </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxy.html#capabilities">capabilities</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxy.html#hasRawHeader">hasRawHeader</a></b>(const QByteArray &amp;<i>headerName</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariant </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxy.html#header">header</a></b>(QNetworkRequest::KnownHeaders <i>header</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxy.html#hostName">hostName</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxy.html#isCachingProxy">isCachingProxy</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxy.html#isTransparentProxy">isTransparentProxy</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxy.html#password">password</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> quint16 </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxy.html#port">port</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QByteArray </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxy.html#rawHeader">rawHeader</a></b>(const QByteArray &amp;<i>headerName</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QList&lt;QByteArray&gt; </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxy.html#rawHeaderList">rawHeaderList</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxy.html#setCapabilities">setCapabilities</a></b>(Capabilities <i>capabilities</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxy.html#setHeader">setHeader</a></b>(QNetworkRequest::KnownHeaders <i>header</i>, const QVariant &amp;<i>value</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxy.html#setHostName">setHostName</a></b>(const QString &amp;<i>hostName</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxy.html#setPassword">setPassword</a></b>(const QString &amp;<i>password</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxy.html#setPort">setPort</a></b>(quint16 <i>port</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxy.html#setRawHeader">setRawHeader</a></b>(const QByteArray &amp;<i>headerName</i>, const QByteArray &amp;<i>headerValue</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxy.html#setType">setType</a></b>(QNetworkProxy::ProxyType <i>type</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxy.html#setUser">setUser</a></b>(const QString &amp;<i>user</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxy.html#swap">swap</a></b>(QNetworkProxy &amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QNetworkProxy::ProxyType </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxy.html#type">type</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxy.html#user">user</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxy.html#operator-not-eq">operator!=</a></b>(const QNetworkProxy &amp;<i>other</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QNetworkProxy &amp;</td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxy.html#operator-eq">operator=</a></b>(QNetworkProxy &amp;&amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QNetworkProxy &amp;</td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxy.html#operator-eq-1">operator=</a></b>(const QNetworkProxy &amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxy.html#operator-eq-eq">operator==</a></b>(const QNetworkProxy &amp;<i>other</i>) const</td></tr>
+</table></div>
+<a name="static-public-members"></a>
+<h2 id="static-public-members">Static Public Members</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> QNetworkProxy </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxy.html#applicationProxy">applicationProxy</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxy.html#setApplicationProxy">setApplicationProxy</a></b>(const QNetworkProxy &amp;<i>networkProxy</i>)</td></tr>
+</table></div>
+<a name="details"></a>
+<!-- $$$QNetworkProxy-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="qnetworkproxy.html">QNetworkProxy</a> class provides a network layer proxy.</p>
+<p><a href="qnetworkproxy.html">QNetworkProxy</a> provides the method for configuring network layer proxy support to the Qt network classes. The currently supported classes are <a href="qabstractsocket.html">QAbstractSocket</a>, <a href="qtcpsocket.html">QTcpSocket</a>, <a href="qudpsocket.html">QUdpSocket</a>, <a href="qtcpserver.html">QTcpServer</a> and <a href="qnetworkaccessmanager.html">QNetworkAccessManager</a>. The proxy support is designed to be as transparent as possible. This means that existing network-enabled applications that you have written should automatically support network proxy using the following code.</p>
+<pre class="cpp">
+
+  <span class="type"><a href="qnetworkproxy.html#QNetworkProxy">QNetworkProxy</a></span> proxy;
+  proxy<span class="operator">.</span>setType(<span class="type"><a href="qnetworkproxy.html#QNetworkProxy">QNetworkProxy</a></span><span class="operator">::</span>Socks5Proxy);
+  proxy<span class="operator">.</span>setHostName(<span class="string">&quot;proxy.example.com&quot;</span>);
+  proxy<span class="operator">.</span>setPort(<span class="number">1080</span>);
+  proxy<span class="operator">.</span>setUser(<span class="string">&quot;username&quot;</span>);
+  proxy<span class="operator">.</span>setPassword(<span class="string">&quot;password&quot;</span>);
+  <span class="type"><a href="qnetworkproxy.html#QNetworkProxy">QNetworkProxy</a></span><span class="operator">::</span>setApplicationProxy(proxy);
+
+</pre>
+<p>An alternative to setting an application wide proxy is to specify the proxy for individual sockets using <a href="qabstractsocket.html#setProxy">QAbstractSocket::setProxy</a>() and <a href="qtcpserver.html#setProxy">QTcpServer::setProxy</a>(). In this way, it is possible to disable the use of a proxy for specific sockets using the following code:</p>
+<pre class="cpp">
+
+  serverSocket<span class="operator">-</span><span class="operator">&gt;</span>setProxy(<span class="type"><a href="qnetworkproxy.html#QNetworkProxy">QNetworkProxy</a></span><span class="operator">::</span>NoProxy);
+
+</pre>
+<p>Network proxy is not used if the address used in <a href="qabstractsocket.html#connectToHost">connectToHost()</a>, <a href="qabstractsocket.html#bind">bind()</a> or <a href="qtcpserver.html#listen">listen()</a> is equivalent to <a href="qhostaddress.html#SpecialAddress-enum">QHostAddress::LocalHost</a> or <a href="qhostaddress.html#SpecialAddress-enum">QHostAddress::LocalHostIPv6</a>.</p>
+<p>Each type of proxy support has certain restrictions associated with it. You should read the <a href="qnetworkproxy.html#ProxyType-enum">ProxyType</a> documentation carefully before selecting a proxy type to use.</p>
+<p><b>Note: </b>Changes made to currently connected sockets do not take effect. If you need to change a connected socket, you should reconnect it.</p><a name="socks5"></a>
+<h3 >SOCKS5</h3>
+<p>The SOCKS5 support in Qt 4 is based on <a href="http://www.rfc-editor.org/rfc/rfc1928.txt">RFC 1928</a> and <a href="http://www.rfc-editor.org/rfc/rfc1929.txt">RFC 1929</a>. The supported authentication methods are no authentication and username/password authentication. Both IPv4 and IPv6 are supported. Domain names are resolved through the SOCKS5 server if the <a href="qnetworkproxy.html#Capability-enum">QNetworkProxy::HostNameLookupCapability</a> is enabled, otherwise they are resolved locally and the IP address is sent to the server. There are several things to remember when using SOCKS5 with <a href="qudpsocket.html">QUdpSocket</a> and <a href="qtcpserver.html">QTcpServer</a>:</p>
+<p>With <a href="qudpsocket.html">QUdpSocket</a>, a call to <a href="qabstractsocket.html#bind">bind()</a> may fail with a timeout error. If a port number other than 0 is passed to <a href="qabstractsocket.html#bind">bind()</a>, it is not guaranteed that it is the specified port that will be used. Use <a href="qabstractsocket.html#localPort">localPort()</a> and <a href="qabstractsocket.html#localAddress">localAddress()</a> to get the actual address and port number in use. Because proxied UDP goes through two UDP connections, it is more likely that packets will be dropped.</p>
+<p>With <a href="qtcpserver.html">QTcpServer</a> a call to <a href="qtcpserver.html#listen">listen()</a> may fail with a timeout error. If a port number other than 0 is passed to <a href="qtcpserver.html#listen">listen()</a>, then it is not guaranteed that it is the specified port that will be used. Use <a href="qtcpserver.html#serverPort">serverPort()</a> and <a href="qtcpserver.html#serverAddress">serverAddress()</a> to get the actual address and port used to listen for connections. SOCKS5 only supports one accepted connection per call to <a href="qtcpserver.html#listen">listen()</a>, and each call is likely to result in a different <a href="qtcpserver.html#serverPort">serverPort()</a> being used.</p>
+</div>
+<p><b>See also </b><a href="qabstractsocket.html">QAbstractSocket</a> and <a href="qtcpserver.html">QTcpServer</a>.</p>
+<!-- @@@QNetworkProxy -->
+<div class="types">
+<h2>Member Type Documentation</h2>
+<!-- $$$Capability$$$TunnelingCapability$$$ListeningCapability$$$UdpTunnelingCapability$$$CachingCapability$$$HostNameLookupCapability -->
+<h3 class="flags" id="Capability-enum"><a name="Capability-enum"></a>enum QNetworkProxy::<span class="name">Capability</span><br/>flags QNetworkProxy::<span class="name">Capabilities</span></h3>
+<p>These flags indicate the capabilities that a given proxy server supports.</p>
+<p><a href="qnetworkproxy.html">QNetworkProxy</a> sets different capabilities by default when the object is created (see <a href="qnetworkproxy.html#ProxyType-enum">QNetworkProxy::ProxyType</a> for a list of the defaults). However, it is possible to change the capabitilies after the object has been created with <a href="qnetworkproxy.html#setCapabilities">setCapabilities</a>().</p>
+<p>The capabilities that <a href="qnetworkproxy.html">QNetworkProxy</a> supports are:</p>
+<div class="table"><table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td class="topAlign"><code>QNetworkProxy::TunnelingCapability</code></td><td class="topAlign tblval"><code>0x0001</code></td><td class="topAlign">Ability to open transparent, tunneled TCP connections to a remote host. The proxy server relays the transmission verbatim from one side to the other and does no caching.</td></tr>
+<tr><td class="topAlign"><code>QNetworkProxy::ListeningCapability</code></td><td class="topAlign tblval"><code>0x0002</code></td><td class="topAlign">Ability to create a listening socket and wait for an incoming TCP connection from a remote host.</td></tr>
+<tr><td class="topAlign"><code>QNetworkProxy::UdpTunnelingCapability</code></td><td class="topAlign tblval"><code>0x0004</code></td><td class="topAlign">Ability to relay UDP datagrams via the proxy server to and from a remote host.</td></tr>
+<tr><td class="topAlign"><code>QNetworkProxy::CachingCapability</code></td><td class="topAlign tblval"><code>0x0008</code></td><td class="topAlign">Ability to cache the contents of the transfer. This capability is specific to each protocol and proxy type. For example, HTTP proxies can cache the contents of web data transferred with &quot;GET&quot; commands.</td></tr>
+<tr><td class="topAlign"><code>QNetworkProxy::HostNameLookupCapability</code></td><td class="topAlign tblval"><code>0x0010</code></td><td class="topAlign">Ability to connect to perform the lookup on a remote host name and connect to it, as opposed to requiring the application to perform the name lookup and request connection to IP addresses only.</td></tr>
+</table></div>
+<p>This enum was introduced or modified in  Qt 4.5.</p>
+<p>The Capabilities type is a typedef for <a href="../qtcore/qflags.html">QFlags</a>&lt;Capability&gt;. It stores an OR combination of Capability values.</p>
+<!-- @@@Capability -->
+<!-- $$$ProxyType$$$DefaultProxy$$$Socks5Proxy$$$NoProxy$$$HttpProxy$$$HttpCachingProxy$$$FtpCachingProxy -->
+<h3 class="fn" id="ProxyType-enum"><a name="ProxyType-enum"></a>enum QNetworkProxy::<span class="name">ProxyType</span></h3>
+<p>This enum describes the types of network proxying provided in Qt.</p>
+<p>There are two types of proxies that Qt understands: transparent proxies and caching proxies. The first group consists of proxies that can handle any arbitrary data transfer, while the second can only handle specific requests. The caching proxies only make sense for the specific classes where they can be used.</p>
+<div class="table"><table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td class="topAlign"><code>QNetworkProxy::NoProxy</code></td><td class="topAlign tblval"><code>2</code></td><td class="topAlign">No proxying is used</td></tr>
+<tr><td class="topAlign"><code>QNetworkProxy::DefaultProxy</code></td><td class="topAlign tblval"><code>0</code></td><td class="topAlign">Proxy is determined based on the application proxy set using <a href="qnetworkproxy.html#setApplicationProxy">setApplicationProxy</a>()</td></tr>
+<tr><td class="topAlign"><code>QNetworkProxy::Socks5Proxy</code></td><td class="topAlign tblval"><code>1</code></td><td class="topAlign"><a href="qnetworkproxy.html#socks5">Socks5</a> proxying is used</td></tr>
+<tr><td class="topAlign"><code>QNetworkProxy::HttpProxy</code></td><td class="topAlign tblval"><code>3</code></td><td class="topAlign">HTTP transparent proxying is used</td></tr>
+<tr><td class="topAlign"><code>QNetworkProxy::HttpCachingProxy</code></td><td class="topAlign tblval"><code>4</code></td><td class="topAlign">Proxying for HTTP requests only</td></tr>
+<tr><td class="topAlign"><code>QNetworkProxy::FtpCachingProxy</code></td><td class="topAlign tblval"><code>5</code></td><td class="topAlign">Proxying for FTP requests only</td></tr>
+</table></div>
+<p>The table below lists different proxy types and their capabilities. Since each proxy type has different capabilities, it is important to understand them before choosing a proxy type.</p>
+<div class="table"><table class="generic">
+ <thead><tr class="qt-style"><th >Proxy type</th><th >Description</th><th >Default capabilities</th></tr></thead>
+<tr valign="top" class="odd"><td >SOCKS 5</td><td >Generic proxy for any kind of connection. Supports TCP, UDP, binding to a port (incoming connections) and authentication.</td><td ><a href="qnetworkproxy.html#Capability-enum">TunnelingCapability</a>, <a href="qnetworkproxy.html#Capability-enum">ListeningCapability</a>, <a href="qnetworkproxy.html#Capability-enum">UdpTunnelingCapability</a>, <a href="qnetworkproxy.html#Capability-enum">HostNameLookupCapability</a></td></tr>
+<tr valign="top" class="even"><td >HTTP</td><td >Implemented using the &quot;CONNECT&quot; command, supports only outgoing TCP connections; supports authentication.</td><td ><a href="qnetworkproxy.html#Capability-enum">TunnelingCapability</a>, <a href="qnetworkproxy.html#Capability-enum">CachingCapability</a>, <a href="qnetworkproxy.html#Capability-enum">HostNameLookupCapability</a></td></tr>
+<tr valign="top" class="odd"><td >Caching-only HTTP</td><td >Implemented using normal HTTP commands, it is useful only in the context of HTTP requests (see <a href="qnetworkaccessmanager.html">QNetworkAccessManager</a>)</td><td ><a href="qnetworkproxy.html#Capability-enum">CachingCapability</a>, <a href="qnetworkproxy.html#Capability-enum">HostNameLookupCapability</a></td></tr>
+<tr valign="top" class="even"><td >Caching FTP</td><td >Implemented using an FTP proxy, it is useful only in the context of FTP requests (see <a href="qnetworkaccessmanager.html">QNetworkAccessManager</a>)</td><td ><a href="qnetworkproxy.html#Capability-enum">CachingCapability</a>, <a href="qnetworkproxy.html#Capability-enum">HostNameLookupCapability</a></td></tr>
+</table></div>
+<p>Also note that you shouldn't set the application default proxy (<a href="qnetworkproxy.html#setApplicationProxy">setApplicationProxy</a>()) to a proxy that doesn't have the <a href="qnetworkproxy.html#Capability-enum">TunnelingCapability</a> capability. If you do, <a href="qtcpsocket.html">QTcpSocket</a> will not know how to open connections.</p>
+<p><b>See also </b><a href="qnetworkproxy.html#setType">setType</a>(), <a href="qnetworkproxy.html#type">type</a>(), <a href="qnetworkproxy.html#capabilities">capabilities</a>(), and <a href="qnetworkproxy.html#setCapabilities">setCapabilities</a>().</p>
+<!-- @@@ProxyType -->
+</div>
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$QNetworkProxy[overload1]$$$QNetworkProxy -->
+<h3 class="fn" id="QNetworkProxy"><a name="QNetworkProxy"></a>QNetworkProxy::<span class="name">QNetworkProxy</span>()</h3>
+<p>Constructs a <a href="qnetworkproxy.html">QNetworkProxy</a> with <a href="qnetworkproxy.html#ProxyType-enum">DefaultProxy</a> type; the proxy type is determined by <a href="qnetworkproxy.html#applicationProxy">applicationProxy</a>(), which defaults to <a href="qnetworkproxy.html#ProxyType-enum">NoProxy</a>.</p>
+<p><b>See also </b><a href="qnetworkproxy.html#setType">setType</a>() and <a href="qnetworkproxy.html#setApplicationProxy">setApplicationProxy</a>().</p>
+<!-- @@@QNetworkProxy -->
+<!-- $$$QNetworkProxy$$$QNetworkProxyProxyTypeconstQString&quint16constQString&constQString& -->
+<h3 class="fn" id="QNetworkProxy-1"><a name="QNetworkProxy-1"></a>QNetworkProxy::<span class="name">QNetworkProxy</span>(<span class="type"><a href="qnetworkproxy.html#ProxyType-enum">ProxyType</a></span> <i>type</i>, const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>hostName</i> = QString(), <span class="type"><a href="../qtcore/qtglobal.html#quint16-typedef">quint16</a></span> <i>port</i> = 0, const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>user</i> = QString(), const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>password</i> = QString())</h3>
+<p>Constructs a <a href="qnetworkproxy.html">QNetworkProxy</a> with <i>type</i>, <i>hostName</i>, <i>port</i>, <i>user</i> and <i>password</i>.</p>
+<p>The default capabilities for proxy type <i>type</i> are set automatically.</p>
+<p><b>See also </b><a href="qnetworkproxy.html#capabilities">capabilities</a>().</p>
+<!-- @@@QNetworkProxy -->
+<!-- $$$QNetworkProxy$$$QNetworkProxyconstQNetworkProxy& -->
+<h3 class="fn" id="QNetworkProxy-2"><a name="QNetworkProxy-2"></a>QNetworkProxy::<span class="name">QNetworkProxy</span>(const <span class="type"><a href="qnetworkproxy.html#QNetworkProxy">QNetworkProxy</a></span> &amp;<i>other</i>)</h3>
+<p>Constructs a copy of <i>other</i>.</p>
+<!-- @@@QNetworkProxy -->
+<!-- $$$~QNetworkProxy[overload1]$$$~QNetworkProxy -->
+<h3 class="fn" id="dtor.QNetworkProxy"><a name="dtor.QNetworkProxy"></a>QNetworkProxy::<span class="name">~QNetworkProxy</span>()</h3>
+<p>Destroys the <a href="qnetworkproxy.html">QNetworkProxy</a> object.</p>
+<!-- @@@~QNetworkProxy -->
+<!-- $$$applicationProxy[overload1]$$$applicationProxy -->
+<h3 class="fn" id="applicationProxy"><a name="applicationProxy"></a><code>[static] </code><span class="type"><a href="qnetworkproxy.html#QNetworkProxy">QNetworkProxy</a></span> QNetworkProxy::<span class="name">applicationProxy</span>()</h3>
+<p>Returns the application level network proxying.</p>
+<p>If a <a href="qabstractsocket.html">QAbstractSocket</a> or <a href="qtcpsocket.html">QTcpSocket</a> has the <a href="qnetworkproxy.html#ProxyType-enum">QNetworkProxy::DefaultProxy</a> type, then the <a href="qnetworkproxy.html">QNetworkProxy</a> returned by this function is used.</p>
+<p><b>See also </b><a href="qnetworkproxyfactory.html">QNetworkProxyFactory</a>, <a href="qnetworkproxy.html#setApplicationProxy">setApplicationProxy</a>(), <a href="qabstractsocket.html#proxy">QAbstractSocket::proxy</a>(), and <a href="qtcpserver.html#proxy">QTcpServer::proxy</a>().</p>
+<!-- @@@applicationProxy -->
+<!-- $$$capabilities[overload1]$$$capabilities -->
+<h3 class="fn" id="capabilities"><a name="capabilities"></a><span class="type"><a href="qnetworkproxy.html#Capability-enum">Capabilities</a></span> QNetworkProxy::<span class="name">capabilities</span>() const</h3>
+<p>Returns the capabilities of this proxy server.</p>
+<p>This function was introduced in  Qt 4.5.</p>
+<p><b>See also </b><a href="qnetworkproxy.html#setCapabilities">setCapabilities</a>() and <a href="qnetworkproxy.html#type">type</a>().</p>
+<!-- @@@capabilities -->
+<!-- $$$hasRawHeader[overload1]$$$hasRawHeaderconstQByteArray& -->
+<h3 class="fn" id="hasRawHeader"><a name="hasRawHeader"></a><span class="type">bool</span> QNetworkProxy::<span class="name">hasRawHeader</span>(const <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> &amp;<i>headerName</i>) const</h3>
+<p>Returns <code>true</code> if the raw header <i>headerName</i> is in use for this proxy. Returns <code>false</code> if the proxy is not of type <a href="qnetworkproxy.html#ProxyType-enum">HttpProxy</a> or <a href="qnetworkproxy.html#ProxyType-enum">HttpCachingProxy</a>.</p>
+<p>This function was introduced in  Qt 5.0.</p>
+<p><b>See also </b><a href="qnetworkproxy.html#rawHeader">rawHeader</a>() and <a href="qnetworkproxy.html#setRawHeader">setRawHeader</a>().</p>
+<!-- @@@hasRawHeader -->
+<!-- $$$header[overload1]$$$headerQNetworkRequest::KnownHeaders -->
+<h3 class="fn" id="header"><a name="header"></a><span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span> QNetworkProxy::<span class="name">header</span>(<span class="type"><a href="qnetworkrequest.html#KnownHeaders-enum">QNetworkRequest::KnownHeaders</a></span> <i>header</i>) const</h3>
+<p>Returns the value of the known network header <i>header</i> if it is in use for this proxy. If it is not present, returns QVariant() (i.e&#x2e;, an invalid variant).</p>
+<p>This function was introduced in  Qt 5.0.</p>
+<p><b>See also </b><a href="qnetworkrequest.html#KnownHeaders-enum">QNetworkRequest::KnownHeaders</a>, <a href="qnetworkproxy.html#rawHeader">rawHeader</a>(), and <a href="qnetworkproxy.html#setHeader">setHeader</a>().</p>
+<!-- @@@header -->
+<!-- $$$hostName[overload1]$$$hostName -->
+<h3 class="fn" id="hostName"><a name="hostName"></a><span class="type"><a href="../qtcore/qstring.html">QString</a></span> QNetworkProxy::<span class="name">hostName</span>() const</h3>
+<p>Returns the host name of the proxy host.</p>
+<p><b>See also </b><a href="qnetworkproxy.html#setHostName">setHostName</a>(), <a href="qnetworkproxy.html#setPort">setPort</a>(), and <a href="qnetworkproxy.html#port">port</a>().</p>
+<!-- @@@hostName -->
+<!-- $$$isCachingProxy[overload1]$$$isCachingProxy -->
+<h3 class="fn" id="isCachingProxy"><a name="isCachingProxy"></a><span class="type">bool</span> QNetworkProxy::<span class="name">isCachingProxy</span>() const</h3>
+<p>Returns <code>true</code> if this proxy supports the <a href="qnetworkproxy.html#Capability-enum">QNetworkProxy::CachingCapability</a> capability.</p>
+<p>In Qt 4.4, the capability was tied to the proxy type, but since Qt 4.5 it is possible to remove the capability of caching from a proxy by calling <a href="qnetworkproxy.html#setCapabilities">setCapabilities</a>().</p>
+<p>This function was introduced in  Qt 4.4.</p>
+<p><b>See also </b><a href="qnetworkproxy.html#capabilities">capabilities</a>(), <a href="qnetworkproxy.html#type">type</a>(), and <a href="qnetworkproxy.html#isTransparentProxy">isTransparentProxy</a>().</p>
+<!-- @@@isCachingProxy -->
+<!-- $$$isTransparentProxy[overload1]$$$isTransparentProxy -->
+<h3 class="fn" id="isTransparentProxy"><a name="isTransparentProxy"></a><span class="type">bool</span> QNetworkProxy::<span class="name">isTransparentProxy</span>() const</h3>
+<p>Returns <code>true</code> if this proxy supports transparent tunneling of TCP connections. This matches the <a href="qnetworkproxy.html#Capability-enum">QNetworkProxy::TunnelingCapability</a> capability.</p>
+<p>In Qt 4.4, the capability was tied to the proxy type, but since Qt 4.5 it is possible to remove the capability of caching from a proxy by calling <a href="qnetworkproxy.html#setCapabilities">setCapabilities</a>().</p>
+<p>This function was introduced in  Qt 4.4.</p>
+<p><b>See also </b><a href="qnetworkproxy.html#capabilities">capabilities</a>(), <a href="qnetworkproxy.html#type">type</a>(), and <a href="qnetworkproxy.html#isCachingProxy">isCachingProxy</a>().</p>
+<!-- @@@isTransparentProxy -->
+<!-- $$$password[overload1]$$$password -->
+<h3 class="fn" id="password"><a name="password"></a><span class="type"><a href="../qtcore/qstring.html">QString</a></span> QNetworkProxy::<span class="name">password</span>() const</h3>
+<p>Returns the password used for authentication.</p>
+<p><b>See also </b><a href="qnetworkproxy.html#user">user</a>(), <a href="qnetworkproxy.html#setPassword">setPassword</a>(), and <a href="qnetworkproxy.html#setUser">setUser</a>().</p>
+<!-- @@@password -->
+<!-- $$$port[overload1]$$$port -->
+<h3 class="fn" id="port"><a name="port"></a><span class="type"><a href="../qtcore/qtglobal.html#quint16-typedef">quint16</a></span> QNetworkProxy::<span class="name">port</span>() const</h3>
+<p>Returns the port of the proxy host.</p>
+<p><b>See also </b><a href="qnetworkproxy.html#setHostName">setHostName</a>(), <a href="qnetworkproxy.html#setPort">setPort</a>(), and <a href="qnetworkproxy.html#hostName">hostName</a>().</p>
+<!-- @@@port -->
+<!-- $$$rawHeader[overload1]$$$rawHeaderconstQByteArray& -->
+<h3 class="fn" id="rawHeader"><a name="rawHeader"></a><span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> QNetworkProxy::<span class="name">rawHeader</span>(const <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> &amp;<i>headerName</i>) const</h3>
+<p>Returns the raw form of header <i>headerName</i>. If no such header is present or the proxy is not of type <a href="qnetworkproxy.html#ProxyType-enum">HttpProxy</a> or <a href="qnetworkproxy.html#ProxyType-enum">HttpCachingProxy</a>, an empty <a href="../qtcore/qbytearray.html">QByteArray</a> is returned, which may be indistinguishable from a header that is present but has no content (use <a href="qnetworkproxy.html#hasRawHeader">hasRawHeader</a>() to find out if the header exists or not).</p>
+<p>Raw headers can be set with <a href="qnetworkproxy.html#setRawHeader">setRawHeader</a>() or with <a href="qnetworkproxy.html#setHeader">setHeader</a>().</p>
+<p>This function was introduced in  Qt 5.0.</p>
+<p><b>See also </b><a href="qnetworkproxy.html#header">header</a>() and <a href="qnetworkproxy.html#setRawHeader">setRawHeader</a>().</p>
+<!-- @@@rawHeader -->
+<!-- $$$rawHeaderList[overload1]$$$rawHeaderList -->
+<h3 class="fn" id="rawHeaderList"><a name="rawHeaderList"></a><span class="type"><a href="../qtcore/qlist.html">QList</a></span>&lt;<span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span>&gt; QNetworkProxy::<span class="name">rawHeaderList</span>() const</h3>
+<p>Returns a list of all raw headers that are set in this network proxy. The list is in the order that the headers were set.</p>
+<p>If the proxy is not of type <a href="qnetworkproxy.html#ProxyType-enum">HttpProxy</a> or <a href="qnetworkproxy.html#ProxyType-enum">HttpCachingProxy</a> an empty <a href="../qtcore/qlist.html">QList</a> is returned.</p>
+<p>This function was introduced in  Qt 5.0.</p>
+<p><b>See also </b><a href="qnetworkproxy.html#hasRawHeader">hasRawHeader</a>() and <a href="qnetworkproxy.html#rawHeader">rawHeader</a>().</p>
+<!-- @@@rawHeaderList -->
+<!-- $$$setApplicationProxy[overload1]$$$setApplicationProxyconstQNetworkProxy& -->
+<h3 class="fn" id="setApplicationProxy"><a name="setApplicationProxy"></a><code>[static] </code><span class="type">void</span> QNetworkProxy::<span class="name">setApplicationProxy</span>(const <span class="type"><a href="qnetworkproxy.html#QNetworkProxy">QNetworkProxy</a></span> &amp;<i>networkProxy</i>)</h3>
+<p>Sets the application level network proxying to be <i>networkProxy</i>.</p>
+<p>If a <a href="qabstractsocket.html">QAbstractSocket</a> or <a href="qtcpsocket.html">QTcpSocket</a> has the <a href="qnetworkproxy.html#ProxyType-enum">QNetworkProxy::DefaultProxy</a> type, then the <a href="qnetworkproxy.html">QNetworkProxy</a> set with this function is used. If you want more flexibility in determining which proxy is used, use the <a href="qnetworkproxyfactory.html">QNetworkProxyFactory</a> class.</p>
+<p>Setting a default proxy value with this function will override the application proxy factory set with <a href="qnetworkproxyfactory.html#setApplicationProxyFactory">QNetworkProxyFactory::setApplicationProxyFactory</a>.</p>
+<p><b>See also </b><a href="qnetworkproxyfactory.html">QNetworkProxyFactory</a>, <a href="qnetworkproxy.html#applicationProxy">applicationProxy</a>(), <a href="qabstractsocket.html#setProxy">QAbstractSocket::setProxy</a>(), and <a href="qtcpserver.html#setProxy">QTcpServer::setProxy</a>().</p>
+<!-- @@@setApplicationProxy -->
+<!-- $$$setCapabilities[overload1]$$$setCapabilitiesCapabilities -->
+<h3 class="fn" id="setCapabilities"><a name="setCapabilities"></a><span class="type">void</span> QNetworkProxy::<span class="name">setCapabilities</span>(<span class="type"><a href="qnetworkproxy.html#Capability-enum">Capabilities</a></span> <i>capabilities</i>)</h3>
+<p>Sets the capabilities of this proxy to <i>capabilities</i>.</p>
+<p>This function was introduced in  Qt 4.5.</p>
+<p><b>See also </b><a href="qnetworkproxy.html#setType">setType</a>() and <a href="qnetworkproxy.html#capabilities">capabilities</a>().</p>
+<!-- @@@setCapabilities -->
+<!-- $$$setHeader[overload1]$$$setHeaderQNetworkRequest::KnownHeadersconstQVariant& -->
+<h3 class="fn" id="setHeader"><a name="setHeader"></a><span class="type">void</span> QNetworkProxy::<span class="name">setHeader</span>(<span class="type"><a href="qnetworkrequest.html#KnownHeaders-enum">QNetworkRequest::KnownHeaders</a></span> <i>header</i>, const <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span> &amp;<i>value</i>)</h3>
+<p>Sets the value of the known header <i>header</i> to be <i>value</i>, overriding any previously set headers. This operation also sets the equivalent raw HTTP header.</p>
+<p>If the proxy is not of type <a href="qnetworkproxy.html#ProxyType-enum">HttpProxy</a> or <a href="qnetworkproxy.html#ProxyType-enum">HttpCachingProxy</a> this has no effect.</p>
+<p>This function was introduced in  Qt 5.0.</p>
+<p><b>See also </b><a href="qnetworkrequest.html#KnownHeaders-enum">QNetworkRequest::KnownHeaders</a>, <a href="qnetworkproxy.html#setRawHeader">setRawHeader</a>(), and <a href="qnetworkproxy.html#header">header</a>().</p>
+<!-- @@@setHeader -->
+<!-- $$$setHostName[overload1]$$$setHostNameconstQString& -->
+<h3 class="fn" id="setHostName"><a name="setHostName"></a><span class="type">void</span> QNetworkProxy::<span class="name">setHostName</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>hostName</i>)</h3>
+<p>Sets the host name of the proxy host to be <i>hostName</i>.</p>
+<p><b>See also </b><a href="qnetworkproxy.html#hostName">hostName</a>(), <a href="qnetworkproxy.html#setPort">setPort</a>(), and <a href="qnetworkproxy.html#port">port</a>().</p>
+<!-- @@@setHostName -->
+<!-- $$$setPassword[overload1]$$$setPasswordconstQString& -->
+<h3 class="fn" id="setPassword"><a name="setPassword"></a><span class="type">void</span> QNetworkProxy::<span class="name">setPassword</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>password</i>)</h3>
+<p>Sets the password for proxy authentication to be <i>password</i>.</p>
+<p><b>See also </b><a href="qnetworkproxy.html#user">user</a>(), <a href="qnetworkproxy.html#setUser">setUser</a>(), and <a href="qnetworkproxy.html#password">password</a>().</p>
+<!-- @@@setPassword -->
+<!-- $$$setPort[overload1]$$$setPortquint16 -->
+<h3 class="fn" id="setPort"><a name="setPort"></a><span class="type">void</span> QNetworkProxy::<span class="name">setPort</span>(<span class="type"><a href="../qtcore/qtglobal.html#quint16-typedef">quint16</a></span> <i>port</i>)</h3>
+<p>Sets the port of the proxy host to be <i>port</i>.</p>
+<p><b>See also </b><a href="qnetworkproxy.html#hostName">hostName</a>(), <a href="qnetworkproxy.html#setHostName">setHostName</a>(), and <a href="qnetworkproxy.html#port">port</a>().</p>
+<!-- @@@setPort -->
+<!-- $$$setRawHeader[overload1]$$$setRawHeaderconstQByteArray&constQByteArray& -->
+<h3 class="fn" id="setRawHeader"><a name="setRawHeader"></a><span class="type">void</span> QNetworkProxy::<span class="name">setRawHeader</span>(const <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> &amp;<i>headerName</i>, const <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> &amp;<i>headerValue</i>)</h3>
+<p>Sets the header <i>headerName</i> to be of value <i>headerValue</i>. If <i>headerName</i> corresponds to a known header (see <a href="qnetworkrequest.html#KnownHeaders-enum">QNetworkRequest::KnownHeaders</a>), the raw format will be parsed and the corresponding &quot;cooked&quot; header will be set as well.</p>
+<p>For example:</p>
+<pre class="cpp">
+
+  request<span class="operator">.</span>setRawHeader(<span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span>(<span class="string">&quot;Last-Modified&quot;</span>)<span class="operator">,</span> <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span>(<span class="string">&quot;Sun, 06 Nov 1994 08:49:37 GMT&quot;</span>));
+
+</pre>
+<p>will also set the known header LastModifiedHeader to be the <a href="../qtcore/qdatetime.html">QDateTime</a> object of the parsed date.</p>
+<p><b>Note: </b>Setting the same header twice overrides the previous setting. To accomplish the behaviour of multiple HTTP headers of the same name, you should concatenate the two values, separating them with a comma (&quot;,&quot;) and set one single raw header.</p><p>If the proxy is not of type <a href="qnetworkproxy.html#ProxyType-enum">HttpProxy</a> or <a href="qnetworkproxy.html#ProxyType-enum">HttpCachingProxy</a> this has no effect.</p>
+<p>This function was introduced in  Qt 5.0.</p>
+<p><b>See also </b><a href="qnetworkrequest.html#KnownHeaders-enum">QNetworkRequest::KnownHeaders</a>, <a href="qnetworkproxy.html#setHeader">setHeader</a>(), <a href="qnetworkproxy.html#hasRawHeader">hasRawHeader</a>(), and <a href="qnetworkproxy.html#rawHeader">rawHeader</a>().</p>
+<!-- @@@setRawHeader -->
+<!-- $$$setType[overload1]$$$setTypeQNetworkProxy::ProxyType -->
+<h3 class="fn" id="setType"><a name="setType"></a><span class="type">void</span> QNetworkProxy::<span class="name">setType</span>(<span class="type"><a href="qnetworkproxy.html#ProxyType-enum">QNetworkProxy::ProxyType</a></span> <i>type</i>)</h3>
+<p>Sets the proxy type for this instance to be <i>type</i>.</p>
+<p>Note that changing the type of a proxy does not change the set of capabilities this <a href="qnetworkproxy.html">QNetworkProxy</a> object holds if any capabilities have been set with <a href="qnetworkproxy.html#setCapabilities">setCapabilities</a>().</p>
+<p><b>See also </b><a href="qnetworkproxy.html#type">type</a>() and <a href="qnetworkproxy.html#setCapabilities">setCapabilities</a>().</p>
+<!-- @@@setType -->
+<!-- $$$setUser[overload1]$$$setUserconstQString& -->
+<h3 class="fn" id="setUser"><a name="setUser"></a><span class="type">void</span> QNetworkProxy::<span class="name">setUser</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>user</i>)</h3>
+<p>Sets the user name for proxy authentication to be <i>user</i>.</p>
+<p><b>See also </b><a href="qnetworkproxy.html#user">user</a>(), <a href="qnetworkproxy.html#setPassword">setPassword</a>(), and <a href="qnetworkproxy.html#password">password</a>().</p>
+<!-- @@@setUser -->
+<!-- $$$swap[overload1]$$$swapQNetworkProxy& -->
+<h3 class="fn" id="swap"><a name="swap"></a><span class="type">void</span> QNetworkProxy::<span class="name">swap</span>(<span class="type"><a href="qnetworkproxy.html#QNetworkProxy">QNetworkProxy</a></span> &amp;<i>other</i>)</h3>
+<p>Swaps this network proxy instance with <i>other</i>. This function is very fast and never fails.</p>
+<p>This function was introduced in  Qt 5.0.</p>
+<!-- @@@swap -->
+<!-- $$$type[overload1]$$$type -->
+<h3 class="fn" id="type"><a name="type"></a><span class="type"><a href="qnetworkproxy.html#ProxyType-enum">QNetworkProxy::ProxyType</a></span> QNetworkProxy::<span class="name">type</span>() const</h3>
+<p>Returns the proxy type for this instance.</p>
+<p><b>See also </b><a href="qnetworkproxy.html#setType">setType</a>().</p>
+<!-- @@@type -->
+<!-- $$$user[overload1]$$$user -->
+<h3 class="fn" id="user"><a name="user"></a><span class="type"><a href="../qtcore/qstring.html">QString</a></span> QNetworkProxy::<span class="name">user</span>() const</h3>
+<p>Returns the user name used for authentication.</p>
+<p><b>See also </b><a href="qnetworkproxy.html#setUser">setUser</a>(), <a href="qnetworkproxy.html#setPassword">setPassword</a>(), and <a href="qnetworkproxy.html#password">password</a>().</p>
+<!-- @@@user -->
+<!-- $$$operator!=[overload1]$$$operator!=constQNetworkProxy& -->
+<h3 class="fn" id="operator-not-eq"><a name="operator-not-eq"></a><span class="type">bool</span> QNetworkProxy::<span class="name">operator!=</span>(const <span class="type"><a href="qnetworkproxy.html#QNetworkProxy">QNetworkProxy</a></span> &amp;<i>other</i>) const</h3>
+<p>Compares the value of this network proxy to <i>other</i> and returns <code>true</code> if they differ.</p>
+<p>This function was introduced in  Qt 4.4.</p>
+<!-- @@@operator!= -->
+<!-- $$$operator=[overload1]$$$operator=QNetworkProxy&& -->
+<h3 class="fn" id="operator-eq"><a name="operator-eq"></a><span class="type"><a href="qnetworkproxy.html#QNetworkProxy">QNetworkProxy</a></span> &amp;QNetworkProxy::<span class="name">operator=</span>(<span class="type"><a href="qnetworkproxy.html#QNetworkProxy">QNetworkProxy</a></span> &amp;&amp;<i>other</i>)</h3>
+<p>Move-assignment operator.</p><!-- @@@operator= -->
+<!-- $$$operator=$$$operator=constQNetworkProxy& -->
+<h3 class="fn" id="operator-eq-1"><a name="operator-eq-1"></a><span class="type"><a href="qnetworkproxy.html#QNetworkProxy">QNetworkProxy</a></span> &amp;QNetworkProxy::<span class="name">operator=</span>(const <span class="type"><a href="qnetworkproxy.html#QNetworkProxy">QNetworkProxy</a></span> &amp;<i>other</i>)</h3>
+<p>Assigns the value of the network proxy <i>other</i> to this network proxy.</p>
+<p>This function was introduced in  Qt 4.2.</p>
+<!-- @@@operator= -->
+<!-- $$$operator==[overload1]$$$operator==constQNetworkProxy& -->
+<h3 class="fn" id="operator-eq-eq"><a name="operator-eq-eq"></a><span class="type">bool</span> QNetworkProxy::<span class="name">operator==</span>(const <span class="type"><a href="qnetworkproxy.html#QNetworkProxy">QNetworkProxy</a></span> &amp;<i>other</i>) const</h3>
+<p>Compares the value of this network proxy to <i>other</i> and returns <code>true</code> if they are equal (same proxy type, server as well as username and password)</p>
+<p>This function was introduced in  Qt 4.4.</p>
+<!-- @@@operator== -->
+</div>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

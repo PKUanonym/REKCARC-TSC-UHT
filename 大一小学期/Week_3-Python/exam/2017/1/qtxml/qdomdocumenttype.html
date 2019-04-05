@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qdom.cpp -->
+  <title>QDomDocumentType Class | Qt XML 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtxml-index.html">Qt XML</a></td><td ><a href="qtxml-module.html">C++ Classes</a></td><td >QDomDocumentType</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">QDomDocumentType Class</h1>
+<!-- $$$QDomDocumentType-brief -->
+<p>The <a href="qdomdocumenttype.html">QDomDocumentType</a> class is the representation of the DTD in the document tree. <a href="#details">More...</a></p>
+<!-- @@@QDomDocumentType -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign">   <span class="preprocessor">#include &lt;QDomDocumentType&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> qmake:</td><td class="memItemRight bottomAlign"> QT += xml</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Inherits:</td><td class="memItemRight bottomAlign"> <a href="qdomnode.html">QDomNode</a></td></tr></table></div><ul>
+<li><a href="qdomdocumenttype-members.html">List of all members, including inherited members</a></li>
+</ul>
+<p><b>Note:</b> All functions in this class are <a href="../qtdoc/threads-reentrancy.html">reentrant</a>.</p>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qdomdocumenttype.html#QDomDocumentType">QDomDocumentType</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qdomdocumenttype.html#QDomDocumentType-1">QDomDocumentType</a></b>(const QDomDocumentType &amp;<i>n</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QDomNamedNodeMap </td><td class="memItemRight bottomAlign"><b><a href="qdomdocumenttype.html#entities">entities</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qdomdocumenttype.html#internalSubset">internalSubset</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qdomdocumenttype.html#name">name</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QDomNode::NodeType </td><td class="memItemRight bottomAlign"><b><a href="qdomdocumenttype.html#nodeType">nodeType</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QDomNamedNodeMap </td><td class="memItemRight bottomAlign"><b><a href="qdomdocumenttype.html#notations">notations</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qdomdocumenttype.html#publicId">publicId</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qdomdocumenttype.html#systemId">systemId</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QDomDocumentType &amp;</td><td class="memItemRight bottomAlign"><b><a href="qdomdocumenttype.html#operator-eq">operator=</a></b>(const QDomDocumentType &amp;<i>n</i>)</td></tr>
+</table></div>
+<ul>
+<li class="fn">65 public functions inherited from <a href="qdomnode.html#public-functions">QDomNode</a></li>
+</ul>
+<a name="details"></a>
+<!-- $$$QDomDocumentType-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="qdomdocumenttype.html">QDomDocumentType</a> class is the representation of the DTD in the document tree.</p>
+<p>The <a href="qdomdocumenttype.html">QDomDocumentType</a> class allows read-only access to some of the data structures in the DTD: it can return a map of all <a href="qdomdocumenttype.html#entities">entities</a>() and <a href="qdomdocumenttype.html#notations">notations</a>(). In addition the function <a href="qdomdocumenttype.html#name">name</a>() returns the name of the document type as specified in the &amp;lt;!DOCTYPE name&amp;gt; tag. This class also provides the <a href="qdomdocumenttype.html#publicId">publicId</a>(), <a href="qdomdocumenttype.html#systemId">systemId</a>() and <a href="qdomdocumenttype.html#internalSubset">internalSubset</a>() functions.</p>
+</div>
+<p><b>See also </b><a href="qdomdocument.html">QDomDocument</a>.</p>
+<!-- @@@QDomDocumentType -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$QDomDocumentType[overload1]$$$QDomDocumentType -->
+<h3 class="fn" id="QDomDocumentType"><a name="QDomDocumentType"></a>QDomDocumentType::<span class="name">QDomDocumentType</span>()</h3>
+<p>Creates an empty <a href="qdomdocumenttype.html">QDomDocumentType</a> object.</p>
+<!-- @@@QDomDocumentType -->
+<!-- $$$QDomDocumentType$$$QDomDocumentTypeconstQDomDocumentType& -->
+<h3 class="fn" id="QDomDocumentType-1"><a name="QDomDocumentType-1"></a>QDomDocumentType::<span class="name">QDomDocumentType</span>(const <span class="type"><a href="qdomdocumenttype.html#QDomDocumentType">QDomDocumentType</a></span> &amp;<i>n</i>)</h3>
+<p>Constructs a copy of <i>n</i>.</p>
+<p>The data of the copy is shared (shallow copy): modifying one node will also change the other. If you want to make a deep copy, use <a href="qdomnode.html#cloneNode">cloneNode</a>().</p>
+<!-- @@@QDomDocumentType -->
+<!-- $$$entities[overload1]$$$entities -->
+<h3 class="fn" id="entities"><a name="entities"></a><span class="type"><a href="qdomnamednodemap.html">QDomNamedNodeMap</a></span> QDomDocumentType::<span class="name">entities</span>() const</h3>
+<p>Returns a map of all entities described in the DTD.</p>
+<!-- @@@entities -->
+<!-- $$$internalSubset[overload1]$$$internalSubset -->
+<h3 class="fn" id="internalSubset"><a name="internalSubset"></a><span class="type"><a href="../qtcore/qstring.html">QString</a></span> QDomDocumentType::<span class="name">internalSubset</span>() const</h3>
+<p>Returns the internal subset of the document type or an empty string if there is no internal subset.</p>
+<p><b>See also </b><a href="qdomdocumenttype.html#publicId">publicId</a>() and <a href="qdomdocumenttype.html#systemId">systemId</a>().</p>
+<!-- @@@internalSubset -->
+<!-- $$$name[overload1]$$$name -->
+<h3 class="fn" id="name"><a name="name"></a><span class="type"><a href="../qtcore/qstring.html">QString</a></span> QDomDocumentType::<span class="name">name</span>() const</h3>
+<p>Returns the name of the document type as specified in the &amp;lt;!DOCTYPE name&amp;gt; tag.</p>
+<p><b>See also </b><a href="qdomnode.html#nodeName">nodeName</a>().</p>
+<!-- @@@name -->
+<!-- $$$nodeType[overload1]$$$nodeType -->
+<h3 class="fn" id="nodeType"><a name="nodeType"></a><span class="type"><a href="qdomnode.html#NodeType-enum">QDomNode::NodeType</a></span> QDomDocumentType::<span class="name">nodeType</span>() const</h3>
+<p>Returns <code>DocumentTypeNode</code>.</p>
+<p><b>See also </b><a href="qdomnode.html#isDocumentType">isDocumentType</a>() and <a href="qdomnode.html#toDocumentType">QDomNode::toDocumentType</a>().</p>
+<!-- @@@nodeType -->
+<!-- $$$notations[overload1]$$$notations -->
+<h3 class="fn" id="notations"><a name="notations"></a><span class="type"><a href="qdomnamednodemap.html">QDomNamedNodeMap</a></span> QDomDocumentType::<span class="name">notations</span>() const</h3>
+<p>Returns a map of all notations described in the DTD.</p>
+<!-- @@@notations -->
+<!-- $$$publicId[overload1]$$$publicId -->
+<h3 class="fn" id="publicId"><a name="publicId"></a><span class="type"><a href="../qtcore/qstring.html">QString</a></span> QDomDocumentType::<span class="name">publicId</span>() const</h3>
+<p>Returns the public identifier of the external DTD subset or an empty string if there is no public identifier.</p>
+<p><b>See also </b><a href="qdomdocumenttype.html#systemId">systemId</a>(), <a href="qdomdocumenttype.html#internalSubset">internalSubset</a>(), and <a href="qdomimplementation.html#createDocumentType">QDomImplementation::createDocumentType</a>().</p>
+<!-- @@@publicId -->
+<!-- $$$systemId[overload1]$$$systemId -->
+<h3 class="fn" id="systemId"><a name="systemId"></a><span class="type"><a href="../qtcore/qstring.html">QString</a></span> QDomDocumentType::<span class="name">systemId</span>() const</h3>
+<p>Returns the system identifier of the external DTD subset or an empty string if there is no system identifier.</p>
+<p><b>See also </b><a href="qdomdocumenttype.html#publicId">publicId</a>(), <a href="qdomdocumenttype.html#internalSubset">internalSubset</a>(), and <a href="qdomimplementation.html#createDocumentType">QDomImplementation::createDocumentType</a>().</p>
+<!-- @@@systemId -->
+<!-- $$$operator=[overload1]$$$operator=constQDomDocumentType& -->
+<h3 class="fn" id="operator-eq"><a name="operator-eq"></a><span class="type"><a href="qdomdocumenttype.html#QDomDocumentType">QDomDocumentType</a></span> &amp;QDomDocumentType::<span class="name">operator=</span>(const <span class="type"><a href="qdomdocumenttype.html#QDomDocumentType">QDomDocumentType</a></span> &amp;<i>n</i>)</h3>
+<p>Assigns <i>n</i> to this document type.</p>
+<p>The data of the copy is shared (shallow copy): modifying one node will also change the other. If you want to make a deep copy, use <a href="qdomnode.html#cloneNode">cloneNode</a>().</p>
+<!-- @@@operator= -->
+</div>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

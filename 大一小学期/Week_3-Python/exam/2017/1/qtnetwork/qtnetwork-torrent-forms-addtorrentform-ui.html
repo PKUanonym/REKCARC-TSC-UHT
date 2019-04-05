@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>addtorrentform.ui Example File | Qt Network 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtnetwork-index.html">Qt Network</a></td><td ><a href="qtnetwork-torrent-example.html">Torrent Example</a></td><td >addtorrentform.ui Example File</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar"><div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">addtorrentform.ui Example File</h1>
+<span class="subtitle">torrent/forms/addtorrentform.ui</span>
+<!-- $$$torrent/forms/addtorrentform.ui-description -->
+<div class="descr"> <a name="details"></a>
+<pre class="cpp">
+
+  &lt;ui version=&quot;4.0&quot; &gt;
+   &lt;author&gt;&lt;/author&gt;
+   &lt;comment&gt;&lt;/comment&gt;
+   &lt;exportmacro&gt;&lt;/exportmacro&gt;
+   &lt;class&gt;AddTorrentFile&lt;/class&gt;
+   &lt;widget class=&quot;QDialog&quot; name=&quot;AddTorrentFile&quot; &gt;
+    &lt;property name=&quot;geometry&quot; &gt;
+     &lt;rect&gt;
+      &lt;x&gt;0&lt;/x&gt;
+      &lt;y&gt;0&lt;/y&gt;
+      &lt;width&gt;464&lt;/width&gt;
+      &lt;height&gt;385&lt;/height&gt;
+     &lt;/rect&gt;
+    &lt;/property&gt;
+    &lt;property name=&quot;windowTitle&quot; &gt;
+     &lt;string&gt;Add a torrent&lt;/string&gt;
+    &lt;/property&gt;
+    &lt;property name=&quot;sizeGripEnabled&quot; &gt;
+     &lt;bool&gt;false&lt;/bool&gt;
+    &lt;/property&gt;
+    &lt;property name=&quot;modal&quot; &gt;
+     &lt;bool&gt;true&lt;/bool&gt;
+    &lt;/property&gt;
+    &lt;layout class=&quot;QVBoxLayout&quot; &gt;
+     &lt;property name=&quot;margin&quot; &gt;
+      &lt;number&gt;8&lt;/number&gt;
+     &lt;/property&gt;
+     &lt;property name=&quot;spacing&quot; &gt;
+      &lt;number&gt;6&lt;/number&gt;
+     &lt;/property&gt;
+     &lt;item&gt;
+      &lt;widget class=&quot;QGroupBox&quot; name=&quot;groupBox&quot; &gt;
+       &lt;property name=&quot;title&quot; &gt;
+        &lt;string&gt;Select a torrent source&lt;/string&gt;
+       &lt;/property&gt;
+       &lt;layout class=&quot;QGridLayout&quot; &gt;
+        &lt;property name=&quot;margin&quot; &gt;
+         &lt;number&gt;8&lt;/number&gt;
+        &lt;/property&gt;
+        &lt;property name=&quot;spacing&quot; &gt;
+         &lt;number&gt;6&lt;/number&gt;
+        &lt;/property&gt;
+        &lt;item row=&quot;6&quot; column=&quot;0&quot; &gt;
+         &lt;widget class=&quot;QLabel&quot; name=&quot;label_4&quot; &gt;
+          &lt;property name=&quot;text&quot; &gt;
+           &lt;string&gt;Destination:&lt;/string&gt;
+          &lt;/property&gt;
+         &lt;/widget&gt;
+        &lt;/item&gt;
+        &lt;item row=&quot;0&quot; column=&quot;1&quot; colspan=&quot;2&quot; &gt;
+         &lt;widget class=&quot;QLineEdit&quot; name=&quot;torrentFile&quot; /&gt;
+        &lt;/item&gt;
+        &lt;item row=&quot;1&quot; column=&quot;0&quot; &gt;
+         &lt;widget class=&quot;QLabel&quot; name=&quot;label_2&quot; &gt;
+          &lt;property name=&quot;text&quot; &gt;
+           &lt;string&gt;Tracker URL:&lt;/string&gt;
+          &lt;/property&gt;
+         &lt;/widget&gt;
+        &lt;/item&gt;
+        &lt;item row=&quot;0&quot; column=&quot;3&quot; &gt;
+         &lt;widget class=&quot;QPushButton&quot; name=&quot;browseTorrents&quot; &gt;
+          &lt;property name=&quot;text&quot; &gt;
+           &lt;string&gt;Browse&lt;/string&gt;
+          &lt;/property&gt;
+          &lt;property name=&quot;default&quot; &gt;
+           &lt;bool&gt;true&lt;/bool&gt;
+          &lt;/property&gt;
+         &lt;/widget&gt;
+        &lt;/item&gt;
+        &lt;item row=&quot;5&quot; column=&quot;0&quot; &gt;
+         &lt;widget class=&quot;QLabel&quot; name=&quot;label_5&quot; &gt;
+          &lt;property name=&quot;text&quot; &gt;
+           &lt;string&gt;File(s):&lt;/string&gt;
+          &lt;/property&gt;
+          &lt;property name=&quot;alignment&quot; &gt;
+           &lt;set&gt;Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop&lt;/set&gt;
+          &lt;/property&gt;
+         &lt;/widget&gt;
+        &lt;/item&gt;
+        &lt;item row=&quot;4&quot; column=&quot;0&quot; &gt;
+         &lt;widget class=&quot;QLabel&quot; name=&quot;label_3&quot; &gt;
+          &lt;property name=&quot;text&quot; &gt;
+           &lt;string&gt;Size:&lt;/string&gt;
+          &lt;/property&gt;
+         &lt;/widget&gt;
+        &lt;/item&gt;
+        &lt;item row=&quot;2&quot; column=&quot;0&quot; &gt;
+         &lt;widget class=&quot;QLabel&quot; name=&quot;label_6&quot; &gt;
+          &lt;property name=&quot;text&quot; &gt;
+           &lt;string&gt;Creator:&lt;/string&gt;
+          &lt;/property&gt;
+         &lt;/widget&gt;
+        &lt;/item&gt;
+        &lt;item row=&quot;5&quot; column=&quot;1&quot; colspan=&quot;3&quot; &gt;
+         &lt;widget class=&quot;QTextEdit&quot; name=&quot;torrentContents&quot; &gt;
+          &lt;property name=&quot;focusPolicy&quot; &gt;
+           &lt;enum&gt;Qt::NoFocus&lt;/enum&gt;
+          &lt;/property&gt;
+          &lt;property name=&quot;tabChangesFocus&quot; &gt;
+           &lt;bool&gt;true&lt;/bool&gt;
+          &lt;/property&gt;
+          &lt;property name=&quot;lineWrapMode&quot; &gt;
+           &lt;enum&gt;QTextEdit::NoWrap&lt;/enum&gt;
+          &lt;/property&gt;
+          &lt;property name=&quot;readOnly&quot; &gt;
+           &lt;bool&gt;true&lt;/bool&gt;
+          &lt;/property&gt;
+         &lt;/widget&gt;
+        &lt;/item&gt;
+        &lt;item row=&quot;6&quot; column=&quot;1&quot; colspan=&quot;2&quot; &gt;
+         &lt;widget class=&quot;QLineEdit&quot; name=&quot;destinationFolder&quot; &gt;
+          &lt;property name=&quot;focusPolicy&quot; &gt;
+           &lt;enum&gt;Qt::StrongFocus&lt;/enum&gt;
+          &lt;/property&gt;
+         &lt;/widget&gt;
+        &lt;/item&gt;
+        &lt;item row=&quot;1&quot; column=&quot;1&quot; colspan=&quot;3&quot; &gt;
+         &lt;widget class=&quot;QLabel&quot; name=&quot;announceUrl&quot; &gt;
+          &lt;property name=&quot;text&quot; &gt;
+           &lt;string&gt;&amp;lt;none&gt;&lt;/string&gt;
+          &lt;/property&gt;
+         &lt;/widget&gt;
+        &lt;/item&gt;
+        &lt;item row=&quot;0&quot; column=&quot;0&quot; &gt;
+         &lt;widget class=&quot;QLabel&quot; name=&quot;label&quot; &gt;
+          &lt;property name=&quot;text&quot; &gt;
+           &lt;string&gt;Torrent file:&lt;/string&gt;
+          &lt;/property&gt;
+         &lt;/widget&gt;
+        &lt;/item&gt;
+        &lt;item row=&quot;6&quot; column=&quot;3&quot; &gt;
+         &lt;widget class=&quot;QPushButton&quot; name=&quot;browseDestination&quot; &gt;
+          &lt;property name=&quot;text&quot; &gt;
+           &lt;string&gt;Browse&lt;/string&gt;
+          &lt;/property&gt;
+         &lt;/widget&gt;
+        &lt;/item&gt;
+        &lt;item row=&quot;3&quot; column=&quot;0&quot; &gt;
+         &lt;widget class=&quot;QLabel&quot; name=&quot;label_7&quot; &gt;
+          &lt;property name=&quot;text&quot; &gt;
+           &lt;string&gt;Comment:&lt;/string&gt;
+          &lt;/property&gt;
+         &lt;/widget&gt;
+        &lt;/item&gt;
+        &lt;item row=&quot;3&quot; column=&quot;1&quot; colspan=&quot;3&quot; &gt;
+         &lt;widget class=&quot;QLabel&quot; name=&quot;commentLabel&quot; &gt;
+          &lt;property name=&quot;text&quot; &gt;
+           &lt;string&gt;&amp;lt;none&gt;&lt;/string&gt;
+          &lt;/property&gt;
+         &lt;/widget&gt;
+        &lt;/item&gt;
+        &lt;item row=&quot;2&quot; column=&quot;1&quot; colspan=&quot;3&quot; &gt;
+         &lt;widget class=&quot;QLabel&quot; name=&quot;creatorLabel&quot; &gt;
+          &lt;property name=&quot;text&quot; &gt;
+           &lt;string&gt;&amp;lt;none&gt;&lt;/string&gt;
+          &lt;/property&gt;
+         &lt;/widget&gt;
+        &lt;/item&gt;
+        &lt;item row=&quot;4&quot; column=&quot;1&quot; colspan=&quot;3&quot; &gt;
+         &lt;widget class=&quot;QLabel&quot; name=&quot;sizeLabel&quot; &gt;
+          &lt;property name=&quot;text&quot; &gt;
+           &lt;string&gt;0&lt;/string&gt;
+          &lt;/property&gt;
+         &lt;/widget&gt;
+        &lt;/item&gt;
+       &lt;/layout&gt;
+       &lt;widget class=&quot;QWidget&quot; name=&quot;widget&quot; &gt;
+        &lt;property name=&quot;geometry&quot; &gt;
+         &lt;rect&gt;
+          &lt;x&gt;10&lt;/x&gt;
+          &lt;y&gt;40&lt;/y&gt;
+          &lt;width&gt;364&lt;/width&gt;
+          &lt;height&gt;33&lt;/height&gt;
+         &lt;/rect&gt;
+        &lt;/property&gt;
+       &lt;/widget&gt;
+      &lt;/widget&gt;
+     &lt;/item&gt;
+     &lt;item&gt;
+      &lt;layout class=&quot;QHBoxLayout&quot; &gt;
+       &lt;property name=&quot;margin&quot; &gt;
+        &lt;number&gt;0&lt;/number&gt;
+       &lt;/property&gt;
+       &lt;property name=&quot;spacing&quot; &gt;
+        &lt;number&gt;6&lt;/number&gt;
+       &lt;/property&gt;
+       &lt;item&gt;
+        &lt;spacer&gt;
+         &lt;property name=&quot;orientation&quot; &gt;
+          &lt;enum&gt;Qt::Horizontal&lt;/enum&gt;
+         &lt;/property&gt;
+         &lt;property name=&quot;sizeHint&quot; &gt;
+          &lt;size&gt;
+           &lt;width&gt;131&lt;/width&gt;
+           &lt;height&gt;31&lt;/height&gt;
+          &lt;/size&gt;
+         &lt;/property&gt;
+        &lt;/spacer&gt;
+       &lt;/item&gt;
+       &lt;item&gt;
+        &lt;widget class=&quot;QPushButton&quot; name=&quot;okButton&quot; &gt;
+         &lt;property name=&quot;enabled&quot; &gt;
+          &lt;bool&gt;false&lt;/bool&gt;
+         &lt;/property&gt;
+         &lt;property name=&quot;text&quot; &gt;
+          &lt;string&gt;&amp;amp;OK&lt;/string&gt;
+         &lt;/property&gt;
+        &lt;/widget&gt;
+       &lt;/item&gt;
+       &lt;item&gt;
+        &lt;widget class=&quot;QPushButton&quot; name=&quot;cancelButton&quot; &gt;
+         &lt;property name=&quot;text&quot; &gt;
+          &lt;string&gt;&amp;amp;Cancel&lt;/string&gt;
+         &lt;/property&gt;
+        &lt;/widget&gt;
+       &lt;/item&gt;
+      &lt;/layout&gt;
+     &lt;/item&gt;
+    &lt;/layout&gt;
+   &lt;/widget&gt;
+   &lt;pixmapfunction&gt;&lt;/pixmapfunction&gt;
+   &lt;tabstops&gt;
+    &lt;tabstop&gt;torrentFile&lt;/tabstop&gt;
+    &lt;tabstop&gt;browseTorrents&lt;/tabstop&gt;
+    &lt;tabstop&gt;torrentContents&lt;/tabstop&gt;
+    &lt;tabstop&gt;destinationFolder&lt;/tabstop&gt;
+    &lt;tabstop&gt;browseDestination&lt;/tabstop&gt;
+    &lt;tabstop&gt;okButton&lt;/tabstop&gt;
+    &lt;tabstop&gt;cancelButton&lt;/tabstop&gt;
+   &lt;/tabstops&gt;
+   &lt;resources/&gt;
+   &lt;connections&gt;
+    &lt;connection&gt;
+     &lt;sender&gt;okButton&lt;/sender&gt;
+     &lt;signal&gt;clicked()&lt;/signal&gt;
+     &lt;receiver&gt;AddTorrentFile&lt;/receiver&gt;
+     &lt;slot&gt;accept()&lt;/slot&gt;
+     &lt;hints&gt;
+      &lt;hint type=&quot;sourcelabel&quot; &gt;
+       &lt;x&gt;278&lt;/x&gt;
+       &lt;y&gt;253&lt;/y&gt;
+      &lt;/hint&gt;
+      &lt;hint type=&quot;destinationlabel&quot; &gt;
+       &lt;x&gt;96&lt;/x&gt;
+       &lt;y&gt;254&lt;/y&gt;
+      &lt;/hint&gt;
+     &lt;/hints&gt;
+    &lt;/connection&gt;
+    &lt;connection&gt;
+     &lt;sender&gt;cancelButton&lt;/sender&gt;
+     &lt;signal&gt;clicked()&lt;/signal&gt;
+     &lt;receiver&gt;AddTorrentFile&lt;/receiver&gt;
+     &lt;slot&gt;reject()&lt;/slot&gt;
+     &lt;hints&gt;
+      &lt;hint type=&quot;sourcelabel&quot; &gt;
+       &lt;x&gt;369&lt;/x&gt;
+       &lt;y&gt;253&lt;/y&gt;
+      &lt;/hint&gt;
+      &lt;hint type=&quot;destinationlabel&quot; &gt;
+       &lt;x&gt;179&lt;/x&gt;
+       &lt;y&gt;282&lt;/y&gt;
+      &lt;/hint&gt;
+     &lt;/hints&gt;
+    &lt;/connection&gt;
+   &lt;/connections&gt;
+  &lt;/ui&gt;
+
+</pre>
+</div>
+<!-- @@@torrent/forms/addtorrentform.ui -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

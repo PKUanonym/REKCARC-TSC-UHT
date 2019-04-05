@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>echoclient.html Example File | Qt WebSockets 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtwebsockets-index.html">Qt WebSockets</a></td><td ><a href="qtwebsockets-echoserver-example.html">Echo Server Example</a></td><td >echoclient.html Example File</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar"><div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">echoclient.html Example File</h1>
+<span class="subtitle">echoserver/echoclient.html</span>
+<!-- $$$echoserver/echoclient.html-description -->
+<div class="descr"> <a name="details"></a>
+<pre class="cpp">
+
+  &lt;html&gt;
+      &lt;head&gt;
+          &lt;title&gt;WebSocket Echo Client&lt;/title&gt;
+      &lt;/head&gt;
+      &lt;body&gt;
+          &lt;h1&gt;WebSocket Echo Client&lt;/h1&gt;
+          &lt;p&gt;
+              &lt;button onClick=&quot;initWebSocket();&quot;&gt;Connect&lt;/button&gt;
+              &lt;button onClick=&quot;stopWebSocket();&quot;&gt;Disconnect&lt;/button&gt;
+              &lt;button onClick=&quot;checkSocket();&quot;&gt;State&lt;/button&gt;
+          &lt;/p&gt;
+          &lt;p&gt;
+              &lt;textarea id=&quot;debugTextArea&quot; style=&quot;width:400px;height:200px;&quot;&gt;&lt;/textarea&gt;
+          &lt;/p&gt;
+          &lt;p&gt;
+              &lt;input type=&quot;text&quot; id=&quot;inputText&quot; onkeydown=&quot;if(event.keyCode==13)sendMessage();&quot;/&gt;
+              &lt;button onClick=&quot;sendMessage();&quot;&gt;Send&lt;/button&gt;
+          &lt;/p&gt;
+
+          &lt;script type=&quot;text/javascript&quot;&gt;
+              var debugTextArea = document.getElementById(&quot;debugTextArea&quot;);
+              function debug(message) {
+                  debugTextArea.value += message + &quot;\n&quot;;
+                  debugTextArea.scrollTop = debugTextArea.scrollHeight;
+              }
+
+              function sendMessage() {
+                  var msg = document.getElementById(&quot;inputText&quot;).value;
+                  if ( websocket != null )
+                  {
+                      document.getElementById(&quot;inputText&quot;).value = &quot;&quot;;
+                      websocket.send( msg );
+                      console.log( &quot;string sent :&quot;, '&quot;'+msg+'&quot;' );
+                  }
+              }
+
+              var wsUri = &quot;ws://localhost:1234&quot;;
+              var websocket = null;
+
+              function initWebSocket() {
+                  try {
+                      if (typeof MozWebSocket == 'function')
+                          WebSocket = MozWebSocket;
+                      if ( websocket &amp;&amp; websocket.readyState == 1 )
+                          websocket.close();
+                      websocket = new WebSocket( wsUri );
+                      websocket.onopen = function (evt) {
+                          debug(&quot;CONNECTED&quot;);
+                      };
+                      websocket.onclose = function (evt) {
+                          debug(&quot;DISCONNECTED&quot;);
+                      };
+                      websocket.onmessage = function (evt) {
+                          console.log( &quot;Message received :&quot;, evt.data );
+                          debug( evt.data );
+                      };
+                      websocket.onerror = function (evt) {
+                          debug('ERROR: ' + evt.data);
+                      };
+                  } catch (exception) {
+                      debug('ERROR: ' + exception);
+                  }
+              }
+
+              function stopWebSocket() {
+                  if (websocket)
+                      websocket.close();
+              }
+
+              function checkSocket() {
+                  if (websocket != null) {
+                      var stateStr;
+                      switch (websocket.readyState) {
+                          case 0: {
+                              stateStr = &quot;CONNECTING&quot;;
+                              break;
+                          }
+                          case 1: {
+                              stateStr = &quot;OPEN&quot;;
+                              break;
+                          }
+                          case 2: {
+                              stateStr = &quot;CLOSING&quot;;
+                              break;
+                          }
+                          case 3: {
+                              stateStr = &quot;CLOSED&quot;;
+                              break;
+                          }
+                          default: {
+                              stateStr = &quot;UNKNOW&quot;;
+                              break;
+                          }
+                      }
+                      debug(&quot;WebSocket state = &quot; + websocket.readyState + &quot; ( &quot; + stateStr + &quot; )&quot;);
+                  } else {
+                      debug(&quot;WebSocket is null&quot;);
+                  }
+              }
+          &lt;/script&gt;
+      &lt;/body&gt;
+  &lt;/html&gt;
+
+</pre>
+</div>
+<!-- @@@echoserver/echoclient.html -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

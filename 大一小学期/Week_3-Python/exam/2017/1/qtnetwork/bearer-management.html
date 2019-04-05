@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- bearermanagement.qdoc -->
+  <title>Bearer Management | Qt Network 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtnetwork-index.html">Qt Network</a></td><td >Bearer Management</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#overview">Overview</a></li>
+<li class="level2"><a href="#the-api-in-detail">The API in Detail</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">Bearer Management</h1>
+<span class="subtitle"></span>
+<!-- $$$bearer-management.html-description -->
+<div class="descr"> <a name="details"></a>
+<p>Bearer Management controls the connectivity state of the system so that the user can start or stop interfaces or roam transparently between access points.</p>
+<a name="overview"></a>
+<h2 id="overview">Overview</h2>
+<p>The Bearer Management API controls the system's connectivity state. This incorporates simple information such as whether the device is online and how many interfaces there are as well as enables the application developer to start, stop network interfaces and influences other connection specific details. Depending on the platform's capabilities it may even provide session management so that a network interface remains up for as long as clients have a registered interest in them while at the same time optimizes the interface's uptime.</p>
+<p>This API does not provide support for management of network configurations themselves. It is up to the platform to provide infrastructure which enables to user to create, edit or delete network configurations.</p>
+<a name="the-api-in-detail"></a>
+<h3 >The API in Detail</h3>
+<p>Computer systems manage their network interfaces via a set of configurations. Each configuration describes a set of parameters which instruct the system how a particular network interface is started. One of the most simplistic examples might be an Ethernet configuration that links a network card to a DHCP server. A more complex example might be a Wireless LAN configuration which may comprise of hardware details such as the WLAN card address, WLAN access point details (e.g ESSID, encryption details) and user specific information (for example username and password). Once the network interface was configured and started according to the configuration blue print, multiple applications are free to use this link layer connection/session for their own socket operations. Note that the <a href="qnetworkconfiguration.html">QNetworkConfiguration</a> object only provides limited information about the configuration details themselves. It's main purpose is to act as a configuration identifier through which link layer connections can be created, destroyed and monitored.</p>
+<p><a href="qnetworksession.html">QNetworkSession</a> provides two types of use cases. It enables the monitoring of physical network interfaces and management of network sessions. Network sessions are a common feature on mobile devices where multiple applications can request network sessions as they see fit. The system consolidates and tracks active network sessions for the same network interface by maintaining the link layer connections until the last session has been closed. The subsequent table lists the major <a href="qnetworksession.html">QNetworkSession</a> functions and how they fit into the session and hardware management categories:</p>
+<div class="table"><table class="generic" width="60%">
+ <thead><tr class="qt-style"><th >Interface management</th><th >Session management</th></tr></thead>
+<tr valign="top" class="odd"><td ><a href="qnetworksession.html#stop">QNetworkSession::stop</a>()</td><td ><a href="qnetworksession.html#open">QNetworkSession::open</a>()</td></tr>
+<tr valign="top" class="even"><td ><a href="qnetworksession.html#interface">QNetworkSession::interface</a>()</td><td ><a href="qnetworksession.html#close">QNetworkSession::close</a>()</td></tr>
+<tr valign="top" class="odd"><td ><a href="qnetworksession.html#state">QNetworkSession::state</a>()</td><td ><a href="qnetworksession.html#isOpen">QNetworkSession::isOpen</a>()</td></tr>
+<tr valign="top" class="even"><td ><a href="qnetworksession.html#bytesWritten">QNetworkSession::bytesWritten</a>()</td><td ><a href="qnetworksession.html#migrate">QNetworkSession::migrate</a>()</td></tr>
+<tr valign="top" class="odd"><td ><a href="qnetworksession.html#bytesReceived">QNetworkSession::bytesReceived</a>()</td><td ><a href="qnetworksession.html#ignore">QNetworkSession::ignore</a>()</td></tr>
+<tr valign="top" class="even"><td ><a href="qnetworksession.html#activeTime">QNetworkSession::activeTime</a>()</td><td ><a href="qnetworksession.html#accept">QNetworkSession::accept</a>()</td></tr>
+<tr valign="top" class="odd"><td ><a href="qnetworksession.html#stateChanged">QNetworkSession::stateChanged</a>()</td><td ><a href="qnetworksession.html#reject">QNetworkSession::reject</a>()</td></tr>
+<tr valign="top" class="even"><td ></td><td ><a href="qnetworksession.html#opened">QNetworkSession::opened</a>()</td></tr>
+<tr valign="top" class="odd"><td ></td><td ><a href="qnetworksession.html#closed">QNetworkSession::closed</a>()</td></tr>
+</table></div>
+<p>The state of the session represents the state of the underlying access point whereas the session's openness implies the networking/connectivity state available to the current process.</p>
+<p>Possible use cases for interface management are network management related applications which intend to monitor the connectivity state but do not engage in network communication themselves. Any application wanting to open a socket to a remote address will typically use session management related functionality.</p>
+<a name="service-networks"></a>
+<h4 >Service networks</h4>
+<p>Some mobile platforms use the concept of grouped access points (also called SNAP or Service Network Access Point). In principle multiple configurations are grouped together and possibly even prioritized when compared to each other. This is useful for use cases where all configurations serve a similar purpose or context. A common context could be that they provide access to the public Internet or possibly only to the office Intranet. By providing a pool of configurations the system can make a decision based on given priorities which usually map to factors such as speed, availability and cost. Furthermore the system can automatically roam from one access point to the next one while ensuring minimal impact on the user experience.</p>
+<p>The <a href="qnetworkconfiguration.html#Type-enum">QNetworkConfiguration::Type</a> flag specifies to what category a configuration belongs. The <a href="qnetworkconfiguration.html#Type-enum">QNetworkConfiguration::InternetAccessPoint</a> type is the most common example. It represents a configuration that can be used to create a session. The above mentioned grouping behavior is provided by <a href="qnetworkconfiguration.html#Type-enum">QNetworkConfiguration::ServiceNetwork</a> configurations. Service networks are place holders until such time when the user attempts to <a href="qnetworksession.html#open">open()</a> a new session. At that point in time the system determines which of the configurations <a href="qnetworkconfiguration.html#children">QNetworkConfiguration::children</a>() is best to use. The selection algorithm is provided by the platform and is usually managed by network settings applications. A service network can only have one level of indirection which implies children can only be of type <a href="qnetworkconfiguration.html#Type-enum">QNetworkConfiguration::InternetAccessPoint</a>.</p>
+<p>Most systems allow the user to define the systems default configuration. Usually the default behavior is either a service network, a particular Internet access point or the user instructs the platform to ask the user once an application requests the network. User interaction is generally implemented by some sort of system dialog which shows up at the appropriate point in time. The application does not have to handle the user input. This API provides the <a href="qnetworkconfigurationmanager.html#defaultConfiguration">QNetworkConfigurationManager::defaultConfiguration</a>() call which serves a similar purpose. The subsequent code snippet provides a quick way how an application can quickly create a new network session without (or only minimal) user interaction:</p>
+<pre class="cpp">
+
+  <span class="comment">// Set Internet Access Point</span>
+  <span class="type"><a href="qnetworkconfigurationmanager.html">QNetworkConfigurationManager</a></span> manager;
+  <span class="keyword">const</span> bool canStartIAP <span class="operator">=</span> (manager<span class="operator">.</span>capabilities()
+                            <span class="operator">&amp;</span> <span class="type"><a href="qnetworkconfigurationmanager.html">QNetworkConfigurationManager</a></span><span class="operator">::</span>CanStartAndStopInterfaces);
+  <span class="comment">// Is there default access point, use it</span>
+  <span class="type"><a href="qnetworkconfiguration.html">QNetworkConfiguration</a></span> cfg <span class="operator">=</span> manager<span class="operator">.</span>defaultConfiguration();
+  <span class="keyword">if</span> (<span class="operator">!</span>cfg<span class="operator">.</span>isValid() <span class="operator">|</span><span class="operator">|</span> (<span class="operator">!</span>canStartIAP <span class="operator">&amp;</span><span class="operator">&amp;</span> cfg<span class="operator">.</span>state() <span class="operator">!</span><span class="operator">=</span> <span class="type"><a href="qnetworkconfiguration.html">QNetworkConfiguration</a></span><span class="operator">::</span>Active)) {
+      <span class="type">QMessageBox</span><span class="operator">::</span>information(<span class="keyword">this</span><span class="operator">,</span> tr(<span class="string">&quot;Network&quot;</span>)<span class="operator">,</span> tr(
+                                   <span class="string">&quot;No Access Point found.&quot;</span>));
+      <span class="keyword">return</span>;
+  }
+
+  session <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="qnetworksession.html">QNetworkSession</a></span>(cfg<span class="operator">,</span> <span class="keyword">this</span>);
+  session<span class="operator">-</span><span class="operator">&gt;</span>open();
+  session<span class="operator">-</span><span class="operator">&gt;</span>waitForOpened(<span class="operator">-</span><span class="number">1</span>);
+
+</pre>
+<p>To accommodate the &quot;Ask user&quot; use case the default configuration can be of type <a href="qnetworkconfiguration.html#Type-enum">QNetworkConfiguration::UserChoice</a>. A user choice configuration is resolved as part of the <a href="qnetworksession.html#open">QNetworkSession::open</a>() call. Note that a <a href="qnetworkconfiguration.html#Type-enum">UserChoice</a> configuration is only ever returned via <a href="qnetworkconfigurationmanager.html#defaultConfiguration">QNetworkConfigurationManager::defaultConfiguration</a>() and not <a href="qnetworkconfigurationmanager.html#allConfigurations">QNetworkConfigurationManager::allConfigurations</a>().</p>
+<p>On systems which do not maintain a list of <a href="qnetworkconfigurationmanager.html#defaultConfiguration">defaultConfiguration()</a> an invalid configuration is returned. A possible workaround could be to implement a custom dialog which is populated based on what <a href="qnetworkconfigurationmanager.html#allConfigurations">QNetworkConfigurationManager::allConfigurations</a>() returns.</p>
+<a name="managing-network-sessions"></a>
+<h4 >Managing network sessions</h4>
+<p>A <a href="qnetworksession.html">QNetworkSession</a> object separates a <a href="qnetworksession.html#state">state()</a> and an <a href="qnetworksession.html#isOpen">isOpen()</a> condition.</p>
+<p>The state() attribute enables developers to detect whether the system currently maintains a global network session for the given <a href="qnetworkconfiguration.html">QNetworkConfiguration</a>. If <a href="qnetworksession.html#isOpen">isOpen()</a> returns <code>true</code> the <a href="qnetworksession.html">QNetworkSession</a> instance at hand was at least one of the entities requesting the global network session. This distinction is required to support the notion of session registrations. For as long as there are one or more open <a href="qnetworksession.html">QNetworkSession</a> instances the underlying network interface is not shut down. Therefore the session <a href="qnetworksession.html#state">state()</a> can be used to monitor the state of network interfaces.</p>
+<p>An open session is created by calling <a href="qnetworksession.html#open">QNetworkSession::open</a>() and closed via <a href="qnetworksession.html#close">QNetworkSession::close</a>(), respectively. If the session is <a href="qnetworksession.html#State-enum">disconnected</a> at the time of the <a href="qnetworksession.html#open">open()</a> call the underlying interface is started; otherwise only the reference counter against the global session is incremented. The opposite behavior can be observed when using <a href="qnetworksession.html#close">close()</a>.</p>
+<p>In some use cases it may be necessary to turn the interface off despite of open sessions. This can be achieved by calling <a href="qnetworksession.html#stop">stop()</a>. An example use case could be a network manager type of application allowing the user to control the overall state of the devices connectivity.</p>
+<p>Global (inter-process) session support is platform dependent and can be detected via <a href="qnetworkconfigurationmanager.html#Capability-enum">QNetworkConfigurationManager::SystemSessionSupport</a>. If the system does not support global session calling <a href="qnetworksession.html#close">close()</a> never stops the interface.</p>
+<a name="roaming"></a>
+<h4 >Roaming</h4>
+<p>Roaming is the process of reconnecting a device from one network to another while minimizing the impact on the application. The system notifies the application about link layer changes so that the required preparation can be taken. The most common reaction would be to reinitialize sockets and to renegotiate stateful connections with other parties. In the most extreme cases applications may even prevent the roaming altogether.</p>
+<p>Roaming is initiated when the system determines that a more appropriate access point becomes available to the user. In general such a decision is based on cost, network speed or network type (access to certain private networks may only be provided via certain access points). Almost all devices providing roaming support have some form of global configuration application enabling the user to define such groups of access points (service networks) and priorities.</p>
+<p>This API supports two types of roaming. Application level roaming (ALR) provides the most control over the process. Applications will be notified about upcoming link layer changes and get the opportunity to test the new access point. Eventually they can reject or accept the link layer change. The second form of roaming is referred to as Forced Roaming. The system simply changes the link layer without consulting the application. It is up to the application to detect that some of its internal socket may have become invalid. As a consequence it has to reinitialize those sockets and reestablish the previous user session without any interruption. Forced roaming has the advantage that applications don't have to manage the entire roaming process by themselves.</p>
+<p><a href="qnetworksession.html">QNetworkSession</a> is the central class for managing roaming related issues.</p>
+<a name="platform-capabilities"></a>
+<h4 >Platform capabilities</h4>
+<p>Some API features are not available on all platforms. The <a href="qnetworkconfigurationmanager.html#Capability-enum">QNetworkConfigurationManager::Capability</a> should be used to detect platform features at runtime. The following table lists the various platform APIs being used by this API. This may assist in the process of determining the feature support:</p>
+<div class="table"><table class="generic">
+ <thead><tr class="qt-style"><th >Platform</th><th >Backend capabilities</th></tr></thead>
+<tr valign="top" class="odd"><td >Linux®</td><td >Linux uses the <a href="http://projects.gnome.org/NetworkManager">NetworkManager</a> and <a href="http://connman.net/">ConnMan</a> / <a href="http://ofono.org/">oFono</a> APIs which support interface notifications and starting and stopping of network interfaces. Network Manager version 0.9 and above is supported.</td></tr>
+<tr valign="top" class="even"><td >Windows® XP</td><td >This platform supports interface notifications without active polling.</td></tr>
+<tr valign="top" class="odd"><td >Windows XP SP2+Hotfixes, Windows XP SP3, Windows Vista, Windows 7</td><td >In addition to standard Windows XP wifi access point monitoring has been improved which includes the ability to start and stop wifi interfaces. This requires Windows to manage the wifi interfaces.</td></tr>
+<tr valign="top" class="even"><td >Mac OS®</td><td >This platform has full support by way of CoreWLAN offered in Mac OS 10.6&#x2e; Previous versions of Mac OS - 10.5 and 10.4 have limited support.</td></tr>
+<tr valign="top" class="odd"><td >All other platforms (*nix, Windows Mobile)</td><td >This backend is the fallback for all platforms supports network interface notifications via active polling only.</td></tr>
+</table></div>
+</div>
+<!-- @@@bearer-management.html -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

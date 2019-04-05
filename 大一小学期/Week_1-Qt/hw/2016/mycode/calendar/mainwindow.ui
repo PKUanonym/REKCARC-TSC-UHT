@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>804</width>
+    <height>513</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="calendar" name="calendarWidget"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>804</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>0</width>
+     <height>25</height>
+    </size>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionFetch_from_file"/>
+    <addaction name="actionPreservation_to_file"/>
+   </widget>
+   <widget class="QMenu" name="menuPreferences">
+    <property name="title">
+     <string>Preferences</string>
+    </property>
+    <widget class="QMenu" name="menuFixed">
+     <property name="title">
+      <string>fixed</string>
+     </property>
+     <addaction name="actionYes"/>
+     <addaction name="actionNo"/>
+    </widget>
+    <widget class="QMenu" name="menuDrag">
+     <property name="title">
+      <string>drag_file</string>
+     </property>
+     <addaction name="actionOn"/>
+     <addaction name="actionOff"/>
+    </widget>
+    <widget class="QMenu" name="menuTransparency">
+     <property name="title">
+      <string>transparency</string>
+     </property>
+     <addaction name="actionno"/>
+     <addaction name="actionlow"/>
+     <addaction name="actionhigh"/>
+    </widget>
+    <addaction name="menuFixed"/>
+    <addaction name="menuDrag"/>
+    <addaction name="menuTransparency"/>
+   </widget>
+   <widget class="QMenu" name="menuEdit">
+    <property name="title">
+     <string>Edit</string>
+    </property>
+    <addaction name="actionAdd_schedule"/>
+   </widget>
+   <widget class="QMenu" name="menuUser">
+    <property name="title">
+     <string>User</string>
+    </property>
+    <addaction name="actionResign"/>
+    <addaction name="actionLogin"/>
+    <addaction name="actionLogout"/>
+   </widget>
+   <widget class="QMenu" name="menuLanguage">
+    <property name="title">
+     <string>Language</string>
+    </property>
+    <addaction name="actionEnglish"/>
+    <addaction name="actionChinese"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuEdit"/>
+   <addaction name="menuPreferences"/>
+   <addaction name="menuUser"/>
+   <addaction name="menuLanguage"/>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionFetch_from_file">
+   <property name="text">
+    <string>Fetch_from_file</string>
+   </property>
+  </action>
+  <action name="actionPreservation_to_file">
+   <property name="text">
+    <string>Preservation_to_file</string>
+   </property>
+  </action>
+  <action name="actionYes">
+   <property name="text">
+    <string>yes</string>
+   </property>
+  </action>
+  <action name="actionNo">
+   <property name="text">
+    <string>no</string>
+   </property>
+  </action>
+  <action name="actionOn">
+   <property name="text">
+    <string>on</string>
+   </property>
+  </action>
+  <action name="actionOff">
+   <property name="text">
+    <string>off</string>
+   </property>
+  </action>
+  <action name="actionAdd_schedule">
+   <property name="text">
+    <string>Add_schedule</string>
+   </property>
+  </action>
+  <action name="actionResign">
+   <property name="text">
+    <string>Resign</string>
+   </property>
+  </action>
+  <action name="actionLogin">
+   <property name="text">
+    <string>Login</string>
+   </property>
+  </action>
+  <action name="actionLogout">
+   <property name="text">
+    <string>Logout</string>
+   </property>
+  </action>
+  <action name="actionno">
+   <property name="text">
+    <string>no</string>
+   </property>
+  </action>
+  <action name="actionlow">
+   <property name="text">
+    <string>low</string>
+   </property>
+  </action>
+  <action name="actionhigh">
+   <property name="text">
+    <string>high</string>
+   </property>
+  </action>
+  <action name="actionEnglish">
+   <property name="text">
+    <string>English</string>
+   </property>
+  </action>
+  <action name="actionChinese">
+   <property name="text">
+    <string>Chinese</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>calendar</class>
+   <extends>QCalendarWidget</extends>
+   <header>calendar.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

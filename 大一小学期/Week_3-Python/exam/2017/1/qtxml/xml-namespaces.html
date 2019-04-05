@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- xml-processing.qdoc -->
+  <title>An Introduction to Namespaces | Qt XML 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtxml-index.html">Qt XML</a></td><td >An Introduction to Namespaces</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+  <link rel="next" href="xml-streaming.html" />
+<p class="naviNextPrevious headerNavi">
+<a class="nextPage" href="xml-streaming.html">XML Streaming</a>
+</p><p/>
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#conventions-used-in-the-qt-xml-documentation">Conventions Used in the Qt XML Documentation</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">An Introduction to Namespaces</h1>
+<span class="subtitle"></span>
+<!-- $$$xml-namespaces.html-description -->
+<div class="descr"> <a name="details"></a>
+<a name="namespaces"></a><p>Parts of the Qt XML module documentation assume that you are familiar with XML namespaces. Here we present a brief introduction; skip to <a href="xml-namespaces.html#namespacesconventions">Qt XML documentation conventions</a> if you already know this material.</p>
+<p>Namespaces are a concept introduced into XML to allow a more modular design. With their help data processing software can easily resolve naming conflicts in XML documents.</p>
+<p>Consider the following example:</p>
+<pre class="cpp">
+
+  <span class="operator">&lt;</span>document<span class="operator">&gt;</span>
+  <span class="operator">&lt;</span>book<span class="operator">&gt;</span>
+    <span class="operator">&lt;</span>title<span class="operator">&gt;</span>Practical XML<span class="operator">&lt;</span><span class="operator">/</span>title<span class="operator">&gt;</span>
+    <span class="operator">&lt;</span>author title<span class="operator">=</span><span class="string">&quot;Ms&quot;</span> name<span class="operator">=</span><span class="string">&quot;Eris Kallisti&quot;</span><span class="operator">/</span><span class="operator">&gt;</span>
+    <span class="operator">&lt;</span>chapter<span class="operator">&gt;</span>
+      <span class="operator">&lt;</span>title<span class="operator">&gt;</span>A Namespace Called fnord<span class="operator">&lt;</span><span class="operator">/</span>title<span class="operator">&gt;</span>
+    <span class="operator">&lt;</span><span class="operator">/</span>chapter<span class="operator">&gt;</span>
+  <span class="operator">&lt;</span><span class="operator">/</span>book<span class="operator">&gt;</span>
+  <span class="operator">&lt;</span><span class="operator">/</span>document<span class="operator">&gt;</span>
+
+</pre>
+<p>Here we find three different uses of the name <i>title</i>. If you wish to process this document you will encounter problems because each of the <i>titles</i> should be displayed in a different manner -- even though they have the same name.</p>
+<p>The solution would be to have some means of identifying the first occurrence of <i>title</i> as the title of a book, i.e&#x2e; to use the <i>title</i> element of a book namespace to distinguish it from, for example, the chapter title, e.g&#x2e;:</p>
+<pre class="cpp">
+
+  <span class="operator">&lt;</span>book:title<span class="operator">&gt;</span>Practical XML<span class="operator">&lt;</span><span class="operator">/</span>book:title<span class="operator">&gt;</span>
+
+</pre>
+<p><i>book</i> in this case is a <i>prefix</i> denoting the namespace.</p>
+<p>Before we can apply a namespace to element or attribute names we must declare it.</p>
+<p>Namespaces are URIs like <i>http://www.example.com/fnord/book/</i>. This does not mean that data must be available at this address; the URI is simply used to provide a unique name.</p>
+<p>We declare namespaces in the same way as attributes; strictly speaking they <i>are</i> attributes. To make for example <i>http://www.example.com/fnord/</i> the document's default XML namespace <i>xmlns</i> we write</p>
+<pre class="cpp">
+
+  xmlns<span class="operator">=</span><span class="string">&quot;http://example.com/fnord/&quot;</span>
+
+</pre>
+<p>To distinguish the <i>http://www.example.com/fnord/book/</i> namespace from the default, we must supply it with a prefix:</p>
+<pre class="cpp">
+
+  xmlns:book<span class="operator">=</span><span class="string">&quot;http://example.com/fnord/book/&quot;</span>
+
+</pre>
+<p>A namespace that is declared like this can be applied to element and attribute names by prepending the appropriate prefix and a &quot;:&quot; delimiter. We have already seen this with the <i>book:title</i> element.</p>
+<p>Element names without a prefix belong to the default namespace. This rule does not apply to attributes: an attribute without a prefix does not belong to any of the declared XML namespaces at all. Attributes always belong to the &quot;traditional&quot; namespace of the element in which they appear. A &quot;traditional&quot; namespace is not an XML namespace, it simply means that all attribute names belonging to one element must be different. Later we will see how to assign an XML namespace to an attribute.</p>
+<p>Due to the fact that attributes without prefixes are not in any XML namespace there is no collision between the attribute <i>title</i> (that belongs to the <i>author</i> element) and for example the <i>title</i> element within a <i>chapter</i>.</p>
+<p>Let's clarify this with an example:</p>
+<pre class="cpp">
+
+  <span class="operator">&lt;</span>document xmlns:book <span class="operator">=</span> <span class="char">'http://example.com/fnord/book/'</span>
+            xmlns      <span class="operator">=</span> <span class="char">'http://example.com/fnord/'</span> <span class="operator">&gt;</span>
+  <span class="operator">&lt;</span>book<span class="operator">&gt;</span>
+    <span class="operator">&lt;</span>book:title<span class="operator">&gt;</span>Practical XML<span class="operator">&lt;</span><span class="operator">/</span>book:title<span class="operator">&gt;</span>
+    <span class="operator">&lt;</span>book:author xmlns:fnord <span class="operator">=</span> <span class="char">'http://example.com/fnord/'</span>
+                 title<span class="operator">=</span><span class="string">&quot;Ms&quot;</span>
+                 fnord:title<span class="operator">=</span><span class="string">&quot;Goddess&quot;</span>
+                 name<span class="operator">=</span><span class="string">&quot;Eris Kallisti&quot;</span><span class="operator">/</span><span class="operator">&gt;</span>
+    <span class="operator">&lt;</span>chapter<span class="operator">&gt;</span>
+      <span class="operator">&lt;</span>title<span class="operator">&gt;</span>A Namespace Called fnord<span class="operator">&lt;</span><span class="operator">/</span>title<span class="operator">&gt;</span>
+    <span class="operator">&lt;</span><span class="operator">/</span>chapter<span class="operator">&gt;</span>
+  <span class="operator">&lt;</span><span class="operator">/</span>book<span class="operator">&gt;</span>
+  <span class="operator">&lt;</span><span class="operator">/</span>document<span class="operator">&gt;</span>
+
+</pre>
+<p>Within the <i>document</i> element we have two namespaces declared. The default namespace <i>http://www.example.com/fnord/</i> applies to the <i>book</i> element, the <i>chapter</i> element, the appropriate <i>title</i> element and of course to <i>document</i> itself.</p>
+<p>The <i>book:author</i> and <i>book:title</i> elements belong to the namespace with the URI <i>http://www.example.com/fnord/book/</i>.</p>
+<p>The two <i>book:author</i> attributes <i>title</i> and <i>name</i> have no XML namespace assigned. They are only members of the &quot;traditional&quot; namespace of the element <i>book:author</i>, meaning that for example two <i>title</i> attributes in <i>book:author</i> are forbidden.</p>
+<p>In the above example we circumvent the last rule by adding a <i>title</i> attribute from the <i>http://www.example.com/fnord/</i> namespace to <i>book:author</i>: the <i>fnord:title</i> comes from the namespace with the prefix <i>fnord</i> that is declared in the <i>book:author</i> element.</p>
+<p>Clearly the <i>fnord</i> namespace has the same namespace URI as the default namespace. So why didn't we simply use the default namespace we'd already declared? The answer is quite complex:</p>
+<ul>
+<li>attributes without a prefix don't belong to any XML namespace at all, not even to the default namespace;</li>
+<li>additionally omitting the prefix would lead to a <i>title-title</i> clash;</li>
+<li>writing it as <i>xmlns:title</i> would declare a new namespace with the prefix <i>title</i> instead of applying the default <i>xmlns</i> namespace.</li>
+</ul>
+<p>With the Qt XML classes elements and attributes can be accessed in two ways: either by referring to their qualified names consisting of the namespace prefix and the &quot;real&quot; name (or <i>local</i> name) or by the combination of local name and namespace URI.</p>
+<p>More information on XML namespaces can be found at <a href="http://www.w3.org/TR/REC-xml-names/">http://www.w3.org/TR/REC-xml-names/</a>.</p>
+<a name="namespacesconventions"></a><a name="conventions-used-in-the-qt-xml-documentation"></a>
+<h2 id="conventions-used-in-the-qt-xml-documentation">Conventions Used in the Qt XML Documentation</h2>
+<p>The following terms are used to distinguish the parts of names within the context of namespaces:</p>
+<ul>
+<li>The <i>qualified name</i> is the name as it appears in the document. (In the above example <i>book:title</i> is a qualified name.)</li>
+<li>A <i>namespace prefix</i> in a qualified name is the part to the left of the &quot;:&quot;. (<i>book</i> is the namespace prefix in <i>book:title</i>.)</li>
+<li>The <i>local part</i> of a name (also referred to as the <i>local name</i>) appears to the right of the &quot;:&quot;. (Thus <i>title</i> is the local part of <i>book:title</i>.)</li>
+<li>The <i>namespace URI</i> (&quot;Uniform Resource Identifier&quot;) is a unique identifier for a namespace. It looks like a URL (e.g&#x2e; <i>http://www.example.com/fnord/</i> ) but does not require data to be accessible by the given protocol at the named address.</li>
+</ul>
+<p>Elements without a &quot;:&quot; (like <i>chapter</i> in the example) do not have a namespace prefix. In this case the local part and the qualified name are identical (i.e&#x2e; <i>chapter</i>).</p>
+</div>
+<p><b>See also </b><a href="qtxml-dombookmarks-example.html">DOM Bookmarks Example</a> and <a href="qtxml-saxbookmarks-example.html">SAX Bookmarks Example</a>.</p>
+<!-- @@@xml-namespaces.html -->
+<p class="naviNextPrevious footerNavi">
+<a class="nextPage" href="xml-streaming.html">XML Streaming</a>
+</p>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

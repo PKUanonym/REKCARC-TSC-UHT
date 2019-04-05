@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>connectionwidget.h Example File | Qt SQL 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtsql-index.html">Qt SQL</a></td><td ><a href="qtsql-sqlbrowser-example.html">SQL Browser</a></td><td >connectionwidget.h Example File</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar"><div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">connectionwidget.h Example File</h1>
+<span class="subtitle">sqlbrowser/connectionwidget.h</span>
+<!-- $$$sqlbrowser/connectionwidget.h-description -->
+<div class="descr"> <a name="details"></a>
+<pre class="cpp">
+
+  <span class="comment">/****************************************************************************
+  **
+  ** Copyright (C) 2015 The Qt Company Ltd.
+  ** Contact: http://www.qt.io/licensing/
+  **
+  ** This file is part of the demonstration applications of the Qt Toolkit.
+  **
+  ** $QT_BEGIN_LICENSE:LGPL21$
+  ** Commercial License Usage
+  ** Licensees holding valid commercial Qt licenses may use this file in
+  ** accordance with the commercial license agreement provided with the
+  ** Software or, alternatively, in accordance with the terms contained in
+  ** a written agreement between you and The Qt Company. For licensing terms
+  ** and conditions see http://www.qt.io/terms-conditions. For further
+  ** information use the contact form at http://www.qt.io/contact-us.
+  **
+  ** GNU Lesser General Public License Usage
+  ** Alternatively, this file may be used under the terms of the GNU Lesser
+  ** General Public License version 2.1 or version 3 as published by the Free
+  ** Software Foundation and appearing in the file LICENSE.LGPLv21 and
+  ** LICENSE.LGPLv3 included in the packaging of this file. Please review the
+  ** following information to ensure the GNU Lesser General Public License
+  ** requirements will be met: https://www.gnu.org/licenses/lgpl.html and
+  ** http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
+  **
+  ** As a special exception, The Qt Company gives you certain additional
+  ** rights. These rights are described in The Qt Company LGPL Exception
+  ** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
+  **
+  ** $QT_END_LICENSE$
+  **
+  ****************************************************************************/</span>
+
+  <span class="preprocessor">#ifndef CONNECTIONWIDGET_H</span>
+  <span class="preprocessor">#define CONNECTIONWIDGET_H</span>
+
+  <span class="preprocessor">#include &lt;QWidget&gt;</span>
+
+  QT_FORWARD_DECLARE_CLASS(<span class="type"><a href="../qtwidgets/qtreewidget.html">QTreeWidget</a></span>)
+  QT_FORWARD_DECLARE_CLASS(<span class="type"><a href="../qtwidgets/qtreewidgetitem.html">QTreeWidgetItem</a></span>)
+  QT_FORWARD_DECLARE_CLASS(<span class="type"><a href="qsqldatabase.html">QSqlDatabase</a></span>)
+  QT_FORWARD_DECLARE_CLASS(<span class="type"><a href="../qtwidgets/qmenu.html">QMenu</a></span>)
+
+  <span class="keyword">class</span> ConnectionWidget: <span class="keyword">public</span> <span class="type"><a href="../qtwidgets/qwidget.html">QWidget</a></span>
+  {
+      Q_OBJECT
+  <span class="keyword">public</span>:
+      ConnectionWidget(<span class="type"><a href="../qtwidgets/qwidget.html">QWidget</a></span> <span class="operator">*</span>parent <span class="operator">=</span> <span class="number">0</span>);
+      <span class="keyword">virtual</span> <span class="operator">~</span>ConnectionWidget();
+
+      <span class="type"><a href="qsqldatabase.html">QSqlDatabase</a></span> currentDatabase() <span class="keyword">const</span>;
+
+  <span class="keyword">signals</span>:
+      <span class="type">void</span> tableActivated(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>table);
+      <span class="type">void</span> metaDataRequested(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>tableName);
+
+  <span class="keyword">public</span> <span class="keyword">slots</span>:
+      <span class="type">void</span> refresh();
+      <span class="type">void</span> showMetaData();
+      <span class="type">void</span> on_tree_itemActivated(<span class="type"><a href="../qtwidgets/qtreewidgetitem.html">QTreeWidgetItem</a></span> <span class="operator">*</span>item<span class="operator">,</span> <span class="type">int</span> column);
+      <span class="type">void</span> on_tree_currentItemChanged(<span class="type"><a href="../qtwidgets/qtreewidgetitem.html">QTreeWidgetItem</a></span> <span class="operator">*</span>current<span class="operator">,</span> <span class="type"><a href="../qtwidgets/qtreewidgetitem.html">QTreeWidgetItem</a></span> <span class="operator">*</span>previous);
+
+  <span class="keyword">private</span>:
+      <span class="type">void</span> setActive(<span class="type"><a href="../qtwidgets/qtreewidgetitem.html">QTreeWidgetItem</a></span> <span class="operator">*</span>);
+
+      <span class="type"><a href="../qtwidgets/qtreewidget.html">QTreeWidget</a></span> <span class="operator">*</span>tree;
+      <span class="type"><a href="../qtwidgets/qaction.html">QAction</a></span> <span class="operator">*</span>metaDataAction;
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> activeDb;
+  };
+
+  <span class="preprocessor">#endif</span>
+
+</pre>
+</div>
+<!-- @@@sqlbrowser/connectionwidget.h -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

@@ -1,0 +1,479 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>mainwindow.cpp Example File | Qt SQL 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtsql-index.html">Qt SQL</a></td><td ><a href="qtsql-masterdetail-example.html">Master Detail Example</a></td><td >mainwindow.cpp Example File</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar"><div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">mainwindow.cpp Example File</h1>
+<span class="subtitle">masterdetail/mainwindow.cpp</span>
+<!-- $$$masterdetail/mainwindow.cpp-description -->
+<div class="descr"> <a name="details"></a>
+<pre class="cpp">
+
+  <span class="comment">/****************************************************************************
+  **
+  ** Copyright (C) 2015 The Qt Company Ltd.
+  ** Contact: http://www.qt.io/licensing/
+  **
+  ** This file is part of the examples of the Qt Toolkit.
+  **
+  ** $QT_BEGIN_LICENSE:BSD$
+  ** You may use this file under the terms of the BSD license as follows:
+  **
+  ** &quot;Redistribution and use in source and binary forms, with or without
+  ** modification, are permitted provided that the following conditions are
+  ** met:
+  **   * Redistributions of source code must retain the above copyright
+  **     notice, this list of conditions and the following disclaimer.
+  **   * Redistributions in binary form must reproduce the above copyright
+  **     notice, this list of conditions and the following disclaimer in
+  **     the documentation and/or other materials provided with the
+  **     distribution.
+  **   * Neither the name of The Qt Company Ltd nor the names of its
+  **     contributors may be used to endorse or promote products derived
+  **     from this software without specific prior written permission.
+  **
+  **
+  ** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  ** &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  ** LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  ** A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  ** OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  ** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  ** LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  ** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  ** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  ** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.&quot;
+  **
+  ** $QT_END_LICENSE$
+  **
+  ****************************************************************************/</span>
+
+  <span class="preprocessor">#include &quot;mainwindow.h&quot;</span>
+  <span class="preprocessor">#include &quot;dialog.h&quot;</span>
+
+  <span class="preprocessor">#include &lt;QtWidgets&gt;</span>
+  <span class="preprocessor">#include &lt;QtSql&gt;</span>
+  <span class="preprocessor">#include &lt;QtXml&gt;</span>
+
+  <span class="keyword">extern</span> <span class="type">int</span> uniqueAlbumId;
+  <span class="keyword">extern</span> <span class="type">int</span> uniqueArtistId;
+
+  MainWindow<span class="operator">::</span>MainWindow(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>artistTable<span class="operator">,</span> <span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>albumTable<span class="operator">,</span>
+                         <span class="type"><a href="../qtcore/qfile.html">QFile</a></span> <span class="operator">*</span>albumDetails<span class="operator">,</span> <span class="type"><a href="../qtwidgets/qwidget.html">QWidget</a></span> <span class="operator">*</span>parent)
+       : <span class="type"><a href="../qtwidgets/qmainwindow.html">QMainWindow</a></span>(parent)
+  {
+      file <span class="operator">=</span> albumDetails;
+      readAlbumData();
+
+      model <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="qsqlrelationaltablemodel.html">QSqlRelationalTableModel</a></span>(<span class="keyword">this</span>);
+      model<span class="operator">-</span><span class="operator">&gt;</span>setTable(albumTable);
+      model<span class="operator">-</span><span class="operator">&gt;</span>setRelation(<span class="number">2</span><span class="operator">,</span> <span class="type"><a href="qsqlrelation.html">QSqlRelation</a></span>(artistTable<span class="operator">,</span> <span class="string">&quot;id&quot;</span><span class="operator">,</span> <span class="string">&quot;artist&quot;</span>));
+      model<span class="operator">-</span><span class="operator">&gt;</span>select();
+
+      <span class="type"><a href="../qtwidgets/qgroupbox.html">QGroupBox</a></span> <span class="operator">*</span>artists <span class="operator">=</span> createArtistGroupBox();
+      <span class="type"><a href="../qtwidgets/qgroupbox.html">QGroupBox</a></span> <span class="operator">*</span>albums <span class="operator">=</span> createAlbumGroupBox();
+      <span class="type"><a href="../qtwidgets/qgroupbox.html">QGroupBox</a></span> <span class="operator">*</span>details <span class="operator">=</span> createDetailsGroupBox();
+
+      artistView<span class="operator">-</span><span class="operator">&gt;</span>setCurrentIndex(<span class="number">0</span>);
+      uniqueAlbumId <span class="operator">=</span> model<span class="operator">-</span><span class="operator">&gt;</span>rowCount();
+      uniqueArtistId <span class="operator">=</span> artistView<span class="operator">-</span><span class="operator">&gt;</span>count();
+
+      connect(model<span class="operator">,</span> SIGNAL(rowsInserted(<span class="type"><a href="../qtcore/qmodelindex.html">QModelIndex</a></span><span class="operator">,</span><span class="type">int</span><span class="operator">,</span><span class="type">int</span>))<span class="operator">,</span>
+              <span class="keyword">this</span><span class="operator">,</span> SLOT(updateHeader(<span class="type"><a href="../qtcore/qmodelindex.html">QModelIndex</a></span><span class="operator">,</span><span class="type">int</span><span class="operator">,</span><span class="type">int</span>)));
+      connect(model<span class="operator">,</span> SIGNAL(rowsRemoved(<span class="type"><a href="../qtcore/qmodelindex.html">QModelIndex</a></span><span class="operator">,</span><span class="type">int</span><span class="operator">,</span><span class="type">int</span>))<span class="operator">,</span>
+              <span class="keyword">this</span><span class="operator">,</span> SLOT(updateHeader(<span class="type"><a href="../qtcore/qmodelindex.html">QModelIndex</a></span><span class="operator">,</span><span class="type">int</span><span class="operator">,</span><span class="type">int</span>)));
+
+      <span class="type"><a href="../qtwidgets/qgridlayout.html">QGridLayout</a></span> <span class="operator">*</span>layout <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qgridlayout.html">QGridLayout</a></span>;
+      layout<span class="operator">-</span><span class="operator">&gt;</span>addWidget(artists<span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">0</span>);
+      layout<span class="operator">-</span><span class="operator">&gt;</span>addWidget(albums<span class="operator">,</span> <span class="number">1</span><span class="operator">,</span> <span class="number">0</span>);
+      layout<span class="operator">-</span><span class="operator">&gt;</span>addWidget(details<span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">1</span><span class="operator">,</span> <span class="number">2</span><span class="operator">,</span> <span class="number">1</span>);
+      layout<span class="operator">-</span><span class="operator">&gt;</span>setColumnStretch(<span class="number">1</span><span class="operator">,</span> <span class="number">1</span>);
+      layout<span class="operator">-</span><span class="operator">&gt;</span>setColumnMinimumWidth(<span class="number">0</span><span class="operator">,</span> <span class="number">500</span>);
+
+      <span class="type"><a href="../qtwidgets/qwidget.html">QWidget</a></span> <span class="operator">*</span>widget <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qwidget.html">QWidget</a></span>;
+      widget<span class="operator">-</span><span class="operator">&gt;</span>setLayout(layout);
+      setCentralWidget(widget);
+      createMenuBar();
+
+      showImageLabel();
+      resize(<span class="number">850</span><span class="operator">,</span> <span class="number">400</span>);
+      setWindowTitle(tr(<span class="string">&quot;Music Archive&quot;</span>));
+  }
+
+  <span class="type">void</span> MainWindow<span class="operator">::</span>changeArtist(<span class="type">int</span> row)
+  {
+      <span class="keyword">if</span> (row <span class="operator">&gt;</span> <span class="number">0</span>) {
+          <span class="type"><a href="../qtcore/qmodelindex.html">QModelIndex</a></span> index <span class="operator">=</span> model<span class="operator">-</span><span class="operator">&gt;</span>relationModel(<span class="number">2</span>)<span class="operator">-</span><span class="operator">&gt;</span>index(row<span class="operator">,</span> <span class="number">1</span>);
+          model<span class="operator">-</span><span class="operator">&gt;</span>setFilter(<span class="string">&quot;artist = '&quot;</span> <span class="operator">+</span> index<span class="operator">.</span>data()<span class="operator">.</span>toString() <span class="operator">+</span> <span class="char">'\''</span>) ;
+          showArtistProfile(index);
+      } <span class="keyword">else</span> <span class="keyword">if</span> (row <span class="operator">=</span><span class="operator">=</span> <span class="number">0</span>) {
+          model<span class="operator">-</span><span class="operator">&gt;</span>setFilter(<span class="type"><a href="../qtcore/qstring.html">QString</a></span>());
+          showImageLabel();
+      } <span class="keyword">else</span> {
+          <span class="keyword">return</span>;
+      }
+  }
+
+  <span class="type">void</span> MainWindow<span class="operator">::</span>showArtistProfile(<span class="type"><a href="../qtcore/qmodelindex.html">QModelIndex</a></span> index)
+  {
+      <span class="type"><a href="qsqlrecord.html">QSqlRecord</a></span> record <span class="operator">=</span> model<span class="operator">-</span><span class="operator">&gt;</span>relationModel(<span class="number">2</span>)<span class="operator">-</span><span class="operator">&gt;</span>record(index<span class="operator">.</span>row());
+
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> name <span class="operator">=</span> record<span class="operator">.</span>value(<span class="string">&quot;artist&quot;</span>)<span class="operator">.</span>toString();
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> count <span class="operator">=</span> record<span class="operator">.</span>value(<span class="string">&quot;albumcount&quot;</span>)<span class="operator">.</span>toString();
+      profileLabel<span class="operator">-</span><span class="operator">&gt;</span>setText(tr(<span class="string">&quot;Artist : %1 \n&quot;</span> \
+                               <span class="string">&quot;Number of Albums: %2&quot;</span>)<span class="operator">.</span>arg(name)<span class="operator">.</span>arg(count));
+
+      profileLabel<span class="operator">-</span><span class="operator">&gt;</span>show();
+      iconLabel<span class="operator">-</span><span class="operator">&gt;</span>show();
+
+      titleLabel<span class="operator">-</span><span class="operator">&gt;</span>hide();
+      trackList<span class="operator">-</span><span class="operator">&gt;</span>hide();
+      imageLabel<span class="operator">-</span><span class="operator">&gt;</span>hide();
+  }
+
+  <span class="type">void</span> MainWindow<span class="operator">::</span>showAlbumDetails(<span class="type"><a href="../qtcore/qmodelindex.html">QModelIndex</a></span> index)
+  {
+      <span class="type"><a href="qsqlrecord.html">QSqlRecord</a></span> record <span class="operator">=</span> model<span class="operator">-</span><span class="operator">&gt;</span>record(index<span class="operator">.</span>row());
+
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> artist <span class="operator">=</span> record<span class="operator">.</span>value(<span class="string">&quot;artist&quot;</span>)<span class="operator">.</span>toString();
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> title <span class="operator">=</span> record<span class="operator">.</span>value(<span class="string">&quot;title&quot;</span>)<span class="operator">.</span>toString();
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> year <span class="operator">=</span> record<span class="operator">.</span>value(<span class="string">&quot;year&quot;</span>)<span class="operator">.</span>toString();
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> albumId <span class="operator">=</span> record<span class="operator">.</span>value(<span class="string">&quot;albumid&quot;</span>)<span class="operator">.</span>toString();
+
+      showArtistProfile(indexOfArtist(artist));
+      titleLabel<span class="operator">-</span><span class="operator">&gt;</span>setText(tr(<span class="string">&quot;Title: %1 (%2)&quot;</span>)<span class="operator">.</span>arg(title)<span class="operator">.</span>arg(year));
+      titleLabel<span class="operator">-</span><span class="operator">&gt;</span>show();
+
+      <span class="type">QDomNodeList</span> albums <span class="operator">=</span> albumData<span class="operator">.</span>elementsByTagName(<span class="string">&quot;album&quot;</span>);
+      <span class="keyword">for</span> (<span class="type">int</span> i <span class="operator">=</span> <span class="number">0</span>; i <span class="operator">&lt;</span> albums<span class="operator">.</span>count(); i<span class="operator">+</span><span class="operator">+</span>) {
+          <span class="type">QDomNode</span> album <span class="operator">=</span> albums<span class="operator">.</span>item(i);
+          <span class="keyword">if</span> (album<span class="operator">.</span>toElement()<span class="operator">.</span>attribute(<span class="string">&quot;id&quot;</span>) <span class="operator">=</span><span class="operator">=</span> albumId) {
+              getTrackList(album<span class="operator">.</span>toElement());
+              <span class="keyword">break</span>;
+          }
+      }
+      <span class="keyword">if</span> (trackList<span class="operator">-</span><span class="operator">&gt;</span>count() <span class="operator">!</span><span class="operator">=</span> <span class="number">0</span>)
+          trackList<span class="operator">-</span><span class="operator">&gt;</span>show();
+  }
+
+  <span class="type">void</span> MainWindow<span class="operator">::</span>getTrackList(<span class="type">QDomNode</span> album)
+  {
+      trackList<span class="operator">-</span><span class="operator">&gt;</span>clear();
+
+      <span class="type">QDomNodeList</span> tracks <span class="operator">=</span> album<span class="operator">.</span>childNodes();
+      <span class="type">QDomNode</span> track;
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> trackNumber;
+
+      <span class="keyword">for</span> (<span class="type">int</span> j <span class="operator">=</span> <span class="number">0</span>; j <span class="operator">&lt;</span> tracks<span class="operator">.</span>count(); j<span class="operator">+</span><span class="operator">+</span>) {
+
+          track <span class="operator">=</span> tracks<span class="operator">.</span>item(j);
+          trackNumber <span class="operator">=</span> track<span class="operator">.</span>toElement()<span class="operator">.</span>attribute(<span class="string">&quot;number&quot;</span>);
+
+          <span class="type"><a href="../qtwidgets/qlistwidgetitem.html">QListWidgetItem</a></span> <span class="operator">*</span>item <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qlistwidgetitem.html">QListWidgetItem</a></span>(trackList);
+          item<span class="operator">-</span><span class="operator">&gt;</span>setText(trackNumber <span class="operator">+</span> <span class="string">&quot;: &quot;</span> <span class="operator">+</span> track<span class="operator">.</span>toElement()<span class="operator">.</span>text());
+      }
+  }
+
+  <span class="type">void</span> MainWindow<span class="operator">::</span>addAlbum()
+  {
+      Dialog <span class="operator">*</span>dialog <span class="operator">=</span> <span class="keyword">new</span> Dialog(model<span class="operator">,</span> albumData<span class="operator">,</span> file<span class="operator">,</span> <span class="keyword">this</span>);
+      <span class="type">int</span> accepted <span class="operator">=</span> dialog<span class="operator">-</span><span class="operator">&gt;</span>exec();
+
+      <span class="keyword">if</span> (accepted <span class="operator">=</span><span class="operator">=</span> <span class="number">1</span>) {
+          <span class="type">int</span> lastRow <span class="operator">=</span> model<span class="operator">-</span><span class="operator">&gt;</span>rowCount() <span class="operator">-</span> <span class="number">1</span>;
+          albumView<span class="operator">-</span><span class="operator">&gt;</span>selectRow(lastRow);
+          albumView<span class="operator">-</span><span class="operator">&gt;</span>scrollToBottom();
+          showAlbumDetails(model<span class="operator">-</span><span class="operator">&gt;</span>index(lastRow<span class="operator">,</span> <span class="number">0</span>));
+      }
+  }
+
+  <span class="type">void</span> MainWindow<span class="operator">::</span>deleteAlbum()
+  {
+      <span class="type"><a href="../qtcore/qmodelindex.html#QModelIndexList-typedef">QModelIndexList</a></span> selection <span class="operator">=</span> albumView<span class="operator">-</span><span class="operator">&gt;</span>selectionModel()<span class="operator">-</span><span class="operator">&gt;</span>selectedRows(<span class="number">0</span>);
+
+      <span class="keyword">if</span> (<span class="operator">!</span>selection<span class="operator">.</span>empty()) {
+          <span class="type"><a href="../qtcore/qmodelindex.html">QModelIndex</a></span> idIndex <span class="operator">=</span> selection<span class="operator">.</span>at(<span class="number">0</span>);
+          <span class="type">int</span> id <span class="operator">=</span> idIndex<span class="operator">.</span>data()<span class="operator">.</span>toInt();
+          <span class="type"><a href="../qtcore/qstring.html">QString</a></span> title <span class="operator">=</span> idIndex<span class="operator">.</span>sibling(idIndex<span class="operator">.</span>row()<span class="operator">,</span> <span class="number">1</span>)<span class="operator">.</span>data()<span class="operator">.</span>toString();
+          <span class="type"><a href="../qtcore/qstring.html">QString</a></span> artist <span class="operator">=</span> idIndex<span class="operator">.</span>sibling(idIndex<span class="operator">.</span>row()<span class="operator">,</span> <span class="number">2</span>)<span class="operator">.</span>data()<span class="operator">.</span>toString();
+
+          <span class="type"><a href="../qtwidgets/qmessagebox.html">QMessageBox</a></span><span class="operator">::</span>StandardButton button;
+          button <span class="operator">=</span> <span class="type"><a href="../qtwidgets/qmessagebox.html">QMessageBox</a></span><span class="operator">::</span>question(<span class="keyword">this</span><span class="operator">,</span> tr(<span class="string">&quot;Delete Album&quot;</span>)<span class="operator">,</span>
+                                         tr(<span class="string">&quot;Are you sure you want to &quot;</span>
+                                            <span class="string">&quot;delete '%1' by '%2'?&quot;</span>)
+                                         <span class="operator">.</span>arg(title<span class="operator">,</span> artist)<span class="operator">,</span>
+                                         <span class="type"><a href="../qtwidgets/qmessagebox.html">QMessageBox</a></span><span class="operator">::</span>Yes <span class="operator">|</span> <span class="type"><a href="../qtwidgets/qmessagebox.html">QMessageBox</a></span><span class="operator">::</span>No);
+
+          <span class="keyword">if</span> (button <span class="operator">=</span><span class="operator">=</span> <span class="type"><a href="../qtwidgets/qmessagebox.html">QMessageBox</a></span><span class="operator">::</span>Yes) {
+              removeAlbumFromFile(id);
+              removeAlbumFromDatabase(idIndex);
+              decreaseAlbumCount(indexOfArtist(artist));
+
+              showImageLabel();
+          }
+      } <span class="keyword">else</span> {
+          <span class="type"><a href="../qtwidgets/qmessagebox.html">QMessageBox</a></span><span class="operator">::</span>information(<span class="keyword">this</span><span class="operator">,</span> tr(<span class="string">&quot;Delete Album&quot;</span>)<span class="operator">,</span>
+                                   tr(<span class="string">&quot;Select the album you want to delete.&quot;</span>));
+      }
+  }
+
+  <span class="type">void</span> MainWindow<span class="operator">::</span>removeAlbumFromFile(<span class="type">int</span> id)
+  {
+
+      <span class="type">QDomNodeList</span> albums <span class="operator">=</span> albumData<span class="operator">.</span>elementsByTagName(<span class="string">&quot;album&quot;</span>);
+
+      <span class="keyword">for</span> (<span class="type">int</span> i <span class="operator">=</span> <span class="number">0</span>; i <span class="operator">&lt;</span> albums<span class="operator">.</span>count(); i<span class="operator">+</span><span class="operator">+</span>) {
+          <span class="type">QDomNode</span> node <span class="operator">=</span> albums<span class="operator">.</span>item(i);
+          <span class="keyword">if</span> (node<span class="operator">.</span>toElement()<span class="operator">.</span>attribute(<span class="string">&quot;id&quot;</span>)<span class="operator">.</span>toInt() <span class="operator">=</span><span class="operator">=</span> id) {
+              albumData<span class="operator">.</span>elementsByTagName(<span class="string">&quot;archive&quot;</span>)<span class="operator">.</span>item(<span class="number">0</span>)<span class="operator">.</span>removeChild(node);
+              <span class="keyword">break</span>;
+          }
+      }
+  <span class="comment">/*
+      The following code is commented out since the example uses an in
+      memory database, i.e., altering the XML file will bring the data
+      out of sync.
+
+      if (!file-&gt;open(QIODevice::WriteOnly)) {
+          return;
+      } else {
+          QTextStream stream(file);
+          albumData.elementsByTagName(&quot;archive&quot;).item(0).save(stream, 4);
+          file-&gt;close();
+      }
+  */</span>
+  }
+
+  <span class="type">void</span> MainWindow<span class="operator">::</span>removeAlbumFromDatabase(<span class="type"><a href="../qtcore/qmodelindex.html">QModelIndex</a></span> index)
+  {
+      model<span class="operator">-</span><span class="operator">&gt;</span>removeRow(index<span class="operator">.</span>row());
+  }
+
+  <span class="type">void</span> MainWindow<span class="operator">::</span>decreaseAlbumCount(<span class="type"><a href="../qtcore/qmodelindex.html">QModelIndex</a></span> artistIndex)
+  {
+      <span class="type">int</span> row <span class="operator">=</span> artistIndex<span class="operator">.</span>row();
+      <span class="type"><a href="../qtcore/qmodelindex.html">QModelIndex</a></span> albumCountIndex <span class="operator">=</span> artistIndex<span class="operator">.</span>sibling(row<span class="operator">,</span> <span class="number">2</span>);
+      <span class="type">int</span> albumCount <span class="operator">=</span> albumCountIndex<span class="operator">.</span>data()<span class="operator">.</span>toInt();
+
+      <span class="type"><a href="qsqltablemodel.html">QSqlTableModel</a></span> <span class="operator">*</span>artists <span class="operator">=</span> model<span class="operator">-</span><span class="operator">&gt;</span>relationModel(<span class="number">2</span>);
+
+      <span class="keyword">if</span> (albumCount <span class="operator">=</span><span class="operator">=</span> <span class="number">1</span>) {
+          artists<span class="operator">-</span><span class="operator">&gt;</span>removeRow(row);
+          showImageLabel();
+      } <span class="keyword">else</span> {
+          artists<span class="operator">-</span><span class="operator">&gt;</span>setData(albumCountIndex<span class="operator">,</span> <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span>(albumCount <span class="operator">-</span> <span class="number">1</span>));
+      }
+  }
+
+  <span class="type">void</span> MainWindow<span class="operator">::</span>readAlbumData()
+  {
+      <span class="keyword">if</span> (<span class="operator">!</span>file<span class="operator">-</span><span class="operator">&gt;</span>open(<span class="type"><a href="../qtcore/qiodevice.html">QIODevice</a></span><span class="operator">::</span>ReadOnly))
+          <span class="keyword">return</span>;
+
+      <span class="keyword">if</span> (<span class="operator">!</span>albumData<span class="operator">.</span>setContent(file)) {
+          file<span class="operator">-</span><span class="operator">&gt;</span>close();
+          <span class="keyword">return</span>;
+      }
+      file<span class="operator">-</span><span class="operator">&gt;</span>close();
+  }
+
+  <span class="type"><a href="../qtwidgets/qgroupbox.html">QGroupBox</a></span><span class="operator">*</span> MainWindow<span class="operator">::</span>createArtistGroupBox()
+  {
+      artistView <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qcombobox.html">QComboBox</a></span>;
+      artistView<span class="operator">-</span><span class="operator">&gt;</span>setModel(model<span class="operator">-</span><span class="operator">&gt;</span>relationModel(<span class="number">2</span>));
+      artistView<span class="operator">-</span><span class="operator">&gt;</span>setModelColumn(<span class="number">1</span>);
+
+      connect(artistView<span class="operator">,</span> SIGNAL(currentIndexChanged(<span class="type">int</span>))<span class="operator">,</span>
+              <span class="keyword">this</span><span class="operator">,</span> SLOT(changeArtist(<span class="type">int</span>)));
+
+      <span class="type"><a href="../qtwidgets/qgroupbox.html">QGroupBox</a></span> <span class="operator">*</span>box <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qgroupbox.html">QGroupBox</a></span>(tr(<span class="string">&quot;Artist&quot;</span>));
+
+      <span class="type"><a href="../qtwidgets/qgridlayout.html">QGridLayout</a></span> <span class="operator">*</span>layout <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qgridlayout.html">QGridLayout</a></span>;
+      layout<span class="operator">-</span><span class="operator">&gt;</span>addWidget(artistView<span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">0</span>);
+      box<span class="operator">-</span><span class="operator">&gt;</span>setLayout(layout);
+
+      <span class="keyword">return</span> box;
+  }
+
+  <span class="type"><a href="../qtwidgets/qgroupbox.html">QGroupBox</a></span><span class="operator">*</span> MainWindow<span class="operator">::</span>createAlbumGroupBox()
+  {
+      <span class="type"><a href="../qtwidgets/qgroupbox.html">QGroupBox</a></span> <span class="operator">*</span>box <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qgroupbox.html">QGroupBox</a></span>(tr(<span class="string">&quot;Album&quot;</span>));
+
+      albumView <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qtableview.html">QTableView</a></span>;
+      albumView<span class="operator">-</span><span class="operator">&gt;</span>setEditTriggers(<span class="type"><a href="../qtwidgets/qabstractitemview.html">QAbstractItemView</a></span><span class="operator">::</span>NoEditTriggers);
+      albumView<span class="operator">-</span><span class="operator">&gt;</span>setSortingEnabled(<span class="keyword">true</span>);
+      albumView<span class="operator">-</span><span class="operator">&gt;</span>setSelectionBehavior(<span class="type"><a href="../qtwidgets/qabstractitemview.html">QAbstractItemView</a></span><span class="operator">::</span>SelectRows);
+      albumView<span class="operator">-</span><span class="operator">&gt;</span>setSelectionMode(<span class="type"><a href="../qtwidgets/qabstractitemview.html">QAbstractItemView</a></span><span class="operator">::</span>SingleSelection);
+      albumView<span class="operator">-</span><span class="operator">&gt;</span>setShowGrid(<span class="keyword">false</span>);
+      albumView<span class="operator">-</span><span class="operator">&gt;</span>verticalHeader()<span class="operator">-</span><span class="operator">&gt;</span>hide();
+      albumView<span class="operator">-</span><span class="operator">&gt;</span>setAlternatingRowColors(<span class="keyword">true</span>);
+      albumView<span class="operator">-</span><span class="operator">&gt;</span>setModel(model);
+      adjustHeader();
+
+      <span class="type"><a href="../qtcore/qlocale.html">QLocale</a></span> locale <span class="operator">=</span> albumView<span class="operator">-</span><span class="operator">&gt;</span>locale();
+      locale<span class="operator">.</span>setNumberOptions(<span class="type"><a href="../qtcore/qlocale.html">QLocale</a></span><span class="operator">::</span>OmitGroupSeparator);
+      albumView<span class="operator">-</span><span class="operator">&gt;</span>setLocale(locale);
+
+      connect(albumView<span class="operator">,</span> SIGNAL(clicked(<span class="type"><a href="../qtcore/qmodelindex.html">QModelIndex</a></span>))<span class="operator">,</span>
+              <span class="keyword">this</span><span class="operator">,</span> SLOT(showAlbumDetails(<span class="type"><a href="../qtcore/qmodelindex.html">QModelIndex</a></span>)));
+      connect(albumView<span class="operator">,</span> SIGNAL(activated(<span class="type"><a href="../qtcore/qmodelindex.html">QModelIndex</a></span>))<span class="operator">,</span>
+              <span class="keyword">this</span><span class="operator">,</span> SLOT(showAlbumDetails(<span class="type"><a href="../qtcore/qmodelindex.html">QModelIndex</a></span>)));
+
+      <span class="type"><a href="../qtwidgets/qvboxlayout.html">QVBoxLayout</a></span> <span class="operator">*</span>layout <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qvboxlayout.html">QVBoxLayout</a></span>;
+      layout<span class="operator">-</span><span class="operator">&gt;</span>addWidget(albumView<span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">0</span>);
+      box<span class="operator">-</span><span class="operator">&gt;</span>setLayout(layout);
+
+      <span class="keyword">return</span> box;
+  }
+
+  <span class="type"><a href="../qtwidgets/qgroupbox.html">QGroupBox</a></span><span class="operator">*</span> MainWindow<span class="operator">::</span>createDetailsGroupBox()
+  {
+      <span class="type"><a href="../qtwidgets/qgroupbox.html">QGroupBox</a></span> <span class="operator">*</span>box <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qgroupbox.html">QGroupBox</a></span>(tr(<span class="string">&quot;Details&quot;</span>));
+
+      profileLabel <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qlabel.html">QLabel</a></span>;
+      profileLabel<span class="operator">-</span><span class="operator">&gt;</span>setWordWrap(<span class="keyword">true</span>);
+      profileLabel<span class="operator">-</span><span class="operator">&gt;</span>setAlignment(<span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>AlignBottom);
+
+      titleLabel <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qlabel.html">QLabel</a></span>;
+      titleLabel<span class="operator">-</span><span class="operator">&gt;</span>setWordWrap(<span class="keyword">true</span>);
+      titleLabel<span class="operator">-</span><span class="operator">&gt;</span>setAlignment(<span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>AlignBottom);
+
+      iconLabel <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qlabel.html">QLabel</a></span>();
+      iconLabel<span class="operator">-</span><span class="operator">&gt;</span>setAlignment(<span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>AlignBottom <span class="operator">|</span> <span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>AlignRight);
+      iconLabel<span class="operator">-</span><span class="operator">&gt;</span>setPixmap(<span class="type">QPixmap</span>(<span class="string">&quot;:/images/icon.png&quot;</span>));
+
+      imageLabel <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qlabel.html">QLabel</a></span>;
+      imageLabel<span class="operator">-</span><span class="operator">&gt;</span>setWordWrap(<span class="keyword">true</span>);
+      imageLabel<span class="operator">-</span><span class="operator">&gt;</span>setAlignment(<span class="type"><a href="../qtcore/qt.html">Qt</a></span><span class="operator">::</span>AlignCenter);
+      imageLabel<span class="operator">-</span><span class="operator">&gt;</span>setPixmap(<span class="type">QPixmap</span>(<span class="string">&quot;:/images/image.png&quot;</span>));
+
+      trackList <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qlistwidget.html">QListWidget</a></span>;
+
+      <span class="type"><a href="../qtwidgets/qgridlayout.html">QGridLayout</a></span> <span class="operator">*</span>layout <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qgridlayout.html">QGridLayout</a></span>;
+      layout<span class="operator">-</span><span class="operator">&gt;</span>addWidget(imageLabel<span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">3</span><span class="operator">,</span> <span class="number">2</span>);
+      layout<span class="operator">-</span><span class="operator">&gt;</span>addWidget(profileLabel<span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">0</span>);
+      layout<span class="operator">-</span><span class="operator">&gt;</span>addWidget(iconLabel<span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">1</span>);
+      layout<span class="operator">-</span><span class="operator">&gt;</span>addWidget(titleLabel<span class="operator">,</span> <span class="number">1</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">1</span><span class="operator">,</span> <span class="number">2</span>);
+      layout<span class="operator">-</span><span class="operator">&gt;</span>addWidget(trackList<span class="operator">,</span> <span class="number">2</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">1</span><span class="operator">,</span> <span class="number">2</span>);
+      layout<span class="operator">-</span><span class="operator">&gt;</span>setRowStretch(<span class="number">2</span><span class="operator">,</span> <span class="number">1</span>);
+      box<span class="operator">-</span><span class="operator">&gt;</span>setLayout(layout);
+
+      <span class="keyword">return</span> box;
+  }
+
+  <span class="type">void</span> MainWindow<span class="operator">::</span>createMenuBar()
+  {
+      <span class="type"><a href="../qtwidgets/qaction.html">QAction</a></span> <span class="operator">*</span>addAction <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qaction.html">QAction</a></span>(tr(<span class="string">&quot;&amp;Add album...&quot;</span>)<span class="operator">,</span> <span class="keyword">this</span>);
+      <span class="type"><a href="../qtwidgets/qaction.html">QAction</a></span> <span class="operator">*</span>deleteAction <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qaction.html">QAction</a></span>(tr(<span class="string">&quot;&amp;Delete album...&quot;</span>)<span class="operator">,</span> <span class="keyword">this</span>);
+      <span class="type"><a href="../qtwidgets/qaction.html">QAction</a></span> <span class="operator">*</span>quitAction <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qaction.html">QAction</a></span>(tr(<span class="string">&quot;&amp;Quit&quot;</span>)<span class="operator">,</span> <span class="keyword">this</span>);
+      <span class="type"><a href="../qtwidgets/qaction.html">QAction</a></span> <span class="operator">*</span>aboutAction <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qaction.html">QAction</a></span>(tr(<span class="string">&quot;&amp;About&quot;</span>)<span class="operator">,</span> <span class="keyword">this</span>);
+      <span class="type"><a href="../qtwidgets/qaction.html">QAction</a></span> <span class="operator">*</span>aboutQtAction <span class="operator">=</span> <span class="keyword">new</span> <span class="type"><a href="../qtwidgets/qaction.html">QAction</a></span>(tr(<span class="string">&quot;About &amp;Qt&quot;</span>)<span class="operator">,</span> <span class="keyword">this</span>);
+
+      addAction<span class="operator">-</span><span class="operator">&gt;</span>setShortcut(tr(<span class="string">&quot;Ctrl+A&quot;</span>));
+      deleteAction<span class="operator">-</span><span class="operator">&gt;</span>setShortcut(tr(<span class="string">&quot;Ctrl+D&quot;</span>));
+      quitAction<span class="operator">-</span><span class="operator">&gt;</span>setShortcuts(<span class="type">QKeySequence</span><span class="operator">::</span>Quit);
+
+      <span class="type"><a href="../qtwidgets/qmenu.html">QMenu</a></span> <span class="operator">*</span>fileMenu <span class="operator">=</span> menuBar()<span class="operator">-</span><span class="operator">&gt;</span>addMenu(tr(<span class="string">&quot;&amp;File&quot;</span>));
+      fileMenu<span class="operator">-</span><span class="operator">&gt;</span>addAction(addAction);
+      fileMenu<span class="operator">-</span><span class="operator">&gt;</span>addAction(deleteAction);
+      fileMenu<span class="operator">-</span><span class="operator">&gt;</span>addSeparator();
+      fileMenu<span class="operator">-</span><span class="operator">&gt;</span>addAction(quitAction);
+
+      <span class="type"><a href="../qtwidgets/qmenu.html">QMenu</a></span> <span class="operator">*</span>helpMenu <span class="operator">=</span> menuBar()<span class="operator">-</span><span class="operator">&gt;</span>addMenu(tr(<span class="string">&quot;&amp;Help&quot;</span>));
+      helpMenu<span class="operator">-</span><span class="operator">&gt;</span>addAction(aboutAction);
+      helpMenu<span class="operator">-</span><span class="operator">&gt;</span>addAction(aboutQtAction);
+
+      connect(addAction<span class="operator">,</span> SIGNAL(triggered(bool))<span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> SLOT(addAlbum()));
+      connect(deleteAction<span class="operator">,</span> SIGNAL(triggered(bool))<span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> SLOT(deleteAlbum()));
+      connect(quitAction<span class="operator">,</span> SIGNAL(triggered(bool))<span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> SLOT(close()));
+      connect(aboutAction<span class="operator">,</span> SIGNAL(triggered(bool))<span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> SLOT(about()));
+      connect(aboutQtAction<span class="operator">,</span> SIGNAL(triggered(bool))<span class="operator">,</span> qApp<span class="operator">,</span> SLOT(aboutQt()));
+  }
+
+  <span class="type">void</span> MainWindow<span class="operator">::</span>showImageLabel()
+  {
+      profileLabel<span class="operator">-</span><span class="operator">&gt;</span>hide();
+      titleLabel<span class="operator">-</span><span class="operator">&gt;</span>hide();
+      iconLabel<span class="operator">-</span><span class="operator">&gt;</span>hide();
+      trackList<span class="operator">-</span><span class="operator">&gt;</span>hide();
+
+      imageLabel<span class="operator">-</span><span class="operator">&gt;</span>show();
+  }
+
+  <span class="type"><a href="../qtcore/qmodelindex.html">QModelIndex</a></span> MainWindow<span class="operator">::</span>indexOfArtist(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>artist)
+  {
+      <span class="type"><a href="qsqltablemodel.html">QSqlTableModel</a></span> <span class="operator">*</span>artistModel <span class="operator">=</span> model<span class="operator">-</span><span class="operator">&gt;</span>relationModel(<span class="number">2</span>);
+
+      <span class="keyword">for</span> (<span class="type">int</span> i <span class="operator">=</span> <span class="number">0</span>; i <span class="operator">&lt;</span> artistModel<span class="operator">-</span><span class="operator">&gt;</span>rowCount(); i<span class="operator">+</span><span class="operator">+</span>) {
+          <span class="type"><a href="qsqlrecord.html">QSqlRecord</a></span> record <span class="operator">=</span>  artistModel<span class="operator">-</span><span class="operator">&gt;</span>record(i);
+          <span class="keyword">if</span> (record<span class="operator">.</span>value(<span class="string">&quot;artist&quot;</span>) <span class="operator">=</span><span class="operator">=</span> artist)
+              <span class="keyword">return</span> artistModel<span class="operator">-</span><span class="operator">&gt;</span>index(i<span class="operator">,</span> <span class="number">1</span>);
+      }
+      <span class="keyword">return</span> <span class="type"><a href="../qtcore/qmodelindex.html">QModelIndex</a></span>();
+  }
+
+  <span class="type">void</span> MainWindow<span class="operator">::</span>updateHeader(<span class="type"><a href="../qtcore/qmodelindex.html">QModelIndex</a></span><span class="operator">,</span> <span class="type">int</span><span class="operator">,</span> <span class="type">int</span>)
+  {
+      adjustHeader();
+  }
+
+  <span class="type">void</span> MainWindow<span class="operator">::</span>adjustHeader()
+  {
+      albumView<span class="operator">-</span><span class="operator">&gt;</span>hideColumn(<span class="number">0</span>);
+      albumView<span class="operator">-</span><span class="operator">&gt;</span>horizontalHeader()<span class="operator">-</span><span class="operator">&gt;</span>setSectionResizeMode(<span class="number">1</span><span class="operator">,</span> <span class="type"><a href="../qtwidgets/qheaderview.html">QHeaderView</a></span><span class="operator">::</span>Stretch);
+      albumView<span class="operator">-</span><span class="operator">&gt;</span>resizeColumnToContents(<span class="number">2</span>);
+      albumView<span class="operator">-</span><span class="operator">&gt;</span>resizeColumnToContents(<span class="number">3</span>);
+  }
+
+  <span class="type">void</span> MainWindow<span class="operator">::</span>about()
+  {
+      <span class="type"><a href="../qtwidgets/qmessagebox.html">QMessageBox</a></span><span class="operator">::</span>about(<span class="keyword">this</span><span class="operator">,</span> tr(<span class="string">&quot;About Music Archive&quot;</span>)<span class="operator">,</span>
+              tr(<span class="string">&quot;&lt;p&gt;The &lt;b&gt;Music Archive&lt;/b&gt; example shows how to present &quot;</span>
+                 <span class="string">&quot;data from different data sources in the same application. &quot;</span>
+                 <span class="string">&quot;The album titles, and the corresponding artists and release dates, &quot;</span>
+                 <span class="string">&quot;are kept in a database, while each album's tracks are stored &quot;</span>
+                 <span class="string">&quot;in an XML file. &lt;/p&gt;&lt;p&gt;The example also shows how to add as &quot;</span>
+                 <span class="string">&quot;well as remove data from both the database and the &quot;</span>
+                 <span class="string">&quot;associated XML file using the API provided by the Qt SQL and &quot;</span>
+                 <span class="string">&quot;Qt XML modules, respectively.&lt;/p&gt;&quot;</span>));
+  }
+
+</pre>
+</div>
+<!-- @@@masterdetail/mainwindow.cpp -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

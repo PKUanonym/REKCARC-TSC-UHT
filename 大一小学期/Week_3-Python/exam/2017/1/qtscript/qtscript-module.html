@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qtscript-module.qdoc -->
+  <title>Qt Script C++ Classes | Qt Script</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtscript-index.html">Qt Script</a></td><td >Qt Script C++ Classes</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#classes">Classes</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+<li class="level2"><a href="#license-information">License Information</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">Qt Script C++ Classes</h1>
+<span class="subtitle"></span>
+<!-- $$$QtScript-brief -->
+<p>The Qt Script module provides classes for making Qt applications scriptable. <a href="#details">More...</a></p>
+<!-- @@@QtScript -->
+<p>This documentation was introduced in  Qt 4.3.</p>
+<a name="classes"></a>
+<h2 id="classes">Classes</h2>
+<div class="table"><table class="annotated">
+<tr class="odd topAlign"><td class="tblName"><p><a href="qscriptclass.html">QScriptClass</a></p></td><td class="tblDescr"><p>Interface for defining custom behavior of (a class of) Qt Script objects</p></td></tr>
+<tr class="even topAlign"><td class="tblName"><p><a href="qscriptclasspropertyiterator.html">QScriptClassPropertyIterator</a></p></td><td class="tblDescr"><p>Iterator interface for custom Qt Script objects</p></td></tr>
+<tr class="odd topAlign"><td class="tblName"><p><a href="qscriptcontext.html">QScriptContext</a></p></td><td class="tblDescr"><p>Represents a Qt Script function invocation</p></td></tr>
+<tr class="even topAlign"><td class="tblName"><p><a href="qscriptcontextinfo.html">QScriptContextInfo</a></p></td><td class="tblDescr"><p>Additional information about a QScriptContext</p></td></tr>
+<tr class="odd topAlign"><td class="tblName"><p><a href="qscriptengine.html">QScriptEngine</a></p></td><td class="tblDescr"><p>Environment for evaluating Qt Script code</p></td></tr>
+<tr class="even topAlign"><td class="tblName"><p><a href="qscriptengineagent.html">QScriptEngineAgent</a></p></td><td class="tblDescr"><p>Interface to report events pertaining to QScriptEngine execution</p></td></tr>
+<tr class="odd topAlign"><td class="tblName"><p><a href="qscriptextensionplugin.html">QScriptExtensionPlugin</a></p></td><td class="tblDescr"><p>Abstract base for custom QScript extension plugins</p></td></tr>
+<tr class="even topAlign"><td class="tblName"><p><a href="qscriptprogram.html">QScriptProgram</a></p></td><td class="tblDescr"><p>Encapsulates a Qt Script program</p></td></tr>
+<tr class="odd topAlign"><td class="tblName"><p><a href="qscriptstring.html">QScriptString</a></p></td><td class="tblDescr"><p>Acts as a handle to &quot;interned&quot; strings in a QScriptEngine</p></td></tr>
+<tr class="even topAlign"><td class="tblName"><p><a href="qscriptsyntaxcheckresult.html">QScriptSyntaxCheckResult</a></p></td><td class="tblDescr"><p>The result of a script syntax check</p></td></tr>
+<tr class="odd topAlign"><td class="tblName"><p><a href="qscriptvalue.html">QScriptValue</a></p></td><td class="tblDescr"><p>Acts as a container for the Qt Script data types</p></td></tr>
+<tr class="even topAlign"><td class="tblName"><p><a href="qscriptvalueiterator.html">QScriptValueIterator</a></p></td><td class="tblDescr"><p>Java-style iterator for QScriptValue</p></td></tr>
+<tr class="odd topAlign"><td class="tblName"><p><a href="qscriptable.html">QScriptable</a></p></td><td class="tblDescr"><p>Access to the Qt Script environment from Qt C++ member functions</p></td></tr>
+</table></div>
+<!-- $$$QtScript-description -->
+<a name="details"></a>
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+</p>
+<p>The Qt Script module only provides core scripting facilities; the Qt Script Tools module provides additional Qt Script-related components that application developers may find useful.</p>
+<p>This module is mainly provided for backwards compatibility reasons with Qt 4.x and not being actively developed any further. For new code please consider using the <a href="../qtqml/qjsengine.html">QJSEngine</a>, etc. classes in the Qt Qml module instead.</p>
+<p>To include the definitions of the module's classes, use the following directive:</p>
+<pre class="cpp">
+
+  <span class="preprocessor">#include &lt;QtScript&gt;</span>
+
+</pre>
+<p>To link against the module, add this line to your <a href="../qmake/qmake-manual.html">qmake</a> <code>.pro</code> file:</p>
+<pre class="cpp">
+
+  QT += script
+
+</pre>
+<p>For detailed information on how to make your application scriptable with Qt Script, see <a href="../qtqml/qtjavascript.html">Making Applications Scriptable</a>.</p>
+<a name="license-information"></a>
+<h3 >License Information</h3>
+<p>Qt Commercial Edition licensees that wish to distribute applications that use the Qt Script module need to be aware of their obligations under the GNU Library General Public License (LGPL).</p>
+<p>Developers using the Open Source Edition can choose to redistribute the module under the appropriate version of the GNU LGPL.</p>
+<p>Commercial customers that do not want to depend on LGPL code can consider using the <a href="../qtqml/qjsengine.html">QJSEngine</a> and <a href="../qtqml/qjsvalue.html">QJSValue</a> classes in the Qt Qml module. These classes offer a similar but more narrow scripting API that is sufficient for most use cases and is not dependent on LGPL code.</p>
+<div class="LegaleseLeft"><p>Qt Script is licensed under the GNU Library General Public License. Individual contributor names and copyright dates can be found inline in the code.</p>
+<p>This library is free software; you can redistribute it and/or modify it under the terms of the GNU Library General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.</p>
+<p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Library General Public License for more details.</p>
+<p>You should have received a copy of the GNU Library General Public License along with this library; see the file COPYING.LIB. If not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.</p>
+</div></div>
+<!-- @@@QtScript -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

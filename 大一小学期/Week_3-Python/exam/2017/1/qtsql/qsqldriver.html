@@ -1,0 +1,442 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qsqldriver.cpp -->
+  <title>QSqlDriver Class | Qt SQL 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtsql-index.html">Qt SQL</a></td><td ><a href="qtsql-module.html">C++ Classes</a></td><td >QSqlDriver</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-types">Public Types</a></li>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#signals">Signals</a></li>
+<li class="level1"><a href="#protected-functions">Protected Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">QSqlDriver Class</h1>
+<!-- $$$QSqlDriver-brief -->
+<p>The <a href="qsqldriver.html">QSqlDriver</a> class is an abstract base class for accessing specific SQL databases. <a href="#details">More...</a></p>
+<!-- @@@QSqlDriver -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign">   <span class="preprocessor">#include &lt;QSqlDriver&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> qmake:</td><td class="memItemRight bottomAlign"> QT += sql</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Inherits:</td><td class="memItemRight bottomAlign"> <a href="../qtcore/qobject.html">QObject</a></td></tr></table></div><ul>
+<li><a href="qsqldriver-members.html">List of all members, including inherited members</a></li>
+</ul>
+<a name="public-types"></a>
+<h2 id="public-types">Public Types</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="qsqldriver.html#DbmsType-enum">DbmsType</a></b> { UnknownDbms, MSSqlServer, MySqlServer, PostgreSQL, ..., DB2 }</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="qsqldriver.html#DriverFeature-enum">DriverFeature</a></b> { Transactions, QuerySize, BLOB, Unicode, ..., CancelQuery }</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="qsqldriver.html#IdentifierType-enum">IdentifierType</a></b> { FieldName, TableName }</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="qsqldriver.html#NotificationSource-enum">NotificationSource</a></b> { UnknownSource, SelfSource, OtherSource }</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="qsqldriver.html#StatementType-enum">StatementType</a></b> { WhereStatement, SelectStatement, UpdateStatement, InsertStatement, DeleteStatement }</td></tr>
+</table></div>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qsqldriver.html#QSqlDriver">QSqlDriver</a></b>(QObject *<i>parent</i> = Q_NULLPTR)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qsqldriver.html#dtor.QSqlDriver">~QSqlDriver</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="qsqldriver.html#beginTransaction">beginTransaction</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="qsqldriver.html#close">close</a></b>() = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="qsqldriver.html#commitTransaction">commitTransaction</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QSqlResult *</td><td class="memItemRight bottomAlign"><b><a href="qsqldriver.html#createResult">createResult</a></b>() const = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> DbmsType </td><td class="memItemRight bottomAlign"><b><a href="qsqldriver.html#dbmsType">dbmsType</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QString </td><td class="memItemRight bottomAlign"><b><a href="qsqldriver.html#escapeIdentifier">escapeIdentifier</a></b>(const QString &amp;<i>identifier</i>, IdentifierType <i>type</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QString </td><td class="memItemRight bottomAlign"><b><a href="qsqldriver.html#formatValue">formatValue</a></b>(const QSqlField &amp;<i>field</i>, bool <i>trimStrings</i> = false) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QVariant </td><td class="memItemRight bottomAlign"><b><a href="qsqldriver.html#handle">handle</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="qsqldriver.html#hasFeature">hasFeature</a></b>(DriverFeature <i>feature</i>) const = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="qsqldriver.html#isIdentifierEscaped">isIdentifierEscaped</a></b>(const QString &amp;<i>identifier</i>, IdentifierType <i>type</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="qsqldriver.html#isOpen">isOpen</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qsqldriver.html#isOpenError">isOpenError</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QSqlError </td><td class="memItemRight bottomAlign"><b><a href="qsqldriver.html#lastError">lastError</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QSql::NumericalPrecisionPolicy </td><td class="memItemRight bottomAlign"><b><a href="qsqldriver.html#numericalPrecisionPolicy">numericalPrecisionPolicy</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="qsqldriver.html#open">open</a></b>(const QString &amp;<i>db</i>, const QString &amp;<i>user</i> = QString(), const QString &amp;<i>password</i> = QString(), const QString &amp;<i>host</i> = QString(), int <i>port</i> = -1, const QString &amp;<i>options</i> = QString()) = 0</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QSqlIndex </td><td class="memItemRight bottomAlign"><b><a href="qsqldriver.html#primaryIndex">primaryIndex</a></b>(const QString &amp;<i>tableName</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QSqlRecord </td><td class="memItemRight bottomAlign"><b><a href="qsqldriver.html#record">record</a></b>(const QString &amp;<i>tableName</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="qsqldriver.html#rollbackTransaction">rollbackTransaction</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qsqldriver.html#setNumericalPrecisionPolicy">setNumericalPrecisionPolicy</a></b>(QSql::NumericalPrecisionPolicy <i>precisionPolicy</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QString </td><td class="memItemRight bottomAlign"><b><a href="qsqldriver.html#sqlStatement">sqlStatement</a></b>(StatementType <i>type</i>, const QString &amp;<i>tableName</i>, const QSqlRecord &amp;<i>rec</i>, bool <i>preparedStatement</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QString </td><td class="memItemRight bottomAlign"><b><a href="qsqldriver.html#stripDelimiters">stripDelimiters</a></b>(const QString &amp;<i>identifier</i>, IdentifierType <i>type</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="qsqldriver.html#subscribeToNotification">subscribeToNotification</a></b>(const QString &amp;<i>name</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QStringList </td><td class="memItemRight bottomAlign"><b><a href="qsqldriver.html#subscribedToNotifications">subscribedToNotifications</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QStringList </td><td class="memItemRight bottomAlign"><b><a href="qsqldriver.html#tables">tables</a></b>(QSql::TableType <i>tableType</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="qsqldriver.html#unsubscribeFromNotification">unsubscribeFromNotification</a></b>(const QString &amp;<i>name</i>)</td></tr>
+</table></div>
+<ul>
+<li class="fn">31 public functions inherited from <a href="../qtcore/qobject.html#public-functions">QObject</a></li>
+</ul>
+<a name="signals"></a>
+<h2 id="signals">Signals</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qsqldriver.html#notification">notification</a></b>(const QString &amp;<i>name</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qsqldriver.html#notification-1">notification</a></b>(const QString &amp;<i>name</i>, QSqlDriver::NotificationSource <i>source</i>, const QVariant &amp;<i>payload</i>)</td></tr>
+</table></div>
+<ul>
+<li class="fn">2 signals inherited from <a href="../qtcore/qobject.html#signals">QObject</a></li>
+</ul>
+<a name="protected-functions"></a>
+<h2 id="protected-functions">Protected Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="qsqldriver.html#setLastError">setLastError</a></b>(const QSqlError &amp;<i>error</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="qsqldriver.html#setOpen">setOpen</a></b>(bool <i>open</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="qsqldriver.html#setOpenError">setOpenError</a></b>(bool <i>error</i>)</td></tr>
+</table></div>
+<ul>
+<li class="fn">9 protected functions inherited from <a href="../qtcore/qobject.html#protected-functions">QObject</a></li>
+</ul>
+<h3>Additional Inherited Members</h3>
+<ul>
+<li class="fn">1 property inherited from <a href="../qtcore/qobject.html#properties">QObject</a></li>
+<li class="fn">1 public slot inherited from <a href="../qtcore/qobject.html#public-slots">QObject</a></li>
+<li class="fn">1 public variable inherited from <a href="../qtcore/qobject.html#public-variables">QObject</a></li>
+<li class="fn">10 static public members inherited from <a href="../qtcore/qobject.html#static-public-members">QObject</a></li>
+<li class="fn">2 protected variables inherited from <a href="../qtcore/qobject.html#protected-variables">QObject</a></li>
+</ul>
+<a name="details"></a>
+<!-- $$$QSqlDriver-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="qsqldriver.html">QSqlDriver</a> class is an abstract base class for accessing specific SQL databases.</p>
+<p>This class should not be used directly. Use <a href="qsqldatabase.html">QSqlDatabase</a> instead.</p>
+<p>If you want to create your own SQL drivers, you can subclass this class and reimplement its pure virtual functions and those virtual functions that you need. See <a href="sql-driver.html#how-to-write-your-own-database-driver">How to Write Your Own Database Driver</a> for more information.</p>
+</div>
+<p><b>See also </b><a href="qsqldatabase.html">QSqlDatabase</a> and <a href="qsqlresult.html">QSqlResult</a>.</p>
+<!-- @@@QSqlDriver -->
+<div class="types">
+<h2>Member Type Documentation</h2>
+<!-- $$$DbmsType$$$UnknownDbms$$$MSSqlServer$$$MySqlServer$$$PostgreSQL$$$Oracle$$$Sybase$$$SQLite$$$Interbase$$$DB2 -->
+<h3 class="fn" id="DbmsType-enum"><a name="DbmsType-enum"></a>enum QSqlDriver::<span class="name">DbmsType</span></h3>
+<p>This enum contains DBMS types.</p>
+<div class="table"><table class="valuelist"><tr><th class="tblConst">Constant</th><th class="tblVal">Value</th></tr>
+<tr><td class="topAlign"><code>QSqlDriver::UnknownDbms</code></td><td class="topAlign tblval"><code>0</code></td></tr>
+<tr><td class="topAlign"><code>QSqlDriver::MSSqlServer</code></td><td class="topAlign tblval"><code>1</code></td></tr>
+<tr><td class="topAlign"><code>QSqlDriver::MySqlServer</code></td><td class="topAlign tblval"><code>2</code></td></tr>
+<tr><td class="topAlign"><code>QSqlDriver::PostgreSQL</code></td><td class="topAlign tblval"><code>3</code></td></tr>
+<tr><td class="topAlign"><code>QSqlDriver::Oracle</code></td><td class="topAlign tblval"><code>4</code></td></tr>
+<tr><td class="topAlign"><code>QSqlDriver::Sybase</code></td><td class="topAlign tblval"><code>5</code></td></tr>
+<tr><td class="topAlign"><code>QSqlDriver::SQLite</code></td><td class="topAlign tblval"><code>6</code></td></tr>
+<tr><td class="topAlign"><code>QSqlDriver::Interbase</code></td><td class="topAlign tblval"><code>7</code></td></tr>
+<tr><td class="topAlign"><code>QSqlDriver::DB2</code></td><td class="topAlign tblval"><code>8</code></td></tr>
+</table></div>
+<!-- @@@DbmsType -->
+<!-- $$$DriverFeature$$$Transactions$$$QuerySize$$$BLOB$$$Unicode$$$PreparedQueries$$$NamedPlaceholders$$$PositionalPlaceholders$$$LastInsertId$$$BatchOperations$$$SimpleLocking$$$LowPrecisionNumbers$$$EventNotifications$$$FinishQuery$$$MultipleResultSets$$$CancelQuery -->
+<h3 class="fn" id="DriverFeature-enum"><a name="DriverFeature-enum"></a>enum QSqlDriver::<span class="name">DriverFeature</span></h3>
+<p>This enum contains a list of features a driver might support. Use <a href="qsqldriver.html#hasFeature">hasFeature</a>() to query whether a feature is supported or not.</p>
+<div class="table"><table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td class="topAlign"><code>QSqlDriver::Transactions</code></td><td class="topAlign tblval"><code>0</code></td><td class="topAlign">Whether the driver supports SQL transactions.</td></tr>
+<tr><td class="topAlign"><code>QSqlDriver::QuerySize</code></td><td class="topAlign tblval"><code>1</code></td><td class="topAlign">Whether the database is capable of reporting the size of a query. Note that some databases do not support returning the size (i.e&#x2e; number of rows returned) of a query, in which case <a href="qsqlquery.html#size">QSqlQuery::size</a>() will return -1.</td></tr>
+<tr><td class="topAlign"><code>QSqlDriver::BLOB</code></td><td class="topAlign tblval"><code>2</code></td><td class="topAlign">Whether the driver supports Binary Large Object fields.</td></tr>
+<tr><td class="topAlign"><code>QSqlDriver::Unicode</code></td><td class="topAlign tblval"><code>3</code></td><td class="topAlign">Whether the driver supports Unicode strings if the database server does.</td></tr>
+<tr><td class="topAlign"><code>QSqlDriver::PreparedQueries</code></td><td class="topAlign tblval"><code>4</code></td><td class="topAlign">Whether the driver supports prepared query execution.</td></tr>
+<tr><td class="topAlign"><code>QSqlDriver::NamedPlaceholders</code></td><td class="topAlign tblval"><code>5</code></td><td class="topAlign">Whether the driver supports the use of named placeholders.</td></tr>
+<tr><td class="topAlign"><code>QSqlDriver::PositionalPlaceholders</code></td><td class="topAlign tblval"><code>6</code></td><td class="topAlign">Whether the driver supports the use of positional placeholders.</td></tr>
+<tr><td class="topAlign"><code>QSqlDriver::LastInsertId</code></td><td class="topAlign tblval"><code>7</code></td><td class="topAlign">Whether the driver supports returning the Id of the last touched row.</td></tr>
+<tr><td class="topAlign"><code>QSqlDriver::BatchOperations</code></td><td class="topAlign tblval"><code>8</code></td><td class="topAlign">Whether the driver supports batched operations, see <a href="qsqlquery.html#execBatch">QSqlQuery::execBatch</a>()</td></tr>
+<tr><td class="topAlign"><code>QSqlDriver::SimpleLocking</code></td><td class="topAlign tblval"><code>9</code></td><td class="topAlign">Whether the driver disallows a write lock on a table while other queries have a read lock on it.</td></tr>
+<tr><td class="topAlign"><code>QSqlDriver::LowPrecisionNumbers</code></td><td class="topAlign tblval"><code>10</code></td><td class="topAlign">Whether the driver allows fetching numerical values with low precision.</td></tr>
+<tr><td class="topAlign"><code>QSqlDriver::EventNotifications</code></td><td class="topAlign tblval"><code>11</code></td><td class="topAlign">Whether the driver supports database event notifications.</td></tr>
+<tr><td class="topAlign"><code>QSqlDriver::FinishQuery</code></td><td class="topAlign tblval"><code>12</code></td><td class="topAlign">Whether the driver can do any low-level resource cleanup when <a href="qsqlquery.html#finish">QSqlQuery::finish</a>() is called.</td></tr>
+<tr><td class="topAlign"><code>QSqlDriver::MultipleResultSets</code></td><td class="topAlign tblval"><code>13</code></td><td class="topAlign">Whether the driver can access multiple result sets returned from batched statements or stored procedures.</td></tr>
+<tr><td class="topAlign"><code>QSqlDriver::CancelQuery</code></td><td class="topAlign tblval"><code>14</code></td><td class="topAlign">Whether the driver allows cancelling a running query.</td></tr>
+</table></div>
+<p>More information about supported features can be found in the <a href="sql-driver.html">Qt SQL driver</a> documentation.</p>
+<p><b>See also </b><a href="qsqldriver.html#hasFeature">hasFeature</a>().</p>
+<!-- @@@DriverFeature -->
+<!-- $$$IdentifierType$$$FieldName$$$TableName -->
+<h3 class="fn" id="IdentifierType-enum"><a name="IdentifierType-enum"></a>enum QSqlDriver::<span class="name">IdentifierType</span></h3>
+<p>This enum contains a list of SQL identifier types.</p>
+<div class="table"><table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td class="topAlign"><code>QSqlDriver::FieldName</code></td><td class="topAlign tblval"><code>0</code></td><td class="topAlign">A SQL field name</td></tr>
+<tr><td class="topAlign"><code>QSqlDriver::TableName</code></td><td class="topAlign tblval"><code>1</code></td><td class="topAlign">A SQL table name</td></tr>
+</table></div>
+<!-- @@@IdentifierType -->
+<!-- $$$NotificationSource$$$UnknownSource$$$SelfSource$$$OtherSource -->
+<h3 class="fn" id="NotificationSource-enum"><a name="NotificationSource-enum"></a>enum QSqlDriver::<span class="name">NotificationSource</span></h3>
+<p>This enum contains a list of SQL notification sources.</p>
+<div class="table"><table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td class="topAlign"><code>QSqlDriver::UnknownSource</code></td><td class="topAlign tblval"><code>0</code></td><td class="topAlign">The notification source is unknown</td></tr>
+<tr><td class="topAlign"><code>QSqlDriver::SelfSource</code></td><td class="topAlign tblval"><code>1</code></td><td class="topAlign">The notification source is this connection</td></tr>
+<tr><td class="topAlign"><code>QSqlDriver::OtherSource</code></td><td class="topAlign tblval"><code>2</code></td><td class="topAlign">The notification source is another connection</td></tr>
+</table></div>
+<!-- @@@NotificationSource -->
+<!-- $$$StatementType$$$WhereStatement$$$SelectStatement$$$UpdateStatement$$$InsertStatement$$$DeleteStatement -->
+<h3 class="fn" id="StatementType-enum"><a name="StatementType-enum"></a>enum QSqlDriver::<span class="name">StatementType</span></h3>
+<p>This enum contains a list of SQL statement (or clause) types the driver can create.</p>
+<div class="table"><table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td class="topAlign"><code>QSqlDriver::WhereStatement</code></td><td class="topAlign tblval"><code>0</code></td><td class="topAlign">An SQL <code>WHERE</code> statement (e.g&#x2e;, <code>WHERE f = 5</code>).</td></tr>
+<tr><td class="topAlign"><code>QSqlDriver::SelectStatement</code></td><td class="topAlign tblval"><code>1</code></td><td class="topAlign">An SQL <code>SELECT</code> statement (e.g&#x2e;, <code>SELECT f FROM t</code>).</td></tr>
+<tr><td class="topAlign"><code>QSqlDriver::UpdateStatement</code></td><td class="topAlign tblval"><code>2</code></td><td class="topAlign">An SQL <code>UPDATE</code> statement (e.g&#x2e;, <code>UPDATE TABLE t set f = 1</code>).</td></tr>
+<tr><td class="topAlign"><code>QSqlDriver::InsertStatement</code></td><td class="topAlign tblval"><code>3</code></td><td class="topAlign">An SQL <code>INSERT</code> statement (e.g&#x2e;, <code>INSERT INTO t (f) values (1)</code>).</td></tr>
+<tr><td class="topAlign"><code>QSqlDriver::DeleteStatement</code></td><td class="topAlign tblval"><code>4</code></td><td class="topAlign">An SQL <code>DELETE</code> statement (e.g&#x2e;, <code>DELETE FROM t</code>).</td></tr>
+</table></div>
+<p><b>See also </b><a href="qsqldriver.html#sqlStatement">sqlStatement</a>().</p>
+<!-- @@@StatementType -->
+</div>
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$QSqlDriver[overload1]$$$QSqlDriverQObject* -->
+<h3 class="fn" id="QSqlDriver"><a name="QSqlDriver"></a>QSqlDriver::<span class="name">QSqlDriver</span>(<span class="type"><a href="../qtcore/qobject.html#QObject">QObject</a></span> *<i>parent</i> = Q_NULLPTR)</h3>
+<p>Constructs a new driver with the given <i>parent</i>.</p>
+<!-- @@@QSqlDriver -->
+<!-- $$$~QSqlDriver[overload1]$$$~QSqlDriver -->
+<h3 class="fn" id="dtor.QSqlDriver"><a name="dtor.QSqlDriver"></a>QSqlDriver::<span class="name">~QSqlDriver</span>()</h3>
+<p>Destroys the object and frees any allocated resources.</p>
+<!-- @@@~QSqlDriver -->
+<!-- $$$beginTransaction[overload1]$$$beginTransaction -->
+<h3 class="fn" id="beginTransaction"><a name="beginTransaction"></a><code>[virtual] </code><span class="type">bool</span> QSqlDriver::<span class="name">beginTransaction</span>()</h3>
+<p>This function is called to begin a transaction. If successful, return true, otherwise return false. The default implementation does nothing and returns <code>false</code>.</p>
+<p><b>See also </b><a href="qsqldriver.html#commitTransaction">commitTransaction</a>() and <a href="qsqldriver.html#rollbackTransaction">rollbackTransaction</a>().</p>
+<!-- @@@beginTransaction -->
+<!-- $$$close[overload1]$$$close -->
+<h3 class="fn" id="close"><a name="close"></a><code>[pure virtual] </code><span class="type">void</span> QSqlDriver::<span class="name">close</span>()</h3>
+<p>Derived classes must reimplement this pure virtual function in order to close the database connection. Return true on success, false on failure.</p>
+<p><b>See also </b><a href="qsqldriver.html#open">open</a>() and <a href="qsqldriver.html#setOpen">setOpen</a>().</p>
+<!-- @@@close -->
+<!-- $$$commitTransaction[overload1]$$$commitTransaction -->
+<h3 class="fn" id="commitTransaction"><a name="commitTransaction"></a><code>[virtual] </code><span class="type">bool</span> QSqlDriver::<span class="name">commitTransaction</span>()</h3>
+<p>This function is called to commit a transaction. If successful, return true, otherwise return false. The default implementation does nothing and returns <code>false</code>.</p>
+<p><b>See also </b><a href="qsqldriver.html#beginTransaction">beginTransaction</a>() and <a href="qsqldriver.html#rollbackTransaction">rollbackTransaction</a>().</p>
+<!-- @@@commitTransaction -->
+<!-- $$$createResult[overload1]$$$createResult -->
+<h3 class="fn" id="createResult"><a name="createResult"></a><code>[pure virtual] </code><span class="type"><a href="qsqlresult.html">QSqlResult</a></span> *QSqlDriver::<span class="name">createResult</span>() const</h3>
+<p>Creates an empty SQL result on the database. Derived classes must reimplement this function and return a <a href="qsqlresult.html">QSqlResult</a> object appropriate for their database to the caller.</p>
+<!-- @@@createResult -->
+<!-- $$$dbmsType[overload1]$$$dbmsType -->
+<h3 class="fn" id="dbmsType"><a name="dbmsType"></a><span class="type"><a href="qsqldriver.html#DbmsType-enum">DbmsType</a></span> QSqlDriver::<span class="name">dbmsType</span>() const</h3>
+<p>Returns the current DBMS type for the database connection.</p>
+<p>This function was introduced in  Qt 5.4.</p>
+<!-- @@@dbmsType -->
+<!-- $$$escapeIdentifier[overload1]$$$escapeIdentifierconstQString&IdentifierType -->
+<h3 class="fn" id="escapeIdentifier"><a name="escapeIdentifier"></a><code>[virtual] </code><span class="type"><a href="../qtcore/qstring.html">QString</a></span> QSqlDriver::<span class="name">escapeIdentifier</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>identifier</i>, <span class="type"><a href="qsqldriver.html#IdentifierType-enum">IdentifierType</a></span> <i>type</i>) const</h3>
+<p>Returns the <i>identifier</i> escaped according to the database rules. <i>identifier</i> can either be a table name or field name, dependent on <i>type</i>.</p>
+<p>The default implementation does nothing.</p>
+<p><b>See also </b><a href="qsqldriver.html#isIdentifierEscaped">isIdentifierEscaped</a>().</p>
+<!-- @@@escapeIdentifier -->
+<!-- $$$formatValue[overload1]$$$formatValueconstQSqlField&bool -->
+<h3 class="fn" id="formatValue"><a name="formatValue"></a><code>[virtual] </code><span class="type"><a href="../qtcore/qstring.html">QString</a></span> QSqlDriver::<span class="name">formatValue</span>(const <span class="type"><a href="qsqlfield.html">QSqlField</a></span> &amp;<i>field</i>, <span class="type">bool</span> <i>trimStrings</i> = false) const</h3>
+<p>Returns a string representation of the <i>field</i> value for the database. This is used, for example, when constructing INSERT and UPDATE statements.</p>
+<p>The default implementation returns the value formatted as a string according to the following rules:</p>
+<ul>
+<li>If <i>field</i> is character data, the value is returned enclosed in single quotation marks, which is appropriate for many SQL databases. Any embedded single-quote characters are escaped (replaced with two single-quote characters). If <i>trimStrings</i> is true (the default is false), all trailing whitespace is trimmed from the field.</li>
+<li>If <i>field</i> is date/time data, the value is formatted in ISO format and enclosed in single quotation marks. If the date/time data is invalid, &quot;NULL&quot; is returned.</li>
+<li>If <i>field</i> is <a href="../qtcore/qbytearray.html">bytearray</a> data, and the driver can edit binary fields, the value is formatted as a hexadecimal string.</li>
+<li>For any other field type, toString() is called on its value and the result of this is returned.</li>
+</ul>
+<p><b>See also </b><a href="../qtcore/qvariant.html#toString">QVariant::toString</a>().</p>
+<!-- @@@formatValue -->
+<!-- $$$handle[overload1]$$$handle -->
+<h3 class="fn" id="handle"><a name="handle"></a><code>[virtual] </code><span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span> QSqlDriver::<span class="name">handle</span>() const</h3>
+<p>Returns the low-level database handle wrapped in a <a href="../qtcore/qvariant.html">QVariant</a> or an invalid variant if there is no handle.</p>
+<p><b>Warning:</b> Use this with uttermost care and only if you know what you're doing.</p>
+<p><b>Warning:</b> The handle returned here can become a stale pointer if the connection is modified (for example, if you close the connection).</p>
+<p><b>Warning:</b> The handle can be NULL if the connection is not open yet.</p>
+<p>The handle returned here is database-dependent, you should query the type name of the variant before accessing it.</p>
+<p>This example retrieves the handle for a connection to sqlite:</p>
+<pre class="cpp">
+
+  <span class="type"><a href="qsqldatabase.html">QSqlDatabase</a></span> db <span class="operator">=</span> <span class="operator">.</span><span class="operator">.</span><span class="operator">.</span>;
+  <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span> v <span class="operator">=</span> db<span class="operator">.</span>driver()<span class="operator">-</span><span class="operator">&gt;</span>handle();
+  <span class="keyword">if</span> (v<span class="operator">.</span>isValid() <span class="operator">&amp;</span><span class="operator">&amp;</span> qstrcmp(v<span class="operator">.</span>typeName()<span class="operator">,</span> <span class="string">&quot;sqlite3*&quot;</span>)<span class="operator">=</span><span class="operator">=</span><span class="number">0</span>) {
+      <span class="comment">// v.data() returns a pointer to the handle</span>
+      sqlite3 <span class="operator">*</span>handle <span class="operator">=</span> <span class="operator">*</span><span class="keyword">static_cast</span><span class="operator">&lt;</span>sqlite3 <span class="operator">*</span><span class="operator">*</span><span class="operator">&gt;</span>(v<span class="operator">.</span>data());
+      <span class="keyword">if</span> (handle <span class="operator">!</span><span class="operator">=</span> <span class="number">0</span>) { <span class="comment">// check that it is not NULL</span>
+          <span class="operator">.</span><span class="operator">.</span><span class="operator">.</span>
+      }
+  }
+
+</pre>
+<p>This snippet returns the handle for <a href="qsqldriver.html#DbmsType-enum">PostgreSQL</a> or MySQL:</p>
+<pre class="cpp">
+
+  <span class="keyword">if</span> (qstrcmp(v<span class="operator">.</span>typeName()<span class="operator">,</span> <span class="string">&quot;PGconn*&quot;</span>)) {
+      PGconn <span class="operator">*</span>handle <span class="operator">=</span> <span class="operator">*</span><span class="keyword">static_cast</span><span class="operator">&lt;</span>PGconn <span class="operator">*</span><span class="operator">*</span><span class="operator">&gt;</span>(v<span class="operator">.</span>data());
+      <span class="keyword">if</span> (handle <span class="operator">!</span><span class="operator">=</span> <span class="number">0</span>) <span class="operator">.</span><span class="operator">.</span><span class="operator">.</span>
+  }
+
+  <span class="keyword">if</span> (qstrcmp(v<span class="operator">.</span>typeName()<span class="operator">,</span> <span class="string">&quot;MYSQL*&quot;</span>)) {
+      MYSQL <span class="operator">*</span>handle <span class="operator">=</span> <span class="operator">*</span><span class="keyword">static_cast</span><span class="operator">&lt;</span>MYSQL <span class="operator">*</span><span class="operator">*</span><span class="operator">&gt;</span>(v<span class="operator">.</span>data());
+      <span class="keyword">if</span> (handle <span class="operator">!</span><span class="operator">=</span> <span class="number">0</span>) <span class="operator">.</span><span class="operator">.</span><span class="operator">.</span>
+  }
+
+</pre>
+<p><b>See also </b><a href="qsqlresult.html#handle">QSqlResult::handle</a>().</p>
+<!-- @@@handle -->
+<!-- $$$hasFeature[overload1]$$$hasFeatureDriverFeature -->
+<h3 class="fn" id="hasFeature"><a name="hasFeature"></a><code>[pure virtual] </code><span class="type">bool</span> QSqlDriver::<span class="name">hasFeature</span>(<span class="type"><a href="qsqldriver.html#DriverFeature-enum">DriverFeature</a></span> <i>feature</i>) const</h3>
+<p>Returns <code>true</code> if the driver supports feature <i>feature</i>; otherwise returns <code>false</code>.</p>
+<p>Note that some databases need to be <a href="qsqldriver.html#open">open</a>() before this can be determined.</p>
+<p><b>See also </b><a href="qsqldriver.html#DriverFeature-enum">DriverFeature</a>.</p>
+<!-- @@@hasFeature -->
+<!-- $$$isIdentifierEscaped[overload1]$$$isIdentifierEscapedconstQString&IdentifierType -->
+<h3 class="fn" id="isIdentifierEscaped"><a name="isIdentifierEscaped"></a><code>[virtual] </code><span class="type">bool</span> QSqlDriver::<span class="name">isIdentifierEscaped</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>identifier</i>, <span class="type"><a href="qsqldriver.html#IdentifierType-enum">IdentifierType</a></span> <i>type</i>) const</h3>
+<p>Returns whether <i>identifier</i> is escaped according to the database rules. <i>identifier</i> can either be a table name or field name, dependent on <i>type</i>.</p>
+<p>Reimplement this function if you want to provide your own implementation in your <a href="qsqldriver.html">QSqlDriver</a> subclass,</p>
+<p><b>See also </b><a href="qsqldriver.html#stripDelimiters">stripDelimiters</a>() and <a href="qsqldriver.html#escapeIdentifier">escapeIdentifier</a>().</p>
+<!-- @@@isIdentifierEscaped -->
+<!-- $$$isOpen[overload1]$$$isOpen -->
+<h3 class="fn" id="isOpen"><a name="isOpen"></a><code>[virtual] </code><span class="type">bool</span> QSqlDriver::<span class="name">isOpen</span>() const</h3>
+<p>Returns <code>true</code> if the database connection is open; otherwise returns false.</p>
+<!-- @@@isOpen -->
+<!-- $$$isOpenError[overload1]$$$isOpenError -->
+<h3 class="fn" id="isOpenError"><a name="isOpenError"></a><span class="type">bool</span> QSqlDriver::<span class="name">isOpenError</span>() const</h3>
+<p>Returns <code>true</code> if the there was an error opening the database connection; otherwise returns <code>false</code>.</p>
+<!-- @@@isOpenError -->
+<!-- $$$lastError[overload1]$$$lastError -->
+<h3 class="fn" id="lastError"><a name="lastError"></a><span class="type"><a href="qsqlerror.html">QSqlError</a></span> QSqlDriver::<span class="name">lastError</span>() const</h3>
+<p>Returns a <a href="qsqlerror.html">QSqlError</a> object which contains information about the last error that occurred on the database.</p>
+<p><b>See also </b><a href="qsqldriver.html#setLastError">setLastError</a>().</p>
+<!-- @@@lastError -->
+<!-- $$$notification[overload1]$$$notificationconstQString& -->
+<h3 class="fn" id="notification"><a name="notification"></a><code>[signal] </code><span class="type">void</span> QSqlDriver::<span class="name">notification</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>name</i>)</h3>
+<p>This signal is emitted when the database posts an event notification that the driver subscribes to. <i>name</i> identifies the event notification.</p>
+<p><b>Note:</b> Signal <i>notification</i> is overloaded in this class. To connect to this one using the function pointer syntax, you must specify the signal type in a static cast, as shown in this example:<pre class="cpp">
+
+  connect(sqlDriver<span class="operator">,</span> <span class="keyword">static_cast</span><span class="operator">&lt;</span><span class="type">void</span>(<span class="type"><a href="qsqldriver.html#QSqlDriver">QSqlDriver</a></span><span class="operator">::</span><span class="operator">*</span>)(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>)<span class="operator">&gt;</span>(<span class="operator">&amp;</span><span class="type"><a href="qsqldriver.html#QSqlDriver">QSqlDriver</a></span><span class="operator">::</span>notification)<span class="operator">,</span>
+      <span class="operator">[</span><span class="operator">=</span><span class="operator">]</span>(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>name){ <span class="comment">/* ... */</span> });
+
+</pre>
+<p>This function was introduced in  Qt 4.4.</p>
+<p><b>See also </b><a href="qsqldriver.html#subscribeToNotification">subscribeToNotification</a>().</p>
+<!-- @@@notification -->
+<!-- $$$notification$$$notificationconstQString&QSqlDriver::NotificationSourceconstQVariant& -->
+<h3 class="fn" id="notification-1"><a name="notification-1"></a><code>[signal] </code><span class="type">void</span> QSqlDriver::<span class="name">notification</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>name</i>, <span class="type"><a href="qsqldriver.html#NotificationSource-enum">QSqlDriver::NotificationSource</a></span> <i>source</i>, const <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span> &amp;<i>payload</i>)</h3>
+<p>This signal is emitted when the database posts an event notification that the driver subscribes to. <i>name</i> identifies the event notification, <i>source</i> indicates the signal source, <i>payload</i> holds the extra data optionally delivered with the notification.</p>
+<p><b>Note:</b> Signal <i>notification</i> is overloaded in this class. To connect to this one using the function pointer syntax, you must specify the signal type in a static cast, as shown in this example:<pre class="cpp">
+
+  connect(sqlDriver<span class="operator">,</span> <span class="keyword">static_cast</span><span class="operator">&lt;</span><span class="type">void</span>(<span class="type"><a href="qsqldriver.html#QSqlDriver">QSqlDriver</a></span><span class="operator">::</span><span class="operator">*</span>)(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span><span class="operator">,</span> <span class="type"><a href="qsqldriver.html#QSqlDriver">QSqlDriver</a></span><span class="operator">::</span>NotificationSource<span class="operator">,</span> <span class="keyword">const</span> <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span> <span class="operator">&amp;</span>)<span class="operator">&gt;</span>(<span class="operator">&amp;</span><span class="type"><a href="qsqldriver.html#QSqlDriver">QSqlDriver</a></span><span class="operator">::</span>notification)<span class="operator">,</span>
+      <span class="operator">[</span><span class="operator">=</span><span class="operator">]</span>(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>name<span class="operator">,</span> <span class="type"><a href="qsqldriver.html#QSqlDriver">QSqlDriver</a></span><span class="operator">::</span>NotificationSource source<span class="operator">,</span> <span class="keyword">const</span> <span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span> <span class="operator">&amp;</span>payload){ <span class="comment">/* ... */</span> });
+
+</pre>
+<p>This function was introduced in  Qt 5.0.</p>
+<p><b>See also </b><a href="qsqldriver.html#subscribeToNotification">subscribeToNotification</a>().</p>
+<!-- @@@notification -->
+<!-- $$$numericalPrecisionPolicy[overload1]$$$numericalPrecisionPolicy -->
+<h3 class="fn" id="numericalPrecisionPolicy"><a name="numericalPrecisionPolicy"></a><span class="type"><a href="qsql.html#NumericalPrecisionPolicy-enum">QSql::NumericalPrecisionPolicy</a></span> QSqlDriver::<span class="name">numericalPrecisionPolicy</span>() const</h3>
+<p>Returns the current default precision policy for the database connection.</p>
+<p>This function was introduced in  Qt 4.6.</p>
+<p><b>See also </b><a href="qsql.html#NumericalPrecisionPolicy-enum">QSql::NumericalPrecisionPolicy</a>, <a href="qsqldriver.html#setNumericalPrecisionPolicy">setNumericalPrecisionPolicy</a>(), <a href="qsqlquery.html#numericalPrecisionPolicy">QSqlQuery::numericalPrecisionPolicy</a>(), and <a href="qsqlquery.html#setNumericalPrecisionPolicy">QSqlQuery::setNumericalPrecisionPolicy</a>().</p>
+<!-- @@@numericalPrecisionPolicy -->
+<!-- $$$open[overload1]$$$openconstQString&constQString&constQString&constQString&intconstQString& -->
+<h3 class="fn" id="open"><a name="open"></a><code>[pure virtual] </code><span class="type">bool</span> QSqlDriver::<span class="name">open</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>db</i>, const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>user</i> = QString(), const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>password</i> = QString(), const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>host</i> = QString(), <span class="type">int</span> <i>port</i> = -1, const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>options</i> = QString())</h3>
+<p>Derived classes must reimplement this pure virtual function to open a database connection on database <i>db</i>, using user name <i>user</i>, password <i>password</i>, host <i>host</i>, port <i>port</i> and connection options <i>options</i>.</p>
+<p>The function must return true on success and false on failure.</p>
+<p><b>See also </b><a href="qsqldriver.html#setOpen">setOpen</a>().</p>
+<!-- @@@open -->
+<!-- $$$primaryIndex[overload1]$$$primaryIndexconstQString& -->
+<h3 class="fn" id="primaryIndex"><a name="primaryIndex"></a><code>[virtual] </code><span class="type"><a href="qsqlindex.html">QSqlIndex</a></span> QSqlDriver::<span class="name">primaryIndex</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>tableName</i>) const</h3>
+<p>Returns the primary index for table <i>tableName</i>. Returns an empty <a href="qsqlindex.html">QSqlIndex</a> if the table doesn't have a primary index. The default implementation returns an empty index.</p>
+<!-- @@@primaryIndex -->
+<!-- $$$record[overload1]$$$recordconstQString& -->
+<h3 class="fn" id="record"><a name="record"></a><code>[virtual] </code><span class="type"><a href="qsqlrecord.html">QSqlRecord</a></span> QSqlDriver::<span class="name">record</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>tableName</i>) const</h3>
+<p>Returns a <a href="qsqlrecord.html">QSqlRecord</a> populated with the names of the fields in table <i>tableName</i>. If no such table exists, an empty record is returned. The default implementation returns an empty record.</p>
+<!-- @@@record -->
+<!-- $$$rollbackTransaction[overload1]$$$rollbackTransaction -->
+<h3 class="fn" id="rollbackTransaction"><a name="rollbackTransaction"></a><code>[virtual] </code><span class="type">bool</span> QSqlDriver::<span class="name">rollbackTransaction</span>()</h3>
+<p>This function is called to rollback a transaction. If successful, return true, otherwise return false. The default implementation does nothing and returns <code>false</code>.</p>
+<p><b>See also </b><a href="qsqldriver.html#beginTransaction">beginTransaction</a>() and <a href="qsqldriver.html#commitTransaction">commitTransaction</a>().</p>
+<!-- @@@rollbackTransaction -->
+<!-- $$$setLastError[overload1]$$$setLastErrorconstQSqlError& -->
+<h3 class="fn" id="setLastError"><a name="setLastError"></a><code>[virtual protected] </code><span class="type">void</span> QSqlDriver::<span class="name">setLastError</span>(const <span class="type"><a href="qsqlerror.html">QSqlError</a></span> &amp;<i>error</i>)</h3>
+<p>This function is used to set the value of the last error, <i>error</i>, that occurred on the database.</p>
+<p><b>See also </b><a href="qsqldriver.html#lastError">lastError</a>().</p>
+<!-- @@@setLastError -->
+<!-- $$$setNumericalPrecisionPolicy[overload1]$$$setNumericalPrecisionPolicyQSql::NumericalPrecisionPolicy -->
+<h3 class="fn" id="setNumericalPrecisionPolicy"><a name="setNumericalPrecisionPolicy"></a><span class="type">void</span> QSqlDriver::<span class="name">setNumericalPrecisionPolicy</span>(<span class="type"><a href="qsql.html#NumericalPrecisionPolicy-enum">QSql::NumericalPrecisionPolicy</a></span> <i>precisionPolicy</i>)</h3>
+<p>Sets the default numerical precision policy used by queries created by this driver to <i>precisionPolicy</i>.</p>
+<p>Note: Setting the default precision policy to <i>precisionPolicy</i> doesn't affect any currently active queries.</p>
+<p>This function was introduced in  Qt 4.6.</p>
+<p><b>See also </b><a href="qsql.html#NumericalPrecisionPolicy-enum">QSql::NumericalPrecisionPolicy</a>, <a href="qsqldriver.html#numericalPrecisionPolicy">numericalPrecisionPolicy</a>(), <a href="qsqlquery.html#setNumericalPrecisionPolicy">QSqlQuery::setNumericalPrecisionPolicy</a>(), and <a href="qsqlquery.html#numericalPrecisionPolicy">QSqlQuery::numericalPrecisionPolicy</a>().</p>
+<!-- @@@setNumericalPrecisionPolicy -->
+<!-- $$$setOpen[overload1]$$$setOpenbool -->
+<h3 class="fn" id="setOpen"><a name="setOpen"></a><code>[virtual protected] </code><span class="type">void</span> QSqlDriver::<span class="name">setOpen</span>(<span class="type">bool</span> <i>open</i>)</h3>
+<p>This function sets the open state of the database to <i>open</i>. Derived classes can use this function to report the status of <a href="qsqldriver.html#open">open</a>().</p>
+<p><b>See also </b><a href="qsqldriver.html#open">open</a>() and <a href="qsqldriver.html#setOpenError">setOpenError</a>().</p>
+<!-- @@@setOpen -->
+<!-- $$$setOpenError[overload1]$$$setOpenErrorbool -->
+<h3 class="fn" id="setOpenError"><a name="setOpenError"></a><code>[virtual protected] </code><span class="type">void</span> QSqlDriver::<span class="name">setOpenError</span>(<span class="type">bool</span> <i>error</i>)</h3>
+<p>This function sets the open error state of the database to <i>error</i>. Derived classes can use this function to report the status of <a href="qsqldriver.html#open">open</a>(). Note that if <i>error</i> is true the open state of the database is set to closed (i.e&#x2e;, <a href="qsqldriver.html#isOpen">isOpen</a>() returns <code>false</code>).</p>
+<p><b>See also </b><a href="qsqldriver.html#isOpenError">isOpenError</a>(), <a href="qsqldriver.html#open">open</a>(), and <a href="qsqldriver.html#setOpen">setOpen</a>().</p>
+<!-- @@@setOpenError -->
+<!-- $$$sqlStatement[overload1]$$$sqlStatementStatementTypeconstQString&constQSqlRecord&bool -->
+<h3 class="fn" id="sqlStatement"><a name="sqlStatement"></a><code>[virtual] </code><span class="type"><a href="../qtcore/qstring.html">QString</a></span> QSqlDriver::<span class="name">sqlStatement</span>(<span class="type"><a href="qsqldriver.html#StatementType-enum">StatementType</a></span> <i>type</i>, const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>tableName</i>, const <span class="type"><a href="qsqlrecord.html">QSqlRecord</a></span> &amp;<i>rec</i>, <span class="type">bool</span> <i>preparedStatement</i>) const</h3>
+<p>Returns a SQL statement of type <i>type</i> for the table <i>tableName</i> with the values from <i>rec</i>. If <i>preparedStatement</i> is true, the string will contain placeholders instead of values.</p>
+<p>This method can be used to manipulate tables without having to worry about database-dependent SQL dialects. For non-prepared statements, the values will be properly escaped.</p>
+<p>In the WHERE statement, each non-null field of <i>rec</i> specifies a filter condition of equality to the field value, or if prepared, a placeholder. However, prepared or not, a null field specifies the condition IS NULL and never introduces a placeholder. The application must not attempt to bind data for the null field during execution. The field must be set to some non-null value if a placeholder is desired. Furthermore, since non-null fields specify equality conditions and SQL NULL is not equal to anything, even itself, it is generally not useful to bind a null to a placeholder.</p>
+<!-- @@@sqlStatement -->
+<!-- $$$stripDelimiters[overload1]$$$stripDelimitersconstQString&IdentifierType -->
+<h3 class="fn" id="stripDelimiters"><a name="stripDelimiters"></a><code>[virtual] </code><span class="type"><a href="../qtcore/qstring.html">QString</a></span> QSqlDriver::<span class="name">stripDelimiters</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>identifier</i>, <span class="type"><a href="qsqldriver.html#IdentifierType-enum">IdentifierType</a></span> <i>type</i>) const</h3>
+<p>Returns the <i>identifier</i> with the leading and trailing delimiters removed, <i>identifier</i> can either be a table name or field name, dependent on <i>type</i>. If <i>identifier</i> does not have leading and trailing delimiter characters, <i>identifier</i> is returned without modification.</p>
+<p>Reimplement this function if you want to provide your own implementation in your <a href="qsqldriver.html">QSqlDriver</a> subclass,</p>
+<p>This function was introduced in  Qt 4.5.</p>
+<p><b>See also </b><a href="qsqldriver.html#isIdentifierEscaped">isIdentifierEscaped</a>().</p>
+<!-- @@@stripDelimiters -->
+<!-- $$$subscribeToNotification[overload1]$$$subscribeToNotificationconstQString& -->
+<h3 class="fn" id="subscribeToNotification"><a name="subscribeToNotification"></a><code>[virtual] </code><span class="type">bool</span> QSqlDriver::<span class="name">subscribeToNotification</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>name</i>)</h3>
+<p>This function is called to subscribe to event notifications from the database. <i>name</i> identifies the event notification.</p>
+<p>If successful, return true, otherwise return false.</p>
+<p>The database must be open when this function is called. When the database is closed by calling <a href="qsqldriver.html#close">close</a>() all subscribed event notifications are automatically unsubscribed. Note that calling <a href="qsqldriver.html#open">open</a>() on an already open database may implicitly cause <a href="qsqldriver.html#close">close</a>() to be called, which will cause the driver to unsubscribe from all event notifications.</p>
+<p>When an event notification identified by <i>name</i> is posted by the database the <a href="qsqldriver.html#notification">notification</a>() signal is emitted.</p>
+<p>Reimplement this function if you want to provide event notification support in your own <a href="qsqldriver.html">QSqlDriver</a> subclass,</p>
+<p>This function was introduced in  Qt 4.4.</p>
+<p><b>See also </b><a href="qsqldriver.html#unsubscribeFromNotification">unsubscribeFromNotification</a>(), <a href="qsqldriver.html#subscribedToNotifications">subscribedToNotifications</a>(), and <a href="qsqldriver.html#hasFeature">QSqlDriver::hasFeature</a>().</p>
+<!-- @@@subscribeToNotification -->
+<!-- $$$subscribedToNotifications[overload1]$$$subscribedToNotifications -->
+<h3 class="fn" id="subscribedToNotifications"><a name="subscribedToNotifications"></a><code>[virtual] </code><span class="type"><a href="../qtcore/qstringlist.html">QStringList</a></span> QSqlDriver::<span class="name">subscribedToNotifications</span>() const</h3>
+<p>Returns a list of the names of the event notifications that are currently subscribed to.</p>
+<p>Reimplement this function if you want to provide event notification support in your own <a href="qsqldriver.html">QSqlDriver</a> subclass,</p>
+<p>This function was introduced in  Qt 4.4.</p>
+<p><b>See also </b><a href="qsqldriver.html#subscribeToNotification">subscribeToNotification</a>() and <a href="qsqldriver.html#unsubscribeFromNotification">unsubscribeFromNotification</a>().</p>
+<!-- @@@subscribedToNotifications -->
+<!-- $$$tables[overload1]$$$tablesQSql::TableType -->
+<h3 class="fn" id="tables"><a name="tables"></a><code>[virtual] </code><span class="type"><a href="../qtcore/qstringlist.html">QStringList</a></span> QSqlDriver::<span class="name">tables</span>(<span class="type"><a href="qsql.html#TableType-enum">QSql::TableType</a></span> <i>tableType</i>) const</h3>
+<p>Returns a list of the names of the tables in the database. The default implementation returns an empty list.</p>
+<p>The <i>tableType</i> argument describes what types of tables should be returned. Due to binary compatibility, the string contains the value of the enum QSql::TableTypes as text. An empty string should be treated as <a href="qsql.html#TableType-enum">QSql::Tables</a> for backward compatibility.</p>
+<!-- @@@tables -->
+<!-- $$$unsubscribeFromNotification[overload1]$$$unsubscribeFromNotificationconstQString& -->
+<h3 class="fn" id="unsubscribeFromNotification"><a name="unsubscribeFromNotification"></a><code>[virtual] </code><span class="type">bool</span> QSqlDriver::<span class="name">unsubscribeFromNotification</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>name</i>)</h3>
+<p>This function is called to unsubscribe from event notifications from the database. <i>name</i> identifies the event notification.</p>
+<p>If successful, return true, otherwise return false.</p>
+<p>The database must be open when this function is called. All subscribed event notifications are automatically unsubscribed from when the <a href="qsqldriver.html#close">close</a>() function is called.</p>
+<p>After calling <i>this</i> function the <a href="qsqldriver.html#notification">notification</a>() signal will no longer be emitted when an event notification identified by <i>name</i> is posted by the database.</p>
+<p>Reimplement this function if you want to provide event notification support in your own <a href="qsqldriver.html">QSqlDriver</a> subclass,</p>
+<p>This function was introduced in  Qt 4.4.</p>
+<p><b>See also </b><a href="qsqldriver.html#subscribeToNotification">subscribeToNotification</a>() and <a href="qsqldriver.html#subscribedToNotifications">subscribedToNotifications</a>().</p>
+<!-- @@@unsubscribeFromNotification -->
+</div>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

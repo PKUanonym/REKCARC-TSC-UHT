@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qsslsocket.cpp -->
+  <title>Obsolete Members for QSslSocket | Qt Network 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtnetwork-index.html">Qt Network</a></td><td ><a href="qtnetwork-module.html">C++ Classes</a></td><td >QSslSocket</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar"><div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">Obsolete Members for QSslSocket</h1>
+<p><b>The following members of class <a href="qsslsocket.html">QSslSocket</a> are obsolete.</b> They are provided to keep old source code working. We strongly advise against using them in new code.</p>
+<h2>Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft topAlign rightAlign"> <code>(obsolete) </code>QList&lt;QSslCertificate&gt; </td><td class="memItemRight bottomAlign"><b><a href="qsslsocket-obsolete.html#caCertificates">caCertificates</a></b>() const</td></tr>
+<tr><td class="memItemLeft topAlign rightAlign"> <code>(obsolete) </code>QList&lt;QSslCipher&gt; </td><td class="memItemRight bottomAlign"><b><a href="qsslsocket-obsolete.html#ciphers">ciphers</a></b>() const</td></tr>
+<tr><td class="memItemLeft topAlign rightAlign"> <code>(obsolete) </code>void </td><td class="memItemRight bottomAlign"><b><a href="qsslsocket-obsolete.html#setCaCertificates">setCaCertificates</a></b>(const QList&lt;QSslCertificate&gt; &amp;<i>certificates</i>)</td></tr>
+<tr><td class="memItemLeft topAlign rightAlign"> <code>(obsolete) </code>void </td><td class="memItemRight bottomAlign"><b><a href="qsslsocket-obsolete.html#setCiphers">setCiphers</a></b>(const QList&lt;QSslCipher&gt; &amp;<i>ciphers</i>)</td></tr>
+<tr><td class="memItemLeft topAlign rightAlign"> <code>(obsolete) </code>void </td><td class="memItemRight bottomAlign"><b><a href="qsslsocket-obsolete.html#setCiphers-1">setCiphers</a></b>(const QString &amp;<i>ciphers</i>)</td></tr>
+</table></div>
+<h2>Static Public Members</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft topAlign rightAlign"> <code>(obsolete) </code>QList&lt;QSslCertificate&gt; </td><td class="memItemRight bottomAlign"><b><a href="qsslsocket-obsolete.html#defaultCaCertificates">defaultCaCertificates</a></b>()</td></tr>
+<tr><td class="memItemLeft topAlign rightAlign"> <code>(obsolete) </code>QList&lt;QSslCipher&gt; </td><td class="memItemRight bottomAlign"><b><a href="qsslsocket-obsolete.html#defaultCiphers">defaultCiphers</a></b>()</td></tr>
+<tr><td class="memItemLeft topAlign rightAlign"> <code>(obsolete) </code>void </td><td class="memItemRight bottomAlign"><b><a href="qsslsocket-obsolete.html#setDefaultCaCertificates">setDefaultCaCertificates</a></b>(const QList&lt;QSslCertificate&gt; &amp;<i>certificates</i>)</td></tr>
+<tr><td class="memItemLeft topAlign rightAlign"> <code>(obsolete) </code>void </td><td class="memItemRight bottomAlign"><b><a href="qsslsocket-obsolete.html#setDefaultCiphers">setDefaultCiphers</a></b>(const QList&lt;QSslCipher&gt; &amp;<i>ciphers</i>)</td></tr>
+<tr><td class="memItemLeft topAlign rightAlign"> <code>(obsolete) </code>QList&lt;QSslCipher&gt; </td><td class="memItemRight bottomAlign"><b><a href="qsslsocket-obsolete.html#supportedCiphers">supportedCiphers</a></b>()</td></tr>
+<tr><td class="memItemLeft topAlign rightAlign"> <code>(obsolete) </code>QList&lt;QSslCertificate&gt; </td><td class="memItemRight bottomAlign"><b><a href="qsslsocket-obsolete.html#systemCaCertificates">systemCaCertificates</a></b>()</td></tr>
+</table></div>
+<ul>
+<li class="fn">1 static public member inherited from <a href="../qtcore/qobject.html#static-public-members">QObject</a></li>
+</ul>
+<h2>Member Function Documentation</h2>
+<!-- $$$caCertificates[overload1]$$$caCertificates -->
+<h3 class="fn" id="caCertificates"><a name="caCertificates"></a><span class="type"><a href="../qtcore/qlist.html">QList</a></span>&lt;<span class="type"><a href="qsslcertificate.html">QSslCertificate</a></span>&gt; QSslSocket::<span class="name">caCertificates</span>() const</h3>
+<p>Use <a href="qsslconfiguration.html#caCertificates">QSslConfiguration::caCertificates</a>() instead.</p>
+<p>Returns this socket's CA certificate database. The CA certificate database is used by the socket during the handshake phase to validate the peer's certificate. It can be moodified prior to the handshake with <a href="qsslsocket.html#addCaCertificate">addCaCertificate</a>(), <a href="qsslsocket.html#addCaCertificates">addCaCertificates</a>(), and <a href="qsslsocket-obsolete.html#setCaCertificates">setCaCertificates</a>().</p>
+<p><b>Note: </b>On Unix, this method may return an empty list if the root certificates are loaded on demand.</p><p><b>See also </b><a href="qsslsocket.html#addCaCertificate">addCaCertificate</a>(), <a href="qsslsocket.html#addCaCertificates">addCaCertificates</a>(), and <a href="qsslsocket-obsolete.html#setCaCertificates">setCaCertificates</a>().</p>
+<!-- @@@caCertificates -->
+<!-- $$$ciphers[overload1]$$$ciphers -->
+<h3 class="fn" id="ciphers"><a name="ciphers"></a><span class="type"><a href="../qtcore/qlist.html">QList</a></span>&lt;<span class="type"><a href="qsslcipher.html">QSslCipher</a></span>&gt; QSslSocket::<span class="name">ciphers</span>() const</h3>
+<p>Use <a href="qsslconfiguration.html#ciphers">QSslConfiguration::ciphers</a>() instead.</p>
+<p>Returns this socket's current cryptographic cipher suite. This list is used during the socket's handshake phase for choosing a session cipher. The returned list of ciphers is ordered by descending preference. (i.e&#x2e;, the first cipher in the list is the most preferred cipher). The session cipher will be the first one in the list that is also supported by the peer.</p>
+<p>By default, the handshake phase can choose any of the ciphers supported by this system's SSL libraries, which may vary from system to system. The list of ciphers supported by this system's SSL libraries is returned by <a href="qsslsocket-obsolete.html#supportedCiphers">supportedCiphers</a>(). You can restrict the list of ciphers used for choosing the session cipher for this socket by calling <a href="qsslsocket-obsolete.html#setCiphers">setCiphers</a>() with a subset of the supported ciphers. You can revert to using the entire set by calling <a href="qsslsocket-obsolete.html#setCiphers">setCiphers</a>() with the list returned by <a href="qsslsocket-obsolete.html#supportedCiphers">supportedCiphers</a>().</p>
+<p>You can restrict the list of ciphers used for choosing the session cipher for <i>all</i> sockets by calling <a href="qsslsocket-obsolete.html#setDefaultCiphers">setDefaultCiphers</a>() with a subset of the supported ciphers. You can revert to using the entire set by calling <a href="qsslsocket-obsolete.html#setCiphers">setCiphers</a>() with the list returned by <a href="qsslsocket-obsolete.html#supportedCiphers">supportedCiphers</a>().</p>
+<p><b>See also </b><a href="qsslsocket-obsolete.html#setCiphers">setCiphers</a>(), <a href="qsslsocket-obsolete.html#defaultCiphers">defaultCiphers</a>(), <a href="qsslsocket-obsolete.html#setDefaultCiphers">setDefaultCiphers</a>(), and <a href="qsslsocket-obsolete.html#supportedCiphers">supportedCiphers</a>().</p>
+<!-- @@@ciphers -->
+<!-- $$$defaultCaCertificates[overload1]$$$defaultCaCertificates -->
+<h3 class="fn" id="defaultCaCertificates"><a name="defaultCaCertificates"></a><code>[static] </code><span class="type"><a href="../qtcore/qlist.html">QList</a></span>&lt;<span class="type"><a href="qsslcertificate.html">QSslCertificate</a></span>&gt; QSslSocket::<span class="name">defaultCaCertificates</span>()</h3>
+<p>Use <a href="qsslconfiguration.html#caCertificates">QSslConfiguration::caCertificates</a>() on the default <a href="qsslconfiguration.html">QSslConfiguration</a> instead.</p>
+<p>Returns the current default CA certificate database. This database is originally set to your system's default CA certificate database. If no system default database is found, an empty database will be returned. You can override the default CA certificate database with your own CA certificate database using <a href="qsslsocket-obsolete.html#setDefaultCaCertificates">setDefaultCaCertificates</a>().</p>
+<p>Each SSL socket's CA certificate database is initialized to the default CA certificate database.</p>
+<p><b>Note: </b>On Unix, this method may return an empty list if the root certificates are loaded on demand.</p><p><b>See also </b><a href="qsslsocket-obsolete.html#setDefaultCaCertificates">setDefaultCaCertificates</a>() and <a href="qsslsocket-obsolete.html#caCertificates">caCertificates</a>().</p>
+<!-- @@@defaultCaCertificates -->
+<!-- $$$defaultCiphers[overload1]$$$defaultCiphers -->
+<h3 class="fn" id="defaultCiphers"><a name="defaultCiphers"></a><code>[static] </code><span class="type"><a href="../qtcore/qlist.html">QList</a></span>&lt;<span class="type"><a href="qsslcipher.html">QSslCipher</a></span>&gt; QSslSocket::<span class="name">defaultCiphers</span>()</h3>
+<p>Use <a href="qsslconfiguration.html#ciphers">QSslConfiguration::ciphers</a>() on the default <a href="qsslconfiguration.html">QSslConfiguration</a> instead.</p>
+<p>Returns the default cryptographic cipher suite for all sockets in this application. This list is used during the socket's handshake phase when negotiating with the peer to choose a session cipher. The list is ordered by preference (i.e&#x2e;, the first cipher in the list is the most preferred cipher).</p>
+<p>By default, the handshake phase can choose any of the ciphers supported by this system's SSL libraries, which may vary from system to system. The list of ciphers supported by this system's SSL libraries is returned by <a href="qsslsocket-obsolete.html#supportedCiphers">supportedCiphers</a>().</p>
+<p><b>See also </b><a href="qsslsocket-obsolete.html#setDefaultCiphers">setDefaultCiphers</a>() and <a href="qsslsocket-obsolete.html#supportedCiphers">supportedCiphers</a>().</p>
+<!-- @@@defaultCiphers -->
+<!-- $$$setCaCertificates[overload1]$$$setCaCertificatesconstQList<QSslCertificate>& -->
+<h3 class="fn" id="setCaCertificates"><a name="setCaCertificates"></a><span class="type">void</span> QSslSocket::<span class="name">setCaCertificates</span>(const <span class="type"><a href="../qtcore/qlist.html">QList</a></span>&lt;<span class="type"><a href="qsslcertificate.html">QSslCertificate</a></span>&gt; &amp;<i>certificates</i>)</h3>
+<p>Use <a href="qsslconfiguration.html#setCaCertificates">QSslConfiguration::setCaCertificates</a>() instead.</p>
+<p>Sets this socket's CA certificate database to be <i>certificates</i>. The certificate database must be set prior to the SSL handshake. The CA certificate database is used by the socket during the handshake phase to validate the peer's certificate.</p>
+<p>The CA certificate database can be reset to the current default CA certificate database by calling this function with the list of CA certificates returned by <a href="qsslsocket-obsolete.html#defaultCaCertificates">defaultCaCertificates</a>().</p>
+<p><b>See also </b><a href="qsslsocket-obsolete.html#caCertificates">caCertificates</a>() and <a href="qsslsocket-obsolete.html#defaultCaCertificates">defaultCaCertificates</a>().</p>
+<!-- @@@setCaCertificates -->
+<!-- $$$setCiphers[overload1]$$$setCiphersconstQList<QSslCipher>& -->
+<h3 class="fn" id="setCiphers"><a name="setCiphers"></a><span class="type">void</span> QSslSocket::<span class="name">setCiphers</span>(const <span class="type"><a href="../qtcore/qlist.html">QList</a></span>&lt;<span class="type"><a href="qsslcipher.html">QSslCipher</a></span>&gt; &amp;<i>ciphers</i>)</h3>
+<p>USe <a href="qsslconfiguration.html#setCiphers">QSslConfiguration::setCiphers</a>() instead.</p>
+<p>Sets the cryptographic cipher suite for this socket to <i>ciphers</i>, which must contain a subset of the ciphers in the list returned by <a href="qsslsocket-obsolete.html#supportedCiphers">supportedCiphers</a>().</p>
+<p>Restricting the cipher suite must be done before the handshake phase, where the session cipher is chosen.</p>
+<p><b>See also </b><a href="qsslsocket-obsolete.html#ciphers">ciphers</a>(), <a href="qsslsocket-obsolete.html#setDefaultCiphers">setDefaultCiphers</a>(), and <a href="qsslsocket-obsolete.html#supportedCiphers">supportedCiphers</a>().</p>
+<!-- @@@setCiphers -->
+<!-- $$$setCiphers$$$setCiphersconstQString& -->
+<h3 class="fn" id="setCiphers-1"><a name="setCiphers-1"></a><span class="type">void</span> QSslSocket::<span class="name">setCiphers</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>ciphers</i>)</h3>
+<p>Use <a href="qsslconfiguration.html#setCiphers">QSslConfiguration::setCiphers</a>() instead.</p>
+<p>Sets the cryptographic cipher suite for this socket to <i>ciphers</i>, which is a colon-separated list of cipher suite names. The ciphers are listed in order of preference, starting with the most preferred cipher. For example:</p>
+<pre class="cpp">
+
+  <span class="type"><a href="qsslsocket.html#QSslSocket">QSslSocket</a></span> socket;
+  socket<span class="operator">.</span>setCiphers(<span class="string">&quot;DHE-RSA-AES256-SHA:DHE-DSS-AES256-SHA:AES256-SHA&quot;</span>);
+
+</pre>
+<p>Each cipher name in <i>ciphers</i> must be the name of a cipher in the list returned by <a href="qsslsocket-obsolete.html#supportedCiphers">supportedCiphers</a>(). Restricting the cipher suite must be done before the handshake phase, where the session cipher is chosen.</p>
+<p><b>See also </b><a href="qsslsocket-obsolete.html#ciphers">ciphers</a>(), <a href="qsslsocket-obsolete.html#setDefaultCiphers">setDefaultCiphers</a>(), and <a href="qsslsocket-obsolete.html#supportedCiphers">supportedCiphers</a>().</p>
+<!-- @@@setCiphers -->
+<!-- $$$setDefaultCaCertificates[overload1]$$$setDefaultCaCertificatesconstQList<QSslCertificate>& -->
+<h3 class="fn" id="setDefaultCaCertificates"><a name="setDefaultCaCertificates"></a><code>[static] </code><span class="type">void</span> QSslSocket::<span class="name">setDefaultCaCertificates</span>(const <span class="type"><a href="../qtcore/qlist.html">QList</a></span>&lt;<span class="type"><a href="qsslcertificate.html">QSslCertificate</a></span>&gt; &amp;<i>certificates</i>)</h3>
+<p>Use <a href="qsslconfiguration.html#setCaCertificates">QSslConfiguration::setCaCertificates</a>() on the default <a href="qsslconfiguration.html">QSslConfiguration</a> instead.</p>
+<p>Sets the default CA certificate database to <i>certificates</i>. The default CA certificate database is originally set to your system's default CA certificate database. You can override the default CA certificate database with your own CA certificate database using this function.</p>
+<p>Each SSL socket's CA certificate database is initialized to the default CA certificate database.</p>
+<p><b>See also </b><a href="qsslsocket-obsolete.html#defaultCaCertificates">defaultCaCertificates</a>() and <a href="qsslsocket.html#addDefaultCaCertificate">addDefaultCaCertificate</a>().</p>
+<!-- @@@setDefaultCaCertificates -->
+<!-- $$$setDefaultCiphers[overload1]$$$setDefaultCiphersconstQList<QSslCipher>& -->
+<h3 class="fn" id="setDefaultCiphers"><a name="setDefaultCiphers"></a><code>[static] </code><span class="type">void</span> QSslSocket::<span class="name">setDefaultCiphers</span>(const <span class="type"><a href="../qtcore/qlist.html">QList</a></span>&lt;<span class="type"><a href="qsslcipher.html">QSslCipher</a></span>&gt; &amp;<i>ciphers</i>)</h3>
+<p>Use <a href="qsslconfiguration.html#setCiphers">QSslConfiguration::setCiphers</a>() on the default <a href="qsslconfiguration.html">QSslConfiguration</a> instead.</p>
+<p>Sets the default cryptographic cipher suite for all sockets in this application to <i>ciphers</i>, which must contain a subset of the ciphers in the list returned by <a href="qsslsocket-obsolete.html#supportedCiphers">supportedCiphers</a>().</p>
+<p>Restricting the default cipher suite only affects SSL sockets that perform their handshake phase after the default cipher suite has been changed.</p>
+<p><b>See also </b><a href="qsslsocket-obsolete.html#setCiphers">setCiphers</a>(), <a href="qsslsocket-obsolete.html#defaultCiphers">defaultCiphers</a>(), and <a href="qsslsocket-obsolete.html#supportedCiphers">supportedCiphers</a>().</p>
+<!-- @@@setDefaultCiphers -->
+<!-- $$$supportedCiphers[overload1]$$$supportedCiphers -->
+<h3 class="fn" id="supportedCiphers"><a name="supportedCiphers"></a><code>[static] </code><span class="type"><a href="../qtcore/qlist.html">QList</a></span>&lt;<span class="type"><a href="qsslcipher.html">QSslCipher</a></span>&gt; QSslSocket::<span class="name">supportedCiphers</span>()</h3>
+<p>Use <a href="qsslconfiguration.html#supportedCiphers">QSslConfiguration::supportedCiphers</a>() instead.</p>
+<p>Returns the list of cryptographic ciphers supported by this system. This list is set by the system's SSL libraries and may vary from system to system.</p>
+<p><b>See also </b><a href="qsslsocket-obsolete.html#defaultCiphers">defaultCiphers</a>(), <a href="qsslsocket-obsolete.html#ciphers">ciphers</a>(), and <a href="qsslsocket-obsolete.html#setCiphers">setCiphers</a>().</p>
+<!-- @@@supportedCiphers -->
+<!-- $$$systemCaCertificates[overload1]$$$systemCaCertificates -->
+<h3 class="fn" id="systemCaCertificates"><a name="systemCaCertificates"></a><code>[static] </code><span class="type"><a href="../qtcore/qlist.html">QList</a></span>&lt;<span class="type"><a href="qsslcertificate.html">QSslCertificate</a></span>&gt; QSslSocket::<span class="name">systemCaCertificates</span>()</h3>
+<p>Use QSslConfiguration::systemDefaultCaCertificates instead.</p>
+<p>This function provides the CA certificate database provided by the operating system. The CA certificate database returned by this function is used to initialize the database returned by <a href="qsslsocket-obsolete.html#defaultCaCertificates">defaultCaCertificates</a>(). You can replace that database with your own with <a href="qsslsocket-obsolete.html#setDefaultCaCertificates">setDefaultCaCertificates</a>().</p>
+<p><b>See also </b><a href="qsslsocket-obsolete.html#caCertificates">caCertificates</a>(), <a href="qsslsocket-obsolete.html#defaultCaCertificates">defaultCaCertificates</a>(), and <a href="qsslsocket-obsolete.html#setDefaultCaCertificates">setDefaultCaCertificates</a>().</p>
+<!-- @@@systemCaCertificates -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

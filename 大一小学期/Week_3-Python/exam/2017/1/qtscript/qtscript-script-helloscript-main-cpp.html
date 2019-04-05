@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>main.cpp Example File | Qt Script</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtscript-index.html">Qt Script</a></td><td ><a href="qtscript-script-helloscript-example.html">Hello Script Example</a></td><td >main.cpp Example File</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar"><div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">main.cpp Example File</h1>
+<span class="subtitle">script/helloscript/main.cpp</span>
+<!-- $$$script/helloscript/main.cpp-description -->
+<div class="descr"> <a name="details"></a>
+<pre class="cpp">
+
+  <span class="comment">/****************************************************************************
+  **
+  ** Copyright (C) 2015 The Qt Company Ltd.
+  ** Contact: http://www.qt.io/licensing/
+  **
+  ** This file is part of the examples of the Qt Toolkit.
+  **
+  ** $QT_BEGIN_LICENSE:BSD$
+  ** You may use this file under the terms of the BSD license as follows:
+  **
+  ** &quot;Redistribution and use in source and binary forms, with or without
+  ** modification, are permitted provided that the following conditions are
+  ** met:
+  **   * Redistributions of source code must retain the above copyright
+  **     notice, this list of conditions and the following disclaimer.
+  **   * Redistributions in binary form must reproduce the above copyright
+  **     notice, this list of conditions and the following disclaimer in
+  **     the documentation and/or other materials provided with the
+  **     distribution.
+  **   * Neither the name of The Qt Company Ltd nor the names of its
+  **     contributors may be used to endorse or promote products derived
+  **     from this software without specific prior written permission.
+  **
+  **
+  ** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  ** &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  ** LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  ** A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  ** OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  ** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  ** LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  ** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  ** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  ** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.&quot;
+  **
+  ** $QT_END_LICENSE$
+  **
+  ****************************************************************************/</span>
+
+  <span class="preprocessor">#include &lt;QApplication&gt;</span>
+  <span class="preprocessor">#include &lt;QFile&gt;</span>
+  <span class="preprocessor">#include &lt;QMessageBox&gt;</span>
+  <span class="preprocessor">#include &lt;QPushButton&gt;</span>
+  <span class="preprocessor">#include &lt;QTextStream&gt;</span>
+  <span class="preprocessor">#include &lt;QTranslator&gt;</span>
+  <span class="preprocessor">#include &lt;QtScript&gt;</span>
+
+  <span class="type">int</span> main(<span class="type">int</span> argc<span class="operator">,</span> <span class="type">char</span> <span class="operator">*</span>argv<span class="operator">[</span><span class="operator">]</span>)
+  {
+      Q_INIT_RESOURCE(helloscript);
+
+      <span class="type"><a href="../qtwidgets/qapplication.html">QApplication</a></span> app(argc<span class="operator">,</span> argv);
+
+      <span class="type"><a href="qscriptengine.html">QScriptEngine</a></span> engine;
+
+      <span class="type"><a href="../qtcore/qtranslator.html">QTranslator</a></span> translator;
+      translator<span class="operator">.</span>load(<span class="string">&quot;helloscript_la&quot;</span>);
+      app<span class="operator">.</span>installTranslator(<span class="operator">&amp;</span>translator);
+      engine<span class="operator">.</span>installTranslatorFunctions();
+
+      <span class="type"><a href="../qtwidgets/qpushbutton.html">QPushButton</a></span> button;
+      <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> scriptButton <span class="operator">=</span> engine<span class="operator">.</span>newQObject(<span class="operator">&amp;</span>button);
+      engine<span class="operator">.</span>globalObject()<span class="operator">.</span>setProperty(<span class="string">&quot;button&quot;</span><span class="operator">,</span> scriptButton);
+
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> fileName(<span class="string">&quot;:/helloscript.js&quot;</span>);
+      <span class="type"><a href="../qtcore/qfile.html">QFile</a></span> scriptFile(fileName);
+      scriptFile<span class="operator">.</span>open(<span class="type"><a href="../qtcore/qiodevice.html">QIODevice</a></span><span class="operator">::</span>ReadOnly);
+      <span class="type"><a href="../qtcore/qtextstream.html">QTextStream</a></span> stream(<span class="operator">&amp;</span>scriptFile);
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> contents <span class="operator">=</span> stream<span class="operator">.</span>readAll();
+      scriptFile<span class="operator">.</span>close();
+
+  <span class="preprocessor">#ifdef Q_OS_SYMBIAN</span>
+      contents<span class="operator">.</span>replace(<span class="string">&quot;button.show()&quot;</span><span class="operator">,</span> <span class="string">&quot;button.showMaximized()&quot;</span>);
+  <span class="preprocessor">#endif</span>
+
+      <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> result <span class="operator">=</span> engine<span class="operator">.</span>evaluate(contents<span class="operator">,</span> fileName);
+
+      <span class="keyword">if</span> (result<span class="operator">.</span>isError()) {
+          <span class="type"><a href="../qtwidgets/qmessagebox.html">QMessageBox</a></span><span class="operator">::</span>critical(<span class="number">0</span><span class="operator">,</span> <span class="string">&quot;Hello Script&quot;</span><span class="operator">,</span>
+                                <span class="type"><a href="../qtcore/qstring.html">QString</a></span><span class="operator">::</span>fromLatin1(<span class="string">&quot;%0:%1: %2&quot;</span>)
+                                <span class="operator">.</span>arg(fileName)
+                                <span class="operator">.</span>arg(result<span class="operator">.</span>property(<span class="string">&quot;lineNumber&quot;</span>)<span class="operator">.</span>toInt32())
+                                <span class="operator">.</span>arg(result<span class="operator">.</span>toString()));
+          <span class="keyword">return</span> <span class="operator">-</span><span class="number">1</span>;
+      }
+
+      <span class="keyword">return</span> app<span class="operator">.</span>exec();
+  }
+
+</pre>
+</div>
+<!-- @@@script/helloscript/main.cpp -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

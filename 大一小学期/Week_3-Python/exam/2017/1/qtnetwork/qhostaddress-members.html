@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qhostaddress.cpp -->
+  <title>List of All Members for QHostAddress | Qt Network 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtnetwork-index.html">Qt Network</a></td><td ><a href="qtnetwork-module.html">C++ Classes</a></td><td >QHostAddress</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar"><div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">List of All Members for QHostAddress</h1>
+<p>This is the complete list of members for <a href="qhostaddress.html">QHostAddress</a>, including inherited members.</p>
+<div class="table"><table class="propsummary">
+<tr><td class="topAlign"><ul>
+<li class="fn">enum <span class="name"><b><a href="qhostaddress.html#SpecialAddress-enum">SpecialAddress</a></b></span></li>
+<li class="fn"><span class="name"><b><a href="qhostaddress.html#QHostAddress">QHostAddress</a></b></span>()</li>
+<li class="fn"><span class="name"><b><a href="qhostaddress.html#QHostAddress-1">QHostAddress</a></b></span>(quint32 )</li>
+<li class="fn"><span class="name"><b><a href="qhostaddress.html#QHostAddress-2">QHostAddress</a></b></span>(quint8 *)</li>
+<li class="fn"><span class="name"><b><a href="qhostaddress.html#QHostAddress-3">QHostAddress</a></b></span>(const quint8 *)</li>
+<li class="fn"><span class="name"><b><a href="qhostaddress.html#QHostAddress-4">QHostAddress</a></b></span>(const Q_IPV6ADDR &amp;)</li>
+<li class="fn"><span class="name"><b><a href="qhostaddress.html#QHostAddress-5">QHostAddress</a></b></span>(const sockaddr *)</li>
+<li class="fn"><span class="name"><b><a href="qhostaddress.html#QHostAddress-6">QHostAddress</a></b></span>(const QString &amp;)</li>
+<li class="fn"><span class="name"><b><a href="qhostaddress.html#QHostAddress-7">QHostAddress</a></b></span>(const QHostAddress &amp;)</li>
+<li class="fn"><span class="name"><b><a href="qhostaddress.html#QHostAddress-8">QHostAddress</a></b></span>(SpecialAddress )</li>
+<li class="fn"><span class="name"><b><a href="qhostaddress.html#dtor.QHostAddress">~QHostAddress</a></b></span>()</li>
+<li class="fn"><span class="name"><b><a href="qhostaddress.html#clear">clear</a></b></span>()</li>
+<li class="fn"><span class="name"><b><a href="qhostaddress.html#d-var">d</a></b></span> : QScopedPointer&lt;QHostAddressPrivate&gt;</li>
+<li class="fn"><span class="name"><b><a href="qhostaddress.html#isInSubnet">isInSubnet</a></b></span>(const QHostAddress &amp;, int ) const : bool</li>
+<li class="fn"><span class="name"><b><a href="qhostaddress.html#isInSubnet-1">isInSubnet</a></b></span>(const QPair&lt;QHostAddress, int&gt; &amp;) const : bool</li>
+<li class="fn"><span class="name"><b><a href="qhostaddress.html#isLoopback">isLoopback</a></b></span>() const : bool</li>
+<li class="fn"><span class="name"><b><a href="qhostaddress.html#isMulticast">isMulticast</a></b></span>() const : bool</li>
+<li class="fn"><span class="name"><b><a href="qhostaddress.html#isNull">isNull</a></b></span>() const : bool</li>
+<li class="fn"><span class="name"><b><a href="qhostaddress.html#parseSubnet">parseSubnet</a></b></span>(const QString &amp;) : QPair&lt;QHostAddress, int&gt;</li>
+<li class="fn"><span class="name"><b><a href="qhostaddress.html#protocol">protocol</a></b></span>() const : QAbstractSocket::NetworkLayerProtocol</li>
+</ul></td><td class="topAlign"><ul>
+<li class="fn"><span class="name"><b><a href="qhostaddress.html#scopeId">scopeId</a></b></span>() const : QString</li>
+<li class="fn"><span class="name"><b><a href="qhostaddress.html#setAddress">setAddress</a></b></span>(quint32 )</li>
+<li class="fn"><span class="name"><b><a href="qhostaddress.html#setAddress-1">setAddress</a></b></span>(quint8 *)</li>
+<li class="fn"><span class="name"><b><a href="qhostaddress.html#setAddress-2">setAddress</a></b></span>(const quint8 *)</li>
+<li class="fn"><span class="name"><b><a href="qhostaddress.html#setAddress-3">setAddress</a></b></span>(const Q_IPV6ADDR &amp;)</li>
+<li class="fn"><span class="name"><b><a href="qhostaddress.html#setAddress-4">setAddress</a></b></span>(const sockaddr *)</li>
+<li class="fn"><span class="name"><b><a href="qhostaddress.html#setAddress-5">setAddress</a></b></span>(const QString &amp;) : bool</li>
+<li class="fn"><span class="name"><b><a href="qhostaddress.html#setScopeId">setScopeId</a></b></span>(const QString &amp;)</li>
+<li class="fn"><span class="name"><b><a href="qhostaddress.html#swap">swap</a></b></span>(QHostAddress &amp;)</li>
+<li class="fn"><span class="name"><b><a href="qhostaddress.html#toIPv4Address">toIPv4Address</a></b></span>() const : quint32</li>
+<li class="fn"><span class="name"><b><a href="qhostaddress.html#toIPv4Address-1">toIPv4Address</a></b></span>(bool *) const : quint32</li>
+<li class="fn"><span class="name"><b><a href="qhostaddress.html#toIPv6Address">toIPv6Address</a></b></span>() const : Q_IPV6ADDR</li>
+<li class="fn"><span class="name"><b><a href="qhostaddress.html#toString">toString</a></b></span>() const : QString</li>
+<li class="fn"><span class="name"><b><a href="qhostaddress.html#operator-not-eq">operator!=</a></b></span>(const QHostAddress &amp;) const : bool</li>
+<li class="fn"><span class="name"><b><a href="qhostaddress.html#operator-not-eq-1">operator!=</a></b></span>(SpecialAddress ) const : bool</li>
+<li class="fn"><span class="name"><b><a href="qhostaddress.html#operator-eq">operator=</a></b></span>(QHostAddress &amp;&amp;) : QHostAddress &amp;</li>
+<li class="fn"><span class="name"><b><a href="qhostaddress.html#operator-eq-1">operator=</a></b></span>(const QHostAddress &amp;) : QHostAddress &amp;</li>
+<li class="fn"><span class="name"><b><a href="qhostaddress.html#operator-eq-2">operator=</a></b></span>(const QString &amp;) : QHostAddress &amp;</li>
+<li class="fn"><span class="name"><b><a href="qhostaddress.html#operator-eq-eq">operator==</a></b></span>(const QHostAddress &amp;) const : bool</li>
+<li class="fn"><span class="name"><b><a href="qhostaddress.html#operator-eq-eq-1">operator==</a></b></span>(SpecialAddress ) const : bool</li>
+</ul>
+</td></tr>
+</table></div>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

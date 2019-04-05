@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>prototypes.cpp Example File | Qt Script</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtscript-index.html">Qt Script</a></td><td ><a href="qtscript-script-defaultprototypes-example.html">Default Prototypes Example</a></td><td >prototypes.cpp Example File</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar"><div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">prototypes.cpp Example File</h1>
+<span class="subtitle">script/defaultprototypes/prototypes.cpp</span>
+<!-- $$$script/defaultprototypes/prototypes.cpp-description -->
+<div class="descr"> <a name="details"></a>
+<pre class="cpp">
+
+  <span class="comment">/****************************************************************************
+  **
+  ** Copyright (C) 2015 The Qt Company Ltd.
+  ** Contact: http://www.qt.io/licensing/
+  **
+  ** This file is part of the examples of the Qt Toolkit.
+  **
+  ** $QT_BEGIN_LICENSE:BSD$
+  ** You may use this file under the terms of the BSD license as follows:
+  **
+  ** &quot;Redistribution and use in source and binary forms, with or without
+  ** modification, are permitted provided that the following conditions are
+  ** met:
+  **   * Redistributions of source code must retain the above copyright
+  **     notice, this list of conditions and the following disclaimer.
+  **   * Redistributions in binary form must reproduce the above copyright
+  **     notice, this list of conditions and the following disclaimer in
+  **     the documentation and/or other materials provided with the
+  **     distribution.
+  **   * Neither the name of The Qt Company Ltd nor the names of its
+  **     contributors may be used to endorse or promote products derived
+  **     from this software without specific prior written permission.
+  **
+  **
+  ** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  ** &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  ** LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  ** A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  ** OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  ** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  ** LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  ** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  ** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  ** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.&quot;
+  **
+  ** $QT_END_LICENSE$
+  **
+  ****************************************************************************/</span>
+
+  <span class="preprocessor">#include &quot;prototypes.h&quot;</span>
+  <span class="preprocessor">#include &lt;QtWidgets/QListWidgetItem&gt;</span>
+  <span class="preprocessor">#include &lt;QtWidgets/QListWidget&gt;</span>
+  <span class="preprocessor">#include &lt;QtScript/QScriptValue&gt;</span>
+  <span class="preprocessor">#include &lt;QtScript/QScriptEngine&gt;</span>
+  <span class="preprocessor">#include &lt;QDebug&gt;</span>
+
+  Q_DECLARE_METATYPE(<span class="type"><a href="../qtwidgets/qlistwidgetitem.html">QListWidgetItem</a></span><span class="operator">*</span>)
+  Q_DECLARE_METATYPE(<span class="type"><a href="../qtwidgets/qlistwidget.html">QListWidget</a></span><span class="operator">*</span>)
+
+  ListWidgetItemPrototype<span class="operator">::</span>ListWidgetItemPrototype(<span class="type"><a href="../qtcore/qobject.html">QObject</a></span> <span class="operator">*</span>parent)
+      : <span class="type"><a href="../qtcore/qobject.html">QObject</a></span>(parent)
+  {
+  }
+
+  <span class="type"><a href="../qtcore/qstring.html">QString</a></span> ListWidgetItemPrototype<span class="operator">::</span>text() <span class="keyword">const</span>
+  {
+      <span class="type"><a href="../qtwidgets/qlistwidgetitem.html">QListWidgetItem</a></span> <span class="operator">*</span>item <span class="operator">=</span> qscriptvalue_cast<span class="operator">&lt;</span><span class="type"><a href="../qtwidgets/qlistwidgetitem.html">QListWidgetItem</a></span><span class="operator">*</span><span class="operator">&gt;</span>(thisObject());
+      <span class="keyword">if</span> (item)
+          <span class="keyword">return</span> item<span class="operator">-</span><span class="operator">&gt;</span>text();
+      <span class="keyword">return</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span>();
+  }
+
+  <span class="type">void</span> ListWidgetItemPrototype<span class="operator">::</span>setText(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>text)
+  {
+      <span class="type"><a href="../qtwidgets/qlistwidgetitem.html">QListWidgetItem</a></span> <span class="operator">*</span>item <span class="operator">=</span> qscriptvalue_cast<span class="operator">&lt;</span><span class="type"><a href="../qtwidgets/qlistwidgetitem.html">QListWidgetItem</a></span><span class="operator">*</span><span class="operator">&gt;</span>(thisObject());
+      <span class="keyword">if</span> (item)
+          item<span class="operator">-</span><span class="operator">&gt;</span>setText(text);
+  }
+
+  <span class="type"><a href="../qtcore/qstring.html">QString</a></span> ListWidgetItemPrototype<span class="operator">::</span>toString() <span class="keyword">const</span>
+  {
+      <span class="keyword">return</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span>(<span class="string">&quot;ListWidgetItem(text = %0)&quot;</span>)<span class="operator">.</span>arg(text());
+  }
+
+  ListWidgetPrototype<span class="operator">::</span>ListWidgetPrototype(<span class="type"><a href="../qtcore/qobject.html">QObject</a></span> <span class="operator">*</span>parent)
+      : <span class="type"><a href="../qtcore/qobject.html">QObject</a></span>(parent)
+  {
+  }
+
+  <span class="type">void</span> ListWidgetPrototype<span class="operator">::</span>addItem(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>text)
+  {
+      <span class="type"><a href="../qtwidgets/qlistwidget.html">QListWidget</a></span> <span class="operator">*</span>widget <span class="operator">=</span> qscriptvalue_cast<span class="operator">&lt;</span><span class="type"><a href="../qtwidgets/qlistwidget.html">QListWidget</a></span><span class="operator">*</span><span class="operator">&gt;</span>(thisObject());
+      <span class="keyword">if</span> (widget)
+          widget<span class="operator">-</span><span class="operator">&gt;</span>addItem(text);
+  }
+
+  <span class="type">void</span> ListWidgetPrototype<span class="operator">::</span>addItems(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstringlist.html">QStringList</a></span> <span class="operator">&amp;</span>texts)
+  {
+      <span class="type"><a href="../qtwidgets/qlistwidget.html">QListWidget</a></span> <span class="operator">*</span>widget <span class="operator">=</span> qscriptvalue_cast<span class="operator">&lt;</span><span class="type"><a href="../qtwidgets/qlistwidget.html">QListWidget</a></span><span class="operator">*</span><span class="operator">&gt;</span>(thisObject());
+      <span class="keyword">if</span> (widget)
+          widget<span class="operator">-</span><span class="operator">&gt;</span>addItems(texts);
+  }
+
+  <span class="type">void</span> ListWidgetPrototype<span class="operator">::</span>setBackgroundColor(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>colorName)
+  {
+      <span class="type"><a href="../qtwidgets/qlistwidget.html">QListWidget</a></span> <span class="operator">*</span>widget <span class="operator">=</span> qscriptvalue_cast<span class="operator">&lt;</span><span class="type"><a href="../qtwidgets/qlistwidget.html">QListWidget</a></span><span class="operator">*</span><span class="operator">&gt;</span>(thisObject());
+      <span class="keyword">if</span> (widget) {
+  <span class="preprocessor">#ifdef Q_WS_MAEMO_5</span>
+          <span class="type"><a href="../qtcore/qstring.html">QString</a></span> style <span class="operator">=</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span>(<span class="string">&quot;QListWidget::item {background-color: %1;}&quot;</span>)<span class="operator">.</span>arg(colorName);
+          style <span class="operator">+</span><span class="operator">=</span> <span class="string">&quot;QListWidget::item {selection-color: black;}&quot;</span>;
+          widget<span class="operator">-</span><span class="operator">&gt;</span>setStyleSheet(style);
+  <span class="preprocessor">#else</span>
+          <span class="type">QPalette</span> palette <span class="operator">=</span> widget<span class="operator">-</span><span class="operator">&gt;</span>palette();
+          <span class="type">QColor</span> color(colorName);
+          palette<span class="operator">.</span>setBrush(<span class="type">QPalette</span><span class="operator">::</span>Base<span class="operator">,</span> color);
+          widget<span class="operator">-</span><span class="operator">&gt;</span>setPalette(palette);
+  <span class="preprocessor">#endif</span>
+      }
+  }
+
+</pre>
+</div>
+<!-- @@@script/defaultprototypes/prototypes.cpp -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

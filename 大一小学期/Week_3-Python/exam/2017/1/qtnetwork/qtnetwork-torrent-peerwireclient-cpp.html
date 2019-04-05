@@ -1,0 +1,713 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>peerwireclient.cpp Example File | Qt Network 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtnetwork-index.html">Qt Network</a></td><td ><a href="qtnetwork-torrent-example.html">Torrent Example</a></td><td >peerwireclient.cpp Example File</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar"><div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">peerwireclient.cpp Example File</h1>
+<span class="subtitle">torrent/peerwireclient.cpp</span>
+<!-- $$$torrent/peerwireclient.cpp-description -->
+<div class="descr"> <a name="details"></a>
+<pre class="cpp">
+
+  <span class="comment">/****************************************************************************
+  **
+  ** Copyright (C) 2015 The Qt Company Ltd.
+  ** Contact: http://www.qt.io/licensing/
+  **
+  ** This file is part of the examples of the Qt Toolkit.
+  **
+  ** $QT_BEGIN_LICENSE:BSD$
+  ** You may use this file under the terms of the BSD license as follows:
+  **
+  ** &quot;Redistribution and use in source and binary forms, with or without
+  ** modification, are permitted provided that the following conditions are
+  ** met:
+  **   * Redistributions of source code must retain the above copyright
+  **     notice, this list of conditions and the following disclaimer.
+  **   * Redistributions in binary form must reproduce the above copyright
+  **     notice, this list of conditions and the following disclaimer in
+  **     the documentation and/or other materials provided with the
+  **     distribution.
+  **   * Neither the name of The Qt Company Ltd nor the names of its
+  **     contributors may be used to endorse or promote products derived
+  **     from this software without specific prior written permission.
+  **
+  **
+  ** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  ** &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  ** LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  ** A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  ** OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  ** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  ** LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  ** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  ** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  ** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.&quot;
+  **
+  ** $QT_END_LICENSE$
+  **
+  ****************************************************************************/</span>
+
+  <span class="preprocessor">#include &quot;peerwireclient.h&quot;</span>
+
+  <span class="preprocessor">#include &lt;QHostAddress&gt;</span>
+  <span class="preprocessor">#include &lt;QTimerEvent&gt;</span>
+
+  <span class="keyword">static</span> <span class="keyword">const</span> <span class="type">int</span> PendingRequestTimeout <span class="operator">=</span> <span class="number">60</span> <span class="operator">*</span> <span class="number">1000</span>;
+  <span class="keyword">static</span> <span class="keyword">const</span> <span class="type">int</span> ClientTimeout <span class="operator">=</span> <span class="number">120</span> <span class="operator">*</span> <span class="number">1000</span>;
+  <span class="keyword">static</span> <span class="keyword">const</span> <span class="type">int</span> ConnectTimeout <span class="operator">=</span> <span class="number">60</span> <span class="operator">*</span> <span class="number">1000</span>;
+  <span class="keyword">static</span> <span class="keyword">const</span> <span class="type">int</span> KeepAliveInterval <span class="operator">=</span> <span class="number">30</span> <span class="operator">*</span> <span class="number">1000</span>;
+  <span class="keyword">static</span> <span class="keyword">const</span> <span class="type">int</span> RateControlTimerDelay <span class="operator">=</span> <span class="number">2000</span>;
+  <span class="keyword">static</span> <span class="keyword">const</span> <span class="type">int</span> MinimalHeaderSize <span class="operator">=</span> <span class="number">48</span>;
+  <span class="keyword">static</span> <span class="keyword">const</span> <span class="type">char</span> ProtocolId<span class="operator">[</span><span class="operator">]</span> <span class="operator">=</span> <span class="string">&quot;BitTorrent protocol&quot;</span>;
+  <span class="keyword">static</span> <span class="keyword">const</span> <span class="type">char</span> ProtocolIdSize <span class="operator">=</span> <span class="number">19</span>;
+
+  <span class="comment">// Reads a 32bit unsigned int from data in network order.</span>
+  <span class="keyword">static</span> <span class="keyword">inline</span> <span class="type"><a href="../qtcore/qtglobal.html#quint32-typedef">quint32</a></span> fromNetworkData(<span class="keyword">const</span> <span class="type">char</span> <span class="operator">*</span>data)
+  {
+      <span class="keyword">const</span> <span class="type">unsigned</span> <span class="type">char</span> <span class="operator">*</span>udata <span class="operator">=</span> (<span class="keyword">const</span> <span class="type">unsigned</span> <span class="type">char</span> <span class="operator">*</span>)data;
+      <span class="keyword">return</span> (<span class="type"><a href="../qtcore/qtglobal.html#quint32-typedef">quint32</a></span>(udata<span class="operator">[</span><span class="number">0</span><span class="operator">]</span>) <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="number">24</span>)
+          <span class="operator">|</span> (<span class="type"><a href="../qtcore/qtglobal.html#quint32-typedef">quint32</a></span>(udata<span class="operator">[</span><span class="number">1</span><span class="operator">]</span>) <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="number">16</span>)
+          <span class="operator">|</span> (<span class="type"><a href="../qtcore/qtglobal.html#quint32-typedef">quint32</a></span>(udata<span class="operator">[</span><span class="number">2</span><span class="operator">]</span>) <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="number">8</span>)
+          <span class="operator">|</span> (<span class="type"><a href="../qtcore/qtglobal.html#quint32-typedef">quint32</a></span>(udata<span class="operator">[</span><span class="number">3</span><span class="operator">]</span>));
+  }
+
+  <span class="comment">// Writes a 32bit unsigned int from num to data in network order.</span>
+  <span class="keyword">static</span> <span class="keyword">inline</span> <span class="type">void</span> toNetworkData(<span class="type"><a href="../qtcore/qtglobal.html#quint32-typedef">quint32</a></span> num<span class="operator">,</span> <span class="type">char</span> <span class="operator">*</span>data)
+  {
+      <span class="type">unsigned</span> <span class="type">char</span> <span class="operator">*</span>udata <span class="operator">=</span> (<span class="type">unsigned</span> <span class="type">char</span> <span class="operator">*</span>)data;
+      udata<span class="operator">[</span><span class="number">3</span><span class="operator">]</span> <span class="operator">=</span> (num <span class="operator">&amp;</span> <span class="number">0xff</span>);
+      udata<span class="operator">[</span><span class="number">2</span><span class="operator">]</span> <span class="operator">=</span> (num <span class="operator">&amp;</span> <span class="number">0xff00</span>) <span class="operator">&gt;</span><span class="operator">&gt;</span> <span class="number">8</span>;
+      udata<span class="operator">[</span><span class="number">1</span><span class="operator">]</span> <span class="operator">=</span> (num <span class="operator">&amp;</span> <span class="number">0xff0000</span>) <span class="operator">&gt;</span><span class="operator">&gt;</span> <span class="number">16</span>;
+      udata<span class="operator">[</span><span class="number">0</span><span class="operator">]</span> <span class="operator">=</span> (num <span class="operator">&amp;</span> <span class="number">0xff000000</span>) <span class="operator">&gt;</span><span class="operator">&gt;</span> <span class="number">24</span>;
+  }
+
+  <span class="comment">// Constructs an unconnected PeerWire client and starts the connect timer.</span>
+  PeerWireClient<span class="operator">::</span>PeerWireClient(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> <span class="operator">&amp;</span>peerId<span class="operator">,</span> <span class="type"><a href="../qtcore/qobject.html">QObject</a></span> <span class="operator">*</span>parent)
+      : <span class="type"><a href="qtcpsocket.html">QTcpSocket</a></span>(parent)<span class="operator">,</span> pendingBlockSizes(<span class="number">0</span>)<span class="operator">,</span>
+        pwState(ChokingPeer <span class="operator">|</span> ChokedByPeer)<span class="operator">,</span> receivedHandShake(<span class="keyword">false</span>)<span class="operator">,</span> gotPeerId(<span class="keyword">false</span>)<span class="operator">,</span>
+        sentHandShake(<span class="keyword">false</span>)<span class="operator">,</span> nextPacketLength(<span class="operator">-</span><span class="number">1</span>)<span class="operator">,</span> pendingRequestTimer(<span class="number">0</span>)<span class="operator">,</span> invalidateTimeout(<span class="keyword">false</span>)<span class="operator">,</span>
+        keepAliveTimer(<span class="number">0</span>)<span class="operator">,</span> torrentPeer(<span class="number">0</span>)
+  {
+      memset(uploadSpeedData<span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="keyword">sizeof</span>(uploadSpeedData));
+      memset(downloadSpeedData<span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="keyword">sizeof</span>(downloadSpeedData));
+
+      transferSpeedTimer <span class="operator">=</span> startTimer(RateControlTimerDelay);
+      timeoutTimer <span class="operator">=</span> startTimer(ConnectTimeout);
+      peerIdString <span class="operator">=</span> peerId;
+
+      connect(<span class="keyword">this</span><span class="operator">,</span> SIGNAL(readyRead())<span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> SIGNAL(readyToTransfer()));
+      connect(<span class="keyword">this</span><span class="operator">,</span> SIGNAL(connected())<span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> SIGNAL(readyToTransfer()));
+
+      connect(<span class="operator">&amp;</span>socket<span class="operator">,</span> SIGNAL(connected())<span class="operator">,</span>
+              <span class="keyword">this</span><span class="operator">,</span> SIGNAL(connected()));
+      connect(<span class="operator">&amp;</span>socket<span class="operator">,</span> SIGNAL(readyRead())<span class="operator">,</span>
+              <span class="keyword">this</span><span class="operator">,</span> SIGNAL(readyRead()));
+      connect(<span class="operator">&amp;</span>socket<span class="operator">,</span> SIGNAL(disconnected())<span class="operator">,</span>
+              <span class="keyword">this</span><span class="operator">,</span> SIGNAL(disconnected()));
+      connect(<span class="operator">&amp;</span>socket<span class="operator">,</span> SIGNAL(error(<span class="type"><a href="qabstractsocket.html">QAbstractSocket</a></span><span class="operator">::</span>SocketError))<span class="operator">,</span>
+              <span class="keyword">this</span><span class="operator">,</span> SIGNAL(error(<span class="type"><a href="qabstractsocket.html">QAbstractSocket</a></span><span class="operator">::</span>SocketError)));
+      connect(<span class="operator">&amp;</span>socket<span class="operator">,</span> SIGNAL(bytesWritten(<span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span>))<span class="operator">,</span>
+              <span class="keyword">this</span><span class="operator">,</span> SIGNAL(bytesWritten(<span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span>)));
+      connect(<span class="operator">&amp;</span>socket<span class="operator">,</span> SIGNAL(stateChanged(<span class="type"><a href="qabstractsocket.html">QAbstractSocket</a></span><span class="operator">::</span>SocketState))<span class="operator">,</span>
+              <span class="keyword">this</span><span class="operator">,</span> SLOT(socketStateChanged(<span class="type"><a href="qabstractsocket.html">QAbstractSocket</a></span><span class="operator">::</span>SocketState)));
+
+  }
+
+  <span class="comment">// Registers the peer ID and SHA1 sum of the torrent, and initiates</span>
+  <span class="comment">// the handshake.</span>
+  <span class="type">void</span> PeerWireClient<span class="operator">::</span>initialize(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> <span class="operator">&amp;</span>infoHash<span class="operator">,</span> <span class="type">int</span> pieceCount)
+  {
+      <span class="keyword">this</span><span class="operator">-</span><span class="operator">&gt;</span>infoHash <span class="operator">=</span> infoHash;
+      peerPieces<span class="operator">.</span>resize(pieceCount);
+      <span class="keyword">if</span> (<span class="operator">!</span>sentHandShake)
+          sendHandShake();
+  }
+
+  <span class="type">void</span> PeerWireClient<span class="operator">::</span>setPeer(TorrentPeer <span class="operator">*</span>peer)
+  {
+      torrentPeer <span class="operator">=</span> peer;
+  }
+
+  TorrentPeer <span class="operator">*</span>PeerWireClient<span class="operator">::</span>peer() <span class="keyword">const</span>
+  {
+      <span class="keyword">return</span> torrentPeer;
+  }
+
+  <span class="type"><a href="../qtcore/qbitarray.html">QBitArray</a></span> PeerWireClient<span class="operator">::</span>availablePieces() <span class="keyword">const</span>
+  {
+      <span class="keyword">return</span> peerPieces;
+  }
+
+  <span class="type"><a href="../qtcore/qlist.html">QList</a></span><span class="operator">&lt;</span>TorrentBlock<span class="operator">&gt;</span> PeerWireClient<span class="operator">::</span>incomingBlocks() <span class="keyword">const</span>
+  {
+      <span class="keyword">return</span> incoming;
+  }
+
+  <span class="comment">// Sends a &quot;choke&quot; message, asking the peer to stop requesting blocks.</span>
+  <span class="type">void</span> PeerWireClient<span class="operator">::</span>chokePeer()
+  {
+      <span class="keyword">const</span> <span class="type">char</span> message<span class="operator">[</span><span class="operator">]</span> <span class="operator">=</span> {<span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">1</span><span class="operator">,</span> <span class="number">0</span>};
+      write(message<span class="operator">,</span> <span class="keyword">sizeof</span>(message));
+      pwState <span class="operator">|</span><span class="operator">=</span> ChokingPeer;
+
+      <span class="comment">// After receiving a choke message, the peer will assume all</span>
+      <span class="comment">// pending requests are lost.</span>
+      pendingBlocks<span class="operator">.</span>clear();
+      pendingBlockSizes <span class="operator">=</span> <span class="number">0</span>;
+  }
+
+  <span class="comment">// Sends an &quot;unchoke&quot; message, allowing the peer to start/resume</span>
+  <span class="comment">// requesting blocks.</span>
+  <span class="type">void</span> PeerWireClient<span class="operator">::</span>unchokePeer()
+  {
+      <span class="keyword">const</span> <span class="type">char</span> message<span class="operator">[</span><span class="operator">]</span> <span class="operator">=</span> {<span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">1</span><span class="operator">,</span> <span class="number">1</span>};
+      write(message<span class="operator">,</span> <span class="keyword">sizeof</span>(message));
+      pwState <span class="operator">&amp;</span><span class="operator">=</span> <span class="operator">~</span>ChokingPeer;
+
+      <span class="keyword">if</span> (pendingRequestTimer)
+          killTimer(pendingRequestTimer);
+  }
+
+  <span class="comment">// Sends a &quot;keep-alive&quot; message to prevent the peer from closing</span>
+  <span class="comment">// the connection when there's no activity</span>
+  <span class="type">void</span> PeerWireClient<span class="operator">::</span>sendKeepAlive()
+  {
+      <span class="keyword">const</span> <span class="type">char</span> message<span class="operator">[</span><span class="operator">]</span> <span class="operator">=</span> {<span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">0</span>};
+      write(message<span class="operator">,</span> <span class="keyword">sizeof</span>(message));
+  }
+
+  <span class="comment">// Sends an &quot;interested&quot; message, informing the peer that it has got</span>
+  <span class="comment">// pieces that we'd like to download.</span>
+  <span class="type">void</span> PeerWireClient<span class="operator">::</span>sendInterested()
+  {
+      <span class="keyword">const</span> <span class="type">char</span> message<span class="operator">[</span><span class="operator">]</span> <span class="operator">=</span> {<span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">1</span><span class="operator">,</span> <span class="number">2</span>};
+      write(message<span class="operator">,</span> <span class="keyword">sizeof</span>(message));
+      pwState <span class="operator">|</span><span class="operator">=</span> InterestedInPeer;
+
+      <span class="comment">// After telling the peer that we're interested, we expect to get</span>
+      <span class="comment">// unchoked within a certain timeframe; otherwise we'll drop the</span>
+      <span class="comment">// connection.</span>
+      <span class="keyword">if</span> (pendingRequestTimer)
+          killTimer(pendingRequestTimer);
+      pendingRequestTimer <span class="operator">=</span> startTimer(PendingRequestTimeout);
+  }
+
+  <span class="comment">// Sends a &quot;not interested&quot; message, informing the peer that it does</span>
+  <span class="comment">// not have any pieces that we'd like to download.</span>
+  <span class="type">void</span> PeerWireClient<span class="operator">::</span>sendNotInterested()
+  {
+      <span class="keyword">const</span> <span class="type">char</span> message<span class="operator">[</span><span class="operator">]</span> <span class="operator">=</span> {<span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">1</span><span class="operator">,</span> <span class="number">3</span>};
+      write(message<span class="operator">,</span> <span class="keyword">sizeof</span>(message));
+      pwState <span class="operator">&amp;</span><span class="operator">=</span> <span class="operator">~</span>InterestedInPeer;
+  }
+
+  <span class="comment">// Sends a piece notification / a &quot;have&quot; message, informing the peer</span>
+  <span class="comment">// that we have just downloaded a new piece.</span>
+  <span class="type">void</span> PeerWireClient<span class="operator">::</span>sendPieceNotification(<span class="type">int</span> piece)
+  {
+      <span class="keyword">if</span> (<span class="operator">!</span>sentHandShake)
+          sendHandShake();
+
+      <span class="type">char</span> message<span class="operator">[</span><span class="operator">]</span> <span class="operator">=</span> {<span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">5</span><span class="operator">,</span> <span class="number">4</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">0</span>};
+      toNetworkData(piece<span class="operator">,</span> <span class="operator">&amp;</span>message<span class="operator">[</span><span class="number">5</span><span class="operator">]</span>);
+      write(message<span class="operator">,</span> <span class="keyword">sizeof</span>(message));
+  }
+
+  <span class="comment">// Sends the complete list of pieces that we have downloaded.</span>
+  <span class="type">void</span> PeerWireClient<span class="operator">::</span>sendPieceList(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qbitarray.html">QBitArray</a></span> <span class="operator">&amp;</span>bitField)
+  {
+      <span class="comment">// The bitfield message may only be sent immediately after the</span>
+      <span class="comment">// handshaking sequence is completed, and before any other</span>
+      <span class="comment">// messages are sent.</span>
+      <span class="keyword">if</span> (<span class="operator">!</span>sentHandShake)
+          sendHandShake();
+
+      <span class="comment">// Don't send the bitfield if it's all zeros.</span>
+      <span class="keyword">if</span> (bitField<span class="operator">.</span>count(<span class="keyword">true</span>) <span class="operator">=</span><span class="operator">=</span> <span class="number">0</span>)
+          <span class="keyword">return</span>;
+
+      <span class="type">int</span> bitFieldSize <span class="operator">=</span> bitField<span class="operator">.</span>size();
+      <span class="type">int</span> size <span class="operator">=</span> (bitFieldSize <span class="operator">+</span> <span class="number">7</span>) <span class="operator">/</span> <span class="number">8</span>;
+      <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> bits(size<span class="operator">,</span> <span class="char">'\0'</span>);
+      <span class="keyword">for</span> (<span class="type">int</span> i <span class="operator">=</span> <span class="number">0</span>; i <span class="operator">&lt;</span> bitFieldSize; <span class="operator">+</span><span class="operator">+</span>i) {
+          <span class="keyword">if</span> (bitField<span class="operator">.</span>testBit(i)) {
+              <span class="type"><a href="../qtcore/qtglobal.html#quint32-typedef">quint32</a></span> byte <span class="operator">=</span> <span class="type"><a href="../qtcore/qtglobal.html#quint32-typedef">quint32</a></span>(i) <span class="operator">/</span> <span class="number">8</span>;
+              <span class="type"><a href="../qtcore/qtglobal.html#quint32-typedef">quint32</a></span> bit <span class="operator">=</span> <span class="type"><a href="../qtcore/qtglobal.html#quint32-typedef">quint32</a></span>(i) <span class="operator">%</span> <span class="number">8</span>;
+              bits<span class="operator">[</span>byte<span class="operator">]</span> <span class="operator">=</span> <span class="type"><a href="../qtcore/qtglobal.html#uchar-typedef">uchar</a></span>(bits<span class="operator">.</span>at(byte)) <span class="operator">|</span> (<span class="number">1</span> <span class="operator">&lt;</span><span class="operator">&lt;</span> (<span class="number">7</span> <span class="operator">-</span> bit));
+          }
+      }
+
+      <span class="type">char</span> message<span class="operator">[</span><span class="operator">]</span> <span class="operator">=</span> {<span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">1</span><span class="operator">,</span> <span class="number">5</span>};
+      toNetworkData(bits<span class="operator">.</span>size() <span class="operator">+</span> <span class="number">1</span><span class="operator">,</span> <span class="operator">&amp;</span>message<span class="operator">[</span><span class="number">0</span><span class="operator">]</span>);
+      write(message<span class="operator">,</span> <span class="keyword">sizeof</span>(message));
+      write(bits);
+  }
+
+  <span class="comment">// Sends a request for a block.</span>
+  <span class="type">void</span> PeerWireClient<span class="operator">::</span>requestBlock(<span class="type">int</span> piece<span class="operator">,</span> <span class="type">int</span> offset<span class="operator">,</span> <span class="type">int</span> length)
+  {
+      <span class="type">char</span> message<span class="operator">[</span><span class="operator">]</span> <span class="operator">=</span> {<span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">1</span><span class="operator">,</span> <span class="number">6</span>};
+      toNetworkData(<span class="number">13</span><span class="operator">,</span> <span class="operator">&amp;</span>message<span class="operator">[</span><span class="number">0</span><span class="operator">]</span>);
+      write(message<span class="operator">,</span> <span class="keyword">sizeof</span>(message));
+
+      <span class="type">char</span> numbers<span class="operator">[</span><span class="number">4</span> <span class="operator">*</span> <span class="number">3</span><span class="operator">]</span>;
+      toNetworkData(piece<span class="operator">,</span> <span class="operator">&amp;</span>numbers<span class="operator">[</span><span class="number">0</span><span class="operator">]</span>);
+      toNetworkData(offset<span class="operator">,</span> <span class="operator">&amp;</span>numbers<span class="operator">[</span><span class="number">4</span><span class="operator">]</span>);
+      toNetworkData(length<span class="operator">,</span> <span class="operator">&amp;</span>numbers<span class="operator">[</span><span class="number">8</span><span class="operator">]</span>);
+      write(numbers<span class="operator">,</span> <span class="keyword">sizeof</span>(numbers));
+
+      incoming <span class="operator">&lt;</span><span class="operator">&lt;</span> TorrentBlock(piece<span class="operator">,</span> offset<span class="operator">,</span> length);
+
+      <span class="comment">// After requesting a block, we expect the block to be sent by the</span>
+      <span class="comment">// other peer within a certain number of seconds. Otherwise, we</span>
+      <span class="comment">// drop the connection.</span>
+      <span class="keyword">if</span> (pendingRequestTimer)
+          killTimer(pendingRequestTimer);
+      pendingRequestTimer <span class="operator">=</span> startTimer(PendingRequestTimeout);
+  }
+
+  <span class="comment">// Cancels a request for a block.</span>
+  <span class="type">void</span> PeerWireClient<span class="operator">::</span>cancelRequest(<span class="type">int</span> piece<span class="operator">,</span> <span class="type">int</span> offset<span class="operator">,</span> <span class="type">int</span> length)
+  {
+      <span class="type">char</span> message<span class="operator">[</span><span class="operator">]</span> <span class="operator">=</span> {<span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">1</span><span class="operator">,</span> <span class="number">8</span>};
+      toNetworkData(<span class="number">13</span><span class="operator">,</span> <span class="operator">&amp;</span>message<span class="operator">[</span><span class="number">0</span><span class="operator">]</span>);
+      write(message<span class="operator">,</span> <span class="keyword">sizeof</span>(message));
+
+      <span class="type">char</span> numbers<span class="operator">[</span><span class="number">4</span> <span class="operator">*</span> <span class="number">3</span><span class="operator">]</span>;
+      toNetworkData(piece<span class="operator">,</span> <span class="operator">&amp;</span>numbers<span class="operator">[</span><span class="number">0</span><span class="operator">]</span>);
+      toNetworkData(offset<span class="operator">,</span> <span class="operator">&amp;</span>numbers<span class="operator">[</span><span class="number">4</span><span class="operator">]</span>);
+      toNetworkData(length<span class="operator">,</span> <span class="operator">&amp;</span>numbers<span class="operator">[</span><span class="number">8</span><span class="operator">]</span>);
+      write(numbers<span class="operator">,</span> <span class="keyword">sizeof</span>(numbers));
+
+      incoming<span class="operator">.</span>removeAll(TorrentBlock(piece<span class="operator">,</span> offset<span class="operator">,</span> length));
+  }
+
+  <span class="comment">// Sends a block to the peer.</span>
+  <span class="type">void</span> PeerWireClient<span class="operator">::</span>sendBlock(<span class="type">int</span> piece<span class="operator">,</span> <span class="type">int</span> offset<span class="operator">,</span> <span class="keyword">const</span> <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> <span class="operator">&amp;</span>data)
+  {
+      <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> block;
+
+      <span class="type">char</span> message<span class="operator">[</span><span class="operator">]</span> <span class="operator">=</span> {<span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">1</span><span class="operator">,</span> <span class="number">7</span>};
+      toNetworkData(<span class="number">9</span> <span class="operator">+</span> data<span class="operator">.</span>size()<span class="operator">,</span> <span class="operator">&amp;</span>message<span class="operator">[</span><span class="number">0</span><span class="operator">]</span>);
+      block <span class="operator">+</span><span class="operator">=</span> <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span>(message<span class="operator">,</span> <span class="keyword">sizeof</span>(message));
+
+      <span class="type">char</span> numbers<span class="operator">[</span><span class="number">4</span> <span class="operator">*</span> <span class="number">2</span><span class="operator">]</span>;
+      toNetworkData(piece<span class="operator">,</span> <span class="operator">&amp;</span>numbers<span class="operator">[</span><span class="number">0</span><span class="operator">]</span>);
+      toNetworkData(offset<span class="operator">,</span> <span class="operator">&amp;</span>numbers<span class="operator">[</span><span class="number">4</span><span class="operator">]</span>);
+      block <span class="operator">+</span><span class="operator">=</span> <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span>(numbers<span class="operator">,</span> <span class="keyword">sizeof</span>(numbers));
+      block <span class="operator">+</span><span class="operator">=</span> data;
+
+      BlockInfo blockInfo;
+      blockInfo<span class="operator">.</span>pieceIndex <span class="operator">=</span> piece;
+      blockInfo<span class="operator">.</span>offset <span class="operator">=</span> offset;
+      blockInfo<span class="operator">.</span>length <span class="operator">=</span> data<span class="operator">.</span>size();
+      blockInfo<span class="operator">.</span>block <span class="operator">=</span> block;
+
+      pendingBlocks <span class="operator">&lt;</span><span class="operator">&lt;</span> blockInfo;
+      pendingBlockSizes <span class="operator">+</span><span class="operator">=</span> block<span class="operator">.</span>size();
+
+      <span class="keyword">if</span> (pendingBlockSizes <span class="operator">&gt;</span> <span class="number">32</span> <span class="operator">*</span> <span class="number">16384</span>) {
+          chokePeer();
+          unchokePeer();
+          <span class="keyword">return</span>;
+      }
+      <span class="keyword">emit</span> readyToTransfer();
+  }
+
+  <span class="comment">// Attempts to write 'bytes' bytes to the socket from the buffer.</span>
+  <span class="comment">// This is used by RateController, which precisely controls how much</span>
+  <span class="comment">// each client can write.</span>
+  <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> PeerWireClient<span class="operator">::</span>writeToSocket(<span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> bytes)
+  {
+      <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> totalWritten <span class="operator">=</span> <span class="number">0</span>;
+      <span class="keyword">do</span> {
+          <span class="keyword">if</span> (outgoingBuffer<span class="operator">.</span>isEmpty() <span class="operator">&amp;</span><span class="operator">&amp;</span> <span class="operator">!</span>pendingBlocks<span class="operator">.</span>isEmpty()) {
+              BlockInfo block <span class="operator">=</span> pendingBlocks<span class="operator">.</span>takeFirst();
+              pendingBlockSizes <span class="operator">-</span><span class="operator">=</span> block<span class="operator">.</span>length;
+              outgoingBuffer <span class="operator">+</span><span class="operator">=</span> block<span class="operator">.</span>block;
+          }
+          <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> written <span class="operator">=</span> socket<span class="operator">.</span>write(outgoingBuffer<span class="operator">.</span>constData()<span class="operator">,</span>
+                                        <a href="../qtcore/qtglobal.html#qMin">qMin</a><span class="operator">&lt;</span><span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span><span class="operator">&gt;</span>(bytes <span class="operator">-</span> totalWritten<span class="operator">,</span> outgoingBuffer<span class="operator">.</span>size()));
+          <span class="keyword">if</span> (written <span class="operator">&lt;</span><span class="operator">=</span> <span class="number">0</span>)
+              <span class="keyword">return</span> totalWritten <span class="operator">?</span> totalWritten : written;
+
+          totalWritten <span class="operator">+</span><span class="operator">=</span> written;
+          uploadSpeedData<span class="operator">[</span><span class="number">0</span><span class="operator">]</span> <span class="operator">+</span><span class="operator">=</span> written;
+          outgoingBuffer<span class="operator">.</span>remove(<span class="number">0</span><span class="operator">,</span> written);
+      } <span class="keyword">while</span> (totalWritten <span class="operator">&lt;</span> bytes <span class="operator">&amp;</span><span class="operator">&amp;</span> (<span class="operator">!</span>outgoingBuffer<span class="operator">.</span>isEmpty() <span class="operator">|</span><span class="operator">|</span> <span class="operator">!</span>pendingBlocks<span class="operator">.</span>isEmpty()));
+
+      <span class="keyword">return</span> totalWritten;
+  }
+
+  <span class="comment">// Attempts to read at most 'bytes' bytes from the socket.</span>
+  <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> PeerWireClient<span class="operator">::</span>readFromSocket(<span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> bytes)
+  {
+      <span class="type">char</span> buffer<span class="operator">[</span><span class="number">1024</span><span class="operator">]</span>;
+      <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> totalRead <span class="operator">=</span> <span class="number">0</span>;
+      <span class="keyword">do</span> {
+          <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> bytesRead <span class="operator">=</span> socket<span class="operator">.</span>read(buffer<span class="operator">,</span> <a href="../qtcore/qtglobal.html#qMin">qMin</a><span class="operator">&lt;</span><span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span><span class="operator">&gt;</span>(<span class="keyword">sizeof</span>(buffer)<span class="operator">,</span> bytes <span class="operator">-</span> totalRead));
+          <span class="keyword">if</span> (bytesRead <span class="operator">&lt;</span><span class="operator">=</span> <span class="number">0</span>)
+              <span class="keyword">break</span>;
+          <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> oldSize <span class="operator">=</span> incomingBuffer<span class="operator">.</span>size();
+          incomingBuffer<span class="operator">.</span>resize(oldSize <span class="operator">+</span> bytesRead);
+          memcpy(incomingBuffer<span class="operator">.</span>data() <span class="operator">+</span> oldSize<span class="operator">,</span> buffer<span class="operator">,</span> bytesRead);
+
+          totalRead <span class="operator">+</span><span class="operator">=</span> bytesRead;
+      } <span class="keyword">while</span> (totalRead <span class="operator">&lt;</span> bytes);
+
+      <span class="keyword">if</span> (totalRead <span class="operator">&gt;</span> <span class="number">0</span>) {
+          downloadSpeedData<span class="operator">[</span><span class="number">0</span><span class="operator">]</span> <span class="operator">+</span><span class="operator">=</span> totalRead;
+          <span class="keyword">emit</span> bytesReceived(totalRead);
+          processIncomingData();
+      }
+      <span class="keyword">return</span> totalRead;
+  }
+
+  <span class="comment">// Returns the average number of bytes per second this client is</span>
+  <span class="comment">// downloading.</span>
+  <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> PeerWireClient<span class="operator">::</span>downloadSpeed() <span class="keyword">const</span>
+  {
+      <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> sum <span class="operator">=</span> <span class="number">0</span>;
+      <span class="keyword">for</span> (<span class="type">unsigned</span> <span class="type">int</span> i <span class="operator">=</span> <span class="number">0</span>; i <span class="operator">&lt;</span> <span class="keyword">sizeof</span>(downloadSpeedData) <span class="operator">/</span> <span class="keyword">sizeof</span>(<span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span>); <span class="operator">+</span><span class="operator">+</span>i)
+          sum <span class="operator">+</span><span class="operator">=</span> downloadSpeedData<span class="operator">[</span>i<span class="operator">]</span>;
+      <span class="keyword">return</span> sum <span class="operator">/</span> (<span class="number">8</span> <span class="operator">*</span> <span class="number">2</span>);
+  }
+
+  <span class="comment">// Returns the average number of bytes per second this client is</span>
+  <span class="comment">// uploading.</span>
+  <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> PeerWireClient<span class="operator">::</span>uploadSpeed() <span class="keyword">const</span>
+  {
+      <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> sum <span class="operator">=</span> <span class="number">0</span>;
+      <span class="keyword">for</span> (<span class="type">unsigned</span> <span class="type">int</span> i <span class="operator">=</span> <span class="number">0</span>; i <span class="operator">&lt;</span> <span class="keyword">sizeof</span>(uploadSpeedData) <span class="operator">/</span> <span class="keyword">sizeof</span>(<span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span>); <span class="operator">+</span><span class="operator">+</span>i)
+          sum <span class="operator">+</span><span class="operator">=</span> uploadSpeedData<span class="operator">[</span>i<span class="operator">]</span>;
+      <span class="keyword">return</span> sum <span class="operator">/</span> (<span class="number">8</span> <span class="operator">*</span> <span class="number">2</span>);
+  }
+
+  <span class="type">void</span> PeerWireClient<span class="operator">::</span>setReadBufferSize(<span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> size)
+  {
+      socket<span class="operator">.</span>setReadBufferSize(size);
+  }
+
+  bool PeerWireClient<span class="operator">::</span>canTransferMore() <span class="keyword">const</span>
+  {
+      <span class="keyword">return</span> bytesAvailable() <span class="operator">&gt;</span> <span class="number">0</span> <span class="operator">|</span><span class="operator">|</span> socket<span class="operator">.</span>bytesAvailable() <span class="operator">&gt;</span> <span class="number">0</span>
+          <span class="operator">|</span><span class="operator">|</span> <span class="operator">!</span>outgoingBuffer<span class="operator">.</span>isEmpty() <span class="operator">|</span><span class="operator">|</span> <span class="operator">!</span>pendingBlocks<span class="operator">.</span>isEmpty();
+  }
+
+  <span class="type">void</span> PeerWireClient<span class="operator">::</span>connectToHost(<span class="keyword">const</span> <span class="type"><a href="qhostaddress.html">QHostAddress</a></span> <span class="operator">&amp;</span>address<span class="operator">,</span>
+                                     <span class="type"><a href="../qtcore/qtglobal.html#quint16-typedef">quint16</a></span> port<span class="operator">,</span> OpenMode openMode)
+
+  {
+      setOpenMode(openMode);
+      socket<span class="operator">.</span>connectToHost(address<span class="operator">,</span> port<span class="operator">,</span> openMode);
+  }
+
+  <span class="type">void</span> PeerWireClient<span class="operator">::</span>diconnectFromHost()
+  {
+      socket<span class="operator">.</span>disconnectFromHost();
+  }
+
+  <span class="type">void</span> PeerWireClient<span class="operator">::</span>timerEvent(<span class="type"><a href="../qtcore/qtimerevent.html">QTimerEvent</a></span> <span class="operator">*</span>event)
+  {
+      <span class="keyword">if</span> (event<span class="operator">-</span><span class="operator">&gt;</span>timerId() <span class="operator">=</span><span class="operator">=</span> transferSpeedTimer) {
+          <span class="comment">// Rotate the upload / download records.</span>
+          <span class="keyword">for</span> (<span class="type">int</span> i <span class="operator">=</span> <span class="number">6</span>; i <span class="operator">&gt;</span><span class="operator">=</span> <span class="number">0</span>; <span class="operator">-</span><span class="operator">-</span>i) {
+              uploadSpeedData<span class="operator">[</span>i <span class="operator">+</span> <span class="number">1</span><span class="operator">]</span> <span class="operator">=</span> uploadSpeedData<span class="operator">[</span>i<span class="operator">]</span>;
+              downloadSpeedData<span class="operator">[</span>i <span class="operator">+</span> <span class="number">1</span><span class="operator">]</span> <span class="operator">=</span> downloadSpeedData<span class="operator">[</span>i<span class="operator">]</span>;
+          }
+          uploadSpeedData<span class="operator">[</span><span class="number">0</span><span class="operator">]</span> <span class="operator">=</span> <span class="number">0</span>;
+          downloadSpeedData<span class="operator">[</span><span class="number">0</span><span class="operator">]</span> <span class="operator">=</span> <span class="number">0</span>;
+      } <span class="keyword">else</span> <span class="keyword">if</span> (event<span class="operator">-</span><span class="operator">&gt;</span>timerId() <span class="operator">=</span><span class="operator">=</span> timeoutTimer) {
+          <span class="comment">// Disconnect if we timed out; otherwise the timeout is</span>
+          <span class="comment">// restarted.</span>
+          <span class="keyword">if</span> (invalidateTimeout) {
+              invalidateTimeout <span class="operator">=</span> <span class="keyword">false</span>;
+          } <span class="keyword">else</span> {
+              abort();
+              <span class="keyword">emit</span> infoHashReceived(<span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span>());
+          }
+      } <span class="keyword">else</span> <span class="keyword">if</span> (event<span class="operator">-</span><span class="operator">&gt;</span>timerId() <span class="operator">=</span><span class="operator">=</span> pendingRequestTimer) {
+          abort();
+      } <span class="keyword">else</span> <span class="keyword">if</span> (event<span class="operator">-</span><span class="operator">&gt;</span>timerId() <span class="operator">=</span><span class="operator">=</span> keepAliveTimer) {
+          sendKeepAlive();
+      }
+      <span class="type"><a href="qtcpsocket.html">QTcpSocket</a></span><span class="operator">::</span>timerEvent(event);
+  }
+
+  <span class="comment">// Sends the handshake to the peer.</span>
+  <span class="type">void</span> PeerWireClient<span class="operator">::</span>sendHandShake()
+  {
+      sentHandShake <span class="operator">=</span> <span class="keyword">true</span>;
+
+      <span class="comment">// Restart the timeout</span>
+      <span class="keyword">if</span> (timeoutTimer)
+          killTimer(timeoutTimer);
+      timeoutTimer <span class="operator">=</span> startTimer(ClientTimeout);
+
+      <span class="comment">// Write the 68 byte PeerWire handshake.</span>
+      write(<span class="operator">&amp;</span>ProtocolIdSize<span class="operator">,</span> <span class="number">1</span>);
+      write(ProtocolId<span class="operator">,</span> ProtocolIdSize);
+      write(<span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span>(<span class="number">8</span><span class="operator">,</span> <span class="char">'\0'</span>));
+      write(infoHash);
+      write(peerIdString);
+  }
+
+  <span class="type">void</span> PeerWireClient<span class="operator">::</span>processIncomingData()
+  {
+      invalidateTimeout <span class="operator">=</span> <span class="keyword">true</span>;
+      <span class="keyword">if</span> (<span class="operator">!</span>receivedHandShake) {
+          <span class="comment">// Check that we received enough data</span>
+          <span class="keyword">if</span> (bytesAvailable() <span class="operator">&lt;</span> MinimalHeaderSize)
+              <span class="keyword">return</span>;
+
+          <span class="comment">// Sanity check the protocol ID</span>
+          <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> id <span class="operator">=</span> read(ProtocolIdSize <span class="operator">+</span> <span class="number">1</span>);
+          <span class="keyword">if</span> (id<span class="operator">.</span>at(<span class="number">0</span>) <span class="operator">!</span><span class="operator">=</span> ProtocolIdSize <span class="operator">|</span><span class="operator">|</span> <span class="operator">!</span>id<span class="operator">.</span>mid(<span class="number">1</span>)<span class="operator">.</span>startsWith(ProtocolId)) {
+              abort();
+              <span class="keyword">return</span>;
+          }
+
+          <span class="comment">// Discard 8 reserved bytes, then read the info hash and peer ID</span>
+          (<span class="type">void</span>) read(<span class="number">8</span>);
+
+          <span class="comment">// Read infoHash</span>
+          <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> peerInfoHash <span class="operator">=</span> read(<span class="number">20</span>);
+          <span class="keyword">if</span> (<span class="operator">!</span>infoHash<span class="operator">.</span>isEmpty() <span class="operator">&amp;</span><span class="operator">&amp;</span> peerInfoHash <span class="operator">!</span><span class="operator">=</span> infoHash) {
+              abort();
+              <span class="keyword">return</span>;
+          }
+
+          <span class="keyword">emit</span> infoHashReceived(peerInfoHash);
+          <span class="keyword">if</span> (infoHash<span class="operator">.</span>isEmpty()) {
+              abort();
+              <span class="keyword">return</span>;
+          }
+
+          <span class="comment">// Send handshake</span>
+          <span class="keyword">if</span> (<span class="operator">!</span>sentHandShake)
+              sendHandShake();
+          receivedHandShake <span class="operator">=</span> <span class="keyword">true</span>;
+      }
+
+      <span class="comment">// Handle delayed peer id arrival</span>
+      <span class="keyword">if</span> (<span class="operator">!</span>gotPeerId) {
+          <span class="keyword">if</span> (bytesAvailable() <span class="operator">&lt;</span> <span class="number">20</span>)
+              <span class="keyword">return</span>;
+          gotPeerId <span class="operator">=</span> <span class="keyword">true</span>;
+          <span class="keyword">if</span> (read(<span class="number">20</span>) <span class="operator">=</span><span class="operator">=</span> peerIdString) {
+              <span class="comment">// We connected to ourself</span>
+              abort();
+              <span class="keyword">return</span>;
+          }
+      }
+
+      <span class="comment">// Initialize keep-alive timer</span>
+      <span class="keyword">if</span> (<span class="operator">!</span>keepAliveTimer)
+          keepAliveTimer <span class="operator">=</span> startTimer(KeepAliveInterval);
+
+      <span class="keyword">do</span> {
+          <span class="comment">// Find the packet length</span>
+          <span class="keyword">if</span> (nextPacketLength <span class="operator">=</span><span class="operator">=</span> <span class="operator">-</span><span class="number">1</span>) {
+              <span class="keyword">if</span> (bytesAvailable() <span class="operator">&lt;</span> <span class="number">4</span>)
+                  <span class="keyword">return</span>;
+
+              <span class="type">char</span> tmp<span class="operator">[</span><span class="number">4</span><span class="operator">]</span>;
+              read(tmp<span class="operator">,</span> <span class="keyword">sizeof</span>(tmp));
+              nextPacketLength <span class="operator">=</span> fromNetworkData(tmp);
+
+              <span class="keyword">if</span> (nextPacketLength <span class="operator">&lt;</span> <span class="number">0</span> <span class="operator">|</span><span class="operator">|</span> nextPacketLength <span class="operator">&gt;</span> <span class="number">200000</span>) {
+                  <span class="comment">// Prevent DoS</span>
+                  abort();
+                  <span class="keyword">return</span>;
+              }
+          }
+
+          <span class="comment">// KeepAlive</span>
+          <span class="keyword">if</span> (nextPacketLength <span class="operator">=</span><span class="operator">=</span> <span class="number">0</span>) {
+              nextPacketLength <span class="operator">=</span> <span class="operator">-</span><span class="number">1</span>;
+              <span class="keyword">continue</span>;
+          }
+
+          <span class="comment">// Wait with parsing until the whole packet has been received</span>
+          <span class="keyword">if</span> (bytesAvailable() <span class="operator">&lt;</span> nextPacketLength)
+              <span class="keyword">return</span>;
+
+          <span class="comment">// Read the packet</span>
+          <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> packet <span class="operator">=</span> read(nextPacketLength);
+          <span class="keyword">if</span> (packet<span class="operator">.</span>size() <span class="operator">!</span><span class="operator">=</span> nextPacketLength) {
+              abort();
+              <span class="keyword">return</span>;
+          }
+
+          <span class="keyword">switch</span> (packet<span class="operator">.</span>at(<span class="number">0</span>)) {
+          <span class="keyword">case</span> ChokePacket:
+              <span class="comment">// We have been choked.</span>
+              pwState <span class="operator">|</span><span class="operator">=</span> ChokedByPeer;
+              incoming<span class="operator">.</span>clear();
+              <span class="keyword">if</span> (pendingRequestTimer)
+                  killTimer(pendingRequestTimer);
+              <span class="keyword">emit</span> choked();
+              <span class="keyword">break</span>;
+          <span class="keyword">case</span> UnchokePacket:
+              <span class="comment">// We have been unchoked.</span>
+              pwState <span class="operator">&amp;</span><span class="operator">=</span> <span class="operator">~</span>ChokedByPeer;
+              <span class="keyword">emit</span> unchoked();
+              <span class="keyword">break</span>;
+          <span class="keyword">case</span> InterestedPacket:
+              <span class="comment">// The peer is interested in downloading.</span>
+              pwState <span class="operator">|</span><span class="operator">=</span> PeerIsInterested;
+              <span class="keyword">emit</span> interested();
+              <span class="keyword">break</span>;
+          <span class="keyword">case</span> NotInterestedPacket:
+              <span class="comment">// The peer is not interested in downloading.</span>
+              pwState <span class="operator">&amp;</span><span class="operator">=</span> <span class="operator">~</span>PeerIsInterested;
+              <span class="keyword">emit</span> notInterested();
+              <span class="keyword">break</span>;
+          <span class="keyword">case</span> HavePacket: {
+              <span class="comment">// The peer has a new piece available.</span>
+              <span class="type"><a href="../qtcore/qtglobal.html#quint32-typedef">quint32</a></span> index <span class="operator">=</span> fromNetworkData(<span class="operator">&amp;</span>packet<span class="operator">.</span>data()<span class="operator">[</span><span class="number">1</span><span class="operator">]</span>);
+              <span class="keyword">if</span> (index <span class="operator">&lt;</span> <span class="type"><a href="../qtcore/qtglobal.html#quint32-typedef">quint32</a></span>(peerPieces<span class="operator">.</span>size())) {
+                  <span class="comment">// Only accept indexes within the valid range.</span>
+                  peerPieces<span class="operator">.</span>setBit(<span class="type">int</span>(index));
+              }
+              <span class="keyword">emit</span> piecesAvailable(availablePieces());
+              <span class="keyword">break</span>;
+          }
+          <span class="keyword">case</span> BitFieldPacket:
+              <span class="comment">// The peer has the following pieces available.</span>
+              <span class="keyword">for</span> (<span class="type">int</span> i <span class="operator">=</span> <span class="number">1</span>; i <span class="operator">&lt;</span> packet<span class="operator">.</span>size(); <span class="operator">+</span><span class="operator">+</span>i) {
+                  <span class="keyword">for</span> (<span class="type">int</span> bit <span class="operator">=</span> <span class="number">0</span>; bit <span class="operator">&lt;</span> <span class="number">8</span>; <span class="operator">+</span><span class="operator">+</span>bit) {
+                      <span class="keyword">if</span> (packet<span class="operator">.</span>at(i) <span class="operator">&amp;</span> (<span class="number">1</span> <span class="operator">&lt;</span><span class="operator">&lt;</span> (<span class="number">7</span> <span class="operator">-</span> bit))) {
+                          <span class="type">int</span> bitIndex <span class="operator">=</span> <span class="type">int</span>(((i <span class="operator">-</span> <span class="number">1</span>) <span class="operator">*</span> <span class="number">8</span>) <span class="operator">+</span> bit);
+                          <span class="keyword">if</span> (bitIndex <span class="operator">&gt;</span><span class="operator">=</span> <span class="number">0</span> <span class="operator">&amp;</span><span class="operator">&amp;</span> bitIndex <span class="operator">&lt;</span> peerPieces<span class="operator">.</span>size()) {
+                              <span class="comment">// Occasionally, broken clients claim to have</span>
+                              <span class="comment">// pieces whose index is outside the valid range.</span>
+                              <span class="comment">// The most common mistake is the index == size</span>
+                              <span class="comment">// case.</span>
+                              peerPieces<span class="operator">.</span>setBit(bitIndex);
+                          }
+                      }
+                  }
+              }
+              <span class="keyword">emit</span> piecesAvailable(availablePieces());
+              <span class="keyword">break</span>;
+          <span class="keyword">case</span> RequestPacket: {
+              <span class="comment">// The peer requests a block.</span>
+              <span class="type"><a href="../qtcore/qtglobal.html#quint32-typedef">quint32</a></span> index <span class="operator">=</span> fromNetworkData(<span class="operator">&amp;</span>packet<span class="operator">.</span>data()<span class="operator">[</span><span class="number">1</span><span class="operator">]</span>);
+              <span class="type"><a href="../qtcore/qtglobal.html#quint32-typedef">quint32</a></span> begin <span class="operator">=</span> fromNetworkData(<span class="operator">&amp;</span>packet<span class="operator">.</span>data()<span class="operator">[</span><span class="number">5</span><span class="operator">]</span>);
+              <span class="type"><a href="../qtcore/qtglobal.html#quint32-typedef">quint32</a></span> length <span class="operator">=</span> fromNetworkData(<span class="operator">&amp;</span>packet<span class="operator">.</span>data()<span class="operator">[</span><span class="number">9</span><span class="operator">]</span>);
+              <span class="keyword">emit</span> blockRequested(<span class="type">int</span>(index)<span class="operator">,</span> <span class="type">int</span>(begin)<span class="operator">,</span> <span class="type">int</span>(length));
+              <span class="keyword">break</span>;
+          }
+          <span class="keyword">case</span> PiecePacket: {
+              <span class="type">int</span> index <span class="operator">=</span> <span class="type">int</span>(fromNetworkData(<span class="operator">&amp;</span>packet<span class="operator">.</span>data()<span class="operator">[</span><span class="number">1</span><span class="operator">]</span>));
+              <span class="type">int</span> begin <span class="operator">=</span> <span class="type">int</span>(fromNetworkData(<span class="operator">&amp;</span>packet<span class="operator">.</span>data()<span class="operator">[</span><span class="number">5</span><span class="operator">]</span>));
+
+              incoming<span class="operator">.</span>removeAll(TorrentBlock(index<span class="operator">,</span> begin<span class="operator">,</span> packet<span class="operator">.</span>size() <span class="operator">-</span> <span class="number">9</span>));
+
+              <span class="comment">// The peer sends a block.</span>
+              <span class="keyword">emit</span> blockReceived(index<span class="operator">,</span> begin<span class="operator">,</span> packet<span class="operator">.</span>mid(<span class="number">9</span>));
+
+              <span class="comment">// Kill the pending block timer.</span>
+              <span class="keyword">if</span> (pendingRequestTimer) {
+                  killTimer(pendingRequestTimer);
+                  pendingRequestTimer <span class="operator">=</span> <span class="number">0</span>;
+              }
+              <span class="keyword">break</span>;
+          }
+          <span class="keyword">case</span> CancelPacket: {
+              <span class="comment">// The peer cancels a block request.</span>
+              <span class="type"><a href="../qtcore/qtglobal.html#quint32-typedef">quint32</a></span> index <span class="operator">=</span> fromNetworkData(<span class="operator">&amp;</span>packet<span class="operator">.</span>data()<span class="operator">[</span><span class="number">1</span><span class="operator">]</span>);
+              <span class="type"><a href="../qtcore/qtglobal.html#quint32-typedef">quint32</a></span> begin <span class="operator">=</span> fromNetworkData(<span class="operator">&amp;</span>packet<span class="operator">.</span>data()<span class="operator">[</span><span class="number">5</span><span class="operator">]</span>);
+              <span class="type"><a href="../qtcore/qtglobal.html#quint32-typedef">quint32</a></span> length <span class="operator">=</span> fromNetworkData(<span class="operator">&amp;</span>packet<span class="operator">.</span>data()<span class="operator">[</span><span class="number">9</span><span class="operator">]</span>);
+              <span class="keyword">for</span> (<span class="type">int</span> i <span class="operator">=</span> <span class="number">0</span>; i <span class="operator">&lt;</span> pendingBlocks<span class="operator">.</span>size(); <span class="operator">+</span><span class="operator">+</span>i) {
+                  <span class="keyword">const</span> BlockInfo <span class="operator">&amp;</span>blockInfo <span class="operator">=</span> pendingBlocks<span class="operator">.</span>at(i);
+                  <span class="keyword">if</span> (blockInfo<span class="operator">.</span>pieceIndex <span class="operator">=</span><span class="operator">=</span> <span class="type">int</span>(index)
+                      <span class="operator">&amp;</span><span class="operator">&amp;</span> blockInfo<span class="operator">.</span>offset <span class="operator">=</span><span class="operator">=</span> <span class="type">int</span>(begin)
+                      <span class="operator">&amp;</span><span class="operator">&amp;</span> blockInfo<span class="operator">.</span>length <span class="operator">=</span><span class="operator">=</span> <span class="type">int</span>(length)) {
+                      pendingBlocks<span class="operator">.</span>removeAt(i);
+                      <span class="keyword">break</span>;
+                  }
+              }
+              <span class="keyword">break</span>;
+          }
+          <span class="keyword">default</span>:
+              <span class="comment">// Unsupported packet type; just ignore it.</span>
+              <span class="keyword">break</span>;
+          }
+          nextPacketLength <span class="operator">=</span> <span class="operator">-</span><span class="number">1</span>;
+      } <span class="keyword">while</span> (bytesAvailable() <span class="operator">&gt;</span> <span class="number">0</span>);
+  }
+
+  <span class="type">void</span> PeerWireClient<span class="operator">::</span>socketStateChanged(<span class="type"><a href="qabstractsocket.html">QAbstractSocket</a></span><span class="operator">::</span>SocketState state)
+  {
+      setLocalAddress(socket<span class="operator">.</span>localAddress());
+      setLocalPort(socket<span class="operator">.</span>localPort());
+      setPeerName(socket<span class="operator">.</span>peerName());
+      setPeerAddress(socket<span class="operator">.</span>peerAddress());
+      setPeerPort(socket<span class="operator">.</span>peerPort());
+      setSocketState(state);
+  }
+
+  <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> PeerWireClient<span class="operator">::</span>readData(<span class="type">char</span> <span class="operator">*</span>data<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> size)
+  {
+      <span class="type">int</span> n <span class="operator">=</span> <a href="../qtcore/qtglobal.html#qMin">qMin</a><span class="operator">&lt;</span><span class="type">int</span><span class="operator">&gt;</span>(size<span class="operator">,</span> incomingBuffer<span class="operator">.</span>size());
+      memcpy(data<span class="operator">,</span> incomingBuffer<span class="operator">.</span>constData()<span class="operator">,</span> n);
+      incomingBuffer<span class="operator">.</span>remove(<span class="number">0</span><span class="operator">,</span> n);
+      <span class="keyword">return</span> n;
+  }
+
+  <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> PeerWireClient<span class="operator">::</span>readLineData(<span class="type">char</span> <span class="operator">*</span>data<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> maxlen)
+  {
+      <span class="keyword">return</span> <span class="type"><a href="../qtcore/qiodevice.html">QIODevice</a></span><span class="operator">::</span>readLineData(data<span class="operator">,</span> maxlen);
+  }
+
+  <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> PeerWireClient<span class="operator">::</span>writeData(<span class="keyword">const</span> <span class="type">char</span> <span class="operator">*</span>data<span class="operator">,</span> <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> size)
+  {
+      <span class="type">int</span> oldSize <span class="operator">=</span> outgoingBuffer<span class="operator">.</span>size();
+      outgoingBuffer<span class="operator">.</span>resize(oldSize <span class="operator">+</span> size);
+      memcpy(outgoingBuffer<span class="operator">.</span>data() <span class="operator">+</span> oldSize<span class="operator">,</span> data<span class="operator">,</span> size);
+      <span class="keyword">emit</span> readyToTransfer();
+      <span class="keyword">return</span> size;
+  }
+
+</pre>
+</div>
+<!-- @@@torrent/peerwireclient.cpp -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

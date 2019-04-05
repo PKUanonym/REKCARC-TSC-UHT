@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- helloscript.qdoc -->
+  <title>Hello Script Example | Qt Script</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtscript-index.html">Qt Script</a></td><td >Hello Script Example</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#translating-the-application">Translating the Application</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">Hello Script Example</h1>
+<span class="subtitle"></span>
+<!-- $$$script/helloscript-description -->
+<div class="descr"> <a name="details"></a>
+<p>The Hello Script example shows the basic use of Qt Script: How to embed a script engine into the application, how to evaluate a script, and how to process the result of the evaluation. The example also shows how to apply internationalization to scripts.</p>
+<pre class="cpp">
+
+  <span class="type">int</span> main(<span class="type">int</span> argc<span class="operator">,</span> <span class="type">char</span> <span class="operator">*</span>argv<span class="operator">[</span><span class="operator">]</span>)
+  {
+      Q_INIT_RESOURCE(helloscript);
+
+</pre>
+<p>The application will load the script file to evaluate from a resource, so we first make sure that the resource is initialized.</p>
+<pre class="cpp">
+
+      <span class="type"><a href="../qtwidgets/qapplication.html">QApplication</a></span> app(argc<span class="operator">,</span> argv);
+
+      <span class="type"><a href="qscriptengine.html">QScriptEngine</a></span> engine;
+
+      <span class="type"><a href="../qtcore/qtranslator.html">QTranslator</a></span> translator;
+      translator<span class="operator">.</span>load(<span class="string">&quot;helloscript_la&quot;</span>);
+      app<span class="operator">.</span>installTranslator(<span class="operator">&amp;</span>translator);
+      engine<span class="operator">.</span>installTranslatorFunctions();
+
+</pre>
+<p>We attempt to load a translation, and install translation functions in the script engine. How to produce a translation is explained later.</p>
+<pre class="cpp">
+
+      <span class="type"><a href="../qtwidgets/qpushbutton.html">QPushButton</a></span> button;
+      <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> scriptButton <span class="operator">=</span> engine<span class="operator">.</span>newQObject(<span class="operator">&amp;</span>button);
+      engine<span class="operator">.</span>globalObject()<span class="operator">.</span>setProperty(<span class="string">&quot;button&quot;</span><span class="operator">,</span> scriptButton);
+
+</pre>
+<p>A push button is created and exported to the script environment as a global variable, <code>button</code>. Scripts will be able to access properties, signals and slots of the button as properties of the <code>button</code> script object; the script object acts as a proxy to the C++ button object.</p>
+<pre class="cpp">
+
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> fileName(<span class="string">&quot;:/helloscript.js&quot;</span>);
+      <span class="type"><a href="../qtcore/qfile.html">QFile</a></span> scriptFile(fileName);
+      scriptFile<span class="operator">.</span>open(<span class="type"><a href="../qtcore/qiodevice.html">QIODevice</a></span><span class="operator">::</span>ReadOnly);
+      <span class="type"><a href="../qtcore/qtextstream.html">QTextStream</a></span> stream(<span class="operator">&amp;</span>scriptFile);
+      <span class="type"><a href="../qtcore/qstring.html">QString</a></span> contents <span class="operator">=</span> stream<span class="operator">.</span>readAll();
+      scriptFile<span class="operator">.</span>close();
+
+</pre>
+<p>The contents of the script file are read.</p>
+<pre class="js">
+
+  <span class="name">button</span>.<span class="name">text</span> <span class="operator">=</span> <span class="name">qsTr</span>(<span class="string">'Hello World!'</span>);
+  <span class="name">button</span>.<span class="name">styleSheet</span> <span class="operator">=</span> <span class="string">'font-style: italic'</span>;
+  <span class="name">button</span>.<span class="name">show</span>();
+
+</pre>
+<p>The script sets the <code>text</code> (note that the qTr() function is used to allow for translation) and <code>styleSheet</code> properties of the button, and calls the button's <code>show()</code> slot.</p>
+<pre class="cpp">
+
+      <span class="type"><a href="qscriptvalue.html">QScriptValue</a></span> result <span class="operator">=</span> engine<span class="operator">.</span>evaluate(contents<span class="operator">,</span> fileName);
+
+</pre>
+<p>The script is evaluated. Note that the file name is passed as the (optional) second parameter; this makes it possible for the script engine to produce a meaningful backtrace if something goes wrong, and makes the qTr() function be able to resolve the translations that are associated with this script.</p>
+<pre class="cpp">
+
+      <span class="keyword">if</span> (result<span class="operator">.</span>isError()) {
+          <span class="type"><a href="../qtwidgets/qmessagebox.html">QMessageBox</a></span><span class="operator">::</span>critical(<span class="number">0</span><span class="operator">,</span> <span class="string">&quot;Hello Script&quot;</span><span class="operator">,</span>
+                                <span class="type"><a href="../qtcore/qstring.html">QString</a></span><span class="operator">::</span>fromLatin1(<span class="string">&quot;%0:%1: %2&quot;</span>)
+                                <span class="operator">.</span>arg(fileName)
+                                <span class="operator">.</span>arg(result<span class="operator">.</span>property(<span class="string">&quot;lineNumber&quot;</span>)<span class="operator">.</span>toInt32())
+                                <span class="operator">.</span>arg(result<span class="operator">.</span>toString()));
+          <span class="keyword">return</span> <span class="operator">-</span><span class="number">1</span>;
+      }
+
+</pre>
+<p>If the result is an Error object (e.g&#x2e; the script contained a syntax error, or tried to call a function that doesn't exist), we obtain the line number and string representation of the error and display it in a message box.</p>
+<pre class="cpp">
+
+      <span class="keyword">return</span> app<span class="operator">.</span>exec();
+  }
+
+</pre>
+<p>If the evaluation went well, the application event loop is entered.</p>
+<a name="translating-the-application"></a>
+<h2 id="translating-the-application">Translating the Application</h2>
+<p>The Qt Script internalization support builds on what Qt already provides for C++; see the <a href="../qtlinguist/qtlinguist-hellotr-example.html">Hello tr</a>() Example for an introduction.</p>
+<p>Since we haven't made the translation file <code>helloscript_la.qm</code>, the source text is shown when we run the application (&quot;Hello world!&quot;).</p>
+<p>To generate the translation file, run <code>lupdate</code> as follows:</p>
+<pre class="cpp">
+
+  lupdate helloscript<span class="operator">.</span>js <span class="operator">-</span>ts helloscript_la<span class="operator">.</span>ts
+
+</pre>
+<p>You should now have a file <code>helloscript_la.ts</code> in the current directory. Run <code>linguist</code> to edit the translation:</p>
+<pre class="cpp">
+
+  linguist helloscript_la<span class="operator">.</span>ts
+
+</pre>
+<p>You should now see the text &quot;helloscript.js&quot; in the top left pane. Double-click it, then click on &quot;Hello world!&quot; and enter &quot;Orbis, te saluto!&quot; in the <b>Translation</b> pane (the middle right of the window). Don't forget the exclamation mark!</p>
+<p>Click the <b>Done</b> checkbox and choose <b>File|Save</b> from the menu bar. The TS file will no longer contain</p>
+<pre class="cpp">
+
+  <span class="operator">&lt;</span>translation type<span class="operator">=</span><span class="char">'unfinished'</span><span class="operator">&gt;</span><span class="operator">&lt;</span><span class="operator">/</span>translation<span class="operator">&gt;</span>
+
+</pre>
+<p>but instead will have</p>
+<pre class="cpp">
+
+  <span class="operator">&lt;</span>translation<span class="operator">&gt;</span>Orbis<span class="operator">,</span> te saluto<span class="operator">!</span><span class="operator">&lt;</span><span class="operator">/</span>translation<span class="operator">&gt;</span>
+
+</pre>
+<p>To see the application running in Latin, we have to generate a QM file from the TS file. Generating a QM file can be achieved either from within <i>Qt Linguist</i> (for a single TS file), or by using the command line program <code>lrelease</code> which will produce one QM file for each of the TS files listed in the project file. Generate <code>hellotr_la.qm</code> from <code>hellotr_la.ts</code> by choosing <b>File|Release</b> from <i>Qt Linguist</i>'s menu bar and pressing <b>Save</b> in the file save dialog that pops up. Now run the <code>helloscript</code> program again. This time the button will be labelled &quot;Orbis, te saluto!&quot;.</p>
+<p>Files:</p>
+<ul>
+<li><a href="qtscript-script-helloscript-helloscript-js.html">script/helloscript/helloscript.js</a></li>
+<li><a href="qtscript-script-helloscript-main-cpp.html">script/helloscript/main.cpp</a></li>
+<li><a href="qtscript-script-helloscript-helloscript-pro.html">script/helloscript/helloscript.pro</a></li>
+<li><a href="qtscript-script-helloscript-helloscript-qrc.html">script/helloscript/helloscript.qrc</a></li>
+</ul>
+</div>
+<!-- @@@script/helloscript -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

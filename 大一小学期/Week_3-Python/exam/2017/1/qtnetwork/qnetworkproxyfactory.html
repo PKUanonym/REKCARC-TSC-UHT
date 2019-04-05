@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qnetworkproxy.cpp -->
+  <title>QNetworkProxyFactory Class | Qt Network 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtnetwork-index.html">Qt Network</a></td><td ><a href="qtnetwork-module.html">C++ Classes</a></td><td >QNetworkProxyFactory</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#static-public-members">Static Public Members</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+<li class="level2"><a href="#system-proxies">System Proxies</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">QNetworkProxyFactory Class</h1>
+<!-- $$$QNetworkProxyFactory-brief -->
+<p>The <a href="qnetworkproxyfactory.html">QNetworkProxyFactory</a> class provides fine-grained proxy selection. <a href="#details">More...</a></p>
+<!-- @@@QNetworkProxyFactory -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign">   <span class="preprocessor">#include &lt;QNetworkProxyFactory&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> qmake:</td><td class="memItemRight bottomAlign"> QT += network</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Since:</td><td class="memItemRight bottomAlign">  Qt 4.5</td></tr></table></div><ul>
+<li><a href="qnetworkproxyfactory-members.html">List of all members, including inherited members</a></li>
+</ul>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxyfactory.html#QNetworkProxyFactory">QNetworkProxyFactory</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxyfactory.html#dtor.QNetworkProxyFactory">~QNetworkProxyFactory</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QList&lt;QNetworkProxy&gt; </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxyfactory.html#queryProxy">queryProxy</a></b>(const QNetworkProxyQuery &amp;<i>query</i> = QNetworkProxyQuery()) = 0</td></tr>
+</table></div>
+<a name="static-public-members"></a>
+<h2 id="static-public-members">Static Public Members</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> QList&lt;QNetworkProxy&gt; </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxyfactory.html#proxyForQuery">proxyForQuery</a></b>(const QNetworkProxyQuery &amp;<i>query</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxyfactory.html#setApplicationProxyFactory">setApplicationProxyFactory</a></b>(QNetworkProxyFactory *<i>factory</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxyfactory.html#setUseSystemConfiguration">setUseSystemConfiguration</a></b>(bool <i>enable</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QList&lt;QNetworkProxy&gt; </td><td class="memItemRight bottomAlign"><b><a href="qnetworkproxyfactory.html#systemProxyForQuery">systemProxyForQuery</a></b>(const QNetworkProxyQuery &amp;<i>query</i> = QNetworkProxyQuery())</td></tr>
+</table></div>
+<a name="details"></a>
+<!-- $$$QNetworkProxyFactory-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="qnetworkproxyfactory.html">QNetworkProxyFactory</a> class provides fine-grained proxy selection.</p>
+<p><a href="qnetworkproxyfactory.html">QNetworkProxyFactory</a> is an extension to <a href="qnetworkproxy.html">QNetworkProxy</a>, allowing applications to have a more fine-grained control over which proxy servers are used, depending on the socket requesting the proxy. This allows an application to apply different settings, according to the protocol or destination hostname, for instance.</p>
+<p><a href="qnetworkproxyfactory.html">QNetworkProxyFactory</a> can be set globally for an application, in which case it will override any global proxies set with <a href="qnetworkproxy.html#setApplicationProxy">QNetworkProxy::setApplicationProxy</a>(). If set globally, any sockets created with Qt will query the factory to determine the proxy to be used.</p>
+<p>A factory can also be set in certain frameworks that support multiple connections, such as <a href="qnetworkaccessmanager.html">QNetworkAccessManager</a>. When set on such object, the factory will be queried for sockets created by that framework only.</p>
+<a name="system-proxies"></a>
+<h3 >System Proxies</h3>
+<p>You can configure a factory to use the system proxy's settings. Call the <a href="qnetworkproxyfactory.html#setUseSystemConfiguration">setUseSystemConfiguration</a>() function with true to enable this behavior, or false to disable it.</p>
+<p>Similarly, you can use a factory to make queries directly to the system proxy by calling its <a href="qnetworkproxyfactory.html#systemProxyForQuery">systemProxyForQuery</a>() function.</p>
+<p><b>Warning:</b> Depending on the configuration of the user's system, the use of system proxy features on certain platforms may be subject to limitations. The <a href="qnetworkproxyfactory.html#systemProxyForQuery">systemProxyForQuery</a>() documentation contains a list of these limitations for those platforms that are affected.</p>
+</div>
+<!-- @@@QNetworkProxyFactory -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$QNetworkProxyFactory[overload1]$$$QNetworkProxyFactory -->
+<h3 class="fn" id="QNetworkProxyFactory"><a name="QNetworkProxyFactory"></a>QNetworkProxyFactory::<span class="name">QNetworkProxyFactory</span>()</h3>
+<p>Creates a <a href="qnetworkproxyfactory.html">QNetworkProxyFactory</a> object.</p>
+<p>Since <a href="qnetworkproxyfactory.html">QNetworkProxyFactory</a> is an abstract class, you cannot create objects of type <a href="qnetworkproxyfactory.html">QNetworkProxyFactory</a> directly.</p>
+<!-- @@@QNetworkProxyFactory -->
+<!-- $$$~QNetworkProxyFactory[overload1]$$$~QNetworkProxyFactory -->
+<h3 class="fn" id="dtor.QNetworkProxyFactory"><a name="dtor.QNetworkProxyFactory"></a><code>[virtual] </code>QNetworkProxyFactory::<span class="name">~QNetworkProxyFactory</span>()</h3>
+<p>Destroys the <a href="qnetworkproxyfactory.html">QNetworkProxyFactory</a> object.</p>
+<!-- @@@~QNetworkProxyFactory -->
+<!-- $$$proxyForQuery[overload1]$$$proxyForQueryconstQNetworkProxyQuery& -->
+<h3 class="fn" id="proxyForQuery"><a name="proxyForQuery"></a><code>[static] </code><span class="type"><a href="../qtcore/qlist.html">QList</a></span>&lt;<span class="type"><a href="qnetworkproxy.html">QNetworkProxy</a></span>&gt; QNetworkProxyFactory::<span class="name">proxyForQuery</span>(const <span class="type"><a href="qnetworkproxyquery.html">QNetworkProxyQuery</a></span> &amp;<i>query</i>)</h3>
+<p>This function takes the query request, <i>query</i>, examines the details of the type of socket or request and returns a list of <a href="qnetworkproxy.html">QNetworkProxy</a> objects that indicate the proxy servers to be used, in order of preference.</p>
+<!-- @@@proxyForQuery -->
+<!-- $$$queryProxy[overload1]$$$queryProxyconstQNetworkProxyQuery& -->
+<h3 class="fn" id="queryProxy"><a name="queryProxy"></a><code>[pure virtual] </code><span class="type"><a href="../qtcore/qlist.html">QList</a></span>&lt;<span class="type"><a href="qnetworkproxy.html">QNetworkProxy</a></span>&gt; QNetworkProxyFactory::<span class="name">queryProxy</span>(const <span class="type"><a href="qnetworkproxyquery.html">QNetworkProxyQuery</a></span> &amp;<i>query</i> = QNetworkProxyQuery())</h3>
+<p>This function takes the query request, <i>query</i>, examines the details of the type of socket or request and returns a list of <a href="qnetworkproxy.html">QNetworkProxy</a> objects that indicate the proxy servers to be used, in order of preference.</p>
+<p>When reimplementing this class, take care to return at least one element.</p>
+<p>If you cannot determine a better proxy alternative, use <a href="qnetworkproxy.html#ProxyType-enum">QNetworkProxy::DefaultProxy</a>, which tells the code querying for a proxy to use a higher alternative. For example, if this factory is set to a <a href="qnetworkaccessmanager.html">QNetworkAccessManager</a> object, DefaultProxy will tell it to query the application-level proxy settings.</p>
+<p>If this factory is set as the application proxy factory, DefaultProxy and NoProxy will have the same meaning.</p>
+<!-- @@@queryProxy -->
+<!-- $$$setApplicationProxyFactory[overload1]$$$setApplicationProxyFactoryQNetworkProxyFactory* -->
+<h3 class="fn" id="setApplicationProxyFactory"><a name="setApplicationProxyFactory"></a><code>[static] </code><span class="type">void</span> QNetworkProxyFactory::<span class="name">setApplicationProxyFactory</span>(<span class="type"><a href="qnetworkproxyfactory.html#QNetworkProxyFactory">QNetworkProxyFactory</a></span> *<i>factory</i>)</h3>
+<p>Sets the application-wide proxy factory to be <i>factory</i>. This function will take ownership of that object and will delete it when necessary.</p>
+<p>The application-wide proxy is used as a last-resort when all other proxy selection requests returned <a href="qnetworkproxy.html#ProxyType-enum">QNetworkProxy::DefaultProxy</a>. For example, <a href="qtcpsocket.html">QTcpSocket</a> objects can have a proxy set with <a href="qabstractsocket.html#setProxy">QTcpSocket::setProxy</a>, but if none is set, the proxy factory class set with this function will be queried.</p>
+<p>If you set a proxy factory with this function, any application level proxies set with <a href="qnetworkproxy.html#setApplicationProxy">QNetworkProxy::setApplicationProxy</a> will be overridden.</p>
+<p><b>See also </b><a href="qnetworkproxy.html#setApplicationProxy">QNetworkProxy::setApplicationProxy</a>(), <a href="qabstractsocket.html#proxy">QAbstractSocket::proxy</a>(), and <a href="qabstractsocket.html#setProxy">QAbstractSocket::setProxy</a>().</p>
+<!-- @@@setApplicationProxyFactory -->
+<!-- $$$setUseSystemConfiguration[overload1]$$$setUseSystemConfigurationbool -->
+<h3 class="fn" id="setUseSystemConfiguration"><a name="setUseSystemConfiguration"></a><code>[static] </code><span class="type">void</span> QNetworkProxyFactory::<span class="name">setUseSystemConfiguration</span>(<span class="type">bool</span> <i>enable</i>)</h3>
+<p>Enables the use of the platform-specific proxy settings, and only those. See <a href="qnetworkproxyfactory.html#systemProxyForQuery">systemProxyForQuery</a>() for more information.</p>
+<p>Internally, this method (when called with <i>enable</i> set to true) sets an application-wide proxy factory. For this reason, this method is mutually exclusive with <a href="qnetworkproxyfactory.html#setApplicationProxyFactory">setApplicationProxyFactory</a>(): calling <a href="qnetworkproxyfactory.html#setApplicationProxyFactory">setApplicationProxyFactory</a>() overrides the use of the system-wide proxy, and calling setUseSystemConfiguration() overrides any application proxy or proxy factory that was previously set.</p>
+<p><b>Note: </b>See the <a href="qnetworkproxyfactory.html#systemProxyForQuery">systemProxyForQuery</a>() documentation for a list of limitations related to the use of system proxies.</p><p>This function was introduced in  Qt 4.6.</p>
+<!-- @@@setUseSystemConfiguration -->
+<!-- $$$systemProxyForQuery[overload1]$$$systemProxyForQueryconstQNetworkProxyQuery& -->
+<h3 class="fn" id="systemProxyForQuery"><a name="systemProxyForQuery"></a><code>[static] </code><span class="type"><a href="../qtcore/qlist.html">QList</a></span>&lt;<span class="type"><a href="qnetworkproxy.html">QNetworkProxy</a></span>&gt; QNetworkProxyFactory::<span class="name">systemProxyForQuery</span>(const <span class="type"><a href="qnetworkproxyquery.html">QNetworkProxyQuery</a></span> &amp;<i>query</i> = QNetworkProxyQuery())</h3>
+<p>This function takes the query request, <i>query</i>, examines the details of the type of socket or request and returns a list of <a href="qnetworkproxy.html">QNetworkProxy</a> objects that indicate the proxy servers to be used, in order of preference.</p>
+<p>This function can be used to determine the platform-specific proxy settings. This function will use the libraries provided by the operating system to determine the proxy for a given connection, if such libraries exist. If they don't, this function will just return a <a href="qnetworkproxy.html">QNetworkProxy</a> of type <a href="qnetworkproxy.html#ProxyType-enum">QNetworkProxy::NoProxy</a>.</p>
+<p>On Windows, this function will use the WinHTTP DLL functions. Despite its name, Microsoft suggests using it for all applications that require network connections, not just HTTP. This will respect the proxy settings set on the registry with the proxycfg.exe tool. If those settings are not found, this function will attempt to obtain Internet Explorer's settings and use them.</p>
+<p>On MacOS X, this function will obtain the proxy settings using the SystemConfiguration framework from Apple. It will apply the FTP, HTTP and HTTPS proxy configurations for queries that contain the protocol tag &quot;ftp&quot;, &quot;http&quot; and &quot;https&quot;, respectively. If the SOCKS proxy is enabled in that configuration, this function will use the SOCKS server for all queries. If SOCKS isn't enabled, it will use the HTTPS proxy for all TcpSocket and UrlRequest queries.</p>
+<p>On BlackBerry, this function obtains proxy settings for the default configuration using system configuration. The type will be set based on protocol tag &quot;http&quot;, &quot;https&quot;, &quot;ftp&quot;, respectively. By default, it assumes http type. Proxy username and password are also set during the query using system configuration.</p>
+<p>On other systems, this function will pick up proxy settings from the &quot;http_proxy&quot; environment variable. This variable must be a URL using one of the following schemes: &quot;http&quot;, &quot;socks5&quot; or &quot;socks5h&quot;.</p>
+<a name="limitations"></a>
+<h4 >Limitations</h4>
+<p>These are the limitations for the current version of this function. Future versions of Qt may lift some of the limitations listed here.</p>
+<ul>
+<li>On MacOS X, this function will ignore the Proxy Auto Configuration settings, since it cannot execute the associated ECMAScript code.</li>
+<li>On Windows platforms, this function may take several seconds to execute depending on the configuration of the user's system.</li>
+<li>On BlackBerry, only UrlRequest and TcpSocket queries are supported. SOCKS is not supported. The proxy credentials are only retrieved for the default configuration.</li>
+</ul>
+<!-- @@@systemProxyForQuery -->
+</div>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

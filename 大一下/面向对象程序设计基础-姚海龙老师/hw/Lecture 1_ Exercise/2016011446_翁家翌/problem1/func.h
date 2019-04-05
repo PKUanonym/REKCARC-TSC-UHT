@@ -1,0 +1,1 @@
+void polynomial(int, char const**);

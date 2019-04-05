@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>torrentserver.cpp Example File | Qt Network 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtnetwork-index.html">Qt Network</a></td><td ><a href="qtnetwork-torrent-example.html">Torrent Example</a></td><td >torrentserver.cpp Example File</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar"><div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">torrentserver.cpp Example File</h1>
+<span class="subtitle">torrent/torrentserver.cpp</span>
+<!-- $$$torrent/torrentserver.cpp-description -->
+<div class="descr"> <a name="details"></a>
+<pre class="cpp">
+
+  <span class="comment">/****************************************************************************
+  **
+  ** Copyright (C) 2015 The Qt Company Ltd.
+  ** Contact: http://www.qt.io/licensing/
+  **
+  ** This file is part of the examples of the Qt Toolkit.
+  **
+  ** $QT_BEGIN_LICENSE:BSD$
+  ** You may use this file under the terms of the BSD license as follows:
+  **
+  ** &quot;Redistribution and use in source and binary forms, with or without
+  ** modification, are permitted provided that the following conditions are
+  ** met:
+  **   * Redistributions of source code must retain the above copyright
+  **     notice, this list of conditions and the following disclaimer.
+  **   * Redistributions in binary form must reproduce the above copyright
+  **     notice, this list of conditions and the following disclaimer in
+  **     the documentation and/or other materials provided with the
+  **     distribution.
+  **   * Neither the name of The Qt Company Ltd nor the names of its
+  **     contributors may be used to endorse or promote products derived
+  **     from this software without specific prior written permission.
+  **
+  **
+  ** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  ** &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  ** LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  ** A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  ** OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  ** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  ** LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  ** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  ** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  ** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.&quot;
+  **
+  ** $QT_END_LICENSE$
+  **
+  ****************************************************************************/</span>
+
+  <span class="preprocessor">#include &quot;connectionmanager.h&quot;</span>
+  <span class="preprocessor">#include &quot;peerwireclient.h&quot;</span>
+  <span class="preprocessor">#include &quot;ratecontroller.h&quot;</span>
+  <span class="preprocessor">#include &quot;torrentclient.h&quot;</span>
+  <span class="preprocessor">#include &quot;torrentserver.h&quot;</span>
+
+  Q_GLOBAL_STATIC(TorrentServer<span class="operator">,</span> torrentServer)
+
+  TorrentServer <span class="operator">*</span>TorrentServer<span class="operator">::</span>instance()
+  {
+      <span class="keyword">return</span> torrentServer();
+  }
+
+  <span class="type">void</span> TorrentServer<span class="operator">::</span>addClient(TorrentClient <span class="operator">*</span>client)
+  {
+      clients <span class="operator">&lt;</span><span class="operator">&lt;</span> client;
+  }
+
+  <span class="type">void</span> TorrentServer<span class="operator">::</span>removeClient(TorrentClient <span class="operator">*</span>client)
+  {
+      clients<span class="operator">.</span>removeAll(client);
+  }
+
+  <span class="type">void</span> TorrentServer<span class="operator">::</span>incomingConnection(qintptr socketDescriptor)
+  {
+      PeerWireClient <span class="operator">*</span>client <span class="operator">=</span>
+          <span class="keyword">new</span> PeerWireClient(ConnectionManager<span class="operator">::</span>instance()<span class="operator">-</span><span class="operator">&gt;</span>clientId()<span class="operator">,</span> <span class="keyword">this</span>);
+
+      <span class="keyword">if</span> (client<span class="operator">-</span><span class="operator">&gt;</span>setSocketDescriptor(socketDescriptor)) {
+          <span class="keyword">if</span> (ConnectionManager<span class="operator">::</span>instance()<span class="operator">-</span><span class="operator">&gt;</span>canAddConnection() <span class="operator">&amp;</span><span class="operator">&amp;</span> <span class="operator">!</span>clients<span class="operator">.</span>isEmpty()) {
+              connect(client<span class="operator">,</span> SIGNAL(infoHashReceived(<span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span>))<span class="operator">,</span>
+                      <span class="keyword">this</span><span class="operator">,</span> SLOT(processInfoHash(<span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span>)));
+              connect(client<span class="operator">,</span> SIGNAL(error(<span class="type"><a href="qabstractsocket.html">QAbstractSocket</a></span><span class="operator">::</span>SocketError))<span class="operator">,</span>
+                      <span class="keyword">this</span><span class="operator">,</span> SLOT(removeClient()));
+              RateController<span class="operator">::</span>instance()<span class="operator">-</span><span class="operator">&gt;</span>addSocket(client);
+              ConnectionManager<span class="operator">::</span>instance()<span class="operator">-</span><span class="operator">&gt;</span>addConnection(client);
+              <span class="keyword">return</span>;
+          }
+      }
+      client<span class="operator">-</span><span class="operator">&gt;</span>abort();
+      <span class="keyword">delete</span> client;
+  }
+
+  <span class="type">void</span> TorrentServer<span class="operator">::</span>removeClient()
+  {
+      PeerWireClient <span class="operator">*</span>peer <span class="operator">=</span> qobject_cast<span class="operator">&lt;</span>PeerWireClient <span class="operator">*</span><span class="operator">&gt;</span>(sender());
+      RateController<span class="operator">::</span>instance()<span class="operator">-</span><span class="operator">&gt;</span>removeSocket(peer);
+      ConnectionManager<span class="operator">::</span>instance()<span class="operator">-</span><span class="operator">&gt;</span>removeConnection(peer);
+      peer<span class="operator">-</span><span class="operator">&gt;</span>deleteLater();
+  }
+
+  <span class="type">void</span> TorrentServer<span class="operator">::</span>processInfoHash(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> <span class="operator">&amp;</span>infoHash)
+  {
+      PeerWireClient <span class="operator">*</span>peer <span class="operator">=</span> qobject_cast<span class="operator">&lt;</span>PeerWireClient <span class="operator">*</span><span class="operator">&gt;</span>(sender());
+      foreach (TorrentClient <span class="operator">*</span>client<span class="operator">,</span> clients) {
+          <span class="keyword">if</span> (client<span class="operator">-</span><span class="operator">&gt;</span>state() <span class="operator">&gt;</span><span class="operator">=</span> TorrentClient<span class="operator">::</span>Searching <span class="operator">&amp;</span><span class="operator">&amp;</span> client<span class="operator">-</span><span class="operator">&gt;</span>infoHash() <span class="operator">=</span><span class="operator">=</span> infoHash) {
+              peer<span class="operator">-</span><span class="operator">&gt;</span>disconnect(peer<span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> <span class="number">0</span>);
+              client<span class="operator">-</span><span class="operator">&gt;</span>setupIncomingConnection(peer);
+              <span class="keyword">return</span>;
+          }
+      }
+      removeClient();
+  }
+
+</pre>
+</div>
+<!-- @@@torrent/torrentserver.cpp -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

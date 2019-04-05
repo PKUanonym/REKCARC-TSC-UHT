@@ -1,0 +1,14 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="{% static 'form/style.css' %}">
+</head>
+<body>
+<form action="{% url 'form:find' %}" method="post" class="container">
+	{% csrf_token %}
+	<input type = "text" name = "url_text">
+	<input type = "submit" value = "search">
+</form>
+</body>
+</html>

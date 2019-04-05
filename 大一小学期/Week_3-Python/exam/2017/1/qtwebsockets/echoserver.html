@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qwebsocketserver.cpp -->
+  <title>WebSocket server example | Qt WebSockets 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtwebsockets-index.html">Qt WebSockets</a></td><td >WebSocket server example</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#description">Description</a></li>
+<li class="level1"><a href="#code">Code</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">WebSocket server example</h1>
+<span class="subtitle"></span>
+<!-- $$$echoserver.html-description -->
+<div class="descr"> <a name="details"></a>
+<a name="description"></a>
+<h2 id="description">Description</h2>
+<p>The echoserver example implements a WebSocket server that echoes back everything that is sent to it.</p>
+<a name="code"></a>
+<h2 id="code">Code</h2>
+<p>We start by creating a <a href="qwebsocketserver.html">QWebSocketServer</a> (`new QWebSocketServer()`). After the creation, we listen on all local network interfaces (`<a href="../qtnetwork/qhostaddress.html#SpecialAddress-enum">QHostAddress::Any</a>`) on the specified <i>port</i>.</p>
+<pre class="cpp">
+
+  EchoServer<span class="operator">::</span>EchoServer(<span class="type"><a href="../qtcore/qtglobal.html#quint16-typedef">quint16</a></span> port<span class="operator">,</span> bool debug<span class="operator">,</span> <span class="type"><a href="../qtcore/qobject.html">QObject</a></span> <span class="operator">*</span>parent) :
+      <span class="type"><a href="../qtcore/qobject.html">QObject</a></span>(parent)<span class="operator">,</span>
+      m_pWebSocketServer(<span class="keyword">new</span> <span class="type"><a href="qwebsocketserver.html">QWebSocketServer</a></span>(<span class="type"><a href="../qtcore/qstring.html#QStringLiteral">QStringLiteral</a></span>(<span class="string">&quot;Echo Server&quot;</span>)<span class="operator">,</span>
+                                              <span class="type"><a href="qwebsocketserver.html">QWebSocketServer</a></span><span class="operator">::</span>NonSecureMode<span class="operator">,</span> <span class="keyword">this</span>))<span class="operator">,</span>
+      m_clients()<span class="operator">,</span>
+      m_debug(debug)
+  {
+      <span class="keyword">if</span> (m_pWebSocketServer<span class="operator">-</span><span class="operator">&gt;</span>listen(<span class="type"><a href="../qtnetwork/qhostaddress.html">QHostAddress</a></span><span class="operator">::</span>Any<span class="operator">,</span> port)) {
+          <span class="keyword">if</span> (m_debug)
+              <a href="../qtcore/qtglobal.html#qDebug">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">&quot;Echoserver listening on port&quot;</span> <span class="operator">&lt;</span><span class="operator">&lt;</span> port;
+          connect(m_pWebSocketServer<span class="operator">,</span> <span class="operator">&amp;</span><span class="type"><a href="qwebsocketserver.html">QWebSocketServer</a></span><span class="operator">::</span>newConnection<span class="operator">,</span>
+                  <span class="keyword">this</span><span class="operator">,</span> <span class="operator">&amp;</span>EchoServer<span class="operator">::</span>onNewConnection);
+          connect(m_pWebSocketServer<span class="operator">,</span> <span class="operator">&amp;</span><span class="type"><a href="qwebsocketserver.html">QWebSocketServer</a></span><span class="operator">::</span>closed<span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> <span class="operator">&amp;</span>EchoServer<span class="operator">::</span>closed);
+      }
+  }
+
+</pre>
+<p>If listening is successful, we connect the `newConnection()` signal to the slot `onNewConnection()`. The `newConnection()` signal will be thrown whenever a new WebSocket client is connected to our server.</p>
+<pre class="cpp">
+
+  <span class="type">void</span> EchoServer<span class="operator">::</span>onNewConnection()
+  {
+      <span class="type"><a href="qwebsocket.html">QWebSocket</a></span> <span class="operator">*</span>pSocket <span class="operator">=</span> m_pWebSocketServer<span class="operator">-</span><span class="operator">&gt;</span>nextPendingConnection();
+
+      connect(pSocket<span class="operator">,</span> <span class="operator">&amp;</span><span class="type"><a href="qwebsocket.html">QWebSocket</a></span><span class="operator">::</span>textMessageReceived<span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> <span class="operator">&amp;</span>EchoServer<span class="operator">::</span>processTextMessage);
+      connect(pSocket<span class="operator">,</span> <span class="operator">&amp;</span><span class="type"><a href="qwebsocket.html">QWebSocket</a></span><span class="operator">::</span>binaryMessageReceived<span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> <span class="operator">&amp;</span>EchoServer<span class="operator">::</span>processBinaryMessage);
+      connect(pSocket<span class="operator">,</span> <span class="operator">&amp;</span><span class="type"><a href="qwebsocket.html">QWebSocket</a></span><span class="operator">::</span>disconnected<span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> <span class="operator">&amp;</span>EchoServer<span class="operator">::</span>socketDisconnected);
+
+      m_clients <span class="operator">&lt;</span><span class="operator">&lt;</span> pSocket;
+  }
+
+</pre>
+<p>When a new connection is received, the client <a href="qwebsocket.html">QWebSocket</a> is retrieved (`nextPendingConnection()`), and the signals we are interested in are connected to our slots (`textMessageReceived()`, `binaryMessageReceived()` and `disconnected()`). The client socket is remembered in a list, in case we would like to use it later (in this example, nothing is done with it).</p>
+<pre class="cpp">
+
+  <span class="type">void</span> EchoServer<span class="operator">::</span>processTextMessage(<span class="type"><a href="../qtcore/qstring.html">QString</a></span> message)
+  {
+      <span class="type"><a href="qwebsocket.html">QWebSocket</a></span> <span class="operator">*</span>pClient <span class="operator">=</span> qobject_cast<span class="operator">&lt;</span><span class="type"><a href="qwebsocket.html">QWebSocket</a></span> <span class="operator">*</span><span class="operator">&gt;</span>(sender());
+      <span class="keyword">if</span> (m_debug)
+          <a href="../qtcore/qtglobal.html#qDebug">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">&quot;Message received:&quot;</span> <span class="operator">&lt;</span><span class="operator">&lt;</span> message;
+      <span class="keyword">if</span> (pClient) {
+          pClient<span class="operator">-</span><span class="operator">&gt;</span>sendTextMessage(message);
+      }
+  }
+
+</pre>
+<p>Whenever `processTextMessage()` is triggered, we retrieve the sender, and if valid, send back the original message (`sendTextMessage()`). The same is done with binary messages.</p>
+<pre class="cpp">
+
+  <span class="type">void</span> EchoServer<span class="operator">::</span>processBinaryMessage(<span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> message)
+  {
+      <span class="type"><a href="qwebsocket.html">QWebSocket</a></span> <span class="operator">*</span>pClient <span class="operator">=</span> qobject_cast<span class="operator">&lt;</span><span class="type"><a href="qwebsocket.html">QWebSocket</a></span> <span class="operator">*</span><span class="operator">&gt;</span>(sender());
+      <span class="keyword">if</span> (m_debug)
+          <a href="../qtcore/qtglobal.html#qDebug">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">&quot;Binary Message received:&quot;</span> <span class="operator">&lt;</span><span class="operator">&lt;</span> message;
+      <span class="keyword">if</span> (pClient) {
+          pClient<span class="operator">-</span><span class="operator">&gt;</span>sendBinaryMessage(message);
+      }
+  }
+
+</pre>
+<p>The only difference is that the message now is a <a href="../qtcore/qbytearray.html">QByteArray</a> instead of a <a href="../qtcore/qstring.html">QString</a>.</p>
+<pre class="cpp">
+
+  <span class="type">void</span> EchoServer<span class="operator">::</span>socketDisconnected()
+  {
+      <span class="type"><a href="qwebsocket.html">QWebSocket</a></span> <span class="operator">*</span>pClient <span class="operator">=</span> qobject_cast<span class="operator">&lt;</span><span class="type"><a href="qwebsocket.html">QWebSocket</a></span> <span class="operator">*</span><span class="operator">&gt;</span>(sender());
+      <span class="keyword">if</span> (m_debug)
+          <a href="../qtcore/qtglobal.html#qDebug">qDebug</a>() <span class="operator">&lt;</span><span class="operator">&lt;</span> <span class="string">&quot;socketDisconnected:&quot;</span> <span class="operator">&lt;</span><span class="operator">&lt;</span> pClient;
+      <span class="keyword">if</span> (pClient) {
+          m_clients<span class="operator">.</span>removeAll(pClient);
+          pClient<span class="operator">-</span><span class="operator">&gt;</span>deleteLater();
+      }
+  }
+
+</pre>
+<p>Whenever a socket is disconnected, we remove it from the clients list and delete the socket. Note: it is best to use `deleteLater()` to delete the socket.</p>
+</div>
+<!-- @@@echoserver.html -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

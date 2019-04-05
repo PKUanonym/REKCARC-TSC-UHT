@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- network-programming.qdoc -->
+  <title>Network Programming with Qt | Qt Network 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtnetwork-index.html">Qt Network</a></td><td >Network Programming with Qt</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#qt-s-classes-for-network-programming">Qt's Classes for Network Programming</a></li>
+<li class="level1"><a href="#high-level-network-operations-for-http-and-ftp">High Level Network Operations for HTTP and FTP</a></li>
+<li class="level1"><a href="#using-tcp-with-qtcpsocket-and-qtcpserver">Using TCP with QTcpSocket and QTcpServer</a></li>
+<li class="level1"><a href="#using-udp-with-qudpsocket">Using UDP with QUdpSocket</a></li>
+<li class="level1"><a href="#resolving-host-names-using-qhostinfo">Resolving Host Names Using QHostInfo</a></li>
+<li class="level1"><a href="#support-for-network-proxies">Support for Network Proxies</a></li>
+<li class="level1"><a href="#bearer-management-support">Bearer Management Support</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">Network Programming with Qt</h1>
+<span class="subtitle"></span>
+<!-- $$$qtnetwork-programming.html-description -->
+<div class="descr"> <a name="details"></a>
+<p>The Qt Network module offers classes that allow you to write TCP/IP clients and servers. It offers lower-level classes such as <a href="qtcpsocket.html">QTcpSocket</a>, <a href="qtcpserver.html">QTcpServer</a> and <a href="qudpsocket.html">QUdpSocket</a> that represent low level network concepts, and high level classes such as <a href="qnetworkrequest.html">QNetworkRequest</a>, <a href="qnetworkreply.html">QNetworkReply</a> and <a href="qnetworkaccessmanager.html">QNetworkAccessManager</a> to perform network operations using common protocols. It also offers classes such as <a href="qnetworkconfiguration.html">QNetworkConfiguration</a>, <a href="qnetworkconfigurationmanager.html">QNetworkConfigurationManager</a> and <a href="qnetworksession.html">QNetworkSession</a> that implement bearer management.</p>
+<a name="qt-s-classes-for-network-programming"></a>
+<h2 id="qt-s-classes-for-network-programming">Qt's Classes for Network Programming</h2>
+<p>The <a href="qtnetwork-module.html">Qt Network C++ Classes</a> page contains a list of the C++ classes in Qt Network.</p>
+<a name="high-level-network-operations-for-http-and-ftp"></a>
+<h2 id="high-level-network-operations-for-http-and-ftp">High Level Network Operations for HTTP and FTP</h2>
+<p>The Network Access API is a collection of classes for performing common network operations. The API provides an abstraction layer over the specific operations and protocols used (for example, getting and posting data over HTTP), and only exposes classes, functions, and signals for general or high level concepts.</p>
+<p>Network requests are represented by the <a href="qnetworkrequest.html">QNetworkRequest</a> class, which also acts as a general container for information associated with a request, such as any header information and the encryption used. The URL specified when a request object is constructed determines the protocol used for a request. Currently HTTP, FTP and local file URLs are supported for uploading and downloading.</p>
+<p>The coordination of network operations is performed by the <a href="qnetworkaccessmanager.html">QNetworkAccessManager</a> class. Once a request has been created, this class is used to dispatch it and emit signals to report on its progress. The manager also coordinates the use of <a href="qnetworkcookiejar.html">cookies</a> to store data on the client, authentication requests, and the use of proxies.</p>
+<p>Replies to network requests are represented by the <a href="qnetworkreply.html">QNetworkReply</a> class; these are created by <a href="qnetworkaccessmanager.html">QNetworkAccessManager</a> when a request is dispatched. The signals provided by <a href="qnetworkreply.html">QNetworkReply</a> can be used to monitor each reply individually, or developers may choose to use the manager's signals for this purpose instead and discard references to replies. Since <a href="qnetworkreply.html">QNetworkReply</a> is a subclass of <a href="../qtcore/qiodevice.html">QIODevice</a>, replies can be handled synchronously or asynchronously; i.e&#x2e;, as blocking or non-blocking operations.</p>
+<p>Each application or library can create one or more instances of <a href="qnetworkaccessmanager.html">QNetworkAccessManager</a> to handle network communication.</p>
+<a name="using-tcp-with-qtcpsocket-and-qtcpserver"></a>
+<h2 id="using-tcp-with-qtcpsocket-and-qtcpserver">Using TCP with QTcpSocket and QTcpServer</h2>
+<p>TCP (Transmission Control Protocol) is a low-level network protocol used by most Internet protocols, including HTTP and FTP, for data transfer. It is a reliable, stream-oriented, connection-oriented transport protocol. It is particularly well suited to the continuous transmission of data.</p>
+<p class="centerAlign"><img src="images/tcpstream.png" alt="A TCP Stream" /></p><p>The <a href="qtcpsocket.html">QTcpSocket</a> class provides an interface for TCP. You can use <a href="qtcpsocket.html">QTcpSocket</a> to implement standard network protocols such as POP3, SMTP, and NNTP, as well as custom protocols.</p>
+<p>A TCP connection must be established to a remote host and port before any data transfer can begin. Once the connection has been established, the IP address and port of the peer are available through <a href="qabstractsocket.html#peerAddress">QTcpSocket::peerAddress</a>() and <a href="qabstractsocket.html#peerPort">QTcpSocket::peerPort</a>(). At any time, the peer can close the connection, and data transfer will then stop immediately.</p>
+<p><a href="qtcpsocket.html">QTcpSocket</a> works asynchronously and emits signals to report status changes and errors, just like <a href="qnetworkaccessmanager.html">QNetworkAccessManager</a>. It relies on the event loop to detect incoming data and to automatically flush outgoing data. You can write data to the socket using <a href="../qtcore/qiodevice.html#write-2">QTcpSocket::write</a>(), and read data using <a href="../qtcore/qiodevice.html#read-1">QTcpSocket::read</a>(). <a href="qtcpsocket.html">QTcpSocket</a> represents two independent streams of data: one for reading and one for writing.</p>
+<p>Since <a href="qtcpsocket.html">QTcpSocket</a> inherits <a href="../qtcore/qiodevice.html">QIODevice</a>, you can use it with <a href="../qtcore/qtextstream.html">QTextStream</a> and <a href="../qtcore/qdatastream.html">QDataStream</a>. When reading from a <a href="qtcpsocket.html">QTcpSocket</a>, you must make sure that enough data is available by calling <a href="qabstractsocket.html#bytesAvailable">QTcpSocket::bytesAvailable</a>() beforehand.</p>
+<p>If you need to handle incoming TCP connections (e.g&#x2e;, in a server application), use the <a href="qtcpserver.html">QTcpServer</a> class. Call <a href="qtcpserver.html#listen">QTcpServer::listen</a>() to set up the server, and connect to the <a href="qtcpserver.html#newConnection">QTcpServer::newConnection</a>() signal, which is emitted once for every client that connects. In your slot, call <a href="qtcpserver.html#nextPendingConnection">QTcpServer::nextPendingConnection</a>() to accept the connection and use the returned <a href="qtcpsocket.html">QTcpSocket</a> to communicate with the client.</p>
+<p>Although most of its functions work asynchronously, it's possible to use <a href="qtcpsocket.html">QTcpSocket</a> synchronously (i.e&#x2e;, blocking). To get blocking behavior, call <a href="qtcpsocket.html">QTcpSocket</a>'s waitFor...() functions; these suspend the calling thread until a signal has been emitted. For example, after calling the non-blocking <a href="qabstractsocket.html#connectToHost">QTcpSocket::connectToHost</a>() function, call <a href="qabstractsocket.html#waitForConnected">QTcpSocket::waitForConnected</a>() to block the thread until the <a href="qabstractsocket.html#connected">connected()</a> signal has been emitted.</p>
+<p>Synchronous sockets often lead to code with a simpler flow of control. The main disadvantage of the waitFor...() approach is that events won't be processed while a waitFor...() function is blocking. If used in the GUI thread, this might freeze the application's user interface. For this reason, we recommend that you use synchronous sockets only in non-GUI threads. When used synchronously, <a href="qtcpsocket.html">QTcpSocket</a> doesn't require an event loop.</p>
+<p>The <a href="qtnetwork-fortuneclient-example.html">Fortune Client</a> and <a href="qtnetwork-fortuneserver-example.html">Fortune Server</a> examples show how to use <a href="qtcpsocket.html">QTcpSocket</a> and <a href="qtcpserver.html">QTcpServer</a> to write TCP client-server applications. See also <a href="qtnetwork-blockingfortuneclient-example.html">Blocking Fortune Client</a> for an example on how to use a synchronous <a href="qtcpsocket.html">QTcpSocket</a> in a separate thread (without using an event loop), and <a href="qtnetwork-threadedfortuneserver-example.html">Threaded Fortune Server</a> for an example of a multithreaded TCP server with one thread per active client.</p>
+<a name="using-udp-with-qudpsocket"></a>
+<h2 id="using-udp-with-qudpsocket">Using UDP with QUdpSocket</h2>
+<p>UDP (User Datagram Protocol) is a lightweight, unreliable, datagram-oriented, connectionless protocol. It can be used when reliability isn't important. For example, a server that reports the time of day could choose UDP. If a datagram with the time of day is lost, the client can simply make another request.</p>
+<p class="centerAlign"><img src="images/udppackets.png" alt="UDP Packets" /></p><p>The <a href="qudpsocket.html">QUdpSocket</a> class allows you to send and receive UDP datagrams. It inherits <a href="qabstractsocket.html">QAbstractSocket</a>, and it therefore shares most of <a href="qtcpsocket.html">QTcpSocket</a>'s interface. The main difference is that <a href="qudpsocket.html">QUdpSocket</a> transfers data as datagrams instead of as a continuous stream of data. In short, a datagram is a data packet of limited size (normally smaller than 512 bytes), containing the IP address and port of the datagram's sender and receiver in addition to the data being transferred.</p>
+<p><a href="qudpsocket.html">QUdpSocket</a> supports IPv4 broadcasting. Broadcasting is often used to implement network discovery protocols, such as finding which host on the network has the most free hard disk space. One host broadcasts a datagram to the network that all other hosts receive. Each host that receives a request then sends a reply back to the sender with its current amount of free disk space. The originator waits until it has received replies from all hosts, and can then choose the server with most free space to store data. To broadcast a datagram, simply send it to the special address <a href="qhostaddress.html#SpecialAddress-enum">QHostAddress::Broadcast</a> (255.255.255.255), or to your local network's broadcast address.</p>
+<p><a href="qabstractsocket.html#bind">QUdpSocket::bind</a>() prepares the socket for accepting incoming datagrams, much like <a href="qtcpserver.html#listen">QTcpServer::listen</a>() for TCP servers. Whenever one or more datagrams arrive, <a href="qudpsocket.html">QUdpSocket</a> emits the <a href="../qtcore/qiodevice.html#readyRead">readyRead()</a> signal. Call <a href="qudpsocket.html#readDatagram">QUdpSocket::readDatagram</a>() to read the datagram.</p>
+<p>The <a href="qtnetwork-broadcastsender-example.html">Broadcast Sender</a> and <a href="qtnetwork-broadcastreceiver-example.html">Broadcast Receiver</a> examples show how to write a UDP sender and a UDP receiver using Qt.</p>
+<p><a href="qudpsocket.html">QUdpSocket</a> also supports multicasting. The <a href="qtnetwork-multicastsender-example.html">Multicast Sender</a> and <a href="qtnetwork-multicastreceiver-example.html">Multicast Receiver</a> examples show how to use write UDP multicast clients.</p>
+<a name="resolving-host-names-using-qhostinfo"></a>
+<h2 id="resolving-host-names-using-qhostinfo">Resolving Host Names Using QHostInfo</h2>
+<p>Before establishing a network connection, <a href="qtcpsocket.html">QTcpSocket</a> and <a href="qudpsocket.html">QUdpSocket</a> perform a name lookup, translating the host name you're connecting to into an IP address. This operation is usually performed using the DNS (Domain Name Service) protocol.</p>
+<p><a href="qhostinfo.html">QHostInfo</a> provides a static function that lets you perform such a lookup yourself. By calling <a href="qhostinfo.html#lookupHost">QHostInfo::lookupHost</a>() with a host name, a <a href="../qtcore/qobject.html">QObject</a> pointer, and a slot signature, <a href="qhostinfo.html">QHostInfo</a> will perform the name lookup and invoke the given slot when the results are ready. The actual lookup is done in a separate thread, making use of the operating system's own methods for performing name lookups.</p>
+<p><a href="qhostinfo.html">QHostInfo</a> also provides a static function called <a href="qhostinfo.html#fromName">QHostInfo::fromName</a>() that takes the host name as argument and returns the results. In this case, the name lookup is performed in the same thread as the caller. This overload is useful for non-GUI applications or for doing name lookups in a separate, non-GUI thread. (Calling this function in a GUI thread may cause your user interface to freeze while the function blocks as it performs the lookup.)</p>
+<a name="support-for-network-proxies"></a>
+<h2 id="support-for-network-proxies">Support for Network Proxies</h2>
+<p>Network communication with Qt can be performed through proxies, which direct or filter network traffic between local and remote connections.</p>
+<p>Individual proxies are represented by the <a href="qnetworkproxy.html">QNetworkProxy</a> class, which is used to describe and configure the connection to a proxy. Proxy types which operate on different levels of network communication are supported, with SOCKS 5 support allowing proxying of network traffic at a low level, and HTTP and FTP proxying working at the protocol level. See <a href="qnetworkproxy.html#ProxyType-enum">QNetworkProxy::ProxyType</a> for more information.</p>
+<p>Proxying can be enabled on a per-socket basis or for all network communication in an application. A newly opened socket can be made to use a proxy by calling its <a href="qabstractsocket.html#setProxy">QAbstractSocket::setProxy</a>() function before it is connected. Application-wide proxying can be enabled for all subsequent socket connections through the use of the <a href="qnetworkproxy.html#setApplicationProxy">QNetworkProxy::setApplicationProxy</a>() function.</p>
+<p>Proxy factories are used to create policies for proxy use. <a href="qnetworkproxyfactory.html">QNetworkProxyFactory</a> supplies proxies based on queries for specific proxy types. The queries themselves are encoded in <a href="qnetworkproxyquery.html">QNetworkProxyQuery</a> objects which enable proxies to be selected based on key criteria, such as the purpose of the proxy (TCP, UDP, TCP server, URL request), local port, remote host and port, and the protocol in use (HTTP, FTP, etc.)&#x2e;</p>
+<p><a href="qnetworkproxyfactory.html#proxyForQuery">QNetworkProxyFactory::proxyForQuery</a>() is used to query the factory directly. An application-wide policy for proxying can be implemented by passing a factory to <a href="qnetworkproxyfactory.html#setApplicationProxyFactory">QNetworkProxyFactory::setApplicationProxyFactory</a>() and a custom proxying policy can be created by subclassing <a href="qnetworkproxyfactory.html">QNetworkProxyFactory</a>; see the class documentation for details.</p>
+<a name="bearer-management-support"></a>
+<h2 id="bearer-management-support">Bearer Management Support</h2>
+<p>Bearer Management controls the connectivity state of the device such that the application can start or stop network interfaces and roam transparently between access points.</p>
+<p>The <a href="qnetworkconfigurationmanager.html">QNetworkConfigurationManager</a> class manages the list of network configurations known to the device. A network configuration describes the set of parameters used to start a network interface and is represented by the <a href="qnetworkconfiguration.html">QNetworkConfiguration</a> class.</p>
+<p>A network interface is started by openning a <a href="qnetworksession.html">QNetworkSession</a> based on a given network configuration. In most situations creating a network session based on the platform specified default network configuration is appropriate. The default network configuration is returned by the <a href="qnetworkconfigurationmanager.html#defaultConfiguration">QNetworkConfigurationManager::defaultConfiguration</a>() function.</p>
+<p>On some platforms it is a platform requirement that the application open a network session before any network operations can be performed. This can be tested by the presents of the <a href="qnetworkconfigurationmanager.html#Capability-enum">QNetworkConfigurationManager::NetworkSessionRequired</a> flag in the value returned by the <a href="qnetworkconfigurationmanager.html#capabilities">QNetworkConfigurationManager::capabilities</a>() function.</p>
+</div>
+<p><b>See also </b><a href="bearer-management.html">Bearer Management</a>.</p>
+<!-- @@@qtnetwork-programming.html -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

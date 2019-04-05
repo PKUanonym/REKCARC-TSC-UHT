@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qqmlwebsocket.cpp -->
+  <title>WebSocket QML Type | Qt WebSockets 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtwebsockets-index.html">Qt WebSockets</a></td><td ><a href="qtwebsockets-qmlmodule.html">QML Types</a></td><td >WebSocket QML Type</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#properties">Properties</a></li>
+<li class="level1"><a href="#signals">Signals</a></li>
+<li class="level1"><a href="#methods">Methods</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">WebSocket QML Type</h1>
+<span class="subtitle"></span>
+<!-- $$$WebSocket-brief -->
+<p>QML interface to <a href="qwebsocket.html">QWebSocket</a>. <a href="#details">More...</a></p>
+<!-- @@@WebSocket -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Import Statement:</td><td class="memItemRight bottomAlign"> import QtWebSockets 1.0</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Since:</td><td class="memItemRight bottomAlign">  Qt 5.3</td></tr></table></div><ul>
+<li><a href="qml-qtwebsockets-websocket-members.html">List of all members, including inherited members</a></li>
+</ul>
+<a name="properties"></a>
+<h2 id="properties">Properties</h2>
+<ul>
+<li class="fn"><b><b><a href="qml-qtwebsockets-websocket.html#active-prop">active</a></b></b> : bool</li>
+<li class="fn"><b><b><a href="qml-qtwebsockets-websocket.html#errorString-prop">errorString</a></b></b> : QString</li>
+<li class="fn"><b><b><a href="qml-qtwebsockets-websocket.html#status-prop">status</a></b></b> : Status</li>
+<li class="fn"><b><b><a href="qml-qtwebsockets-websocket.html#url-prop">url</a></b></b> : QUrl</li>
+</ul>
+<a name="signals"></a>
+<h2 id="signals">Signals</h2>
+<ul>
+<li class="fn"><b><b><a href="qml-qtwebsockets-websocket.html#statusChanged-signal">statusChanged</a></b></b>(Status <i>status</i>)</li>
+<li class="fn"><b><b><a href="qml-qtwebsockets-websocket.html#textMessageReceived-signal">textMessageReceived</a></b></b>(QString <i>message</i>)</li>
+</ul>
+<a name="methods"></a>
+<h2 id="methods">Methods</h2>
+<ul>
+<li class="fn">void <b><b><a href="qml-qtwebsockets-websocket.html#sendTextMessage-method">sendTextMessage</a></b></b>(string <i>message</i>)</li>
+</ul>
+<!-- $$$WebSocket-description -->
+<a name="details"></a>
+<h2 id="details">Detailed Description</h2>
+</p>
+<p>WebSockets is a web technology providing full-duplex communications channels over a single TCP connection. The WebSocket protocol was standardized by the IETF as <a href="http://tools.ietf.org/html/rfc6455">RFC 6455</a> in 2011.</p>
+<!-- @@@WebSocket -->
+<h2>Property Documentation</h2>
+<!-- $$$active -->
+<div class="qmlitem"><div class="qmlproto">
+<div class="table"><table class="qmlname">
+<tr valign="top" class="odd" id="active-prop">
+<td class="tblQmlPropNode"><p>
+<a name="active-prop"></a><span class="name">active</span> : <span class="type">bool</span></p></td></tr>
+</table></div>
+</div><div class="qmldoc"><p>When set to true, a connection is made to the server with the given url. When set to false, the connection is closed. The default value is false.</p>
+</div></div><!-- @@@active -->
+<br/>
+<!-- $$$errorString -->
+<div class="qmlitem"><div class="qmlproto">
+<div class="table"><table class="qmlname">
+<tr valign="top" class="odd" id="errorString-prop">
+<td class="tblQmlPropNode"><p>
+<a name="errorString-prop"></a><span class="name">errorString</span> : <span class="type"><a href="../qtcore/qstring.html">QString</a></span></p></td></tr>
+</table></div>
+</div><div class="qmldoc"><p>Contains a description of the last error that occurred. When no error occurrred, this string is empty.</p>
+</div></div><!-- @@@errorString -->
+<br/>
+<!-- $$$status -->
+<div class="qmlitem"><div class="qmlproto">
+<div class="table"><table class="qmlname">
+<tr valign="top" class="odd" id="status-prop">
+<td class="tblQmlPropNode"><p>
+<a name="status-prop"></a><span class="name">status</span> : <span class="type">Status</span></p></td></tr>
+</table></div>
+</div><div class="qmldoc"><p>Status of the WebSocket.</p>
+<p>The status can have the following values:</p>
+<ul>
+<li>WebSockets.Connecting</li>
+<li>WebSockets.Open</li>
+<li>WebSockets.Closing</li>
+<li>WebSockets.Closed</li>
+<li>WebSockets.Error</li>
+</ul>
+</div></div><!-- @@@status -->
+<br/>
+<!-- $$$url -->
+<div class="qmlitem"><div class="qmlproto">
+<div class="table"><table class="qmlname">
+<tr valign="top" class="odd" id="url-prop">
+<td class="tblQmlPropNode"><p>
+<a name="url-prop"></a><span class="name">url</span> : <span class="type"><a href="../qtcore/qurl.html">QUrl</a></span></p></td></tr>
+</table></div>
+</div><div class="qmldoc"><p>Server url to connect to. The url must have one of 2 schemes: <i>ws://</i> or <i>wss://</i>. When not supplied, then <i>ws://</i> is used.</p>
+</div></div><!-- @@@url -->
+<br/>
+<h2>Signal Documentation</h2>
+<!-- $$$statusChanged -->
+<div class="qmlitem"><div class="qmlproto">
+<div class="table"><table class="qmlname">
+<tr valign="top" class="odd" id="statusChanged-signal">
+<td class="tblQmlFuncNode"><p>
+<a name="statusChanged-signal"></a><span class="name">statusChanged</span>(<span class="type">Status</span> <i>status</i>)</p></td></tr>
+</table></div>
+</div><div class="qmldoc"><p>This signal is emitted when the status of the WebSocket changes. the <a href="qml-qtwebsockets-websocket.html#status-prop">status</a> argument provides the current status.</p>
+<p><b>See also </b><a href="qml-qtwebsockets-websocket.html#status-prop">WebSocket::status</a>.</p>
+</div></div><!-- @@@statusChanged -->
+<br/>
+<!-- $$$textMessageReceived -->
+<div class="qmlitem"><div class="qmlproto">
+<div class="table"><table class="qmlname">
+<tr valign="top" class="odd" id="textMessageReceived-signal">
+<td class="tblQmlFuncNode"><p>
+<a name="textMessageReceived-signal"></a><span class="name">textMessageReceived</span>(<span class="type"><a href="../qtcore/qstring.html">QString</a></span> <i>message</i>)</p></td></tr>
+</table></div>
+</div><div class="qmldoc"><p>This signal is emitted when a text message is received.</p>
+</div></div><!-- @@@textMessageReceived -->
+<br/>
+<h2>Method Documentation</h2>
+<!-- $$$sendTextMessage -->
+<div class="qmlitem"><div class="qmlproto">
+<div class="table"><table class="qmlname">
+<tr valign="top" class="odd" id="sendTextMessage-method">
+<td class="tblQmlFuncNode"><p>
+<a name="sendTextMessage-method"></a><span class="type">void</span> <span class="name">sendTextMessage</span>(<span class="type">string</span> <i>message</i>)</p></td></tr>
+</table></div>
+</div><div class="qmldoc"><p>Sends <code>message</code> to the server.</p>
+</div></div><!-- @@@sendTextMessage -->
+<br/>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

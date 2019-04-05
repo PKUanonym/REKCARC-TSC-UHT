@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qlocalsocket.cpp -->
+  <title>QLocalSocket Class | Qt Network 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtnetwork-index.html">Qt Network</a></td><td ><a href="qtnetwork-module.html">C++ Classes</a></td><td >QLocalSocket</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-types">Public Types</a></li>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#reimplemented-public-functions">Reimplemented Public Functions</a></li>
+<li class="level1"><a href="#signals">Signals</a></li>
+<li class="level1"><a href="#reimplemented-protected-functions">Reimplemented Protected Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">QLocalSocket Class</h1>
+<!-- $$$QLocalSocket-brief -->
+<p>The <a href="qlocalsocket.html">QLocalSocket</a> class provides a local socket. <a href="#details">More...</a></p>
+<!-- @@@QLocalSocket -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign">   <span class="preprocessor">#include &lt;QLocalSocket&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> qmake:</td><td class="memItemRight bottomAlign"> QT += network</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Since:</td><td class="memItemRight bottomAlign">  Qt 4.4</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Inherits:</td><td class="memItemRight bottomAlign"> <a href="../qtcore/qiodevice.html">QIODevice</a></td></tr></table></div><ul>
+<li><a href="qlocalsocket-members.html">List of all members, including inherited members</a></li>
+</ul>
+<a name="public-types"></a>
+<h2 id="public-types">Public Types</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="qlocalsocket.html#LocalSocketError-enum">LocalSocketError</a></b> { ConnectionRefusedError, PeerClosedError, ServerNotFoundError, SocketAccessError, ..., UnknownSocketError }</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="qlocalsocket.html#LocalSocketState-enum">LocalSocketState</a></b> { UnconnectedState, ConnectingState, ConnectedState, ClosingState }</td></tr>
+</table></div>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qlocalsocket.html#QLocalSocket">QLocalSocket</a></b>(QObject *<i>parent</i> = Q_NULLPTR)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qlocalsocket.html#dtor.QLocalSocket">~QLocalSocket</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qlocalsocket.html#abort">abort</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qlocalsocket.html#connectToServer">connectToServer</a></b>(OpenMode <i>openMode</i> = ReadWrite)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qlocalsocket.html#connectToServer-1">connectToServer</a></b>(const QString &amp;<i>name</i>, OpenMode <i>openMode</i> = ReadWrite)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qlocalsocket.html#disconnectFromServer">disconnectFromServer</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> LocalSocketError </td><td class="memItemRight bottomAlign"><b><a href="qlocalsocket.html#error">error</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qlocalsocket.html#flush">flush</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qlocalsocket.html#fullServerName">fullServerName</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qlocalsocket.html#isValid">isValid</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> qint64 </td><td class="memItemRight bottomAlign"><b><a href="qlocalsocket.html#readBufferSize">readBufferSize</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qlocalsocket.html#serverName">serverName</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qlocalsocket.html#setReadBufferSize">setReadBufferSize</a></b>(qint64 <i>size</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qlocalsocket.html#setServerName">setServerName</a></b>(const QString &amp;<i>name</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qlocalsocket.html#setSocketDescriptor">setSocketDescriptor</a></b>(qintptr <i>socketDescriptor</i>, LocalSocketState <i>socketState</i> = ConnectedState, OpenMode <i>openMode</i> = ReadWrite)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> qintptr </td><td class="memItemRight bottomAlign"><b><a href="qlocalsocket.html#socketDescriptor">socketDescriptor</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> LocalSocketState </td><td class="memItemRight bottomAlign"><b><a href="qlocalsocket.html#state">state</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qlocalsocket.html#waitForConnected">waitForConnected</a></b>(int <i>msecs</i> = 30000)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qlocalsocket.html#waitForDisconnected">waitForDisconnected</a></b>(int <i>msecs</i> = 30000)</td></tr>
+</table></div>
+<a name="reimplemented-public-functions"></a>
+<h2 id="reimplemented-public-functions">Reimplemented Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> virtual qint64 </td><td class="memItemRight bottomAlign"><b><a href="qlocalsocket.html#bytesAvailable">bytesAvailable</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual qint64 </td><td class="memItemRight bottomAlign"><b><a href="qlocalsocket.html#bytesToWrite">bytesToWrite</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="qlocalsocket.html#canReadLine">canReadLine</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="qlocalsocket.html#close">close</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="qlocalsocket.html#isSequential">isSequential</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="qlocalsocket.html#open">open</a></b>(OpenMode <i>openMode</i> = ReadWrite)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="qlocalsocket.html#waitForBytesWritten">waitForBytesWritten</a></b>(int <i>msecs</i> = 30000)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="qlocalsocket.html#waitForReadyRead">waitForReadyRead</a></b>(int <i>msecs</i> = 30000)</td></tr>
+</table></div>
+<ul>
+<li class="fn">33 public functions inherited from <a href="../qtcore/qiodevice.html#public-functions">QIODevice</a></li>
+<li class="fn">31 public functions inherited from <a href="../qtcore/qobject.html#public-functions">QObject</a></li>
+</ul>
+<a name="signals"></a>
+<h2 id="signals">Signals</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qlocalsocket.html#connected">connected</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qlocalsocket.html#disconnected">disconnected</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qlocalsocket.html#error-1">error</a></b>(QLocalSocket::LocalSocketError <i>socketError</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qlocalsocket.html#stateChanged">stateChanged</a></b>(QLocalSocket::LocalSocketState <i>socketState</i>)</td></tr>
+</table></div>
+<ul>
+<li class="fn">4 signals inherited from <a href="../qtcore/qiodevice.html#signals">QIODevice</a></li>
+<li class="fn">2 signals inherited from <a href="../qtcore/qobject.html#signals">QObject</a></li>
+</ul>
+<a name="reimplemented-protected-functions"></a>
+<h2 id="reimplemented-protected-functions">Reimplemented Protected Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> virtual qint64 </td><td class="memItemRight bottomAlign"><b><a href="qlocalsocket.html#readData">readData</a></b>(char *<i>data</i>, qint64 <i>c</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual qint64 </td><td class="memItemRight bottomAlign"><b><a href="qlocalsocket.html#writeData">writeData</a></b>(const char *<i>data</i>, qint64 <i>c</i>)</td></tr>
+</table></div>
+<ul>
+<li class="fn">5 protected functions inherited from <a href="../qtcore/qiodevice.html#protected-functions">QIODevice</a></li>
+<li class="fn">9 protected functions inherited from <a href="../qtcore/qobject.html#protected-functions">QObject</a></li>
+</ul>
+<h3>Additional Inherited Members</h3>
+<ul>
+<li class="fn">1 property inherited from <a href="../qtcore/qobject.html#properties">QObject</a></li>
+<li class="fn">1 public slot inherited from <a href="../qtcore/qobject.html#public-slots">QObject</a></li>
+<li class="fn">1 public variable inherited from <a href="../qtcore/qobject.html#public-variables">QObject</a></li>
+<li class="fn">10 static public members inherited from <a href="../qtcore/qobject.html#static-public-members">QObject</a></li>
+<li class="fn">5 protected functions inherited from <a href="../qtcore/qiodevice.html#protected-functions">QIODevice</a></li>
+<li class="fn">9 protected functions inherited from <a href="../qtcore/qobject.html#protected-functions">QObject</a></li>
+<li class="fn">2 protected variables inherited from <a href="../qtcore/qobject.html#protected-variables">QObject</a></li>
+</ul>
+<a name="details"></a>
+<!-- $$$QLocalSocket-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="qlocalsocket.html">QLocalSocket</a> class provides a local socket.</p>
+<p>On Windows this is a named pipe and on Unix this is a local domain socket.</p>
+<p>If an error occurs, socketError() returns the type of error, and <a href="../qtcore/qiodevice.html#errorString">errorString</a>() can be called to get a human readable description of what happened.</p>
+<p>Although <a href="qlocalsocket.html">QLocalSocket</a> is designed for use with an event loop, it's possible to use it without one. In that case, you must use <a href="qlocalsocket.html#waitForConnected">waitForConnected</a>(), <a href="qlocalsocket.html#waitForReadyRead">waitForReadyRead</a>(), <a href="qlocalsocket.html#waitForBytesWritten">waitForBytesWritten</a>(), and <a href="qlocalsocket.html#waitForDisconnected">waitForDisconnected</a>() which blocks until the operation is complete or the timeout expires.</p>
+</div>
+<p><b>See also </b><a href="qlocalserver.html">QLocalServer</a>.</p>
+<!-- @@@QLocalSocket -->
+<div class="types">
+<h2>Member Type Documentation</h2>
+<!-- $$$LocalSocketError$$$ConnectionRefusedError$$$PeerClosedError$$$ServerNotFoundError$$$SocketAccessError$$$SocketResourceError$$$SocketTimeoutError$$$DatagramTooLargeError$$$ConnectionError$$$UnsupportedSocketOperationError$$$UnknownSocketError$$$OperationError -->
+<h3 class="fn" id="LocalSocketError-enum"><a name="LocalSocketError-enum"></a>enum QLocalSocket::<span class="name">LocalSocketError</span></h3>
+<p>The LocalServerError enumeration represents the errors that can occur. The most recent error can be retrieved through a call to <a href="qlocalsocket.html#error">QLocalSocket::error</a>().</p>
+<div class="table"><table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td class="topAlign"><code>QLocalSocket::ConnectionRefusedError</code></td><td class="topAlign tblval"><code>QAbstractSocket::ConnectionRefusedError</code></td><td class="topAlign">The connection was refused by the peer (or timed out).</td></tr>
+<tr><td class="topAlign"><code>QLocalSocket::PeerClosedError</code></td><td class="topAlign tblval"><code>QAbstractSocket::RemoteHostClosedError</code></td><td class="topAlign">The remote socket closed the connection. Note that the client socket (i.e&#x2e;, this socket) will be closed after the remote close notification has been sent.</td></tr>
+<tr><td class="topAlign"><code>QLocalSocket::ServerNotFoundError</code></td><td class="topAlign tblval"><code>QAbstractSocket::HostNotFoundError</code></td><td class="topAlign">The local socket name was not found.</td></tr>
+<tr><td class="topAlign"><code>QLocalSocket::SocketAccessError</code></td><td class="topAlign tblval"><code>QAbstractSocket::SocketAccessError</code></td><td class="topAlign">The socket operation failed because the application lacked the required privileges.</td></tr>
+<tr><td class="topAlign"><code>QLocalSocket::SocketResourceError</code></td><td class="topAlign tblval"><code>QAbstractSocket::SocketResourceError</code></td><td class="topAlign">The local system ran out of resources (e.g&#x2e;, too many sockets).</td></tr>
+<tr><td class="topAlign"><code>QLocalSocket::SocketTimeoutError</code></td><td class="topAlign tblval"><code>QAbstractSocket::SocketTimeoutError</code></td><td class="topAlign">The socket operation timed out.</td></tr>
+<tr><td class="topAlign"><code>QLocalSocket::DatagramTooLargeError</code></td><td class="topAlign tblval"><code>QAbstractSocket::DatagramTooLargeError</code></td><td class="topAlign">The datagram was larger than the operating system's limit (which can be as low as 8192 bytes).</td></tr>
+<tr><td class="topAlign"><code>QLocalSocket::ConnectionError</code></td><td class="topAlign tblval"><code>QAbstractSocket::NetworkError</code></td><td class="topAlign">An error occurred with the connection.</td></tr>
+<tr><td class="topAlign"><code>QLocalSocket::UnsupportedSocketOperationError</code></td><td class="topAlign tblval"><code>QAbstractSocket::UnsupportedSocketOperationError</code></td><td class="topAlign">The requested socket operation is not supported by the local operating system.</td></tr>
+<tr><td class="topAlign"><code>QLocalSocket::OperationError</code></td><td class="topAlign tblval"><code>QAbstractSocket::OperationError</code></td><td class="topAlign">An operation was attempted while the socket was in a state that did not permit it.</td></tr>
+<tr><td class="topAlign"><code>QLocalSocket::UnknownSocketError</code></td><td class="topAlign tblval"><code>QAbstractSocket::UnknownSocketError</code></td><td class="topAlign">An unidentified error occurred.</td></tr>
+</table></div>
+<!-- @@@LocalSocketError -->
+<!-- $$$LocalSocketState$$$UnconnectedState$$$ConnectingState$$$ConnectedState$$$ClosingState -->
+<h3 class="fn" id="LocalSocketState-enum"><a name="LocalSocketState-enum"></a>enum QLocalSocket::<span class="name">LocalSocketState</span></h3>
+<p>This enum describes the different states in which a socket can be.</p>
+<div class="table"><table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td class="topAlign"><code>QLocalSocket::UnconnectedState</code></td><td class="topAlign tblval"><code>QAbstractSocket::UnconnectedState</code></td><td class="topAlign">The socket is not connected.</td></tr>
+<tr><td class="topAlign"><code>QLocalSocket::ConnectingState</code></td><td class="topAlign tblval"><code>QAbstractSocket::ConnectingState</code></td><td class="topAlign">The socket has started establishing a connection.</td></tr>
+<tr><td class="topAlign"><code>QLocalSocket::ConnectedState</code></td><td class="topAlign tblval"><code>QAbstractSocket::ConnectedState</code></td><td class="topAlign">A connection is established.</td></tr>
+<tr><td class="topAlign"><code>QLocalSocket::ClosingState</code></td><td class="topAlign tblval"><code>QAbstractSocket::ClosingState</code></td><td class="topAlign">The socket is about to close (data may still be waiting to be written).</td></tr>
+</table></div>
+<p><b>See also </b><a href="qlocalsocket.html#state">QLocalSocket::state</a>().</p>
+<!-- @@@LocalSocketState -->
+</div>
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$QLocalSocket[overload1]$$$QLocalSocketQObject* -->
+<h3 class="fn" id="QLocalSocket"><a name="QLocalSocket"></a>QLocalSocket::<span class="name">QLocalSocket</span>(<span class="type"><a href="../qtcore/qobject.html#QObject">QObject</a></span> *<i>parent</i> = Q_NULLPTR)</h3>
+<p>Creates a new local socket. The <i>parent</i> argument is passed to <a href="../qtcore/qobject.html">QObject</a>'s constructor.</p>
+<!-- @@@QLocalSocket -->
+<!-- $$$~QLocalSocket[overload1]$$$~QLocalSocket -->
+<h3 class="fn" id="dtor.QLocalSocket"><a name="dtor.QLocalSocket"></a>QLocalSocket::<span class="name">~QLocalSocket</span>()</h3>
+<p>Destroys the socket, closing the connection if necessary.</p>
+<!-- @@@~QLocalSocket -->
+<!-- $$$abort[overload1]$$$abort -->
+<h3 class="fn" id="abort"><a name="abort"></a><span class="type">void</span> QLocalSocket::<span class="name">abort</span>()</h3>
+<p>Aborts the current connection and resets the socket. Unlike <a href="qlocalsocket.html#disconnectFromServer">disconnectFromServer</a>(), this function immediately closes the socket, clearing any pending data in the write buffer.</p>
+<p><b>See also </b><a href="qlocalsocket.html#disconnectFromServer">disconnectFromServer</a>() and <a href="qlocalsocket.html#close">close</a>().</p>
+<!-- @@@abort -->
+<!-- $$$bytesAvailable[overload1]$$$bytesAvailable -->
+<h3 class="fn" id="bytesAvailable"><a name="bytesAvailable"></a><code>[virtual] </code><span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> QLocalSocket::<span class="name">bytesAvailable</span>() const</h3>
+<p>Reimplemented from <a href="../qtcore/qiodevice.html#bytesAvailable">QIODevice::bytesAvailable</a>().</p>
+<!-- @@@bytesAvailable -->
+<!-- $$$bytesToWrite[overload1]$$$bytesToWrite -->
+<h3 class="fn" id="bytesToWrite"><a name="bytesToWrite"></a><code>[virtual] </code><span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> QLocalSocket::<span class="name">bytesToWrite</span>() const</h3>
+<p>Reimplemented from <a href="../qtcore/qiodevice.html#bytesToWrite">QIODevice::bytesToWrite</a>().</p>
+<!-- @@@bytesToWrite -->
+<!-- $$$canReadLine[overload1]$$$canReadLine -->
+<h3 class="fn" id="canReadLine"><a name="canReadLine"></a><code>[virtual] </code><span class="type">bool</span> QLocalSocket::<span class="name">canReadLine</span>() const</h3>
+<p>Reimplemented from <a href="../qtcore/qiodevice.html#canReadLine">QIODevice::canReadLine</a>().</p>
+<!-- @@@canReadLine -->
+<!-- $$$close[overload1]$$$close -->
+<h3 class="fn" id="close"><a name="close"></a><code>[virtual] </code><span class="type">void</span> QLocalSocket::<span class="name">close</span>()</h3>
+<p>Reimplemented from <a href="../qtcore/qiodevice.html#close">QIODevice::close</a>().</p>
+<!-- @@@close -->
+<!-- $$$connectToServer[overload1]$$$connectToServerOpenMode -->
+<h3 class="fn" id="connectToServer"><a name="connectToServer"></a><span class="type">void</span> QLocalSocket::<span class="name">connectToServer</span>(<span class="type"><a href="../qtcore/qiodevice.html#OpenModeFlag-enum">OpenMode</a></span> <i>openMode</i> = ReadWrite)</h3>
+<p>Attempts to make a connection to <a href="qlocalsocket.html#serverName">serverName</a>(). <a href="qlocalsocket.html#setServerName">setServerName</a>() must be called before you open the connection. Alternatively you can use connectToServer(const <a href="../qtcore/qstring.html">QString</a> &amp;name, <a href="../qtcore/qiodevice.html#OpenModeFlag-enum">OpenMode</a> <a href="../qtcore/qiodevice.html#openMode">openMode</a>);</p>
+<p>The socket is opened in the given <i>openMode</i> and first enters <a href="qlocalsocket.html#LocalSocketState-enum">ConnectingState</a>. If a connection is established, <a href="qlocalsocket.html">QLocalSocket</a> enters <a href="qlocalsocket.html#LocalSocketState-enum">ConnectedState</a> and emits <a href="qlocalsocket.html#connected">connected</a>().</p>
+<p>After calling this function, the socket can emit <a href="qlocalsocket.html#error">error</a>() to signal that an error occurred.</p>
+<p>This function was introduced in  Qt 5.1.</p>
+<p><b>See also </b><a href="qlocalsocket.html#state">state</a>(), <a href="qlocalsocket.html#serverName">serverName</a>(), and <a href="qlocalsocket.html#waitForConnected">waitForConnected</a>().</p>
+<!-- @@@connectToServer -->
+<!-- $$$connectToServer$$$connectToServerconstQString&OpenMode -->
+<h3 class="fn" id="connectToServer-1"><a name="connectToServer-1"></a><span class="type">void</span> QLocalSocket::<span class="name">connectToServer</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>name</i>, <span class="type"><a href="../qtcore/qiodevice.html#OpenModeFlag-enum">OpenMode</a></span> <i>openMode</i> = ReadWrite)</h3>
+<p>This is an overloaded function.</p>
+<p>Set the server <i>name</i> and attempts to make a connection to it.</p>
+<p>The socket is opened in the given <i>openMode</i> and first enters <a href="qlocalsocket.html#LocalSocketState-enum">ConnectingState</a>. If a connection is established, <a href="qlocalsocket.html">QLocalSocket</a> enters <a href="qlocalsocket.html#LocalSocketState-enum">ConnectedState</a> and emits <a href="qlocalsocket.html#connected">connected</a>().</p>
+<p>After calling this function, the socket can emit <a href="qlocalsocket.html#error">error</a>() to signal that an error occurred.</p>
+<p><b>See also </b><a href="qlocalsocket.html#state">state</a>(), <a href="qlocalsocket.html#serverName">serverName</a>(), and <a href="qlocalsocket.html#waitForConnected">waitForConnected</a>().</p>
+<!-- @@@connectToServer -->
+<!-- $$$connected[overload1]$$$connected -->
+<h3 class="fn" id="connected"><a name="connected"></a><code>[signal] </code><span class="type">void</span> QLocalSocket::<span class="name">connected</span>()</h3>
+<p>This signal is emitted after <a href="qlocalsocket.html#connectToServer">connectToServer</a>() has been called and a connection has been successfully established.</p>
+<p><b>See also </b><a href="qlocalsocket.html#connectToServer">connectToServer</a>() and <a href="qlocalsocket.html#disconnected">disconnected</a>().</p>
+<!-- @@@connected -->
+<!-- $$$disconnectFromServer[overload1]$$$disconnectFromServer -->
+<h3 class="fn" id="disconnectFromServer"><a name="disconnectFromServer"></a><span class="type">void</span> QLocalSocket::<span class="name">disconnectFromServer</span>()</h3>
+<p>Attempts to close the socket. If there is pending data waiting to be written, <a href="qlocalsocket.html">QLocalSocket</a> will enter <a href="qlocalsocket.html#LocalSocketState-enum">ClosingState</a> and wait until all data has been written. Eventually, it will enter <a href="qlocalsocket.html#LocalSocketState-enum">UnconnectedState</a> and emit the disconnectedFromServer() signal.</p>
+<p><b>See also </b><a href="qlocalsocket.html#connectToServer">connectToServer</a>().</p>
+<!-- @@@disconnectFromServer -->
+<!-- $$$disconnected[overload1]$$$disconnected -->
+<h3 class="fn" id="disconnected"><a name="disconnected"></a><code>[signal] </code><span class="type">void</span> QLocalSocket::<span class="name">disconnected</span>()</h3>
+<p>This signal is emitted when the socket has been disconnected.</p>
+<p><b>See also </b><a href="qlocalsocket.html#connectToServer">connectToServer</a>(), <a href="qlocalsocket.html#disconnectFromServer">disconnectFromServer</a>(), <a href="qlocalsocket.html#abort">abort</a>(), and <a href="qlocalsocket.html#connected">connected</a>().</p>
+<!-- @@@disconnected -->
+<!-- $$$error[overload1]$$$error -->
+<h3 class="fn" id="error"><a name="error"></a><span class="type"><a href="qlocalsocket.html#LocalSocketError-enum">LocalSocketError</a></span> QLocalSocket::<span class="name">error</span>() const</h3>
+<p>Returns the type of error that last occurred.</p>
+<p><b>See also </b><a href="qlocalsocket.html#state">state</a>() and <a href="../qtcore/qiodevice.html#errorString">errorString</a>().</p>
+<!-- @@@error -->
+<!-- $$$error$$$errorQLocalSocket::LocalSocketError -->
+<h3 class="fn" id="error-1"><a name="error-1"></a><code>[signal] </code><span class="type">void</span> QLocalSocket::<span class="name">error</span>(<span class="type"><a href="qlocalsocket.html#LocalSocketError-enum">QLocalSocket::LocalSocketError</a></span> <i>socketError</i>)</h3>
+<p>This signal is emitted after an error occurred. The <i>socketError</i> parameter describes the type of error that occurred.</p>
+<p><a href="qlocalsocket.html#LocalSocketError-enum">QLocalSocket::LocalSocketError</a> is not a registered metatype, so for queued connections, you will have to register it with <a href="../qtcore/qmetatype.html#Q_DECLARE_METATYPE">Q_DECLARE_METATYPE</a>() and <a href="../qtcore/qmetatype.html#qRegisterMetaType-1">qRegisterMetaType</a>().</p>
+<p><b>Note:</b> Signal <i>error</i> is overloaded in this class. To connect to this one using the function pointer syntax, you must specify the signal type in a static cast, as shown in this example:<pre class="cpp">
+
+  connect(localSocket<span class="operator">,</span> <span class="keyword">static_cast</span><span class="operator">&lt;</span><span class="type">void</span>(<span class="type"><a href="qlocalsocket.html#QLocalSocket">QLocalSocket</a></span><span class="operator">::</span><span class="operator">*</span>)(<span class="type"><a href="qlocalsocket.html#QLocalSocket">QLocalSocket</a></span><span class="operator">::</span>LocalSocketError)<span class="operator">&gt;</span>(<span class="operator">&amp;</span><span class="type"><a href="qlocalsocket.html#QLocalSocket">QLocalSocket</a></span><span class="operator">::</span>error)<span class="operator">,</span>
+      <span class="operator">[</span><span class="operator">=</span><span class="operator">]</span>(<span class="type"><a href="qlocalsocket.html#QLocalSocket">QLocalSocket</a></span><span class="operator">::</span>LocalSocketError socketError){ <span class="comment">/* ... */</span> });
+
+</pre>
+<p><b>See also </b><a href="qlocalsocket.html#error">error</a>(), <a href="../qtcore/qiodevice.html#errorString">errorString</a>(), and <a href="../qtcore/custom-types.html">Creating Custom Qt Types</a>.</p>
+<!-- @@@error -->
+<!-- $$$flush[overload1]$$$flush -->
+<h3 class="fn" id="flush"><a name="flush"></a><span class="type">bool</span> QLocalSocket::<span class="name">flush</span>()</h3>
+<p>This function writes as much as possible from the internal write buffer to the socket, without blocking. If any data was written, this function returns <code>true</code>; otherwise false is returned.</p>
+<p>Call this function if you need <a href="qlocalsocket.html">QLocalSocket</a> to start sending buffered data immediately. The number of bytes successfully written depends on the operating system. In most cases, you do not need to call this function, because <a href="qlocalsocket.html">QLocalSocket</a> will start sending data automatically once control goes back to the event loop. In the absence of an event loop, call <a href="qlocalsocket.html#waitForBytesWritten">waitForBytesWritten</a>() instead.</p>
+<p><b>See also </b><a href="../qtcore/qiodevice.html#write-2">write</a>() and <a href="qlocalsocket.html#waitForBytesWritten">waitForBytesWritten</a>().</p>
+<!-- @@@flush -->
+<!-- $$$fullServerName[overload1]$$$fullServerName -->
+<h3 class="fn" id="fullServerName"><a name="fullServerName"></a><span class="type"><a href="../qtcore/qstring.html">QString</a></span> QLocalSocket::<span class="name">fullServerName</span>() const</h3>
+<p>Returns the server path that the socket is connected to.</p>
+<p><b>Note: </b>The return value of this function is platform specific.</p><p><b>See also </b><a href="qlocalsocket.html#connectToServer">connectToServer</a>() and <a href="qlocalsocket.html#serverName">serverName</a>().</p>
+<!-- @@@fullServerName -->
+<!-- $$$isSequential[overload1]$$$isSequential -->
+<h3 class="fn" id="isSequential"><a name="isSequential"></a><code>[virtual] </code><span class="type">bool</span> QLocalSocket::<span class="name">isSequential</span>() const</h3>
+<p>Reimplemented from <a href="../qtcore/qiodevice.html#isSequential">QIODevice::isSequential</a>().</p>
+<!-- @@@isSequential -->
+<!-- $$$isValid[overload1]$$$isValid -->
+<h3 class="fn" id="isValid"><a name="isValid"></a><span class="type">bool</span> QLocalSocket::<span class="name">isValid</span>() const</h3>
+<p>Returns <code>true</code> if the socket is valid and ready for use; otherwise returns <code>false</code>.</p>
+<p><b>Note: </b>The socket's state must be <a href="qlocalsocket.html#LocalSocketState-enum">ConnectedState</a> before reading and writing can occur.</p><p><b>See also </b><a href="qlocalsocket.html#state">state</a>() and <a href="qlocalsocket.html#connectToServer">connectToServer</a>().</p>
+<!-- @@@isValid -->
+<!-- $$$open[overload1]$$$openOpenMode -->
+<h3 class="fn" id="open"><a name="open"></a><code>[virtual] </code><span class="type">bool</span> QLocalSocket::<span class="name">open</span>(<span class="type"><a href="../qtcore/qiodevice.html#OpenModeFlag-enum">OpenMode</a></span> <i>openMode</i> = ReadWrite)</h3>
+<p>Reimplemented from <a href="../qtcore/qiodevice.html#open">QIODevice::open</a>().</p>
+<p>Equivalent to <a href="qlocalsocket.html#connectToServer">connectToServer</a>(<a href="../qtcore/qiodevice.html#OpenModeFlag-enum">OpenMode</a> mode). The socket is opened in the given <i>openMode</i> to the server defined by <a href="qlocalsocket.html#setServerName">setServerName</a>().</p>
+<p>Note that unlike in most other <a href="../qtcore/qiodevice.html">QIODevice</a> subclasses, open() may not open the device directly. The function return false if the socket was already connected or if the server to connect to was not defined and true in any other case. The <a href="qlocalsocket.html#connected">connected</a>() or <a href="qlocalsocket.html#error">error</a>() signals will be emitted once the device is actualy open (or the connection failed).</p>
+<p>See <a href="qlocalsocket.html#connectToServer">connectToServer</a>() for more details.</p>
+<!-- @@@open -->
+<!-- $$$readBufferSize[overload1]$$$readBufferSize -->
+<h3 class="fn" id="readBufferSize"><a name="readBufferSize"></a><span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> QLocalSocket::<span class="name">readBufferSize</span>() const</h3>
+<p>Returns the size of the internal read buffer. This limits the amount of data that the client can receive before you call <a href="../qtcore/qiodevice.html#read-1">read</a>() or <a href="../qtcore/qiodevice.html#readAll">readAll</a>(). A read buffer size of 0 (the default) means that the buffer has no size limit, ensuring that no data is lost.</p>
+<p><b>See also </b><a href="qlocalsocket.html#setReadBufferSize">setReadBufferSize</a>() and <a href="../qtcore/qiodevice.html#read-1">read</a>().</p>
+<!-- @@@readBufferSize -->
+<!-- $$$readData[overload1]$$$readDatachar*qint64 -->
+<h3 class="fn" id="readData"><a name="readData"></a><code>[virtual protected] </code><span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> QLocalSocket::<span class="name">readData</span>(<span class="type">char</span> *<i>data</i>, <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> <i>c</i>)</h3>
+<p>Reimplemented from <a href="../qtcore/qiodevice.html#readData">QIODevice::readData</a>().</p>
+<!-- @@@readData -->
+<!-- $$$serverName[overload1]$$$serverName -->
+<h3 class="fn" id="serverName"><a name="serverName"></a><span class="type"><a href="../qtcore/qstring.html">QString</a></span> QLocalSocket::<span class="name">serverName</span>() const</h3>
+<p>Returns the name of the peer as specified by <a href="qlocalsocket.html#setServerName">setServerName</a>(), or an empty <a href="../qtcore/qstring.html">QString</a> if <a href="qlocalsocket.html#setServerName">setServerName</a>() has not been called or <a href="qlocalsocket.html#connectToServer">connectToServer</a>() failed.</p>
+<p><b>See also </b><a href="qlocalsocket.html#setServerName">setServerName</a>(), <a href="qlocalsocket.html#connectToServer">connectToServer</a>(), and <a href="qlocalsocket.html#fullServerName">fullServerName</a>().</p>
+<!-- @@@serverName -->
+<!-- $$$setReadBufferSize[overload1]$$$setReadBufferSizeqint64 -->
+<h3 class="fn" id="setReadBufferSize"><a name="setReadBufferSize"></a><span class="type">void</span> QLocalSocket::<span class="name">setReadBufferSize</span>(<span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> <i>size</i>)</h3>
+<p>Sets the size of <a href="qlocalsocket.html">QLocalSocket</a>'s internal read buffer to be <i>size</i> bytes.</p>
+<p>If the buffer size is limited to a certain size, <a href="qlocalsocket.html">QLocalSocket</a> won't buffer more than this size of data. Exceptionally, a buffer size of 0 means that the read buffer is unlimited and all incoming data is buffered. This is the default.</p>
+<p>This option is useful if you only read the data at certain points in time (e.g&#x2e;, in a real-time streaming application) or if you want to protect your socket against receiving too much data, which may eventually cause your application to run out of memory.</p>
+<p><b>See also </b><a href="qlocalsocket.html#readBufferSize">readBufferSize</a>() and <a href="../qtcore/qiodevice.html#read-1">read</a>().</p>
+<!-- @@@setReadBufferSize -->
+<!-- $$$setServerName[overload1]$$$setServerNameconstQString& -->
+<h3 class="fn" id="setServerName"><a name="setServerName"></a><span class="type">void</span> QLocalSocket::<span class="name">setServerName</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>name</i>)</h3>
+<p>Set the <i>name</i> of the peer to connect to. On Windows name is the name of a named pipe; on Unix name is the name of a local domain socket.</p>
+<p>This function must be called when the socket is not connected.</p>
+<p>This function was introduced in  Qt 5.1.</p>
+<p><b>See also </b><a href="qlocalsocket.html#serverName">serverName</a>().</p>
+<!-- @@@setServerName -->
+<!-- $$$setSocketDescriptor[overload1]$$$setSocketDescriptorqintptrLocalSocketStateOpenMode -->
+<h3 class="fn" id="setSocketDescriptor"><a name="setSocketDescriptor"></a><span class="type">bool</span> QLocalSocket::<span class="name">setSocketDescriptor</span>(<span class="type"><a href="../qtcore/qtglobal.html#qintptr-typedef">qintptr</a></span> <i>socketDescriptor</i>, <span class="type"><a href="qlocalsocket.html#LocalSocketState-enum">LocalSocketState</a></span> <i>socketState</i> = ConnectedState, <span class="type"><a href="../qtcore/qiodevice.html#OpenModeFlag-enum">OpenMode</a></span> <i>openMode</i> = ReadWrite)</h3>
+<p>Initializes <a href="qlocalsocket.html">QLocalSocket</a> with the native socket descriptor <i>socketDescriptor</i>. Returns <code>true</code> if <a href="qlocalsocket.html#socketDescriptor">socketDescriptor</a> is accepted as a valid socket descriptor; otherwise returns <code>false</code>. The socket is opened in the mode specified by <i>openMode</i>, and enters the socket state specified by <i>socketState</i>.</p>
+<p><b>Note: </b>It is not possible to initialize two local sockets with the same native socket descriptor.</p><p><b>See also </b><a href="qlocalsocket.html#socketDescriptor">socketDescriptor</a>(), <a href="qlocalsocket.html#state">state</a>(), and <a href="../qtcore/qiodevice.html#openMode">openMode</a>().</p>
+<!-- @@@setSocketDescriptor -->
+<!-- $$$socketDescriptor[overload1]$$$socketDescriptor -->
+<h3 class="fn" id="socketDescriptor"><a name="socketDescriptor"></a><span class="type"><a href="../qtcore/qtglobal.html#qintptr-typedef">qintptr</a></span> QLocalSocket::<span class="name">socketDescriptor</span>() const</h3>
+<p>Returns the native socket descriptor of the <a href="qlocalsocket.html">QLocalSocket</a> object if this is available; otherwise returns -1.</p>
+<p>The socket descriptor is not available when <a href="qlocalsocket.html">QLocalSocket</a> is in <a href="qlocalsocket.html#LocalSocketState-enum">UnconnectedState</a>.</p>
+<p><b>See also </b><a href="qlocalsocket.html#setSocketDescriptor">setSocketDescriptor</a>().</p>
+<!-- @@@socketDescriptor -->
+<!-- $$$state[overload1]$$$state -->
+<h3 class="fn" id="state"><a name="state"></a><span class="type"><a href="qlocalsocket.html#LocalSocketState-enum">LocalSocketState</a></span> QLocalSocket::<span class="name">state</span>() const</h3>
+<p>Returns the state of the socket.</p>
+<p><b>See also </b><a href="qlocalsocket.html#error">error</a>().</p>
+<!-- @@@state -->
+<!-- $$$stateChanged[overload1]$$$stateChangedQLocalSocket::LocalSocketState -->
+<h3 class="fn" id="stateChanged"><a name="stateChanged"></a><code>[signal] </code><span class="type">void</span> QLocalSocket::<span class="name">stateChanged</span>(<span class="type"><a href="qlocalsocket.html#LocalSocketState-enum">QLocalSocket::LocalSocketState</a></span> <i>socketState</i>)</h3>
+<p>This signal is emitted whenever <a href="qlocalsocket.html">QLocalSocket</a>'s state changes. The <i>socketState</i> parameter is the new state.</p>
+<p>QLocalSocket::SocketState is not a registered metatype, so for queued connections, you will have to register it with <a href="../qtcore/qmetatype.html#Q_DECLARE_METATYPE">Q_DECLARE_METATYPE</a>() and <a href="../qtcore/qmetatype.html#qRegisterMetaType-1">qRegisterMetaType</a>().</p>
+<p><b>See also </b><a href="qlocalsocket.html#state">state</a>() and <a href="../qtcore/custom-types.html">Creating Custom Qt Types</a>.</p>
+<!-- @@@stateChanged -->
+<!-- $$$waitForBytesWritten[overload1]$$$waitForBytesWrittenint -->
+<h3 class="fn" id="waitForBytesWritten"><a name="waitForBytesWritten"></a><code>[virtual] </code><span class="type">bool</span> QLocalSocket::<span class="name">waitForBytesWritten</span>(<span class="type">int</span> <i>msecs</i> = 30000)</h3>
+<p>Reimplemented from <a href="../qtcore/qiodevice.html#waitForBytesWritten">QIODevice::waitForBytesWritten</a>().</p>
+<!-- @@@waitForBytesWritten -->
+<!-- $$$waitForConnected[overload1]$$$waitForConnectedint -->
+<h3 class="fn" id="waitForConnected"><a name="waitForConnected"></a><span class="type">bool</span> QLocalSocket::<span class="name">waitForConnected</span>(<span class="type">int</span> <i>msecs</i> = 30000)</h3>
+<p>Waits until the socket is connected, up to <i>msecs</i> milliseconds. If the connection has been established, this function returns <code>true</code>; otherwise it returns <code>false</code>. In the case where it returns <code>false</code>, you can call <a href="qlocalsocket.html#error">error</a>() to determine the cause of the error.</p>
+<p>The following example waits up to one second for a connection to be established:</p>
+<pre class="cpp">
+
+  socket<span class="operator">-</span><span class="operator">&gt;</span>connectToServer(<span class="string">&quot;market&quot;</span>);
+  <span class="keyword">if</span> (socket<span class="operator">-</span><span class="operator">&gt;</span>waitForConnected(<span class="number">1000</span>))
+      <a href="../qtcore/qtglobal.html#qDebug">qDebug</a>(<span class="string">&quot;Connected!&quot;</span>);
+
+</pre>
+<p>If <i>msecs</i> is -1, this function will not time out.</p>
+<p><b>See also </b><a href="qlocalsocket.html#connectToServer">connectToServer</a>() and <a href="qlocalsocket.html#connected">connected</a>().</p>
+<!-- @@@waitForConnected -->
+<!-- $$$waitForDisconnected[overload1]$$$waitForDisconnectedint -->
+<h3 class="fn" id="waitForDisconnected"><a name="waitForDisconnected"></a><span class="type">bool</span> QLocalSocket::<span class="name">waitForDisconnected</span>(<span class="type">int</span> <i>msecs</i> = 30000)</h3>
+<p>Waits until the socket has disconnected, up to <i>msecs</i> milliseconds. If the connection has been disconnected, this function returns <code>true</code>; otherwise it returns <code>false</code>. In the case where it returns <code>false</code>, you can call <a href="qlocalsocket.html#error">error</a>() to determine the cause of the error.</p>
+<p>The following example waits up to one second for a connection to be closed:</p>
+<pre class="cpp">
+
+  socket<span class="operator">-</span><span class="operator">&gt;</span>disconnectFromServer();
+  <span class="keyword">if</span> (socket<span class="operator">-</span><span class="operator">&gt;</span>waitForDisconnected(<span class="number">1000</span>))
+      <a href="../qtcore/qtglobal.html#qDebug">qDebug</a>(<span class="string">&quot;Disconnected!&quot;</span>);
+
+</pre>
+<p>If <i>msecs</i> is -1, this function will not time out.</p>
+<p><b>See also </b><a href="qlocalsocket.html#disconnectFromServer">disconnectFromServer</a>() and <a href="qlocalsocket.html#close">close</a>().</p>
+<!-- @@@waitForDisconnected -->
+<!-- $$$waitForReadyRead[overload1]$$$waitForReadyReadint -->
+<h3 class="fn" id="waitForReadyRead"><a name="waitForReadyRead"></a><code>[virtual] </code><span class="type">bool</span> QLocalSocket::<span class="name">waitForReadyRead</span>(<span class="type">int</span> <i>msecs</i> = 30000)</h3>
+<p>Reimplemented from <a href="../qtcore/qiodevice.html#waitForReadyRead">QIODevice::waitForReadyRead</a>().</p>
+<p>This function blocks until data is available for reading and the <a href="../qtcore/qiodevice.html#readyRead">readyRead()</a> signal has been emitted. The function will timeout after <i>msecs</i> milliseconds; the default timeout is 30000 milliseconds.</p>
+<p>The function returns <code>true</code> if data is available for reading; otherwise it returns <code>false</code> (if an error occurred or the operation timed out).</p>
+<p><b>See also </b><a href="qlocalsocket.html#waitForBytesWritten">waitForBytesWritten</a>().</p>
+<!-- @@@waitForReadyRead -->
+<!-- $$$writeData[overload1]$$$writeDataconstchar*qint64 -->
+<h3 class="fn" id="writeData"><a name="writeData"></a><code>[virtual protected] </code><span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> QLocalSocket::<span class="name">writeData</span>(const <span class="type">char</span> *<i>data</i>, <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> <i>c</i>)</h3>
+<p>Reimplemented from <a href="../qtcore/qiodevice.html#writeData">QIODevice::writeData</a>().</p>
+<!-- @@@writeData -->
+</div>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

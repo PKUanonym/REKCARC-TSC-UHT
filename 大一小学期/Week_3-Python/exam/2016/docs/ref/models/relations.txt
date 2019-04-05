@@ -1,0 +1,208 @@
+=========================
+Related objects reference
+=========================
+
+.. currentmodule:: django.db.models.fields.related
+
+.. class:: RelatedManager
+
+    A "related manager" is a manager used in a one-to-many or many-to-many
+    related context. This happens in two cases:
+
+    * The "other side" of a :class:`~django.db.models.ForeignKey` relation.
+      That is::
+
+            from django.db import models
+
+            class Reporter(models.Model):
+                # ...
+                pass
+
+            class Article(models.Model):
+                reporter = models.ForeignKey(Reporter, on_delete=models.CASCADE)
+
+      In the above example, the methods below will be available on
+      the manager ``reporter.article_set``.
+
+    * Both sides of a :class:`~django.db.models.ManyToManyField` relation::
+
+            class Topping(models.Model):
+                # ...
+                pass
+
+            class Pizza(models.Model):
+                toppings = models.ManyToManyField(Topping)
+
+      In this example, the methods below will be available both on
+      ``topping.pizza_set`` and on ``pizza.toppings``.
+
+    .. method:: add(*objs, bulk=True)
+
+        Adds the specified model objects to the related object set.
+
+        Example::
+
+            >>> b = Blog.objects.get(id=1)
+            >>> e = Entry.objects.get(id=234)
+            >>> b.entry_set.add(e) # Associates Entry e with Blog b.
+
+        In the example above, in the case of a
+        :class:`~django.db.models.ForeignKey` relationship,
+        :meth:`QuerySet.update() <django.db.models.query.QuerySet.update>`
+        is used to perform the update. This requires the objects to already be
+        saved.
+
+        You can use the ``bulk=False`` argument to instead have the related
+        manager perform the update by calling ``e.save()``.
+
+        Using ``add()`` with a many-to-many relationship, however, will not
+        call any ``save()`` methods, but rather create the relationships
+        using :meth:`QuerySet.bulk_create()
+        <django.db.models.query.QuerySet.bulk_create>`. If you need to execute
+        some custom logic when a relationship is created, listen to the
+        :data:`~django.db.models.signals.m2m_changed` signal.
+
+        .. versionchanged:: 1.9
+
+            The ``bulk`` parameter was added. In older versions, foreign key
+            updates were always done using ``save()``. Use ``bulk=False`` if
+            you require the old behavior.
+
+    .. method:: create(**kwargs)
+
+        Creates a new object, saves it and puts it in the related object set.
+        Returns the newly created object::
+
+            >>> b = Blog.objects.get(id=1)
+            >>> e = b.entry_set.create(
+            ...     headline='Hello',
+            ...     body_text='Hi',
+            ...     pub_date=datetime.date(2005, 1, 1)
+            ... )
+
+            # No need to call e.save() at this point -- it's already been saved.
+
+        This is equivalent to (but much simpler than)::
+
+            >>> b = Blog.objects.get(id=1)
+            >>> e = Entry(
+            ...     blog=b,
+            ...     headline='Hello',
+            ...     body_text='Hi',
+            ...     pub_date=datetime.date(2005, 1, 1)
+            ... )
+            >>> e.save(force_insert=True)
+
+        Note that there's no need to specify the keyword argument of the model
+        that defines the relationship. In the above example, we don't pass the
+        parameter ``blog`` to ``create()``. Django figures out that the new
+        ``Entry`` object's ``blog`` field should be set to ``b``.
+
+    .. method:: remove(*objs)
+
+        Removes the specified model objects from the related object set::
+
+            >>> b = Blog.objects.get(id=1)
+            >>> e = Entry.objects.get(id=234)
+            >>> b.entry_set.remove(e) # Disassociates Entry e from Blog b.
+
+        Similar to :meth:`add()`, ``e.save()`` is called in the example above
+        to perform the update. Using ``remove()`` with a many-to-many
+        relationship, however, will delete the relationships using
+        :meth:`QuerySet.delete()<django.db.models.query.QuerySet.delete>` which
+        means no model ``save()`` methods are called; listen to the
+        :data:`~django.db.models.signals.m2m_changed` signal if you wish to
+        execute custom code when a relationship is deleted.
+
+        For :class:`~django.db.models.ForeignKey` objects, this method only
+        exists if ``null=True``. If the related field can't be set to ``None``
+        (``NULL``), then an object can't be removed from a relation without
+        being added to another. In the above example, removing ``e`` from
+        ``b.entry_set()`` is equivalent to doing ``e.blog = None``, and because
+        the ``blog`` :class:`~django.db.models.ForeignKey` doesn't have
+        ``null=True``, this is invalid.
+
+        For :class:`~django.db.models.ForeignKey` objects, this method accepts
+        a ``bulk`` argument to control how to perform the operation.
+        If ``True`` (the default), ``QuerySet.update()`` is used.
+        If ``bulk=False``, the ``save()`` method of each individual model
+        instance is called instead. This triggers the
+        :data:`~django.db.models.signals.pre_save` and
+        :data:`~django.db.models.signals.post_save` signals and comes at the
+        expense of performance.
+
+    .. method:: clear()
+
+        Removes all objects from the related object set::
+
+            >>> b = Blog.objects.get(id=1)
+            >>> b.entry_set.clear()
+
+        Note this doesn't delete the related objects -- it just disassociates
+        them.
+
+        Just like ``remove()``, ``clear()`` is only available on
+        :class:`~django.db.models.ForeignKey`\s where ``null=True`` and it also
+        accepts the ``bulk`` keyword argument.
+
+    .. method:: set(objs, bulk=True, clear=False)
+
+        .. versionadded:: 1.9
+
+        Replace the set of related objects::
+
+            >>> new_list = [obj1, obj2, obj3]
+            >>> e.related_set.set(new_list)
+
+        This method accepts a ``clear`` argument to control how to perform the
+        operation. If ``False`` (the default), the elements missing from the
+        new set are removed using ``remove()`` and only the new ones are added.
+        If ``clear=True``, the ``clear()`` method is called instead and the
+        whole set is added at once.
+
+        The ``bulk`` argument is passed on to :meth:`add`.
+
+        Note that since ``set()`` is a compound operation, it is subject to
+        race conditions. For instance, new objects may be added to the database
+        in between the call to ``clear()`` and the call to ``add()``.
+
+    .. note::
+
+       Note that ``add()``, ``create()``, ``remove()``, ``clear()``, and
+       ``set()`` all apply database changes immediately for all types of
+       related fields. In other words, there is no need to call ``save()``
+       on either end of the relationship.
+
+       Also, if you are using :ref:`an intermediate model
+       <intermediary-manytomany>` for a many-to-many relationship, then the
+       ``add()``, ``create()``, ``remove()``, and ``set()`` methods are
+       disabled.
+
+Direct Assignment
+=================
+
+A related object set can be replaced in bulk with one operation by assigning a
+new iterable of objects to it::
+
+    >>> new_list = [obj1, obj2, obj3]
+    >>> e.related_set = new_list
+
+If the foreign key relationship has ``null=True``, then the related manager
+will first disassociate any existing objects in the related set before adding
+the contents of ``new_list``. Otherwise the objects in ``new_list`` will be
+added to the existing related object set.
+
+.. versionchanged:: 1.9
+
+    In earlier versions, direct assignment used to perform ``clear()`` followed
+    by ``add()``. It now performs a ``set()`` with the keyword argument
+    ``clear=False``.
+
+.. deprecated:: 1.10
+
+    Direct assignment is deprecated in favor of the
+    :meth:`~django.db.models.fields.related.RelatedManager.set` method::
+
+        >>> e.related_set.set([obj1, obj2, obj3])
+
+    This prevents confusion about an assignment resulting in an implicit save.

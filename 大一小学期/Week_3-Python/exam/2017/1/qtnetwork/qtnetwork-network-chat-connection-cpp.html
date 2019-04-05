@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>connection.cpp Example File | Qt Network 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtnetwork-index.html">Qt Network</a></td><td ><a href="qtnetwork-network-chat-example.html">Network Chat Example</a></td><td >connection.cpp Example File</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar"><div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">connection.cpp Example File</h1>
+<span class="subtitle">network-chat/connection.cpp</span>
+<!-- $$$network-chat/connection.cpp-description -->
+<div class="descr"> <a name="details"></a>
+<pre class="cpp">
+
+  <span class="comment">/****************************************************************************
+  **
+  ** Copyright (C) 2015 The Qt Company Ltd.
+  ** Contact: http://www.qt.io/licensing/
+  **
+  ** This file is part of the examples of the Qt Toolkit.
+  **
+  ** $QT_BEGIN_LICENSE:BSD$
+  ** You may use this file under the terms of the BSD license as follows:
+  **
+  ** &quot;Redistribution and use in source and binary forms, with or without
+  ** modification, are permitted provided that the following conditions are
+  ** met:
+  **   * Redistributions of source code must retain the above copyright
+  **     notice, this list of conditions and the following disclaimer.
+  **   * Redistributions in binary form must reproduce the above copyright
+  **     notice, this list of conditions and the following disclaimer in
+  **     the documentation and/or other materials provided with the
+  **     distribution.
+  **   * Neither the name of The Qt Company Ltd nor the names of its
+  **     contributors may be used to endorse or promote products derived
+  **     from this software without specific prior written permission.
+  **
+  **
+  ** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  ** &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  ** LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  ** A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  ** OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  ** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  ** LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  ** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  ** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  ** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.&quot;
+  **
+  ** $QT_END_LICENSE$
+  **
+  ****************************************************************************/</span>
+
+  <span class="preprocessor">#include &quot;connection.h&quot;</span>
+
+  <span class="preprocessor">#include &lt;QtNetwork&gt;</span>
+
+  <span class="keyword">static</span> <span class="keyword">const</span> <span class="type">int</span> TransferTimeout <span class="operator">=</span> <span class="number">30</span> <span class="operator">*</span> <span class="number">1000</span>;
+  <span class="keyword">static</span> <span class="keyword">const</span> <span class="type">int</span> PongTimeout <span class="operator">=</span> <span class="number">60</span> <span class="operator">*</span> <span class="number">1000</span>;
+  <span class="keyword">static</span> <span class="keyword">const</span> <span class="type">int</span> PingInterval <span class="operator">=</span> <span class="number">5</span> <span class="operator">*</span> <span class="number">1000</span>;
+  <span class="keyword">static</span> <span class="keyword">const</span> <span class="type">char</span> SeparatorToken <span class="operator">=</span> <span class="char">' '</span>;
+
+  Connection<span class="operator">::</span>Connection(<span class="type"><a href="../qtcore/qobject.html">QObject</a></span> <span class="operator">*</span>parent)
+      : <span class="type"><a href="qtcpsocket.html">QTcpSocket</a></span>(parent)
+  {
+      greetingMessage <span class="operator">=</span> tr(<span class="string">&quot;undefined&quot;</span>);
+      username <span class="operator">=</span> tr(<span class="string">&quot;unknown&quot;</span>);
+      state <span class="operator">=</span> WaitingForGreeting;
+      currentDataType <span class="operator">=</span> Undefined;
+      numBytesForCurrentDataType <span class="operator">=</span> <span class="operator">-</span><span class="number">1</span>;
+      transferTimerId <span class="operator">=</span> <span class="number">0</span>;
+      isGreetingMessageSent <span class="operator">=</span> <span class="keyword">false</span>;
+      pingTimer<span class="operator">.</span>setInterval(PingInterval);
+
+      <span class="type"><a href="../qtcore/qobject.html">QObject</a></span><span class="operator">::</span>connect(<span class="keyword">this</span><span class="operator">,</span> SIGNAL(readyRead())<span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> SLOT(processReadyRead()));
+      <span class="type"><a href="../qtcore/qobject.html">QObject</a></span><span class="operator">::</span>connect(<span class="keyword">this</span><span class="operator">,</span> SIGNAL(disconnected())<span class="operator">,</span> <span class="operator">&amp;</span>pingTimer<span class="operator">,</span> SLOT(stop()));
+      <span class="type"><a href="../qtcore/qobject.html">QObject</a></span><span class="operator">::</span>connect(<span class="operator">&amp;</span>pingTimer<span class="operator">,</span> SIGNAL(timeout())<span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> SLOT(sendPing()));
+      <span class="type"><a href="../qtcore/qobject.html">QObject</a></span><span class="operator">::</span>connect(<span class="keyword">this</span><span class="operator">,</span> SIGNAL(connected())<span class="operator">,</span>
+                       <span class="keyword">this</span><span class="operator">,</span> SLOT(sendGreetingMessage()));
+  }
+
+  <span class="type"><a href="../qtcore/qstring.html">QString</a></span> Connection<span class="operator">::</span>name() <span class="keyword">const</span>
+  {
+      <span class="keyword">return</span> username;
+  }
+
+  <span class="type">void</span> Connection<span class="operator">::</span>setGreetingMessage(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>message)
+  {
+      greetingMessage <span class="operator">=</span> message;
+  }
+
+  bool Connection<span class="operator">::</span>sendMessage(<span class="keyword">const</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span> <span class="operator">&amp;</span>message)
+  {
+      <span class="keyword">if</span> (message<span class="operator">.</span>isEmpty())
+          <span class="keyword">return</span> <span class="keyword">false</span>;
+
+      <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> msg <span class="operator">=</span> message<span class="operator">.</span>toUtf8();
+      <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> data <span class="operator">=</span> <span class="string">&quot;MESSAGE &quot;</span> <span class="operator">+</span> <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span><span class="operator">::</span>number(msg<span class="operator">.</span>size()) <span class="operator">+</span> <span class="char">' '</span> <span class="operator">+</span> msg;
+      <span class="keyword">return</span> write(data) <span class="operator">=</span><span class="operator">=</span> data<span class="operator">.</span>size();
+  }
+
+  <span class="type">void</span> Connection<span class="operator">::</span>timerEvent(<span class="type"><a href="../qtcore/qtimerevent.html">QTimerEvent</a></span> <span class="operator">*</span>timerEvent)
+  {
+      <span class="keyword">if</span> (timerEvent<span class="operator">-</span><span class="operator">&gt;</span>timerId() <span class="operator">=</span><span class="operator">=</span> transferTimerId) {
+          abort();
+          killTimer(transferTimerId);
+          transferTimerId <span class="operator">=</span> <span class="number">0</span>;
+      }
+  }
+
+  <span class="type">void</span> Connection<span class="operator">::</span>processReadyRead()
+  {
+      <span class="keyword">if</span> (state <span class="operator">=</span><span class="operator">=</span> WaitingForGreeting) {
+          <span class="keyword">if</span> (<span class="operator">!</span>readProtocolHeader())
+              <span class="keyword">return</span>;
+          <span class="keyword">if</span> (currentDataType <span class="operator">!</span><span class="operator">=</span> Greeting) {
+              abort();
+              <span class="keyword">return</span>;
+          }
+          state <span class="operator">=</span> ReadingGreeting;
+      }
+
+      <span class="keyword">if</span> (state <span class="operator">=</span><span class="operator">=</span> ReadingGreeting) {
+          <span class="keyword">if</span> (<span class="operator">!</span>hasEnoughData())
+              <span class="keyword">return</span>;
+
+          buffer <span class="operator">=</span> read(numBytesForCurrentDataType);
+          <span class="keyword">if</span> (buffer<span class="operator">.</span>size() <span class="operator">!</span><span class="operator">=</span> numBytesForCurrentDataType) {
+              abort();
+              <span class="keyword">return</span>;
+          }
+
+          username <span class="operator">=</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span>(buffer) <span class="operator">+</span> <span class="char">'@'</span> <span class="operator">+</span> peerAddress()<span class="operator">.</span>toString() <span class="operator">+</span> <span class="char">':'</span>
+                     <span class="operator">+</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span><span class="operator">::</span>number(peerPort());
+          currentDataType <span class="operator">=</span> Undefined;
+          numBytesForCurrentDataType <span class="operator">=</span> <span class="number">0</span>;
+          buffer<span class="operator">.</span>clear();
+
+          <span class="keyword">if</span> (<span class="operator">!</span>isValid()) {
+              abort();
+              <span class="keyword">return</span>;
+          }
+
+          <span class="keyword">if</span> (<span class="operator">!</span>isGreetingMessageSent)
+              sendGreetingMessage();
+
+          pingTimer<span class="operator">.</span>start();
+          pongTime<span class="operator">.</span>start();
+          state <span class="operator">=</span> ReadyForUse;
+          <span class="keyword">emit</span> readyForUse();
+      }
+
+      <span class="keyword">do</span> {
+          <span class="keyword">if</span> (currentDataType <span class="operator">=</span><span class="operator">=</span> Undefined) {
+              <span class="keyword">if</span> (<span class="operator">!</span>readProtocolHeader())
+                  <span class="keyword">return</span>;
+          }
+          <span class="keyword">if</span> (<span class="operator">!</span>hasEnoughData())
+              <span class="keyword">return</span>;
+          processData();
+      } <span class="keyword">while</span> (bytesAvailable() <span class="operator">&gt;</span> <span class="number">0</span>);
+  }
+
+  <span class="type">void</span> Connection<span class="operator">::</span>sendPing()
+  {
+      <span class="keyword">if</span> (pongTime<span class="operator">.</span>elapsed() <span class="operator">&gt;</span> PongTimeout) {
+          abort();
+          <span class="keyword">return</span>;
+      }
+
+      write(<span class="string">&quot;PING 1 p&quot;</span>);
+  }
+
+  <span class="type">void</span> Connection<span class="operator">::</span>sendGreetingMessage()
+  {
+      <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> greeting <span class="operator">=</span> greetingMessage<span class="operator">.</span>toUtf8();
+      <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> data <span class="operator">=</span> <span class="string">&quot;GREETING &quot;</span> <span class="operator">+</span> <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span><span class="operator">::</span>number(greeting<span class="operator">.</span>size()) <span class="operator">+</span> <span class="char">' '</span> <span class="operator">+</span> greeting;
+      <span class="keyword">if</span> (write(data) <span class="operator">=</span><span class="operator">=</span> data<span class="operator">.</span>size())
+          isGreetingMessageSent <span class="operator">=</span> <span class="keyword">true</span>;
+  }
+
+  <span class="type">int</span> Connection<span class="operator">::</span>readDataIntoBuffer(<span class="type">int</span> maxSize)
+  {
+      <span class="keyword">if</span> (maxSize <span class="operator">&gt;</span> MaxBufferSize)
+          <span class="keyword">return</span> <span class="number">0</span>;
+
+      <span class="type">int</span> numBytesBeforeRead <span class="operator">=</span> buffer<span class="operator">.</span>size();
+      <span class="keyword">if</span> (numBytesBeforeRead <span class="operator">=</span><span class="operator">=</span> MaxBufferSize) {
+          abort();
+          <span class="keyword">return</span> <span class="number">0</span>;
+      }
+
+      <span class="keyword">while</span> (bytesAvailable() <span class="operator">&gt;</span> <span class="number">0</span> <span class="operator">&amp;</span><span class="operator">&amp;</span> buffer<span class="operator">.</span>size() <span class="operator">&lt;</span> maxSize) {
+          buffer<span class="operator">.</span>append(read(<span class="number">1</span>));
+          <span class="keyword">if</span> (buffer<span class="operator">.</span>endsWith(SeparatorToken))
+              <span class="keyword">break</span>;
+      }
+      <span class="keyword">return</span> buffer<span class="operator">.</span>size() <span class="operator">-</span> numBytesBeforeRead;
+  }
+
+  <span class="type">int</span> Connection<span class="operator">::</span>dataLengthForCurrentDataType()
+  {
+      <span class="keyword">if</span> (bytesAvailable() <span class="operator">&lt;</span><span class="operator">=</span> <span class="number">0</span> <span class="operator">|</span><span class="operator">|</span> readDataIntoBuffer() <span class="operator">&lt;</span><span class="operator">=</span> <span class="number">0</span>
+              <span class="operator">|</span><span class="operator">|</span> <span class="operator">!</span>buffer<span class="operator">.</span>endsWith(SeparatorToken))
+          <span class="keyword">return</span> <span class="number">0</span>;
+
+      buffer<span class="operator">.</span>chop(<span class="number">1</span>);
+      <span class="type">int</span> number <span class="operator">=</span> buffer<span class="operator">.</span>toInt();
+      buffer<span class="operator">.</span>clear();
+      <span class="keyword">return</span> number;
+  }
+
+  bool Connection<span class="operator">::</span>readProtocolHeader()
+  {
+      <span class="keyword">if</span> (transferTimerId) {
+          killTimer(transferTimerId);
+          transferTimerId <span class="operator">=</span> <span class="number">0</span>;
+      }
+
+      <span class="keyword">if</span> (readDataIntoBuffer() <span class="operator">&lt;</span><span class="operator">=</span> <span class="number">0</span>) {
+          transferTimerId <span class="operator">=</span> startTimer(TransferTimeout);
+          <span class="keyword">return</span> <span class="keyword">false</span>;
+      }
+
+      <span class="keyword">if</span> (buffer <span class="operator">=</span><span class="operator">=</span> <span class="string">&quot;PING &quot;</span>) {
+          currentDataType <span class="operator">=</span> Ping;
+      } <span class="keyword">else</span> <span class="keyword">if</span> (buffer <span class="operator">=</span><span class="operator">=</span> <span class="string">&quot;PONG &quot;</span>) {
+          currentDataType <span class="operator">=</span> Pong;
+      } <span class="keyword">else</span> <span class="keyword">if</span> (buffer <span class="operator">=</span><span class="operator">=</span> <span class="string">&quot;MESSAGE &quot;</span>) {
+          currentDataType <span class="operator">=</span> PlainText;
+      } <span class="keyword">else</span> <span class="keyword">if</span> (buffer <span class="operator">=</span><span class="operator">=</span> <span class="string">&quot;GREETING &quot;</span>) {
+          currentDataType <span class="operator">=</span> Greeting;
+      } <span class="keyword">else</span> {
+          currentDataType <span class="operator">=</span> Undefined;
+          abort();
+          <span class="keyword">return</span> <span class="keyword">false</span>;
+      }
+
+      buffer<span class="operator">.</span>clear();
+      numBytesForCurrentDataType <span class="operator">=</span> dataLengthForCurrentDataType();
+      <span class="keyword">return</span> <span class="keyword">true</span>;
+  }
+
+  bool Connection<span class="operator">::</span>hasEnoughData()
+  {
+      <span class="keyword">if</span> (transferTimerId) {
+          <span class="type"><a href="../qtcore/qobject.html">QObject</a></span><span class="operator">::</span>killTimer(transferTimerId);
+          transferTimerId <span class="operator">=</span> <span class="number">0</span>;
+      }
+
+      <span class="keyword">if</span> (numBytesForCurrentDataType <span class="operator">&lt;</span><span class="operator">=</span> <span class="number">0</span>)
+          numBytesForCurrentDataType <span class="operator">=</span> dataLengthForCurrentDataType();
+
+      <span class="keyword">if</span> (bytesAvailable() <span class="operator">&lt;</span> numBytesForCurrentDataType
+              <span class="operator">|</span><span class="operator">|</span> numBytesForCurrentDataType <span class="operator">&lt;</span><span class="operator">=</span> <span class="number">0</span>) {
+          transferTimerId <span class="operator">=</span> startTimer(TransferTimeout);
+          <span class="keyword">return</span> <span class="keyword">false</span>;
+      }
+
+      <span class="keyword">return</span> <span class="keyword">true</span>;
+  }
+
+  <span class="type">void</span> Connection<span class="operator">::</span>processData()
+  {
+      buffer <span class="operator">=</span> read(numBytesForCurrentDataType);
+      <span class="keyword">if</span> (buffer<span class="operator">.</span>size() <span class="operator">!</span><span class="operator">=</span> numBytesForCurrentDataType) {
+          abort();
+          <span class="keyword">return</span>;
+      }
+
+      <span class="keyword">switch</span> (currentDataType) {
+      <span class="keyword">case</span> PlainText:
+          <span class="keyword">emit</span> newMessage(username<span class="operator">,</span> <span class="type"><a href="../qtcore/qstring.html">QString</a></span><span class="operator">::</span>fromUtf8(buffer));
+          <span class="keyword">break</span>;
+      <span class="keyword">case</span> Ping:
+          write(<span class="string">&quot;PONG 1 p&quot;</span>);
+          <span class="keyword">break</span>;
+      <span class="keyword">case</span> Pong:
+          pongTime<span class="operator">.</span>restart();
+          <span class="keyword">break</span>;
+      <span class="keyword">default</span>:
+          <span class="keyword">break</span>;
+      }
+
+      currentDataType <span class="operator">=</span> Undefined;
+      numBytesForCurrentDataType <span class="operator">=</span> <span class="number">0</span>;
+      buffer<span class="operator">.</span>clear();
+  }
+
+</pre>
+</div>
+<!-- @@@network-chat/connection.cpp -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

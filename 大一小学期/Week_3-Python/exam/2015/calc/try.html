@@ -1,0 +1,35 @@
+
+<form method="post" action="/">
+    {% csrf_token %}
+    <input type="text" name="input" value="850.235294">
+    <table>
+    <tr>
+        <td><input type="submit" value="1" name="b"></td>
+        <td><input type="submit" value="2" name="b"></td>
+        <td><input type="submit" value="3" name="b"></td>
+        <td></td>
+        <td><input type="submit" value="+" name="b"></td>
+        <td><input type="submit" value="-" name="b"></td>
+    </tr>
+    <tr>
+        <td><input type="submit" value="4" name="b"></td>
+        <td><input type="submit" value="5" name="b"></td>
+        <td><input type="submit" value="6" name="b"></td>
+        <td></td>
+        <td><input type="submit" value="*" name="b"></td>
+        <td><input type="submit" value="/" name="b"></td>
+    </tr>
+    <tr>
+        <td><input type="submit" value="7" name="b"></td>
+        <td><input type="submit" value="8" name="b"></td>
+        <td><input type="submit" value="9" name="b"></td>
+        <td></td>
+        <td><input type="submit" value="=" name="b"></td>
+        <td><input type="submit" value="C" name="b"></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><input type="submit" value="0" name="b"></td>
+    </tr>
+    </table>
+</form>

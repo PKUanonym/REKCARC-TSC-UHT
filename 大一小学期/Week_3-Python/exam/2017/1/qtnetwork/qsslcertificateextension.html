@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qsslcertificateextension.cpp -->
+  <title>QSslCertificateExtension Class | Qt Network 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtnetwork-index.html">Qt Network</a></td><td ><a href="qtnetwork-module.html">C++ Classes</a></td><td >QSslCertificateExtension</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">QSslCertificateExtension Class</h1>
+<!-- $$$QSslCertificateExtension-brief -->
+<p>The <a href="qsslcertificateextension.html">QSslCertificateExtension</a> class provides an API for accessing the extensions of an X509 certificate. <a href="#details">More...</a></p>
+<!-- @@@QSslCertificateExtension -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign">   <span class="preprocessor">#include &lt;QSslCertificateExtension&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> qmake:</td><td class="memItemRight bottomAlign"> QT += network</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Since:</td><td class="memItemRight bottomAlign">  Qt 5.0</td></tr></table></div><ul>
+<li><a href="qsslcertificateextension-members.html">List of all members, including inherited members</a></li>
+</ul>
+<p><b>Note:</b> All functions in this class are <a href="../qtdoc/threads-reentrancy.html">reentrant</a>.</p>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qsslcertificateextension.html#QSslCertificateExtension">QSslCertificateExtension</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qsslcertificateextension.html#QSslCertificateExtension-1">QSslCertificateExtension</a></b>(const QSslCertificateExtension &amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qsslcertificateextension.html#dtor.QSslCertificateExtension">~QSslCertificateExtension</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qsslcertificateextension.html#isCritical">isCritical</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qsslcertificateextension.html#isSupported">isSupported</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qsslcertificateextension.html#name">name</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qsslcertificateextension.html#oid">oid</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qsslcertificateextension.html#swap">swap</a></b>(QSslCertificateExtension &amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariant </td><td class="memItemRight bottomAlign"><b><a href="qsslcertificateextension.html#value">value</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QSslCertificateExtension &amp;</td><td class="memItemRight bottomAlign"><b><a href="qsslcertificateextension.html#operator-eq">operator=</a></b>(QSslCertificateExtension &amp;&amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QSslCertificateExtension &amp;</td><td class="memItemRight bottomAlign"><b><a href="qsslcertificateextension.html#operator-eq-1">operator=</a></b>(const QSslCertificateExtension &amp;<i>other</i>)</td></tr>
+</table></div>
+<a name="details"></a>
+<!-- $$$QSslCertificateExtension-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="qsslcertificateextension.html">QSslCertificateExtension</a> class provides an API for accessing the extensions of an X509 certificate.</p>
+<p><a href="qsslcertificateextension.html">QSslCertificateExtension</a> provides access to an extension stored in an X509 certificate. The information available depends on the type of extension being accessed.</p>
+<p>All X509 certificate extensions have the following properties:</p>
+<div class="table"><table class="generic">
+ <thead><tr class="qt-style"><th >Property</th><th >Description</th></tr></thead>
+<tr valign="top" class="odd"><td >name</td><td >The human readable name of the extension, eg. 'basicConstraints'.</td></tr>
+<tr valign="top" class="even"><td >criticality</td><td >This is a boolean value indicating if the extension is critical to correctly interpreting the certificate.</td></tr>
+<tr valign="top" class="odd"><td >oid</td><td >The ASN.1 object identifier that specifies which extension this is.</td></tr>
+<tr valign="top" class="even"><td >supported</td><td >If this is true the structure of the extension's value will not change between Qt versions.</td></tr>
+<tr valign="top" class="odd"><td >value</td><td >A <a href="../qtcore/qvariant.html">QVariant</a> with a structure dependent on the type of extension.</td></tr>
+</table></div>
+<p>Whilst this class provides access to any type of extension, only some are guaranteed to be returned in a format that will remain unchanged between releases. The <a href="qsslcertificateextension.html#isSupported">isSupported</a>() method returns <code>true</code> for extensions where this is the case.</p>
+<p>The extensions currently supported, and the structure of the value returned are as follows:</p>
+<div class="table"><table class="generic">
+ <thead><tr class="qt-style"><th >Name</th><th >OID</th><th >Details</th></tr></thead>
+<tr valign="top" class="odd"><td >basicConstraints</td><td >2.5&#x2e;29.19</td><td >Returned as a <a href="../qtcore/qvariant.html#QVariantMap-typedef">QVariantMap</a>. The key 'ca' contains a boolean value, the optional key 'pathLenConstraint' contains an integer.</td></tr>
+<tr valign="top" class="even"><td >authorityInfoAccess</td><td >1.3&#x2e;6&#x2e;1&#x2e;5&#x2e;5&#x2e;7&#x2e;1&#x2e;1</td><td >Returned as a <a href="../qtcore/qvariant.html#QVariantMap-typedef">QVariantMap</a>. There is a key for each access method, with the value being a URI.</td></tr>
+<tr valign="top" class="odd"><td >subjectKeyIdentifier</td><td >2.5&#x2e;29.14</td><td >Returned as a <a href="../qtcore/qvariant.html">QVariant</a> containing a <a href="../qtcore/qstring.html">QString</a>. The string is the key identifier.</td></tr>
+<tr valign="top" class="even"><td >authorityKeyIdentifier</td><td >2.5&#x2e;29.35</td><td >Returned as a <a href="../qtcore/qvariant.html#QVariantMap-typedef">QVariantMap</a>. The optional key 'keyid' contains the key identifier as a hex string stored in a <a href="../qtcore/qbytearray.html">QByteArray</a>. The optional key 'serial' contains the authority key serial number as a qlonglong. Currently there is no support for the general names field of this extension.</td></tr>
+</table></div>
+<p>In addition to the supported extensions above, many other common extensions will be returned in a reasonably structured way. Extensions that the SSL backend has no support for at all will be returned as a <a href="../qtcore/qbytearray.html">QByteArray</a>.</p>
+<p>Further information about the types of extensions certificates can contain can be found in RFC 5280.</p>
+</div>
+<p><b>See also </b><a href="qsslcertificate.html#extensions">QSslCertificate::extensions</a>().</p>
+<!-- @@@QSslCertificateExtension -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$QSslCertificateExtension[overload1]$$$QSslCertificateExtension -->
+<h3 class="fn" id="QSslCertificateExtension"><a name="QSslCertificateExtension"></a>QSslCertificateExtension::<span class="name">QSslCertificateExtension</span>()</h3>
+<p>Constructs a <a href="qsslcertificateextension.html">QSslCertificateExtension</a>.</p>
+<!-- @@@QSslCertificateExtension -->
+<!-- $$$QSslCertificateExtension$$$QSslCertificateExtensionconstQSslCertificateExtension& -->
+<h3 class="fn" id="QSslCertificateExtension-1"><a name="QSslCertificateExtension-1"></a>QSslCertificateExtension::<span class="name">QSslCertificateExtension</span>(const <span class="type"><a href="qsslcertificateextension.html#QSslCertificateExtension">QSslCertificateExtension</a></span> &amp;<i>other</i>)</h3>
+<p>Constructs a copy of <i>other</i>.</p>
+<!-- @@@QSslCertificateExtension -->
+<!-- $$$~QSslCertificateExtension[overload1]$$$~QSslCertificateExtension -->
+<h3 class="fn" id="dtor.QSslCertificateExtension"><a name="dtor.QSslCertificateExtension"></a>QSslCertificateExtension::<span class="name">~QSslCertificateExtension</span>()</h3>
+<p>Destroys the extension.</p>
+<!-- @@@~QSslCertificateExtension -->
+<!-- $$$isCritical[overload1]$$$isCritical -->
+<h3 class="fn" id="isCritical"><a name="isCritical"></a><span class="type">bool</span> QSslCertificateExtension::<span class="name">isCritical</span>() const</h3>
+<p>Returns the criticality of the extension.</p>
+<!-- @@@isCritical -->
+<!-- $$$isSupported[overload1]$$$isSupported -->
+<h3 class="fn" id="isSupported"><a name="isSupported"></a><span class="type">bool</span> QSslCertificateExtension::<span class="name">isSupported</span>() const</h3>
+<p>Returns the true if this extension is supported. In this case, supported simply means that the structure of the <a href="../qtcore/qvariant.html">QVariant</a> returned by the <a href="qsslcertificateextension.html#value">value</a>() accessor will remain unchanged between versions. Unsupported extensions can be freely used, however there is no guarantee that the returned data will have the same structure between versions.</p>
+<!-- @@@isSupported -->
+<!-- $$$name[overload1]$$$name -->
+<h3 class="fn" id="name"><a name="name"></a><span class="type"><a href="../qtcore/qstring.html">QString</a></span> QSslCertificateExtension::<span class="name">name</span>() const</h3>
+<p>Returns the name of the extension. If no name is known for the extension then the OID will be returned.</p>
+<!-- @@@name -->
+<!-- $$$oid[overload1]$$$oid -->
+<h3 class="fn" id="oid"><a name="oid"></a><span class="type"><a href="../qtcore/qstring.html">QString</a></span> QSslCertificateExtension::<span class="name">oid</span>() const</h3>
+<p>Returns the ASN.1 OID of this extension.</p>
+<!-- @@@oid -->
+<!-- $$$swap[overload1]$$$swapQSslCertificateExtension& -->
+<h3 class="fn" id="swap"><a name="swap"></a><span class="type">void</span> QSslCertificateExtension::<span class="name">swap</span>(<span class="type"><a href="qsslcertificateextension.html#QSslCertificateExtension">QSslCertificateExtension</a></span> &amp;<i>other</i>)</h3>
+<p>Swaps this certificate extension instance with <i>other</i>. This function is very fast and never fails.</p>
+<!-- @@@swap -->
+<!-- $$$value[overload1]$$$value -->
+<h3 class="fn" id="value"><a name="value"></a><span class="type"><a href="../qtcore/qvariant.html">QVariant</a></span> QSslCertificateExtension::<span class="name">value</span>() const</h3>
+<p>Returns the value of the extension. The structure of the value returned depends on the extension type.</p>
+<!-- @@@value -->
+<!-- $$$operator=[overload1]$$$operator=QSslCertificateExtension&& -->
+<h3 class="fn" id="operator-eq"><a name="operator-eq"></a><span class="type"><a href="qsslcertificateextension.html#QSslCertificateExtension">QSslCertificateExtension</a></span> &amp;QSslCertificateExtension::<span class="name">operator=</span>(<span class="type"><a href="qsslcertificateextension.html#QSslCertificateExtension">QSslCertificateExtension</a></span> &amp;&amp;<i>other</i>)</h3>
+<p>Move-assignment operator.</p><!-- @@@operator= -->
+<!-- $$$operator=$$$operator=constQSslCertificateExtension& -->
+<h3 class="fn" id="operator-eq-1"><a name="operator-eq-1"></a><span class="type"><a href="qsslcertificateextension.html#QSslCertificateExtension">QSslCertificateExtension</a></span> &amp;QSslCertificateExtension::<span class="name">operator=</span>(const <span class="type"><a href="qsslcertificateextension.html#QSslCertificateExtension">QSslCertificateExtension</a></span> &amp;<i>other</i>)</h3>
+<p>Assigns <i>other</i> to this extension and returns a reference to this extension.</p>
+<!-- @@@operator= -->
+</div>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

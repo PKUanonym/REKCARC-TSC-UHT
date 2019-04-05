@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qxml.cpp -->
+  <title>QXmlParseException Class | Qt XML 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtxml-index.html">Qt XML</a></td><td ><a href="qtxml-module.html">C++ Classes</a></td><td >QXmlParseException</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">QXmlParseException Class</h1>
+<!-- $$$QXmlParseException-brief -->
+<p>The <a href="qxmlparseexception.html">QXmlParseException</a> class is used to report errors with the <a href="qxmlerrorhandler.html">QXmlErrorHandler</a> interface. <a href="#details">More...</a></p>
+<!-- @@@QXmlParseException -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign">   <span class="preprocessor">#include &lt;QXmlParseException&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> qmake:</td><td class="memItemRight bottomAlign"> QT += xml</td></tr></table></div><ul>
+<li><a href="qxmlparseexception-members.html">List of all members, including inherited members</a></li>
+</ul>
+<p><b>Note:</b> All functions in this class are <a href="../qtdoc/threads-reentrancy.html">reentrant</a>.</p>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qxmlparseexception.html#QXmlParseException">QXmlParseException</a></b>(const QString &amp;<i>name</i> = QString(), int <i>c</i> = -1, int <i>l</i> = -1, const QString &amp;<i>p</i> = QString(), const QString &amp;<i>s</i> = QString())</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qxmlparseexception.html#QXmlParseException-1">QXmlParseException</a></b>(const QXmlParseException &amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qxmlparseexception.html#dtor.QXmlParseException">~QXmlParseException</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="qxmlparseexception.html#columnNumber">columnNumber</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="qxmlparseexception.html#lineNumber">lineNumber</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qxmlparseexception.html#message">message</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qxmlparseexception.html#publicId">publicId</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qxmlparseexception.html#systemId">systemId</a></b>() const</td></tr>
+</table></div>
+<a name="details"></a>
+<!-- $$$QXmlParseException-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="qxmlparseexception.html">QXmlParseException</a> class is used to report errors with the <a href="qxmlerrorhandler.html">QXmlErrorHandler</a> interface.</p>
+<p>The XML subsystem constructs an instance of this class when it detects an error. You can retrieve the place where the error occurred using <a href="qxmlparseexception.html#systemId">systemId</a>(), <a href="qxmlparseexception.html#publicId">publicId</a>(), <a href="qxmlparseexception.html#lineNumber">lineNumber</a>() and <a href="qxmlparseexception.html#columnNumber">columnNumber</a>(), along with the error <a href="qxmlparseexception.html#message">message</a>(). The possible error messages are:</p>
+<ul>
+<li>&quot;no error occurred&quot;</li>
+<li>&quot;error triggered by consumer&quot;</li>
+<li>&quot;unexpected end of file&quot;</li>
+<li>&quot;more than one document type definition&quot;</li>
+<li>&quot;error occurred while parsing element&quot;</li>
+<li>&quot;tag mismatch&quot;</li>
+<li>&quot;error occurred while parsing content&quot;</li>
+<li>&quot;unexpected character&quot;</li>
+<li>&quot;invalid name for processing instruction&quot;</li>
+<li>&quot;version expected while reading the XML declaration&quot;</li>
+<li>&quot;wrong value for standalone declaration&quot;</li>
+<li>&quot;encoding declaration or standalone declaration expected while reading the XML declaration&quot;</li>
+<li>&quot;standalone declaration expected while reading the XML declaration&quot;</li>
+<li>&quot;error occurred while parsing document type definition&quot;</li>
+<li>&quot;letter is expected&quot;</li>
+<li>&quot;error occurred while parsing comment&quot;</li>
+<li>&quot;error occurred while parsing reference&quot;</li>
+<li>&quot;internal general entity reference not allowed in DTD&quot;</li>
+<li>&quot;external parsed general entity reference not allowed in attribute value&quot;</li>
+<li>&quot;external parsed general entity reference not allowed in DTD&quot;</li>
+<li>&quot;unparsed entity reference n wrong context&quot;</li>
+<li>&quot;recursive entities&quot;</li>
+<li>&quot;error in the text declaration of an external entity&quot;</li>
+</ul>
+<p>Note that, if you want to display these error messages to your application's users, they will be displayed in English unless they are explicitly translated.</p>
+</div>
+<p><b>See also </b><a href="qxmlerrorhandler.html">QXmlErrorHandler</a> and <a href="qxmlreader.html">QXmlReader</a>.</p>
+<!-- @@@QXmlParseException -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$QXmlParseException[overload1]$$$QXmlParseExceptionconstQString&intintconstQString&constQString& -->
+<h3 class="fn" id="QXmlParseException"><a name="QXmlParseException"></a>QXmlParseException::<span class="name">QXmlParseException</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>name</i> = QString(), <span class="type">int</span> <i>c</i> = -1, <span class="type">int</span> <i>l</i> = -1, const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>p</i> = QString(), const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>s</i> = QString())</h3>
+<p>Constructs a parse exception with the error string <i>name</i> for column <i>c</i> and line <i>l</i> for the public identifier <i>p</i> and the system identifier <i>s</i>.</p>
+<!-- @@@QXmlParseException -->
+<!-- $$$QXmlParseException$$$QXmlParseExceptionconstQXmlParseException& -->
+<h3 class="fn" id="QXmlParseException-1"><a name="QXmlParseException-1"></a>QXmlParseException::<span class="name">QXmlParseException</span>(const <span class="type"><a href="qxmlparseexception.html#QXmlParseException">QXmlParseException</a></span> &amp;<i>other</i>)</h3>
+<p>Creates a copy of <i>other</i>.</p>
+<!-- @@@QXmlParseException -->
+<!-- $$$~QXmlParseException[overload1]$$$~QXmlParseException -->
+<h3 class="fn" id="dtor.QXmlParseException"><a name="dtor.QXmlParseException"></a>QXmlParseException::<span class="name">~QXmlParseException</span>()</h3>
+<p>Destroys the <a href="qxmlparseexception.html">QXmlParseException</a>.</p>
+<!-- @@@~QXmlParseException -->
+<!-- $$$columnNumber[overload1]$$$columnNumber -->
+<h3 class="fn" id="columnNumber"><a name="columnNumber"></a><span class="type">int</span> QXmlParseException::<span class="name">columnNumber</span>() const</h3>
+<p>Returns the column number where the error occurred.</p>
+<!-- @@@columnNumber -->
+<!-- $$$lineNumber[overload1]$$$lineNumber -->
+<h3 class="fn" id="lineNumber"><a name="lineNumber"></a><span class="type">int</span> QXmlParseException::<span class="name">lineNumber</span>() const</h3>
+<p>Returns the line number where the error occurred.</p>
+<!-- @@@lineNumber -->
+<!-- $$$message[overload1]$$$message -->
+<h3 class="fn" id="message"><a name="message"></a><span class="type"><a href="../qtcore/qstring.html">QString</a></span> QXmlParseException::<span class="name">message</span>() const</h3>
+<p>Returns the error message.</p>
+<!-- @@@message -->
+<!-- $$$publicId[overload1]$$$publicId -->
+<h3 class="fn" id="publicId"><a name="publicId"></a><span class="type"><a href="../qtcore/qstring.html">QString</a></span> QXmlParseException::<span class="name">publicId</span>() const</h3>
+<p>Returns the public identifier where the error occurred.</p>
+<!-- @@@publicId -->
+<!-- $$$systemId[overload1]$$$systemId -->
+<h3 class="fn" id="systemId"><a name="systemId"></a><span class="type"><a href="../qtcore/qstring.html">QString</a></span> QXmlParseException::<span class="name">systemId</span>() const</h3>
+<p>Returns the system identifier where the error occurred.</p>
+<!-- @@@systemId -->
+</div>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

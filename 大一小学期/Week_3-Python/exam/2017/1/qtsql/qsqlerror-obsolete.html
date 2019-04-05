@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qsqlerror.cpp -->
+  <title>Obsolete Members for QSqlError | Qt SQL 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtsql-index.html">Qt SQL</a></td><td ><a href="qtsql-module.html">C++ Classes</a></td><td >QSqlError</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar"><div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">Obsolete Members for QSqlError</h1>
+<p><b>The following members of class <a href="qsqlerror.html">QSqlError</a> are obsolete.</b> They are provided to keep old source code working. We strongly advise against using them in new code.</p>
+<h2>Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft topAlign rightAlign"> <code>(obsolete) </code></td><td class="memItemRight bottomAlign"><b><a href="qsqlerror-obsolete.html#QSqlError-1">QSqlError</a></b>(const QString &amp;<i>driverText</i>, const QString &amp;<i>databaseText</i>, ErrorType <i>type</i>, int <i>number</i>)</td></tr>
+<tr><td class="memItemLeft topAlign rightAlign"> <code>(obsolete) </code>int </td><td class="memItemRight bottomAlign"><b><a href="qsqlerror-obsolete.html#number">number</a></b>() const</td></tr>
+<tr><td class="memItemLeft topAlign rightAlign"> <code>(obsolete) </code>void </td><td class="memItemRight bottomAlign"><b><a href="qsqlerror-obsolete.html#setDatabaseText">setDatabaseText</a></b>(const QString &amp;<i>databaseText</i>)</td></tr>
+<tr><td class="memItemLeft topAlign rightAlign"> <code>(obsolete) </code>void </td><td class="memItemRight bottomAlign"><b><a href="qsqlerror-obsolete.html#setDriverText">setDriverText</a></b>(const QString &amp;<i>driverText</i>)</td></tr>
+<tr><td class="memItemLeft topAlign rightAlign"> <code>(obsolete) </code>void </td><td class="memItemRight bottomAlign"><b><a href="qsqlerror-obsolete.html#setNumber">setNumber</a></b>(int <i>number</i>)</td></tr>
+<tr><td class="memItemLeft topAlign rightAlign"> <code>(obsolete) </code>void </td><td class="memItemRight bottomAlign"><b><a href="qsqlerror-obsolete.html#setType">setType</a></b>(ErrorType <i>type</i>)</td></tr>
+</table></div>
+<h2>Member Function Documentation</h2>
+<!-- $$$QSqlError$$$QSqlErrorconstQString&constQString&ErrorTypeint -->
+<h3 class="fn" id="QSqlError-1"><a name="QSqlError-1"></a>QSqlError::<span class="name">QSqlError</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>driverText</i>, const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>databaseText</i>, <span class="type"><a href="qsqlerror.html#ErrorType-enum">ErrorType</a></span> <i>type</i>, <span class="type">int</span> <i>number</i>)</h3>
+<p>Constructs an error containing the driver error text <i>driverText</i>, the database-specific error text <i>databaseText</i>, the type <i>type</i> and the optional error number <i>number</i>.</p>
+<!-- @@@QSqlError -->
+<!-- $$$number[overload1]$$$number -->
+<h3 class="fn" id="number"><a name="number"></a><span class="type">int</span> QSqlError::<span class="name">number</span>() const</h3>
+<p>Returns the database-specific error number, or -1 if it cannot be determined.</p>
+<p>Returns 0 if the error code is not an integer.</p>
+<p><b>Warning:</b> Some databases use alphanumeric error codes, which makes number() unreliable if such a database is used.</p>
+<p>Use <a href="qsqlerror.html#nativeErrorCode">nativeErrorCode</a>() instead</p>
+<p><b>See also </b><a href="qsqlerror-obsolete.html#setNumber">setNumber</a>() and <a href="qsqlerror.html#nativeErrorCode">nativeErrorCode</a>().</p>
+<!-- @@@number -->
+<!-- $$$setDatabaseText[overload1]$$$setDatabaseTextconstQString& -->
+<h3 class="fn" id="setDatabaseText"><a name="setDatabaseText"></a><span class="type">void</span> QSqlError::<span class="name">setDatabaseText</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>databaseText</i>)</h3>
+<p>Sets the database error text to the value of <i>databaseText</i>.</p>
+<p>Use <a href="qsqlerror.html">QSqlError</a>(const <a href="../qtcore/qstring.html">QString</a> &amp;<a href="qsqlerror.html#driverText">driverText</a>, const <a href="../qtcore/qstring.html">QString</a> &amp;<a href="qsqlerror.html#databaseText">databaseText</a>, <a href="qsqlerror.html#ErrorType-enum">ErrorType</a> type, int number) instead</p>
+<p><b>See also </b><a href="qsqlerror.html#databaseText">databaseText</a>(), <a href="qsqlerror-obsolete.html#setDriverText">setDriverText</a>(), and <a href="qsqlerror.html#text">text</a>().</p>
+<!-- @@@setDatabaseText -->
+<!-- $$$setDriverText[overload1]$$$setDriverTextconstQString& -->
+<h3 class="fn" id="setDriverText"><a name="setDriverText"></a><span class="type">void</span> QSqlError::<span class="name">setDriverText</span>(const <span class="type"><a href="../qtcore/qstring.html">QString</a></span> &amp;<i>driverText</i>)</h3>
+<p>Sets the driver error text to the value of <i>driverText</i>.</p>
+<p>Use <a href="qsqlerror.html">QSqlError</a>(const <a href="../qtcore/qstring.html">QString</a> &amp;<a href="qsqlerror.html#driverText">driverText</a>, const <a href="../qtcore/qstring.html">QString</a> &amp;<a href="qsqlerror.html#databaseText">databaseText</a>, <a href="qsqlerror.html#ErrorType-enum">ErrorType</a> type, int number) instead</p>
+<p><b>See also </b><a href="qsqlerror.html#driverText">driverText</a>(), <a href="qsqlerror-obsolete.html#setDatabaseText">setDatabaseText</a>(), and <a href="qsqlerror.html#text">text</a>().</p>
+<!-- @@@setDriverText -->
+<!-- $$$setNumber[overload1]$$$setNumberint -->
+<h3 class="fn" id="setNumber"><a name="setNumber"></a><span class="type">void</span> QSqlError::<span class="name">setNumber</span>(<span class="type">int</span> <i>number</i>)</h3>
+<p>Sets the database-specific error number to <i>number</i>.</p>
+<p>Use <a href="qsqlerror.html">QSqlError</a>(const <a href="../qtcore/qstring.html">QString</a> &amp;<a href="qsqlerror.html#driverText">driverText</a>, const <a href="../qtcore/qstring.html">QString</a> &amp;<a href="qsqlerror.html#databaseText">databaseText</a>, <a href="qsqlerror.html#ErrorType-enum">ErrorType</a> type, int number) instead</p>
+<p><b>See also </b><a href="qsqlerror-obsolete.html#number">number</a>().</p>
+<!-- @@@setNumber -->
+<!-- $$$setType[overload1]$$$setTypeErrorType -->
+<h3 class="fn" id="setType"><a name="setType"></a><span class="type">void</span> QSqlError::<span class="name">setType</span>(<span class="type"><a href="qsqlerror.html#ErrorType-enum">ErrorType</a></span> <i>type</i>)</h3>
+<p>Sets the error type to the value of <i>type</i>.</p>
+<p>Use <a href="qsqlerror.html">QSqlError</a>(const <a href="../qtcore/qstring.html">QString</a> &amp;<a href="qsqlerror.html#driverText">driverText</a>, const <a href="../qtcore/qstring.html">QString</a> &amp;<a href="qsqlerror.html#databaseText">databaseText</a>, <a href="qsqlerror.html#ErrorType-enum">ErrorType</a> type, int number) instead</p>
+<p><b>See also </b><a href="qsqlerror.html#type">type</a>().</p>
+<!-- @@@setType -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

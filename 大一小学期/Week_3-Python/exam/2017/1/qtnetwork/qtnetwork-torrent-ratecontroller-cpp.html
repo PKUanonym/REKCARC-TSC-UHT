@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>ratecontroller.cpp Example File | Qt Network 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtnetwork-index.html">Qt Network</a></td><td ><a href="qtnetwork-torrent-example.html">Torrent Example</a></td><td >ratecontroller.cpp Example File</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar"><div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">ratecontroller.cpp Example File</h1>
+<span class="subtitle">torrent/ratecontroller.cpp</span>
+<!-- $$$torrent/ratecontroller.cpp-description -->
+<div class="descr"> <a name="details"></a>
+<pre class="cpp">
+
+  <span class="comment">/****************************************************************************
+  **
+  ** Copyright (C) 2015 The Qt Company Ltd.
+  ** Contact: http://www.qt.io/licensing/
+  **
+  ** This file is part of the examples of the Qt Toolkit.
+  **
+  ** $QT_BEGIN_LICENSE:BSD$
+  ** You may use this file under the terms of the BSD license as follows:
+  **
+  ** &quot;Redistribution and use in source and binary forms, with or without
+  ** modification, are permitted provided that the following conditions are
+  ** met:
+  **   * Redistributions of source code must retain the above copyright
+  **     notice, this list of conditions and the following disclaimer.
+  **   * Redistributions in binary form must reproduce the above copyright
+  **     notice, this list of conditions and the following disclaimer in
+  **     the documentation and/or other materials provided with the
+  **     distribution.
+  **   * Neither the name of The Qt Company Ltd nor the names of its
+  **     contributors may be used to endorse or promote products derived
+  **     from this software without specific prior written permission.
+  **
+  **
+  ** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  ** &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  ** LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  ** A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  ** OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  ** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  ** LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  ** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  ** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  ** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.&quot;
+  **
+  ** $QT_END_LICENSE$
+  **
+  ****************************************************************************/</span>
+
+  <span class="preprocessor">#include &quot;peerwireclient.h&quot;</span>
+  <span class="preprocessor">#include &quot;ratecontroller.h&quot;</span>
+
+  <span class="preprocessor">#include &lt;QtCore&gt;</span>
+
+  Q_GLOBAL_STATIC(RateController<span class="operator">,</span> rateController)
+
+  RateController <span class="operator">*</span>RateController<span class="operator">::</span>instance()
+  {
+      <span class="keyword">return</span> rateController();
+  }
+
+  <span class="type">void</span> RateController<span class="operator">::</span>addSocket(PeerWireClient <span class="operator">*</span>socket)
+  {
+      connect(socket<span class="operator">,</span> SIGNAL(readyToTransfer())<span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> SLOT(scheduleTransfer()));
+      socket<span class="operator">-</span><span class="operator">&gt;</span>setReadBufferSize(downLimit <span class="operator">*</span> <span class="number">4</span>);
+      sockets <span class="operator">&lt;</span><span class="operator">&lt;</span> socket;
+      scheduleTransfer();
+  }
+
+  <span class="type">void</span> RateController<span class="operator">::</span>removeSocket(PeerWireClient <span class="operator">*</span>socket)
+  {
+      disconnect(socket<span class="operator">,</span> SIGNAL(readyToTransfer())<span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> SLOT(scheduleTransfer()));
+      socket<span class="operator">-</span><span class="operator">&gt;</span>setReadBufferSize(<span class="number">0</span>);
+      sockets<span class="operator">.</span>remove(socket);
+  }
+
+  <span class="type">void</span> RateController<span class="operator">::</span>setDownloadLimit(<span class="type">int</span> bytesPerSecond)
+  {
+      downLimit <span class="operator">=</span> bytesPerSecond;
+      foreach (PeerWireClient <span class="operator">*</span>socket<span class="operator">,</span> sockets)
+          socket<span class="operator">-</span><span class="operator">&gt;</span>setReadBufferSize(downLimit <span class="operator">*</span> <span class="number">4</span>);
+  }
+
+  <span class="type">void</span> RateController<span class="operator">::</span>scheduleTransfer()
+  {
+      <span class="keyword">if</span> (transferScheduled)
+          <span class="keyword">return</span>;
+      transferScheduled <span class="operator">=</span> <span class="keyword">true</span>;
+      <span class="type"><a href="../qtcore/qtimer.html">QTimer</a></span><span class="operator">::</span>singleShot(<span class="number">50</span><span class="operator">,</span> <span class="keyword">this</span><span class="operator">,</span> SLOT(transfer()));
+  }
+
+  <span class="type">void</span> RateController<span class="operator">::</span>transfer()
+  {
+      transferScheduled <span class="operator">=</span> <span class="keyword">false</span>;
+      <span class="keyword">if</span> (sockets<span class="operator">.</span>isEmpty())
+          <span class="keyword">return</span>;
+
+      <span class="type">int</span> msecs <span class="operator">=</span> <span class="number">1000</span>;
+      <span class="keyword">if</span> (<span class="operator">!</span>stopWatch<span class="operator">.</span>isNull())
+          msecs <span class="operator">=</span> <a href="../qtcore/qtglobal.html#qMin">qMin</a>(msecs<span class="operator">,</span> stopWatch<span class="operator">.</span>elapsed());
+
+      <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> bytesToWrite <span class="operator">=</span> (upLimit <span class="operator">*</span> msecs) <span class="operator">/</span> <span class="number">1000</span>;
+      <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> bytesToRead <span class="operator">=</span> (downLimit <span class="operator">*</span> msecs) <span class="operator">/</span> <span class="number">1000</span>;
+      <span class="keyword">if</span> (bytesToWrite <span class="operator">=</span><span class="operator">=</span> <span class="number">0</span> <span class="operator">&amp;</span><span class="operator">&amp;</span> bytesToRead <span class="operator">=</span><span class="operator">=</span> <span class="number">0</span>) {
+          scheduleTransfer();
+          <span class="keyword">return</span>;
+      }
+
+      <span class="type"><a href="../qtcore/qset.html">QSet</a></span><span class="operator">&lt;</span>PeerWireClient <span class="operator">*</span><span class="operator">&gt;</span> pendingSockets;
+      foreach (PeerWireClient <span class="operator">*</span>client<span class="operator">,</span> sockets) {
+          <span class="keyword">if</span> (client<span class="operator">-</span><span class="operator">&gt;</span>canTransferMore())
+              pendingSockets <span class="operator">&lt;</span><span class="operator">&lt;</span> client;
+      }
+      <span class="keyword">if</span> (pendingSockets<span class="operator">.</span>isEmpty())
+          <span class="keyword">return</span>;
+
+      stopWatch<span class="operator">.</span>start();
+
+      bool canTransferMore;
+      <span class="keyword">do</span> {
+          canTransferMore <span class="operator">=</span> <span class="keyword">false</span>;
+          <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> writeChunk <span class="operator">=</span> <a href="../qtcore/qtglobal.html#qMax">qMax</a><span class="operator">&lt;</span><span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span><span class="operator">&gt;</span>(<span class="number">1</span><span class="operator">,</span> bytesToWrite <span class="operator">/</span> pendingSockets<span class="operator">.</span>size());
+          <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> readChunk <span class="operator">=</span> <a href="../qtcore/qtglobal.html#qMax">qMax</a><span class="operator">&lt;</span><span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span><span class="operator">&gt;</span>(<span class="number">1</span><span class="operator">,</span> bytesToRead <span class="operator">/</span> pendingSockets<span class="operator">.</span>size());
+
+          <span class="type"><a href="../qtcore/qsetiterator.html">QSetIterator</a></span><span class="operator">&lt;</span>PeerWireClient <span class="operator">*</span><span class="operator">&gt;</span> it(pendingSockets);
+          <span class="keyword">while</span> (it<span class="operator">.</span>hasNext() <span class="operator">&amp;</span><span class="operator">&amp;</span> (bytesToWrite <span class="operator">&gt;</span> <span class="number">0</span> <span class="operator">|</span><span class="operator">|</span> bytesToRead <span class="operator">&gt;</span> <span class="number">0</span>)) {
+              PeerWireClient <span class="operator">*</span>socket <span class="operator">=</span> it<span class="operator">.</span>next();
+              <span class="keyword">if</span> (socket<span class="operator">-</span><span class="operator">&gt;</span>state() <span class="operator">!</span><span class="operator">=</span> <span class="type"><a href="qabstractsocket.html">QAbstractSocket</a></span><span class="operator">::</span>ConnectedState) {
+                  pendingSockets<span class="operator">.</span>remove(socket);
+                  <span class="keyword">continue</span>;
+              }
+
+              bool dataTransferred <span class="operator">=</span> <span class="keyword">false</span>;
+              <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> available <span class="operator">=</span> <a href="../qtcore/qtglobal.html#qMin">qMin</a><span class="operator">&lt;</span><span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span><span class="operator">&gt;</span>(socket<span class="operator">-</span><span class="operator">&gt;</span>socketBytesAvailable()<span class="operator">,</span> readChunk);
+              <span class="keyword">if</span> (available <span class="operator">&gt;</span> <span class="number">0</span>) {
+                  <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> readBytes <span class="operator">=</span> socket<span class="operator">-</span><span class="operator">&gt;</span>readFromSocket(<a href="../qtcore/qtglobal.html#qMin">qMin</a><span class="operator">&lt;</span><span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span><span class="operator">&gt;</span>(available<span class="operator">,</span> bytesToRead));
+                  <span class="keyword">if</span> (readBytes <span class="operator">&gt;</span> <span class="number">0</span>) {
+                      bytesToRead <span class="operator">-</span><span class="operator">=</span> readBytes;
+                      dataTransferred <span class="operator">=</span> <span class="keyword">true</span>;
+                  }
+              }
+
+              <span class="keyword">if</span> (upLimit <span class="operator">*</span> <span class="number">2</span> <span class="operator">&gt;</span> socket<span class="operator">-</span><span class="operator">&gt;</span>bytesToWrite()) {
+                  <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> chunkSize <span class="operator">=</span> <a href="../qtcore/qtglobal.html#qMin">qMin</a><span class="operator">&lt;</span><span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span><span class="operator">&gt;</span>(writeChunk<span class="operator">,</span> bytesToWrite);
+                  <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> toWrite <span class="operator">=</span> <a href="../qtcore/qtglobal.html#qMin">qMin</a>(upLimit <span class="operator">*</span> <span class="number">2</span> <span class="operator">-</span> socket<span class="operator">-</span><span class="operator">&gt;</span>bytesToWrite()<span class="operator">,</span> chunkSize);
+                  <span class="keyword">if</span> (toWrite <span class="operator">&gt;</span> <span class="number">0</span>) {
+                      <span class="type"><a href="../qtcore/qtglobal.html#qint64-typedef">qint64</a></span> writtenBytes <span class="operator">=</span> socket<span class="operator">-</span><span class="operator">&gt;</span>writeToSocket(toWrite);
+                      <span class="keyword">if</span> (writtenBytes <span class="operator">&gt;</span> <span class="number">0</span>) {
+                          bytesToWrite <span class="operator">-</span><span class="operator">=</span> writtenBytes;
+                          dataTransferred <span class="operator">=</span> <span class="keyword">true</span>;
+                      }
+                  }
+              }
+
+              <span class="keyword">if</span> (dataTransferred <span class="operator">&amp;</span><span class="operator">&amp;</span> socket<span class="operator">-</span><span class="operator">&gt;</span>canTransferMore())
+                  canTransferMore <span class="operator">=</span> <span class="keyword">true</span>;
+              <span class="keyword">else</span>
+                  pendingSockets<span class="operator">.</span>remove(socket);
+          }
+      } <span class="keyword">while</span> (canTransferMore <span class="operator">&amp;</span><span class="operator">&amp;</span> (bytesToWrite <span class="operator">&gt;</span> <span class="number">0</span> <span class="operator">|</span><span class="operator">|</span> bytesToRead <span class="operator">&gt;</span> <span class="number">0</span>) <span class="operator">&amp;</span><span class="operator">&amp;</span> <span class="operator">!</span>pendingSockets<span class="operator">.</span>isEmpty());
+
+      <span class="keyword">if</span> (canTransferMore <span class="operator">|</span><span class="operator">|</span> bytesToWrite <span class="operator">=</span><span class="operator">=</span> <span class="number">0</span> <span class="operator">|</span><span class="operator">|</span> bytesToRead <span class="operator">=</span><span class="operator">=</span> <span class="number">0</span>)
+          scheduleTransfer();
+  }
+
+</pre>
+</div>
+<!-- @@@torrent/ratecontroller.cpp -->
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

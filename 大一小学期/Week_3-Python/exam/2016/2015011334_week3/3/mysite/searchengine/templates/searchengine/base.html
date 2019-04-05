@@ -1,0 +1,23 @@
+{% load static %}
+<html>
+    <head>
+        <title>学校搜索引擎</title>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <div>
+            <form action="{% url 'searchengine:search' %}" method="post" class="form">
+                {% csrf_token %}
+                <input type="text" name="event" id="event">
+                <label for="event">事件</label><br>
+                <input type="datetime-local" name="ttime" id="ttime">
+                <label for="ttime">时间</label><br>
+                <button type="submit" name="add" class="btn btn-primary">添加事件</button>
+                <button type="submit" name="query" class="btn btn-primary">查询事件</button>
+                <button type="submit" name="rewrite" class="btn btn-primary">重写</button>
+            </form>
+        </div>
+        {% block content %}
+        {% endblock %}
+    </body>
+</html>

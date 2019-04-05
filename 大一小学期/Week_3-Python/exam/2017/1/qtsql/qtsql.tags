@@ -1,0 +1,2975 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tagfile>
+    <compound kind="namespace">
+        <name>QSql</name>
+        <filename>qsql.html</filename>
+        <member kind="enum">
+            <name>Location</name>
+            <anchor>Location-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="BeforeFirstRow">
+            <anchor>Location-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="AfterLastRow">
+            <anchor>Location-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member kind="enum">
+            <name>ParamTypeFlag</name>
+            <anchor>ParamTypeFlag-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="In">
+            <anchor>ParamTypeFlag-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="Out">
+            <anchor>ParamTypeFlag-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="InOut">
+            <anchor>ParamTypeFlag-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="Binary">
+            <anchor>ParamTypeFlag-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member kind="typedef" type="QSql::ParamTypeFlag">
+            <name>ParamType</name>
+            <anchorfile>qsql.html</anchorfile>
+            <anchor>ParamTypeFlag-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member kind="enum">
+            <name>TableType</name>
+            <anchor>TableType-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="Tables">
+            <anchor>TableType-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="SystemTables">
+            <anchor>TableType-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="Views">
+            <anchor>TableType-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="AllTables">
+            <anchor>TableType-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member kind="enum">
+            <name>NumericalPrecisionPolicy</name>
+            <anchor>NumericalPrecisionPolicy-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="LowPrecisionInt32">
+            <anchor>NumericalPrecisionPolicy-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="LowPrecisionInt64">
+            <anchor>NumericalPrecisionPolicy-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="LowPrecisionDouble">
+            <anchor>NumericalPrecisionPolicy-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="HighPrecision">
+            <anchor>NumericalPrecisionPolicy-enum</anchor>
+            <arglist></arglist>
+        </member>
+    </compound>
+    <compound kind="class">
+        <name>QSqlDriverCreatorBase</name>
+        <filename>qsqldrivercreatorbase.html</filename>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual </type>
+            <name>~QSqlDriverCreatorBase</name>
+            <anchorfile>qsqldrivercreatorbase.html</anchorfile>
+            <anchor>dtor.QSqlDriverCreatorBase</anchor>
+            <arglist>()</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="pure" static="no">
+            <type>virtual QSqlDriver *</type>
+            <name>createObject</name>
+            <anchorfile>qsqldrivercreatorbase.html</anchorfile>
+            <anchor>createObject</anchor>
+            <arglist>() const = 0</arglist>
+        </member>
+    </compound>
+    <compound kind="class">
+        <name>QSqlDriverCreator</name>
+        <filename>qsqldrivercreator.html</filename>
+        <base>QSqlDriverCreatorBase</base>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual QSqlDriver *</type>
+            <name>createObject</name>
+            <anchorfile>qsqldrivercreator.html</anchorfile>
+            <anchor>createObject</anchor>
+            <arglist>() const</arglist>
+        </member>
+    </compound>
+    <compound kind="class">
+        <name>QSqlDatabase</name>
+        <filename>qsqldatabase.html</filename>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type></type>
+            <name>QSqlDatabase</name>
+            <anchorfile>qsqldatabase.html</anchorfile>
+            <anchor>QSqlDatabase</anchor>
+            <arglist>()</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type></type>
+            <name>QSqlDatabase</name>
+            <anchorfile>qsqldatabase.html</anchorfile>
+            <anchor>QSqlDatabase-1</anchor>
+            <arglist>(const QSqlDatabase &amp;other)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type></type>
+            <name>~QSqlDatabase</name>
+            <anchorfile>qsqldatabase.html</anchorfile>
+            <anchor>dtor.QSqlDatabase</anchor>
+            <arglist>()</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QSqlDatabase &amp;</type>
+            <name>operator=</name>
+            <anchorfile>qsqldatabase.html</anchorfile>
+            <anchor>operator-eq</anchor>
+            <arglist>(const QSqlDatabase &amp;other)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>bool</type>
+            <name>open</name>
+            <anchorfile>qsqldatabase.html</anchorfile>
+            <anchor>open</anchor>
+            <arglist>()</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>bool</type>
+            <name>open</name>
+            <anchorfile>qsqldatabase.html</anchorfile>
+            <anchor>open-1</anchor>
+            <arglist>(const QString &amp;user, const QString &amp;password)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>close</name>
+            <anchorfile>qsqldatabase.html</anchorfile>
+            <anchor>close</anchor>
+            <arglist>()</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>bool</type>
+            <name>isOpen</name>
+            <anchorfile>qsqldatabase.html</anchorfile>
+            <anchor>isOpen</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>bool</type>
+            <name>isOpenError</name>
+            <anchorfile>qsqldatabase.html</anchorfile>
+            <anchor>isOpenError</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QStringList</type>
+            <name>tables</name>
+            <anchorfile>qsqldatabase.html</anchorfile>
+            <anchor>tables</anchor>
+            <arglist>(QSql::TableType type) const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QSqlIndex</type>
+            <name>primaryIndex</name>
+            <anchorfile>qsqldatabase.html</anchorfile>
+            <anchor>primaryIndex</anchor>
+            <arglist>(const QString &amp;tablename) const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QSqlRecord</type>
+            <name>record</name>
+            <anchorfile>qsqldatabase.html</anchorfile>
+            <anchor>record</anchor>
+            <arglist>(const QString &amp;tablename) const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QSqlQuery</type>
+            <name>exec</name>
+            <anchorfile>qsqldatabase.html</anchorfile>
+            <anchor>exec</anchor>
+            <arglist>(const QString &amp;query) const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QSqlError</type>
+            <name>lastError</name>
+            <anchorfile>qsqldatabase.html</anchorfile>
+            <anchor>lastError</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>bool</type>
+            <name>isValid</name>
+            <anchorfile>qsqldatabase.html</anchorfile>
+            <anchor>isValid</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>bool</type>
+            <name>transaction</name>
+            <anchorfile>qsqldatabase.html</anchorfile>
+            <anchor>transaction</anchor>
+            <arglist>()</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>bool</type>
+            <name>commit</name>
+            <anchorfile>qsqldatabase.html</anchorfile>
+            <anchor>commit</anchor>
+            <arglist>()</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>bool</type>
+            <name>rollback</name>
+            <anchorfile>qsqldatabase.html</anchorfile>
+            <anchor>rollback</anchor>
+            <arglist>()</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>setDatabaseName</name>
+            <anchorfile>qsqldatabase.html</anchorfile>
+            <anchor>setDatabaseName</anchor>
+            <arglist>(const QString &amp;name)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>setUserName</name>
+            <anchorfile>qsqldatabase.html</anchorfile>
+            <anchor>setUserName</anchor>
+            <arglist>(const QString &amp;name)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>setPassword</name>
+            <anchorfile>qsqldatabase.html</anchorfile>
+            <anchor>setPassword</anchor>
+            <arglist>(const QString &amp;password)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>setHostName</name>
+            <anchorfile>qsqldatabase.html</anchorfile>
+            <anchor>setHostName</anchor>
+            <arglist>(const QString &amp;host)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>setPort</name>
+            <anchorfile>qsqldatabase.html</anchorfile>
+            <anchor>setPort</anchor>
+            <arglist>(int port)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>setConnectOptions</name>
+            <anchorfile>qsqldatabase.html</anchorfile>
+            <anchor>setConnectOptions</anchor>
+            <arglist>(const QString &amp;options)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QString</type>
+            <name>databaseName</name>
+            <anchorfile>qsqldatabase.html</anchorfile>
+            <anchor>databaseName</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QString</type>
+            <name>userName</name>
+            <anchorfile>qsqldatabase.html</anchorfile>
+            <anchor>userName</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QString</type>
+            <name>password</name>
+            <anchorfile>qsqldatabase.html</anchorfile>
+            <anchor>password</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QString</type>
+            <name>hostName</name>
+            <anchorfile>qsqldatabase.html</anchorfile>
+            <anchor>hostName</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QString</type>
+            <name>driverName</name>
+            <anchorfile>qsqldatabase.html</anchorfile>
+            <anchor>driverName</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>int</type>
+            <name>port</name>
+            <anchorfile>qsqldatabase.html</anchorfile>
+            <anchor>port</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QString</type>
+            <name>connectOptions</name>
+            <anchorfile>qsqldatabase.html</anchorfile>
+            <anchor>connectOptions</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QString</type>
+            <name>connectionName</name>
+            <anchorfile>qsqldatabase.html</anchorfile>
+            <anchor>connectionName</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>setNumericalPrecisionPolicy</name>
+            <anchorfile>qsqldatabase.html</anchorfile>
+            <anchor>setNumericalPrecisionPolicy</anchor>
+            <arglist>(QSql::NumericalPrecisionPolicy precisionPolicy)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QSql::NumericalPrecisionPolicy</type>
+            <name>numericalPrecisionPolicy</name>
+            <anchorfile>qsqldatabase.html</anchorfile>
+            <anchor>numericalPrecisionPolicy</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QSqlDriver *</type>
+            <name>driver</name>
+            <anchorfile>qsqldatabase.html</anchorfile>
+            <anchor>driver</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="yes">
+            <type>QSqlDatabase</type>
+            <name>addDatabase</name>
+            <anchorfile>qsqldatabase.html</anchorfile>
+            <anchor>addDatabase</anchor>
+            <arglist>(const QString &amp;type, const QString &amp;connectionName)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="yes">
+            <type>QSqlDatabase</type>
+            <name>addDatabase</name>
+            <anchorfile>qsqldatabase.html</anchorfile>
+            <anchor>addDatabase-1</anchor>
+            <arglist>(QSqlDriver *driver, const QString &amp;connectionName)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="yes">
+            <type>QSqlDatabase</type>
+            <name>cloneDatabase</name>
+            <anchorfile>qsqldatabase.html</anchorfile>
+            <anchor>cloneDatabase</anchor>
+            <arglist>(const QSqlDatabase &amp;other, const QString &amp;connectionName)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="yes">
+            <type>QSqlDatabase</type>
+            <name>database</name>
+            <anchorfile>qsqldatabase.html</anchorfile>
+            <anchor>database</anchor>
+            <arglist>(const QString &amp;connectionName, bool open)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="yes">
+            <type>void</type>
+            <name>removeDatabase</name>
+            <anchorfile>qsqldatabase.html</anchorfile>
+            <anchor>removeDatabase</anchor>
+            <arglist>(const QString &amp;connectionName)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="yes">
+            <type>bool</type>
+            <name>contains</name>
+            <anchorfile>qsqldatabase.html</anchorfile>
+            <anchor>contains</anchor>
+            <arglist>(const QString &amp;connectionName)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="yes">
+            <type>QStringList</type>
+            <name>drivers</name>
+            <anchorfile>qsqldatabase.html</anchorfile>
+            <anchor>drivers</anchor>
+            <arglist>()</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="yes">
+            <type>QStringList</type>
+            <name>connectionNames</name>
+            <anchorfile>qsqldatabase.html</anchorfile>
+            <anchor>connectionNames</anchor>
+            <arglist>()</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="yes">
+            <type>void</type>
+            <name>registerSqlDriver</name>
+            <anchorfile>qsqldatabase.html</anchorfile>
+            <anchor>registerSqlDriver</anchor>
+            <arglist>(const QString &amp;name, QSqlDriverCreatorBase *creator)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="yes">
+            <type>bool</type>
+            <name>isDriverAvailable</name>
+            <anchorfile>qsqldatabase.html</anchorfile>
+            <anchor>isDriverAvailable</anchor>
+            <arglist>(const QString &amp;name)</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="non" static="no">
+            <type></type>
+            <name>QSqlDatabase</name>
+            <anchorfile>qsqldatabase.html</anchorfile>
+            <anchor>QSqlDatabase-2</anchor>
+            <arglist>(const QString &amp;type)</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="non" static="no">
+            <type></type>
+            <name>QSqlDatabase</name>
+            <anchorfile>qsqldatabase.html</anchorfile>
+            <anchor>QSqlDatabase-3</anchor>
+            <arglist>(QSqlDriver *driver)</arglist>
+        </member>
+    </compound>
+    <compound kind="class">
+        <name>QSqlDriver</name>
+        <filename>qsqldriver.html</filename>
+        <base>QObject</base>
+        <member kind="enum">
+            <name>DriverFeature</name>
+            <anchor>DriverFeature-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="Transactions">
+            <anchor>DriverFeature-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="QuerySize">
+            <anchor>DriverFeature-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="BLOB">
+            <anchor>DriverFeature-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="Unicode">
+            <anchor>DriverFeature-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="PreparedQueries">
+            <anchor>DriverFeature-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="NamedPlaceholders">
+            <anchor>DriverFeature-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="PositionalPlaceholders">
+            <anchor>DriverFeature-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="LastInsertId">
+            <anchor>DriverFeature-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="BatchOperations">
+            <anchor>DriverFeature-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="SimpleLocking">
+            <anchor>DriverFeature-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="LowPrecisionNumbers">
+            <anchor>DriverFeature-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="EventNotifications">
+            <anchor>DriverFeature-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="FinishQuery">
+            <anchor>DriverFeature-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="MultipleResultSets">
+            <anchor>DriverFeature-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="CancelQuery">
+            <anchor>DriverFeature-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member kind="enum">
+            <name>StatementType</name>
+            <anchor>StatementType-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="WhereStatement">
+            <anchor>StatementType-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="SelectStatement">
+            <anchor>StatementType-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="UpdateStatement">
+            <anchor>StatementType-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="InsertStatement">
+            <anchor>StatementType-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="DeleteStatement">
+            <anchor>StatementType-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member kind="enum">
+            <name>IdentifierType</name>
+            <anchor>IdentifierType-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="FieldName">
+            <anchor>IdentifierType-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="TableName">
+            <anchor>IdentifierType-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member kind="enum">
+            <name>NotificationSource</name>
+            <anchor>NotificationSource-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="UnknownSource">
+            <anchor>NotificationSource-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="SelfSource">
+            <anchor>NotificationSource-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="OtherSource">
+            <anchor>NotificationSource-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member kind="enum">
+            <name>DbmsType</name>
+            <anchor>DbmsType-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="UnknownDbms">
+            <anchor>DbmsType-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="MSSqlServer">
+            <anchor>DbmsType-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="MySqlServer">
+            <anchor>DbmsType-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="PostgreSQL">
+            <anchor>DbmsType-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="Oracle">
+            <anchor>DbmsType-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="Sybase">
+            <anchor>DbmsType-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="SQLite">
+            <anchor>DbmsType-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="Interbase">
+            <anchor>DbmsType-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="DB2">
+            <anchor>DbmsType-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type></type>
+            <name>QSqlDriver</name>
+            <anchorfile>qsqldriver.html</anchorfile>
+            <anchor>QSqlDriver</anchor>
+            <arglist>(QObject *parent)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type></type>
+            <name>~QSqlDriver</name>
+            <anchorfile>qsqldriver.html</anchorfile>
+            <anchor>dtor.QSqlDriver</anchor>
+            <arglist>()</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual bool</type>
+            <name>isOpen</name>
+            <anchorfile>qsqldriver.html</anchorfile>
+            <anchor>isOpen</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>bool</type>
+            <name>isOpenError</name>
+            <anchorfile>qsqldriver.html</anchorfile>
+            <anchor>isOpenError</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual bool</type>
+            <name>beginTransaction</name>
+            <anchorfile>qsqldriver.html</anchorfile>
+            <anchor>beginTransaction</anchor>
+            <arglist>()</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual bool</type>
+            <name>commitTransaction</name>
+            <anchorfile>qsqldriver.html</anchorfile>
+            <anchor>commitTransaction</anchor>
+            <arglist>()</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual bool</type>
+            <name>rollbackTransaction</name>
+            <anchorfile>qsqldriver.html</anchorfile>
+            <anchor>rollbackTransaction</anchor>
+            <arglist>()</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual QStringList</type>
+            <name>tables</name>
+            <anchorfile>qsqldriver.html</anchorfile>
+            <anchor>tables</anchor>
+            <arglist>(QSql::TableType tableType) const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual QSqlIndex</type>
+            <name>primaryIndex</name>
+            <anchorfile>qsqldriver.html</anchorfile>
+            <anchor>primaryIndex</anchor>
+            <arglist>(const QString &amp;tableName) const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual QSqlRecord</type>
+            <name>record</name>
+            <anchorfile>qsqldriver.html</anchorfile>
+            <anchor>record</anchor>
+            <arglist>(const QString &amp;tableName) const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual QString</type>
+            <name>formatValue</name>
+            <anchorfile>qsqldriver.html</anchorfile>
+            <anchor>formatValue</anchor>
+            <arglist>(const QSqlField &amp;field, bool trimStrings) const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual QString</type>
+            <name>escapeIdentifier</name>
+            <anchorfile>qsqldriver.html</anchorfile>
+            <anchor>escapeIdentifier</anchor>
+            <arglist>(const QString &amp;identifier, IdentifierType type) const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual QString</type>
+            <name>sqlStatement</name>
+            <anchorfile>qsqldriver.html</anchorfile>
+            <anchor>sqlStatement</anchor>
+            <arglist>(StatementType type, const QString &amp;tableName, const QSqlRecord &amp;rec, bool preparedStatement) const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QSqlError</type>
+            <name>lastError</name>
+            <anchorfile>qsqldriver.html</anchorfile>
+            <anchor>lastError</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual QVariant</type>
+            <name>handle</name>
+            <anchorfile>qsqldriver.html</anchorfile>
+            <anchor>handle</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="pure" static="no">
+            <type>virtual bool</type>
+            <name>hasFeature</name>
+            <anchorfile>qsqldriver.html</anchorfile>
+            <anchor>hasFeature</anchor>
+            <arglist>(DriverFeature feature) const = 0</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="pure" static="no">
+            <type>virtual void</type>
+            <name>close</name>
+            <anchorfile>qsqldriver.html</anchorfile>
+            <anchor>close</anchor>
+            <arglist>() = 0</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="pure" static="no">
+            <type>virtual QSqlResult *</type>
+            <name>createResult</name>
+            <anchorfile>qsqldriver.html</anchorfile>
+            <anchor>createResult</anchor>
+            <arglist>() const = 0</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="pure" static="no">
+            <type>virtual bool</type>
+            <name>open</name>
+            <anchorfile>qsqldriver.html</anchorfile>
+            <anchor>open</anchor>
+            <arglist>(const QString &amp;db, const QString &amp;user, const QString &amp;password, const QString &amp;host, int port, const QString &amp;options) = 0</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual bool</type>
+            <name>subscribeToNotification</name>
+            <anchorfile>qsqldriver.html</anchorfile>
+            <anchor>subscribeToNotification</anchor>
+            <arglist>(const QString &amp;name)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual bool</type>
+            <name>unsubscribeFromNotification</name>
+            <anchorfile>qsqldriver.html</anchorfile>
+            <anchor>unsubscribeFromNotification</anchor>
+            <arglist>(const QString &amp;name)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual QStringList</type>
+            <name>subscribedToNotifications</name>
+            <anchorfile>qsqldriver.html</anchorfile>
+            <anchor>subscribedToNotifications</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual bool</type>
+            <name>isIdentifierEscaped</name>
+            <anchorfile>qsqldriver.html</anchorfile>
+            <anchor>isIdentifierEscaped</anchor>
+            <arglist>(const QString &amp;identifier, IdentifierType type) const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual QString</type>
+            <name>stripDelimiters</name>
+            <anchorfile>qsqldriver.html</anchorfile>
+            <anchor>stripDelimiters</anchor>
+            <arglist>(const QString &amp;identifier, IdentifierType type) const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>setNumericalPrecisionPolicy</name>
+            <anchorfile>qsqldriver.html</anchorfile>
+            <anchor>setNumericalPrecisionPolicy</anchor>
+            <arglist>(QSql::NumericalPrecisionPolicy precisionPolicy)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QSql::NumericalPrecisionPolicy</type>
+            <name>numericalPrecisionPolicy</name>
+            <anchorfile>qsqldriver.html</anchorfile>
+            <anchor>numericalPrecisionPolicy</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>DbmsType</type>
+            <name>dbmsType</name>
+            <anchorfile>qsqldriver.html</anchorfile>
+            <anchor>dbmsType</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>notification</name>
+            <anchorfile>qsqldriver.html</anchorfile>
+            <anchor>notification</anchor>
+            <arglist>(const QString &amp;name)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>notification</name>
+            <anchorfile>qsqldriver.html</anchorfile>
+            <anchor>notification-1</anchor>
+            <arglist>(const QString &amp;name, QSqlDriver::NotificationSource source, const QVariant &amp;payload)</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="virtual" static="no">
+            <type>virtual void</type>
+            <name>setOpen</name>
+            <anchorfile>qsqldriver.html</anchorfile>
+            <anchor>setOpen</anchor>
+            <arglist>(bool open)</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="virtual" static="no">
+            <type>virtual void</type>
+            <name>setOpenError</name>
+            <anchorfile>qsqldriver.html</anchorfile>
+            <anchor>setOpenError</anchor>
+            <arglist>(bool error)</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="virtual" static="no">
+            <type>virtual void</type>
+            <name>setLastError</name>
+            <anchorfile>qsqldriver.html</anchorfile>
+            <anchor>setLastError</anchor>
+            <arglist>(const QSqlError &amp;error)</arglist>
+        </member>
+    </compound>
+    <compound kind="class">
+        <name>QSqlDriverPlugin</name>
+        <filename>qsqldriverplugin.html</filename>
+        <base>QObject</base>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type></type>
+            <name>QSqlDriverPlugin</name>
+            <anchorfile>qsqldriverplugin.html</anchorfile>
+            <anchor>QSqlDriverPlugin</anchor>
+            <arglist>(QObject *parent)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type></type>
+            <name>~QSqlDriverPlugin</name>
+            <anchorfile>qsqldriverplugin.html</anchorfile>
+            <anchor>dtor.QSqlDriverPlugin</anchor>
+            <arglist>()</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="pure" static="no">
+            <type>virtual QSqlDriver *</type>
+            <name>create</name>
+            <anchorfile>qsqldriverplugin.html</anchorfile>
+            <anchor>create</anchor>
+            <arglist>(const QString &amp;key) = 0</arglist>
+        </member>
+    </compound>
+    <compound kind="class">
+        <name>QSqlError</name>
+        <filename>qsqlerror.html</filename>
+        <member kind="enum">
+            <name>ErrorType</name>
+            <anchor>ErrorType-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="NoError">
+            <anchor>ErrorType-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="ConnectionError">
+            <anchor>ErrorType-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="StatementError">
+            <anchor>ErrorType-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="TransactionError">
+            <anchor>ErrorType-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="UnknownError">
+            <anchor>ErrorType-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type></type>
+            <name>QSqlError</name>
+            <anchorfile>qsqlerror-obsolete.html</anchorfile>
+            <anchor>QSqlError-1</anchor>
+            <arglist>(const QString &amp;driverText, const QString &amp;databaseText, ErrorType type, int number)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type></type>
+            <name>QSqlError</name>
+            <anchorfile>qsqlerror.html</anchorfile>
+            <anchor>QSqlError</anchor>
+            <arglist>(const QString &amp;driverText, const QString &amp;databaseText, ErrorType type, const QString &amp;code)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type></type>
+            <name>QSqlError</name>
+            <anchorfile>qsqlerror.html</anchorfile>
+            <anchor>QSqlError-2</anchor>
+            <arglist>(const QSqlError &amp;other)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QSqlError &amp;</type>
+            <name>operator=</name>
+            <anchorfile>qsqlerror.html</anchorfile>
+            <anchor>operator-eq</anchor>
+            <arglist>(const QSqlError &amp;other)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>bool</type>
+            <name>operator==</name>
+            <anchorfile>qsqlerror.html</anchorfile>
+            <anchor>operator-eq-eq</anchor>
+            <arglist>(const QSqlError &amp;other) const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>bool</type>
+            <name>operator!=</name>
+            <anchorfile>qsqlerror.html</anchorfile>
+            <anchor>operator-not-eq</anchor>
+            <arglist>(const QSqlError &amp;other) const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type></type>
+            <name>~QSqlError</name>
+            <anchorfile>qsqlerror.html</anchorfile>
+            <anchor>dtor.QSqlError</anchor>
+            <arglist>()</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QString</type>
+            <name>driverText</name>
+            <anchorfile>qsqlerror.html</anchorfile>
+            <anchor>driverText</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QString</type>
+            <name>databaseText</name>
+            <anchorfile>qsqlerror.html</anchorfile>
+            <anchor>databaseText</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>ErrorType</type>
+            <name>type</name>
+            <anchorfile>qsqlerror.html</anchorfile>
+            <anchor>type</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>int</type>
+            <name>number</name>
+            <anchorfile>qsqlerror-obsolete.html</anchorfile>
+            <anchor>number</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QString</type>
+            <name>nativeErrorCode</name>
+            <anchorfile>qsqlerror.html</anchorfile>
+            <anchor>nativeErrorCode</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QString</type>
+            <name>text</name>
+            <anchorfile>qsqlerror.html</anchorfile>
+            <anchor>text</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>bool</type>
+            <name>isValid</name>
+            <anchorfile>qsqlerror.html</anchorfile>
+            <anchor>isValid</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>setDriverText</name>
+            <anchorfile>qsqlerror-obsolete.html</anchorfile>
+            <anchor>setDriverText</anchor>
+            <arglist>(const QString &amp;driverText)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>setDatabaseText</name>
+            <anchorfile>qsqlerror-obsolete.html</anchorfile>
+            <anchor>setDatabaseText</anchor>
+            <arglist>(const QString &amp;databaseText)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>setType</name>
+            <anchorfile>qsqlerror-obsolete.html</anchorfile>
+            <anchor>setType</anchor>
+            <arglist>(ErrorType type)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>setNumber</name>
+            <anchorfile>qsqlerror-obsolete.html</anchorfile>
+            <anchor>setNumber</anchor>
+            <arglist>(int number)</arglist>
+        </member>
+    </compound>
+    <compound kind="class">
+        <name>QSqlField</name>
+        <filename>qsqlfield.html</filename>
+        <member kind="enum">
+            <name>RequiredStatus</name>
+            <anchor>RequiredStatus-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="Unknown">
+            <anchor>RequiredStatus-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="Optional">
+            <anchor>RequiredStatus-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="Required">
+            <anchor>RequiredStatus-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type></type>
+            <name>QSqlField</name>
+            <anchorfile>qsqlfield.html</anchorfile>
+            <anchor>QSqlField</anchor>
+            <arglist>(const QString &amp;fieldName, QVariant::Type type)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type></type>
+            <name>QSqlField</name>
+            <anchorfile>qsqlfield.html</anchorfile>
+            <anchor>QSqlField-1</anchor>
+            <arglist>(const QSqlField &amp;other)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QSqlField &amp;</type>
+            <name>operator=</name>
+            <anchorfile>qsqlfield.html</anchorfile>
+            <anchor>operator-eq</anchor>
+            <arglist>(const QSqlField &amp;other)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>bool</type>
+            <name>operator==</name>
+            <anchorfile>qsqlfield.html</anchorfile>
+            <anchor>operator-eq-eq</anchor>
+            <arglist>(const QSqlField &amp;other) const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>bool</type>
+            <name>operator!=</name>
+            <anchorfile>qsqlfield.html</anchorfile>
+            <anchor>operator-not-eq</anchor>
+            <arglist>(const QSqlField &amp;other) const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type></type>
+            <name>~QSqlField</name>
+            <anchorfile>qsqlfield.html</anchorfile>
+            <anchor>dtor.QSqlField</anchor>
+            <arglist>()</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>setValue</name>
+            <anchorfile>qsqlfield.html</anchorfile>
+            <anchor>setValue</anchor>
+            <arglist>(const QVariant &amp;value)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QVariant</type>
+            <name>value</name>
+            <anchorfile>qsqlfield.html</anchorfile>
+            <anchor>value</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>setName</name>
+            <anchorfile>qsqlfield.html</anchorfile>
+            <anchor>setName</anchor>
+            <arglist>(const QString &amp;name)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QString</type>
+            <name>name</name>
+            <anchorfile>qsqlfield.html</anchorfile>
+            <anchor>name</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>bool</type>
+            <name>isNull</name>
+            <anchorfile>qsqlfield.html</anchorfile>
+            <anchor>isNull</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>setReadOnly</name>
+            <anchorfile>qsqlfield.html</anchorfile>
+            <anchor>setReadOnly</anchor>
+            <arglist>(bool readOnly)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>bool</type>
+            <name>isReadOnly</name>
+            <anchorfile>qsqlfield.html</anchorfile>
+            <anchor>isReadOnly</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>clear</name>
+            <anchorfile>qsqlfield.html</anchorfile>
+            <anchor>clear</anchor>
+            <arglist>()</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QVariant::Type</type>
+            <name>type</name>
+            <anchorfile>qsqlfield.html</anchorfile>
+            <anchor>type</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>bool</type>
+            <name>isAutoValue</name>
+            <anchorfile>qsqlfield.html</anchorfile>
+            <anchor>isAutoValue</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>setType</name>
+            <anchorfile>qsqlfield.html</anchorfile>
+            <anchor>setType</anchor>
+            <arglist>(QVariant::Type type)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>setRequiredStatus</name>
+            <anchorfile>qsqlfield.html</anchorfile>
+            <anchor>setRequiredStatus</anchor>
+            <arglist>(RequiredStatus required)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>setRequired</name>
+            <anchorfile>qsqlfield.html</anchorfile>
+            <anchor>setRequired</anchor>
+            <arglist>(bool required)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>setLength</name>
+            <anchorfile>qsqlfield.html</anchorfile>
+            <anchor>setLength</anchor>
+            <arglist>(int fieldLength)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>setPrecision</name>
+            <anchorfile>qsqlfield.html</anchorfile>
+            <anchor>setPrecision</anchor>
+            <arglist>(int precision)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>setDefaultValue</name>
+            <anchorfile>qsqlfield.html</anchorfile>
+            <anchor>setDefaultValue</anchor>
+            <arglist>(const QVariant &amp;value)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>setGenerated</name>
+            <anchorfile>qsqlfield.html</anchorfile>
+            <anchor>setGenerated</anchor>
+            <arglist>(bool gen)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>setAutoValue</name>
+            <anchorfile>qsqlfield.html</anchorfile>
+            <anchor>setAutoValue</anchor>
+            <arglist>(bool autoVal)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>RequiredStatus</type>
+            <name>requiredStatus</name>
+            <anchorfile>qsqlfield.html</anchorfile>
+            <anchor>requiredStatus</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>int</type>
+            <name>length</name>
+            <anchorfile>qsqlfield.html</anchorfile>
+            <anchor>length</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>int</type>
+            <name>precision</name>
+            <anchorfile>qsqlfield.html</anchorfile>
+            <anchor>precision</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QVariant</type>
+            <name>defaultValue</name>
+            <anchorfile>qsqlfield.html</anchorfile>
+            <anchor>defaultValue</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>bool</type>
+            <name>isGenerated</name>
+            <anchorfile>qsqlfield.html</anchorfile>
+            <anchor>isGenerated</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>bool</type>
+            <name>isValid</name>
+            <anchorfile>qsqlfield.html</anchorfile>
+            <anchor>isValid</anchor>
+            <arglist>() const</arglist>
+        </member>
+    </compound>
+    <compound kind="class">
+        <name>QSqlIndex</name>
+        <filename>qsqlindex.html</filename>
+        <base>QSqlRecord</base>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type></type>
+            <name>QSqlIndex</name>
+            <anchorfile>qsqlindex.html</anchorfile>
+            <anchor>QSqlIndex</anchor>
+            <arglist>(const QString &amp;cursorname, const QString &amp;name)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type></type>
+            <name>QSqlIndex</name>
+            <anchorfile>qsqlindex.html</anchorfile>
+            <anchor>QSqlIndex-1</anchor>
+            <arglist>(const QSqlIndex &amp;other)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type></type>
+            <name>~QSqlIndex</name>
+            <anchorfile>qsqlindex.html</anchorfile>
+            <anchor>dtor.QSqlIndex</anchor>
+            <arglist>()</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QSqlIndex &amp;</type>
+            <name>operator=</name>
+            <anchorfile>qsqlindex.html</anchorfile>
+            <anchor>operator-eq</anchor>
+            <arglist>(const QSqlIndex &amp;other)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>setCursorName</name>
+            <anchorfile>qsqlindex.html</anchorfile>
+            <anchor>setCursorName</anchor>
+            <arglist>(const QString &amp;cursorName)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QString</type>
+            <name>cursorName</name>
+            <anchorfile>qsqlindex.html</anchorfile>
+            <anchor>cursorName</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>setName</name>
+            <anchorfile>qsqlindex.html</anchorfile>
+            <anchor>setName</anchor>
+            <arglist>(const QString &amp;name)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QString</type>
+            <name>name</name>
+            <anchorfile>qsqlindex.html</anchorfile>
+            <anchor>name</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>append</name>
+            <anchorfile>qsqlindex.html</anchorfile>
+            <anchor>append</anchor>
+            <arglist>(const QSqlField &amp;field)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>append</name>
+            <anchorfile>qsqlindex.html</anchorfile>
+            <anchor>append-1</anchor>
+            <arglist>(const QSqlField &amp;field, bool desc)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>bool</type>
+            <name>isDescending</name>
+            <anchorfile>qsqlindex.html</anchorfile>
+            <anchor>isDescending</anchor>
+            <arglist>(int i) const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>setDescending</name>
+            <anchorfile>qsqlindex.html</anchorfile>
+            <anchor>setDescending</anchor>
+            <arglist>(int i, bool desc)</arglist>
+        </member>
+    </compound>
+    <compound kind="class">
+        <name>QSqlQuery</name>
+        <filename>qsqlquery.html</filename>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type></type>
+            <name>QSqlQuery</name>
+            <anchorfile>qsqlquery.html</anchorfile>
+            <anchor>QSqlQuery</anchor>
+            <arglist>(QSqlResult *result)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type></type>
+            <name>QSqlQuery</name>
+            <anchorfile>qsqlquery.html</anchorfile>
+            <anchor>QSqlQuery-1</anchor>
+            <arglist>(const QString &amp;query, QSqlDatabase db)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type></type>
+            <name>QSqlQuery</name>
+            <anchorfile>qsqlquery.html</anchorfile>
+            <anchor>QSqlQuery-2</anchor>
+            <arglist>(QSqlDatabase db)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type></type>
+            <name>QSqlQuery</name>
+            <anchorfile>qsqlquery.html</anchorfile>
+            <anchor>QSqlQuery-3</anchor>
+            <arglist>(const QSqlQuery &amp;other)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QSqlQuery &amp;</type>
+            <name>operator=</name>
+            <anchorfile>qsqlquery.html</anchorfile>
+            <anchor>operator-eq</anchor>
+            <arglist>(const QSqlQuery &amp;other)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type></type>
+            <name>~QSqlQuery</name>
+            <anchorfile>qsqlquery.html</anchorfile>
+            <anchor>dtor.QSqlQuery</anchor>
+            <arglist>()</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>bool</type>
+            <name>isValid</name>
+            <anchorfile>qsqlquery.html</anchorfile>
+            <anchor>isValid</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>bool</type>
+            <name>isActive</name>
+            <anchorfile>qsqlquery.html</anchorfile>
+            <anchor>isActive</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>bool</type>
+            <name>isNull</name>
+            <anchorfile>qsqlquery.html</anchorfile>
+            <anchor>isNull</anchor>
+            <arglist>(int field) const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>bool</type>
+            <name>isNull</name>
+            <anchorfile>qsqlquery.html</anchorfile>
+            <anchor>isNull-1</anchor>
+            <arglist>(const QString &amp;name) const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>int</type>
+            <name>at</name>
+            <anchorfile>qsqlquery.html</anchorfile>
+            <anchor>at</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QString</type>
+            <name>lastQuery</name>
+            <anchorfile>qsqlquery.html</anchorfile>
+            <anchor>lastQuery</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>int</type>
+            <name>numRowsAffected</name>
+            <anchorfile>qsqlquery.html</anchorfile>
+            <anchor>numRowsAffected</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QSqlError</type>
+            <name>lastError</name>
+            <anchorfile>qsqlquery.html</anchorfile>
+            <anchor>lastError</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>bool</type>
+            <name>isSelect</name>
+            <anchorfile>qsqlquery.html</anchorfile>
+            <anchor>isSelect</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>int</type>
+            <name>size</name>
+            <anchorfile>qsqlquery.html</anchorfile>
+            <anchor>size</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>const QSqlDriver *</type>
+            <name>driver</name>
+            <anchorfile>qsqlquery.html</anchorfile>
+            <anchor>driver</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>const QSqlResult *</type>
+            <name>result</name>
+            <anchorfile>qsqlquery.html</anchorfile>
+            <anchor>result</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>bool</type>
+            <name>isForwardOnly</name>
+            <anchorfile>qsqlquery.html</anchorfile>
+            <anchor>isForwardOnly</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QSqlRecord</type>
+            <name>record</name>
+            <anchorfile>qsqlquery.html</anchorfile>
+            <anchor>record</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>setForwardOnly</name>
+            <anchorfile>qsqlquery.html</anchorfile>
+            <anchor>setForwardOnly</anchor>
+            <arglist>(bool forward)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>bool</type>
+            <name>exec</name>
+            <anchorfile>qsqlquery.html</anchorfile>
+            <anchor>exec</anchor>
+            <arglist>(const QString &amp;query)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QVariant</type>
+            <name>value</name>
+            <anchorfile>qsqlquery.html</anchorfile>
+            <anchor>value</anchor>
+            <arglist>(int index) const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QVariant</type>
+            <name>value</name>
+            <anchorfile>qsqlquery.html</anchorfile>
+            <anchor>value-1</anchor>
+            <arglist>(const QString &amp;name) const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>setNumericalPrecisionPolicy</name>
+            <anchorfile>qsqlquery.html</anchorfile>
+            <anchor>setNumericalPrecisionPolicy</anchor>
+            <arglist>(QSql::NumericalPrecisionPolicy precisionPolicy)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QSql::NumericalPrecisionPolicy</type>
+            <name>numericalPrecisionPolicy</name>
+            <anchorfile>qsqlquery.html</anchorfile>
+            <anchor>numericalPrecisionPolicy</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>bool</type>
+            <name>seek</name>
+            <anchorfile>qsqlquery.html</anchorfile>
+            <anchor>seek</anchor>
+            <arglist>(int index, bool relative)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>bool</type>
+            <name>next</name>
+            <anchorfile>qsqlquery.html</anchorfile>
+            <anchor>next</anchor>
+            <arglist>()</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>bool</type>
+            <name>previous</name>
+            <anchorfile>qsqlquery.html</anchorfile>
+            <anchor>previous</anchor>
+            <arglist>()</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>bool</type>
+            <name>first</name>
+            <anchorfile>qsqlquery.html</anchorfile>
+            <anchor>first</anchor>
+            <arglist>()</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>bool</type>
+            <name>last</name>
+            <anchorfile>qsqlquery.html</anchorfile>
+            <anchor>last</anchor>
+            <arglist>()</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>clear</name>
+            <anchorfile>qsqlquery.html</anchorfile>
+            <anchor>clear</anchor>
+            <arglist>()</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>bool</type>
+            <name>exec</name>
+            <anchorfile>qsqlquery.html</anchorfile>
+            <anchor>exec-1</anchor>
+            <arglist>()</arglist>
+        </member>
+        <member kind="enum">
+            <name>BatchExecutionMode</name>
+            <anchor>BatchExecutionMode-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="ValuesAsRows">
+            <anchor>BatchExecutionMode-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="ValuesAsColumns">
+            <anchor>BatchExecutionMode-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>bool</type>
+            <name>execBatch</name>
+            <anchorfile>qsqlquery.html</anchorfile>
+            <anchor>execBatch</anchor>
+            <arglist>(BatchExecutionMode mode)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>bool</type>
+            <name>prepare</name>
+            <anchorfile>qsqlquery.html</anchorfile>
+            <anchor>prepare</anchor>
+            <arglist>(const QString &amp;query)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>bindValue</name>
+            <anchorfile>qsqlquery.html</anchorfile>
+            <anchor>bindValue</anchor>
+            <arglist>(const QString &amp;placeholder, const QVariant &amp;val, QSql::ParamType paramType)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>bindValue</name>
+            <anchorfile>qsqlquery.html</anchorfile>
+            <anchor>bindValue-1</anchor>
+            <arglist>(int pos, const QVariant &amp;val, QSql::ParamType paramType)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>addBindValue</name>
+            <anchorfile>qsqlquery.html</anchorfile>
+            <anchor>addBindValue</anchor>
+            <arglist>(const QVariant &amp;val, QSql::ParamType paramType)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QVariant</type>
+            <name>boundValue</name>
+            <anchorfile>qsqlquery.html</anchorfile>
+            <anchor>boundValue</anchor>
+            <arglist>(const QString &amp;placeholder) const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QVariant</type>
+            <name>boundValue</name>
+            <anchorfile>qsqlquery.html</anchorfile>
+            <anchor>boundValue-1</anchor>
+            <arglist>(int pos) const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QMap&lt;QString, QVariant&gt;</type>
+            <name>boundValues</name>
+            <anchorfile>qsqlquery.html</anchorfile>
+            <anchor>boundValues</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QString</type>
+            <name>executedQuery</name>
+            <anchorfile>qsqlquery.html</anchorfile>
+            <anchor>executedQuery</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QVariant</type>
+            <name>lastInsertId</name>
+            <anchorfile>qsqlquery.html</anchorfile>
+            <anchor>lastInsertId</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>finish</name>
+            <anchorfile>qsqlquery.html</anchorfile>
+            <anchor>finish</anchor>
+            <arglist>()</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>bool</type>
+            <name>nextResult</name>
+            <anchorfile>qsqlquery.html</anchorfile>
+            <anchor>nextResult</anchor>
+            <arglist>()</arglist>
+        </member>
+    </compound>
+    <compound kind="class">
+        <name>QSqlRecord</name>
+        <filename>qsqlrecord.html</filename>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type></type>
+            <name>QSqlRecord</name>
+            <anchorfile>qsqlrecord.html</anchorfile>
+            <anchor>QSqlRecord</anchor>
+            <arglist>()</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type></type>
+            <name>QSqlRecord</name>
+            <anchorfile>qsqlrecord.html</anchorfile>
+            <anchor>QSqlRecord-1</anchor>
+            <arglist>(const QSqlRecord &amp;other)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QSqlRecord &amp;</type>
+            <name>operator=</name>
+            <anchorfile>qsqlrecord.html</anchorfile>
+            <anchor>operator-eq</anchor>
+            <arglist>(const QSqlRecord &amp;other)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type></type>
+            <name>~QSqlRecord</name>
+            <anchorfile>qsqlrecord.html</anchorfile>
+            <anchor>dtor.QSqlRecord</anchor>
+            <arglist>()</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>bool</type>
+            <name>operator==</name>
+            <anchorfile>qsqlrecord.html</anchorfile>
+            <anchor>operator-eq-eq</anchor>
+            <arglist>(const QSqlRecord &amp;other) const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>bool</type>
+            <name>operator!=</name>
+            <anchorfile>qsqlrecord.html</anchorfile>
+            <anchor>operator-not-eq</anchor>
+            <arglist>(const QSqlRecord &amp;other) const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QVariant</type>
+            <name>value</name>
+            <anchorfile>qsqlrecord.html</anchorfile>
+            <anchor>value</anchor>
+            <arglist>(int index) const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QVariant</type>
+            <name>value</name>
+            <anchorfile>qsqlrecord.html</anchorfile>
+            <anchor>value-1</anchor>
+            <arglist>(const QString &amp;name) const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>setValue</name>
+            <anchorfile>qsqlrecord.html</anchorfile>
+            <anchor>setValue</anchor>
+            <arglist>(int index, const QVariant &amp;val)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>setValue</name>
+            <anchorfile>qsqlrecord.html</anchorfile>
+            <anchor>setValue-1</anchor>
+            <arglist>(const QString &amp;name, const QVariant &amp;val)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>setNull</name>
+            <anchorfile>qsqlrecord.html</anchorfile>
+            <anchor>setNull</anchor>
+            <arglist>(int index)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>setNull</name>
+            <anchorfile>qsqlrecord.html</anchorfile>
+            <anchor>setNull-1</anchor>
+            <arglist>(const QString &amp;name)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>bool</type>
+            <name>isNull</name>
+            <anchorfile>qsqlrecord.html</anchorfile>
+            <anchor>isNull-1</anchor>
+            <arglist>(int index) const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>bool</type>
+            <name>isNull</name>
+            <anchorfile>qsqlrecord.html</anchorfile>
+            <anchor>isNull</anchor>
+            <arglist>(const QString &amp;name) const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>int</type>
+            <name>indexOf</name>
+            <anchorfile>qsqlrecord.html</anchorfile>
+            <anchor>indexOf</anchor>
+            <arglist>(const QString &amp;name) const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QString</type>
+            <name>fieldName</name>
+            <anchorfile>qsqlrecord.html</anchorfile>
+            <anchor>fieldName</anchor>
+            <arglist>(int index) const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QSqlField</type>
+            <name>field</name>
+            <anchorfile>qsqlrecord.html</anchorfile>
+            <anchor>field</anchor>
+            <arglist>(int index) const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QSqlField</type>
+            <name>field</name>
+            <anchorfile>qsqlrecord.html</anchorfile>
+            <anchor>field-1</anchor>
+            <arglist>(const QString &amp;name) const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>bool</type>
+            <name>isGenerated</name>
+            <anchorfile>qsqlrecord.html</anchorfile>
+            <anchor>isGenerated-1</anchor>
+            <arglist>(int index) const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>bool</type>
+            <name>isGenerated</name>
+            <anchorfile>qsqlrecord.html</anchorfile>
+            <anchor>isGenerated</anchor>
+            <arglist>(const QString &amp;name) const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>setGenerated</name>
+            <anchorfile>qsqlrecord.html</anchorfile>
+            <anchor>setGenerated</anchor>
+            <arglist>(const QString &amp;name, bool generated)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>setGenerated</name>
+            <anchorfile>qsqlrecord.html</anchorfile>
+            <anchor>setGenerated-1</anchor>
+            <arglist>(int index, bool generated)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>append</name>
+            <anchorfile>qsqlrecord.html</anchorfile>
+            <anchor>append</anchor>
+            <arglist>(const QSqlField &amp;field)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>replace</name>
+            <anchorfile>qsqlrecord.html</anchorfile>
+            <anchor>replace</anchor>
+            <arglist>(int pos, const QSqlField &amp;field)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>insert</name>
+            <anchorfile>qsqlrecord.html</anchorfile>
+            <anchor>insert</anchor>
+            <arglist>(int pos, const QSqlField &amp;field)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>remove</name>
+            <anchorfile>qsqlrecord.html</anchorfile>
+            <anchor>remove</anchor>
+            <arglist>(int pos)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>bool</type>
+            <name>isEmpty</name>
+            <anchorfile>qsqlrecord.html</anchorfile>
+            <anchor>isEmpty</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>bool</type>
+            <name>contains</name>
+            <anchorfile>qsqlrecord.html</anchorfile>
+            <anchor>contains</anchor>
+            <arglist>(const QString &amp;name) const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>clear</name>
+            <anchorfile>qsqlrecord.html</anchorfile>
+            <anchor>clear</anchor>
+            <arglist>()</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>clearValues</name>
+            <anchorfile>qsqlrecord.html</anchorfile>
+            <anchor>clearValues</anchor>
+            <arglist>()</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>int</type>
+            <name>count</name>
+            <anchorfile>qsqlrecord.html</anchorfile>
+            <anchor>count</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QSqlRecord</type>
+            <name>keyValues</name>
+            <anchorfile>qsqlrecord.html</anchorfile>
+            <anchor>keyValues</anchor>
+            <arglist>(const QSqlRecord &amp;keyFields) const</arglist>
+        </member>
+    </compound>
+    <compound kind="class">
+        <name>QSqlResult</name>
+        <filename>qsqlresult.html</filename>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual </type>
+            <name>~QSqlResult</name>
+            <anchorfile>qsqlresult.html</anchorfile>
+            <anchor>dtor.QSqlResult</anchor>
+            <arglist>()</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual QVariant</type>
+            <name>handle</name>
+            <anchorfile>qsqlresult.html</anchorfile>
+            <anchor>handle</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="enum">
+            <name>BindingSyntax</name>
+            <anchor>BindingSyntax-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="PositionalBinding">
+            <anchor>BindingSyntax-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="NamedBinding">
+            <anchor>BindingSyntax-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="non" static="no">
+            <type></type>
+            <name>QSqlResult</name>
+            <anchorfile>qsqlresult.html</anchorfile>
+            <anchor>QSqlResult</anchor>
+            <arglist>(const QSqlDriver *db)</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="non" static="no">
+            <type>int</type>
+            <name>at</name>
+            <anchorfile>qsqlresult.html</anchorfile>
+            <anchor>at</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="non" static="no">
+            <type>QString</type>
+            <name>lastQuery</name>
+            <anchorfile>qsqlresult.html</anchorfile>
+            <anchor>lastQuery</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="non" static="no">
+            <type>QSqlError</type>
+            <name>lastError</name>
+            <anchorfile>qsqlresult.html</anchorfile>
+            <anchor>lastError</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="non" static="no">
+            <type>bool</type>
+            <name>isValid</name>
+            <anchorfile>qsqlresult.html</anchorfile>
+            <anchor>isValid</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="non" static="no">
+            <type>bool</type>
+            <name>isActive</name>
+            <anchorfile>qsqlresult.html</anchorfile>
+            <anchor>isActive</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="non" static="no">
+            <type>bool</type>
+            <name>isSelect</name>
+            <anchorfile>qsqlresult.html</anchorfile>
+            <anchor>isSelect</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="non" static="no">
+            <type>bool</type>
+            <name>isForwardOnly</name>
+            <anchorfile>qsqlresult.html</anchorfile>
+            <anchor>isForwardOnly</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="non" static="no">
+            <type>const QSqlDriver *</type>
+            <name>driver</name>
+            <anchorfile>qsqlresult.html</anchorfile>
+            <anchor>driver</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="virtual" static="no">
+            <type>virtual void</type>
+            <name>setAt</name>
+            <anchorfile>qsqlresult.html</anchorfile>
+            <anchor>setAt</anchor>
+            <arglist>(int index)</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="virtual" static="no">
+            <type>virtual void</type>
+            <name>setActive</name>
+            <anchorfile>qsqlresult.html</anchorfile>
+            <anchor>setActive</anchor>
+            <arglist>(bool active)</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="virtual" static="no">
+            <type>virtual void</type>
+            <name>setLastError</name>
+            <anchorfile>qsqlresult.html</anchorfile>
+            <anchor>setLastError</anchor>
+            <arglist>(const QSqlError &amp;error)</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="virtual" static="no">
+            <type>virtual void</type>
+            <name>setQuery</name>
+            <anchorfile>qsqlresult.html</anchorfile>
+            <anchor>setQuery</anchor>
+            <arglist>(const QString &amp;query)</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="virtual" static="no">
+            <type>virtual void</type>
+            <name>setSelect</name>
+            <anchorfile>qsqlresult.html</anchorfile>
+            <anchor>setSelect</anchor>
+            <arglist>(bool select)</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="virtual" static="no">
+            <type>virtual void</type>
+            <name>setForwardOnly</name>
+            <anchorfile>qsqlresult.html</anchorfile>
+            <anchor>setForwardOnly</anchor>
+            <arglist>(bool forward)</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="virtual" static="no">
+            <type>virtual bool</type>
+            <name>exec</name>
+            <anchorfile>qsqlresult.html</anchorfile>
+            <anchor>exec</anchor>
+            <arglist>()</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="virtual" static="no">
+            <type>virtual bool</type>
+            <name>prepare</name>
+            <anchorfile>qsqlresult.html</anchorfile>
+            <anchor>prepare</anchor>
+            <arglist>(const QString &amp;query)</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="virtual" static="no">
+            <type>virtual bool</type>
+            <name>savePrepare</name>
+            <anchorfile>qsqlresult.html</anchorfile>
+            <anchor>savePrepare</anchor>
+            <arglist>(const QString &amp;query)</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="virtual" static="no">
+            <type>virtual void</type>
+            <name>bindValue</name>
+            <anchorfile>qsqlresult.html</anchorfile>
+            <anchor>bindValue</anchor>
+            <arglist>(int index, const QVariant &amp;val, QSql::ParamType paramType)</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="virtual" static="no">
+            <type>virtual void</type>
+            <name>bindValue</name>
+            <anchorfile>qsqlresult.html</anchorfile>
+            <anchor>bindValue-1</anchor>
+            <arglist>(const QString &amp;placeholder, const QVariant &amp;val, QSql::ParamType paramType)</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="non" static="no">
+            <type>void</type>
+            <name>addBindValue</name>
+            <anchorfile>qsqlresult.html</anchorfile>
+            <anchor>addBindValue</anchor>
+            <arglist>(const QVariant &amp;val, QSql::ParamType paramType)</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="non" static="no">
+            <type>QVariant</type>
+            <name>boundValue</name>
+            <anchorfile>qsqlresult.html</anchorfile>
+            <anchor>boundValue-1</anchor>
+            <arglist>(const QString &amp;placeholder) const</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="non" static="no">
+            <type>QVariant</type>
+            <name>boundValue</name>
+            <anchorfile>qsqlresult.html</anchorfile>
+            <anchor>boundValue</anchor>
+            <arglist>(int index) const</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="non" static="no">
+            <type>QSql::ParamType</type>
+            <name>bindValueType</name>
+            <anchorfile>qsqlresult.html</anchorfile>
+            <anchor>bindValueType-1</anchor>
+            <arglist>(const QString &amp;placeholder) const</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="non" static="no">
+            <type>QSql::ParamType</type>
+            <name>bindValueType</name>
+            <anchorfile>qsqlresult.html</anchorfile>
+            <anchor>bindValueType</anchor>
+            <arglist>(int index) const</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="non" static="no">
+            <type>int</type>
+            <name>boundValueCount</name>
+            <anchorfile>qsqlresult.html</anchorfile>
+            <anchor>boundValueCount</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="non" static="no">
+            <type>QVector&lt;QVariant&gt; &amp;</type>
+            <name>boundValues</name>
+            <anchorfile>qsqlresult.html</anchorfile>
+            <anchor>boundValues</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="non" static="no">
+            <type>QString</type>
+            <name>executedQuery</name>
+            <anchorfile>qsqlresult.html</anchorfile>
+            <anchor>executedQuery</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="non" static="no">
+            <type>QString</type>
+            <name>boundValueName</name>
+            <anchorfile>qsqlresult.html</anchorfile>
+            <anchor>boundValueName</anchor>
+            <arglist>(int index) const</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="non" static="no">
+            <type>void</type>
+            <name>clear</name>
+            <anchorfile>qsqlresult.html</anchorfile>
+            <anchor>clear</anchor>
+            <arglist>()</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="non" static="no">
+            <type>bool</type>
+            <name>hasOutValues</name>
+            <anchorfile>qsqlresult.html</anchorfile>
+            <anchor>hasOutValues</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="non" static="no">
+            <type>BindingSyntax</type>
+            <name>bindingSyntax</name>
+            <anchorfile>qsqlresult.html</anchorfile>
+            <anchor>bindingSyntax</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="pure" static="no">
+            <type>virtual QVariant</type>
+            <name>data</name>
+            <anchorfile>qsqlresult.html</anchorfile>
+            <anchor>data</anchor>
+            <arglist>(int index) = 0</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="pure" static="no">
+            <type>virtual bool</type>
+            <name>isNull</name>
+            <anchorfile>qsqlresult.html</anchorfile>
+            <anchor>isNull</anchor>
+            <arglist>(int index) = 0</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="pure" static="no">
+            <type>virtual bool</type>
+            <name>reset</name>
+            <anchorfile>qsqlresult.html</anchorfile>
+            <anchor>reset</anchor>
+            <arglist>(const QString &amp;query) = 0</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="pure" static="no">
+            <type>virtual bool</type>
+            <name>fetch</name>
+            <anchorfile>qsqlresult.html</anchorfile>
+            <anchor>fetch</anchor>
+            <arglist>(int index) = 0</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="virtual" static="no">
+            <type>virtual bool</type>
+            <name>fetchNext</name>
+            <anchorfile>qsqlresult.html</anchorfile>
+            <anchor>fetchNext</anchor>
+            <arglist>()</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="virtual" static="no">
+            <type>virtual bool</type>
+            <name>fetchPrevious</name>
+            <anchorfile>qsqlresult.html</anchorfile>
+            <anchor>fetchPrevious</anchor>
+            <arglist>()</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="pure" static="no">
+            <type>virtual bool</type>
+            <name>fetchFirst</name>
+            <anchorfile>qsqlresult.html</anchorfile>
+            <anchor>fetchFirst</anchor>
+            <arglist>() = 0</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="pure" static="no">
+            <type>virtual bool</type>
+            <name>fetchLast</name>
+            <anchorfile>qsqlresult.html</anchorfile>
+            <anchor>fetchLast</anchor>
+            <arglist>() = 0</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="pure" static="no">
+            <type>virtual int</type>
+            <name>size</name>
+            <anchorfile>qsqlresult.html</anchorfile>
+            <anchor>size</anchor>
+            <arglist>() = 0</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="pure" static="no">
+            <type>virtual int</type>
+            <name>numRowsAffected</name>
+            <anchorfile>qsqlresult.html</anchorfile>
+            <anchor>numRowsAffected</anchor>
+            <arglist>() = 0</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="virtual" static="no">
+            <type>virtual QSqlRecord</type>
+            <name>record</name>
+            <anchorfile>qsqlresult.html</anchorfile>
+            <anchor>record</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="virtual" static="no">
+            <type>virtual QVariant</type>
+            <name>lastInsertId</name>
+            <anchorfile>qsqlresult.html</anchorfile>
+            <anchor>lastInsertId</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="non" static="no">
+            <type>void</type>
+            <name>resetBindCount</name>
+            <anchorfile>qsqlresult.html</anchorfile>
+            <anchor>resetBindCount</anchor>
+            <arglist>()</arglist>
+        </member>
+    </compound>
+    <compound kind="class">
+        <name>QSqlQueryModel</name>
+        <filename>qsqlquerymodel.html</filename>
+        <base>QAbstractTableModel</base>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type></type>
+            <name>QSqlQueryModel</name>
+            <anchorfile>qsqlquerymodel.html</anchorfile>
+            <anchor>QSqlQueryModel</anchor>
+            <arglist>(QObject *parent)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual </type>
+            <name>~QSqlQueryModel</name>
+            <anchorfile>qsqlquerymodel.html</anchorfile>
+            <anchor>dtor.QSqlQueryModel</anchor>
+            <arglist>()</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual int</type>
+            <name>rowCount</name>
+            <anchorfile>qsqlquerymodel.html</anchorfile>
+            <anchor>rowCount</anchor>
+            <arglist>(const QModelIndex &amp;parent) const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual int</type>
+            <name>columnCount</name>
+            <anchorfile>qsqlquerymodel.html</anchorfile>
+            <anchor>columnCount</anchor>
+            <arglist>(const QModelIndex &amp;index) const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QSqlRecord</type>
+            <name>record</name>
+            <anchorfile>qsqlquerymodel.html</anchorfile>
+            <anchor>record</anchor>
+            <arglist>(int row) const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QSqlRecord</type>
+            <name>record</name>
+            <anchorfile>qsqlquerymodel.html</anchorfile>
+            <anchor>record-1</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual QVariant</type>
+            <name>data</name>
+            <anchorfile>qsqlquerymodel.html</anchorfile>
+            <anchor>data</anchor>
+            <arglist>(const QModelIndex &amp;item, int role) const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual QVariant</type>
+            <name>headerData</name>
+            <anchorfile>qsqlquerymodel.html</anchorfile>
+            <anchor>headerData</anchor>
+            <arglist>(int section, Qt::Orientation orientation, int role) const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual bool</type>
+            <name>setHeaderData</name>
+            <anchorfile>qsqlquerymodel.html</anchorfile>
+            <anchor>setHeaderData</anchor>
+            <arglist>(int section, Qt::Orientation orientation, const QVariant &amp;value, int role)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual bool</type>
+            <name>insertColumns</name>
+            <anchorfile>qsqlquerymodel.html</anchorfile>
+            <anchor>insertColumns</anchor>
+            <arglist>(int column, int count, const QModelIndex &amp;parent)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual bool</type>
+            <name>removeColumns</name>
+            <anchorfile>qsqlquerymodel.html</anchorfile>
+            <anchor>removeColumns</anchor>
+            <arglist>(int column, int count, const QModelIndex &amp;parent)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>setQuery</name>
+            <anchorfile>qsqlquerymodel.html</anchorfile>
+            <anchor>setQuery</anchor>
+            <arglist>(const QSqlQuery &amp;query)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>setQuery</name>
+            <anchorfile>qsqlquerymodel.html</anchorfile>
+            <anchor>setQuery-1</anchor>
+            <arglist>(const QString &amp;query, const QSqlDatabase &amp;db)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QSqlQuery</type>
+            <name>query</name>
+            <anchorfile>qsqlquerymodel.html</anchorfile>
+            <anchor>query</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual void</type>
+            <name>clear</name>
+            <anchorfile>qsqlquerymodel.html</anchorfile>
+            <anchor>clear</anchor>
+            <arglist>()</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QSqlError</type>
+            <name>lastError</name>
+            <anchorfile>qsqlquerymodel.html</anchorfile>
+            <anchor>lastError</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual void</type>
+            <name>fetchMore</name>
+            <anchorfile>qsqlquerymodel.html</anchorfile>
+            <anchor>fetchMore</anchor>
+            <arglist>(const QModelIndex &amp;parent)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual bool</type>
+            <name>canFetchMore</name>
+            <anchorfile>qsqlquerymodel.html</anchorfile>
+            <anchor>canFetchMore</anchor>
+            <arglist>(const QModelIndex &amp;parent) const</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="virtual" static="no">
+            <type>virtual void</type>
+            <name>queryChange</name>
+            <anchorfile>qsqlquerymodel.html</anchorfile>
+            <anchor>queryChange</anchor>
+            <arglist>()</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="virtual" static="no">
+            <type>virtual QModelIndex</type>
+            <name>indexInQuery</name>
+            <anchorfile>qsqlquerymodel.html</anchorfile>
+            <anchor>indexInQuery</anchor>
+            <arglist>(const QModelIndex &amp;item) const</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="non" static="no">
+            <type>void</type>
+            <name>setLastError</name>
+            <anchorfile>qsqlquerymodel.html</anchorfile>
+            <anchor>setLastError</anchor>
+            <arglist>(const QSqlError &amp;error)</arglist>
+        </member>
+    </compound>
+    <compound kind="class">
+        <name>QSqlRelationalDelegate</name>
+        <filename>qsqlrelationaldelegate.html</filename>
+        <base>QItemDelegate</base>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type></type>
+            <name>QSqlRelationalDelegate</name>
+            <anchorfile>qsqlrelationaldelegate.html</anchorfile>
+            <anchor>QSqlRelationalDelegate</anchor>
+            <arglist>(QObject *parent)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type></type>
+            <name>~QSqlRelationalDelegate</name>
+            <anchorfile>qsqlrelationaldelegate.html</anchorfile>
+            <anchor>dtor.QSqlRelationalDelegate</anchor>
+            <arglist>()</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual QWidget *</type>
+            <name>createEditor</name>
+            <anchorfile>qsqlrelationaldelegate.html</anchorfile>
+            <anchor>createEditor</anchor>
+            <arglist>(QWidget *parent, const QStyleOptionViewItem &amp;option, const QModelIndex &amp;index) const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual void</type>
+            <name>setModelData</name>
+            <anchorfile>qsqlrelationaldelegate.html</anchorfile>
+            <anchor>setModelData</anchor>
+            <arglist>(QWidget *editor, QAbstractItemModel *model, const QModelIndex &amp;index) const</arglist>
+        </member>
+    </compound>
+    <compound kind="class">
+        <name>QSqlRelation</name>
+        <filename>qsqlrelation.html</filename>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type></type>
+            <name>QSqlRelation</name>
+            <anchorfile>qsqlrelation.html</anchorfile>
+            <anchor>QSqlRelation</anchor>
+            <arglist>()</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type></type>
+            <name>QSqlRelation</name>
+            <anchorfile>qsqlrelation.html</anchorfile>
+            <anchor>QSqlRelation-1</anchor>
+            <arglist>(const QString &amp;tableName, const QString &amp;indexColumn, const QString &amp;displayColumn)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QString</type>
+            <name>tableName</name>
+            <anchorfile>qsqlrelation.html</anchorfile>
+            <anchor>tableName</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QString</type>
+            <name>indexColumn</name>
+            <anchorfile>qsqlrelation.html</anchorfile>
+            <anchor>indexColumn</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QString</type>
+            <name>displayColumn</name>
+            <anchorfile>qsqlrelation.html</anchorfile>
+            <anchor>displayColumn</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>bool</type>
+            <name>isValid</name>
+            <anchorfile>qsqlrelation.html</anchorfile>
+            <anchor>isValid</anchor>
+            <arglist>() const</arglist>
+        </member>
+    </compound>
+    <compound kind="class">
+        <name>QSqlRelationalTableModel</name>
+        <filename>qsqlrelationaltablemodel.html</filename>
+        <base>QSqlTableModel</base>
+        <member kind="enum">
+            <name>JoinMode</name>
+            <anchor>JoinMode-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="InnerJoin">
+            <anchor>JoinMode-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="LeftJoin">
+            <anchor>JoinMode-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type></type>
+            <name>QSqlRelationalTableModel</name>
+            <anchorfile>qsqlrelationaltablemodel.html</anchorfile>
+            <anchor>QSqlRelationalTableModel</anchor>
+            <arglist>(QObject *parent, QSqlDatabase db)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual </type>
+            <name>~QSqlRelationalTableModel</name>
+            <anchorfile>qsqlrelationaltablemodel.html</anchorfile>
+            <anchor>dtor.QSqlRelationalTableModel</anchor>
+            <arglist>()</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual QVariant</type>
+            <name>data</name>
+            <anchorfile>qsqlrelationaltablemodel.html</anchorfile>
+            <anchor>data</anchor>
+            <arglist>(const QModelIndex &amp;index, int role) const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual bool</type>
+            <name>setData</name>
+            <anchorfile>qsqlrelationaltablemodel.html</anchorfile>
+            <anchor>setData</anchor>
+            <arglist>(const QModelIndex &amp;index, const QVariant &amp;value, int role)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual bool</type>
+            <name>removeColumns</name>
+            <anchorfile>qsqlrelationaltablemodel.html</anchorfile>
+            <anchor>removeColumns</anchor>
+            <arglist>(int column, int count, const QModelIndex &amp;parent)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual void</type>
+            <name>clear</name>
+            <anchorfile>qsqlrelationaltablemodel.html</anchorfile>
+            <anchor>clear</anchor>
+            <arglist>()</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual bool</type>
+            <name>select</name>
+            <anchorfile>qsqlrelationaltablemodel.html</anchorfile>
+            <anchor>select</anchor>
+            <arglist>()</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual void</type>
+            <name>setTable</name>
+            <anchorfile>qsqlrelationaltablemodel.html</anchorfile>
+            <anchor>setTable</anchor>
+            <arglist>(const QString &amp;table)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual void</type>
+            <name>setRelation</name>
+            <anchorfile>qsqlrelationaltablemodel.html</anchorfile>
+            <anchor>setRelation</anchor>
+            <arglist>(int column, const QSqlRelation &amp;relation)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QSqlRelation</type>
+            <name>relation</name>
+            <anchorfile>qsqlrelationaltablemodel.html</anchorfile>
+            <anchor>relation</anchor>
+            <arglist>(int column) const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual QSqlTableModel *</type>
+            <name>relationModel</name>
+            <anchorfile>qsqlrelationaltablemodel.html</anchorfile>
+            <anchor>relationModel</anchor>
+            <arglist>(int column) const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>setJoinMode</name>
+            <anchorfile>qsqlrelationaltablemodel.html</anchorfile>
+            <anchor>setJoinMode</anchor>
+            <arglist>(QSqlRelationalTableModel::JoinMode joinMode)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual void</type>
+            <name>revertRow</name>
+            <anchorfile>qsqlrelationaltablemodel.html</anchorfile>
+            <anchor>revertRow</anchor>
+            <arglist>(int row)</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="virtual" static="no">
+            <type>virtual QString</type>
+            <name>selectStatement</name>
+            <anchorfile>qsqlrelationaltablemodel.html</anchorfile>
+            <anchor>selectStatement</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="virtual" static="no">
+            <type>virtual bool</type>
+            <name>updateRowInTable</name>
+            <anchorfile>qsqlrelationaltablemodel.html</anchorfile>
+            <anchor>updateRowInTable</anchor>
+            <arglist>(int row, const QSqlRecord &amp;values)</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="virtual" static="no">
+            <type>virtual bool</type>
+            <name>insertRowIntoTable</name>
+            <anchorfile>qsqlrelationaltablemodel.html</anchorfile>
+            <anchor>insertRowIntoTable</anchor>
+            <arglist>(const QSqlRecord &amp;values)</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="virtual" static="no">
+            <type>virtual QString</type>
+            <name>orderByClause</name>
+            <anchorfile>qsqlrelationaltablemodel.html</anchorfile>
+            <anchor>orderByClause</anchor>
+            <arglist>() const</arglist>
+        </member>
+    </compound>
+    <compound kind="class">
+        <name>QSqlTableModel</name>
+        <filename>qsqltablemodel.html</filename>
+        <base>QSqlQueryModel</base>
+        <member kind="enum">
+            <name>EditStrategy</name>
+            <anchor>EditStrategy-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="OnFieldChange">
+            <anchor>EditStrategy-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="OnRowChange">
+            <anchor>EditStrategy-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member name="OnManualSubmit">
+            <anchor>EditStrategy-enum</anchor>
+            <arglist></arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type></type>
+            <name>QSqlTableModel</name>
+            <anchorfile>qsqltablemodel.html</anchorfile>
+            <anchor>QSqlTableModel</anchor>
+            <arglist>(QObject *parent, QSqlDatabase db)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual </type>
+            <name>~QSqlTableModel</name>
+            <anchorfile>qsqltablemodel.html</anchorfile>
+            <anchor>dtor.QSqlTableModel</anchor>
+            <arglist>()</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual void</type>
+            <name>setTable</name>
+            <anchorfile>qsqltablemodel.html</anchorfile>
+            <anchor>setTable</anchor>
+            <arglist>(const QString &amp;tableName)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QString</type>
+            <name>tableName</name>
+            <anchorfile>qsqltablemodel.html</anchorfile>
+            <anchor>tableName</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual Qt::ItemFlags</type>
+            <name>flags</name>
+            <anchorfile>qsqltablemodel.html</anchorfile>
+            <anchor>flags</anchor>
+            <arglist>(const QModelIndex &amp;index) const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QSqlRecord</type>
+            <name>record</name>
+            <anchorfile>qsqltablemodel.html</anchorfile>
+            <anchor>record</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QSqlRecord</type>
+            <name>record</name>
+            <anchorfile>qsqltablemodel.html</anchorfile>
+            <anchor>record-1</anchor>
+            <arglist>(int row) const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual QVariant</type>
+            <name>data</name>
+            <anchorfile>qsqltablemodel.html</anchorfile>
+            <anchor>data</anchor>
+            <arglist>(const QModelIndex &amp;index, int role) const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual bool</type>
+            <name>setData</name>
+            <anchorfile>qsqltablemodel.html</anchorfile>
+            <anchor>setData</anchor>
+            <arglist>(const QModelIndex &amp;index, const QVariant &amp;value, int role)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual QVariant</type>
+            <name>headerData</name>
+            <anchorfile>qsqltablemodel.html</anchorfile>
+            <anchor>headerData</anchor>
+            <arglist>(int section, Qt::Orientation orientation, int role) const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>bool</type>
+            <name>isDirty</name>
+            <anchorfile>qsqltablemodel.html</anchorfile>
+            <anchor>isDirty-1</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>bool</type>
+            <name>isDirty</name>
+            <anchorfile>qsqltablemodel.html</anchorfile>
+            <anchor>isDirty</anchor>
+            <arglist>(const QModelIndex &amp;index) const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual void</type>
+            <name>clear</name>
+            <anchorfile>qsqltablemodel.html</anchorfile>
+            <anchor>clear</anchor>
+            <arglist>()</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual void</type>
+            <name>setEditStrategy</name>
+            <anchorfile>qsqltablemodel.html</anchorfile>
+            <anchor>setEditStrategy</anchor>
+            <arglist>(EditStrategy strategy)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>EditStrategy</type>
+            <name>editStrategy</name>
+            <anchorfile>qsqltablemodel.html</anchorfile>
+            <anchor>editStrategy</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QSqlIndex</type>
+            <name>primaryKey</name>
+            <anchorfile>qsqltablemodel.html</anchorfile>
+            <anchor>primaryKey</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QSqlDatabase</type>
+            <name>database</name>
+            <anchorfile>qsqltablemodel.html</anchorfile>
+            <anchor>database</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>int</type>
+            <name>fieldIndex</name>
+            <anchorfile>qsqltablemodel.html</anchorfile>
+            <anchor>fieldIndex</anchor>
+            <arglist>(const QString &amp;fieldName) const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual void</type>
+            <name>sort</name>
+            <anchorfile>qsqltablemodel.html</anchorfile>
+            <anchor>sort</anchor>
+            <arglist>(int column, Qt::SortOrder order)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual void</type>
+            <name>setSort</name>
+            <anchorfile>qsqltablemodel.html</anchorfile>
+            <anchor>setSort</anchor>
+            <arglist>(int column, Qt::SortOrder order)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>QString</type>
+            <name>filter</name>
+            <anchorfile>qsqltablemodel.html</anchorfile>
+            <anchor>filter</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual void</type>
+            <name>setFilter</name>
+            <anchorfile>qsqltablemodel.html</anchorfile>
+            <anchor>setFilter</anchor>
+            <arglist>(const QString &amp;filter)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual int</type>
+            <name>rowCount</name>
+            <anchorfile>qsqltablemodel.html</anchorfile>
+            <anchor>rowCount</anchor>
+            <arglist>(const QModelIndex &amp;parent) const</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual bool</type>
+            <name>removeColumns</name>
+            <anchorfile>qsqltablemodel.html</anchorfile>
+            <anchor>removeColumns</anchor>
+            <arglist>(int column, int count, const QModelIndex &amp;parent)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual bool</type>
+            <name>removeRows</name>
+            <anchorfile>qsqltablemodel.html</anchorfile>
+            <anchor>removeRows</anchor>
+            <arglist>(int row, int count, const QModelIndex &amp;parent)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual bool</type>
+            <name>insertRows</name>
+            <anchorfile>qsqltablemodel.html</anchorfile>
+            <anchor>insertRows</anchor>
+            <arglist>(int row, int count, const QModelIndex &amp;parent)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>bool</type>
+            <name>insertRecord</name>
+            <anchorfile>qsqltablemodel.html</anchorfile>
+            <anchor>insertRecord</anchor>
+            <arglist>(int row, const QSqlRecord &amp;record)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>bool</type>
+            <name>setRecord</name>
+            <anchorfile>qsqltablemodel.html</anchorfile>
+            <anchor>setRecord</anchor>
+            <arglist>(int row, const QSqlRecord &amp;values)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual void</type>
+            <name>revertRow</name>
+            <anchorfile>qsqltablemodel.html</anchorfile>
+            <anchor>revertRow</anchor>
+            <arglist>(int row)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual bool</type>
+            <name>select</name>
+            <anchorfile>qsqltablemodel.html</anchorfile>
+            <anchor>select</anchor>
+            <arglist>()</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual bool</type>
+            <name>selectRow</name>
+            <anchorfile>qsqltablemodel.html</anchorfile>
+            <anchor>selectRow</anchor>
+            <arglist>(int row)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual bool</type>
+            <name>submit</name>
+            <anchorfile>qsqltablemodel.html</anchorfile>
+            <anchor>submit</anchor>
+            <arglist>()</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="virtual" static="no">
+            <type>virtual void</type>
+            <name>revert</name>
+            <anchorfile>qsqltablemodel.html</anchorfile>
+            <anchor>revert</anchor>
+            <arglist>()</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>bool</type>
+            <name>submitAll</name>
+            <anchorfile>qsqltablemodel.html</anchorfile>
+            <anchor>submitAll</anchor>
+            <arglist>()</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>revertAll</name>
+            <anchorfile>qsqltablemodel.html</anchorfile>
+            <anchor>revertAll</anchor>
+            <arglist>()</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>primeInsert</name>
+            <anchorfile>qsqltablemodel.html</anchorfile>
+            <anchor>primeInsert</anchor>
+            <arglist>(int row, QSqlRecord &amp;record)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>beforeInsert</name>
+            <anchorfile>qsqltablemodel.html</anchorfile>
+            <anchor>beforeInsert</anchor>
+            <arglist>(QSqlRecord &amp;record)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>beforeUpdate</name>
+            <anchorfile>qsqltablemodel.html</anchorfile>
+            <anchor>beforeUpdate</anchor>
+            <arglist>(int row, QSqlRecord &amp;record)</arglist>
+        </member>
+        <member kind="function" protection="public" virtualness="non" static="no">
+            <type>void</type>
+            <name>beforeDelete</name>
+            <anchorfile>qsqltablemodel.html</anchorfile>
+            <anchor>beforeDelete</anchor>
+            <arglist>(int row)</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="virtual" static="no">
+            <type>virtual bool</type>
+            <name>updateRowInTable</name>
+            <anchorfile>qsqltablemodel.html</anchorfile>
+            <anchor>updateRowInTable</anchor>
+            <arglist>(int row, const QSqlRecord &amp;values)</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="virtual" static="no">
+            <type>virtual bool</type>
+            <name>insertRowIntoTable</name>
+            <anchorfile>qsqltablemodel.html</anchorfile>
+            <anchor>insertRowIntoTable</anchor>
+            <arglist>(const QSqlRecord &amp;values)</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="virtual" static="no">
+            <type>virtual bool</type>
+            <name>deleteRowFromTable</name>
+            <anchorfile>qsqltablemodel.html</anchorfile>
+            <anchor>deleteRowFromTable</anchor>
+            <arglist>(int row)</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="virtual" static="no">
+            <type>virtual QString</type>
+            <name>orderByClause</name>
+            <anchorfile>qsqltablemodel.html</anchorfile>
+            <anchor>orderByClause</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="virtual" static="no">
+            <type>virtual QString</type>
+            <name>selectStatement</name>
+            <anchorfile>qsqltablemodel.html</anchorfile>
+            <anchor>selectStatement</anchor>
+            <arglist>() const</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="non" static="no">
+            <type>void</type>
+            <name>setPrimaryKey</name>
+            <anchorfile>qsqltablemodel.html</anchorfile>
+            <anchor>setPrimaryKey</anchor>
+            <arglist>(const QSqlIndex &amp;key)</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="non" static="no">
+            <type>void</type>
+            <name>setQuery</name>
+            <anchorfile>qsqltablemodel.html</anchorfile>
+            <anchor>setQuery</anchor>
+            <arglist>(const QSqlQuery &amp;query)</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="virtual" static="no">
+            <type>virtual QModelIndex</type>
+            <name>indexInQuery</name>
+            <anchorfile>qsqltablemodel.html</anchorfile>
+            <anchor>indexInQuery</anchor>
+            <arglist>(const QModelIndex &amp;item) const</arglist>
+        </member>
+        <member kind="function" protection="protected" virtualness="non" static="no">
+            <type>QSqlRecord</type>
+            <name>primaryValues</name>
+            <anchorfile>qsqltablemodel.html</anchorfile>
+            <anchor>primaryValues</anchor>
+            <arglist>(int row) const</arglist>
+        </member>
+    </compound>
+</tagfile>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- sql-programming.qdoc -->
+  <title>SQL Programming | Qt SQL 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtsql-index.html">Qt SQL</a></td><td >SQL Programming</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+  <link rel="next" href="sql-connecting.html" />
+<p class="naviNextPrevious headerNavi">
+<a class="nextPage" href="sql-connecting.html">Connecting to Databases</a>
+</p><p/>
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#topics">Topics:</a></li>
+<li class="level1"><a href="#database-classes">Database Classes</a></li>
+<li class="level2"><a href="#driver-layer">Driver Layer</a></li>
+<li class="level2"><a href="#sql-api-layer">SQL API Layer</a></li>
+<li class="level2"><a href="#user-interface-layer">User Interface Layer</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">SQL Programming</h1>
+<span class="subtitle"></span>
+<!-- $$$sql-programming.html-description -->
+<div class="descr"> <a name="details"></a>
+<p>This overview assumes that you have at least a basic knowledge of SQL. You should be able to understand simple <code>SELECT</code>, <code>INSERT</code>, <code>UPDATE</code>, and <code>DELETE</code> statements. Although the <a href="qsqltablemodel.html">QSqlTableModel</a> class provides an interface to database browsing and editing that does not require a knowledge of SQL, a basic understanding of SQL is highly recommended. A standard text covering SQL databases is <i>An Introduction to Database Systems</i> (7th Ed.) by C. J. Date, ISBN 0201385902.</p>
+<a name="topics"></a>
+<h2 id="topics">Topics:</h2>
+<ul>
+<li><a href="sql-programming.html#database-classes">Database Classes</a></li>
+<li><a href="sql-connecting.html">Connecting to Databases</a><ul>
+<li><a href="sql-driver.html">SQL Database Drivers</a></li>
+</ul>
+</li>
+<li><a href="sql-sqlstatements.html">Executing SQL Statements</a><ul>
+<li><a href="sql-types.html">Data Types for Qt-supported Database Systems</a></li>
+</ul>
+</li>
+<li><a href="sql-model.html">Using the SQL Model Classes</a></li>
+<li><a href="sql-presenting.html">Presenting Data in a Table View</a></li>
+<li><a href="sql-forms.html">Creating Data-Aware Forms</a></li>
+</ul>
+<a name="database-classes"></a>
+<h2 id="database-classes">Database Classes</h2>
+<p>These classes provide access to SQL databases.</p>
+<div class="table"><table class="annotated">
+<tr class="odd topAlign"><td class="tblName"><p><a href="qsql.html">QSql</a></p></td><td class="tblDescr"><p>Contains miscellaneous identifiers used throughout the Qt SQL module</p></td></tr>
+<tr class="even topAlign"><td class="tblName"><p><a href="qsqldatabase.html">QSqlDatabase</a></p></td><td class="tblDescr"><p>Represents a connection to a database</p></td></tr>
+<tr class="odd topAlign"><td class="tblName"><p><a href="qsqldriver.html">QSqlDriver</a></p></td><td class="tblDescr"><p>Abstract base class for accessing specific SQL databases</p></td></tr>
+<tr class="even topAlign"><td class="tblName"><p><a href="qsqldrivercreator.html">QSqlDriverCreator</a></p></td><td class="tblDescr"><p>Template class that provides a SQL driver factory for a specific driver type</p></td></tr>
+<tr class="odd topAlign"><td class="tblName"><p><a href="qsqldrivercreatorbase.html">QSqlDriverCreatorBase</a></p></td><td class="tblDescr"><p>The base class for SQL driver factories</p></td></tr>
+<tr class="even topAlign"><td class="tblName"><p><a href="qsqlerror.html">QSqlError</a></p></td><td class="tblDescr"><p>SQL database error information</p></td></tr>
+<tr class="odd topAlign"><td class="tblName"><p><a href="qsqlfield.html">QSqlField</a></p></td><td class="tblDescr"><p>Manipulates the fields in SQL database tables and views</p></td></tr>
+<tr class="even topAlign"><td class="tblName"><p><a href="qsqlindex.html">QSqlIndex</a></p></td><td class="tblDescr"><p>Functions to manipulate and describe database indexes</p></td></tr>
+<tr class="odd topAlign"><td class="tblName"><p><a href="qsqlquery.html">QSqlQuery</a></p></td><td class="tblDescr"><p>Means of executing and manipulating SQL statements</p></td></tr>
+<tr class="even topAlign"><td class="tblName"><p><a href="qsqlquerymodel.html">QSqlQueryModel</a></p></td><td class="tblDescr"><p>Read-only data model for SQL result sets</p></td></tr>
+<tr class="odd topAlign"><td class="tblName"><p><a href="qsqlrecord.html">QSqlRecord</a></p></td><td class="tblDescr"><p>Encapsulates a database record</p></td></tr>
+<tr class="even topAlign"><td class="tblName"><p><a href="qsqlrelationaltablemodel.html">QSqlRelationalTableModel</a></p></td><td class="tblDescr"><p>Editable data model for a single database table, with foreign key support</p></td></tr>
+<tr class="odd topAlign"><td class="tblName"><p><a href="qsqlresult.html">QSqlResult</a></p></td><td class="tblDescr"><p>Abstract interface for accessing data from specific SQL databases</p></td></tr>
+<tr class="even topAlign"><td class="tblName"><p><a href="qsqltablemodel.html">QSqlTableModel</a></p></td><td class="tblDescr"><p>Editable data model for a single database table</p></td></tr>
+</table></div>
+<p>The SQL classes are divided into three layers:</p>
+<a name="driver-layer"></a>
+<h3 >Driver Layer</h3>
+<p>This comprises the classes <a href="qsqldriver.html">QSqlDriver</a>, <a href="qsqldrivercreator.html">QSqlDriverCreator</a>, <a href="qsqldrivercreatorbase.html">QSqlDriverCreatorBase</a>, <a href="qsqldriverplugin.html">QSqlDriverPlugin</a>, and <a href="qsqlresult.html">QSqlResult</a>.</p>
+<p>This layer provides the low-level bridge between the specific databases and the SQL API layer. See <a href="sql-driver.html">SQL Database Drivers</a> for more information.</p>
+<a name="sql-api-layer"></a>
+<h3 >SQL API Layer</h3>
+<p>These classes provide access to databases. Connections are made using the <a href="qsqldatabase.html">QSqlDatabase</a> class. Database interaction is achieved by using the <a href="qsqlquery.html">QSqlQuery</a> class. In addition to <a href="qsqldatabase.html">QSqlDatabase</a> and <a href="qsqlquery.html">QSqlQuery</a>, the SQL API layer is supported by <a href="qsqlerror.html">QSqlError</a>, <a href="qsqlfield.html">QSqlField</a>, <a href="qsqlindex.html">QSqlIndex</a>, and <a href="qsqlrecord.html">QSqlRecord</a>.</p>
+<a name="user-interface-layer"></a>
+<h3 >User Interface Layer</h3>
+<p>These classes link the data from a database to data-aware widgets. They include <a href="qsqlquerymodel.html">QSqlQueryModel</a>, <a href="qsqltablemodel.html">QSqlTableModel</a>, and <a href="qsqlrelationaltablemodel.html">QSqlRelationalTableModel</a>. These classes are designed to work with Qt's <a href="../qtwidgets/model-view-programming.html">model/view framework</a>.</p>
+<p>Note that a <a href="../qtcore/qcoreapplication.html">QCoreApplication</a> object must be instantiated before using any of these classes.</p>
+</div>
+<!-- @@@sql-programming.html -->
+<p class="naviNextPrevious footerNavi">
+<a class="nextPage" href="sql-connecting.html">Connecting to Databases</a>
+</p>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

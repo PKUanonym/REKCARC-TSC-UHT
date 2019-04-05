@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qsslkey_p.cpp -->
+  <title>QSslKey Class | Qt Network 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtnetwork-index.html">Qt Network</a></td><td ><a href="qtnetwork-module.html">C++ Classes</a></td><td >QSslKey</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">QSslKey Class</h1>
+<!-- $$$QSslKey-brief -->
+<p>The <a href="qsslkey.html">QSslKey</a> class provides an interface for private and public keys. <a href="#details">More...</a></p>
+<!-- @@@QSslKey -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign">   <span class="preprocessor">#include &lt;QSslKey&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> qmake:</td><td class="memItemRight bottomAlign"> QT += network</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Since:</td><td class="memItemRight bottomAlign">  Qt 4.3</td></tr></table></div><ul>
+<li><a href="qsslkey-members.html">List of all members, including inherited members</a></li>
+</ul>
+<p><b>Note:</b> All functions in this class are <a href="../qtdoc/threads-reentrancy.html">reentrant</a>.</p>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qsslkey.html#QSslKey">QSslKey</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qsslkey.html#QSslKey-1">QSslKey</a></b>(const QByteArray &amp;<i>encoded</i>, QSsl::KeyAlgorithm <i>algorithm</i>, QSsl::EncodingFormat <i>encoding</i> = QSsl::Pem, QSsl::KeyType <i>type</i> = QSsl::PrivateKey, const QByteArray &amp;<i>passPhrase</i> = QByteArray())</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qsslkey.html#QSslKey-2">QSslKey</a></b>(QIODevice *<i>device</i>, QSsl::KeyAlgorithm <i>algorithm</i>, QSsl::EncodingFormat <i>encoding</i> = QSsl::Pem, QSsl::KeyType <i>type</i> = QSsl::PrivateKey, const QByteArray &amp;<i>passPhrase</i> = QByteArray())</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qsslkey.html#QSslKey-3">QSslKey</a></b>(Qt::HANDLE <i>handle</i>, QSsl::KeyType <i>type</i> = QSsl::PrivateKey)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qsslkey.html#QSslKey-4">QSslKey</a></b>(const QSslKey &amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qsslkey.html#dtor.QSslKey">~QSslKey</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QSsl::KeyAlgorithm </td><td class="memItemRight bottomAlign"><b><a href="qsslkey.html#algorithm">algorithm</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qsslkey.html#clear">clear</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> Qt::HANDLE </td><td class="memItemRight bottomAlign"><b><a href="qsslkey.html#handle">handle</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qsslkey.html#isNull">isNull</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="qsslkey.html#length">length</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qsslkey.html#swap">swap</a></b>(QSslKey &amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QByteArray </td><td class="memItemRight bottomAlign"><b><a href="qsslkey.html#toDer">toDer</a></b>(const QByteArray &amp;<i>passPhrase</i> = QByteArray()) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QByteArray </td><td class="memItemRight bottomAlign"><b><a href="qsslkey.html#toPem">toPem</a></b>(const QByteArray &amp;<i>passPhrase</i> = QByteArray()) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QSsl::KeyType </td><td class="memItemRight bottomAlign"><b><a href="qsslkey.html#type">type</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qsslkey.html#operator-not-eq">operator!=</a></b>(const QSslKey &amp;<i>other</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QSslKey &amp;</td><td class="memItemRight bottomAlign"><b><a href="qsslkey.html#operator-eq">operator=</a></b>(QSslKey &amp;&amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QSslKey &amp;</td><td class="memItemRight bottomAlign"><b><a href="qsslkey.html#operator-eq-1">operator=</a></b>(const QSslKey &amp;<i>other</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qsslkey.html#operator-eq-eq">operator==</a></b>(const QSslKey &amp;<i>other</i>) const</td></tr>
+</table></div>
+<a name="details"></a>
+<!-- $$$QSslKey-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="qsslkey.html">QSslKey</a> class provides an interface for private and public keys.</p>
+<p><a href="qsslkey.html">QSslKey</a> provides a simple API for managing keys.</p>
+</div>
+<p><b>See also </b><a href="qsslsocket.html">QSslSocket</a>, <a href="qsslcertificate.html">QSslCertificate</a>, and <a href="qsslcipher.html">QSslCipher</a>.</p>
+<!-- @@@QSslKey -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$QSslKey[overload1]$$$QSslKey -->
+<h3 class="fn" id="QSslKey"><a name="QSslKey"></a>QSslKey::<span class="name">QSslKey</span>()</h3>
+<p>Constructs a null key.</p>
+<p><b>See also </b><a href="qsslkey.html#isNull">isNull</a>().</p>
+<!-- @@@QSslKey -->
+<!-- $$$QSslKey$$$QSslKeyconstQByteArray&QSsl::KeyAlgorithmQSsl::EncodingFormatQSsl::KeyTypeconstQByteArray& -->
+<h3 class="fn" id="QSslKey-1"><a name="QSslKey-1"></a>QSslKey::<span class="name">QSslKey</span>(const <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> &amp;<i>encoded</i>, <span class="type"><a href="qssl.html#KeyAlgorithm-enum">QSsl::KeyAlgorithm</a></span> <i>algorithm</i>, <span class="type"><a href="qssl.html#EncodingFormat-enum">QSsl::EncodingFormat</a></span> <i>encoding</i> = QSsl::Pem, <span class="type"><a href="qssl.html#KeyType-enum">QSsl::KeyType</a></span> <i>type</i> = QSsl::PrivateKey, const <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> &amp;<i>passPhrase</i> = QByteArray())</h3>
+<p>Constructs a <a href="qsslkey.html">QSslKey</a> by decoding the string in the byte array <i>encoded</i> using a specified <i>algorithm</i> and <i>encoding</i> format. <i>type</i> specifies whether the key is public or private.</p>
+<p>If the key is encoded as PEM and encrypted, <i>passPhrase</i> is used to decrypt it.</p>
+<p>After construction, use <a href="qsslkey.html#isNull">isNull</a>() to check if <i>encoded</i> contained a valid key.</p>
+<!-- @@@QSslKey -->
+<!-- $$$QSslKey$$$QSslKeyQIODevice*QSsl::KeyAlgorithmQSsl::EncodingFormatQSsl::KeyTypeconstQByteArray& -->
+<h3 class="fn" id="QSslKey-2"><a name="QSslKey-2"></a>QSslKey::<span class="name">QSslKey</span>(<span class="type"><a href="../qtcore/qiodevice.html">QIODevice</a></span> *<i>device</i>, <span class="type"><a href="qssl.html#KeyAlgorithm-enum">QSsl::KeyAlgorithm</a></span> <i>algorithm</i>, <span class="type"><a href="qssl.html#EncodingFormat-enum">QSsl::EncodingFormat</a></span> <i>encoding</i> = QSsl::Pem, <span class="type"><a href="qssl.html#KeyType-enum">QSsl::KeyType</a></span> <i>type</i> = QSsl::PrivateKey, const <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> &amp;<i>passPhrase</i> = QByteArray())</h3>
+<p>Constructs a <a href="qsslkey.html">QSslKey</a> by reading and decoding data from a <i>device</i> using a specified <i>algorithm</i> and <i>encoding</i> format. <i>type</i> specifies whether the key is public or private.</p>
+<p>If the key is encoded as PEM and encrypted, <i>passPhrase</i> is used to decrypt it.</p>
+<p>After construction, use <a href="qsslkey.html#isNull">isNull</a>() to check if <i>device</i> provided a valid key.</p>
+<!-- @@@QSslKey -->
+<!-- $$$QSslKey$$$QSslKeyQt::HANDLEQSsl::KeyType -->
+<h3 class="fn" id="QSslKey-3"><a name="QSslKey-3"></a>QSslKey::<span class="name">QSslKey</span>(<span class="type"><a href="../qtcore/qt.html#HANDLE-typedef">Qt::HANDLE</a></span> <i>handle</i>, <span class="type"><a href="qssl.html#KeyType-enum">QSsl::KeyType</a></span> <i>type</i> = QSsl::PrivateKey)</h3>
+<p>Constructs a <a href="qsslkey.html">QSslKey</a> from a valid native key <i>handle</i>. <i>type</i> specifies whether the key is public or private.</p>
+<p><a href="qsslkey.html">QSslKey</a> will take ownership for this key and you must not free the key using the native library. The algorithm used when creating a key from a handle will always be <a href="qssl.html#KeyAlgorithm-enum">QSsl::Opaque</a>.</p>
+<p>This function was introduced in  Qt 5.0.</p>
+<!-- @@@QSslKey -->
+<!-- $$$QSslKey$$$QSslKeyconstQSslKey& -->
+<h3 class="fn" id="QSslKey-4"><a name="QSslKey-4"></a>QSslKey::<span class="name">QSslKey</span>(const <span class="type"><a href="qsslkey.html#QSslKey">QSslKey</a></span> &amp;<i>other</i>)</h3>
+<p>Constructs an identical copy of <i>other</i>.</p>
+<!-- @@@QSslKey -->
+<!-- $$$~QSslKey[overload1]$$$~QSslKey -->
+<h3 class="fn" id="dtor.QSslKey"><a name="dtor.QSslKey"></a>QSslKey::<span class="name">~QSslKey</span>()</h3>
+<p>Destroys the <a href="qsslkey.html">QSslKey</a> object.</p>
+<!-- @@@~QSslKey -->
+<!-- $$$algorithm[overload1]$$$algorithm -->
+<h3 class="fn" id="algorithm"><a name="algorithm"></a><span class="type"><a href="qssl.html#KeyAlgorithm-enum">QSsl::KeyAlgorithm</a></span> QSslKey::<span class="name">algorithm</span>() const</h3>
+<p>Returns the key algorithm.</p>
+<!-- @@@algorithm -->
+<!-- $$$clear[overload1]$$$clear -->
+<h3 class="fn" id="clear"><a name="clear"></a><span class="type">void</span> QSslKey::<span class="name">clear</span>()</h3>
+<p>Clears the contents of this key, making it a null key.</p>
+<p><b>See also </b><a href="qsslkey.html#isNull">isNull</a>().</p>
+<!-- @@@clear -->
+<!-- $$$handle[overload1]$$$handle -->
+<h3 class="fn" id="handle"><a name="handle"></a><span class="type"><a href="../qtcore/qt.html#HANDLE-typedef">Qt::HANDLE</a></span> QSslKey::<span class="name">handle</span>() const</h3>
+<p>Returns a pointer to the native key handle, if it is available; otherwise a null pointer is returned.</p>
+<p>You can use this handle together with the native API to access extended information about the key.</p>
+<p><b>Warning:</b> Use of this function has a high probability of being non-portable, and its return value may vary across platforms, and between minor Qt releases.</p>
+<!-- @@@handle -->
+<!-- $$$isNull[overload1]$$$isNull -->
+<h3 class="fn" id="isNull"><a name="isNull"></a><span class="type">bool</span> QSslKey::<span class="name">isNull</span>() const</h3>
+<p>Returns <code>true</code> if this is a null key; otherwise false.</p>
+<p><b>See also </b><a href="qsslkey.html#clear">clear</a>().</p>
+<!-- @@@isNull -->
+<!-- $$$length[overload1]$$$length -->
+<h3 class="fn" id="length"><a name="length"></a><span class="type">int</span> QSslKey::<span class="name">length</span>() const</h3>
+<p>Returns the length of the key in bits, or -1 if the key is null.</p>
+<!-- @@@length -->
+<!-- $$$swap[overload1]$$$swapQSslKey& -->
+<h3 class="fn" id="swap"><a name="swap"></a><span class="type">void</span> QSslKey::<span class="name">swap</span>(<span class="type"><a href="qsslkey.html#QSslKey">QSslKey</a></span> &amp;<i>other</i>)</h3>
+<p>Swaps this ssl key with <i>other</i>. This function is very fast and never fails.</p>
+<p>This function was introduced in  Qt 5.0.</p>
+<!-- @@@swap -->
+<!-- $$$toDer[overload1]$$$toDerconstQByteArray& -->
+<h3 class="fn" id="toDer"><a name="toDer"></a><span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> QSslKey::<span class="name">toDer</span>(const <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> &amp;<i>passPhrase</i> = QByteArray()) const</h3>
+<p>Returns the key in DER encoding.</p>
+<p>The <i>passPhrase</i> argument should be omitted as DER cannot be encrypted. It will be removed in a future version of Qt.</p>
+<!-- @@@toDer -->
+<!-- $$$toPem[overload1]$$$toPemconstQByteArray& -->
+<h3 class="fn" id="toPem"><a name="toPem"></a><span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> QSslKey::<span class="name">toPem</span>(const <span class="type"><a href="../qtcore/qbytearray.html">QByteArray</a></span> &amp;<i>passPhrase</i> = QByteArray()) const</h3>
+<p>Returns the key in PEM encoding. The result is encrypted with <i>passPhrase</i> if the key is a private key and <i>passPhrase</i> is non-empty.</p>
+<!-- @@@toPem -->
+<!-- $$$type[overload1]$$$type -->
+<h3 class="fn" id="type"><a name="type"></a><span class="type"><a href="qssl.html#KeyType-enum">QSsl::KeyType</a></span> QSslKey::<span class="name">type</span>() const</h3>
+<p>Returns the type of the key (i.e&#x2e;, PublicKey or PrivateKey).</p>
+<!-- @@@type -->
+<!-- $$$operator!=[overload1]$$$operator!=constQSslKey& -->
+<h3 class="fn" id="operator-not-eq"><a name="operator-not-eq"></a><span class="type">bool</span> QSslKey::<span class="name">operator!=</span>(const <span class="type"><a href="qsslkey.html#QSslKey">QSslKey</a></span> &amp;<i>other</i>) const</h3>
+<p>Returns <code>true</code> if this key is not equal to key <i>other</i>; otherwise returns <code>false</code>.</p>
+<!-- @@@operator!= -->
+<!-- $$$operator=[overload1]$$$operator=QSslKey&& -->
+<h3 class="fn" id="operator-eq"><a name="operator-eq"></a><span class="type"><a href="qsslkey.html#QSslKey">QSslKey</a></span> &amp;QSslKey::<span class="name">operator=</span>(<span class="type"><a href="qsslkey.html#QSslKey">QSslKey</a></span> &amp;&amp;<i>other</i>)</h3>
+<p>Move-assignment operator.</p><!-- @@@operator= -->
+<!-- $$$operator=$$$operator=constQSslKey& -->
+<h3 class="fn" id="operator-eq-1"><a name="operator-eq-1"></a><span class="type"><a href="qsslkey.html#QSslKey">QSslKey</a></span> &amp;QSslKey::<span class="name">operator=</span>(const <span class="type"><a href="qsslkey.html#QSslKey">QSslKey</a></span> &amp;<i>other</i>)</h3>
+<p>Copies the contents of <i>other</i> into this key, making the two keys identical.</p>
+<p>Returns a reference to this <a href="qsslkey.html">QSslKey</a>.</p>
+<!-- @@@operator= -->
+<!-- $$$operator==[overload1]$$$operator==constQSslKey& -->
+<h3 class="fn" id="operator-eq-eq"><a name="operator-eq-eq"></a><span class="type">bool</span> QSslKey::<span class="name">operator==</span>(const <span class="type"><a href="qsslkey.html#QSslKey">QSslKey</a></span> &amp;<i>other</i>) const</h3>
+<p>Returns <code>true</code> if this key is equal to <i>other</i>; otherwise returns <code>false</code>.</p>
+<!-- @@@operator== -->
+</div>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>

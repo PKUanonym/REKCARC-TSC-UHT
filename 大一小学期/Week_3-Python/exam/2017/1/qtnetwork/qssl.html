@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qssl.cpp -->
+  <title>QSsl Namespace | Qt Network 5.6</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-6">Qt 5.6</a></td><td ><a href="qtnetwork-index.html">Qt Network</a></td><td >QSsl Namespace</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.6.1 Reference Documentation</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#types">Types</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">QSsl Namespace</h1>
+<!-- $$$QSsl-brief -->
+<p>The <a href="qssl.html">QSsl</a> namespace declares enums common to all SSL classes in Qt Network. <a href="#details">More...</a></p>
+<!-- @@@QSsl -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign">   <span class="preprocessor">#include &lt;QSsl&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> qmake:</td><td class="memItemRight bottomAlign"> QT += network</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Since:</td><td class="memItemRight bottomAlign">  Qt 4.3</td></tr></table></div><ul>
+<li><a href="qssl-obsolete.html">Obsolete members</a></li>
+</ul>
+<a name="types"></a>
+<h2 id="types">Types</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="qssl.html#AlternativeNameEntryType-enum">AlternativeNameEntryType</a></b> { EmailEntry, DnsEntry }</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="qssl.html#EncodingFormat-enum">EncodingFormat</a></b> { Pem, Der }</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="qssl.html#KeyAlgorithm-enum">KeyAlgorithm</a></b> { Rsa, Dsa, Ec, Opaque }</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="qssl.html#KeyType-enum">KeyType</a></b> { PrivateKey, PublicKey }</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="qssl.html#SslOption-enum">SslOption</a></b> { SslOptionDisableEmptyFragments, SslOptionDisableSessionTickets, SslOptionDisableCompression, SslOptionDisableServerNameIndication, ..., SslOptionDisableServerCipherPreference }</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> flags </td><td class="memItemRight bottomAlign"><b><a href="qssl.html#SslOption-enum">SslOptions</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="qssl.html#SslProtocol-enum">SslProtocol</a></b> { SslV3, SslV2, TlsV1_0, TlsV1_0OrLater, ..., SecureProtocols }</td></tr>
+</table></div>
+<a name="details"></a>
+<!-- $$$QSsl-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="qssl.html">QSsl</a> namespace declares enums common to all SSL classes in Qt Network.</p>
+</div>
+<!-- @@@QSsl -->
+<div class="types">
+<h2>Type Documentation</h2>
+<!-- $$$AlternativeNameEntryType$$$EmailEntry$$$DnsEntry -->
+<h3 class="fn" id="AlternativeNameEntryType-enum"><a name="AlternativeNameEntryType-enum"></a>enum QSsl::<span class="name">AlternativeNameEntryType</span></h3>
+<p>Describes the key types for alternative name entries in <a href="qsslcertificate.html">QSslCertificate</a>.</p>
+<div class="table"><table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td class="topAlign"><code>QSsl::EmailEntry</code></td><td class="topAlign tblval"><code>0</code></td><td class="topAlign">An email entry; the entry contains an email address that the certificate is valid for.</td></tr>
+<tr><td class="topAlign"><code>QSsl::DnsEntry</code></td><td class="topAlign tblval"><code>1</code></td><td class="topAlign">A DNS host name entry; the entry contains a host name entry that the certificate is valid for. The entry may contain wildcards.</td></tr>
+</table></div>
+<p><b>Note: </b>In Qt 4, this enum was called <code>AlternateNameEntryType</code>. That name is deprecated in Qt 5.</p><p><b>See also </b><a href="qsslcertificate.html#subjectAlternativeNames">QSslCertificate::subjectAlternativeNames</a>().</p>
+<!-- @@@AlternativeNameEntryType -->
+<!-- $$$EncodingFormat$$$Pem$$$Der -->
+<h3 class="fn" id="EncodingFormat-enum"><a name="EncodingFormat-enum"></a>enum QSsl::<span class="name">EncodingFormat</span></h3>
+<p>Describes supported encoding formats for certificates and keys.</p>
+<div class="table"><table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td class="topAlign"><code>QSsl::Pem</code></td><td class="topAlign tblval"><code>0</code></td><td class="topAlign">The PEM format.</td></tr>
+<tr><td class="topAlign"><code>QSsl::Der</code></td><td class="topAlign tblval"><code>1</code></td><td class="topAlign">The DER format.</td></tr>
+</table></div>
+<!-- @@@EncodingFormat -->
+<!-- $$$KeyAlgorithm$$$Opaque$$$Rsa$$$Dsa$$$Ec -->
+<h3 class="fn" id="KeyAlgorithm-enum"><a name="KeyAlgorithm-enum"></a>enum QSsl::<span class="name">KeyAlgorithm</span></h3>
+<p>Describes the different key algorithms supported by <a href="qsslkey.html">QSslKey</a>.</p>
+<div class="table"><table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td class="topAlign"><code>QSsl::Rsa</code></td><td class="topAlign tblval"><code>1</code></td><td class="topAlign">The RSA algorithm.</td></tr>
+<tr><td class="topAlign"><code>QSsl::Dsa</code></td><td class="topAlign tblval"><code>2</code></td><td class="topAlign">The DSA algorithm.</td></tr>
+<tr><td class="topAlign"><code>QSsl::Ec</code></td><td class="topAlign tblval"><code>3</code></td><td class="topAlign">The Elliptic Curve algorithm</td></tr>
+<tr><td class="topAlign"><code>QSsl::Opaque</code></td><td class="topAlign tblval"><code>0</code></td><td class="topAlign">A key that should be treated as a 'black box' by <a href="qsslkey.html">QSslKey</a>.</td></tr>
+</table></div>
+<p>The opaque key facility allows applications to add support for facilities such as PKCS#11 that Qt does not currently offer natively.</p>
+<!-- @@@KeyAlgorithm -->
+<!-- $$$KeyType$$$PrivateKey$$$PublicKey -->
+<h3 class="fn" id="KeyType-enum"><a name="KeyType-enum"></a>enum QSsl::<span class="name">KeyType</span></h3>
+<p>Describes the two types of keys <a href="qsslkey.html">QSslKey</a> supports.</p>
+<div class="table"><table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td class="topAlign"><code>QSsl::PrivateKey</code></td><td class="topAlign tblval"><code>0</code></td><td class="topAlign">A private key.</td></tr>
+<tr><td class="topAlign"><code>QSsl::PublicKey</code></td><td class="topAlign tblval"><code>1</code></td><td class="topAlign">A public key.</td></tr>
+</table></div>
+<!-- @@@KeyType -->
+<!-- $$$SslOption$$$SslOptionDisableEmptyFragments$$$SslOptionDisableSessionTickets$$$SslOptionDisableCompression$$$SslOptionDisableServerNameIndication$$$SslOptionDisableLegacyRenegotiation$$$SslOptionDisableSessionSharing$$$SslOptionDisableSessionPersistence$$$SslOptionDisableServerCipherPreference -->
+<h3 class="flags" id="SslOption-enum"><a name="SslOption-enum"></a>enum QSsl::<span class="name">SslOption</span><br/>flags QSsl::<span class="name">SslOptions</span></h3>
+<p>Describes the options that can be used to control the details of SSL behaviour. These options are generally used to turn features off to work around buggy servers.</p>
+<div class="table"><table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td class="topAlign"><code>QSsl::SslOptionDisableEmptyFragments</code></td><td class="topAlign tblval"><code>0x01</code></td><td class="topAlign">Disables the insertion of empty fragments into the data when using block ciphers. When enabled, this prevents some attacks (such as the BEAST attack), however it is incompatible with some servers.</td></tr>
+<tr><td class="topAlign"><code>QSsl::SslOptionDisableSessionTickets</code></td><td class="topAlign tblval"><code>0x02</code></td><td class="topAlign">Disables the SSL session ticket extension. This can cause slower connection setup, however some servers are not compatible with the extension.</td></tr>
+<tr><td class="topAlign"><code>QSsl::SslOptionDisableCompression</code></td><td class="topAlign tblval"><code>0x04</code></td><td class="topAlign">Disables the SSL compression extension. When enabled, this allows the data being passed over SSL to be compressed, however some servers are not compatible with this extension.</td></tr>
+<tr><td class="topAlign"><code>QSsl::SslOptionDisableServerNameIndication</code></td><td class="topAlign tblval"><code>0x08</code></td><td class="topAlign">Disables the SSL server name indication extension. When enabled, this tells the server the virtual host being accessed allowing it to respond with the correct certificate.</td></tr>
+<tr><td class="topAlign"><code>QSsl::SslOptionDisableLegacyRenegotiation</code></td><td class="topAlign tblval"><code>0x10</code></td><td class="topAlign">Disables the older insecure mechanism for renegotiating the connection parameters. When enabled, this option can allow connections for legacy servers, but it introduces the possibility that an attacker could inject plaintext into the SSL session.</td></tr>
+<tr><td class="topAlign"><code>QSsl::SslOptionDisableSessionSharing</code></td><td class="topAlign tblval"><code>0x20</code></td><td class="topAlign">Disables SSL session sharing via the session ID handshake attribute.</td></tr>
+<tr><td class="topAlign"><code>QSsl::SslOptionDisableSessionPersistence</code></td><td class="topAlign tblval"><code>0x40</code></td><td class="topAlign">Disables storing the SSL session in ASN.1 format as returned by <a href="qsslconfiguration.html#sessionTicket">QSslConfiguration::sessionTicket</a>(). Enabling this feature adds memory overhead of approximately 1K per used session ticket.</td></tr>
+<tr><td class="topAlign"><code>QSsl::SslOptionDisableServerCipherPreference</code></td><td class="topAlign tblval"><code>0x80</code></td><td class="topAlign">Disables selecting the cipher chosen based on the servers preferences rather than the order ciphers were sent by the client. This option is only relevant to server sockets, and is only honored by the OpenSSL backend.</td></tr>
+</table></div>
+<p>By default, SslOptionDisableEmptyFragments is turned on since this causes problems with a large number of servers. SslOptionDisableLegacyRenegotiation is also turned on, since it introduces a security risk. SslOptionDisableCompression is turned on to prevent the attack publicised by CRIME. SslOptionDisableSessionPersistence is turned on to optimize memory usage. The other options are turned off.</p>
+<p><b>Note: </b>Availability of above options depends on the version of the SSL backend in use.</p><p>The SslOptions type is a typedef for <a href="../qtcore/qflags.html">QFlags</a>&lt;SslOption&gt;. It stores an OR combination of SslOption values.</p>
+<!-- @@@SslOption -->
+<!-- $$$SslProtocol$$$SslV3$$$SslV2$$$TlsV1_0$$$TlsV1$$$TlsV1_1$$$TlsV1_2$$$AnyProtocol$$$TlsV1SslV3$$$SecureProtocols$$$TlsV1_0OrLater$$$TlsV1_1OrLater$$$TlsV1_2OrLater$$$UnknownProtocol -->
+<h3 class="fn" id="SslProtocol-enum"><a name="SslProtocol-enum"></a>enum QSsl::<span class="name">SslProtocol</span></h3>
+<p>Describes the protocol of the cipher.</p>
+<div class="table"><table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td class="topAlign"><code>QSsl::SslV3</code></td><td class="topAlign tblval"><code>0</code></td><td class="topAlign">SSLv3</td></tr>
+<tr><td class="topAlign"><code>QSsl::SslV2</code></td><td class="topAlign tblval"><code>1</code></td><td class="topAlign">SSLv2</td></tr>
+<tr><td class="topAlign"><code>QSsl::TlsV1_0</code></td><td class="topAlign tblval"><code>2</code></td><td class="topAlign">TLSv1.0</td></tr>
+<tr><td class="topAlign"><code>QSsl::TlsV1_0OrLater</code></td><td class="topAlign tblval">?</td><td class="topAlign">TLSv1.0 and later versions. This option is not available when using the <a href="../qtdoc/build-sources.html#winrt">WinRT</a> backend due to platform limitations.</td></tr>
+<tr><td class="topAlign"><code>QSsl::TlsV1</code></td><td class="topAlign tblval"><code>TlsV1_0</code></td><td class="topAlign">Obsolete, means the same as TlsV1_0</td></tr>
+<tr><td class="topAlign"><code>QSsl::TlsV1_1</code></td><td class="topAlign tblval">?</td><td class="topAlign">TLSv1.1</td></tr>
+<tr><td class="topAlign"><code>QSsl::TlsV1_1OrLater</code></td><td class="topAlign tblval">?</td><td class="topAlign">TLSv1.1 and later versions. This option is not available when using the <a href="../qtdoc/build-sources.html#winrt">WinRT</a> backend due to platform limitations.</td></tr>
+<tr><td class="topAlign"><code>QSsl::TlsV1_2</code></td><td class="topAlign tblval">?</td><td class="topAlign">TLSv1.2</td></tr>
+<tr><td class="topAlign"><code>QSsl::TlsV1_2OrLater</code></td><td class="topAlign tblval">?</td><td class="topAlign">TLSv1.2 and later versions. This option is not available when using the <a href="../qtdoc/build-sources.html#winrt">WinRT</a> backend due to platform limitations.</td></tr>
+<tr><td class="topAlign"><code>QSsl::UnknownProtocol</code></td><td class="topAlign tblval"><code>-1</code></td><td class="topAlign">The cipher's protocol cannot be determined.</td></tr>
+<tr><td class="topAlign"><code>QSsl::AnyProtocol</code></td><td class="topAlign tblval">?</td><td class="topAlign">The socket understands SSLv2, SSLv3, and TLSv1.0&#x2e; This value is used by <a href="qsslsocket.html">QSslSocket</a> only.</td></tr>
+<tr><td class="topAlign"><code>QSsl::TlsV1SslV3</code></td><td class="topAlign tblval">?</td><td class="topAlign">On the client side, this will send a TLS 1.0 Client Hello, enabling TLSv1_0 and SSLv3 connections. On the server side, this will enable both SSLv3 and TLSv1_0 connections.</td></tr>
+<tr><td class="topAlign"><code>QSsl::SecureProtocols</code></td><td class="topAlign tblval">?</td><td class="topAlign">The default option, using protocols known to be secure; currently behaves similar to TlsV1Ssl3 except denying SSLv3 connections that does not upgrade to TLS.</td></tr>
+</table></div>
+<p><b>Note: </b>most servers understand both SSL and TLS, but it is recommended to use TLS only for security reasons. However, SSL and TLS are not compatible with each other: if you get unexpected handshake failures, verify that you chose the correct setting for your protocol.</p><!-- @@@SslProtocol -->
+</div>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> 2016 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br>    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </p>
+</div>
+</body>
+</html>
