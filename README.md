@@ -12,7 +12,7 @@
 
 若要下载单个文件夹，复制该文件夹的网址，粘贴入[DownGit](https://minhaskamal.github.io/DownGit/#/home)中，选择download即可
 
-感谢对本项目贡献的同学：[Trinkle23897](https://github.com/trinkle23897)、[LJSthu](https://github.com/ljsthu)、[shyoshyo](https://github.com/shyoshyo)、[wuhaozhe](https://github.com/wuhaozhe)、[choumartin1234](https://github.com/choumartin1234)、[FztTony](https://github.com/FztTony/)、[VicaYang](https://github.com/VicaYang/)、[duzx16](https://github.com/duzx16/)、[zerotrac](https://github.com/zerotrac)、[gjz010](https://github.com/gjz010/)、[Recursion](https://github.com/RecursionSheep)、[linusboyle](https://github.com/linusboyle)、[namasikanam](https://github.com/namasikanam)、[JamesZhengYuyu](https://github.com/JamesZhengYuyu)、[zx1239856](https://github.com/zx1239856)、[yaoqs](https://github.com/yaoqs)、[heheda12345](https://github.com/heheda12345)……以及电脑前的您！
+感谢对本项目贡献的同学：[Trinkle23897](https://github.com/trinkle23897)、[LJSthu](https://github.com/ljsthu)、[shyoshyo](https://github.com/shyoshyo)、[wuhaozhe](https://github.com/wuhaozhe)、[choumartin1234](https://github.com/choumartin1234)、[FztTony](https://github.com/FztTony/)、[VicaYang](https://github.com/VicaYang/)、[duzx16](https://github.com/duzx16/)、[zerotrac](https://github.com/zerotrac)、[gjz010](https://github.com/gjz010/)、[Recursion](https://github.com/RecursionSheep)、[linusboyle](https://github.com/linusboyle)、[namasikanam](https://github.com/namasikanam)、[JamesZhengYuyu](https://github.com/JamesZhengYuyu)、[zx1239856](https://github.com/zx1239856)、[yaoqs](https://github.com/yaoqs)、[heheda12345](https://github.com/heheda12345)、[MashPlant](https://github.com/MashPlant)……以及电脑前的您！
 
 ## 前言
 
