@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+        {% csrf_token %}
+{#将提交到login函数的表单内容在这里展示#}
+    <h1>信息列表</h1>
+    <table border="1">
+            <thead><tr>
+    <th>姓名</th><th>性别</th><th>日期</th><th>邮箱</th>
+    </tr></thead><tbody>
+        {% for item in data %}
+            <tr>
+                <td>{{ item.name  }}</td>
+                <td>{{ item.sex  }}</td>
+                <td>{{ item.date  }}</td>
+                <td>{{ item.email }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+</body>
+</html>
