@@ -1,0 +1,788 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>668</width>
+    <height>515</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>668</width>
+    <height>515</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>668</width>
+    <height>515</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Sudoku Game - Powered by n+e</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="res.qrc">
+    <normaloff>:/fig/sudoku</normaloff>:/fig/sudoku</iconset>
+  </property>
+  <property name="autoFillBackground">
+   <bool>true</bool>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="QWidget" name="gridLayoutWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>480</x>
+      <y>310</y>
+      <width>111</width>
+      <height>141</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout_2">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+    </layout>
+   </widget>
+   <widget class="QTableWidget" name="tableWidget">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>50</y>
+      <width>404</width>
+      <height>404</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="Line" name="line">
+    <property name="geometry">
+     <rect>
+      <x>470</x>
+      <y>160</y>
+      <width>131</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="Line" name="line_2">
+    <property name="geometry">
+     <rect>
+      <x>470</x>
+      <y>280</y>
+      <width>131</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>480</x>
+      <y>50</y>
+      <width>111</width>
+      <height>95</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QPushButton" name="pushButton_2">
+       <property name="focusPolicy">
+        <enum>Qt::ClickFocus</enum>
+       </property>
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgba(85, 170, 255, 150);</string>
+       </property>
+       <property name="text">
+        <string>Start</string>
+       </property>
+       <property name="flat">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton">
+       <property name="focusPolicy">
+        <enum>Qt::ClickFocus</enum>
+       </property>
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgba(85, 170, 255, 150);</string>
+       </property>
+       <property name="text">
+        <string>Tips</string>
+       </property>
+       <property name="flat">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_3">
+       <property name="focusPolicy">
+        <enum>Qt::ClickFocus</enum>
+       </property>
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgba(85, 170, 255, 150);</string>
+       </property>
+       <property name="text">
+        <string>Solve</string>
+       </property>
+       <property name="flat">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>60</y>
+      <width>20</width>
+      <height>381</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_5">
+     <property name="spacing">
+      <number>24</number>
+     </property>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <property name="spacing">
+        <number>22</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>A</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>B</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>C</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <property name="spacing">
+        <number>22</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="label_4">
+         <property name="text">
+          <string>D</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_5">
+         <property name="text">
+          <string>E</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_6">
+         <property name="text">
+          <string>F</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <property name="spacing">
+        <number>22</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="label_7">
+         <property name="text">
+          <string>G</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_8">
+         <property name="text">
+          <string>H</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_9">
+         <property name="text">
+          <string>I</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>20</y>
+      <width>365</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <property name="spacing">
+      <number>39</number>
+     </property>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <property name="spacing">
+        <number>33</number>
+       </property>
+       <property name="sizeConstraint">
+        <enum>QLayout::SetMinimumSize</enum>
+       </property>
+       <item>
+        <widget class="QLabel" name="label_10">
+         <property name="text">
+          <string>1</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_11">
+         <property name="text">
+          <string>2</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_12">
+         <property name="text">
+          <string>3</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <property name="spacing">
+        <number>33</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="label_13">
+         <property name="text">
+          <string>4</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_14">
+         <property name="text">
+          <string>5</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_15">
+         <property name="text">
+          <string>6</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <property name="spacing">
+        <number>33</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="label_16">
+         <property name="text">
+          <string>7</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_17">
+         <property name="text">
+          <string>8</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_18">
+         <property name="text">
+          <string>9</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QLabel" name="label_19">
+    <property name="geometry">
+     <rect>
+      <x>470</x>
+      <y>185</y>
+      <width>67</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Timer&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QLCDNumber" name="timer">
+    <property name="geometry">
+     <rect>
+      <x>490</x>
+      <y>213</y>
+      <width>101</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>0</width>
+      <height>41</height>
+     </size>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>668</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuNew_Game">
+    <property name="title">
+     <string>&amp;New Game</string>
+    </property>
+    <widget class="QMenu" name="menuEasy_2">
+     <property name="title">
+      <string>Easy</string>
+     </property>
+     <addaction name="actionLv_1"/>
+     <addaction name="actionLv_2"/>
+     <addaction name="actionLv_3"/>
+     <addaction name="actionLv_4"/>
+     <addaction name="actionRandom"/>
+    </widget>
+    <widget class="QMenu" name="menuNormal_2">
+     <property name="title">
+      <string>Normal</string>
+     </property>
+     <addaction name="actionLv_5"/>
+     <addaction name="actionLv_6"/>
+     <addaction name="actionLv_7"/>
+     <addaction name="actionLv_8"/>
+     <addaction name="actionRandom_2"/>
+    </widget>
+    <widget class="QMenu" name="menuHard_2">
+     <property name="title">
+      <string>Hard</string>
+     </property>
+     <addaction name="actionLv_9"/>
+     <addaction name="actionLv_10"/>
+     <addaction name="actionLv_11"/>
+     <addaction name="actionLv_12"/>
+     <addaction name="actionRandom_3"/>
+    </widget>
+    <widget class="QMenu" name="menuCrazy">
+     <property name="title">
+      <string>Crazy</string>
+     </property>
+     <addaction name="actionLv_13"/>
+     <addaction name="actionLv_14"/>
+     <addaction name="actionLv_15"/>
+     <addaction name="actionLv_16"/>
+     <addaction name="actionRandom_4"/>
+    </widget>
+    <widget class="QMenu" name="menuCustom">
+     <property name="title">
+      <string>Custom</string>
+     </property>
+     <addaction name="actionInput_Sudoku_Game"/>
+    </widget>
+    <addaction name="menuEasy_2"/>
+    <addaction name="menuNormal_2"/>
+    <addaction name="menuHard_2"/>
+    <addaction name="menuCrazy"/>
+    <addaction name="menuCustom"/>
+   </widget>
+   <addaction name="menuNew_Game"/>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="floatable">
+    <bool>true</bool>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>LeftToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionInfo"/>
+   <addaction name="actionPause"/>
+   <addaction name="actionUndo"/>
+   <addaction name="actionRedo"/>
+   <addaction name="actionReset"/>
+   <addaction name="actionMusic"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionInfo">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/fig/sudoku</normaloff>:/fig/sudoku</iconset>
+   </property>
+   <property name="text">
+    <string>info</string>
+   </property>
+   <property name="toolTip">
+    <string>Infomation</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+I</string>
+   </property>
+  </action>
+  <action name="actionStart">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/fig/play</normaloff>:/fig/play</iconset>
+   </property>
+   <property name="text">
+    <string>start</string>
+   </property>
+  </action>
+  <action name="actionUndo">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/fig/prev</normaloff>:/fig/prev</iconset>
+   </property>
+   <property name="text">
+    <string>undo</string>
+   </property>
+   <property name="toolTip">
+    <string>Undo</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Z</string>
+   </property>
+  </action>
+  <action name="actionReset">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/fig/previous</normaloff>:/fig/previous</iconset>
+   </property>
+   <property name="text">
+    <string>reset</string>
+   </property>
+   <property name="toolTip">
+    <string>Reset to initial</string>
+   </property>
+  </action>
+  <action name="actionPause">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/fig/pause</normaloff>:/fig/pause</iconset>
+   </property>
+   <property name="text">
+    <string>pause</string>
+   </property>
+   <property name="toolTip">
+    <string>Pause</string>
+   </property>
+   <property name="shortcut">
+    <string>Space</string>
+   </property>
+  </action>
+  <action name="actionRedo">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/fig/next</normaloff>:/fig/next</iconset>
+   </property>
+   <property name="text">
+    <string>redo</string>
+   </property>
+   <property name="toolTip">
+    <string>Redo</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Y</string>
+   </property>
+  </action>
+  <action name="actionNew">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/fig/shuffle</normaloff>:/fig/shuffle</iconset>
+   </property>
+   <property name="text">
+    <string>new</string>
+   </property>
+   <property name="toolTip">
+    <string>New game</string>
+   </property>
+  </action>
+  <action name="actionDelete">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/fig/minus</normaloff>:/fig/minus</iconset>
+   </property>
+   <property name="text">
+    <string>delete</string>
+   </property>
+   <property name="toolTip">
+    <string>Delete numbers in selected grid</string>
+   </property>
+  </action>
+  <action name="actionSolve">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/fig/calc</normaloff>:/fig/calc</iconset>
+   </property>
+   <property name="text">
+    <string>solve</string>
+   </property>
+   <property name="toolTip">
+    <string>Auto solve</string>
+   </property>
+  </action>
+  <action name="actionLevel_13">
+   <property name="text">
+    <string>Level 1</string>
+   </property>
+  </action>
+  <action name="actionLevel_2">
+   <property name="text">
+    <string>Level 2</string>
+   </property>
+  </action>
+  <action name="actionLevel_21">
+   <property name="text">
+    <string>Level 1</string>
+   </property>
+  </action>
+  <action name="actionLevel_22">
+   <property name="text">
+    <string>Level 2</string>
+   </property>
+  </action>
+  <action name="actionLevel_5">
+   <property name="text">
+    <string>Level 3</string>
+   </property>
+  </action>
+  <action name="actionLevel_23">
+   <property name="text">
+    <string>Level 3</string>
+   </property>
+  </action>
+  <action name="actionLevel_7">
+   <property name="text">
+    <string>Level 1</string>
+   </property>
+  </action>
+  <action name="actionLevel_8">
+   <property name="text">
+    <string>Level 2</string>
+   </property>
+  </action>
+  <action name="actionLevel_9">
+   <property name="text">
+    <string>Level 3</string>
+   </property>
+  </action>
+  <action name="actionLevel_10">
+   <property name="text">
+    <string>Level 4</string>
+   </property>
+  </action>
+  <action name="actionLevel_24">
+   <property name="text">
+    <string>Level 4</string>
+   </property>
+  </action>
+  <action name="actionLevel_12">
+   <property name="text">
+    <string>Level 4</string>
+   </property>
+  </action>
+  <action name="actionInput_sudoku_game">
+   <property name="text">
+    <string>Input sudoku game</string>
+   </property>
+  </action>
+  <action name="actionLv_1">
+   <property name="text">
+    <string>Lv.1</string>
+   </property>
+  </action>
+  <action name="actionLv_2">
+   <property name="text">
+    <string>Lv.2</string>
+   </property>
+  </action>
+  <action name="actionLv_3">
+   <property name="text">
+    <string>Lv.3</string>
+   </property>
+  </action>
+  <action name="actionLv_4">
+   <property name="text">
+    <string>Lv.4</string>
+   </property>
+  </action>
+  <action name="actionLv_5">
+   <property name="text">
+    <string>Lv.1</string>
+   </property>
+  </action>
+  <action name="actionLv_6">
+   <property name="text">
+    <string>Lv.2</string>
+   </property>
+  </action>
+  <action name="actionLv_7">
+   <property name="text">
+    <string>Lv.3</string>
+   </property>
+  </action>
+  <action name="actionLv_8">
+   <property name="text">
+    <string>Lv.4</string>
+   </property>
+  </action>
+  <action name="actionLv_9">
+   <property name="text">
+    <string>Lv.1</string>
+   </property>
+  </action>
+  <action name="actionLv_10">
+   <property name="text">
+    <string>Lv.2</string>
+   </property>
+  </action>
+  <action name="actionLv_11">
+   <property name="text">
+    <string>Lv.3</string>
+   </property>
+  </action>
+  <action name="actionLv_12">
+   <property name="text">
+    <string>Lv.4</string>
+   </property>
+  </action>
+  <action name="actionRandom">
+   <property name="text">
+    <string>Random</string>
+   </property>
+  </action>
+  <action name="actionRandom_2">
+   <property name="text">
+    <string>Random</string>
+   </property>
+  </action>
+  <action name="actionRandom_3">
+   <property name="text">
+    <string>Random</string>
+   </property>
+  </action>
+  <action name="actionLv_13">
+   <property name="text">
+    <string>Lv.1</string>
+   </property>
+  </action>
+  <action name="actionLv_14">
+   <property name="text">
+    <string>Lv.2</string>
+   </property>
+  </action>
+  <action name="actionLv_15">
+   <property name="text">
+    <string>Lv.3</string>
+   </property>
+  </action>
+  <action name="actionLv_16">
+   <property name="text">
+    <string>Lv.4</string>
+   </property>
+  </action>
+  <action name="actionRandom_4">
+   <property name="text">
+    <string>Random</string>
+   </property>
+  </action>
+  <action name="actionInput_Sudoku_Game">
+   <property name="text">
+    <string>Input Sudoku Game</string>
+   </property>
+  </action>
+  <action name="actionMusic">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/fig/mute</normaloff>:/fig/mute</iconset>
+   </property>
+   <property name="text">
+    <string>music</string>
+   </property>
+   <property name="toolTip">
+    <string>Play music</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+M</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <tabstops>
+  <tabstop>pushButton_2</tabstop>
+  <tabstop>pushButton</tabstop>
+  <tabstop>pushButton_3</tabstop>
+ </tabstops>
+ <resources>
+  <include location="res.qrc"/>
+ </resources>
+ <connections/>
+</ui>
