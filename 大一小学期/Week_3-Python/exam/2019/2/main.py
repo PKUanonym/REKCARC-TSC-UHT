@@ -6,14 +6,13 @@ import string
 
 from html_table_parser import HTMLTableParser
 
-with open('origin.html', 'r', encoding='utf-8') as f:
-    text = f.read()
 
-p = HTMLTableParser()
-p.feed(text)
+if __name__ == '__main__':
+    with open('origin.html', 'r', encoding='utf-8') as f:
+        text = f.read()
 
-if True:
-    # if __name__ == '__main__':
+    p = HTMLTableParser()
+    p.feed(text)
 
     # task 1
     tables = p.tables
