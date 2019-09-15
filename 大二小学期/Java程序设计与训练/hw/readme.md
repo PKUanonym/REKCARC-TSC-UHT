@@ -3,3 +3,5 @@
 https://github.com/Harry-Chen/TrivialNews-Client
 
 https://github.com/Trinkle23897/simple-news-android-app
+
+https://github.com/chenweize1998/Android-News-App
