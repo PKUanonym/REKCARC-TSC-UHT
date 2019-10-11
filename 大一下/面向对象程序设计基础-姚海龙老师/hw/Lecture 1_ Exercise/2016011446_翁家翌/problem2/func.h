@@ -1,1 +1,0 @@
-void posynomial(int, char const **);

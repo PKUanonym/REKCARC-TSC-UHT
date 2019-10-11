@@ -12,7 +12,7 @@
 
 若要下载单个文件夹，复制该文件夹的网址，粘贴入[DownGit](https://minhaskamal.github.io/DownGit/#/home)中，选择download即可
 
-感谢对本项目贡献的同学：[Trinkle23897](https://github.com/trinkle23897)、[LJSthu](https://github.com/ljsthu)、[shyoshyo](https://github.com/shyoshyo)、[wuhaozhe](https://github.com/wuhaozhe)、[choumartin1234](https://github.com/choumartin1234)、[FztTony](https://github.com/FztTony/)、[VicaYang](https://github.com/VicaYang/)、[duzx16](https://github.com/duzx16/)、[zerotrac](https://github.com/zerotrac)、[gjz010](https://github.com/gjz010/)……以及电脑前的您！
+感谢对本项目贡献的同学：[Trinkle23897](https://github.com/trinkle23897)、[LJSthu](https://github.com/ljsthu)、[shyoshyo](https://github.com/shyoshyo)、[wuhaozhe](https://github.com/wuhaozhe)、[choumartin1234](https://github.com/choumartin1234)、[FztTony](https://github.com/FztTony/)、[VicaYang](https://github.com/VicaYang/)、[duzx16](https://github.com/duzx16/)、[zerotrac](https://github.com/zerotrac)、[gjz010](https://github.com/gjz010/)、[Recursion](https://github.com/RecursionSheep)、[linusboyle](https://github.com/linusboyle)、[namasikanam](https://github.com/namasikanam)、[JamesZhengYuyu](https://github.com/JamesZhengYuyu)、[zx1239856](https://github.com/zx1239856)、[yaoqs](https://github.com/yaoqs)、[heheda12345](https://github.com/heheda12345)、[MashPlant](https://github.com/MashPlant)、[lwpie](https://github.com/lwpie)、[cht33](https://github.com/cht33)、[chenweize1998](https://github.com/chenweize1998)……以及电脑前的您！
 
 ## 前言
 
@@ -20,7 +20,9 @@
 
 ## 目录
 
-本项目收录的内容见 [收录内容.md](收录内容.md)
+本项目收录的内容见 [收录内容](收录内容.md)
+
+本项目大部分课程的参考书目见 [参考书目](参考书目.md)
 
 ## 贡献
 
@@ -30,7 +32,7 @@ Issue、PR、纠错、资料、选课/考试攻略，完全欢迎！来自大家
 
 如果希望匿名贡献，可以email至此邮箱，注明"REKCARC-TSC-UHT"即可：PKUanonymous@qq.com
 
-贡献方法见 [贡献方法.md](贡献方法.md)
+贡献方法见 [贡献方法](贡献方法.md)
 
 ## 许可
 
@@ -40,7 +42,7 @@ Issue、PR、纠错、资料、选课/考试攻略，完全欢迎！来自大家
 
 其他部分的版权归属于其各自的作者。资料仅供参考，请自己判断其适用性。
 
-## Warning
+## 附录
 
 ### 清华大学学生纪律处分管理规定实施细则
 
@@ -55,4 +57,3 @@ Issue、PR、纠错、资料、选课/考试攻略，完全欢迎！来自大家
 （三）期中、期末课程论文抄袭严重的；
 
 （四）在课程学习过程中严重弄虚作假的其他情形。
-
