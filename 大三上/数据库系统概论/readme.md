@@ -8,8 +8,16 @@
 
 ## 大作业
 
-https://github.com/Harry-Chen/SimpleDB
+https://github.com/Harry-Chen/SimpleDB by Shengqi Chen
 
 https://github.com/duzx16/MyDB by Zhengxiao Du and Yifan Wu
 
-https://github.com/gjz010/slowql by gjz010
+https://github.com/gjz010/slowql by Jingzhe Guo
+
+https://github.com/qinyao-he/wxyDB by Qinyao He
+
+https://github.com/wangrunji0408/DBProject by Runji Wang
+
+https://github.com/miskcoo/TrivialDB by Hao Yu
+
+https://github.com/huzecong/rebaseDB by Zecong Hu and Yilong Wei
