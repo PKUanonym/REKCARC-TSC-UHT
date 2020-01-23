@@ -24,4 +24,4 @@ https://github.com/huzecong/rebaseDB by Zecong Hu and Yilong Wei
 
 https://github.com/RecursionSheep/DBNoC by Zhiyang Chen
 
-https://github.com/MashPlant/db by 
+https://github.com/MashPlant/db by Chenhao Li
