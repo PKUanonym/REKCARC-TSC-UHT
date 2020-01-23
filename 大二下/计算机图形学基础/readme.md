@@ -19,3 +19,7 @@
 直接抄学长的OO代码……放弃吧，不现实的，而且效果真的不是很好，加一个feature烦得很
 
 报告详见 https://github.com/Trinkle23897/cg2018/raw/master/hw2/report/report.pdf
+
+# 其他人的
+
+https://github.com/MashPlant/computational_graphics_2019 by Chenhao Li
