@@ -1,0 +1,181 @@
+% UTF-8 encoding
+% Compile with latex+dvipdfmx, pdflatex, xelatex or lualatex
+
+\documentclass[hyperref, UTF8]{ctexart}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{subfigure}
+\usepackage{geometry}
+\usepackage{caption}
+
+\title{离散数学——第一周作业}
+\author{计83  刘轩奇  2018011025}
+\date{2019.09.20}
+
+\geometry{left=2.0cm, right=2.0cm, top=2.5cm, bottom=2.5cm}
+\linespread{0.7}
+\begin{document}
+
+\maketitle
+
+\paragraph{1.1}\label{1.1}
+判断下列语句是否是命题，并对命题确定其真值。\\
+
+\quad (1) 火星上有声明存在。 \\
+
+\quad (3) 香山比华山高。\\
+
+\quad (5) 这盆茉莉花真香！\\
+
+\quad (7) 这句话是错的。\\
+
+\paragraph{答}
+(1) 是命题。但真值尚未确定。(3) 是命题，真值为假。(5) 不是命题。感叹句不是命题。(7) 不是命题。悖论不是命题。
+
+\paragraph{1.2}\label{1.2}
+$P$表示今天很冷，$Q$表示正在下雪。\\
+
+\quad (1) 将下列命题符号化：\\
+
+\qquad 如果正在下雪，那么今天很冷。\\
+
+\qquad 今天很冷当且仅当正在下雪。\\
+
+\qquad 正在下雪的必要条件是今天很冷。\\
+
+\quad (2) 用自然语句叙述下列公式：\\
+
+\qquad $$\lnot(P\lor Q), \lnot P \land \lnot Q, P \to Q,
+\lnot P \lor Q, \lnot \lnot P, \lnot P \leftrightarrow Q. $$
+
+\paragraph{答}
+\subparagraph{(1)}
+$Q\to P, P \leftrightarrow Q, Q\to P.$
+\subparagraph{(2)}
+今天很冷与正在下雪两件事不同时发生；
+今天不冷或没在下雪；
+如果今天很冷，则正在下雪；
+今天不冷或正在下雪；
+今天并非不冷；
+今天不冷当且仅当正在下雪。
+
+\paragraph{1.3}\label{1.3}
+对下列公式直观叙述在什么样的解释下为真，并列写出真值表来验证。\\
+
+\quad (1) $ \lnot (P \lor Q), \lnot P \land Q, \lnot (P \land Q). $ \\
+
+\quad (3) $ (P \to Q) \land (P \leftrightarrow Q). $ \\
+
+\quad (5) $ P \to (Q \to R), P \land Q \to R.$ \\
+
+\paragraph{解} 
+\subparagraph{(1)}
+$\lnot (P \lor Q)$和$ \lnot P \land Q$仅在$P$与$Q$均为$0$时真值为$1$。
+$\lnot (P \land Q)$只需$P, Q$中有一个为$0$，真值即为$1$。真值表如表 1.3(1) 所示。
+\begin{table}[!htb]
+\centering
+\begin{tabular}{ccccc}
+$P$ & $Q$ & $\lnot(P \lor Q)$ & $\lnot P \land \lnot Q$ & $\lnot (P \land Q)$ \\
+0 & 0 & 1                 & 1                       & 1                                               \\
+0 & 1 & 0                 & 0                       & 1                                               \\
+1 & 0 & 0                 & 0                       & 1                                               \\
+1 & 1 & 0                 & 0                       & 0
+\end{tabular}
+\caption*{表 1.3 (1)}
+\end{table}
+
+\subparagraph{(3)}仅当$P$假$Q$真时，公式真值为$1$。真值表如表 1.3(3) 所示。
+\begin{table}[!htb]
+\centering
+\begin{tabular}{ccc}
+$P$ & $Q$ & $(P\to Q)\land \lnot (P \leftrightarrow Q)$ \\
+0 & 0 & 0                                           \\
+0 & 1 & 1                                           \\
+1 & 0 & 0                                           \\
+1 & 1 & 0
+\end{tabular}
+\caption*{表 1.3 (3)}
+\end{table}
+
+\subparagraph{(5)}上述公式仅在$P=Q=1, R=0$时真值为$0$，否则为$1$。真值表如图 1.3(5) 所示。
+\begin{table}[!htb]
+\centering
+\begin{tabular}{ccccc}
+$P$ & $Q$ & $R$ & $P \to (Q \to R)$ & $P \land Q \to R$ \\
+0 & 0 & 0 & 1                 & 1                 \\
+0 & 0 & 1 & 1                 & 1                 \\
+0 & 1 & 0 & 1                 & 1                 \\
+0 & 1 & 1 & 1                 & 1                 \\
+1 & 0 & 0 & 1                 & 1                 \\
+1 & 0 & 1 & 1                 & 1                 \\
+1 & 1 & 0 & 0                 & 0                 \\
+1 & 1 & 1 & 1                 & 1
+\end{tabular}
+\caption*{表 1.3 (5)}
+\end{table} 
+
+\paragraph{1.4}\label{1.4}
+下列公式哪个是重言式，永假式和可满足的，并用代入规则（对重言式）或真值表来验证。\\
+
+\quad (1) $P \to P$. \\
+
+\quad (3) $(Q\to R)\to((P\lor Q)\to (P \lor R)).$  \\
+
+\quad (5) $(P \to Q) \to (\lnot Q \to \lnot P).$ \\
+
+\paragraph{解}
+
+\subparagraph{(1)} 该公式是重言式。
+
+\subparagraph{(3)} 该公式是重言式。真值表如表 1.4(3) 所示。
+
+\begin{table}[!htb]
+\centering
+\begin{tabular}{ccccccccc}
+$P$                                           & 0 & 0 & 0 & 0 & 1 & 1 & 1 & 1 \\
+$Q$                                           & 0 & 0 & 1 & 1 & 0 & 0 & 1 & 1 \\
+$R$                                           & 0 & 1 & 0 & 1 & 0 & 1 & 0 & 1 \\
+$P \lor Q$                                  & 0 & 0 & 1 & 1 & 1 & 1 & 1 & 1 \\
+$P \lor R$                                  & 0 & 1 & 0 & 1 & 1 & 1 & 1 & 1 \\
+$(P \lor Q) \to (P \lor R)$                 & 1 & 1 & 0 & 1 & 1 & 1 & 1 & 1 \\
+$Q \to R$                                   & 1 & 1 & 0 & 1 & 1 & 1 & 0 & 1 \\
+$(Q \to R) \to ((P \lor Q) \to (P \lor R))$ & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1
+\end{tabular}
+\caption*{表 1.4 (3)}
+\end{table}
+
+\subparagraph{(5)} 该公式是重言式。真值表如表 1.4(5) 所示。
+
+\begin{table}[!htb]
+\centering
+\begin{tabular}{ccccc}
+$P$                                   & 0 & 0 & 1 & 1 \\
+$Q$                                   & 0 & 1 & 0 & 1 \\
+$P \to Q$                             & 1 & 1 & 0 & 1 \\
+$\lnot Q \to \lnot P$                 & 1 & 1 & 0 & 1 \\
+$(P \to Q) \to (\lnot Q \to \lnot P)$ & 1 & 1 & 1 & 1
+\end{tabular}
+\caption*{表 1.4 (5)}
+\end{table}
+
+\paragraph{1.5}\label{1.5}
+形式化下列自然语句。\\
+
+\quad (1) 他个子高而且很胖。 \\
+
+\quad (3) 并非“他个子高或很胖”。\\
+
+\quad (5) 他个子高或者他个子矮而很胖。\\
+
+\quad (7) 如果水是清的，那么或者张三能见到池底或者他是个近视眼。\\
+
+\paragraph{解} 
+\subparagraph{(1)}$P\land Q. $ 其中$P: $他很高；$Q: $他很胖。
+\subparagraph{(3)}$\lnot (P \lor Q).$ 定义同上。
+\subparagraph{(5)}$P \lor (\lnot P \land Q).$ 定义同上。
+\subparagraph{(7)}$P\to (Q \land R).$ 其中$P: $水是清的；$Q: $张三能看到池底；$R: $张三是近视眼。
+
+
+
+\end{document} 

@@ -1,0 +1,150 @@
+% UTF-8 encoding
+% Compile with latex+dvipdfmx, pdflatex, xelatex or lualatex
+
+\documentclass[UTF8]{ctexart}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{subfigure}
+\usepackage{geometry}
+\usepackage{caption}
+
+\newcommand{\true}{{\rm T}}
+\newcommand{\false}{{\rm F}}
+\newcommand{\snatural}{\mathbb{N}}
+\newcommand{\sinteger}{\mathbb{Z}}
+\newcommand{\srational}{\mathbb{Q}}
+\newcommand{\sreal}{\mathbb{R}}
+\newcommand{\card}{\rm{card}}
+\newcommand{\modt}{\text{mod }}
+\newcommand{\ran}{{\rm ran}}
+\newcommand{\dom}{{\rm dom}}
+
+\title{离散数学——第十四周作业}
+\author{计83  刘轩奇  2018011025}
+\date{2019.12.15}
+
+\geometry{left=2.0cm, right=2.0cm, top=2.5cm, bottom=2.5cm}
+
+\begin{document}
+
+\maketitle
+
+\paragraph{11.1} \label{11.1}
+    下列关系中哪个是函数？
+
+    (1) $ \{ \langle x,y \rangle |x \in \snatural \land y \in \snatural \land x+y < 10 \} $
+
+    (2) $ \{ \langle x,y \rangle | x \in \sreal \land y \in \sreal \land x = y^2 \} $
+
+    (3) $ \{ \langle x,y \rangle | x \in \sreal \land y \in \sreal \land y = x^2 \} $
+
+\paragraph{答}
+    (1) 不是。$ \langle 1,2 \rangle , \langle 1,1 \rangle \in R$
+
+    (2) 不是。$ \langle 1,-1 \rangle , \langle 1,1 \rangle \in R$
+
+    (3) 是。
+
+\paragraph{11.2} \label{11.2}
+    下列集合是函数吗？如果是，写其定义域和值域。
+
+    (1)  $\{ \langle 1, \langle 2,3 \rangle \rangle , \langle 2, \langle 3,2 \rangle \rangle , \langle 3, \langle 4,1 \rangle \rangle \}$
+
+    (2) $\{ \langle 1, \langle 2,3 \rangle \rangle , \langle 2, \langle 3,4 \rangle \rangle , \langle 1, \langle 3,4 \rangle \rangle \}$
+    
+    (3) $\{ \langle 1, \langle 2,3 \rangle \rangle , \langle 2, \langle 2,3 \rangle \rangle , \langle 3, \langle 2,3 \rangle \rangle \} $
+
+\paragraph{答}
+    (1) 是。$\dom(f) = \{ 1,2,3 \} , \ran(f) = \{ \langle 2,3 \rangle , \langle 3,2 \rangle , \langle 4,1 \rangle \} $
+
+    (2) 不是。
+
+    (3) 是。$\dom(f) = \{ 1,2,3 \} , \ran(f) = \{ \langle 2,3 \rangle \} $
+
+\paragraph{11.3} \label{11.3}
+    设$f,g\in A_B$，且$f \cap g \neq \varnothing$，$f \cap g$和$f \cup g$是函数吗？如果是，证明之；不是则举反例。
+
+\paragraph{答}
+    (1) $f \cap g$不是$A$到$B$的函数，例如
+    $$f= \{ \langle 1,1 \rangle , \langle 2,2 \rangle , \langle 3,3 \rangle \} , g= \{ \langle 1,1 \rangle , \langle 2,3 \rangle , \langle 3,2 \rangle \} $$
+    $f \cap g = \{ \langle 1,1 \rangle \} $不是$\{1,2,3\}$到$\{1,2,3\}$的函数，仅是部分函数。
+    
+    (2) $f \cup g$不是$A$到$B$的函数，同上例，$f \cup g = \{ \langle 1,1 \rangle , \langle 2,2 \rangle , \langle 2,3 \rangle , \langle 3,2 \rangle , \langle 3,3 \rangle \} $不是函数。
+
+\paragraph{11.4} \label{11.4}
+    设$f \cap g \neq \varnothing$，
+    \begin{gather*}
+        f(x) = \left\{\begin{aligned}1, &\text{当}x\text{是奇数} \\ \frac{x}{2}, & \text{当}x\text{是偶数}\end{aligned}\right.
+    \end{gather*}
+    求$f(0), f[ \{ 0 \} ], f[ \{ 0,2,4,6,\cdots \} ], f[ \{ 1,3,5,\cdots \} ], f^ { -1 } [ \{ 2 \} ], f^ { -1 } [ \{ 3,4 \} ]$.
+
+\paragraph{解}
+    \begin{align*}
+        f(0) & = 0 \\
+        f[ \{ 0 \} ] & = \{ 0 \} \\
+        f[ \{ 0,2,4,6,\cdots \} ] & = \{ 0,1,2,3,\cdots \} \\
+        f[ \{ 1,3,5,\cdots \} ] & = \{ 1 \} \\
+        f^{-1}[ \{ 2 \} ] & = \{ 4 \} \\
+        f^{-1} \{ \{ 3,4 \} ] & = \{ 6,8 \} \\ 
+    \end{align*}
+
+\paragraph{11.6} \label{11.6}
+    下列函数是否满射的，单射的，双射的？
+    
+    (1) $f: \sreal \rightarrow \sreal, f(x) = x^2 - 2x - 15$
+
+    (2) $f: \snatural - \{ 0 \} \rightarrow \sreal, f(x) = \log_2 x$
+    
+    (3) $f: \snatural \rightarrow \snatural, f(x) = \left \{ \begin{aligned} 1, & x \text{是奇数} \\ 2, & x \text{是偶数}\end{aligned} \right.$
+    
+    (4) $f: \snatural \rightarrow \snatural, f(x) = x \mod 3 $
+
+\paragraph{答}
+    (1) 不是满射也不是单射的，更不是双射的。
+
+    (2) 不是满射的但是单射的，不是双射的。
+
+    (3) 是满射的但不是单射的，不是双射的。
+
+    (4) 是满射的但不是单射的，不是双射的。
+
+\paragraph{11.7} \label{11.7}
+    设$R$是$A$上的等价关系，$g: A \rightarrow A / R$是自然映射，什么条件下$g$是双射的？
+
+\paragraph{解}
+    $g$是双射的$\Longleftrightarrow$ $R$是恒同映射$I_A$
+    \subparagraph{充分性}
+        $g$是双射的$\Longrightarrow$ $g$是单射的$\Longrightarrow$ $ ( \forall x) ( \forall y)(x \in A \land y \in A \land x \neq y \longrightarrow g(x) \neq g(y))$，而$g$是自然映射，则$ ( \forall x) ( \forall y)(x \in A \land y \in A \land x \neq y \longrightarrow g(x) = [x]_R \neq [y]_R = g(y))$，则$g(x) = \{x\}$。即$R$是恒同映射。
+    \subparagraph{必要性}
+        $\forall x,y$，若$x \in A, y \in A$且$x \neq y$，则$g(x) = \{x\} \neq \{y\} = g(y)$，则$g$是单射的。$\forall B \in A/R, \exists x \in B$，则$g(x)=B$，从而$g(x)$是满射的。从而$g$是双射的。
+
+\paragraph{11.9} \label{11.9}
+    对有限集合$A$和$B$，$|A|=m, |B|=n$，求在下列情况下$m$和$n$应满足的条件。
+
+    (1) 存在从$A$到$B$的单射函数。
+
+    (2) 存在从$A$到$B$的满射函数。
+
+    (3) 存在从$A$到$B$的双射函数。
+
+\paragraph{答}
+    (1) $n \ge m$, (2) $m \ge n$, (3) $m=n$
+    
+\paragraph{11.10} \label{11.10}
+    对下列集合$A$和$B$，构造从$A$到$B$的双射函数。
+
+    (1) $A = \{ 1,2,3 \} , B = \{ a,b,c \} $
+
+    (2) $A = (0,1)\subseteq R, B = (1,3)\subseteq R$
+    
+    (3) $A = P(X), B = X_Y$，$X= \{ a,b,c \} , 其中Y= \{ 0,1 \} $
+
+\paragraph{答}
+    (1) $f: A \rightarrow B, f(1) = a, f(2) = b, f(3) = c$
+
+    (2) $f: A \rightarrow B, f(x) = 1+2x $
+
+    (3) $f: A \rightarrow B, f = \chi_X$，其中$\chi_X$是集合$X$的特征函数。
+
+\end{document} 

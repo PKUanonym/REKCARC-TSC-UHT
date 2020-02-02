@@ -6,7 +6,7 @@
 [![](https://img.shields.io/github/issues-pr-closed-raw/PKUanonym/REKCARC-TSC-UHT.svg?style=flat)](https://github.com/PKUanonym/REKCARC-TSC-UHT/issues)
 ![](https://img.shields.io/github/repo-size/PKUanonym/REKCARC-TSC-UHT.svg?style=flat)
 
-Web page: [REKCARC-TSC-UHT.readthedocs.io](https://REKCARC-TSC-UHT.readthedocs.io)
+Web page [![Documentation Status](https://readthedocs.org/projects/rekcarc-tsc-uht/badge/?version=latest)](https://rekcarc-tsc-uht.readthedocs.io/en/latest/?badge=latest): [REKCARC-TSC-UHT.readthedocs.io](https://REKCARC-TSC-UHT.readthedocs.io)
 
 受[浙江大学相关项目](https://github.com/QSCTech/zju-icicles)启发，创立了本项目。
 

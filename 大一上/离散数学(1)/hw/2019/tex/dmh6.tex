@@ -1,0 +1,110 @@
+% UTF-8 encoding
+% Compile with latex+dvipdfmx, pdflatex, xelatex or lualatex
+
+\documentclass[hyperref, UTF8]{ctexart}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{subfigure}
+\usepackage{geometry}
+\usepackage{caption}
+
+\newcommand{\true}{{\rm T}}
+\newcommand{\false}{{\rm F}}
+\newcommand{\zhyou}{\text{由}}
+\newcommand{\zhfenli}{\text{分离}}
+\newcommand{\zhguijie}{\text{归结}}
+\newcommand{\zhqianti}{\text{前提}}
+\newcommand{\zhzhihuan}{\text{置换}}
+\newcommand{\zhdairu}{\text{代入}}
+\newcommand{\zherqie}{\text{而且}}
+\newcommand{\zhaxiom}{\text{公理}}
+\newcommand{\zhtheorem}{\text{定理}}
+\newcommand{\zhdefinition}{\text{定义}}
+
+\title{离散数学——第七周作业}
+\author{计83  刘轩奇  2018011025}
+\date{2019.10.23}
+
+\geometry{left=2.0cm, right=2.0cm, top=2.5cm, bottom=2.5cm}
+
+\begin{document}
+
+\maketitle
+
+\paragraph{5.1}\label{5.1}
+证明下列等值式和蕴含式
+
+(6) $ ( \exists x)(P(x) \rightarrow Q(x)) = (al x)P(x) \rightarrow ( \exists x)Q(x) $
+
+(8) $ ( \exists x)P(x) \land ( \forall x)Q(x) \Rightarrow ( \exists x)(P(x) \lor Q(x)) $
+
+(10) $ ( \exists z) ( \exists y) ( \exists x)((P(x,z) \rightarrow Q(x,z)) \lor ((R(y,z) \rightarrow S(y,z)) $ 
+
+\qquad $ = ( ( \forall z) ( \forall x)P(x,z) \rightarrow ( \exists z) ( \exists x)Q(x,y)) \lor ( ( \forall z) ( \forall y)R(x,y) \rightarrow ( \exists z) ( \exists y)S(y,z)) $
+
+\paragraph{证}
+(6)
+\begin{align*}
+( \exists x)(P(x) \rightarrow Q(x)) 
+&= ( \exists x)(\lnot P(x) \lor Q(x))
+\\ &= ( \exists x)(\lnot P(x)) \lor ( \exists x)(Q(x))
+\\ &= \lnot ( \forall x)P(x) \lor ( \exists x)Q(x) 
+\\ &= ( \forall x)P(x) \rightarrow ( \exists x)Q(x)
+\end{align*}
+
+(8)
+\begin{align*}
+( \exists x)P(x) \land ( \forall x)Q(x) 
+&= ( \exists x)P(x) \land ( \forall y)Q(y)
+\\ &= ( \exists x)(P(x) \land ( \forall y)Q(y))
+\\ &\Rightarrow ( \exists x)(P(x) \land Q(x))
+\end{align*}
+
+(10)
+\begin{align*}
+& ( \exists z) ( \exists y) ( \exists x)((P(x,z) \rightarrow Q(x,z)) \lor ((R(y,z) \rightarrow S(y,z)) 
+\\ & = ( \exists z) ( \exists y) ( \exists x)((P(x,z) \rightarrow Q(x,z)) \lor ( \exists z) ( \exists y) ( \exists x)(R(y,z) \rightarrow S(y,z))
+\\ & = ( \exists z) ( \exists x)(P(x,z) \rightarrow Q(x,z)) \lor ( \exists z) ( \exists y)(R(y,z) \rightarrow S(y,z))
+\\ & = ( \exists z) ( \exists x)(\lnot P(x,z) \lor Q(x,z)) \lor ( \exists z) ( \exists y)(\lnot R(y,z) \lor S(y,z)) 
+\\ & = ( ( \exists z) ( \exists x) \lnot P(x,z) \lor ( \exists z) ( \exists x) Q(x,z)) \lor ( ( \exists z) ( \exists y) \lnot R(y,z) \lor ( \exists z) ( \exists y)S(y,z))
+\\ & = (\lnot ( \forall z) ( \forall x)P(x,z) \lor ( \exists z) ( \exists x)Q(x,z)) \lor (\lnot ( \forall z) ( \forall y) R(y,z) \lor ( \exists z) ( \exists y)S(y,z))
+\\ & = ( ( \forall z) ( \forall x)P(x,z) \rightarrow ( \exists z) ( \exists x)Q(x,y)) \lor ( ( \forall z) ( \forall y)R(x,y) \rightarrow ( \exists z) ( \exists y)S(y,z))
+\end{align*}
+
+\paragraph{5.2}\label{5.2}
+判断下列各公式哪些是普遍有效的并给出证明，不是普遍有效的举出反例。
+
+(3) $( ( \exists x)P(x) \rightarrow ( \forall x)Q(x)) \rightarrow )(\forall x)P(x) \rightarrow ( \forall x)Q(x)) $
+
+(5) $ ( ( \exists x)P(x) \rightarrow ( \exists x)Q(x)) \rightarrow (\exists x)(P(x) \rightarrow Q(x)) $
+
+(7) $ ( \exists x)P(x) \land ( \exists x)Q(x) \rightarrow ( \exists x)(P(x) \land Q(x)) $
+
+\paragraph{解}
+(3)
+\begin{align*}
+& ( ( \exists x)P(x) \rightarrow ( \forall x)Q(x)) \rightarrow ( \forall x)(P(x) \rightarrow Q(x))
+\\ &= (\lnot ( \exists x)P(x) \lor ( \forall x)(Q(x)) \rightarrow ( \forall x)(P(x) \rightarrow Q(x))
+\\ &= ( ( \forall x) \lnot P(x) \lor ( \forall x)Q(x)) \rightarrow ( \forall x)(P(x) \rightarrow Q(x))
+\\ &= ( ( \forall x) \lnot P(x) \lor ( \forall x)Q(x)) \rightarrow ( \forall x)(\lnot P(x) \lor Q(x))
+\\ &= \true
+\end{align*}
+
+则原公式普遍有效。
+
+(5)
+\begin{align*}
+& ( ( \forall x)P(x) \rightarrow ( \exists x)Q(x)) \rightarrow ( \exists x)(P(x) \rightarrow Q(x))
+\\ &= (\lnot ( \exists x)P(x) \lor ( \exists x)Q(x)) \rightarrow ( \exists x)(\lnot P(x) \lor Q(x))
+\\ &= ( ( \forall x) \lnot P(x) \lor ( \exists x)Q(x)) \rightarrow ( \exists x)(\lnot P(x) \lor Q(x))
+\\ &= ( ( \exists x) \lnot P(x) \rightarrow ( \exists x) \lnot P(x)) \lor ( \exists x)Q(x)
+\\ &= \true \lor ( \exists x)Q(x)
+\\ &= \true 
+\end{align*}
+
+则原公式普遍有效。
+
+(7) 原公式并非普遍有效。例如在论域$\{1,2\}$上，令$P(1)=Q(2)=\true$, $P(2)=Q(1)=\false$, 则原公式真值为$\false$。
+
+\end{document} 

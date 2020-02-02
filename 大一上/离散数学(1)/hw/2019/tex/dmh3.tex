@@ -1,0 +1,212 @@
+% UTF-8 encoding
+% Compile with latex+dvipdfmx, pdflatex, xelatex or lualatex
+
+\documentclass[hyperref, UTF8]{ctexart}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{subfigure}
+\usepackage{geometry}
+\usepackage{caption}
+
+\newcommand{\true}{{\rm T}}
+\newcommand{\false}{{\rm F}}
+
+\title{离散数学——第四周作业}
+\author{计83  刘轩奇  2018011025}
+\date{2019.09.28}
+
+\geometry{left=2.0cm, right=2.0cm, top=2.5cm, bottom=2.5cm}
+\linespread{0.7}
+\begin{document}
+
+\maketitle
+
+\paragraph{2.5}\label{2.5}
+给出下列公式的合取范式、析取范式、主合取范式和主析取范式。并给出所有使公式为真的解释。\\
+
+(3) $ ( \lnot P \lor \lnot Q) \rightarrow (P \leftrightarrow \lnot Q) $ \\
+
+(5) $ P \land (Q \lor ( \lnot P \land R)) $ \\
+
+(7) $ P \rightarrow (Q \land ( \lnot P \leftrightarrow Q)) $ \\
+
+\paragraph{解}
+
+(3)
+\begin{align*}
+( \lnot P \lor \lnot Q) \rightarrow (P \leftrightarrow \lnot Q)
+    &= \lnot ( \lnot P \lor \lnot Q) \lor (P \land \lnot Q) \lor ( \lnot P \land Q) \\
+    &= (P \land Q) \lor (P \land \lnot Q) \lor ( \lnot P \land Q) & \text{(析取范式)} \\
+    &= \lor_{1;2;3} & \text{(主析取范式)} \\
+( \lnot P \lor \lnot Q) \rightarrow (P \leftrightarrow \lnot Q)
+    &= \lnot ( \lnot P \lor \lnot Q) \lor ((P \lor Q) \land ( \lnot P \lor \lnot Q)) \\
+    &= (P \land Q) \lor (( \lnot P \lor \lnot Q) \land (P \lor Q)) \\
+    &= P \lor Q & \text{(合取范式)}\\
+    &= \land _3 & \text{(主合取范式)}
+\end{align*}
+
+该式在$P=\true$或$Q=\true$时为真。\\
+
+(5)
+\begin{align*}
+P \land (Q \lor ( \lnot P \land R))
+    &= P \land (Q \lor \lnot P) \land (Q \lor R) & \text{(合取范式)} \\
+    &= (P \lor (Q \land \lnot Q) \lor (R \land \lnot R)) \land (Q \lor \lnot P \lor (R \land \lnot R)) \\
+    & \quad \land (Q \lor R \lor (P \land \lnot P)) \\
+    &= (P \lor Q \lor R) \land (P \lor Q \lor \lnot R) \land (P \lor \lnot Q \lor R) \\
+    & \quad \land (P \lor \lnot Q \lor \lnot R) \land ( \lnot P \lor Q \lor R) \land ( \lnot P \lor Q \lor \lnot R) \\
+    & \quad \land (P \lor Q \lor R) \land ( \lnot P \lor Q \lor R) \\
+    &= \land _{2;3;4;5;6;7} & \text{(主合取范式)}\\
+    &= \lor _{6;7} & \text{(主析取范式)}\\
+    &= (P \land Q) & \text{(析取范式)}
+\end{align*}
+
+该式在$P=\true$且$Q=\true$时为真。\\
+
+(7)
+\begin{align*}
+P \rightarrow (Q \land ( \lnot P \leftrightarrow Q))
+    &= \lnot P \lor (Q \land (( \lnot P \land Q) \lor (P \land \lnot Q))) \\
+    &= \lnot P \lor (Q \land \lnot P \land Q) \lor (Q \land P \land \lnot Q) \\
+    &= \lnot P \lor (Q \land \lnot P) \\
+    &= \lnot P & \text{(合取范式、析取范式)} \\
+    &= \lor _{0;1} & \text{(主析取范式)} \\
+    &= \land _{0;1} & \text{(主合取范式)}
+\end{align*}
+
+该式在$P=\false$时为真。\\
+
+\paragraph{2.6}\label{2.6}
+分别以$A \to B$永真, $A\land \lnot B$永假以及解释法来证明下列各重言蕴含式$A\Rightarrow B$。\\
+
+\paragraph{证}
+
+(2) $ (P \rightarrow (Q \rightarrow R)) \Rightarrow (P \rightarrow Q) \rightarrow (P \rightarrow R) $ \\
+
+\quad (a) $A \to B$永真
+$$ (P \rightarrow (Q \rightarrow R)) \rightarrow ((P \rightarrow Q) \rightarrow (P \rightarrow R)) = (P \rightarrow (Q \rightarrow R)) \rightarrow (P \rightarrow (Q \rightarrow R)) = \true $$
+
+\quad (b) $A\land \lnot B$永假 \\
+$$ (P \rightarrow (Q \rightarrow R)) \land \lnot ((P \rightarrow Q) \rightarrow (P \rightarrow R)) = (P \rightarrow (Q \rightarrow R)) \land \lnot (P \rightarrow (Q \rightarrow R)) = \false $$
+
+\quad (c) 解释法 \\
+$$P \rightarrow (Q \rightarrow R) = \true $$
+
+\qquad 若$P=\true$则$P \rightarrow Q = \true , (P \rightarrow R) = \true , (P \rightarrow Q) \rightarrow (P \rightarrow R) = \true $。
+
+\qquad 若$P=\false$则$(P \rightarrow Q) \rightarrow (P \rightarrow R)= \true $。
+
+\qquad 综上，蕴含式成立。\\
+
+(4) $ (P \land Q) \rightarrow R \Rightarrow P \rightarrow (Q \rightarrow R) $ \\
+
+\quad (a) $A \to B$永真
+\begin{align*}
+((P \land Q) \rightarrow R) \rightarrow (P \rightarrow (Q \rightarrow R))
+    &= ( \lnot (P \land Q) \lor R) \rightarrow ( \lnot P \lor ( \lnot Q \lor R)) \\
+    &= ( \lnot P \lor \lnot Q \lor R) \rightarrow ( \lnot P \lor \lnot Q \lor R) \\
+    &= \true
+\end{align*}
+
+\quad (b) $A\land \lnot B$永假 \\
+\begin{align*}
+((P \land Q) \rightarrow R) \land \lnot (P \rightarrow (Q \rightarrow R))
+    &= ( \lnot P \lor \lnot Q \lor R) \land \lnot ( \lnot P \lor \lnot Q \lor R) \\
+    &= \false
+\end{align*}
+
+\quad (c) 解释法 \\
+\begin{flalign*}
+& (P \land Q) \rightarrow R= \true \\
+& \therefore \lnot (P \land Q) \lor R= \true \\
+& \therefore P \rightarrow ( \lnot Q \lor R) = \true \\
+& \therefore P \rightarrow (Q \rightarrow R) = \true
+\end{flalign*}
+
+\paragraph{2.7}\label{2.7}
+判断下列推理式是否正确？\\
+
+(9) $ (P \land Q) \rightarrow R \Rightarrow (P \rightarrow R) \land (Q \rightarrow R) $ \\
+
+(11) $ P \rightarrow Q \Rightarrow (P \rightarrow R) \rightarrow (Q \rightarrow R) $ \\
+
+(13) $  \lnot (P \rightarrow Q) \land (Q \rightarrow P) \Rightarrow P \land \lnot Q $ \\
+
+(15) $ (P \rightarrow Q) \land (R \rightarrow Q) \land (S \rightarrow Q) \Rightarrow (P \land R \land \lnot S \rightarrow Q) $ \\
+
+\paragraph{解}
+
+(9)
+\begin{align*}
+((P \land Q) \rightarrow R) \rightarrow ((P \rightarrow R) \land (Q \rightarrow R))
+    &= \lnot ( \lnot (P \land Q) \lor R) \lor (( \lnot P \lor R) \land ( \lnot Q \lor R)) \\
+    &= \lnot ( \lnot P \lor \lnot Q \lor R) \lor ( \lnot P \land Q) \lor R \\
+    &= (P \land Q \land \lnot R) \lor R \lor ( \lnot P \land \lnot Q)
+\end{align*}
+
+当$R=\false, P=\true, Q=\false$时，上式为$\false$，则推理不正确。\\
+
+(11)
+\begin{align*}
+(P \rightarrow Q) \rightarrow ((P \rightarrow R) \rightarrow (Q \rightarrow R))
+    &= \lnot ( \lnot P \lor Q) \lor ( \lnot ( \lnot P \lor R) \lor ( \lnot Q \lor R)) \\
+    &= (P \land \lnot Q) \lor (P \land \lnot R) \lor ( \lnot Q \lor R) \\
+    &= (P \land \lnot Q) \lor \lnot Q \lor R \lor (P \land \lnot R) \\
+    &= \lnot Q \lor R \lor (P \land \lnot R)
+\end{align*}
+
+当$P=\false, Q=\true, R=\false$时，上式为$\false$，则推理不正确。\\
+
+(13)
+设 $\lnot (P \rightarrow Q) \land (Q \rightarrow P)= \true $
+
+\qquad 则 $P \rightarrow Q= \false , Q \rightarrow P= \true $
+
+\qquad 由 $P \rightarrow Q= \false$ 知，$P= \true , Q= \false $
+
+\qquad 则 $P\land \lnot Q=\true$，推理正确。\\
+
+(15) 只要验证 $(P \rightarrow Q) \land (R \rightarrow Q) \land (S \rightarrow Q) \land (P \land R \land \lnot S) \Rightarrow Q$ 即可。
+
+\qquad $P \rightarrow Q = \true, R \rightarrow Q = \true, S \rightarrow Q = \true, P \land R \land \lnot S = \true$ 即 $P=R=\true, S=\false$
+
+\qquad 由 $P \rightarrow Q = \true, P = \true$ 知 $Q = \true$，从而推理正确。
+
+\paragraph{2.8}\label{2.8}
+使用推理规则证明 \\
+
+(4) $ P \lor Q \rightarrow R \land S, S \lor E \rightarrow U \Rightarrow P \rightarrow U $ \\
+
+(6) $  \lnot Q \lor S, (E \rightarrow \lnot U) \rightarrow \lnot S \Rightarrow Q \rightarrow E $ \\
+
+\paragraph{证}
+
+(4) 
+\begin{align*}
+(a) & (P \lor Q) \rightarrow (R \land S) & \text{前提引入} \\ 
+(b) & (S \lor E) \rightarrow U & \text{前提引入} \\ 
+(c) & P & \text{附加前提引入} \\ 
+(d) & P \lor Q & (c)\text{置换} \\ 
+(e) & R \land S & (a)(d)\text{分离} \\
+(f) & S & (e)\text{置换} \\ 
+(g) & S \lor E & (f)\text{置换} \\ 
+(h) & U & (b)(g)\text{分离} \\
+(i) & P \rightarrow U & \text{条件证明规则}
+\end{align*}
+
+(6)
+\begin{align*}
+(a) & \lnot (Q \lor S) & \text{前提引入} \\
+(b) & (E \rightarrow \lnot U) \rightarrow \lnot S & \text{前提引入} \\
+(c) & Q & \text{附加前提引入} \\
+(d) & Q \rightarrow S & (a)\text{置换} \\
+(e) & S & (c)(d)\text{分离} \\
+(f) & S \rightarrow \lnot (E \rightarrow \lnot U) & (b)\text{置换} \\
+(g) & \lnot (E \rightarrow \lnot U) & (e)(f)\text{分离} \\
+(h) & E \land U & (g)\text{置换} \\
+(i) & E & (h) \\
+(j) & Q \rightarrow E & \text{条件证明规则}
+\end{align*}
+
+\end{document} 
