@@ -5,8 +5,9 @@
 [![](https://img.shields.io/github/forks/PKUanonym/REKCARC-TSC-UHT.svg?style=flat)](https://github.com/PKUanonym/REKCARC-TSC-UHT/network/members)
 [![](https://img.shields.io/github/issues-pr-closed-raw/PKUanonym/REKCARC-TSC-UHT.svg?style=flat)](https://github.com/PKUanonym/REKCARC-TSC-UHT/issues)
 ![](https://img.shields.io/github/repo-size/PKUanonym/REKCARC-TSC-UHT.svg?style=flat)
+[![Documentation Status](https://readthedocs.org/projects/rekcarc-tsc-uht/badge/?version=latest)](https://rekcarc-tsc-uht.readthedocs.io/en/latest/?badge=latest)
 
-Web page [![Documentation Status](https://readthedocs.org/projects/rekcarc-tsc-uht/badge/?version=latest)](https://rekcarc-tsc-uht.readthedocs.io/en/latest/?badge=latest): [REKCARC-TSC-UHT.readthedocs.io](https://REKCARC-TSC-UHT.readthedocs.io)
+Web page: [REKCARC-TSC-UHT.readthedocs.io](https://REKCARC-TSC-UHT.readthedocs.io)
 
 受[浙江大学相关项目](https://github.com/QSCTech/zju-icicles)启发，创立了本项目。
 
@@ -16,7 +17,7 @@ Web page [![Documentation Status](https://readthedocs.org/projects/rekcarc-tsc-u
 
 如果您是清华大学学生，可移步 https://git.tsinghua.edu.cn/pkuanonym/REKCARC-TSC-UHT 进行查看并且能节约不少流量。
 
-感谢对本项目贡献的同学：[Trinkle23897](https://github.com/trinkle23897)、[LJSthu](https://github.com/ljsthu)、[shyoshyo](https://github.com/shyoshyo)、[wuhaozhe](https://github.com/wuhaozhe)、[choumartin1234](https://github.com/choumartin1234)、[FztTony](https://github.com/FztTony/)、[VicaYang](https://github.com/VicaYang/)、[duzx16](https://github.com/duzx16/)、[zerotrac](https://github.com/zerotrac)、[gjz010](https://github.com/gjz010/)、[Recursion](https://github.com/RecursionSheep)、[linusboyle](https://github.com/linusboyle)、[namasikanam](https://github.com/namasikanam)、[JamesZhengYuyu](https://github.com/JamesZhengYuyu)、[zx1239856](https://github.com/zx1239856)、[yaoqs](https://github.com/yaoqs)、[heheda12345](https://github.com/heheda12345)、[MashPlant](https://github.com/MashPlant)、[lwpie](https://github.com/lwpie)、[cht33](https://github.com/cht33)、[chenweize1998](https://github.com/chenweize1998)、[will7101](https://github.com/will7101)、[UNIDY2002](https://github.com/UNIDY2002)、[yinhaoxuan](https://github.com/yinhaoxuan)、[zhengkw18](https://github.com/zhengkw18)、[rcy17](https://github.com/rcy17)、[prnake](https://github.com/prnake)、[qky18](https://github.com/qky18)……以及电脑前的您！
+感谢对本项目贡献的同学：[Trinkle23897](https://github.com/trinkle23897)、[LJSthu](https://github.com/ljsthu)、[shyoshyo](https://github.com/shyoshyo)、[wuhaozhe](https://github.com/wuhaozhe)、[choumartin1234](https://github.com/choumartin1234)、[FztTony](https://github.com/FztTony/)、[VicaYang](https://github.com/VicaYang/)、[duzx16](https://github.com/duzx16/)、[zerotrac](https://github.com/zerotrac)、[gjz010](https://github.com/gjz010/)、[Recursion](https://github.com/RecursionSheep)、[linusboyle](https://github.com/linusboyle)、[namasikanam](https://github.com/namasikanam)、[JamesZhengYuyu](https://github.com/JamesZhengYuyu)、[zx1239856](https://github.com/zx1239856)、[yaoqs](https://github.com/yaoqs)、[heheda12345](https://github.com/heheda12345)、[MashPlant](https://github.com/MashPlant)、[lwpie](https://github.com/lwpie)、[cht33](https://github.com/cht33)、[chenweize1998](https://github.com/chenweize1998)、[will7101](https://github.com/will7101)、[UNIDY2002](https://github.com/UNIDY2002)、[yinhaoxuan](https://github.com/yinhaoxuan)、[zhengkw18](https://github.com/zhengkw18)、[rcy17](https://github.com/rcy17)、[prnake](https://github.com/prnake)、[qky18](https://github.com/qky18)、[JamesZFS](https://github.com/JamesZFS)、[EnjoyColin](https://github.com/EnjoyColin)、[3ToThe6](https://github.com/3ToThe6)……以及电脑前的您！
 
 ## 前言
 
