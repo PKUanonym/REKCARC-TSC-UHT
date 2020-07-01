@@ -1,5 +1,7 @@
 ## Tips
 
+update: 2020春本课程已课改，内容改为数据库的基础知识（与数据库系统概论有不少重合）。2020年作业见https://github.com/RecursionSheep/Database-Training-Projects
+
 我觉得lcgg的代码写的太菜了，就把它删了。我的在这里：
 
 https://github.com/Trinkle23897/Personal-Homework/tree/master/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%93%E9%A2%98%E8%AE%AD%E7%BB%83
