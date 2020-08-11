@@ -1,0 +1,176 @@
+% UTF-8 encoding
+% Compile with latex+dvipdfmx, pdflatex, xelatex or lualatex
+
+\documentclass[hyperref, UTF8]{ctexart}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{subfigure}
+\usepackage{geometry}
+\usepackage{caption}
+
+\newcommand{\true}{{\rm T}}
+\newcommand{\false}{{\rm F}}
+\newcommand{\zhyou}{\text{由}}
+\newcommand{\zhfenli}{\text{分离}}
+\newcommand{\zhguijie}{\text{归结}}
+\newcommand{\zhqianti}{\text{前提}}
+\newcommand{\zhzhihuan}{\text{置换}}
+\newcommand{\zhdairu}{\text{代入}}
+\newcommand{\zherqie}{\text{而且}}
+\newcommand{\zhaxiom}{\text{公理}}
+\newcommand{\zhtheorem}{\text{定理}}
+\newcommand{\zhdefinition}{\text{定义}}
+
+\title{离散数学——第六周作业}
+\author{计83  刘轩奇  2018011025}
+\date{2019.10.18}
+
+\geometry{left=2.0cm, right=2.0cm, top=2.5cm, bottom=2.5cm}
+
+\begin{document}
+
+\maketitle
+
+\paragraph{3.3}\label{3.3}
+依自然演绎系统证明
+
+(3) $ A \rightarrow B, A \rightarrow \lnot B \vdash \lnot A $
+
+\paragraph{证} (3) 
+\begin{align*}
+(a) & A \rightarrow B, A \rightarrow \lnot B, A \vdash A & (\text{肯定前提}) \\
+(b) & A \rightarrow B, A \rightarrow \lnot B, A \vdash A \rightarrow B & (\text{肯定前提}) \\
+(c) & A \rightarrow B, A \rightarrow \lnot B, A \vdash A \rightarrow \lnot B & (\text{肯定前提}) \\
+(d) & A \rightarrow B, A \vdash B & (\text{分离规则}) \\
+(e) & A \rightarrow \lnot B, A \vdash \lnot B & (\text{分离规则}) \\
+(f) & A \rightarrow B, A \rightarrow \lnot B, A \vdash B & ((a)(b)(d)\text{传递律}) \\
+(g) & A \rightarrow B, A \rightarrow \lnot B, A \vdash \lnot B & ((a)(c)(e)\text{传递律}) \\
+(h) & A \rightarrow B, A \rightarrow \lnot B \vdash \lnot A & ((f)(g)\text{反证律})
+\end{align*}
+
+\paragraph{4.5}\label{4.5}
+将下列语句符号化
+
+(2) 凡有理数都可写为分数。
+
+(5) 过平面上两个点，有且仅有一条直线通过。
+
+(6) 凡实数都能比较大小。
+
+(7) 在北京工作的人未必都是北京人。
+
+(8) 只有一个北京。
+
+(10) 如果明天天气好，有些学生将去香山。
+
+\paragraph{答}
+
+(2) $P(x): $ $x$是有理数；$Q(x): $ $x$可写成分数。
+
+语句可化为$ ( \forall x)(P(x) \rightarrow Q(x))$。
+
+(5) $P(x): $ $x$是平面上的点；$Q(x): $ $x$是直线；$R(x,y): $ $x$通过$y$。
+
+语句可化为$ ( \forall x) ( \forall y)((P(x) \land P(y) \land \lnot E(x,y))$
+
+(6) $P(x): $ $x$为实数；$Q(x,y): $ $x,y$能比较大小。
+
+语句可化为$ ( \forall x) ( \forall y)((P(x) \land P(y)) \rightarrow Q(x,y))$
+
+(7) $P(x): $ $x$是人；$Q(x): $ $x$在北京工作；$R(x): $ $x$是北京人。
+
+语句可化为$ \lnot ( \forall x)(P(x) \land Q(x) \rightarrow R(x))$
+
+(8) $P(x):$ $x$是北京；$E(x,y): $ $x,y$相同。
+
+语句可化为$ ( \exists x)(P(x) \land ( \forall y)(P(x) \rightarrow E(x,y)))$
+
+(10) $P: $ 明天天气好；$Q(x): $ $x$是学生；$R(x): $ $x$去香山。
+
+语句可化为$ P \rightarrow ( \exists x)(Q(x) \land R(x))$
+
+\paragraph{4.6}\label{4.6}
+设$P(x)$表示x是有理数，$Q(x)$表示$x$是实数，$R(x)$表示$x$是无理数，$L(x)$表示$x$是正整数，$S(x)$表示$x$是偶数，$W(x)$表示$x$是奇数，试将下列公式翻译成自然语句。
+
+(3) $  \lnot ( \forall x )(Q(x) \rightarrow P(x)) $ 
+
+(6) $( \forall x ) (L(x) \rightarrow S(x) \bar \lor W(x)))$ 
+
+(9) $ ( \forall x ) (L(x) \rightarrow P(x)) \land \lnot ( \forall x) (P(x) \rightarrow I(x)) $
+
+\paragraph{答}
+(3) 不是所有实数都是有理数。
+
+(6) 任意正整数不是偶数就是奇数。
+
+(9) 任意正整数都是有理数，但并非所有有理数都是正整数。
+
+\paragraph{4.7}\label{4.7}
+设个体域为$  \{ a, b, c \}  $，试将下列公式写成命题逻辑公式 
+
+(3) $( \forall x )P(x) \land ( \exists x ) Q(x) $
+
+(4) $( \forall x ) (P(x) \rightarrow Q(x))$
+
+(5) $( \forall x ) \lnot P(x) \lor ( \forall x ) P(x)$
+
+\paragraph{答}
+(3) $ P(a) \land P(b) \land P(c) \land (Q(a) \lor Q(b) \lor Q(c)) $
+
+(4) $ (P(a) \rightarrow Q(a)) \land (P(b) \rightarrow Q(b)) \land (P(c) \rightarrow Q(c)) $
+
+(5) $ ( \lnot P(a) \lor P(a)) \land ( \lnot P(b) \lor P(b)) \land ( \lnot P(c) \lor P(c)) $
+
+\paragraph{4.8}\label{4.8}
+判断下列公式是普遍有效的，不可满足的还是可满足的？
+
+(1) $  ( \forall x)P(x) \rightarrow P(y) $ 
+
+(2) $  ( \exists x)(P(x) \land Q(x)) \rightarrow ( ( \exists x)P(x) \land ( \exists x)Q(x)) $ 
+
+(3) $  ( \forall x)P(x) $ 
+
+(4) $ ( \exists x)(P(x) \land \lnot P(x)) $ 
+
+(5) $  ( \forall x)(P(x) \rightarrow Q(x)) $ 
+
+(6) $  ( \forall x)(P(x) \lor \lnot P(x)) $ 
+
+(7) $ ( ( \exists x)P(x) \land ( \exists x)Q(x)) \rightarrow ( \exists x)(P(x) \land Q(x)) $
+
+\paragraph{答} (1) 普遍有效； (2) 普遍有效； (3) 可满足； (4) 不可满足； (5) 可满足； (6) 普遍有效； (7) 可满足。
+
+\paragraph{4.9}\label{4.9}
+给出一个公式，使其在$  \{ 1, 2 \}  $上是可满足的，而在$  \{ 1 \} $上是不可满足的。
+
+\paragraph{答} $P(x): x=2$, 公式: $(\exists x)P(x)$
+
+\paragraph{4.10}\label{4.10}
+设个体域为$ \{ a,b \} $，并对$P(x,y)$设定为$P(a,a)=\true$, $P(a,b)=\false$, $P(b,a)=\false$, $P(b,b)=\true$，计算下列公式的真值。
+
+(3) $  ( \forall x) ( \forall y)P(x,y) $ 
+
+(5) $  ( \exists y) \lnot P(a,y) $ 
+
+(7) $  ( \forall x) ( \forall y)(P(x,y) \rightarrow P(y,x)) $
+
+\paragraph{解}
+(3) $x=a, y=b, P(x,y)=\false$
+
+$ \therefore (\forall x)(\forall y)P(x,y)=\false$
+
+(5) $ y=b, \lnot P(a,y)=\true $
+
+$\therefore (\exists y)\lnot P(a,y)=\true $
+
+(7) 
+\begin{gather*}
+x=a, y=a, P(x,y)=P(y,x)= \true , P(x,y) \rightarrow P(y,x)= \true \\
+x=a, y=b, P(x,y)=P(y,x)= \false , P(x,y) \rightarrow P(y,x)= \true \\
+x=b, y=a, P(x,y)=P(y,x)= \false , P(x,y) \rightarrow P(y,x)= \true \\
+x=b, y=b, P(x,y)=P(y,x)= \true , P(x,y) \rightarrow P(y,x)= \true \\
+\therefore ( \forall x) ( \forall y)(P(x,y) \rightarrow P(y,x))= \true
+\end{gather*}
+
+\end{document} 

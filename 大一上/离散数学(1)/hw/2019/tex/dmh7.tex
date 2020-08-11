@@ -1,0 +1,114 @@
+% UTF-8 encoding
+% Compile with latex+dvipdfmx, pdflatex, xelatex or lualatex
+
+\documentclass[hyperref, UTF8]{ctexart}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{subfigure}
+\usepackage{geometry}
+\usepackage{caption}
+
+\newcommand{\true}{{\rm T}}
+\newcommand{\false}{{\rm F}}
+
+\title{离散数学——第八周作业}
+\author{计83  刘轩奇  2018011025}
+\date{2019.11.01}
+
+\geometry{left=2.0cm, right=2.0cm, top=2.5cm, bottom=2.5cm}
+
+\begin{document}
+
+\maketitle
+
+\paragraph{5.4}\label{5.4}
+求下列(1)到(5)的前束范式，(6)到(8)的$\exists$前束范式，(9)(10)的Skolem范式（只含$\forall$）。
+
+(4) $( \lnot ( \exists x)P(x) \lor ( \forall y)Q(y)) \rightarrow ( \forall z)R(z) $
+
+(8) $ ( \forall x)(P(x) \rightarrow Q(x)) \rightarrow ( ( \exists x)P(x) \rightarrow ( \exists x)Q(x)) $ 
+
+(9) $ ( \forall x)(P(x) \rightarrow ( \exists y)Q(x,y)) \lor ( \forall z)R(z) $
+
+(10) $ ( \exists y) ( \forall y) ( \forall z) ( \exists u) ( \forall v)P(x,y,z,u,v) $
+
+\paragraph{解}
+(4) 
+\begin{align*}
+    & ( \lnot ( \exists x)P(x) \lor ( \forall y)Q(y)) \rightarrow ( \forall z)R(z) \\
+    & = \lnot (\lnot ( \exists x)P(x) \lor ( \forall y)Q(y)) \lor ( \forall z)R(z) \\
+    & = ( ( \exists x)P(x) \land ( \exists y) \lnot Q(y)) \lor ( \forall z)R(z) \\
+    &= ( \exists x) ( \exists y) ( \forall z)(((P(x) \land \lnot Q(y)) \lor R(z))
+\end{align*}
+
+(8) 在普遍有效的意义下
+\begin{align*}
+    & ( \forall x)(P(x) \rightarrow Q(x)) \rightarrow ( ( \exists x)P(x) \rightarrow ( \exists x)Q(x)) \\
+    &= ( \forall x)(\lnot P(x) \lor Q(x)) \rightarrow (\lnot ( \exists x)P(x) \lor ( \exists x)Q(x)) \\
+    &= ( \exists x)(P(x) \land \lnot Q(x)) \lor ( \forall x) \lnot P(x) \lor ( \exists x)Q(x) \\
+    &= ( \exists x) ( \exists z) ( \forall y)((P(x) \land \lnot Q(x)) \lor \lnot P(y) \lor Q(z))
+\end{align*}
+
+(9) 在不可满足的意义下
+\begin{align*}
+    & ( \forall x)(P(x) \rightarrow ( \exists y)Q(x,y)) \lor ( \forall z)R(z) \\
+    &= ( \forall x) ( \exists y) ( \forall z)(\lnot P(x) \lor Q(x,y) \lor R(z)) \\
+    &= ( \forall x) ( \forall z)(\lnot P(x) \lor Q(x,f(x)) \lor R(z))
+\end{align*}
+
+(10) 在不可满足的意义下
+\begin{align*}
+    & ( \exists y) ( \forall y) ( \forall z) ( \exists u) ( \forall v)P(x,y,z,u,v) \\
+    &= ( \forall x) ( \forall z) ( \exists u) ( \forall v)P(x,a,z,u,v) \\
+    &= ( \forall x) ( \forall z) ( \forall v)P(x,a,z,f(x,z),v)
+\end{align*}
+
+\paragraph{5.5}\label{5.5}
+使用推理规则和归结法作推理演算
+
+(1) $ ( \forall x)(P(x) \lor Q(x)) \land ( \forall x)(Q(x) \rightarrow \lnot R(x)) \Rightarrow ( \exists x)(R(x) \rightarrow P(x)) $
+
+(4) 大学里的学生不是本科生就是研究生，有的学生是高材生，John不是研究生但是高材生，从而如果John是学生必是本科生。
+
+\paragraph{解}
+(1)
+\begin{align*}
+    (a) & ( \forall x)(P(x) \lor Q(x)) \land ( \forall x)(Q(x) \rightarrow \lnot R(x)) & \text{Premise} \\
+    (b) & ( \forall x)(P(x) \lor Q(x)) & \text{Simplification of } (a) \\
+    (c) & ( \forall x)(Q(x) \rightarrow \lnot R(x)) & \text{Simplification of } (a) \\
+    (d) & ( \forall x)(R(x) \rightarrow \lnot Q(x)) & \text{Transposition of }(c) \\
+    (e) & ( \forall x)(\lnot Q(x) \rightarrow P(x)) & \text{Material implication of } (b) \\
+    (f) & ( \forall x)(R(x) \rightarrow P(x)) & \text{Hypothetical syllogism of } (d),(e) \\
+    (g) & R(c) \rightarrow P(c) & \text{ Elimination of } \forall \text{ from } (f)\\
+    (h) & ( \exists x)(R(x) \rightarrow P(x)) & \text{ Introduction of } \exists \text{ to } (g) \\
+\end{align*}
+
+(4) $P(x): $ $x$ 是学生，$Q(x): $ $x$ 是本科生，$R(x): $ $x$ 是研究生，$S(x): $ $x$ 是高材生，$a: $ John。
+
+前提：
+\begin{align*}
+    ( \forall x)(P(x) \rightarrow (Q(x) \land \lnot R(x)) \lor (\lnot Q(x) \land R(x))) \\
+    ( \exists x)S(x) \\
+    \lnot R(a) \\
+    S(a)
+\end{align*}
+
+结论：$P(a) \rightarrow Q(a)$
+
+证明：
+\begin{align*}
+    (a) & ( \forall x)(P(x) \rightarrow (Q(x) \land \lnot R(x)) \lor (\lnot Q(x) \land R(x))) & \text{Premise} \\
+    (b) & P(a) \rightarrow (Q(a) \land \lnot R(a)) \lor (\lnot Q(a) \land R(a)) & \text{Elimination of } \forall \text{ from } (a) \\
+    (c) & P(a) & \text{Assumption} \\
+    (d) & (Q(a) \land \lnot R(a)) \lor (\lnot Q(a) \land R(a)) & \text{Modus ponens of } (b)(c) \\
+    (e) & \lnot (R(a) \land \lnot Q(a)) \rightarrow (Q(a) \land \lnot R(a)) & \text{Material implication of } (d) \\
+    (f) & \lnot R(a) & \text{Premise} \\
+    (g) & \lnot R(a) \lor Q(a) & \text{Addition of } (g) \\
+    (h) & \lnot (R(a) \land \lnot Q(a)) & \text{DeMorgan's Law of } (g) \\
+    (i) & Q(a) \land \lnot R(a) & \text{Modus ponens of } (e)(h) \\
+    (j) & Q(a) & \text{Simplification of } (i) \\
+    (k) & P(a) \rightarrow Q(a) & \text{Conditional proof}
+\end{align*} 
+
+\end{document} 
