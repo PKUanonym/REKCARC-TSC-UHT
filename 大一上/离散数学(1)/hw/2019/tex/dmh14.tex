@@ -1,0 +1,107 @@
+% UTF-8 encoding
+% Compile with latex+dvipdfmx, pdflatex, xelatex or lualatex
+
+\documentclass[UTF8]{ctexart}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{subfigure}
+\usepackage{geometry}
+\usepackage{caption}
+
+\newcommand{\true}{{\rm T}}
+\newcommand{\false}{{\rm F}}
+\newcommand{\snatural}{\mathbb{N}}
+\newcommand{\sinteger}{\mathbb{Z}}
+\newcommand{\srational}{\mathbb{Q}}
+\newcommand{\sreal}{\mathbb{R}}
+\newcommand{\card}{\rm{card}}
+\newcommand{\modt}{\text{mod }}
+\newcommand{\ran}{{\rm ran}}
+\newcommand{\dom}{{\rm dom}}
+
+\title{离散数学——第十五周作业}
+\author{计83  刘轩奇  2018011025}
+\date{2019.12.20}
+
+\geometry{left=2.0cm, right=2.0cm, top=2.5cm, bottom=2.5cm}
+
+\begin{document}
+
+\maketitle
+
+\paragraph{12.2} \label{12.2}
+    用等势定义证明$[0,1] \approx [a,b], (a,b \in \sreal, a<b)$.
+
+\paragraph{证}
+    $f:[0,1] \rightarrow [a,b], f(x) = a+x(b-a)$是双射函数，从而$[0,1] \approx [a,b], (a,b \in \sreal, a<b)$
+
+\paragraph{12.4} \label{12.4}
+    写出$\snatural$的三个与$\snatural$等势的真子集。
+
+\paragraph{答}
+    正自然数集合$\snatural ^+ = \snatural - \{0\}$
+
+    偶自然数集合$\snatural_{\text{even}} = \{x | ( \exists y) (y \in \snatural \land x = 2y) \}$
+
+    奇自然数集合$\snatural_{\text{odd}} = \snatural^+ - \snatural_{\text{even}} = \{x | ( \exists y) (y \in \snatural \land x = 2y+1) \}$
+
+\paragraph{12.7} \label{12.7}
+    对于任意的基数$k,l$和无限基数$m$，如果$2 \le k \le m$且$2 \le l \le m$，证明
+
+    (1) $k^m = 2^m$
+
+    (2) $k^m = l^m$
+
+\paragraph{证}
+    (1) $$2^m \le k^m \le m^m \le 2^m$$
+    $$\therefore k^m = 2^m$$
+
+    (2) $k^m = 2^m$，同理$l^m = 2^m$，从而
+    $$k^m = l^m$$
+
+\paragraph{12.9} \label{12.9}
+    证明平面上直角坐标系中的所有整数坐标点的集合使可数集。
+
+\paragraph{证}
+    设所有整数坐标点的集合为$A = \{(x,y) | x \in \sinteger \land y \in \sinteger \}$
+    $$\card A = \card(\sinteger \times \sinteger) = \aleph_0 \cdot \aleph_0 = \aleph_0$$
+    从而$A$是可数集。
+
+\paragraph{12.10} \label{12.10}
+    计算下列集合的基数。
+    
+    (1) $A = \{a,b,c\}$
+
+    (2) $B = \{x|(\exists n)(n \in\snatural \land x = n^2)\}$
+
+    (3) $D = \{x|(\exists n)(n \in\snatural \land x = n^5)\}$
+
+    (4) $B \cap D$
+
+    (5) $B \cup D$
+
+    (6) $\snatural_\snatural$
+    
+    (7) $\sreal_\sreal$
+
+\paragraph{解}
+    (1) $\card A = 3$
+
+    (2) $f: \snatural \to B, f(x) = x^2$是双射函数，则$\card B = \aleph_0$
+
+    (3) $f: \snatural \to D, f(x) = x^5$是双射函数，则$\card D= \aleph_0$
+
+    (4) 记$C = B \cap D$，显然$1 = 1^2 = 1^5$从而$1 \in C$；同时$1024 = 32^2 = 4^5$，则$1024 \in C$。另外易知$C$是自然数集$\snatural$的子集，则$\card C \le \aleph_0$。
+
+    假设$C$是有限集，可令$a$是全序集$\langle \snatural, \le \rangle$上定义的$C$的最大元。则必有$a \ge 1024$。取$b = a^10 = (a^2)^5 = (a^5)^2 > a$，则$b \in C$，这与$a$是$C$的最大元相矛盾。从而$C$不是有限集，$\card C \ge \aleph_0$
+
+    综上，$\card C = \aleph_0$
+
+    (5) $\aleph_0 \le \card(B \cup D) \le  \aleph_0 + \aleph_0 = \aleph_0, \therefore \card(B \cup D) = \aleph_0$
+
+    (6) $\card(\snatural_\snatural) = \aleph_0^{\aleph_0} = 2^{\aleph_0} = \aleph_1$
+
+    (7) $\card(\sreal_\sreal) = \aleph_1 ^ {\aleph_1} = 2^{\aleph_1} = \aleph_2$
+
+\end{document} 

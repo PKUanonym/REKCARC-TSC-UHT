@@ -1,0 +1,196 @@
+% UTF-8 encoding
+% Compile with latex+dvipdfmx, pdflatex, xelatex or lualatex
+
+\documentclass[hyperref, UTF8]{ctexart}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{subfigure}
+\usepackage{geometry}
+\usepackage{caption}
+
+\newcommand{\true}{{\rm T}}
+\newcommand{\false}{{\rm F}}
+\newcommand{\zhyou}{\text{由}}
+\newcommand{\zhfenli}{\text{分离}}
+\newcommand{\zhguijie}{\text{归结}}
+\newcommand{\zhqianti}{\text{前提}}
+\newcommand{\zhzhihuan}{\text{置换}}
+\newcommand{\zhdairu}{\text{代入}}
+\newcommand{\zherqie}{\text{而且}}
+\newcommand{\zhaxiom}{\text{公理}}
+\newcommand{\zhtheorem}{\text{定理}}
+\newcommand{\zhdefinition}{\text{定义}}
+
+\title{离散数学——第五周作业}
+\author{计83  刘轩奇  2018011025}
+\date{2019.10.11}
+
+\geometry{left=2.0cm, right=2.0cm, top=2.5cm, bottom=2.5cm}
+\linespread{0.7}
+\begin{document}
+
+\maketitle
+
+\paragraph{2.9}\label{2.9}
+证明下列推理关系：\\
+
+(1) 在大城市球赛中，如果北京队第三，那么如果上海队第二，那么天津队第四。沈阳队不是第一或北京队第三。上海队第二。从而知，如果沈阳队第一，那么天津队第四。\\
+
+(2) 如果国家不对农产品给与补贴，那么国家就要对农产品进行控制。如果对农产品进行控制，农产品就不会短缺。或者农产品短缺或者农产品过剩。事实上农产品不过剩。从而国家对农产品给与了补贴。
+
+\paragraph{解}
+
+(1) $P$：北京队第三；$Q$：上海队第二；$R$：天津队第四；$S$：沈阳队第一。\\
+
+\quad 欲证：$ P \rightarrow (Q \rightarrow R), \lnot S \lor P, Q \Rightarrow S \rightarrow R $ 
+
+\begin{align*}
+(a) & \lnot S \lor P & \text{前提} \\
+(b) & S \to P & (a)\text{置换} \\
+(c) & S & \text{附加前提} \\
+(d) & P & (b)(c)\text{分离} \\
+(e) & P \to (Q \to R) & \text{前提} \\
+(f) & Q \to R & (d)(e)\text{分离} \\
+(g) & Q & \text{前提} \\
+(h) & R & (f)(g)\text{分离} \\
+(i) & S \rightarrow R & \text{条件证明规则}
+\end{align*}
+
+(2) $P$：国家对农产品给与补贴；$Q$：国家对农产品进行控制；$R$：农产品短缺；$S$：农产品过剩。\\
+
+\quad 欲证：$  \lnot P \rightarrow Q, Q \rightarrow \lnot R, R \leftrightarrow \lnot S, \lnot S \Rightarrow P $ 
+
+\begin{align*}
+(a) & \lnot S & \text{前提} \\
+(b) & R \leftrightarrow \lnot S & \text{前提} \\
+(c) & R & (a)(b)\text{分离} \\
+(d) & Q \to \lnot R & \text{前提} \\
+(e) & R \to \lnot Q & (d)\text{置换} \\
+(f) & \lnot Q & (c)(e)\text{分离} \\
+(g) & \lnot P \to Q & \text{前提} \\
+(h) & \lnot Q \to P & (g)\text{置换} \\
+(i) & P & (f)(h)\text{分离}
+\end{align*}
+
+\paragraph{2.10}\label{2.10}
+如果合同是有效的，那么张三应受罚。如果张三受罚，他将破产。如果银行给张三贷款，他就不会破产。事实上，合同有效并且银行给张三贷款了。验证这些前提是否有矛盾。
+
+\paragraph{解}
+$P$：合同有效；$Q$：张三受罚；$R$：张三破产；$S$：银行给张三贷款。\\
+
+条件：$ P \rightarrow Q, Q \rightarrow R, S \rightarrow \lnot R, P \land S $ 
+
+\begin{align*}
+(a) & P \land S & \text{前提} \\
+(b) & P & \text{由}(a) \\
+(c) & P \to Q & \text{前提} \\
+(d) & Q & (b)(c)\text{分离} \\
+(e) & Q \to R & \text{前提} \\
+(f) & R & (d)(e)\text{分离} \\
+(g) & S & \text{由}(a) \\
+(h) & S \to \lnot R & \text{前提} \\
+(i) & \lnot R & (g)(h)\text{分离} \\
+(j) & \square & \text{由}(f)(i) 
+\end{align*}
+
+\paragraph{2.12}\label{2.12}
+利用归结法证明：\\
+
+(1) $ (P \lor Q) \land (P \rightarrow R) \land (Q \rightarrow R) \Rightarrow R $ \\
+
+(3) $ \lnot (P \land \lnot Q) \land ( \lnot Q \lor R) \land \lnot R \Rightarrow \lnot P $
+
+\paragraph{证}
+
+(1) 子句集 $ \{ P \lor Q, P \rightarrow R, Q \rightarrow R, \lnot R \} $
+\begin{align*}
+(a) & P \lor Q \\
+(b) & P \to R \\
+(c) & Q \to R \\
+(d) & \lnot R \\
+(e) & \lnot P \lor R & (b)\text{置换} \\
+(f) & Q \lor R & (a)(e)\text{归结} \\
+(g) & \lnot Q \lor R & (c)\text{置换} \\
+(h) & R \lor R & (f)(g)\text{归结} \\
+(i) & R & (h)\text{置换} \\
+(j) & \square & (d)(i)\text{归结}  
+\end{align*}
+
+(3)子句集 $ \{  \lnot P \lor Q, \lnot Q \lor R, \lnot R, P \} $
+\begin{align*}
+(a) & \lnot P \lor Q \\
+(b) & \lnot Q \lor R \\
+(c) & \lnot R \\
+(d) & P \\
+(e) & \lnot P \lor R & (a)(b)\text{归结} \\
+(f) & \lnot P & (c)(e)\text{归结} \\
+(g) & \square & (d)(f)\text{归结} 
+\end{align*}
+
+\paragraph{2.11}\label{2.11}
+若 $ P_i \rightarrow Q_i(i=1, \cdots, n) $ 为真，$ P_1 \lor P_2 \lor \cdots \lor P_n $ 和 $  \lnot (Q_i \land Q_j) (i \neq j) $ 也为真。试证明必有 $ Q_i \rightarrow P_i (i=1, \cdots, n) $ 为真。
+
+\paragraph{证}
+\begin{align*}
+(a) & \lnot (Q_i \land Q_j) & \zhqianti \\
+(b) & Q_i \to \lnot Q_j & (a)\zhzhihuan \\
+(c) & P_i \to Q_i & \zhqianti \\ 
+(d) & P_i \to \lnot Q_j & (b)(c)\zhfenli \\
+(e) & \lnot Q_i \to \lnot P_i & (c)\zhzhihuan \\
+(f) & P_i \to \lnot P_j & (d)(e)\zhfenli \\
+(g) & P_i \to (\lnot P_1 \land \lnot P_2 \cdots \land \lnot P_{i-1} \land \lnot P_{i+1} \cdots \land \lnot P_n) & \zhyou (f) \\
+(h) & \lnot P_i \lor (\lnot P_1 \land \lnot P_2 \cdots \land \lnot P_{i-1} \land \lnot P_{i+1} \cdots \land \lnot P_n) & (g)\zhzhihuan \\
+(i) & P_1 \lor P_2 \lor \cdots \lor P_n & \zhqianti \\
+(j) & P_i \lor (P_1 \lor P_2 \lor \cdots \lor P_{i-1} \lor P_{i+1} \lor \cdots \lor P_n) & (i)\zhzhihuan \\
+(k) & \lnot (P_1 \lor P_2 \lor \cdots \lor P_{i-1} \lor P_{i+1} \lor \cdots \lor P_n) \to P_i & (j)\zhzhihuan \\
+(l) & (\lnot P_1 \land \lnot P_2 \cdots \land \lnot P_{i-1} \land \lnot P_{i+1} \cdots \land \lnot P_n) \to P_i & (k)\zhzhihuan \\
+(m) & Q_i \to (\lnot Q_1 \land \lnot Q_2 \cdots \land \lnot Q_{i-1} \land \lnot Q_{i+1} \land \cdots \land Q_n) & \zhyou (b) \\
+(n) & Q_i \to (\lnot P_1 \land \lnot P_2 \cdots \land \lnot P_{i-1} \land \lnot P_{i+1} \cdots \land \lnot P_n) & \zhyou (e)(m)\text{三段论} \\
+(o) & Q_i \to P_i & \zhyou (l)(m)\text{三段论}
+\end{align*}
+
+\paragraph{3.1}\label{3.1}
+依公理系统证明 \\
+
+(1) $  \vdash \lnot (P \land Q) \rightarrow ( \lnot P \lor \lnot Q) $ \\
+
+(3) $ \vdash P \rightarrow (Q \lor P) $
+
+\paragraph{证}
+
+(1)
+\begin{align*}
+(a) & \vdash \lnot \lnot P \rightarrow P & \zhtheorem 3.2.5 \\
+(b) & \vdash \lnot \lnot ( \lnot P \lor \lnot Q) \rightarrow ( \lnot P \lor \lnot Q) & \zhdairu \frac{P}{ \lnot P \lor \lnot Q} \\
+(c) & \vdash \lnot (P \land Q) \rightarrow ( \lnot P \lor \lnot Q) & \zhdefinition (2) 
+\end{align*}
+
+(3)
+\begin{align*}
+(a) & \vdash (Q \rightarrow R) \rightarrow ((P \rightarrow Q) \rightarrow (P \rightarrow R)) & \zhtheorem 3.2.1 \\
+(b) & \vdash ((P \lor Q) \rightarrow (Q \lor P)) \rightarrow ((P \rightarrow (P \lor Q) \rightarrow (P \rightarrow (Q \lor P))) & \zhdairu \frac{Q}{(P \lor Q)},\frac{R}{(Q \lor P)} \\
+(c) & \vdash ((P \lor Q)) \rightarrow (Q \lor P)) & \zhaxiom 3 \\
+(d) & \vdash ((P \rightarrow (P \lor Q) \rightarrow (P \rightarrow (Q \lor P)) & (b)(c) \zhfenli \\
+(e) & \vdash (P \rightarrow (P \lor Q)) & \zhaxiom 2 \\
+(f) & \vdash P \rightarrow (Q \lor P) & (d)(e) \zhfenli 
+\end{align*}
+
+
+\paragraph{3.2}\label{3.2} 
+依王浩算法判断下述蕴含式是否正确 \\
+
+(1) $  \lnot Q \land (P \rightarrow Q) \Rightarrow \lnot P $ 
+
+\paragraph{解}
+\begin{align*}
+(a) & \lnot Q \land (P \rightarrow Q) \overset{\rm s}{\Rightarrow} \lnot P & (\text{写成相继式}) \\
+(b) & \lnot Q, (P \rightarrow Q) \overset{\rm s}{\Rightarrow} \lnot P & ( \land \Rightarrow ) \\
+(c) & Q, \lnot Q \overset{\rm s}{\Rightarrow} \lnot P \zherqie \lnot Q \overset{\rm s}{\Rightarrow} P, \lnot P & ( \rightarrow \Rightarrow ) \\
+(d) & Q \overset{\rm s}{\Rightarrow} \lnot P, Q \zherqie \overset{\rm s}{\Rightarrow} P, \lnot P, Q & ( \lnot \Rightarrow ) \\
+(e) & P, Q \overset{\rm s}{\Rightarrow} Q \zherqie P \overset{\rm s}{\Rightarrow} P, Q & ( \Rightarrow \lnot ) 
+\end{align*}
+
+上式无联结词而且 $ \overset{\rm s}{\Rightarrow} $ 两端均有共同的命题变项，从而是公理，则原蕴含式正确。
+
+\end{document} 

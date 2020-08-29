@@ -1,0 +1,237 @@
+% UTF-8 encoding
+% Compile with latex+dvipdfmx, pdflatex, xelatex or lualatex
+
+\documentclass[UTF8]{ctexart}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{subfigure}
+\usepackage{geometry}
+\usepackage{caption}
+
+\newcommand{\true}{{\rm T}}
+\newcommand{\false}{{\rm F}}
+\newcommand{\snatural}{\mathbb{N}}
+\newcommand{\sinteger}{\mathbb{Z}}
+\newcommand{\srational}{\mathbb{Q}}
+\newcommand{\sreal}{\mathbb{R}}
+\newcommand{\card}{\rm{card}}
+\newcommand{\modt}{\text{mod }}
+
+\title{离散数学——第十周作业}
+\author{计83  刘轩奇  2018011025}
+\date{2019.11.15}
+
+\geometry{left=2.0cm, right=2.0cm, top=2.5cm, bottom=2.5cm}
+
+\begin{document}
+
+\maketitle
+
+\paragraph{9.13} \label{9.13}
+给定$\snatural$的下列子集，$A,B,C,D$为 
+$A = \{ 1,2,7,8 \},$
+$B = \{ x | x^2 < 50 \} ,$
+$C = \{ x|0 \le x \le 20 \land x \text {可被} 3\text {整除} ,$
+$D = \{ x|x=2^K \land K \in \snatural \land 0 \le K \le 5 \}.$
+列出下列集合的所有元素。
+
+(3) $B-(A \cup C)$
+
+\paragraph{解}
+(3) $B - (A \cup C) = \{ 0,1,2,3,4,5,6,7 \} - \{ 0,1,2,3,6,7,8,9,12,15,18 \} = \{ 4,5 \} $
+
+\paragraph{9.14} \label{9.14}
+写出下列集合：
+
+(1) $\cup \{ \{ 3,4 \} , \{ \{ 3 \} , \{ 4 \} \} , \{ 3, \{ 4 \} \} , \{ \{ 3 \} ,4 \} \}$
+
+(2) $\cap \{ \{ 1,2,3 \} , \{ 2,3,4 \} , \{ 3,4,5 \} \} $
+
+\paragraph{解}
+(1) $\cup \{ \{ 3,4 \} , \{ \{ 3 \} , \{ 4 \} \} , \{ 3, \{ 4 \} \} , \{ \{ 3 \} ,4 \} \} =  \{ 3,4, \{ 3 \} , \{ 4 \} \} $
+
+(2) $\cap \{ \{ 1,2,3 \} , \{ 2,3,4 \} , \{ 3,4,5 \} \}  = \{ 3 \}$
+
+\paragraph{9.15} \label{9.15}
+写出下列集合，其中：$PP(A)=P(P(A)), PPP(A)=P(P(P(A)))$
+
+(1) $ \cup \{ PPP(\varnothing), PP(\varnothing), P(\varnothing), \varnothing \} $
+
+(2) $ \cap \{ PPP(\varnothing), PP(\varnothing), P(\varnothing) \} $
+
+\paragraph{解}
+$$P(\varnothing) = \{ \varnothing \} , P(P(\varnothing)) = \{ \varnothing, \{ \varnothing \} \} , P(P(P(\varnothing))) = \{ \varnothing, \{ \varnothing \} , \{ \{ \varnothing \} \} , \{ \varnothing, \{ \varnothing \} \} \} $$
+
+(1) $ \cup \{ PPP(\varnothing), PP(\varnothing), P(\varnothing), \varnothing \} = \{ \varnothing, \{ \varnothing \} , \{ \{ \varnothing \} \} , \{ \varnothing, \{ \varnothing \} \} \} $
+
+(2) $ \cap \{ PPP(\varnothing), PP(\varnothing), P(\varnothing) \} = \{ \varnothing \} $
+
+\paragraph{9.16} \label{9.16}
+设$ A = \{ \{ \varnothing \}, \{ \{ \varnothing \} \} \} $，写出集合：
+
+(1) $ P(A) $ 和 $ \cup P(A) $
+
+(2) $ \cup A $ 和 $ P( \cup A) $
+
+\paragraph{解}
+(1) $ P(A) = \{ \varnothing, \{ \{ \varnothing \} \} , \{ \{ \{ \varnothing \} \} \} , \{ \{ \varnothing \} , \{ \{ \varnothing \} \} \} \} , \cup P(A) = \{ \{ \varnothing \} , \{ \{ \varnothing \} \} \} $
+
+(2) $ \cup (A) = \{ \varnothing, \{ \varnothing \} \} , P( \cup (A)) = \{ \varnothing, \{ \varnothing \} , \{ \{ \varnothing \} \} , \{ \varnothing, \{ \varnothing \} \} \} $
+
+\paragraph{9.17} \label{9.17}
+设$A,B,C$是任意的集合，证明：
+
+(2) $(A-B)-C=(A-C)-(B-C)$
+
+(4) $A\subseteq C \land B\subseteq C \Leftrightarrow A \cup B\subseteq C$
+
+\paragraph{解}
+(2)
+\begin{align*}
+    & (A-C) - (B-C) \\
+    = & (A \cup -C) \cup -(B \cup -C) \\
+    = & (A \cup -C) \cup (-B \cap C) \\
+    = & (A \cup -C \cup -B) \cap (A \cup -C \cup C) \\
+    = & (A \cup -B \cup -C) \cap (A \cup E) \\
+    = & ((A-B) - C) \cap E \\
+    = & (A-B)-C
+\end{align*}
+(4) 充分性：
+$$A\subseteq C \land B\subseteq C \Rightarrow (A \cup B)\subseteq (C \cup C) \Rightarrow A \cup B\subseteq C$$
+必要性：若$A \cup B \subseteq C$
+
+任意$x$，若$x \in A$，则$x \in A \cup B$，从而$x \in C$，则$A \subseteq C$。
+
+任意$x$，若$x \in B$，则$x \in A \cup B$，从而$x \in C$，则$B \subseteq C$。
+$$\therefore A \cup B\subseteq C \Rightarrow A\subseteq C \land B\subseteq C$$
+
+\paragraph{9.18} \label{9.18}
+满足下列条件的集合$A,B$有什么关系？
+
+(1) $A-B=B$
+
+(3) $A \cap B = A \cup B$
+
+\paragraph{答}
+(1) $A=B=\varnothing$
+
+(3) $A=B$
+
+\paragraph{9.19} \label{9.19}
+给出下列命题成立的充要条件：
+
+(2) $ (A-B) \cup (A-C) = \varnothing $
+
+(4) $ (A-B) \oplus (A-C) = \varnothing $
+
+\paragraph{解}
+(2)
+\begin{align*}
+     & (A-B) \cup (A-C) = \varnothing \\
+    \Longleftrightarrow & (A \cup -B) \cap (A \cup -C) = \varnothing \\
+    \Longleftrightarrow & A \cap -(B \cap C) = \varnothing \\
+    \Longleftrightarrow & A\subseteq B \cap C
+\end{align*}
+(4)
+\begin{align*}
+    & (A-B) \oplus (A-C) = \varnothing \\
+    \Longleftrightarrow & ((A-B)-(A-C) \cup ((A-C)-(A-B)) = \varnothing \\
+    \Longleftrightarrow & ((A \cap -B) \cap -(A \cap -C)) \cup ((A \cap -C) \cap -(A \cap B)) = \varnothing \\
+    \Longleftrightarrow & ((A \cap -B) \cap (-A \cup C)) \cup ((A \cap -C) \cap (-A \cup B)) = \varnothing \\
+    \Longleftrightarrow & (A \cap -A \cap -B) \cup (A \cap -B \cap C) \cup (A \cap -A \cap -C) \cup (A \cap B \cap -C) = \varnothing \\
+    \Longleftrightarrow & \varnothing \cup (A \cap -B \cap -C) \cup \varnothing \cup (A \cap B \cap -C) = \varnothing \\
+    \Longleftrightarrow & A \cap -B \cap C = \varnothing \land A \cap B \cap -C = \varnothing \\
+    \Longleftrightarrow & A-B\subseteq -C \land A-C\subseteq -B \\
+    \Longleftrightarrow & A-B\subseteq A-C \land A-C\subseteq A-B & (\ast)\text{待后补证} \\
+    \Longleftrightarrow & A-B = A-C
+\end{align*}
+补证(*)$A-B\subseteq -C \Longleftrightarrow A-B\subseteq A-C$
+\begin{align*}
+    A-B\subseteq -C 
+    \Longleftrightarrow & ( \forall x) (x \in A-B \rightarrow x \in -C) \\
+    \Longleftrightarrow & ( \forall x)((x \in A \land x \in -B) \rightarrow x \in C) \\
+    \Longleftrightarrow & ( \forall x)((x \in A \land x \in -B) \rightarrow (x \in A \land x \in -C) \\
+    \Longleftrightarrow & ( \forall x)(x \in A-B \rightarrow x \in A-C) \\
+    \Longleftrightarrow & A-B\subseteq A-C
+\end{align*}
+
+\paragraph{9.26} \label{9.26}
+(1) 若 $A \times B = \varnothing$ ，则$A$和$B$应满足什么条件。
+
+(2) 对集合 $A$ ，是否可能$A = A \times A$。
+
+\paragraph{答}
+(1) $A \times B = \varnothing \Longleftrightarrow A=\varnothing \lor B = \varnothing$
+
+(2) $A = A \times A \Longleftrightarrow A = \varnothing$
+
+\paragraph{9.28} \label{9.28}
+求$1$至$250$之间被$2,3,5$中任何一个整除的整数的个数。
+
+\paragraph{解}
+设
+\begin{align*}
+    E & = \{x|x \in \snatural \land 1\le x \le 250\} \\
+    A & = \{x|x \equiv 0 (\modt 2) \land x \in E\} \\
+    B & = \{x|x \equiv 0 (\modt 3) \land x \in E\} \\
+    C & = \{x|x \equiv 0 (\modt 5) \land x \in E\} 
+\end{align*}
+$$|A|=\lfloor 250/2 \rfloor = 125, |B|=\lfloor 250/3 \rfloor = 83, |C|=\lfloor 250/5 \rfloor = 50 $$
+$$|A \cap B|=\lfloor 250/6 \rfloor = 83, |A\cap C|=\lfloor 250/6 \rfloor = 25, |B\cap C|=\lfloor 250/15 \rfloor = 16 $$
+$$|A \cap B \cap C|=\lfloor 250/30 \rfloor = 8 $$
+\begin{align*}
+    \therefore |A \cup B \cup C| & = |A| + |B| + |C| - |A \cup B| - |A \cup C| - |B \cup C| + |A \cup B \cup C| \\ & =  125+83+50-41-25-16+8 = 184
+\end{align*}
+
+\paragraph{9.30} \label{9.30}
+证明不存在集合$A_1, A_2, A_3, A_4$使
+$$A_4 \in A_3 \land A_3 \in A_2 \land A_2 \in A_1 \land A_1 \in A_4$$
+
+\paragraph{证}
+假设这样的$A_1, A_2, A_3, A_4$存在，则令$B=\{A_1, A_2, A_3, A_4\}$
+
+由正则公理，$B$含有极小项，由对称性不妨设该极小项为$A_1$。则$A_1 \cap B = \varnothing$。
+
+而$A_2 \in A_1, A_2 \in B$，则$A_2 \in A \cap B$，这与$A_1 \cap B = \varnothing$矛盾。
+
+则假设错误，不存在这样的四个集合。
+
+\paragraph{9.31} \label{9.31}
+证明不存在由所有单元素集合组成的集合。
+
+\paragraph{证}
+假设存在所有单元素集合组成的集合$A$。
+
+则令$B=\{A\}$，$B$是单元素集合，则$B \in A$，而又有$A \in B$，这与定理9.7.7: $\lnot (A_1 \in A_2 \land A_2 \in A_1)$矛盾。
+
+故假设错误，不存在由所有单元素集合组成的集合。
+
+\paragraph{9.32} \label{9.32}
+证明存在所有素数组成的集合。
+
+\paragraph{证}
+由无穷公理知自然数集$\snatural$存在，设谓词$P(x)$表示$x$为素数，则由子集公理
+$$(\exists A)(\forall x)(x \in A \longleftrightarrow x \in \snatural \land P(x))$$
+即存在$A=\{x|x\text{为素数}\land x \in \snatural\}$为全体素数组成的集合。
+
+\paragraph{9.33} \label{9.33}
+证明若$A$是传递集合，则$A_+$是传递集合。
+
+\paragraph{证}
+\begin{align*}
+    A\text{为传递集} 
+    & \Longleftrightarrow ( \forall x) ( \forall y)((x \in y \land y \in A) \rightarrow x \in A) \\
+    A^+ = A \cup \{ A \} & \Longrightarrow ( \forall x)(x \in A \rightarrow x \in A^+) \\
+    & \Longleftrightarrow ( ( \forall x) ( \forall y)((x \in y \land y = A) \rightarrow x \in A^+) 
+\end{align*}
+\begin{align*}
+    & A\text{为传递集}  \land A^+ = A \cup \{ A \} \\
+    \Longrightarrow & ( ( \forall x) ( \forall y)((x \in y \land y \in A) \rightarrow x \in A^+) \land ( \forall x) ( \forall y)((x \in y \land y \in A) \rightarrow x \in A^+) \\
+    \Longrightarrow & ( \forall x) ( \forall y)(((x \in y \land y \in A) \rightarrow x \in A^+) \land (((x \in y \land y \in A) \rightarrow x \in A^+)) \\
+    \Longrightarrow & ( \forall x) ( \forall y)((x \in y) \land (y \in A \lor y = A)) \rightarrow x \in A^+) \\
+    \Longrightarrow & ( \forall x) ( \forall y)((x \in y \land y \in A^+) \rightarrow x \in A^+) \\
+    \Longrightarrow & A^+\text{为传递集}  
+\end{align*}
+
+\end{document} 

@@ -18,6 +18,10 @@ https://github.com/qinyao-he/wxyDB by Qinyao He
 
 https://github.com/wangrunji0408/DBProject by Runji Wang
 
-https://github.com/miskcoo/TrivialDB by Hao Yu
+https://github.com/miskcoo/TrivialDB by Yuhao Zhou
 
 https://github.com/huzecong/rebaseDB by Zecong Hu and Yilong Wei
+
+https://github.com/RecursionSheep/DBNoC by Zhiyang Chen
+
+https://github.com/MashPlant/db by Chenhao Li
