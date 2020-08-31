@@ -1,0 +1,593 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>621</width>
+    <height>780</height>
+   </rect>
+  </property>
+  <property name="font">
+   <font>
+    <family>Segoe UI</family>
+    <pointsize>8</pointsize>
+    <weight>75</weight>
+    <italic>true</italic>
+    <bold>true</bold>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QWidget" name="horizontalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>640</y>
+      <width>611</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="startButton">
+       <property name="font">
+        <font>
+         <family>Microsoft JhengHei UI</family>
+         <pointsize>10</pointsize>
+         <weight>75</weight>
+         <italic>false</italic>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
+       <property name="text">
+        <string>startGame</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pauseButton">
+       <property name="font">
+        <font>
+         <family>Microsoft JhengHei UI</family>
+         <pointsize>10</pointsize>
+         <weight>75</weight>
+         <italic>false</italic>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
+       <property name="text">
+        <string>pauseGame</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="continueButton">
+       <property name="font">
+        <font>
+         <family>Microsoft JhengHei UI</family>
+         <pointsize>10</pointsize>
+         <weight>75</weight>
+         <italic>false</italic>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
+       <property name="text">
+        <string>continueGame</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="restartButton">
+       <property name="font">
+        <font>
+         <family>Microsoft JhengHei UI</family>
+         <pointsize>10</pointsize>
+         <weight>75</weight>
+         <italic>false</italic>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
+       <property name="text">
+        <string>restartGame</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QToolButton" name="startTool">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>32</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Segoe UI Black</family>
+      <pointsize>7</pointsize>
+      <weight>75</weight>
+      <italic>true</italic>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::NoFocus</enum>
+    </property>
+    <property name="text">
+     <string>start</string>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="pauseTool">
+    <property name="geometry">
+     <rect>
+      <x>42</x>
+      <y>10</y>
+      <width>32</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Segoe UI Black</family>
+      <pointsize>7</pointsize>
+      <weight>75</weight>
+      <italic>true</italic>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::NoFocus</enum>
+    </property>
+    <property name="text">
+     <string>pause</string>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="continueTool">
+    <property name="geometry">
+     <rect>
+      <x>74</x>
+      <y>10</y>
+      <width>32</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Segoe UI Black</family>
+      <pointsize>7</pointsize>
+      <weight>75</weight>
+      <italic>true</italic>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::NoFocus</enum>
+    </property>
+    <property name="text">
+     <string>conti</string>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="restartTool">
+    <property name="geometry">
+     <rect>
+      <x>106</x>
+      <y>10</y>
+      <width>32</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Segoe UI Black</family>
+      <pointsize>7</pointsize>
+      <weight>75</weight>
+      <italic>true</italic>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::NoFocus</enum>
+    </property>
+    <property name="text">
+     <string>res</string>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="quitTool">
+    <property name="geometry">
+     <rect>
+      <x>138</x>
+      <y>10</y>
+      <width>32</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Segoe UI Black</family>
+      <pointsize>7</pointsize>
+      <weight>75</weight>
+      <italic>true</italic>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::NoFocus</enum>
+    </property>
+    <property name="text">
+     <string>quit</string>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="loadTool">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>10</y>
+      <width>32</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Segoe UI Black</family>
+      <pointsize>7</pointsize>
+      <weight>75</weight>
+      <italic>true</italic>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::NoFocus</enum>
+    </property>
+    <property name="text">
+     <string>load</string>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="saveTool">
+    <property name="geometry">
+     <rect>
+      <x>202</x>
+      <y>10</y>
+      <width>32</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Segoe UI Black</family>
+      <pointsize>7</pointsize>
+      <weight>75</weight>
+      <italic>true</italic>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::NoFocus</enum>
+    </property>
+    <property name="text">
+     <string>save</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="horizontalLayoutWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>680</y>
+      <width>611</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QPushButton" name="quitButton">
+       <property name="font">
+        <font>
+         <family>Microsoft JhengHei UI</family>
+         <pointsize>10</pointsize>
+         <weight>75</weight>
+         <italic>false</italic>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
+       <property name="text">
+        <string>quitGame</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="loadButton">
+       <property name="font">
+        <font>
+         <family>Microsoft JhengHei UI</family>
+         <pointsize>10</pointsize>
+         <weight>75</weight>
+         <italic>false</italic>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
+       <property name="text">
+        <string>loadGame</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="saveButton">
+       <property name="font">
+        <font>
+         <family>Microsoft JhengHei UI</family>
+         <pointsize>10</pointsize>
+         <weight>75</weight>
+         <italic>false</italic>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
+       <property name="text">
+        <string>saveGame</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>621</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuGame">
+    <property name="title">
+     <string>Game</string>
+    </property>
+    <addaction name="actionstartGame"/>
+    <addaction name="actionpauseGame"/>
+    <addaction name="actioncontinueGame"/>
+    <addaction name="actionrestartGame"/>
+    <addaction name="actionquitGame"/>
+   </widget>
+   <widget class="QMenu" name="menuLoad_Save">
+    <property name="title">
+     <string>Load/Save</string>
+    </property>
+    <addaction name="actionloadGame"/>
+    <addaction name="actionsaveGame"/>
+   </widget>
+   <addaction name="menuGame"/>
+   <addaction name="menuLoad_Save"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>true</bool>
+   </attribute>
+   <addaction name="actionstartGame_2"/>
+   <addaction name="actionpauseGame_2"/>
+   <addaction name="actioncontinueGame_2"/>
+   <addaction name="actionrestartGame_2"/>
+   <addaction name="actionquitGame_2"/>
+   <addaction name="actionloadGame_2"/>
+   <addaction name="actionsaveGame_2"/>
+  </widget>
+  <action name="actionstartGame">
+   <property name="text">
+    <string>startGame</string>
+   </property>
+  </action>
+  <action name="actionpauseGame">
+   <property name="text">
+    <string>pauseGame</string>
+   </property>
+  </action>
+  <action name="actioncontinueGame">
+   <property name="text">
+    <string>continueGame</string>
+   </property>
+  </action>
+  <action name="actionrestartGame">
+   <property name="text">
+    <string>restartGame</string>
+   </property>
+  </action>
+  <action name="actionquitGame">
+   <property name="text">
+    <string>quitGame</string>
+   </property>
+  </action>
+  <action name="actionloadGame">
+   <property name="text">
+    <string>loadGame</string>
+   </property>
+  </action>
+  <action name="actionsaveGame">
+   <property name="text">
+    <string>saveGame</string>
+   </property>
+  </action>
+  <action name="actionstartGame_2">
+   <property name="text">
+    <string>startGame</string>
+   </property>
+  </action>
+  <action name="actionpauseGame_2">
+   <property name="text">
+    <string>pauseGame</string>
+   </property>
+  </action>
+  <action name="actioncontinueGame_2">
+   <property name="text">
+    <string>continueGame</string>
+   </property>
+  </action>
+  <action name="actionrestartGame_2">
+   <property name="text">
+    <string>restartGame</string>
+   </property>
+  </action>
+  <action name="actionquitGame_2">
+   <property name="text">
+    <string>quitGame</string>
+   </property>
+  </action>
+  <action name="actionloadGame_2">
+   <property name="text">
+    <string>loadGame</string>
+   </property>
+  </action>
+  <action name="actionsaveGame_2">
+   <property name="text">
+    <string>saveGame</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>actionrestartGame_2</sender>
+   <signal>triggered()</signal>
+   <receiver>restartTool</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>121</x>
+     <y>69</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionpauseGame_2</sender>
+   <signal>triggered()</signal>
+   <receiver>pauseTool</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>57</x>
+     <y>69</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actioncontinueGame_2</sender>
+   <signal>triggered()</signal>
+   <receiver>continueTool</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>89</x>
+     <y>69</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionstartGame_2</sender>
+   <signal>triggered()</signal>
+   <receiver>startTool</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>25</x>
+     <y>69</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionloadGame_2</sender>
+   <signal>triggered()</signal>
+   <receiver>loadTool</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>185</x>
+     <y>69</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionsaveGame_2</sender>
+   <signal>triggered()</signal>
+   <receiver>saveTool</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>217</x>
+     <y>69</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionquitGame_2</sender>
+   <signal>triggered()</signal>
+   <receiver>quitTool</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>153</x>
+     <y>69</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
