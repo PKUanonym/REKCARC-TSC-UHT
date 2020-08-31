@@ -1,1 +1,1 @@
-### https:://github.com/nldxtd/wchSnake
+### https://github.com/nldxtd/wchSnake
