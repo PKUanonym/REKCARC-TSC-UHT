@@ -1,0 +1,289 @@
+name: Build Release
+on: 
+  push:
+    tags:
+      - v*
+env:
+  targetName: FTL
+jobs:
+  publish:
+    name: Upload Release Asset
+    runs-on: ubuntu-latest
+    outputs:
+      upload_Url: ${{ steps.create_release.outputs.upload_url }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+  buildMac:
+    name: Build MacOS
+    runs-on: ${{ matrix.os }}
+    needs: publish
+    strategy:
+      matrix:
+        os: [macos-latest]
+        qt_ver: [5.15.0]
+        qt_arch: [clang_64]
+    steps:
+      - name: cacheQt
+        id: MacosCacheQt
+        uses: actions/cache@v1
+        with:
+          path: ../Qt/${{matrix.qt_ver}}/${{matrix.qt_arch}}
+          key: ${{ runner.os }}-Qt/${{matrix.qt_ver}}/${{matrix.qt_arch}}
+      - name: Install Qt
+        # if: steps.MacosCacheQt.outputs.cache-hit != 'true'
+        uses: jurplel/install-qt-action@v2
+        with:
+          version: ${{ matrix.qt_ver }}
+          cached: ${{ steps.MacosCacheQt.outputs.cache-hit }}
+      - uses: actions/checkout@v1
+        with:
+          fetch-depth: 1
+      - name: build macos
+        run: |
+          qmake
+          make
+      # tag 打包
+      - name: package
+        if: startsWith(github.event.ref, 'refs/tags/')
+        run: |
+          # 拷贝依赖
+          macdeployqt bin/${targetName}.app -qmldir=. -verbose=1 -dmg
+      # tag 上传Release
+      - name: uploadRelease
+        id: uploadRelease
+        if: startsWith(github.event.ref, 'refs/tags/')
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ needs.publish.outputs.upload_Url }}
+          asset_path: ./bin/${{ env.targetName }}.dmg
+          asset_name: ${{ env.targetName }}.dmg
+          asset_content_type: application/applefile
+      - name: uploadArtifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: MacOS
+          path: bin
+  buildWin:
+    name: Build Windows
+    # 运行平台， windows-latest目前是windows server 2019
+    runs-on: windows-latest
+    needs: publish
+    strategy:
+      # 矩阵配置
+      matrix:
+        qt_ver: [5.13.0]
+        qt_target: [desktop]
+        # mingw用不了
+        # qt_arch: [win64_msvc2017_64, win32_msvc2017, win32_mingw53,win32_mingw73]
+        qt_arch: [win64_msvc2017_64, win32_msvc2017]
+        # 额外设置msvc_arch
+        include:
+          - qt_arch: win64_msvc2017_64
+            msvc_arch: x64
+            qt_arch_install: msvc2017_64
+          - qt_arch: win32_msvc2017
+            msvc_arch: x86
+            qt_arch_install: msvc2017
+    # 步骤
+    steps:
+      - name: cacheQt
+        id: WindowsCacheQt
+        uses: actions/cache@v1
+        with:
+          path: ../Qt/${{matrix.qt_ver}}/${{matrix.qt_arch_install}}
+          key: ${{ runner.os }}-Qt/${{matrix.qt_ver}}/${{matrix.qt_arch}}
+      - name: Install Qt
+        # if: steps.WindowsCacheQt.outputs.cache-hit != 'true'
+        # 使用外部action。这个action专门用来安装Qt
+        uses: jurplel/install-qt-action@v2
+        with:
+          # Version of Qt to install
+          version: ${{ matrix.qt_ver }}
+          # Target platform for build
+          target: ${{ matrix.qt_target }}
+          # Architecture for Windows/Android
+          arch: ${{ matrix.qt_arch }}
+          cached: ${{steps.WindowsCacheQt.outputs.cache-hit }}
+      # 拉取代码
+      - uses: actions/checkout@v1
+        with:
+          fetch-depth: 1
+      # 编译msvc
+      - name: build-msvc
+        shell: cmd
+        env:
+          vc_arch: ${{ matrix.msvc_arch }}
+        run: |
+          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" %vc_arch%
+          qmake
+          nmake
+      # tag 打包
+      - name: package
+        if: startsWith(github.event.ref, 'refs/tags/')
+        env:
+          VCINSTALLDIR: 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC'
+          archiveName: ${{ env.targetName }}-${{ matrix.qt_arch }}
+        shell: pwsh
+        run: |
+          # 创建文件夹
+          New-Item -ItemType Directory ${env:archiveName}
+          # 拷贝exe
+          Copy-Item bin\${env:targetName}.exe ${env:archiveName}\
+          # 拷贝依赖
+          windeployqt --qmldir . ${env:archiveName}\${env:targetName}.exe
+          # 打包zip
+          Compress-Archive -Path ${env:archiveName} ${env:archiveName}'.zip'
+          # 记录环境变量packageName给后续step
+          $name = ${env:archiveName}
+          echo "::set-env name=packageName::$name"
+          # 打印环境变量packageName
+          Write-Host 'packageName:'${env:packageName}
+      # tag 上传Release
+      - name: uploadRelease
+        id: uploadRelease
+        if: startsWith(github.event.ref, 'refs/tags/')
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ needs.publish.outputs.upload_Url }}
+          asset_path: ./${{ env.packageName }}.zip
+          asset_name: ${{ env.packageName }}.zip
+          asset_content_type: application/zip
+      - name: uploadArtifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.qt_arch }}
+          path: bin
+  buildAnd:
+    name: Build Android
+    runs-on: ${{ matrix.os }}
+    needs: publish
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        # 5.9.8 版本低，需要额外设置工具链。这里暂不支持。
+        qt_ver: [5.12.6]
+        qt_target: [android]
+        # android_arm64_v8a 暂时不支持. install-qt-action 依赖的aqtinstall版本为0.5*,需要升级
+        # qt_arch: [android_x86,android_armv7,android_arm64_v8a]
+        qt_arch: [android_x86,android_armv7]
+        # exclude:
+        #   - qt_ver: 5.9.8
+        #     qt_arch: android_arm64_v8a
+    steps:
+      - name: Install Qt
+        # if: steps.cacheqt.outputs.cache-hit != 'true'
+        uses: jurplel/install-qt-action@v2
+        with:
+          # Version of Qt to install
+          version: ${{ matrix.qt_ver }}
+          # Target platform for build
+          target: ${{ matrix.qt_target }}
+          # Architecture for Windows/Android
+          arch: ${{ matrix.qt_arch }}
+      - uses: actions/checkout@v1
+        with:
+          fetch-depth: 1
+      - name: build android
+        run: |
+          export ANDROID_SDK_ROOT=$ANDROID_HOME
+          export ANDROID_NDK_ROOT=$ANDROID_HOME/ndk-bundle
+          qmake
+          make
+      - name: uploadArtifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.qt_arch }}
+          path: bin
+  buildIos:
+    name: Build IOS
+    runs-on: ${{ matrix.os }}
+    needs: publish
+    strategy:
+      matrix:
+        os: [macos-latest]
+        qt_ver: [5.12.6]
+        qt_target: [ios]
+    steps:
+      - name: Install Qt
+        # if: steps.cacheqt.outputs.cache-hit != 'true'
+        uses: jurplel/install-qt-action@v2
+        with:
+          # Version of Qt to install
+          version: ${{ matrix.qt_ver }}
+          # Target platform for build
+          target: ${{ matrix.qt_target }}
+      - uses: actions/checkout@v1
+        with:
+          fetch-depth: 1
+      - name: build ios
+        run: |
+          qmake -r -spec macx-ios-clang CONFIG+=release CONFIG+=iphoneos
+          make
+      - name: uploadArtifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: IOS
+          path: bin
+  buildLin:
+    name: Build Linux
+    runs-on: ${{ matrix.os }}
+    needs: publish
+    strategy:
+      matrix:
+        os: [ubuntu-18.04]
+        qt_arch: [gcc_64]
+        qt_ver: [5.15.0]
+    steps:
+      - name: cacheQt
+        id: UbuntuCacheQt
+        uses: actions/cache@v1
+        with:
+          path: ../Qt/${{matrix.qt_ver}}/${{matrix.qt_arch}}
+          key: ${{ runner.os }}-Qt/${{matrix.qt_ver}}/${{matrix.qt_arch}}
+      - name: Install Qt
+        # if: steps.UbuntuCacheQt.outputs.cache-hit != 'true'
+        uses: jurplel/install-qt-action@v2
+        with:
+          version: ${{ matrix.qt_ver }}
+          cached: ${{ steps.UbuntuCacheQt.outputs.cache-hit }}
+      - name: ubuntu install GL library
+        run: sudo apt-get install -y libglew-dev libglfw3-dev
+      - uses: actions/checkout@v1
+        with:
+          fetch-depth: 1
+      - name: build ubuntu
+        run: |
+          qmake
+          make
+      # tag 上传Release
+      - name: uploadRelease
+        id: uploadRelease
+        if: startsWith(github.event.ref, 'refs/tags/')
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ needs.publish.outputs.upload_Url }}
+          asset_path: ./bin/${{ env.targetName }}
+          asset_name: ${{ env.targetName }}
+          asset_content_type: application/applefile
+      - name: uploadArtifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: Linux
+          path: bin

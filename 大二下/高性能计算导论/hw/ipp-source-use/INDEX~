@@ -1,0 +1,209 @@
+"Section" refers to the first section or subsection in "An Introduction 
+to Parallel Programming" that discusses the program.  "Page" refers to 
+the first page in the hard copy of the book.
+
+Section Page    File                    Description
+------- ----    ----                    -----------
+2.7.1   66      ch2/histogram.c         serial program that constructs 
+                                        a histogram
+
+
+3.1     84      ch3/mpi_hello.c         print a greeting from each MPI 
+                                        process
+3.2.1   94      ch3/trap.c              serial trapezoidal rule program
+3.2.2   96      ch3/mpi_trap1.c         first version of MPI trapezoidal 
+                                        rule: a, b, and n are hardwired
+3.3.1   97      ch3/mpi_output.c        each MPI process prints a message
+3.3.2   100     ch3/mpi_trap2.c         second version of MPI trapezoidal
+                                        rule:  proc 0 reads and distributes
+                                        a, b, and n
+3.4.2   104     ch3/mpi_trap3.c         third version of MPI trapezoidal
+                                        rule:  use MPI_Reduce to compute
+                                        global sum and MPI_Bcast to distribute
+                                        input data
+3.4.6   109     ch3/vector_add.c        serial vector sum
+3.4.6   109     ch3/mpi_vector_add.c    MPI vector sum that uses a block
+                                        distribution of the vectors.  Also
+                                        illustrate use of MPI_Scatter and
+                                        MPI_Gather
+3.4.9   113     ch3/mat_vect_mult.c     Serial program that multiplies a
+                                        matrix by a vector.  Uses a one-
+                                        dimensional array for the matrix
+3.4.9   113     ch3/mpi_mat_vect_mult.c MPI program that multiplies a
+                                        matrix by a vector.  Uses a block
+                                        distribution of the vectors and a
+                                        block row distribution of the matrix
+3.5     116     ch3/mpi_many_msgs.c     Compare the cost of sending one large
+                                        message to the cost of sending many
+                                        small messages
+3.5     117     ch3/mpi_trap4.c         Trapezoidal rule implementation 
+                                        that uses a derived datatype for
+                                        the distribution of the input data
+3.6.1   121     ch3/timer.h             Macro for taking timings in serial
+                                        programs
+3.6.2   122     ch3/mpi_mat_vect_time.c Matrix vector multiplication program
+                                        that reports run-time
+3.7.1   127     ch3/bubble.c            Serial bubble sort
+3.7.1   128     ch3/odd_even.c          Serial odd-even transposition sort
+3.7.2   129     ch3/mpi_odd_even.c      MPI implementation of parallel odd-
+                                        even transposition sort
+
+
+4.2     153     ch4/pth_hello.c         Print a greeting from each thread
+4.3     252     ch4/mat_vect_mult.c     Serial matrix-vector multiplication
+4.3     159     ch4/pth_mat_vect.c      Pthreads matrix-vector multiplication
+4.4     162     ch4/pth_pi.c            Buggy attempt to estimate pi with
+                                        pthreads
+4.5     165     ch4/pth_pi_busy1.c      First attempt at using busy-waiting
+                                        to protect a critical section
+4.5     167     ch4/pth_do_nothing.c    Estimate cost of forking and joining
+                                        threads
+4.5     168     ch4/pth_pi_busy2.c      Second attempt at using busy-waiting
+                                        to protect a critical section
+4.6     168     ch4/pth_pi_mutex.c      Use a mutex to protect the critical
+                                        section in the pi program
+4.7     172     ch4/pth_msg.c           Try to send messages among the
+                                        threads
+4.7     174     ch4/pth_msg_sem.c       Use unnamed semaphores to solve
+                                        the synchronization problem in
+                                        sending messages
+4.7     174     ch4/pth_msg_sem_mac.c   Use named semaphores to solve
+                                        the synchronization problem in
+                                        sending messages
+4.8.1   177     ch4/pth_busy_bar.c      Implement a barrier using busy-
+                                        waiting and a mutex
+4.8.2   177     ch4/pth_sem_bar.c       Implement a barrier using semaphores
+4.8.3   179     ch4/pth_cond_bar.c      Implement a barrier using a condition
+                                        condition variable
+4.9.1   181     ch4/linked_list.c       A serial linked list program
+4.9.2   185     ch4/pth_ll_one_mut.c    A Pthreads linked list program that
+                                        uses a single mutex to control access
+                                        to the list.
+4.9.2   185     ch4/my_rand.c           Thread-safe random number generator
+                                        (not discussed in text, but needed
+                                        by the pth_ll programs.)
+4.9.2   185     ch4/my_rand.h           Header file for thread-safe random 
+                                        number generator (not discussed in 
+                                        text, but needed by the pth_ll 
+                                        programs.)
+4.9.2   186     ch4/pth_ll_mult_mut.c   A Pthreads linked list program that
+                                        uses a one mutex for each list node
+4.9.3   187     ch4/pth_ll_rwl.c        A Pthreads linked list program that
+                                        uses read-write locks
+4.10    191     ch4/pth_mat_vect.c      Pthreads matrix-vector multiplication
+4.11    195     ch4/pth_tokenize.c      Pthreads program that attempts to
+                                        tokenize input text with strtok
+4.11    197     ch4/pth_tokenize_r.c    Pthreads program that tokenizes
+                                        input text with strtok_r
+
+
+5.1     211     ch5/omp_hello.c         An OpenMP program that prints a 
+                                        greeting from each thread
+5.1.3   215     ch5/omp_hello_err_chk.c The OpenMP greeting program modified
+                                        so that it checks for some errors
+                                        and checks whether the compiler
+                                        supports OpenMP
+5.2     216     ch5/trap.c              Serial trapezoidal rule
+5.2.1   216     ch5/omp_trap1.c         First OpenMP implementation of 
+                                        trapezoidal rule.  Uses a critical
+                                        directive to add threads' subintegrals
+5.4     222     ch5/omp_trap2a.c        OpenMP implementation of trapezoidal
+                                        rule that uses a hand-coded reduction
+                                        after the function call.
+5.4     223     ch5/omp_trap2b.c        OpenMP implementation of trapezoidal
+                                        rule that uses a reduction clause.
+5.5     224     ch5/omp_trap3.c         OpenMP implementation of trapezoidal
+                                        rule that uses a parallel for directive
+5.5.2   227     ch5/omp_fibo.c          Try to parallelize a loop that computes
+                                        the Fibonacci numbers:  this program
+                                        has a serious bug.
+5.5.4   229     ch5/omp_pi.c            Estimate pi using a parallel for
+                                        directive
+5.5.4   231     ch5/omp_private.c       Print the value of a private variable
+                                        at the beginning of a parallel block
+                                        and after a parallel block
+5.6.1   232     ch5/bubble.c            Serial bubble sort
+5.6.2   233     ch5/odd_even.c          Serial odd-even transposition sort
+5.6.2   234     ch5/omp_odd_even1.c     OpenMP implementation of odd-even
+                                        transposition sort that uses two
+                                        parallel for directives
+5.6.2   235     ch5/omp_odd_even2.c     OpenMP implementation of odd-even
+                                        transposition sort that uses a
+                                        parallel directive and two for
+                                        directives
+5.7     236     ch5/omp_sin_sum.c       Use a parallel for directive to
+                                        parallelize a loop in which the
+                                        time per iteration is proportional
+                                        to the iteration number
+5.8.1   241     ch5/omp_msg/queue.c     Implements a queue of messages
+                                        (source + contents) as a linked
+                                        list
+5.8.1   241     ch5/omp_msg/queue.h     Header file for queue.c
+5.8.2   242     ch5/omp_msg/omp_msgps.c Program that passes messages
+                                        among threads.  This version uses
+                                        critical and atomic directives
+                                        to protect critical sections.
+5.8.9   248     ch5/omp_msg/queue_lk.c  Linked list queue with OpenMP
+                                        locks.
+5.8.9   248     ch5/omp_msg/queue_lk.h  Header file for queue_lk.c
+5.8.9   248     ch5/omp_msg/omp_msglk.c Program that passes messages
+                                        among threads.  This version uses
+                                        atomic directive and OpenMP locks
+                                        to protect critical sections.
+5.9     252     ch5/mat_vect_mult.c     Serial matrix-vector multiplication
+5.9     253     ch5/omp_mat_vect.c      Parallelization of matrix-vector
+                                        multiplication that uses a parallel
+                                        for directive
+5.10    256     ch5/omp_tokenize.c      OpenMP program that attempts to 
+                                        tokenize input with strtok
+5.10    258     ch5/pth_tokenize_r.c    OpenMP program that tokenizes
+                                        input text with strtok_r
+
+
+6.1.2   273     ch6/nbody_basic.c       Serial implementation of the basic
+                                        algorithm for solving an n-body
+                                        problem
+6.1.2   273     ch6/nbody_red.c         Serial implementation of the reduced
+                                        algorithm for solving an n-body
+                                        problem
+6.1.2   273     ch6/timer.h             Macro for reporting elapsed time
+                                        since some point in the past
+6.1.5   281     ch6/omp_nbody_basic.c   OpenMP implementation of the basic
+                                        algorithm for solving an n-body
+                                        problem
+6.1.6   284     ch6/omp_nbody_red.c     OpenMP implementation of the reduced                                            algorithm for solving an n-body
+                                        problem
+6.1.8   289     ch6/pth_nbody_basic.c   Pthreads implementation of the
+                                        basic algorithm for solving an
+                                        an n-body problem
+6.1.8   289     ch6/pth_nbody_red.c     Pthreads implementation of the
+                                        reduced algorithm for solving an
+                                        an n-body problem
+6.1.9   290     ch6/mpi_nbody_basic.c   MPI implementation of the basic
+                                        algorithm for solving an n-body
+                                        problem
+6.2.1   302     ch6/tsp_rec.c           Serial program that uses recursion
+                                        to solve tsp 
+6.2.2   303     ch6/tsp_iter1.c         Serial program that uses iteration
+                                        and its own stack to solve tsp.
+6.2.2   304     ch6/tsp_iter2.c         Serial program that uses iteration
+                                        and its own stack to solve tsp.
+                                        This version pushes a copy of the
+                                        current tour onto the stack.
+6.2.6   309     ch6/pth_tsp_stat.c      Static version of Pthreads 
+                                        implementation of solution to tsp
+6.2.7   310     ch6/pth_tsp_dyn.c       Dynamic version of Pthreads 
+                                        implementation of solution to tsp
+6.2,9   316     ch6/omp_tsp_stat.c      Static version of OpenMP
+                                        implementation of solutio to tsp
+6.2.9   316     ch6/omp_tsp_dyn.c       Dynamic version of OpenMP
+                                        implementation of solution to tsp
+6.2.11  319     ch6/mpi_tsp_stat.c      Static version of MPI implementation                                            of tsp solution
+6.2.12  327     ch6/mpi_tsp_dyn.c       Dynamic version of MPI implementation                                           of tsp solution
+6.2.12  331     ch6/frac.c              Implementation of common fractions
+                                        for use in termination detection in
+                                        mpi_tsp_dyn.c
+6.2.12  331     ch6/frac.h              Header file for frac.c
+Ex 6.9  343     ch6/cyclic_derived.c    Program that uses a derived datatype
+                                        for I/O of an array with a cyclic
+                                        distribution
