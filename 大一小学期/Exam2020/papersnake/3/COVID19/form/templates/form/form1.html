@@ -1,0 +1,11 @@
+<main>
+        <form method="POST" action="/">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">提交</button>
+        </form>
+        <p>{{ msg }}</p>
+        {% for post in posts %}
+    <p>{{ post.0 }} {{ post.1 }}</p>
+        {% endfor %}
+</main>

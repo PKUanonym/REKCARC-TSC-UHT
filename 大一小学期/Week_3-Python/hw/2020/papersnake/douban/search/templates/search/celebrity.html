@@ -1,0 +1,170 @@
+{% load static %}<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>{{ title }}</title>
+<meta name="description" content="{{ content }}">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+</head>
+<body class="bg-grey-lighter font-sans antialiased">
+<!--[if lt IE 7]>
+	<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+<![endif]-->
+<div class="fixed bg-grey-lighter pin z-50 flex justify-center items-center" id="loading">
+	<svg width="60px" height="60px" viewBox="0 0 60 60" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="morphing">
+		<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+			<g transform="translate(-1178.000000, -87.000000)">
+				<g transform="translate(1159.000000, 0.000000)">
+					<g transform="translate(0.000000, 87.000000)">
+						<g transform="translate(19.000000, 0.000000)">
+							<circle id="small-circle" fill="#5661B3" cx="30" cy="30" r="30"></circle>
+							<path id="moon" d="M30.5,49.7304688 C40.7172679,49.7304688 30.5,43.266096 30.5,33.0488281 C30.5,22.8315603 40.7172679,12 30.5,12 C20.2827321,12 11.0390625,20.6479665 11.0390625,30.8652344 C11.0390625,41.0825022 20.2827321,49.7304688 30.5,49.7304688 Z" fill="#F4E1E0"></path>
+							<circle id="big-circle" fill="#070707" cx="31" cy="31" r="11"></circle>
+						</g>
+					</g>
+				</g>
+			</g>
+		</g>
+	</svg>
+</div>
+<div class="bg-indigo-darker text-center p-4 px-6 flex items-center">
+	<div class="hidden lg:block lg:w-1/4 xl:w-1/5 pr-8">
+		<a href="#" class="flex justify-start pl-6">
+		<img src="{% static 'img/logo.svg' %}" class="" alt="logo">
+	</a>
+	</div>
+	<div class="lg:hidden pr-3" id="mobile-nav-trigger">
+		<div class="toggle p-2 block"><span></span></div>
+	</div>
+	<div class="flex flex-grow items-center lg:w-full xl:w-full">
+		<span class="relative w-full">
+		<form action="/search" method="get">
+		<input type="search" placeholder="Search" value="{{ keywords }}" name="q" required class="w-1/2 text-sm text-white transition border border-transparent focus:outline-none focus:border-indigo placeholder-white rounded bg-indigo-medium py-1 px-2 pl-10 appearance-none leading-normal ds-input">
+		<div class="text-sm text-white transition border border-transparent focus:outline-none focus:border-indigo placeholder-white rounded bg-indigo-medium py-1 px-2 pl-10 appearance-none leading-normal ds-input inline-block">
+			<input type="radio" id="contactChoice1" name="type" value="Movie" {{ check1 }} required>
+			<label for="contactChoice1">影视</label>
+			<input type="radio" id="contactChoice2" name="type" value="Celebrity" {{ check2 }}>
+			<label for="contactChoice2">演员</label>
+			<input type="radio" id="contactChoice3" name="type" value="Comment" {{ check3 }}>
+			<label for="contactChoice3">影评</label>
+		</div>
+		<input type="submit" class="w-1/6 text-sm text-white transition border border-transparent focus:outline-none focus:border-indigo placeholder-white rounded bg-indigo-medium py-1 px-2 pl-10 appearance-none leading-normal ds-input"></input>
+		</form>
+		<div class="absolute search-icon" style="top: .5rem; left: .8rem;">
+		<svg class="fill-current pointer-events-none text-white w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+			<path d="M12.9 14.32a8 8 0 1 1 1.41-1.41l5.35 5.33-1.42 1.42-5.33-5.34zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z"></path>
+		</svg>
+		</div>
+	</span>
+
+	</div>
+</div>
+<!-- Main -->
+<div class="flex">
+	<!-- Side Nav -->
+	<nav class="absolute lg:relative lg:flex lg:text-sm bg-indigo-darker lg:bg-transparent pin-l pin-r py-4 px-6 lg:pt-10 lg:pl-12 lg:pr-6 -mt-1 lg:mt-0 overflow-y-auto lg:w-1/5 lg:border-r z-40 hidden">
+		<ul class="list-reset mb-8 w-full">
+			<li class="ml-2 mb-4 flex">
+				<img src="{% static 'img/home-default.svg' %}" alt="home-icon" class="w-4 h-4 mr-2">
+                <div class="hover:cursor-pointer text-white lg:text-indigo-darkest no-underline font-medium mobile-home-trigger"><a href="/">Home</a></div>
+			</li>
+			<li class="ml-2 mb-4">
+				<div class="flex" id="sidenav-categories-trigger">
+					<img src="{% static 'img/category-default.svg' %}" alt="home-icon" class="w-4 h-4 mr-2">
+					<div class="hover:cursor-pointer text-white lg:text-indigo-darkest no-underline font-medium w-full relative">
+						Categories
+						<div class="pointer-events-none absolute pin-y pin-r flex items-center px-1 text-grey-darker" id="sidenav-icon">
+							<svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+								<path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+							</svg>
+						</div>
+					</div>
+				</div>
+				<ul class="text-grey lg:text-grey-dark list-reset leading-loose mt-2" id="sidenav-categories">
+					<li class="text-indigo-lighter lg:text-indigo-darker font-medium flex justify-between items-center hover:cursor-pointer transition-normal ml-1 border-l border-grey-dark pl-4 mobile-home-trigger">
+                        <span><a href="?q={{ keywords }}&type=Movie&page={{ posts.number }}">Movie</a></span>
+                        {% if movie_type %}
+						<span class="bg-indigo-dark text-white text-xs rounded-full px-2 leading-normal">{{ post_list|length }}</span>
+					    {% endif %}
+                    </li>
+					<li class="text-indigo-lighter lg:text-indigo-darker font-medium flex justify-between items-center hover:cursor-pointer transition-normal ml-1 border-l border-grey-dark pl-4 mobile-home-trigger">
+                        <span><a href="?q={{ keywords }}&type=Celebrity&page={{ posts.number }}">Celebrity</a></span>
+                        {% if actor_type %}
+						<span class="bg-indigo-dark text-white text-xs rounded-full px-2 leading-normal">{{ post_list|length }}</span>
+					    {% endif %}
+                    </li>
+                    <li class="text-indigo-lighter lg:text-indigo-darker font-medium flex justify-between items-center hover:cursor-pointer transition-normal ml-1 border-l border-grey-dark pl-4 mobile-home-trigger">
+                        <span><a href="?q={{ keywords }}&type=Comment&page={{ posts.number }}">Comment</a></span>
+                        {% if comment_type %}
+						<span class="bg-indigo-dark text-white text-xs rounded-full px-2 leading-normal">{{ post_list|length }}</span>
+					    {% endif %}
+                    </li>
+				</ul>
+                <li class="ml-2 mb-4 flex">
+				        <img src="{% static 'img/wishlist-default.svg' %}" alt="all-movie" class="w-4 h-4 mr-2">
+                        <div class="hover:cursor-pointer text-white lg:text-indigo-darkest no-underline font-medium mobile-home-trigger"><a href="/search/?q=+&type=Movie">所有电影</a></div>
+			        </li>
+                    <li class="ml-2 mb-4 flex">
+				        <img src="{% static 'img/wishlist-default.svg' %}" alt="all-celebrity" class="w-4 h-4 mr-2">
+				        <div class="hover:cursor-pointer text-white lg:text-indigo-darkest no-underline font-medium mobile-home-trigger"><a href="/search/?q=+&type=Celebrity">所有人物</a></div>
+			    </li>
+			</li>
+		</ul>
+	</nav>
+	<!-- Content -->
+	<div class="flex flex-1 flex-col md:px-6 pt-10" id="content">
+		<!-- Title -->
+		<div class="px-6 md:px-0 flex justify-between -order-1">
+			<div class="mr-3">
+				<h2 class="font-normal">{{ post.title }}</h2>
+                <div class="px-6 md:px-0 flex items-baseline justify-between border-b-2 border-grey-light mt-6 order-0 lg:order-1">
+			        <h4 class="md:inline-block text-grey-dark font-normal">简介</h4>
+		        </div>
+                {{ info|safe }}
+			</div>
+        <img src="{{ post.img_url }}" referrerPolicy="no-referrer" alt="{{ post.title }}" class="w-1/3 shadow-md transition-normal hover:brighter hover:translate-y-1 hover:shadow-lg hover:border-indigo">
+		</div>
+		<!-- Library -->
+        <div class="px-6 md:px-0 flex items-baseline justify-between border-b-2 border-grey-light mt-6 order-0 lg:order-1">
+			<h4 class="md:inline-block text-grey-dark font-normal">参演影视</h4>
+		</div>
+        <div class="px-6 md:px-0 flex items-baseline justify-between border-grey-light mt-6 order-0 lg:order-1 hidden px-2 pt-2 md:px-0 flex-wrap pb-8 js-tab-pane active" id="section-library">
+                {% for post in movies %}
+                <div class="flex flex-row sm:flex-col items-center sm:items-start w-2/3 xs:w-1/2 sm:w-1/3 md:w-1/5 p-4 js-book">
+				<a href="/movie/{{ post.id }}"><img src="{{ post.pic_link }}" referrerPolicy="no-referrer" alt="{{ post.title }}" class="w-1/3 sm:w-full shadow-md transition-normal hover:brighter hover:translate-y-1 hover:shadow-lg hover:border-indigo"></a>
+				<div class="ml-3 sm:ml-0 w-2/3 sm:w-full">
+                    <p class="text-sm my-2 font-medium sm:font-normal"><a href="/movie/{{ post.id }}">{{ post.title }}</a></p>
+                </div>
+			    </div>
+                {% endfor %}
+        </div>
+        <div class="px-6 md:px-0 flex items-baseline justify-between border-b-2 border-grey-light mt-6 order-0 lg:order-1">
+			<h4 class="md:inline-block text-grey-dark font-normal">合作演员</h4>
+		</div>
+        <div style="margin-bottom: 100px" class="px-6 md:px-0 flex items-baseline justify-between border-grey-light mt-6 order-0 lg:order-1 hidden px-2 pt-2 md:px-0 flex-wrap pb-8 js-tab-pane active" id="section-library">
+                {% for post in actors %}
+                <div class="flex flex-row sm:flex-col items-center sm:items-start w-2/3 xs:w-1/2 sm:w-1/3 md:w-1/5 p-4 js-book">
+				<a href="/celebrity/{{ post.0.id }}"><img src="{{ post.0.img_url }}" referrerPolicy="no-referrer" alt="{{ post.0.title }}" class="w-1/3 sm:w-full shadow-md transition-normal hover:brighter hover:translate-y-1 hover:shadow-lg hover:border-indigo"></a>
+				<div class="ml-3 sm:ml-0 w-2/3 sm:w-full">
+                    <p class="text-sm my-2 font-medium sm:font-normal"><a href="/celebrity/{{ post.0.id }}">{{ post.0.title }}</a> (合作{{ post.1 }}次)</p>
+                </div>
+			    </div>
+                {% endfor %}
+        </div>
+	</div>
+	<footer id="footer">
+    <div style= "text-align: center; margin: 0px; padding:10px">
+        <p style= "color:grey; font-family: raleway">&copy;2020&nbsp;<a target="_blank" href="https://github.com/prnake/" rel="noopener noreferrer">Papersnake</a><span class="my-face">&nbsp;(=^･ｪ･^=)ﾉ<span style='color:lightpink'>♥</span></span></p>
+    </div>
+    </footer>
+<script src="{% static 'js/style.js' %}" async defer></script>
+</body>
+</html>
