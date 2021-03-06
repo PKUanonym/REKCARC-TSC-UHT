@@ -1,3 +1,5 @@
+（如何运行Applet演示程序请参考： [Run applet programs via IntelliJ IDEA ](https://blog.valderfield.com/archives/50/)。）
+
 # Tips
 
 当时看选邓公的人太多了，就选了尹霞。尹霞有小测，每次都是周五的那节早课。天大寒，砚冰坚，手指不可屈伸，怠之。呆滞。
