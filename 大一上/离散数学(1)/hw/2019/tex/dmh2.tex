@@ -1,0 +1,155 @@
+% UTF-8 encoding
+% Compile with latex+dvipdfmx, pdflatex, xelatex or lualatex
+
+\documentclass[hyperref, UTF8]{ctexart}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{subfigure}
+\usepackage{geometry}
+\usepackage{caption}
+
+\newcommand{\true}{{\rm T}}
+\newcommand{\false}{{\rm F}}
+
+\title{离散数学——第三周作业}
+\author{计83  刘轩奇  2018011025}
+\date{2019.09.27}
+
+\geometry{left=2.0cm, right=2.0cm, top=2.5cm, bottom=2.5cm}
+\linespread{0.7}
+\begin{document}
+
+\maketitle
+
+\paragraph{1.6}\label{1.6}
+将下列公式写成波兰式和逆波兰式。\\
+
+(1) $ P \rightarrow Q \lor R \lor S $ \\
+
+(2) $ P \land \lnot R \leftrightarrow P \lor Q $ \\
+
+(3) $ \lnot \lnot P \lor (W \land R) \lor \lnot Q $
+
+\paragraph{解}
+
+(1) 波兰式 $ \rightarrow P \lor \lor QRS $ ，逆波兰式 $ PQR \lor S \lor \rightarrow $。\\
+
+(2) 波兰式 $ \leftrightarrow \land P \lnot R \lor PQ $ ，逆波兰式 $ PR \lnot \land PQ \lor \leftrightarrow $。\\
+
+(3) 波兰式 $ \lor \lor \lnot \lnot P \land WR \lnot Q $ ，逆波兰式 $ P \lnot \lnot WR \land \lor Q \lnot \lor $。 \\
+
+\paragraph{2.1}\label{2.1}
+证明下列等值公式。\\
+
+(1) $ P \rightarrow (Q \land R)=(P \rightarrow Q) \land (P \rightarrow R) $ \\
+
+(3) $ ((P \rightarrow \lnot Q) \rightarrow (Q \rightarrow \lnot P)) \land R=R $ \\
+
+(5) $ P \rightarrow (Q \rightarrow R)=(P \land Q) \rightarrow R $
+
+\paragraph{证}
+
+(1)
+\begin{align*}
+P \rightarrow (Q \land R) &= \lnot P \lor (Q \land R) \\
+&=( \lnot P \lor Q) \land ( \lnot P \lor R) \\ &= (P \rightarrow Q) \land (P \rightarrow R)
+\end{align*}
+
+(3)
+\begin{align*}
+((P \rightarrow \lnot Q) \rightarrow (Q \rightarrow \lnot P)) \land R &=(( \lnot P \lor \lnot Q) \rightarrow ( \lnot Q \lor \lnot P)) \land R \\ &=R
+\end{align*}
+
+(5)
+\begin{align*}
+P \rightarrow (Q \rightarrow R)&=P \rightarrow ( \lnot Q \lor R) \\ &= \lnot P \lor ( \lnot Q \lor R) \\ &=( \lnot P \lor \lnot Q) \lor R \\ &= \lnot (P \land Q) \lor R \\ &=(P \land Q) \rightarrow R
+\end{align*}
+
+\paragraph{2.2}\label{2.2}
+由下列真值表，分别从$\true$和$\false$来列写出$A, B$和$C$的表达式，并分别以符号$m_i$和$M_i$表示。
+
+\begin{table}[!htb]
+\centering
+\begin{tabular}{ccccc}
+\hline
+$P$ & $Q$ & $A$ & $B$ & $C$ \\
+\hline
+$\false$ & $\false$ & $\true$ & $\true$ & $\true$ \\
+$\false$ & $\true$ & $\true$ & $\false$ & $\false$ \\
+$\true$ & $\false$ & $\true$ & $\false$ & $\false$ \\
+$\true$ & $\true$ & $\false$ & $\true$ & $\false$ \\
+\hline
+\end{tabular}
+\end{table}
+
+\paragraph{解}
+
+\begin{align*}
+A
+  & = ( \lnot P \land \lnot Q) \lor ( \lnot P \land Q) \lor (P \land \lnot Q) \\
+  & = m_0 \lor m_1 \lor m_2 \\
+  & = ( \lnot Q \lor \lnot P) \\
+  & = M_0 \\
+B
+  & = ( \lnot P \land \lnot Q) \lor (P \land Q) \\
+  & = m_0 \lor m_3 \\
+  & = (P \lor \lnot Q) \land ( \lnot P \lor Q) \\
+  & = M_1 \land M_2 \\
+C
+  & = ( \lnot P \land \lnot Q) \\
+  & = m_0 \\
+  & = (P \lor \lnot Q) \land ( \lnot P \lor Q) \land ( \lnot P \lor \lnot Q) \\
+  & =M_0 \land M_1 \land M_2
+\end{align*}
+
+\paragraph{2.3}\label{2.3}
+用$\uparrow$和$\downarrow$分别表示出$ \lnot , \land , \lor , \rightarrow $和$\leftrightarrow $。
+
+\paragraph{解}
+
+(1) 用$\uparrow$
+\begin{align*}
+\lnot P &= \lnot (P \land P) \\&= P \uparrow P \\
+P \land Q &= \lnot ( \lnot (P \land Q)) \\&= \lnot (P \uparrow Q) \\&= (P \uparrow Q) \uparrow (P \uparrow Q) \\
+P \lor Q &= \lnot ( \lnot P \land \lnot Q) \\&= \lnot P \uparrow \lnot Q \\&= (P \uparrow P) \uparrow (Q \uparrow Q) \\
+P \rightarrow Q &= \lnot P \lor Q \\&= ( \lnot P \uparrow \lnot P) \uparrow (Q \uparrow Q) \\&= P \uparrow (Q \uparrow Q) \\
+P \leftrightarrow Q &= (P \land Q) \lor ( \lnot P \land \lnot Q) \\&= \lnot \lnot ((P \land Q) \lor ( \lnot P \land \lnot Q)) \\&= \lnot ( \lnot (P \land Q) \lor \lnot ( \lnot P \land \lnot Q)) \\&= \lnot (P \uparrow Q) \land ( \lnot P \uparrow Q) \\&= (P \uparrow Q) \uparrow ( \lnot P \uparrow \lnot Q) \\&= (P \uparrow Q) \uparrow ((P \uparrow P) \uparrow (Q \uparrow Q))
+\end{align*}
+(2) 用$\downarrow$
+\begin{align*}
+\lnot P &= \lnot (P \lor P) \\&= P \downarrow P \\
+P \land Q &= \lnot ( \lnot P \lor \lnot Q) \\&= \lnot P \downarrow \lnot Q \\&= (P \downarrow P) \downarrow (Q \downarrow Q) \\
+P \lor Q &= \lnot \lnot (P \lor Q) \\&= \lnot (P \downarrow Q) \\&= (P \downarrow Q) \downarrow (P \downarrow Q) \\
+P \rightarrow Q &= \lnot P \lor Q \\&= ( \lnot P \downarrow Q) \downarrow ( \lnot P \downarrow Q) \\&= =((P \downarrow P) \downarrow Q) \downarrow ((P \downarrow P) \downarrow Q) \\
+P \leftrightarrow Q &= (P \land Q) \lor ( \lnot P \land \lnot Q) \\&= ( \lnot ( \lnot P \lor \lnot Q) \lor ( \lnot (P \lor Q)) \\&= ( \lnot P \downarrow \lnot Q) \lor (P \downarrow Q) \\&= \lnot \lnot (( \lnot P \downarrow Q) \lor (P \downarrow Q)) \\&= \lnot (( \lnot P \downarrow \lnot Q) \downarrow (P \downarrow Q)) \\&= \lnot (((P \downarrow P) \downarrow (Q \downarrow Q)) \downarrow (P \downarrow Q)) \\&= (((P \downarrow P) \downarrow (Q \downarrow Q)) \downarrow (P \downarrow Q)) \downarrow (((P \downarrow P) \downarrow (Q \downarrow Q)) \downarrow (P \downarrow Q))
+\end{align*}
+
+\paragraph{2.4}\label{2.4}
+证明 \\
+
+(1) $A\rightarrow B$与$B^*\rightarrow A^*$同永真、同可满足。\\
+
+(2) $A\leftrightarrow B$与$A^*\leftrightarrow B^*$同永真、同可满足。\\
+
+\paragraph{证}
+
+(1)
+$$
+A\rightarrow B=\lnot B \rightarrow \lnot A = B^{*-} \rightarrow A^{*-}
+$$
+
+而$B^{*-} \rightarrow A^{*-}$与$B^* \rightarrow A^*$同永真、同可满足。\\
+
+$\therefore$$A\rightarrow B$与$B^* \rightarrow A^*$同永真、同可满足。\\
+
+(2)
+\begin{align*}
+A\leftrightarrow B &= \lnot \lnot (A \leftrightarrow B) \\&= \lnot (A \leftrightarrow \lnot B) \\&= ( \lnot A) \leftrightarrow ( \lnot B) \\ &= (A^{*-})\leftrightarrow (B^{*-})
+\end{align*}
+
+而$(A^{*-})\leftrightarrow (B^{*-})$与$A^* \leftrightarrow B^*$同永真、同可满足。\\
+
+$\therefore$$A\leftrightarrow B$与$A^* \leftrightarrow B^*$同永真、同可满足。
+
+\end{document} 

@@ -1,0 +1,115 @@
+Flow report for test
+Fri May 24 15:37:57 2019
+Quartus II Version 9.0 Build 132 02/25/2009 SJ Full Version
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Flow Summary
+  3. Flow Settings
+  4. Flow Non-Default Global Settings
+  5. Flow Elapsed Time
+  6. Flow OS Summary
+  7. Flow Log
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 1991-2009 Altera Corporation
+Your use of Altera Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Altera Program License 
+Subscription Agreement, Altera MegaCore Function License 
+Agreement, or other applicable license agreement, including, 
+without limitation, that your use is for the sole purpose of 
+programming logic devices manufactured by Altera and sold by 
+Altera or its authorized distributors.  Please refer to the 
+applicable agreement for further details.
+
+
+
++--------------------------------------------------------------------+
+; Flow Summary                                                       ;
++-------------------------+------------------------------------------+
+; Flow Status             ; Successful - Fri May 24 15:37:57 2019    ;
+; Quartus II Version      ; 9.0 Build 132 02/25/2009 SJ Full Version ;
+; Revision Name           ; test                                     ;
+; Top-level Entity Name   ; test                                     ;
+; Family                  ; MAX II                                   ;
+; Device                  ; EPM240T100C5                             ;
+; Timing Models           ; Final                                    ;
+; Met timing requirements ; Yes                                      ;
+; Total logic elements    ; 48 / 240 ( 20 % )                        ;
+; Total pins              ; 6 / 80 ( 8 % )                           ;
+; Total virtual pins      ; 0                                        ;
+; UFM blocks              ; 0 / 1 ( 0 % )                            ;
++-------------------------+------------------------------------------+
+
+
++-----------------------------------------+
+; Flow Settings                           ;
++-------------------+---------------------+
+; Option            ; Setting             ;
++-------------------+---------------------+
+; Start date & time ; 05/24/2019 15:37:50 ;
+; Main task         ; Compilation         ;
+; Revision Name     ; test                ;
++-------------------+---------------------+
+
+
++-------------------------------------------------------------------------------------------------------------------------+
+; Flow Non-Default Global Settings                                                                                        ;
++---------------------------------------+----------------------------------+---------------+-------------+----------------+
+; Assignment Name                       ; Value                            ; Default Value ; Entity Name ; Section Id     ;
++---------------------------------------+----------------------------------+---------------+-------------+----------------+
+; COMPILER_SIGNATURE_ID                 ; 61811222391313.155868347009284   ; --            ; --          ; --             ;
+; MAX_CORE_JUNCTION_TEMP                ; 85                               ; --            ; --          ; --             ;
+; MIN_CORE_JUNCTION_TEMP                ; 0                                ; --            ; --          ; --             ;
+; MISC_FILE                             ; D:/Quartus Project/test/test.dpf ; --            ; --          ; --             ;
+; POWER_EXT_SUPPLY_VOLTAGE_TO_REGULATOR ; 3.3V                             ; --            ; --          ; --             ;
+; USE_GENERATED_PHYSICAL_CONSTRAINTS    ; Off                              ; --            ; --          ; eda_blast_fpga ;
++---------------------------------------+----------------------------------+---------------+-------------+----------------+
+
+
++-----------------------------------------------------------------------------------------------------------------------------+
+; Flow Elapsed Time                                                                                                           ;
++-------------------------+--------------+-------------------------+---------------------+------------------------------------+
+; Module Name             ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
++-------------------------+--------------+-------------------------+---------------------+------------------------------------+
+; Analysis & Synthesis    ; 00:00:02     ; 1.0                     ; 268 MB              ; 00:00:01                           ;
+; Fitter                  ; 00:00:01     ; 1.0                     ; 291 MB              ; 00:00:01                           ;
+; Assembler               ; 00:00:01     ; 1.0                     ; 223 MB              ; 00:00:02                           ;
+; Classic Timing Analyzer ; 00:00:00     ; 1.0                     ; 196 MB              ; 00:00:00                           ;
+; Total                   ; 00:00:04     ; --                      ; --                  ; 00:00:04                           ;
++-------------------------+--------------+-------------------------+---------------------+------------------------------------+
+
+
++------------------------------------------------------------------------------------------+
+; Flow OS Summary                                                                          ;
++-------------------------+------------------+---------------+------------+----------------+
+; Module Name             ; Machine Hostname ; OS Name       ; OS Version ; Processor type ;
++-------------------------+------------------+---------------+------------+----------------+
+; Analysis & Synthesis    ; DESKTOP-U9VM7TV  ; Windows Vista ; 6.2        ; x86_64         ;
+; Fitter                  ; DESKTOP-U9VM7TV  ; Windows Vista ; 6.2        ; x86_64         ;
+; Assembler               ; DESKTOP-U9VM7TV  ; Windows Vista ; 6.2        ; x86_64         ;
+; Classic Timing Analyzer ; DESKTOP-U9VM7TV  ; Windows Vista ; 6.2        ; x86_64         ;
++-------------------------+------------------+---------------+------------+----------------+
+
+
+------------
+; Flow Log ;
+------------
+quartus_map --read_settings_files=on --write_settings_files=off test -c test
+quartus_fit --read_settings_files=off --write_settings_files=off test -c test
+quartus_asm --read_settings_files=off --write_settings_files=off test -c test
+quartus_tan --read_settings_files=off --write_settings_files=off test -c test
+
+
+
