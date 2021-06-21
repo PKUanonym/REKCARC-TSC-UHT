@@ -23,3 +23,5 @@
 # 其他人的
 
 https://github.com/MashPlant/computational_graphics_2019 by Chenhao Li
+
+https://github.com/Guangxuan-Xiao/THU-Computer-Graphics-2020 by Guangxuan Xiao
