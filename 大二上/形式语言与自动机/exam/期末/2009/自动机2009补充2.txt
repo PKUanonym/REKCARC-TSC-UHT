@@ -1,0 +1,218 @@
+发信人: askzy (快乐的小猪猪), 信区: e_note
+标  题: [形式语言与自动机]2009.1.14考题（B卷）我的答案
+发信站: 酒井BBS (Mon Jan 11 13:42:50 2010), 转信
+
+额，做做看，有人对答案me ?
+
+【 在 chokkyvista (刚嗨嗨) 的大作中提到: 】
+一.判断题
+    1.任一空栈接收的PDA，存在一个终态接收的PDA与之等价。
+        t
+    2.任一无二义性的CFG，存在一个DPDA接收该CFG生成的CFL。
+        f
+    3.任意一个P问题都是NP的。
+        t
+    4.任一递归可枚举语言(RE)，存在一个停机的TM接收它。
+        f
+    5.在同一个字符集\Sigma下，空语言的Klein闭包不等于{\epsilon}的Klein闭包（即\emptyset^{*} != {\epsilon}^{*}）。
+        f
+    6.L1是正则语言，L2不是正则语言，则L1与L2的并不是正则语言。
+        f
+    7.存在一个算法，判定两个正则表达式生成的语言是否相等。
+        t
+    8.任一半无限长(semi-infinite)带的TM，存在一个双栈PDA与之等价。
+        t
+二.单选，从A~H中选一个与1~6匹配
+    1.L(a^{*}b^{*})                     B
+    2.{a^nb^n | n>0}                    C
+    3.{a^nb^m | n>m>0}                  D
+    4.{ww | w \in {a,b}^{*}}            F
+    5.{ww^R | w \in {a,b}^{*}}          E
+    6.L_u (i.e. {(M,w) | w \in L(M)})   G
+
+    A.能被DFA接收 且 能被空栈接收的DPDA接收
+    B.能被DFA接收 且 不能被任何空栈接收的DPDA接收
+    C.能被终态接收或空栈接收的DPDA接收 且 不能被任何DFA接收
+    D.能被终态接收的DPDA接收 且 不能被任何空栈接收的DPDA或DFA接收
+    E.能被PDA接收 且 不能被任何DPDA接收
+    F.能被停机的TM接收 且 不能被任何PDA接收
+    G.能被TM接收 且 不能被任何停机的TM接收
+    H.不能被任何TM接收
+
+三.简答
+    1. S -> AB
+       A -> aAb | \epsilon
+       B -> cB | \epsilon
+    (1) 消去所有epsilon产生式
+    (2) 在上一题的基础上消去所有unit产生式
+    (3) 在上一题的基础上将文法转成CNF(Chormsky Normal Form)
+
+(1)     S -> AB | A | B
+        A -> aAb | ab
+        B -> cB | c
+
+(2)     S -> AB | aAb | ab | cB | c
+        A -> aAb | ab
+        B -> cB | c
+
+(3)     S -> AB | A'A_1 | A'B' | C'B | c
+        A -> A'A_1 | A'B'
+        B -> C'B' | c
+        A_1 -> AB'
+        A' -> a
+        B' -> b
+        C' -> c
+
+    2. S -> DE | DC | CA | a
+       A -> DE | DC
+       B -> CA | DE | DC | a
+       E -> BC
+       C -> a
+       D -> b
+    (1) 在串baa上使用CYK算法，给出X_{ij} (1<=i<=j<=3)
+    (2) 判断baa是否属于G[S]生成的语言
+
+(1)
+j
+3       S E
+2       S B     E
+1       D       S B C   S B C
+i       1       2       3
+        b       a       a
+(2) 是，S \in X_{13}, S=>DE=>bE=>bBC=>baC=>baa
+
+    3. S -> aSbS | aS | c
+    (1) 说明G[S]是二义文法
+    (2) 给出接收G[S]生成语言的空栈接收的PDA
+
+(1)lm:  S=>aSbS=>aaSbS=>aacbS=>aacbc
+   lm:  S=>aS=>aaSbS=>aacbS=>aacbc
+(2)
+        \epsilon, Z_0/SZ_0
+-> q_0 ---------------------->q_1 ___
+                               /\    |
+                                |    |
+                                ------
+                        \epsilon, Z_0/\epsilon
+                        \epsilon, S/SbSa
+                        \epsilon, S/Sa
+                        \epsilon, S/c
+                        a, a/\epsilon
+                        b, b/\epsilon
+                        c, c/\epsilon
+
+    4. 给出判定如下问题的算法描述：
+    (1) 给定CFG G，判断L(G)是否为空语言
+    (2) 给定CFG G，判断\epsilon是否属于L(G)
+
+(1)即求S是否是产生的(generating)，见书上的算法
+        base:所有终结符都是产生的
+        induction:如果一个产生式右边所有符号都是产生的，则左边的非终结符也是
+        反复执行直到不能再找到新的generating的符号
+        如果S不是generating的，L(G)为空
+
+(2)即求S是否是可空的(nullable)，见书上的算法
+        base:\epsilon符号记为nullable
+        induction:如果一个产生式右部所有号都是nullable，那么左边的非终结符也是
+        反复执行直到不能再找到新的nullable符号
+        如果S是nullable，则\epsilon属于L(G)
+
+
+    5. 给出了一个DFA A（原题用状态图给出）：
+      ________|__a__|__b__|__
+      -->*q_0 | q_1 | q_2 |
+         *q_1 | q_1 | q_0 |
+          q_2 | q_1 | q_2 |
+    (1) 构造一个DFA 接收 ({a,b}^{*}-L(A))^R
+    (2) 定义同态映射h: h(0)=ba, h(1)=ab，构造一个DFA 接收 h^{-1}(L(A))
+
+(1)     同一个DFA,将q_2改为接受态，q_1和q_0记为非接受态
+(2)     构造后q_2变成了不可达状态，没了，DFA如下，h^{-1}(L(A)) = {0, 1}*
+        ________|__0__|__1__|
+        -->*q_0 | q_1 | q_0 |
+           *q_1 | q_1 | q_0 |
+        其实现在它什么都收，q_1和q_0等价，写成这样也行。。
+        ________|__0__|__1__|
+        -->*q_0 | q_0 | q_0 |
+
+    6. 给出 PDA P = (Q_p, \Sigma, \Gamma, \delta_p, q^p_0, Z_0, F_p) 
+         和 DFA D = (Q_d, \Sigma, \delta_d, q^d_0, F_d)
+       设其分别接收语言L1，L2，要求构造一个PDA P^{'} 使其接收 L1交L2，给出P^{'}的转移规则\delta即可
+       （假设 P^{'} = (Q_p*Q_d, \Sigma, \Gamma, \delta, (q^p_0,q^d_0), Z_0, F_p*F_d)，其中*为笛卡尔积）
+
+        ((p_p, p_d), \gamma) \in \delta((q_p, q_d), a, X)
+        iff
+        (p_p, \gamma) \in \delta_p(q_p, a, X)
+        and \delta_d(q_d, a) = p_d
+
+四.构造题
+    1. 构造一个DFA，要求|Q|<=8，使其接收语言
+       L={w | w \in {0,1}^{*}, w包含00子串但不含000子串}
+
+        期中考过了，我用了六个状态。。
+ 分别表示接受和不接受的末尾为1或者0的状态，末尾是00的接受态，见到过000的非接受态
+
+    2. 写出正则表达式E，要求运算符个数不超过8（括号不算），使其产生语言
+       L={w | w \in {a,b}^{*}, w不含aa子串}
+
+        (ab + b)* (\epsilon + a)
+
+    3. 构造一个CFG，要求产生式数目不超过8，使其产生语言
+       L={a^nb^mc^k | n<=m+k, n>=k, m,n,k>=0}
+
+        S -> aSc | A
+        A -> aAb | B
+        B -> bB  | \epsilon
+
+    4. 构造PDA，空栈接收或终态接收皆可，使其接收语言
+       L={w | w \in {a,b,c}^{*}, w中a,b个数相等}
+
+        仅有一个状态，仅有到自身的状态转移，转移条件为
+        a, Z_0/AZ_0     b, Z_0/BZ_0     c, Z_0/Z_0
+        a, A/AA         a, B/\epsilon
+        b, A/\epsilon   b, B/BB
+        c, A/A          c, B/B
+        \epsilon, Z_0/\epsilon
+
+    5. 构造TM，要求|Q|<=5，使其接收语言
+       L={w | w \in {a,b}^{*}, w中a,b个数都是偶数}
+
+        __state__|____a____|____b____|____B____|
+         -->*q_0 | a q_1 R | b q_2 R | halt ac |
+             q_1 | a q_0 R | b q_3 R |  halt   |
+             q_2 | a q_3 R | b q_0 R |  halt   |
+             q_3 | a q_2 R | b q_1 R |  halt   |
+
+五.证明题
+    1. G[S]: S -> aSbb | aSbbb | \epsilon
+       求证：L(G) = {a^nb^m | 2n<=m<=3n, n,m>=0}
+
+        (1) 证明所有a^nb^m, 2n <= m <= 3n的串都可以从G得出，直接推导即可。。
+        (2) 证明G[S]得出的串都是这个形式
+                对推导长度归纳证明如下结论即可：
+                        G[S]文法中的任何句型都具有a^nSb^m或者a^nb^m的形式
+                        其中2n <= m <= 3n
+        综合(1)(2)即可
+
+    2. 证明 L={w | w \in {a,b,c,d}^{*}, w中a,b,c个数相等且a,b,c互不相邻} 不是CFL
+        pump,考虑串a^ndb^ndc^n
+        （如果a和a本身也不让相邻，考虑串(ad)^n(bd)^n(cd)^n）
+
+    3. 证明子集构造算法的正确性
+        ...略过...
+
+--
+
+
+
+--
+发信人: try (还有一个月回家咯), 信区: TV
+发信站: 酒井BBS (Sun Dec 21 22:07:40 2008), 转信
+师弟，那位是师兄……
+【 在 whoami (kitty) 的大作中提到: 】
+: 话说这位姐姐也喜欢韩剧么？？
+: 【 在 bonndeng (你看不见的地方) 的大作中提到: 】
+
+
+※ 修改:·askzy 于 Jan 11 13:43:11 2010 修改本文·[FROM: 166.111.142.70]
+※ 来源:·酒井BBS bbs.net9.org·[FROM: 166.111.142.70]
