@@ -1,0 +1,791 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+  <head>
+    <title>Python Unit Testing Framework</title>
+  </head>
+
+  <body bgcolor="#FFFFFF">
+    <h1 align="center">Python Unit Testing Framework</h1>
+    <div align="center">
+      <small>
+        Author: Steve Purcell,
+        &lt;stephen_purcell&nbsp;at&nbsp;yahoo&nbsp;dot&nbsp;com&gt;<br>
+        Project website: <a href="http://pyunit.sourceforge.net/">http://pyunit.sourceforge.net/</a>
+      </small>
+    </div>
+
+    <h2>Contents</h2>
+
+    <ul>
+      <li><a href="#OVERVIEW">Overview</a>
+      <li><a href="#SYSREQ">System Requirements</a>
+      <li><a href="#USING">Using PyUnit to write your own tests</a>
+        <ul>
+          <li><a href="#INSTALL">Installation</a>
+          <li><a href="#CASEINTRO">An introduction to TestCases</a>
+          <li><a href="#SIMPLECASE">Creating a simple test case</a>
+          <li><a href="#RESETUP">Re-using set-up code: creating 'fixtures'</a>
+          <li><a href="#MANYTESTMETHODS">TestCase classes with several test methods</a>
+          <li><a href="#SUITES">Aggregating test cases into test suites</a>
+          <li><a href="#SUITESUITES">Nesting test suites</a>
+          <li><a href="#WHERE">Where to place testing code</a>
+          <li><a href="#RUNNING_INT">Running tests interactively</a>
+          <li><a href="#RUNNING_CMD">Running tests from the command line</a>
+          <li><a href="#GUI">The GUI test runner</a>
+          <li><a href="#TESTDOCS">Documenting your tests</a>
+          <li><a href="#TESTCONDS">More about test conditions</a>
+          <li><a href="#TESTEQUAL">Testing for equality</a>
+          <li><a href="#TESTEXCEP">Testing for exceptions</a>
+        </ul>
+      <li><a href="#TESTFUNC">Re-using old test code with PyUnit</a>
+      <li><a href="#JPYTHON">Using PyUnit with JPython and Jython</a>
+      <li><a href="#CAVEATS">Caveats</a>
+        <ul>
+          <li><a href="#ASSERT">Assertions</a>
+          <li><a href="#MEMORY">Memory use</a>
+        </ul>
+      <li><a href="#USETERMS">Terms of use</a>
+      <li><a href="#FUTURE">Future plans</a>
+      <li><a href="#UPDATES">Updates and community</a>
+      <li><a href="#ACKS">Acknowledgements</a>
+      <li><a href="#INFO">Related information</a>
+      <li><a href="#AUTHOR">About the author</a>
+    </ul>
+
+    <h2><a name="OVERVIEW">Overview</a></h2>
+
+    <p>
+      The Python unit testing framework, dubbed 'PyUnit' by convention, is
+      a <a href="http://www.python.org/">Python</a> language version of
+      <a href="http://members.pingnet.ch/gamma/junit.htm">JUnit</a>, by
+      smart cookies Kent Beck and Erich Gamma. JUnit is, in turn, a Java
+      version of Kent's Smalltalk testing framework. Each is the de facto
+      standard unit testing framework for its respective language.
+    </p>
+    <p>
+      This document explains the Python-specific aspects of the design and
+      usage of PyUnit; for background information on the basic design of the
+      framework the reader is referred to Kent's original paper,
+      <a href="http://www.XProgramming.com/testfram.htm">"Simple Smalltalk
+        Testing: With Patterns"</a>.
+    </p>
+    <p>
+      PyUnit forms a part of the Python Standard Library as of Python 
+      <a href="http://www.python.org/2.1">version 2.1</a>.
+    </p>
+    <p>
+      The following information assumes knowledge of
+      <a href="http://www.python.org/">Python</a>, a language so
+      easy that even I managed to learn it, and so addictive that I can't stop.
+    </p>
+
+    <h2><a name="SYSREQ">System requirements</a></h2>
+
+    <p>
+      PyUnit is designed to work with any standard Python, version 1.5.2 and
+      higher.
+    </p>
+    <p>
+      PyUnit has been tested by the author on Linux (Redhat 6.0 and 6.1,
+      Debian Potato) with Python 1.5.2, 2.0 and 2.1. It is also known to work
+      on other Python platforms, including Windows and Mac. If any platform or
+      Python version issues cause you trouble, please let me know.
+    </p>
+    <p>
+      For details of using PyUnit with JPython and Jython, please refer to the section
+      <a href="#JPYTHON">'Using PyUnit with JPython and Jython'</a>.
+    </p>
+
+
+    <h2><a name="USING">Using PyUnit to write your own tests</a></h2>
+
+    <h4><a name="INSTALL">Installation</a></h4>
+
+    <p>
+      The classes needed to write tests are to be found in the 'unittest'
+      module. This module is part of the standard Python library for Python 2.1
+      and later. If you are using an older Python version, you should
+      obtain the module from the separate PyUnit distribution.
+    </p>
+    <p>
+      To be able to use the module from your own code, simply ensure
+      that the directory containing the file 'unittest.py' is in your Python
+      search path. You can do this by setting the '$PYTHONPATH' environment
+      variable, or by placing the file in a directory in your current Python
+      search path, such as <code>/usr/lib/python1.5/site-packages</code>
+      on Redhat Linux machines.
+    </p>
+    <p>
+      Note that you will have to do this before you can run the examples
+      that are provided with PyUnit unless you copy 'unittest.py' into the
+      examples directory.
+    </p>
+
+    <h4><a name="CASEINTRO">An introduction to TestCases</a></h4>
+      
+    <p>
+      The basic building blocks of unit testing are 'test cases' -- single
+      scenarios that must be set up and checked for correctness. In PyUnit,
+      test cases are represented by the <code>TestCase</code> class in the
+      <code>unittest</code> module. To make your own test cases you must
+      write subclasses of <code>TestCase</code>.
+    </p>
+    <p>
+      An instance of a <code>TestCase</code> class is an object that can
+      completely run a single test method, together with optional set-up
+      and tidy-up code.
+    </p>
+    <p>
+      The testing code of a <code>TestCase</code> instance should be
+      entirely self contained, such that it can be run either in isolation
+      or in arbitrary combination with any number of other test cases.
+    </p>
+
+    <h4><a name="SIMPLECASE">Creating a simple test case</a></h4>
+      
+    <p>
+      The simplest test case subclass will simply override the
+      <code>runTest</code> method in order to perform specific testing code:
+    </p>
+    <pre>
+        import unittest
+
+        class DefaultWidgetSizeTestCase(unittest.TestCase):
+            def runTest(self):
+                widget = Widget("The widget")
+                assert widget.size() == (50,50), 'incorrect default size'
+    </pre>
+    <p>
+      Note that in order to test something, we just use the built-in 'assert'
+      statement of Python. If the assertion fails when the test case runs, an
+      <code>AssertionError</code> will be raised, and the testing framework
+      will identify the test case as a 'failure'. Other exceptions that do not
+      arise from explicit 'assert' checks are identified by the testing
+      framework as 'errors'. (See also the section
+      <a href="#TESTCONDS">'More about test conditions'</a>.)
+    </p>
+    <p>
+      The way to run a test case will be described later. For now, note that
+      to construct an instance of such a test case, we call its constructor
+      without arguments:
+    </p>
+    <pre>
+        testCase = DefaultWidgetSizeTestCase()
+    </pre>
+
+    <h4><a name="RESETUP">Re-using set-up code: creating 'fixtures'</a></h4>
+
+    <p>
+      Now, such test cases can be numerous, and their set-up can be repetitive.
+      In the above case, constructing a 'Widget' in each of 100 Widget
+      test case subclasses would mean unsightly duplication.
+    </p>
+    <p>
+      Luckily, we
+      can factor out such set-up code by implementing a hook method called
+      <code>setUp</code>, which the testing framework will automatically
+      call for us when we run the test:
+    </p>
+    <pre>
+        import unittest
+
+        class SimpleWidgetTestCase(unittest.TestCase):
+            def setUp(self):
+                self.widget = Widget("The widget")
+
+        class DefaultWidgetSizeTestCase(SimpleWidgetTestCase):
+            def runTest(self):
+                assert self.widget.size() == (50,50), 'incorrect default size'
+
+        class WidgetResizeTestCase(SimpleWidgetTestCase):
+            def runTest(self):
+                self.widget.resize(100,150)
+                assert self.widget.size() == (100,150), \
+                       'wrong size after resize'
+    </pre>
+    <p>
+      If the <code>setUp</code> method raises an exception while the test
+      is running, the framework will consider the test to have suffered an
+      error, and the <code>runTest</code> method will not be executed.
+    </p>
+    <p>
+      Similarly, we can provide a <code>tearDown</code> method that tidies
+      up after the <code>runTest</code> method has been run:
+    </p>
+    <pre>
+        import unittest
+
+        class SimpleWidgetTestCase(unittest.TestCase):
+            def setUp(self):
+                self.widget = Widget("The widget")
+            def tearDown(self):
+                self.widget.dispose()
+                self.widget = None
+    </pre>
+    <p>
+      If <code>setUp</code> succeeded, the <code>tearDown</code> method
+      will be run regardless of whether or not <code>runTest</code>
+      succeeded.
+    </p>
+    <p>
+      Such a working environment for the testing code is
+      termed a <em>fixture</em>.
+    </p>
+
+    <h4><a name="MANYTESTMETHODS">TestCase classes with several test methods</a></h4>
+
+    <p>
+      Often, many small test cases will use the same fixture. In this case,
+      we would end up subclassing <code>SimpleWidgetTestCase</code> into
+      many small one-method classes such as 
+      <code>DefaultWidgetSizeTestCase</code>. This is time-consuming and
+      discouraging, so in the same vein as JUnit, PyUnit provides a simpler
+      mechanism:
+    </p>
+    <pre>
+        import unittest
+
+        class WidgetTestCase(unittest.TestCase):
+            def setUp(self):
+                self.widget = Widget("The widget")
+            def tearDown(self):
+                self.widget.dispose()
+                self.widget = None
+            def testDefaultSize(self):
+                assert self.widget.size() == (50,50), 'incorrect default size'
+            def testResize(self):
+                self.widget.resize(100,150)
+                assert self.widget.size() == (100,150), \
+                       'wrong size after resize'
+    </pre>
+    <p>
+      Here we have not provided a <code>runTest</code> method, but have
+      instead provided two different test methods. Class instances will now
+      each run one of the <code>test</code>  methods, with
+      <code>self.widget</code> created and destroyed separately for each
+      instance. When creating an instance we must specify the test method it
+      is to run. We do this by passing the method name in the constructor:
+    </p>
+    <pre>
+        defaultSizeTestCase = WidgetTestCase("testDefaultSize")
+        resizeTestCase = WidgetTestCase("testResize")
+    </pre>
+
+    <h4><a name="SUITES">Aggregating test cases into test suites</a></h4>
+
+    <p>
+      Test case instances are grouped together according to the features they
+      test. PyUnit provides a mechanism for this: the 'test suite', represented
+      by the class <code>TestSuite</code> in the <code>unittest</code>
+      module:
+    </p>
+    <pre>
+        widgetTestSuite = unittest.TestSuite()
+        widgetTestSuite.addTest(WidgetTestCase("testDefaultSize"))
+        widgetTestSuite.addTest(WidgetTestCase("testResize"))
+    </pre>
+    <p>
+      For the ease of running tests, as we will see later, it is a good
+      idea to provide in each test module a 'callable' object that returns a
+      pre-built test suite:
+    </p>
+    <pre>
+       def suite():
+           suite = unittest.TestSuite()
+           suite.addTest(WidgetTestCase("testDefaultSize"))
+           suite.addTest(WidgetTestCase("testResize"))
+           return suite
+    </pre>
+    <p>
+      or even:
+    </p>
+    <pre>
+       class WidgetTestSuite(unittest.TestSuite):
+           def __init__(self):
+               unittest.TestSuite.__init__(self,map(WidgetTestCase,
+                                                     ("testDefaultSize",
+                                                      "testResize")))
+    </pre>
+    <p>
+      (the latter is admittedly not for the faint-hearted)
+    </p>
+    <p>
+      Since it is a common pattern to create a <code>TestCase</code> subclass
+      with many similarly named test functions, there is a convenience
+      function called <code>makeSuite</code> provided in the
+      <code>unittest</code> module that constructs a test suite that
+      comprises all of the test cases in a test case class:-
+    </p>
+    <pre>
+       suite = unittest.makeSuite(WidgetTestCase,'test')
+    </pre>
+    <p>
+      Note that when using the <code>makeSuite</code> function, the order in
+      which the various test cases will be run by the test suite is the order
+      determined by sorting the test function names using the <code>cmp</code>
+      built-in function.
+    </p>
+
+    <h4><a name="SUITESUITES">Nesting test suites</a></h4>
+
+    <p>
+      Often it is desirable to group suites of test cases together, so as to
+      run tests for the whole system at once. This is easy, since
+      <code>TestSuite</code>s can be added to a <code>TestSuite</code> just
+      as <code>TestCase</code>s can be added to a <code>TestSuite</code>:-
+    </p>
+    <pre>
+       suite1 = module1.TheTestSuite()
+       suite2 = module2.TheTestSuite()
+       alltests = unittest.TestSuite((suite1, suite2))
+    </pre>
+    <p>
+      An example of nesting test suites can be found in the file
+      '<code>alltests.py</code>', in the '<code>examples</code>' subdirectory
+      of the distribution package.
+    </p>
+
+    <h4><a name="WHERE">Where to place testing code</a></h4>
+
+    <p>
+      You can place the definitions of test cases and test suites in the
+      same modules as the code they are to test (e.g. 'widget.py'), but
+      there are several advantages to placing the test code in a
+      separate module, such as 'widgettests.py':
+    </p>
+    <ul>
+      <li>The test module can be run standalone from the command line
+      <li>The test code can more easily be separated from shipped code
+      <li>There is less temptation to change test code to fit the code it tests
+        without a good reason
+      <li>Test code should be modified much less frequently than the code
+        it tests
+      <li>Tested code can be refactored more easily
+      <li>Tests for modules written in C must be in separate modules anyway,
+        so why not be consistent?
+      <li>If the testing strategy changes, there is no need to change the
+        source code
+    </ul>
+
+    <h4><a name="RUNNING_INT">Running tests interactively</a></h4>
+
+    <p>
+      Of course, the whole point of writing these tests is so that we can
+      run them and find out if our software is working. The test framework
+      uses 'TestRunner' classes to provide an environment in which your tests
+      can execute. The most common TestRunner is <code>TextTestRunner</code>,
+      which can run tests and report the results in textual form:
+    </p>
+    <pre>
+        runner = unittest.TextTestRunner()
+        runner.run(widgetTestSuite)
+    </pre>
+    <p>
+      By default, <code>TextTestRunner</code> prints its output to
+      <code>sys.stderr</code>, but this can be changed by passing a different
+      file-like object to its constructor.
+    </p>
+    <p>
+      Using <code>TextTestRunner</code> like this is an ideal way to run your
+      tests interactively from within a Python interpreter session.
+    </p>
+
+    <h4><a name="RUNNING_CMD">Running tests from the command line</a></h4>
+
+    <p>
+      The <code>unittest</code> module contains a function called <code>main</code>,
+      which can be used to easily turn a test module into a script that will
+      run the tests it contains. The <code>main</code> function uses the
+      <code>unittest.TestLoader</code> class to automatically find and load
+      test cases within the current module.
+    </p>
+    <p>
+      Therefore, if you name your test methods using the <code>test*</code>
+      convention described earlier, you can place the following code at
+      the bottom of your test module:
+    </p>
+    <pre>
+        if __name__ == "__main__":
+            unittest.main()
+    </pre>
+    <p>
+      Then, when you execute your test module from the command line, all of
+      the tests contained therein will be run. Run the module with the '-h'
+      option in order to see the options available.
+    </p>
+    <p>
+      To run arbitrary tests from the command-line, you can run the
+      <code>unittest</code> module as a script, giving it the name of an
+      test case or test suite:
+    </p>
+    <pre>
+        % python unittest.py widgettests.WidgetTestSuite
+    </pre>
+    <p>
+      or
+    </p>
+    <pre>
+        % python unittest.py widgettests.makeWidgetTestSuite
+    </pre>
+    <p>
+      You may also specify particular tests on the command-line. To run the
+      <code>TestCase</code> subclass '<code>ListTestCase</code>' in the
+      module 'listtests' (see the 'examples' subdirectory of the distribution
+      package) you can execute the command:
+    </p>
+    <pre>
+        % python unittest.py listtests.ListTestCase.testAppend
+    </pre>
+    <p>
+      where 'testAppend' is the name of the test method that is to be run
+      by the test case instance. To create and run <code>ListTestCase</code>
+      instances for all the 'test*' methods in that class, you can run:
+    </p>
+    <pre>
+        % python unittest.py listtests.ListTestCase
+    </pre>
+
+    <h4><a name="GUI">The GUI test runner</a></h4>
+
+    <p>
+      There is a graphical front end that you can use in order to run your
+      tests. It is written using <code>Tkinter</code>, the windowing toolkit
+      shipped with Python on most platforms. It looks similar to the JUnit
+      GUI.
+    </p>
+    <p>
+      To use the GUI test runner, simply run:
+    </p>
+    <pre>
+        % python unittestgui.py
+    </pre>
+    or
+    <pre>
+        % python unittestgui.py widgettests.WidgetTestSuite
+    </pre>
+    <p>
+      Note that here, again, the name entered for the test to be run should
+      be the fully-qualified name of an object which returns a
+      <code>TestCase</code> or <code>TestSuite</code> instance. It should not
+      be the name of a pre-created test, since every test must be recreated
+      each time it is run.
+    </p>
+    <p>
+      The use of the GUI test runner rather than the text test runner
+      imposes a time overhead due to all those window updates; on my system,
+      it takes an extra seven seconds per thousand tests. Your mileage may
+      vary.
+    </p>
+
+    <h4><a name="TESTDOCS">Documenting your tests</a></h4>
+    <p>
+      Usually, when a test is run its name is displayed by the
+      <code>TestRunner</code>. This name is derived from the name of the
+      test case class, and the name of the test method that the instance has
+      been initialised to run.
+    </p>
+    <p>
+      However, if you supply a doc-string for a test method, the first line
+      of that doc-string will be displayed when the test is run. This provides
+      an easy mechanism for documenting your tests:
+    </p>
+    <pre>
+        class WidgetTestCase(unittest.TestCase):
+            def testDefaultSize(self):
+                """Check that widgets are created with correct default size"""
+                assert self.widget.size() == (50,50), 'incorrect default size'
+    </pre>
+
+    <h4><a name="TESTCONDS">More about test conditions</a></h4>
+    <p>
+      I have suggested the use of Python's built-in assertion mechanism for
+      checking conditions in test cases rather than a 'home-brewed'
+      equivalent; <code>assert</code> is simple, concise and familiar.
+    </p>
+    <p>
+      Note, however, that if tests are run with Python's
+      optimisation option turned on (generating '.pyo' bytecode files), the
+      <code>assert</code> statements will be skipped, rendering the
+      test cases quite useless.
+    </p>
+    <p>
+      For those who tend to work with Python's optimisation option enabled,
+      I have included a method <code>assert_</code> in the
+      <code>TestCase</code> class. It is functionally equivalent to the
+      <code>assert</code> built-in and will not be optimised away, but it is
+      less convenient and results in less helpful error messages:
+    </p>
+    <pre>
+        def runTest(self):
+            self.assert_(self.widget.size() == (100,100), "size is wrong")
+    </pre>
+    <p>
+      For good measure I have also provided <code>TestCase</code> with
+      <code>failIf</code> and <code>failUnless</code> methods:
+    </p>
+    <pre>
+        def runTest(self):
+            self.failIf(self.widget.size() <> (100,100))
+    </pre>
+    <p>
+      A test case method can also call <code>fail</code> in order to fail
+      immediately:
+    </p>
+    <pre>
+        def runTest(self):
+            ...
+            if not hasattr(something, "blah"):
+                self.fail("blah missing")
+                # or just 'self.fail()'
+    </pre>
+
+    <h4><a name="TESTEQUAL">Testing for equality</a></h4>
+    <p>
+      The most common type of assertion is an assertion of equality between
+      two values or objects. If the assertion fails, the developer usually
+      wants to see what the incorrect value actually was.
+    </p>
+    <p>
+      <code>TestCase</code> has a pair of methods called
+      <code>assertEqual</code> and <code>assertNotEqual</code> for this purpose
+      (with aliases <code>failUnlessEqual</code> and <code>failIfEqual</code>
+      for those who prefer):
+    </p>
+    <pre>
+        def testSomething(self):
+            self.widget.resize(100,100)
+            self.assertEqual(self.widget.size, (100,100))
+    </pre>
+
+    <h4><a name="TESTEXCEP">Testing for exceptions</a></h4>
+    <p>
+      Often a test will wish to check that an exception is raised in a
+      certain set of circumstances. If the expected exception is not thrown,
+      the test should fail. This is easy to do:
+    </p>
+    <pre>
+        def runTest(self):
+            try:
+                self.widget.resize(-1,-1)
+            except ValueError:
+                pass
+            else:
+                fail("expected a ValueError")
+    </pre>
+    <p>
+      Usually, the source of the expected exception is a callable object;
+      for that reason, <code>TestCase</code> has an
+      <code>assertRaises</code> method. The first two arguments of the method
+      are the expected exception as it would appear in an 'except' clause,
+      and the callable object. The remaining arguments are those that should
+      be passed to the callable object:
+    </p>
+    <pre>
+        def runTest(self):
+            self.assertRaises(ValueError, self.widget.resize, -1, -1)
+    </pre>
+
+    <h2><a name="TESTFUNC">Re-using old test code with PyUnit</a></h2>
+    <p>
+      Some users will find that they have existing test code that they would
+      like to run from PyUnit, without converting every old test function to
+      a <code>TestCase</code> subclass.
+    </p>
+    <p>
+      For this reason, PyUnit provides a <code>FunctionTestCase</code> class.
+      This subclass of <code>TestCase</code> can be used to wrap an existing
+      test function. Set-up and tear-down functions can also optionally be
+      wrapped.
+    </p>
+    <p>
+      Given the following test function:
+    </p>
+    <pre>
+        def testSomething():
+            something = makeSomething()
+            assert something.name is not None
+            ...
+    </pre>
+    <p>
+      one can create an equivalent test case instance as follows:
+    </p>
+    <pre>
+        testcase = unittest.FunctionTestCase(testSomething)
+    </pre>
+    <p>
+      If there are additional set-up and tear-down methods that should be
+      called as part of the test case's operation, they can also be provided:
+    </p>
+    <pre>
+        testcase = unittest.FunctionTestCase(testSomething,
+                                             setUp=makeSomethingDB,
+                                             tearDown=deleteSomethingDB)
+    </pre>
+
+
+    <h2><a name="JPYTHON">Using PyUnit with JPython and Jython</a></h2>
+    <p>
+      Although PyUnit was written primarily for 'C' Python, it is possible to
+      write PyUnit tests using Jython for your Java or Jython software.
+      This can be preferable to trying to write JUnit tests using Jython.
+      PyUnit also works correctly with Jython's predecessors, JPython 1.0 and
+      1.1.
+    </p>
+    <p>
+      Of course, Java does not have a TK GUI interface, so PyUnit's
+      Tkinter-based GUI will not work with Jython. The text-only interface
+      works just fine, however.
+    </p>
+    <p>
+      To do so, simply copy the standard C Python library module files
+      '<code>traceback.py</code>', '<code>linecache.py</code>',
+      '<code>stat.py</code>' and '<code>getopt.py</code>' to a location from
+      which they can be imported by
+      JPython. You can get these files from any distribution of
+      C Python. (These guidelines are based on the standard library of
+      C Python 1.5.x, and may not be correct for other Python versions.)
+    </p>
+    <p>
+      Now you can write your PyUnit tests exactly as you would with C Python.
+    </p>
+
+    <h2><a name="CAVEATS">Caveats</a></h2>
+    
+    <h4><a name="ASSERT">Assertions</a></h4>
+
+    <p>
+      See the caveats in the section <a href="#TESTCONDS">"More about test
+        conditions"</a> above.
+    </p>
+
+    <h4><a name="MEMORY">Memory use</a></h4>
+
+    <p>
+      When exceptions are raised during the running of a test suite, the
+      resulting traceback objects are saved so that failure details can be
+      formatted and printed at the end of the test run. Apart from simplicity,
+      the benefit of this is that a future version of the GUI TestRunner
+      will be able to allow post-mortem inspection of local and global
+      variable values, which are stored with the traceback.
+    </p>
+    <p>
+      A possible side-effect is that when running test suites with very high
+      failure rates, the memory usage of all these saved traceback objects
+      could become a problem. Of course, if so many tests are failing, this
+      memory overhead is the least of your problems.
+    </p>
+
+    <h2><a name="USETERMS">Terms of use</a></h2>
+
+    <p>
+      You may freely use, alter and redistribute this software under the same
+      liberal terms that apply to Python itself. All I ask is that my name,
+      e-mail address and the project URL be retained in the source code and
+      accompanying documentation, with a credit for me as the original author.
+    </p>
+    <p>
+      My motive for writing this software was to make a small contribution
+      to the improvement of software quality in the world; I didn't bargain
+      on getting any cash. (That's not to say that sponsorship would be
+      unwelcome.)
+    </p>
+
+    <h2><a name="FUTURE">Future plans</a></h2>
+
+    <p>
+      One key plan for the future is to integrate the TK GUI with
+      the IDLE IDE. Volunteers are welcome!
+    </p>
+    <p>
+      Other than that, I have no great plans to extend the functionality of
+      the module. I have kept PyUnit as simple as possible (but no simpler,
+      hopefully!) because I believe that helper modules for
+      such common testing tasks as log file comparison are better written by
+      test writers than by myself.
+    </p>
+
+    <h2><a name="UPDATES">Updates and community</a></h2>
+
+    <p>
+      News, updates and more are available at the <a href="http://pyunit.sourceforge.net/">
+        project website</a>.
+    </p>
+    <p>
+      Comments, suggestions and bug reports are welcome; simply e-mail me or,
+      better still, join the very low-volume
+      <a href="http://lists.sourceforge.net/mailman/listinfo/pyunit-interest">
+        mailing list</a> and post your comments there. There are a surprisingly
+      large number of people already using PyUnit, and they all have wisdom
+      to share.
+    </p>
+
+    <h2><a name="ACKS">Acknowledgements</a></h2>
+
+    <p>
+      Many thanks to Guido and his disciples for the Python language. In
+      tribute, I have written the following <i>haiku</i> (or '<i>pyku</i>', if
+      you will):
+    </p>
+    <blockquote><cite>
+        Guido van Rossum<br>
+        'Gawky Dutchman' gave birth to<br>
+        Beautiful Python
+    </cite></blockquote>
+    <p>
+      I gratefully acknowledge the work of Kent Beck and Erich Gamma for their
+      work on JUnit, which made the design of PyUnit a no-brainer.
+    </p>
+    <p>
+      Thanks also to Tim Voght; I discovered after I had implemented PyUnit
+      that he had also implemented a 'pyunit' module as part of his 'PyWiki'
+      WikiWikiWeb clone. He graciously gave me the go-ahead to submit my
+      version to the community at large.
+    </p>
+    <p>
+      Many thanks to those who have written to me with suggestions and
+      questions. I've tried to add appropriate credits in the CHANGES file
+      in the download package.
+    </p>
+    <p>
+      Particular thanks to J&eacute;r&ocirc;me Marant, who packaged PyUnit
+      for Debian.
+    </p>
+
+
+    <h2><a name="INFO">Related information</a></h2>
+
+    <ul>
+      <li><a href="http://pyunit.sourceforge.net/">PyUnit website</a>
+      <li><a href="http://www.python.org/">Python website</a>
+      <li><a href="http://www.XProgramming.com/testfram.htm">"Simple Smalltalk
+          Testing: With Patterns"</a> by Kent Beck
+      <li><a href="http://www.junit.org">JUnit website</a>
+      <li><a href="http://www.xprogramming.com/">XProgramming.com</a> --
+        the home of eXtreme Programming
+      <li><a href="http://c2.com/cgi/wiki?ExtremeProgramming">ExtremeProgramming</a>
+        on WikiWikiWeb
+      <li><a href="http://c2.com/cgi/wiki?PyWiki">PyWiki</a> --
+        Python WikiWikiWeb clone by Tim Voght
+    </ul>
+
+    <hr>
+    <h4><a name="AUTHOR">About the author</a></h4>
+
+    <p>
+      Steve Purcell is <a href="http://c2.com/cgi/wiki?JustaProgrammer">just
+      a programmer</a> at heart, working independently writing, applying and
+      teaching Open Source software.
+    </p>
+    <p>
+      He recently acted as Technical Director for a Web/WAP start-up, but
+      spends most of his time architecting and coding large Java systems whilst
+      counterproductively urging his Java-skilled colleagues to take up
+      Python instead.
+    </p>
+
+    <hr>
+    <address>Steve Purcell, &lt;stephen_purcell&nbsp;at&nbsp;yahoo&nbsp;dot&nbsp;com&gt;
+</address>
+    <small>$Id: PyUnit.html,v 1.20 2001/08/08 07:22:16 purcell Exp $</small>
+  </body>
+</html>
