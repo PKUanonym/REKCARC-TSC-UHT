@@ -1,0 +1,46 @@
+网络边缘：面向连接服务，无连接服务
+网络核心：电路交换，报文交换
+分组交换网中的时延与丢失
+协议层次和服务模型
+典型应用及其协议
+	web，http：非持久连接和持久连接；http报文；web缓存，条件GET
+	ftp
+	email ： smtp ，pop3， mime
+	dns：层次化结构：local/root/TLD/authoritative ; dns server ; dns 报文； 查询
+传输层服务：复用，分解
+UDP：无连接服务；报文段格式；应用特点；UDP校验和
+可靠传输原理：可靠信道；有位差信道；有位差丢包信道；改进链路利用率
+TCP：报文段结构； 序号/确认号； 连接管理/握手机制 ； 流量控制； 拥塞控制； 时延模型；
+网络层服务模型
+IP：IPV4编址/寻址/CIDR ； IP数据报格式 ； IP分片/重组
+层次化编址/路由聚合
+路由器原理/路由表/转发表
+路由算法 ： LS/DV
+            ISP ； OSPF ；BGP
+ICMP
+链路层服务：差错检测和纠错
+多路访问协议和局域网：
+	信道划分MAC协议：TDMA，FDMA
+	随机访问MAC协议：时隙ALOHA ， 纯ALOHA， CSMA ； CSMA/CD
+	轮流协议： Polling ，Token Passing
+	效率计算
+Ethernet： 帧结构； CSMA/CD原理与算法； MAC 地址；技术发展 ； 10M/100M/ 1000M Ethernet ； ARP
+集线器PUB ； 网桥bridge ； 交换机switch ； 直接转发cut-through ； 存储转发store-and - forward
+
+如果时间实在不够了，不妨看看以下内容。
+总结自程鹏老师上周五第三节课的录音中说得比较详细的部分。
+
+HTTP条件GET
+FTP带外传输，控制
+哪些协议与Email有关
+DNS的递归和迭代查询
+UDPpinger实验
+滑动窗口（注意看一下相关作业题）
+TCP的拥塞控制
+IP的CIDR编址
+路由算法的种类和收敛的讨论
+ICMP是什么层的，是个什么类型的协议，待遇和TCP差不多
+各层差错检测的强弱，必要性
+多路访问的各种概念理顺，算法通过作业弄熟
+以太网帧结构，长度计算，速度和介质的影响，
+hub是物理层的，bridge和switch是链路层，路由器在网络层
