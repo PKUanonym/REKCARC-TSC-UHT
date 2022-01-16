@@ -29,3 +29,10 @@ https://github.com/MashPlant/db by Chenhao Li
 https://github.com/ZYFZYF/RoboDBMS by Yunfeng Zhao
 
 https://github.com/rcy17/pybase by rls (implemented with Python)
+
+### 2021
+
+https://thu-db.github.io/dbs-tutorial/
+
+选课同学主要感受大作业工作量远大于课程的2学分，此外还有文档实现指导（截止2021学期结束）太过简略，期末检查测例比较难（且不会提前公布）等问题。
+
