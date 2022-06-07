@@ -1,5 +1,7 @@
 ## Tips
 
+update: 2022春本课程已再次课改，内容改为针对数据库基础知识的 5 次 lab，与 [CMU 15-445](https://15445.courses.cs.cmu.edu/fall2019/) 的形式类似，但目测难度要小不少，除了最后一个实验几乎不需要考虑多线程。具体可见 https://thu-db.github.io/dbtrain-tutorial/ 。给分很好。
+
 update: 2020春本课程已课改，内容改为数据库的基础知识（与数据库系统概论有不少重合）。2020年作业见https://github.com/RecursionSheep/Database-Training-Projects
 
 我觉得lcgg的代码写的太菜了，就把它删了。我的在这里：
