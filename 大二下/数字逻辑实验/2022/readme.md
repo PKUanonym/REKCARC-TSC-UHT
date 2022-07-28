@@ -1,4 +1,4 @@
-# readme、
+# readme
 这是 [Eren](https://zhaochenyang20.github.io/) 2022 年的笔记，不得不感慨数电实验真的垃圾。
 
 对应的文件请看文件树下的内容。
