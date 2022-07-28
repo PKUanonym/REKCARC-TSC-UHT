@@ -11,9 +11,9 @@ Web page: [REKCARC-TSC-UHT.readthedocs.io](https://REKCARC-TSC-UHT.readthedocs.i
 
 受[浙江大学相关项目](https://github.com/QSCTech/zju-icicles)启发，创立了本项目。
 
-由于本仓库未启用`git-lfs`，因此请不要上传单个超过100M的文件，否则commit无效。
+由于本仓库未启用 `git-lfs`，因此请不要上传单个超过 100M 的文件，否则 commit 无效。
 
-若要下载单个文件夹，复制该文件夹的网址，粘贴入[DownGit](https://minhaskamal.github.io/DownGit/#/home)中，选择download即可。
+若要下载单个文件夹，复制该文件夹的网址，粘贴入 [DownGit](https://minhaskamal.github.io/DownGit/#/home) 中，选择 download 即可。
 
 如果您是清华大学学生，可移步 https://git.tsinghua.edu.cn/pkuanonym/REKCARC-TSC-UHT 进行查看并且能节约不少流量。
 
@@ -21,7 +21,7 @@ Web page: [REKCARC-TSC-UHT.readthedocs.io](https://REKCARC-TSC-UHT.readthedocs.i
 
 ## 前言
 
-继承自[Trinkle23897的项目](https://github.com/Trinkle23897/thu-cst-cracker)，删去了其中侵权内容。若还有任何侵权内容请在issues下指出，非常感谢。
+继承自 [Trinkle23897 的项目](https://github.com/Trinkle23897/thu-cst-cracker)，删去了其中侵权内容。若还有任何侵权内容请在 issues 下指出，非常感谢。
 
 ## 目录
 
@@ -35,7 +35,7 @@ Web page: [REKCARC-TSC-UHT.readthedocs.io](https://REKCARC-TSC-UHT.readthedocs.i
 
 Issue、PR、纠错、资料、选课/考试攻略，完全欢迎！来自大家的关注、维护和贡献，才是让这个攻略继续存在的动力~
 
-如果希望匿名贡献，可以email至此邮箱，注明"REKCARC-TSC-UHT"即可：PKUanonymous@qq.com
+如果希望匿名贡献，可以 email 至此邮箱，注明 "REKCARC-TSC-UHT" 即可：PKUanonymous@qq.com
 
 贡献方法见 [贡献方法](贡献方法.md)
 
