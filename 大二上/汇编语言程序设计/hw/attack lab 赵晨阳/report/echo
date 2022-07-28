@@ -1,0 +1,8 @@
+echo:
+	subq	$24, %rsp 	Allocate 24 bytes on stack
+	movq	%rsp, %rdi 	Compute buf as %rsp
+	call	gets
+	movq	%rsp, %rdi  Compute buf as %rsp
+	call	puts
+	addq	$24, %rsp	Deallocate stack space
+	ret
