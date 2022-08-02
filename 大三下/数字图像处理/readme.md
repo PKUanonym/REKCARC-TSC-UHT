@@ -12,7 +12,10 @@
 第二次是组队的，找了Gty，然后我就负责干脏活。
 
 
-#### Update
+## Update
+
 2020春季学期作业：https://github.com/zx1239856/UndergradProjects/tree/master/数字图像处理
 
 平常4次小作业较为trivial，第一次大作业的view morphing正确实现具有一定难度，第二次大作业随便训一个attention head就能提高准确率到不错的程度，总体工作量不大
+
+一个泊松图像融合的 project: https://github.com/Trinkle23897/Fast-Poisson-Image-Editing

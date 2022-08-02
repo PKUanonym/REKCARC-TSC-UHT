@@ -11,17 +11,17 @@ Web page: [REKCARC-TSC-UHT.readthedocs.io](https://REKCARC-TSC-UHT.readthedocs.i
 
 受[浙江大学相关项目](https://github.com/QSCTech/zju-icicles)启发，创立了本项目。
 
-由于本仓库未启用`git-lfs`，因此请不要上传单个超过100M的文件，否则commit无效。
+由于本仓库未启用 `git-lfs`，因此请不要上传单个超过 100M 的文件，否则 commit 无效。
 
-若要下载单个文件夹，复制该文件夹的网址，粘贴入[DownGit](https://minhaskamal.github.io/DownGit/#/home)中，选择download即可。
+若要下载单个文件夹，复制该文件夹的网址，粘贴入 [DownGit](https://minhaskamal.github.io/DownGit/#/home) 中，选择 download 即可。
 
 如果您是清华大学学生，可移步 https://git.tsinghua.edu.cn/pkuanonym/REKCARC-TSC-UHT 进行查看并且能节约不少流量。
 
-感谢对本项目贡献的同学：[Trinkle23897](https://github.com/trinkle23897)、[LJSthu](https://github.com/ljsthu)、[shyoshyo](https://github.com/shyoshyo)、[wuhaozhe](https://github.com/wuhaozhe)、[choumartin1234](https://github.com/choumartin1234)、[FztTony](https://github.com/FztTony/)、[VicaYang](https://github.com/VicaYang/)、[duzx16](https://github.com/duzx16/)、[zerotrac](https://github.com/zerotrac)、[gjz010](https://github.com/gjz010/)、[Recursion](https://github.com/RecursionSheep)、[linusboyle](https://github.com/linusboyle)、[namasikanam](https://github.com/namasikanam)、[JamesZhengYuyu](https://github.com/JamesZhengYuyu)、[zx1239856](https://github.com/zx1239856)、[yaoqs](https://github.com/yaoqs)、[heheda12345](https://github.com/heheda12345)、[MashPlant](https://github.com/MashPlant)、[lwpie](https://github.com/lwpie)、[cht33](https://github.com/cht33)、[chenweize1998](https://github.com/chenweize1998)、[will7101](https://github.com/will7101)、[UNIDY2002](https://github.com/UNIDY2002)、[yinhaoxuan](https://github.com/yinhaoxuan)、[zhengkw18](https://github.com/zhengkw18)、[rcy17](https://github.com/rcy17)、[prnake](https://github.com/prnake)、[qky18](https://github.com/qky18)、[JamesZFS](https://github.com/JamesZFS)、[EnjoyColin](https://github.com/EnjoyColin)、[3ToThe6](https://github.com/3ToThe6)、[c7w](https://github.com/c7w), ……以及电脑前的您！
+感谢对本项目贡献的同学：[Trinkle23897](https://github.com/trinkle23897)、[LJSthu](https://github.com/ljsthu)、[shyoshyo](https://github.com/shyoshyo)、[wuhaozhe](https://github.com/wuhaozhe)、[choumartin1234](https://github.com/choumartin1234)、[FztTony](https://github.com/FztTony/)、[VicaYang](https://github.com/VicaYang/)、[duzx16](https://github.com/duzx16/)、[zerotrac](https://github.com/zerotrac)、[gjz010](https://github.com/gjz010/)、[Recursion](https://github.com/RecursionSheep)、[linusboyle](https://github.com/linusboyle)、[namasikanam](https://github.com/namasikanam)、[JamesZhengYuyu](https://github.com/JamesZhengYuyu)、[zx1239856](https://github.com/zx1239856)、[yaoqs](https://github.com/yaoqs)、[heheda12345](https://github.com/heheda12345)、[MashPlant](https://github.com/MashPlant)、[lwpie](https://github.com/lwpie)、[cht33](https://github.com/cht33)、[chenweize1998](https://github.com/chenweize1998)、[will7101](https://github.com/will7101)、[UNIDY2002](https://github.com/UNIDY2002)、[yinhaoxuan](https://github.com/yinhaoxuan)、[zhengkw18](https://github.com/zhengkw18)、[rcy17](https://github.com/rcy17)、[prnake](https://github.com/prnake)、[qky18](https://github.com/qky18)、[JamesZFS](https://github.com/JamesZFS)、[Co1lin](https://github.com/Co1lin)、[3ToThe6](https://github.com/3ToThe6)、[c7w](https://github.com/c7w), [Eren Zhao](https://zhaochenyang20.github.io/about/) ……以及电脑前的您！
 
 ## 前言
 
-继承自[Trinkle23897的项目](https://github.com/Trinkle23897/thu-cst-cracker)，删去了其中侵权内容。若还有任何侵权内容请在issues下指出，非常感谢。
+继承自 [Trinkle23897 的项目](https://github.com/Trinkle23897/thu-cst-cracker)，删去了其中侵权内容。若还有任何侵权内容请在 issues 下指出，非常感谢。
 
 ## 目录
 
@@ -35,7 +35,7 @@ Web page: [REKCARC-TSC-UHT.readthedocs.io](https://REKCARC-TSC-UHT.readthedocs.i
 
 Issue、PR、纠错、资料、选课/考试攻略，完全欢迎！来自大家的关注、维护和贡献，才是让这个攻略继续存在的动力~
 
-如果希望匿名贡献，可以email至此邮箱，注明"REKCARC-TSC-UHT"即可：PKUanonymous@qq.com
+如果希望匿名贡献，可以 email 至此邮箱，注明 "REKCARC-TSC-UHT" 即可：PKUanonymous@qq.com
 
 贡献方法见 [贡献方法](贡献方法.md)
 
