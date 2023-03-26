@@ -12,3 +12,6 @@ https://github.com/zx1239856/UndergradProjects/tree/master/人工神经网络
 
 
 https://github.com/Guangxuan-Xiao/THU-Artificial-Neural-Network
+
+
+https://github.com/Btlmd/ann_assignments

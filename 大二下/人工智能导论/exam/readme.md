@@ -2,7 +2,7 @@
 
 考点就那么几个（考试六道题的样子）：
 
-第一章的A和A*算法
+第一章的A和A\*算法
 
 第二章的alpha-beta剪枝和MCTS（如何走步）
 
@@ -19,4 +19,3 @@
 ## 2022
 
 - 批量拟合人智导习题可以使用 [IAI_Gen](https://github.com/Btlmd/IAI_Gen)
-
