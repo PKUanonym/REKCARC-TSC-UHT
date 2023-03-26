@@ -30,6 +30,8 @@ https://github.com/ZYFZYF/RoboDBMS by Yunfeng Zhao
 
 https://github.com/rcy17/pybase by rls (implemented with Python)
 
+https://github.com/Btlmd/dbs-tutorial by lambda & c7w (C++)
+
 ### 2021
 
 https://thu-db.github.io/dbs-tutorial/
