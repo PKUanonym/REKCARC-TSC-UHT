@@ -1,5 +1,9 @@
 # 造机
 
+## 2022 Fall Update
+
+勉强能跑 uCore 的造机：https://github.com/wenqi-wang20/RISCV-LAB
+
 ## 2021 Fall Update
 
 非常普通的 RISCV 造机： [OrdinaryRISCV](https://github.com/Co1lin/OrdinaryRISCV)
