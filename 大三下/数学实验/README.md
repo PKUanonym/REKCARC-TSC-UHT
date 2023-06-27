@@ -9,7 +9,7 @@ https://github.com/zhaochenyang20/MathExperiment
 
 ~~生是 Python 人，死是 Python 魂。让我学 MatLab，死也不可能。~~
 
-用 Python 重写了一次往年报告，而且会议了下考试。
+用 Python 重写了一次往年报告，而且回忆（锐评 raping）了下考试。
 
 https://github.com/zhaochenyang20/Math_Modeling
 
