@@ -25,3 +25,5 @@
 https://github.com/MashPlant/computational_graphics_2019 by Chenhao Li
 
 https://github.com/Guangxuan-Xiao/THU-Computer-Graphics-2020 by Guangxuan Xiao
+
+https://github.com/ARintaro/PositronSniperRifle 2023 Path Tracer
