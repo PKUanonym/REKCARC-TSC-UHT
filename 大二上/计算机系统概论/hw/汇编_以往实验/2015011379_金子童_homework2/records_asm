@@ -1,0 +1,15 @@
+
+write_records：     文件格式 elf32-i386
+
+
+Disassembly of section .text:
+
+08048074 <write_record>:
+ 8048074:	55                   	push   %ebp
+ 8048075:	89 e5                	mov    %esp,%ebp
+ 8048077:	53                   	push   %ebx
+ 8048078:	b8 04 00 00 00       	mov    $0x4,%eax
+ 804807d:	8b 5d 0c             	mov    0xc(%ebp),%ebx
+ 8048080:	8b 4d 08             	mov    0x8(%ebp),%ecx
+ 8048083:	ba d0 07 00 00       	mov    $0x7d0,%edx
+ 8048088:	cd 80                	int    $0x80
