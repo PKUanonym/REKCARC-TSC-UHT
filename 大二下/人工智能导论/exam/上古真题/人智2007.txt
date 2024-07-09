@@ -1,0 +1,61 @@
+发信人: CAQ (打印机没有了), 信区: e_note
+标  题: 人智2007.1.6（A卷）马少平
+发信站: 酒井BBS (Sat Jan  6 16:33:34 2007), 转信
+
+人智2007.1.6（A卷）
+14:00-16:00
+
+1.（10分）
+(1)α-β剪枝的原理；与极大极小法相比，结果一样吗？
+(2)遗传，种群大小为4，A、B、C、D的适应值依次为4、6、2、8。用确定性算法做一遍；再用轮盘赌做一遍，随机数为0.15 0.55 0.25 0.45。
+
+2.（20分）α-β剪枝，值依次是
+3 -1 -2 5 7 1 -3 2 -2 5 -1 4 6 9 -2 -5 -2 1 -3 5 3 -1 -2 4
+都是两个一组往上并起来，只是最上面是三个一组并到根
+
+3.（20分）A算法，类似
+http://www.chinatraining.net/demo/computer/003/text/exam/first/exam.htm
+中的三、5题，该题内容如下：
+
+某问题的状态空间图如下图所示，其中括号内标明的是各节点的h值，弧线边的数字是该弧线的耗散值，试用A算法求解从初始节点S到目标节点T的路径。要求给出搜索图，标明各节点的f值，及各节点的扩展次序，并给出求得的解路径。 
+
+http://www.chinatraining.net/demo/computer/003/text/exam/first/images/t2.gif
+
+4.（20分）逆向演绎，类似
+http://www.chinatraining.net/demo/computer/003/text/exam/second/exam.htm
+中的三、4题，该题内容如下：
+
+某问题由下列公式描述：
+　　(1)、（exists s）~P（s）
+　　(2)、（forany s）（P（g（s）））
+　　(3)、（exists x）（forany s）（exists y）（（P（s）∧Q（b，x，s））→H（y）
+　　(4)、（forany x）（forany s）（Q（b，x，s）→Q（b，x，g（s）））
+　　(5)、（forany x）（forany s）（exists y）（~P（s）→Q（b，x，y））
+求证：( x)H(x) 请用基于规则的逆向演绎系统求解( x)H(x)成立。要求给出一个求得的一致解图，并说明为什么它是一致的；给出目标的解答。 
+
+5.（20分）AO*问题，类似
+http://www.chinatraining.net/demo/computer/003/text/exam/second/exam.htm
+中的三、1题，该题内容如下：
+
+某问题状态图如右图所示。假定k连接符的耗散值为k。 各节点的h值假定为：
+h(A)=3, h(B)=2, h(C)=6, h(D)=3,
+h(E)=4, h(F)=2, h(G)=3, h(H)=h(I)=0 (目标节点)
+用AO*算法求解该问题， 给出每次循环后的搜索图， 并给出求得的解图。
+
+http://www.chinatraining.net/demo/computer/003/text/exam/second/images/t1.gif
+
+说明：以上三个“类似”的题，数字可能有改。
+
+6.（10分）
+同一问题的两个A*算法，即使h1(n)>=h2(n)，也不能保证算法1扩展的节点数<=算法2扩展的。为什么？或给出例子。
+
+--
+╭┬─╮╭┬─╮╭┬─╮
+│┤    │┤  ││┤  │
+│┤    │┤─││┤╭│
+╰┴─╯╰╯  ╯╰┴┴╯
+33
+
+
+※ 修改:·CAQ 于 Jan 12 13:32:15 修改本文·[FROM: 59.66.130.90]
+※ 来源:·酒井BBS bbs.net9.org·[FROM: 59.66.130.90]
