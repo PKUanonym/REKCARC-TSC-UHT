@@ -1,0 +1,25 @@
+------entering main------
+Test(): this->buf @ 0x1e1550
+Test(): this->buf @ 0x1e1570
+------before call f1------
+f1():
+Test(const Test&) called. this->buf @ 0x1e1590
+a.buf @ 0x1e1590
+Test(Test&&) called. this->buf @ 0x1e1590
+Test(Test&&) called. this->buf @ 0x1e1590
+~Test(): this->buf @ 0
+~Test(): this->buf @ 0
+------after f1 return------
+------before call f2------
+f2():
+b.buf @ 0x1e1570
+------after f2 return------
+------before call f3------
+f3():
+Test(Test&&) called. this->buf @ 0x1e1550
+~Test(): this->buf @ 0
+------after f3 return------
+------exiting main------
+~Test(): this->buf @ 0x1e1590
+~Test(): this->buf @ 0x1e1550
+~Test(): this->buf @ 0x1e1570
