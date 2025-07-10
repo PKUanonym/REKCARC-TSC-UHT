@@ -27,3 +27,9 @@ https://github.com/MashPlant/computational_graphics_2019 by Chenhao Li
 https://github.com/Guangxuan-Xiao/THU-Computer-Graphics-2020 by Guangxuan Xiao
 
 https://github.com/ARintaro/PositronSniperRifle 2023 Path Tracer
+
+## 辅助工具
+
+用于辅助调试 scene description language（即各种 testcase.txt）的一个 vscode 扩展，其由来是写大作业时反复手动数 `numObjects`、记不住材料编号与具体材料的对应、**没有语法高亮**（这是重点），于是愈发烦躁……具体的 feature 介绍可以参考下面的链接。
+
+https://marketplace.visualstudio.com/items?itemName=ovolab-veritas.computer-graphics-testcases-highlighting
