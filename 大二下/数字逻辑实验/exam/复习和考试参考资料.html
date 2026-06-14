@@ -1,0 +1,1078 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>数字逻辑实验期末：SystemVerilog / Vivado FPGA 备考手册</title>
+<style>
+:root{
+  --bg:#f6f7fb; --paper:#ffffff; --ink:#1b2430; --muted:#5b6678; --line:#d8deea;
+  --brand:#3857d6; --brand2:#1a9b8f; --warn:#b35a00; --bad:#bb2d3b; --good:#19703e;
+  --code:#0d1117; --code2:#111827; --soft:#eef2ff; --soft2:#ecfdf5; --soft3:#fff7ed;
+  --shadow:0 8px 24px rgba(20,30,60,.10);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.72 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans SC","PingFang SC","Microsoft YaHei",Arial,sans-serif}
+a{color:var(--brand);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:290px 1fr;min-height:100vh}
+aside{position:sticky;top:0;height:100vh;overflow:auto;padding:22px 18px;background:#111827;color:#e5e7eb;border-right:1px solid #000}
+aside h1{font-size:18px;line-height:1.35;margin:0 0 14px;color:white}
+aside .meta{font-size:12px;color:#aeb7c8;margin-bottom:18px}
+aside nav a{display:block;color:#d6def5;padding:6px 8px;border-radius:8px;font-size:13px;line-height:1.35}
+aside nav a:hover{background:#1f2937;text-decoration:none;color:white}
+main{max-width:1180px;margin:0 auto;padding:34px 42px 80px}
+.hero{background:linear-gradient(135deg,#eef2ff,#ecfeff 65%,#fff7ed);border:1px solid var(--line);border-radius:22px;padding:32px 36px;box-shadow:var(--shadow);margin-bottom:28px}
+.hero h1{font-size:34px;line-height:1.22;margin:0 0 12px;color:#172033}.hero p{margin:8px 0;color:#374151}.hero .tag{display:inline-block;background:white;color:#344;box-shadow:0 1px 6px #dbe4f5;border:1px solid var(--line);border-radius:999px;padding:4px 10px;margin:5px 5px 0 0;font-size:13px}
+section{background:var(--paper);border:1px solid var(--line);border-radius:18px;box-shadow:0 2px 10px rgba(20,30,60,.04);margin:22px 0;padding:28px 32px}
+h2{font-size:26px;margin:0 0 16px;padding-bottom:10px;border-bottom:2px solid #eef2f7;color:#1d2b4f}
+h3{font-size:21px;margin:26px 0 10px;color:#23365f} h4{font-size:17px;margin:18px 0 6px;color:#26364d}
+p{margin:10px 0}.muted{color:var(--muted)}.small{font-size:13px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.full{grid-column:1/-1}
+.card{border:1px solid var(--line);border-radius:14px;background:#fbfcff;padding:15px 16px}.card h4{margin-top:0}.card.good{background:var(--soft2)}.card.warn{background:var(--soft3)}.card.blue{background:var(--soft)}
+.callout{border-left:5px solid var(--brand);background:#f5f7ff;padding:14px 18px;margin:16px 0;border-radius:0 12px 12px 0}.callout.warn{border-left-color:var(--warn);background:#fff7ed}.callout.bad{border-left-color:var(--bad);background:#fff1f2}.callout.good{border-left-color:var(--good);background:#ecfdf5}
+table{border-collapse:collapse;width:100%;margin:14px 0;background:white}th,td{border:1px solid var(--line);padding:8px 10px;vertical-align:top}th{background:#f1f5f9;text-align:left}td code,li code,p code{background:#f1f5f9;border:1px solid #e2e8f0;border-radius:5px;padding:1px 5px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+pre.code{background:var(--code);color:#e6edf3;border-radius:14px;padding:16px 18px;overflow:auto;box-shadow:inset 0 0 0 1px #30363d;margin:14px 0 18px;line-height:1.5}pre.code code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;font-size:13.5px;white-space:pre}
+pre.code code::before{content:attr(data-lang);display:block;color:#8b949e;font-size:12px;margin-bottom:8px;text-transform:uppercase;letter-spacing:.06em}
+ul,ol{padding-left:1.35em}.checklist li{margin:5px 0}.kbd{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:#111827;color:white;border-radius:6px;padding:1px 6px;font-size:.85em}
+.diagram{margin:16px 0;padding:12px;background:#fbfdff;border:1px solid var(--line);border-radius:14px;overflow:auto}.diagram svg{max-width:100%;height:auto}.box{fill:#eef2ff;stroke:#5663c7;stroke-width:1.4}.box2{fill:#ecfdf5;stroke:#26956d;stroke-width:1.4}.box3{fill:#fff7ed;stroke:#da8a22;stroke-width:1.4}.arrow{stroke:#374151;stroke-width:1.8;marker-end:url(#arrow)}.lbl{font:14px sans-serif;fill:#172033}.tiny{font:12px sans-serif;fill:#4b5563}.state{fill:#fff;stroke:#3857d6;stroke-width:1.6}.state2{fill:#f0fdf4;stroke:#16a34a;stroke-width:1.6}
+.ref-list li{margin:8px 0}.toc-note{font-size:12px;color:#9ca3af;margin-top:10px}
+hr{border:none;border-top:1px solid var(--line);margin:22px 0}
+@media (max-width:960px){.layout{display:block}aside{position:relative;height:auto}.grid,.grid3{grid-template-columns:1fr}main{padding:20px 14px}.hero{padding:24px 20px}section{padding:22px 18px}}
+@media print{aside{display:none}.layout{display:block}main{max-width:none;padding:0}body{background:white}section,.hero{box-shadow:none;break-inside:avoid}a{text-decoration:none;color:#111}pre.code{white-space:pre-wrap}}
+</style>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <h1>SystemVerilog / Vivado<br>FPGA 期末备考手册</h1>
+  <div class="meta">面向《数字逻辑实验》上机考试；重点：会写、会改、能跑通。<br>本文件可离线打开。</div>
+  <nav>
+    <a href="#start">0. 怎么用这份手册</a>
+    <a href="#mindset">1. 硬件描述的思维方式</a>
+    <a href="#sv-basics">2. SystemVerilog 基础语法</a>
+    <a href="#comb">3. 组合逻辑写法</a>
+    <a href="#hierarchy">4. 模块化与例化</a>
+    <a href="#seq">5. 时序逻辑与寄存器</a>
+    <a href="#counter">6. 计数器、分频、按钮</a>
+    <a href="#fsm">7. 状态机方法</a>
+    <a href="#sevenseg">8. 七段数码管</a>
+    <a href="#labs">9. 实验 4–7 典型题解法</a>
+    <a href="#mock">10. 模拟题：摩斯电码项目</a>
+    <a href="#vivado">11. Vivado / XDC / 上板排错</a>
+    <a href="#templates">12. 考试模板库</a>
+    <a href="#checklist">13. 最后检查清单</a>
+    <a href="#refs">参考资料</a>
+  </nav>
+  <div class="toc-note">建议考试前把“模板库”和“检查清单”单独打印或置顶。</div>
+</aside>
+<main>
+<div class="hero" id="start">
+  <h1>数字逻辑实验期末：SystemVerilog / Vivado FPGA 备考手册</h1>
+  <p>这份手册按“从零能写出能综合、能上板的代码”的目标组织。它不把重点放在仿真，也不过度展开亚稳态理论，而是把考试中最容易遇到的模块——译码器、全加器、计数器、分频器、按钮长短按、串行输入、状态机、七段数码管和 XDC 管脚约束——拆成可直接改写的模板。</p>
+  <span class="tag">SystemVerilog 可综合子集</span>
+  <span class="tag">Vivado 上板</span>
+  <span class="tag">组合逻辑</span>
+  <span class="tag">时序逻辑</span>
+  <span class="tag">FSM</span>
+  <span class="tag">七段数码管</span>
+  <span class="tag">Morse 模拟题</span>
+</div>
+
+<section>
+<h2>0. 考试时应该怎么用这份手册</h2>
+<div class="grid">
+  <div class="card blue"><h4>先搭骨架，再填功能</h4><p>上机题通常不是考“背语法”，而是给一个 FPGA 小项目，让你把输入、状态、计数和显示连起来。拿到题目后先写顶层端口、XDC 管脚、显示译码器和复位逻辑，再写核心功能。</p></div>
+  <div class="card good"><h4>所有项目都可拆成三类电路</h4><p><b>组合逻辑</b>：译码、比较、加法、选择。<b>寄存器/计数器</b>：保存状态、保存输入、计时。<b>状态机</b>：按步骤推进流程。绝大多数考试项目就是这三类的组合。</p></div>
+</div>
+<p>推荐顺序：先读第 1–7 章建立语法和设计模型，再看第 8–10 章的典型项目，最后把第 12–13 章作为考试速查。</p>
+<div class="callout warn"><b>考试原则：</b>宁可写朴素、清晰、能综合的代码，也不要追求“高级”。不用仿真时，板上调试更依赖模块拆分、LED 暴露中间信号、复位逻辑可靠、端口和 XDC 名字一致。</div>
+</section>
+
+<section id="mindset">
+<h2>1. 硬件描述的思维方式：你写的不是“按行执行的程序”</h2>
+<p>SystemVerilog 看起来像 C，但本质完全不同。你写的代码会被 Vivado 综合成电路：线、门、触发器、多路选择器、加法器、比较器等。理解这一点，很多语法规则就自然了。</p>
+<div class="diagram">
+<svg width="880" height="190" viewBox="0 0 880 190" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#374151"/></marker></defs>
+<rect class="box2" x="35" y="55" width="150" height="70" rx="12"/><text class="lbl" x="73" y="86">输入信号</text><text class="tiny" x="68" y="108">开关 / 按钮 / 时钟</text>
+<line class="arrow" x1="185" y1="90" x2="260" y2="90"/>
+<rect class="box" x="260" y="35" width="180" height="110" rx="12"/><text class="lbl" x="315" y="72">组合逻辑</text><text class="tiny" x="285" y="100">assign / always_comb</text><text class="tiny" x="285" y="122">立即由输入决定输出</text>
+<line class="arrow" x1="440" y1="90" x2="515" y2="90"/>
+<rect class="box3" x="515" y="35" width="180" height="110" rx="12"/><text class="lbl" x="570" y="72">寄存器</text><text class="tiny" x="542" y="100">always_ff @(posedge clk)</text><text class="tiny" x="548" y="122">只在时钟边沿更新</text>
+<line class="arrow" x1="695" y1="90" x2="770" y2="90"/>
+<rect class="box2" x="770" y="55" width="80" height="70" rx="12"/><text class="lbl" x="790" y="86">输出</text><text class="tiny" x="783" y="108">LED / SEG</text>
+</svg>
+</div>
+<h3>1.1 三句话理解硬件代码</h3>
+<ol>
+<li><b><code>assign</code> 和 <code>always_comb</code></b> 描述组合电路。输入一变，输出就按逻辑关系变化。它们不会“记住”过去。</li>
+<li><b><code>always_ff @(posedge clk)</code></b> 描述触发器/寄存器。只有时钟上升沿到来时，寄存器才把右侧的值保存进去。</li>
+<li><b>状态机</b>就是“寄存器保存当前状态 + 组合逻辑算下一状态 + 组合逻辑/寄存器产生输出”。</li>
+</ol>
+<h3>1.2 软件变量 vs 硬件信号</h3>
+<table><tr><th>软件程序</th><th>硬件描述</th><th>考试中怎么想</th></tr>
+<tr><td>变量存放在内存里，语句按顺序执行</td><td>信号对应电路线；多个逻辑块同时存在、同时工作</td><td>不要问“下一行什么时候执行”，要问“这根线接到哪里”</td></tr>
+<tr><td><code>if</code> 是运行时分支</td><td><code>if</code> 在组合逻辑中常综合成选择器，在时序逻辑中决定寄存器下一拍写什么</td><td>每个分支都要给输出赋值，否则可能生成锁存器</td></tr>
+<tr><td>循环可以跑很多轮</td><td>可综合 <code>for</code> 常被展开成多份硬件</td><td>循环次数必须是综合时可确定的小常量</td></tr>
+</table>
+</section>
+
+<section id="sv-basics">
+<h2>2. SystemVerilog 基础语法：考试够用版</h2>
+<h3>2.1 模块 module：一个“黑盒电路”</h3>
+<p>每个 FPGA 设计都由模块组成。顶层模块的端口会被 XDC 绑定到 FPGA 管脚；子模块通过例化连到顶层或其他模块中。</p>
+<pre class="code"><code data-lang="systemverilog">module AndGate (
+    input  wire a,
+    input  wire b,
+    output wire y
+);
+    assign y = a &amp; b;
+endmodule</code></pre>
+<p>考试里最推荐的命名方式：端口名简单清楚，和 XDC 保持完全一致；内部信号可以用 <code>xxx_r</code> 表示寄存器，<code>xxx_w</code> 表示组合线/下一值。</p>
+<h3>2.2 <code>wire</code>、<code>reg</code>、<code>logic</code> 到底是什么</h3>
+<table><tr><th>写法</th><th>典型用途</th><th>赋值位置</th><th>建议</th></tr>
+<tr><td><code>wire</code></td><td>连续连线、子模块输出接线</td><td><code>assign</code> 或模块输出驱动</td><td>课程模板常用；用于纯连线很安全</td></tr>
+<tr><td><code>reg</code></td><td>在 <code>always_comb</code> / <code>always_ff</code> 中被赋值的信号</td><td>always 块内部</td><td>课程文档常用；名字叫 reg 不代表一定是寄存器，取决于 always 类型</td></tr>
+<tr><td><code>logic</code></td><td>SystemVerilog 更现代的单驱动信号类型</td><td><code>assign</code> 或 always 块，但不要多处驱动</td><td>考试可以用；若担心风格不一致，就用课程的 wire/reg</td></tr>
+</table>
+<div class="callout"><b>最简单不出错规则：</b>用 <code>assign</code> 赋值的输出声明成 <code>wire</code>；在 <code>always_comb</code> 或 <code>always_ff</code> 里赋值的输出声明成 <code>reg</code> 或 <code>logic</code>；同一个信号只在一个地方被赋值。</div>
+<h3>2.3 位宽、下标、切片</h3>
+<pre class="code"><code data-lang="systemverilog">logic        a;        // 1 bit
+logic [3:0]  sw;       // 4 bit，常写成 sw[3] sw[2] sw[1] sw[0]
+logic [6:0]  seg;      // 七段数码管 a~g，可约定 seg[6]=a, ..., seg[0]=g
+logic [15:0] token;    // 4 个十六进制数码，可用 4 个 nibble 保存
+
+assign high_nibble = token[15:12];
+assign low_nibble  = token[3:0];
+assign token2      = {sw, token[11:0]};   // 拼接：把新 sw 放到最高 4 位
+assign doubled     = {2{sw}};             // 重复：sw sw，共 8 bit</code></pre>
+<h3>2.4 字面量：<code>4'hA</code> 是什么意思</h3>
+<table><tr><th>写法</th><th>含义</th><th>例子</th></tr>
+<tr><td><code>宽度'进制数值</code></td><td>指定一个有位宽的常量</td><td><code>4'b1010</code>、<code>8'hFF</code>、<code>16'd1000</code></td></tr>
+<tr><td><code>'b</code></td><td>二进制</td><td><code>3'b010</code></td></tr>
+<tr><td><code>'d</code></td><td>十进制</td><td><code>20'd999_999</code></td></tr>
+<tr><td><code>'h</code></td><td>十六进制</td><td><code>16'h1234</code></td></tr>
+<tr><td><code>x</code></td><td>无关/未知；综合时可视为 don't care，但谨慎使用</td><td><code>4'b10xx</code></td></tr>
+</table>
+<p>考试里强烈建议给所有常量写位宽，尤其是计数器比较值、七段码、状态编码。这样 Vivado 不容易出现位宽截断警告。</p>
+<h3>2.5 常用运算符</h3>
+<table><tr><th>类别</th><th>运算符</th><th>说明</th></tr>
+<tr><td>按位逻辑</td><td><code>&amp;</code> <code>|</code> <code>^</code> <code>~</code></td><td>每一位分别做与/或/异或/取反。全加器常用 <code>^</code>。</td></tr>
+<tr><td>逻辑判断</td><td><code>&amp;&amp;</code> <code>||</code> <code>!</code></td><td>把整个表达式当真/假，常用于 <code>if</code> 条件。</td></tr>
+<tr><td>比较</td><td><code>==</code> <code>!=</code> <code>&lt;</code> <code>&gt;=</code></td><td>状态判断、计数器到达阈值。</td></tr>
+<tr><td>移位</td><td><code>&lt;&lt;</code> <code>&gt;&gt;</code></td><td>串行输入、Morse 编码、流水移位。</td></tr>
+<tr><td>拼接</td><td><code>{a,b}</code></td><td>把多段信号连成一段，常用于保存 4 个十六进制数字。</td></tr>
+<tr><td>三目</td><td><code>cond ? x : y</code></td><td>简单二选一；综合为 mux。</td></tr>
+</table>
+</section>
+
+<section id="comb">
+<h2>3. 组合逻辑写法：译码、选择、比较、查表</h2>
+<h3>3.1 <code>assign</code>：适合一行表达式</h3>
+<pre class="code"><code data-lang="systemverilog">module FullAdder1 (
+    input  wire A,
+    input  wire B,
+    input  wire Cin,
+    output wire Sum,
+    output wire Cout
+);
+    assign Sum  = A ^ B ^ Cin;
+    assign Cout = (A &amp; B) | (Cin &amp; (A ^ B));
+endmodule</code></pre>
+<p>只要能写成一个表达式，就可以用 <code>assign</code>。这类逻辑没有记忆，不需要时钟。</p>
+<h3>3.2 <code>always_comb</code>：适合 if / case / 查表</h3>
+<pre class="code"><code data-lang="systemverilog">module Mux4 (
+    input  wire [1:0] sel,
+    input  wire [3:0] a, b, c, d,
+    output reg  [3:0] y
+);
+    always_comb begin
+        case (sel)
+            2&#x27;d0:    y = a;
+            2&#x27;d1:    y = b;
+            2&#x27;d2:    y = c;
+            2&#x27;d3:    y = d;
+            default: y = 4&#x27;h0;  // 理论上到不了，也写上，防止不完整
+        endcase
+    end
+endmodule</code></pre>
+<h3>3.3 防止锁存器：组合逻辑必须“每条路都有赋值”</h3>
+<div class="grid">
+<div class="card warn"><h4>错误：某些分支没给 y 赋值</h4>
+<pre class="code"><code data-lang="systemverilog">always_comb begin
+    if (en) begin
+        y = a;
+    end
+    // en=0 时 y 没有新值，综合器可能推断锁存器
+end</code></pre></div>
+<div class="card good"><h4>正确：先给默认值，特殊情况再覆盖</h4>
+<pre class="code"><code data-lang="systemverilog">always_comb begin
+    y = 4&#x27;h0;       // 默认值
+    if (en) begin
+        y = a;
+    end
+end</code></pre></div>
+</div>
+<h3>3.4 <code>case</code> 查表模板</h3>
+<p>七段数码管、Morse 表、状态输出都适合用 <code>case</code>。写查表时要先定清楚“输入编码”和“输出位序”。</p>
+<pre class="code"><code data-lang="systemverilog">function automatic logic [6:0] hex_to_seg(input logic [3:0] x);
+    // 位序约定：seg[6:0] = {a,b,c,d,e,f,g}；1 表示点亮。
+    case (x)
+        4&#x27;h0: hex_to_seg = 7&#x27;b1111110;
+        4&#x27;h1: hex_to_seg = 7&#x27;b0110000;
+        4&#x27;h2: hex_to_seg = 7&#x27;b1101101;
+        4&#x27;h3: hex_to_seg = 7&#x27;b1111001;
+        4&#x27;h4: hex_to_seg = 7&#x27;b0110011;
+        4&#x27;h5: hex_to_seg = 7&#x27;b1011011;
+        4&#x27;h6: hex_to_seg = 7&#x27;b1011111;
+        4&#x27;h7: hex_to_seg = 7&#x27;b1110000;
+        4&#x27;h8: hex_to_seg = 7&#x27;b1111111;
+        4&#x27;h9: hex_to_seg = 7&#x27;b1111011;
+        4&#x27;hA: hex_to_seg = 7&#x27;b1110111;
+        4&#x27;hB: hex_to_seg = 7&#x27;b0011111; // 显示小写 b
+        4&#x27;hC: hex_to_seg = 7&#x27;b1001110;
+        4&#x27;hD: hex_to_seg = 7&#x27;b0111101; // 显示小写 d
+        4&#x27;hE: hex_to_seg = 7&#x27;b1001111;
+        4&#x27;hF: hex_to_seg = 7&#x27;b1000111;
+        default: hex_to_seg = 7&#x27;b0000000;
+    endcase
+endfunction</code></pre>
+<div class="callout warn"><b>注意 active-high / active-low：</b>课程文档中“不带译码数码管”示例采用输入为高时点亮相应段。若你的板子或题目写的是低电平点亮，只需要输出取反：<code>assign seg = ~hex_to_seg(x);</code>。</div>
+</section>
+
+<section id="hierarchy">
+<h2>4. 模块化与例化：把大题拆成小电路</h2>
+<p>考试项目一旦超过一个功能，就不要把所有逻辑堆到一个 always 块里。先写可复用的小模块，再在顶层连起来。这样即使某部分错了，也容易用 LED 暴露中间信号。</p>
+<h3>4.1 命名端口例化</h3>
+<pre class="code"><code data-lang="systemverilog">module Adder4 (
+    input  wire [3:0] A,
+    input  wire [3:0] B,
+    input  wire       Cin,
+    output wire [3:0] Sum,
+    output wire       Cout
+);
+    wire [2:0] c;
+
+    FullAdder1 u0 (.A(A[0]), .B(B[0]), .Cin(Cin),  .Sum(Sum[0]), .Cout(c[0]));
+    FullAdder1 u1 (.A(A[1]), .B(B[1]), .Cin(c[0]), .Sum(Sum[1]), .Cout(c[1]));
+    FullAdder1 u2 (.A(A[2]), .B(B[2]), .Cin(c[1]), .Sum(Sum[2]), .Cout(c[2]));
+    FullAdder1 u3 (.A(A[3]), .B(B[3]), .Cin(c[2]), .Sum(Sum[3]), .Cout(Cout));
+endmodule</code></pre>
+<p><b>强烈建议始终使用命名端口例化</b>，也就是 <code>.端口名(信号名)</code>。不要依赖位置顺序，因为一改模块端口顺序就会连错。</p>
+<h3>4.2 顶层模块的职责</h3>
+<ol>
+<li>端口名与 XDC 完全一致。</li>
+<li>只做“连线”和少量顶层 glue logic；核心功能下沉到子模块。</li>
+<li>把显示译码器作为独立模块，别在每个功能模块里重复写。</li>
+<li>必要时输出调试 LED，如当前状态、计数器最高位、错误标志。</li>
+</ol>
+<div class="diagram">
+<svg width="900" height="240" viewBox="0 0 900 240" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#374151"/></marker></defs>
+<rect class="box2" x="30" y="40" width="120" height="50" rx="10"/><text class="lbl" x="58" y="70">按钮/开关</text>
+<rect class="box2" x="30" y="150" width="120" height="50" rx="10"/><text class="lbl" x="74" y="180">时钟</text>
+<line class="arrow" x1="150" y1="65" x2="245" y2="65"/><line class="arrow" x1="150" y1="175" x2="245" y2="175"/>
+<rect class="box" x="245" y="25" width="170" height="80" rx="12"/><text class="lbl" x="292" y="58">输入处理</text><text class="tiny" x="272" y="82">边沿 / 长短按 / 串行码</text>
+<rect class="box3" x="245" y="135" width="170" height="80" rx="12"/><text class="lbl" x="298" y="168">计时器</text><text class="tiny" x="280" y="192">分频 / 计数 / tick</text>
+<line class="arrow" x1="415" y1="65" x2="505" y2="100"/><line class="arrow" x1="415" y1="175" x2="505" y2="140"/>
+<rect class="box3" x="505" y="70" width="150" height="100" rx="12"/><text class="lbl" x="555" y="108">FSM</text><text class="tiny" x="532" y="132">保存状态 / 决定流程</text><text class="tiny" x="540" y="154">产生结果码</text>
+<line class="arrow" x1="655" y1="120" x2="735" y2="120"/>
+<rect class="box" x="735" y="70" width="130" height="100" rx="12"/><text class="lbl" x="767" y="108">显示译码</text><text class="tiny" x="764" y="132">hex → seg</text><text class="tiny" x="762" y="154">err → LED</text>
+</svg>
+</div>
+</section>
+
+<section id="seq">
+<h2>5. 时序逻辑：寄存器、复位、非阻塞赋值</h2>
+<h3>5.1 寄存器模板：<code>always_ff</code></h3>
+<pre class="code"><code data-lang="systemverilog">module RegEn #(
+    parameter int W = 8
+)(
+    input  wire         clk,
+    input  wire         rst,   // 高有效同步复位
+    input  wire         en,
+    input  wire [W-1:0] d,
+    output reg  [W-1:0] q
+);
+    always_ff @(posedge clk) begin
+        if (rst) begin
+            q &lt;= &#x27;0;
+        end else if (en) begin
+            q &lt;= d;
+        end
+        // en=0 时不写 q，寄存器自然保持原值。这里不是锁存器，是触发器保持。
+    end
+endmodule</code></pre>
+<h3>5.2 非阻塞赋值 <code>&lt;=</code>：时序逻辑必须用它</h3>
+<p>在 <code>always_ff</code> 中，几乎总是用 <code>&lt;=</code>。它的直觉是：本拍所有右侧都先用“旧值”计算，到时钟边沿结束后一起更新。</p>
+<pre class="code"><code data-lang="systemverilog">always_ff @(posedge clk) begin
+    a &lt;= b;
+    b &lt;= a;
+end
+// 这会交换 a 和 b。因为 a&lt;=b 用旧 b，b&lt;=a 用旧 a。</code></pre>
+<div class="callout"><b>口诀：</b><code>always_comb</code> 里用阻塞赋值 <code>=</code>；<code>always_ff</code> 里用非阻塞赋值 <code>&lt;=</code>；不要在同一个 always 块混用。</div>
+<h3>5.3 同步复位 vs 异步复位</h3>
+<div class="grid">
+<div class="card"><h4>同步复位</h4>
+<pre class="code"><code data-lang="systemverilog">always_ff @(posedge clk) begin
+    if (rst) q &lt;= 0;
+    else     q &lt;= d;
+end</code></pre><p>复位信号只在时钟上升沿被检查。代码更简单，考试推荐优先使用，除非题目明确要求某个边沿异步复位。</p></div>
+<div class="card"><h4>异步复位</h4>
+<pre class="code"><code data-lang="systemverilog">always_ff @(posedge clk or negedge rst_n) begin
+    if (!rst_n) q &lt;= 0;
+    else        q &lt;= d;
+end</code></pre><p>复位边沿一来立即清零。课程计数器示例中出现过下降沿复位。敏感列表除了时钟，只应再放异步复位。</p></div>
+</div>
+<h3>5.4 多寄存器同拍更新：写计数器、串行输入很常见</h3>
+<pre class="code"><code data-lang="systemverilog">// 每按一次 CLK，保存一个 4-bit 输入。注意 token[11:0] 用的是旧 token。
+always_ff @(posedge CLK or posedge RST) begin
+    if (RST) begin
+        token &lt;= 16&#x27;h0000;
+        count &lt;= 2&#x27;d0;
+    end else begin
+        token &lt;= {token[11:0], Code};  // 左移 4 位，末尾放入新 Code
+        count &lt;= count + 1;
+    end
+end</code></pre>
+<p>如果你在同一个 always_ff 里既更新 <code>token</code> 又马上要比较“加入当前 Code 后的新 token”，不要直接用 <code>token</code>，因为它还是旧值。可以写成 <code>{token[11:0], Code}</code> 参与比较。</p>
+</section>
+
+<section id="counter">
+<h2>6. 计数器、分频、按钮：期末最常见的时序工具</h2>
+<h3>6.1 模 N 计数器</h3>
+<pre class="code"><code data-lang="systemverilog">module ModCounter #(
+    parameter int MOD = 10,
+    parameter int W   = 4
+)(
+    input  wire       clk,
+    input  wire       rst,
+    input  wire       en,
+    output reg [W-1:0] cnt,
+    output wire      last
+);
+    assign last = (cnt == MOD-1);
+
+    always_ff @(posedge clk) begin
+        if (rst) begin
+            cnt &lt;= &#x27;0;
+        end else if (en) begin
+            if (last) cnt &lt;= &#x27;0;
+            else      cnt &lt;= cnt + 1&#x27;b1;
+        end
+    end
+endmodule</code></pre>
+<h3>6.2 00–59 BCD 计数器</h3>
+<p>两个 BCD 位：低位 0–9，高位 0–5。低位到 9 时归 0 并进位；高位到 5 且低位到 9 时整体回 00。</p>
+<pre class="code"><code data-lang="systemverilog">module Counter00To59 (
+    input  wire       clk,
+    input  wire       rst,
+    input  wire       en,
+    output reg  [3:0] high,
+    output reg  [3:0] low
+);
+    always_ff @(posedge clk) begin
+        if (rst) begin
+            high &lt;= 4&#x27;d0;
+            low  &lt;= 4&#x27;d0;
+        end else if (en) begin
+            if (low == 4&#x27;d9) begin
+                low &lt;= 4&#x27;d0;
+                if (high == 4&#x27;d5) high &lt;= 4&#x27;d0;
+                else              high &lt;= high + 1&#x27;b1;
+            end else begin
+                low &lt;= low + 1&#x27;b1;
+            end
+        end
+    end
+endmodule</code></pre>
+<h3>6.3 用 1 MHz 时钟做 1 秒 tick</h3>
+<p>不要把计数器输出当新时钟乱接。更稳妥的写法是用原始时钟驱动所有寄存器，只产生一个一拍宽的 <code>tick</code> 作为使能。</p>
+<pre class="code"><code data-lang="systemverilog">module Tick1HzFrom1MHz (
+    input  wire clk_1m,
+    input  wire rst,
+    output reg  tick
+);
+    localparam int DIV = 1_000_000;
+    logic [19:0] cnt;  // 2^20 = 1,048,576，够数到 999,999
+
+    always_ff @(posedge clk_1m) begin
+        if (rst) begin
+            cnt  &lt;= 20&#x27;d0;
+            tick &lt;= 1&#x27;b0;
+        end else begin
+            tick &lt;= 1&#x27;b0;              // 默认没有 tick
+            if (cnt == DIV-1) begin
+                cnt  &lt;= 20&#x27;d0;
+                tick &lt;= 1&#x27;b1;          // 只有这一拍为 1
+            end else begin
+                cnt &lt;= cnt + 1&#x27;b1;
+            end
+        end
+    end
+endmodule</code></pre>
+<h3>6.4 6 分频：输出频率为输入的 1/6</h3>
+<p>若要得到近似 50% 占空比的 1/6 频率，可以每 3 个输入时钟翻转一次输出。输出完整周期需要 6 个输入周期。</p>
+<pre class="code"><code data-lang="systemverilog">module Div6 (
+    input  wire clk,
+    input  wire rst,
+    output reg  clk_div6
+);
+    logic [1:0] cnt; // 0,1,2
+
+    always_ff @(posedge clk) begin
+        if (rst) begin
+            cnt      &lt;= 2&#x27;d0;
+            clk_div6 &lt;= 1&#x27;b0;
+        end else begin
+            if (cnt == 2&#x27;d2) begin
+                cnt      &lt;= 2&#x27;d0;
+                clk_div6 &lt;= ~clk_div6;
+            end else begin
+                cnt &lt;= cnt + 1&#x27;b1;
+            end
+        end
+    end
+endmodule</code></pre>
+<h3>6.5 边沿检测：把“按下的一瞬间”变成一个时钟周期的脉冲</h3>
+<pre class="code"><code data-lang="systemverilog">module EdgeDetect (
+    input  wire clk,
+    input  wire rst,
+    input  wire level,
+    output wire rise,
+    output wire fall
+);
+    logic level_d;
+
+    always_ff @(posedge clk) begin
+        if (rst) level_d &lt;= 1&#x27;b0;
+        else     level_d &lt;= level;
+    end
+
+    assign rise =  level &amp; ~level_d;
+    assign fall = ~level &amp;  level_d;
+endmodule</code></pre>
+<h3>6.6 长按 / 短按判定：在释放按钮时给出 dot/dash 脉冲</h3>
+<p>模拟题规定短于 1 秒为短按，长于 1 秒为长按。若输入是 1 MHz 时钟，阈值可设为 1,000,000 个周期。下面模板在按钮释放时产生一个一拍脉冲：短按输出 <code>dot_pulse</code>，长按输出 <code>dash_pulse</code>。</p>
+<pre class="code"><code data-lang="systemverilog">module PressClassifier #(
+    parameter int THRESH = 1_000_000,
+    parameter int W = 21
+)(
+    input  wire clk,
+    input  wire rst,
+    input  wire button,
+    output reg  dot_pulse,
+    output reg  dash_pulse
+);
+    logic button_d;
+    logic [W-1:0] cnt;
+
+    always_ff @(posedge clk) begin
+        if (rst) begin
+            button_d   &lt;= 1&#x27;b0;
+            cnt        &lt;= &#x27;0;
+            dot_pulse  &lt;= 1&#x27;b0;
+            dash_pulse &lt;= 1&#x27;b0;
+        end else begin
+            dot_pulse  &lt;= 1&#x27;b0;       // 脉冲默认拉低
+            dash_pulse &lt;= 1&#x27;b0;
+            button_d   &lt;= button;     // 非阻塞：下面看到的是上一拍 button_d
+
+            if (button &amp;&amp; !button_d) begin
+                cnt &lt;= &#x27;0;             // 刚按下，清零计时
+            end else if (button) begin
+                if (cnt != {W{1&#x27;b1}}) cnt &lt;= cnt + 1&#x27;b1;
+            end else if (!button &amp;&amp; button_d) begin
+                // 刚释放，根据按住时长分类
+                if (cnt &gt;= THRESH) dash_pulse &lt;= 1&#x27;b1;
+                else               dot_pulse  &lt;= 1&#x27;b1;
+                cnt &lt;= &#x27;0;
+            end
+        end
+    end
+endmodule</code></pre>
+<div class="callout warn"><b>手动按钮会抖动。</b>本手册按课程上机题的抽象写法处理，重点是会用计数器和状态机。若实板按钮抖动明显，可在输入前加简单消抖；但期末时间有限，先保证主要功能和复位逻辑。</div>
+</section>
+
+<section id="fsm">
+<h2>7. 状态机 FSM：把“按步骤完成任务”翻译成电路</h2>
+<p>串行密码锁、Morse 输入、菜单模式、逐步显示、协议控制，本质都是状态机。状态机不要直接从代码开始写，先画状态和转移条件。</p>
+<h3>7.1 三段式 FSM 模板</h3>
+<div class="diagram">
+<svg width="900" height="260" viewBox="0 0 900 260" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#374151"/></marker></defs>
+<rect class="box3" x="60" y="85" width="180" height="80" rx="12"/><text class="lbl" x="102" y="118">状态寄存器</text><text class="tiny" x="85" y="142">always_ff: state <= next</text>
+<rect class="box" x="360" y="45" width="190" height="80" rx="12"/><text class="lbl" x="405" y="78">次状态逻辑</text><text class="tiny" x="392" y="102">always_comb: next_state</text>
+<rect class="box2" x="360" y="155" width="190" height="80" rx="12"/><text class="lbl" x="412" y="188">输出逻辑</text><text class="tiny" x="398" y="212">always_comb: outputs</text>
+<rect class="box2" x="675" y="85" width="145" height="80" rx="12"/><text class="lbl" x="720" y="118">输出</text><text class="tiny" x="698" y="142">LED / 数码管 / flag</text>
+<line class="arrow" x1="240" y1="115" x2="360" y2="85"/><line class="arrow" x1="240" y1="135" x2="360" y2="195"/><line class="arrow" x1="550" y1="85" x2="595" y2="85"/><line class="arrow" x1="595" y1="85" x2="595" y2="35"/><line class="arrow" x1="595" y1="35" x2="150" y2="35"/><line class="arrow" x1="150" y1="35" x2="150" y2="85"/><text class="tiny" x="610" y="55">next_state</text><line class="arrow" x1="550" y1="195" x2="675" y2="125"/>
+</svg>
+</div>
+<pre class="code"><code data-lang="systemverilog">typedef enum logic [1:0] {S0, S1, S2, S3} state_t;
+state_t state, next_state;
+
+// 1) 状态寄存器：只负责在时钟边沿切换状态
+always_ff @(posedge clk or posedge rst) begin
+    if (rst) state &lt;= S0;
+    else     state &lt;= next_state;
+end
+
+// 2) 次状态组合逻辑：根据 state 和输入算 next_state
+always_comb begin
+    next_state = state; // 默认保持，避免漏赋值
+    case (state)
+        S0: if (go) next_state = S1;
+        S1:         next_state = S2;
+        S2: if (ok) next_state = S3;
+            else    next_state = S0;
+        S3: if (rst_request) next_state = S0;
+        default: next_state = S0;
+    endcase
+end
+
+// 3) 输出组合逻辑：根据当前状态和必要输入产生输出
+always_comb begin
+    unlock = 1&#x27;b0;
+    err    = 1&#x27;b0;
+    case (state)
+        S3: unlock = 1&#x27;b1;
+        default: ;
+    endcase
+end</code></pre>
+<h3>7.2 Moore 和 Mealy：考试中怎么选</h3>
+<table><tr><th>类型</th><th>输出依赖</th><th>优点</th><th>考试建议</th></tr>
+<tr><td>Moore</td><td>只依赖当前状态</td><td>稳定、好调试、画图清楚</td><td>默认使用；数码管显示、状态指示很适合</td></tr>
+<tr><td>Mealy</td><td>依赖当前状态和输入</td><td>反应可更快，状态数可能更少</td><td>只在“同一拍输入后马上给 flag”时使用；要小心毛刺</td></tr>
+</table>
+<h3>7.3 状态设计流程</h3>
+<ol>
+<li>列出必须记住的信息：已经输入几位？当前模式？是否出错？是否完成？</li>
+<li>把“已经到哪一步”变成状态：例如 <code>WAIT1, WAIT2, WAIT3, CHECK, DONE</code>。</li>
+<li>为每条边写条件：按下 CLK、收到 end、计数到阈值、RST。</li>
+<li>为每个状态写输出：显示什么、LED 亮不亮、是否清空/保存寄存器。</li>
+<li>最后翻译成三段式代码。</li>
+</ol>
+</section>
+
+<section id="sevenseg">
+<h2>8. 七段数码管：从 4-bit 十六进制到 seg[6:0]</h2>
+<p>实验和模拟题都反复使用不带译码的七段数码管。先统一约定：<code>seg[6:0] = {a,b,c,d,e,f,g}</code>，且 1 点亮。若题目给的硬件是低有效，输出时取反。</p>
+<div class="grid">
+<div class="card"><h4>七段位序</h4>
+<pre class="code"><code data-lang="text">   a
+ f   b
+   g
+ e   c
+   d</code></pre>
+</div>
+<div class="card"><h4>常用模块</h4>
+<pre class="code"><code data-lang="systemverilog">module Hex7Seg (
+    input  wire [3:0] hex,
+    output reg  [6:0] seg
+);
+    always_comb begin
+        case (hex)
+            4&#x27;h0: seg = 7&#x27;b1111110;
+            4&#x27;h1: seg = 7&#x27;b0110000;
+            4&#x27;h2: seg = 7&#x27;b1101101;
+            4&#x27;h3: seg = 7&#x27;b1111001;
+            4&#x27;h4: seg = 7&#x27;b0110011;
+            4&#x27;h5: seg = 7&#x27;b1011011;
+            4&#x27;h6: seg = 7&#x27;b1011111;
+            4&#x27;h7: seg = 7&#x27;b1110000;
+            4&#x27;h8: seg = 7&#x27;b1111111;
+            4&#x27;h9: seg = 7&#x27;b1111011;
+            4&#x27;hA: seg = 7&#x27;b1110111;
+            4&#x27;hB: seg = 7&#x27;b0011111;
+            4&#x27;hC: seg = 7&#x27;b1001110;
+            4&#x27;hD: seg = 7&#x27;b0111101;
+            4&#x27;hE: seg = 7&#x27;b1001111;
+            4&#x27;hF: seg = 7&#x27;b1000111;
+            default: seg = 7&#x27;b0000000;
+        endcase
+    end
+endmodule</code></pre></div></div>
+<h3>8.1 多位显示：两个或四个数码管</h3>
+<p>课程实验里的不带译码数码管通常是每个数码管各有一组段线，所以直接例化多个译码器即可。</p>
+<pre class="code"><code data-lang="systemverilog">module TwoDigitDisplay (
+    input  wire [3:0] high_hex,
+    input  wire [3:0] low_hex,
+    output wire [6:0] high_seg,
+    output wire [6:0] low_seg
+);
+    Hex7Seg u_high (.hex(high_hex), .seg(high_seg));
+    Hex7Seg u_low  (.hex(low_hex),  .seg(low_seg));
+endmodule</code></pre>
+<h3>8.2 显示调试信息</h3>
+<p>当核心功能没反应时，先不要猜。把内部变量接到数码管或 LED：当前状态显示为 0/1/2/3，计数低位显示出来，错误标志接 LED。上板考试没有仿真时，这比盲改代码有效得多。</p>
+</section>
+
+<section id="labs">
+<h2>9. 实验 4–7 典型题解法</h2>
+<h3>9.1 实验 4：点亮数码管 / 译码器</h3>
+<div class="grid">
+<div class="card blue"><h4>题目抽象</h4><p>输入 <code>sw[3:0]</code>，输出 <code>seg[6:0]</code>。本质是 16 项查表。</p></div>
+<div class="card good"><h4>解法</h4><p>写 <code>Hex7Seg</code> 模块，用 <code>always_comb case</code> 覆盖 0–F 和 default。重点检查位序和高/低有效。</p></div>
+</div>
+<h3>9.2 实验 5：四位全加器</h3>
+<p>有两种写法。若题目要求“元件例化”，用一位全加器级联；若只要求实现功能，可以直接用 <code>{Cout, Sum} = A + B + Cin</code>。</p>
+<div class="grid">
+<div class="card"><h4>结构化级联写法</h4>
+<pre class="code"><code data-lang="systemverilog">FullAdder1 u0 (.A(A[0]), .B(B[0]), .Cin(Cin),  .Sum(Sum[0]), .Cout(c[0]));
+FullAdder1 u1 (.A(A[1]), .B(B[1]), .Cin(c[0]), .Sum(Sum[1]), .Cout(c[1]));
+FullAdder1 u2 (.A(A[2]), .B(B[2]), .Cin(c[1]), .Sum(Sum[2]), .Cout(c[2]));
+FullAdder1 u3 (.A(A[3]), .B(B[3]), .Cin(c[2]), .Sum(Sum[3]), .Cout(Cout));</code></pre></div><div class="card"><h4>快速行为写法</h4>
+<pre class="code"><code data-lang="systemverilog">module Adder4Fast(
+    input  wire [3:0] A, B,
+    input  wire       Cin,
+    output wire [3:0] Sum,
+    output wire       Cout
+);
+    assign {Cout, Sum} = A + B + Cin;
+endmodule</code></pre></div></div>
+<div class="callout warn">如果题目明确要求“使用自己设计的一位全加器构建四位全加器”，就不要只写快速行为写法；否则会被认为没有按要求体现元件例化。</div>
+<h3>9.3 实验 6：00–59 计数器</h3>
+<p>核心代码就是两个 BCD 寄存器。输出到七段数码管时，不要让计数器模块直接写一堆七段码；更清楚的结构是：计数器输出 <code>high/low</code> 两个 4-bit BCD，再例化两个 <code>Hex7Seg</code>。</p>
+<pre class="code"><code data-lang="systemverilog">module CounterDisplay (
+    input  wire clk,
+    input  wire rst,
+    input  wire en,
+    output wire [6:0] High,
+    output wire [6:0] Low
+);
+    wire [3:0] h, l;
+    Counter00To59 u_cnt (.clk(clk), .rst(rst), .en(en), .high(h), .low(l));
+    Hex7Seg       u_h   (.hex(h), .seg(High));
+    Hex7Seg       u_l   (.hex(l), .seg(Low));
+endmodule</code></pre>
+<h3>9.4 实验 7：串行密码锁</h3>
+<p>串行密码锁最重要的是“已经输入第几位”的状态。每按一次 CLK 保存当前 <code>Code[3:0]</code>，四次后在设置模式保存为密码，在验证模式比较。</p>
+<pre class="code"><code data-lang="systemverilog">module SerialLock (
+    input  wire       CLK,     // 手动输入时钟：每按一次输入一位
+    input  wire       RST,     // 高有效复位：回到输入第 1 位
+    input  wire       Mode,    // 1=设置密码，0=验证密码
+    input  wire [3:0] Code,
+    output reg        Unlock,
+    output reg        Err
+);
+    typedef enum logic [2:0] {S0, S1, S2, S3, DONE} state_t;
+    state_t state;
+
+    logic [15:0] token;
+    logic [15:0] password = 16&#x27;h1234; // 默认密码；设置模式完成后会改写
+    logic [15:0] token_after_input;
+
+    assign token_after_input = {token[11:0], Code};
+
+    always_ff @(posedge CLK or posedge RST) begin
+        if (RST) begin
+            state  &lt;= S0;
+            token  &lt;= 16&#x27;h0000;
+            Unlock &lt;= 1&#x27;b0;
+            Err    &lt;= 1&#x27;b0;
+            // 注意：这里不重置 password。否则设置完密码后按 RST 会丢失密码。
+        end else begin
+            Unlock &lt;= 1&#x27;b0;
+            Err    &lt;= 1&#x27;b0;
+
+            case (state)
+                S0: begin token &lt;= token_after_input; state &lt;= S1; end
+                S1: begin token &lt;= token_after_input; state &lt;= S2; end
+                S2: begin token &lt;= token_after_input; state &lt;= S3; end
+                S3: begin
+                    token &lt;= token_after_input;
+                    state &lt;= DONE;
+                    if (Mode) begin
+                        password &lt;= token_after_input;   // 设置新密码
+                    end else begin
+                        if (token_after_input == password) Unlock &lt;= 1&#x27;b1;
+                        else                               Err    &lt;= 1&#x27;b1;
+                    end
+                end
+                DONE: begin
+                    // 等待 RST。也可按题目要求自动回 S0。
+                    state &lt;= DONE;
+                end
+                default: state &lt;= S0;
+            endcase
+        end
+    end
+endmodule</code></pre>
+<div class="callout"><b>修改点：</b>如果题目要求“输入错误立刻报错”，就不要等四位输完再比较；每输入一位就和对应密码位比较，并用 <code>bad</code> 寄存器累积错误。若题目要求“设置密码时也亮一个成功灯”，就在 Mode 分支中置一个 <code>SetOK</code>。</div>
+</section>
+
+<section id="mock">
+<h2>10. 模拟题：摩斯电码项目完整解法思路</h2>
+<p>模拟题可以拆成五个子问题：十六进制七段译码、用拨码开关输入点/划/结束并查表、用计数器判定长短按、把按钮长短按接入查表、1M 时钟 6 分频。</p>
+<h3>10.1 Morse 表的编码方式</h3>
+<p>表中 0–F 的 Morse 码如下：</p>
+<table><tr><th>值</th><th>Morse</th><th>值</th><th>Morse</th><th>值</th><th>Morse</th><th>值</th><th>Morse</th></tr>
+<tr><td>0</td><td>-----</td><td>1</td><td>.----</td><td>2</td><td>..---</td><td>3</td><td>...--</td></tr>
+<tr><td>4</td><td>....-</td><td>5</td><td>.....</td><td>6</td><td>-....</td><td>7</td><td>--...</td></tr>
+<tr><td>8</td><td>---..</td><td>9</td><td>----.</td><td>A</td><td>.-</td><td>B</td><td>-...</td></tr>
+<tr><td>C</td><td>-.-.</td><td>D</td><td>-..</td><td>E</td><td>.</td><td>F</td><td>..-.</td></tr>
+</table>
+<p>为了让查表简单，可以用“二叉树路径”编码：初始 <code>idx=1</code>；点 <code>.</code> 就左移补 0；划 <code>-</code> 就左移补 1。额外保存长度 <code>len</code>。例如：</p>
+<ul><li><code>E = .</code>：len=1, idx=2（二进制 10）</li><li><code>A = .-</code>：len=2, idx=5（二进制 101）</li><li><code>0 = -----</code>：len=5, idx=63（二进制 111111）</li></ul>
+<h3>10.2 Morse 查表函数</h3>
+<pre class="code"><code data-lang="systemverilog">function automatic logic [4:0] morse_lookup(
+    input logic [2:0] len,
+    input logic [5:0] idx
+);
+    // 返回 {err, hex[3:0]}，err=1 表示表中没有这个 Morse 码
+    morse_lookup = {1&#x27;b1, 4&#x27;h0};
+    case ({len, idx})
+        {3&#x27;d5, 6&#x27;d63}: morse_lookup = {1&#x27;b0, 4&#x27;h0}; // 0 -----
+        {3&#x27;d5, 6&#x27;d47}: morse_lookup = {1&#x27;b0, 4&#x27;h1}; // 1 .----
+        {3&#x27;d5, 6&#x27;d39}: morse_lookup = {1&#x27;b0, 4&#x27;h2}; // 2 ..---
+        {3&#x27;d5, 6&#x27;d35}: morse_lookup = {1&#x27;b0, 4&#x27;h3}; // 3 ...--
+        {3&#x27;d5, 6&#x27;d33}: morse_lookup = {1&#x27;b0, 4&#x27;h4}; // 4 ....-
+        {3&#x27;d5, 6&#x27;d32}: morse_lookup = {1&#x27;b0, 4&#x27;h5}; // 5 .....
+        {3&#x27;d5, 6&#x27;d48}: morse_lookup = {1&#x27;b0, 4&#x27;h6}; // 6 -....
+        {3&#x27;d5, 6&#x27;d56}: morse_lookup = {1&#x27;b0, 4&#x27;h7}; // 7 --...
+        {3&#x27;d5, 6&#x27;d60}: morse_lookup = {1&#x27;b0, 4&#x27;h8}; // 8 ---..
+        {3&#x27;d5, 6&#x27;d62}: morse_lookup = {1&#x27;b0, 4&#x27;h9}; // 9 ----.
+        {3&#x27;d2, 6&#x27;d5 }: morse_lookup = {1&#x27;b0, 4&#x27;hA}; // A .-
+        {3&#x27;d4, 6&#x27;d24}: morse_lookup = {1&#x27;b0, 4&#x27;hB}; // B -...
+        {3&#x27;d4, 6&#x27;d26}: morse_lookup = {1&#x27;b0, 4&#x27;hC}; // C -.-.
+        {3&#x27;d3, 6&#x27;d12}: morse_lookup = {1&#x27;b0, 4&#x27;hD}; // D -..
+        {3&#x27;d1, 6&#x27;d2 }: morse_lookup = {1&#x27;b0, 4&#x27;hE}; // E .
+        {3&#x27;d4, 6&#x27;d18}: morse_lookup = {1&#x27;b0, 4&#x27;hF}; // F ..-.
+        default: ;
+    endcase
+endfunction</code></pre>
+<h3>10.3 简单 Morse 翻译：拨码开关 00/01/10 + CLK</h3>
+<p>拨码开关 <code>op[1:0]</code> 约定：00=点，01=划，10=结束。每次按 CLK，把当前操作输入一次。结束时查表并显示。</p>
+<pre class="code"><code data-lang="systemverilog">module MorseSwitchInput (
+    input  wire       CLK,
+    input  wire       RST,
+    input  wire [1:0] op,       // 00=dot, 01=dash, 10=end
+    output reg  [3:0] hex,
+    output reg        err
+);
+    localparam int MAX_LEN = 5;
+    logic [2:0] len;
+    logic [5:0] idx;
+    logic [4:0] decoded;
+
+    always_comb begin
+        decoded = morse_lookup(len, idx);
+    end
+
+    always_ff @(posedge CLK or posedge RST) begin
+        if (RST) begin
+            len &lt;= 3&#x27;d0;
+            idx &lt;= 6&#x27;d1;
+            hex &lt;= 4&#x27;h0;
+            err &lt;= 1&#x27;b0;
+        end else begin
+            case (op)
+                2&#x27;b00: begin // dot
+                    if (len &lt; MAX_LEN) begin
+                        idx &lt;= {idx[4:0], 1&#x27;b0};
+                        len &lt;= len + 1&#x27;b1;
+                    end else begin
+                        err &lt;= 1&#x27;b1;
+                    end
+                end
+                2&#x27;b01: begin // dash
+                    if (len &lt; MAX_LEN) begin
+                        idx &lt;= {idx[4:0], 1&#x27;b1};
+                        len &lt;= len + 1&#x27;b1;
+                    end else begin
+                        err &lt;= 1&#x27;b1;
+                    end
+                end
+                2&#x27;b10: begin // end, lookup and clear input buffer
+                    err &lt;= decoded[4];
+                    if (!decoded[4]) hex &lt;= decoded[3:0];
+                    len &lt;= 3&#x27;d0;
+                    idx &lt;= 6&#x27;d1;
+                end
+                default: begin
+                    err &lt;= 1&#x27;b1;
+                end
+            endcase
+        end
+    end
+endmodule</code></pre>
+<h3>10.4 完整 Morse 核心：接收 dot/dash/end 三个脉冲</h3>
+<p>为了复用，把输入方式抽象成三个“一拍脉冲”：<code>dot_pulse</code>、<code>dash_pulse</code>、<code>end_pulse</code>。拨码输入、长短按输入都可以转成这三个脉冲。</p>
+<pre class="code"><code data-lang="systemverilog">module MorseCore (
+    input  wire clk,
+    input  wire rst,
+    input  wire dot_pulse,
+    input  wire dash_pulse,
+    input  wire end_pulse,
+    output reg  [3:0] hex,
+    output reg        err
+);
+    localparam int MAX_LEN = 5;
+    logic [2:0] len;
+    logic [5:0] idx;
+    logic [4:0] decoded;
+
+    always_comb begin
+        decoded = morse_lookup(len, idx);
+    end
+
+    always_ff @(posedge clk) begin
+        if (rst) begin
+            len &lt;= 3&#x27;d0;
+            idx &lt;= 6&#x27;d1;
+            hex &lt;= 4&#x27;h0;
+            err &lt;= 1&#x27;b0;
+        end else begin
+            if (dot_pulse || dash_pulse) begin
+                if (len &lt; MAX_LEN) begin
+                    idx &lt;= {idx[4:0], dash_pulse}; // dot=0, dash=1
+                    len &lt;= len + 1&#x27;b1;
+                    err &lt;= 1&#x27;b0;
+                end else begin
+                    err &lt;= 1&#x27;b1;
+                end
+            end else if (end_pulse) begin
+                err &lt;= decoded[4];
+                if (!decoded[4]) hex &lt;= decoded[3:0];
+                len &lt;= 3&#x27;d0;
+                idx &lt;= 6&#x27;d1;
+            end
+        end
+    end
+endmodule</code></pre>
+<h3>10.5 长短按 + MorseCore + 七段显示：完整顶层骨架</h3>
+<p>一个可能的顶层：按钮 <code>KEY</code> 用按住时间产生点/划；另一个按钮或开关 <code>END</code> 表示结束；结果通过七段数码管显示，错误接 LED。</p>
+<pre class="code"><code data-lang="systemverilog">module MorseTop (
+    input  wire       CLK1M,
+    input  wire       RST,
+    input  wire       KEY,       // 按住/释放，分类为 dot/dash
+    input  wire       END_BTN,   // 按一下表示结束输入
+    output wire [6:0] SEG,
+    output wire       ERR_LED,
+    output wire       CLK_DIV6_OUT
+);
+    wire dot_pulse, dash_pulse;
+    wire end_pulse;
+    wire [3:0] hex;
+
+    PressClassifier #(.THRESH(1_000_000), .W(21)) u_press (
+        .clk(CLK1M), .rst(RST), .button(KEY),
+        .dot_pulse(dot_pulse), .dash_pulse(dash_pulse)
+    );
+
+    EdgeDetect u_end (
+        .clk(CLK1M), .rst(RST), .level(END_BTN),
+        .rise(end_pulse), .fall()
+    );
+
+    MorseCore u_morse (
+        .clk(CLK1M), .rst(RST),
+        .dot_pulse(dot_pulse), .dash_pulse(dash_pulse), .end_pulse(end_pulse),
+        .hex(hex), .err(ERR_LED)
+    );
+
+    Hex7Seg u_seg (.hex(hex), .seg(SEG));
+    Div6    u_div (.clk(CLK1M), .rst(RST), .clk_div6(CLK_DIV6_OUT));
+endmodule</code></pre>
+<div class="callout warn"><b>如果题目规定“CLK 按钮每次输入一位/结束”而不是 END_BTN：</b>就用第 10.3 节的 <code>MorseSwitchInput</code> 模块；如果题目规定“同一个按钮按出点/划，另一个动作表示结束”，就用第 10.5 节结构。关键是把题目输入抽象成 dot/dash/end 三种事件。</div>
+</section>
+
+<section id="vivado">
+<h2>11. Vivado / XDC / 上板排错</h2>
+<h3>11.1 Vivado 工程流程速记</h3>
+<ol>
+<li>新建 RTL Project，选择正确 FPGA 型号/板卡。</li>
+<li>添加 <code>.sv</code> 源文件。确认顶层模块是你要综合的 top。</li>
+<li>添加 <code>.xdc</code> 约束文件。端口名必须和顶层模块完全一致，大小写敏感。</li>
+<li>Run Synthesis → Run Implementation → Generate Bitstream → Open Hardware Manager → Program Device。</li>
+<li>若综合失败，先看第一条 error；若实现失败，多半是管脚约束、时钟约束或多驱动。</li>
+</ol>
+<h3>11.2 常见 XDC 管脚模板</h3>
+<p>以下是课程文档中反复出现的常用接插孔映射。考试时以题目和课程提供约束为准；若你改了顶层端口名，XDC 也必须同步改。</p>
+<table><tr><th>接口</th><th>PACKAGE_PIN</th><th>常见用途</th></tr>
+<tr><td>CLK 接插孔</td><td>J19</td><td>手动 CLK 或时钟输入</td></tr>
+<tr><td>IO0</td><td>K18</td><td>RST</td></tr>
+<tr><td>IO1–IO4</td><td>M21, N20, N22, P21</td><td>4 位开关输入或 seg 高位</td></tr>
+<tr><td>IO5–IO9</td><td>P22, T21, U21, R21, R22</td><td>Cin / B[3:0] / 其他输入</td></tr>
+<tr><td>IO11–IO17</td><td>W21, W22, Y22, Y21, AB22, AA18, AB18</td><td>数码管低位、LED、Mode</td></tr>
+<tr><td>IO18–IO20</td><td>AA20, AB21, AA21</td><td>Sum 或 seg 输出</td></tr>
+</table>
+<pre class="code"><code data-lang="xdc"># 示例：顶层端口名为 CLK, RST, sw[3:0], seg[6:0]
+set_property -dict {PACKAGE_PIN J19 IOSTANDARD LVCMOS33} [get_ports CLK]
+set_property -dict {PACKAGE_PIN K18 IOSTANDARD LVCMOS33} [get_ports RST]
+
+set_property -dict {PACKAGE_PIN M21 IOSTANDARD LVCMOS33} [get_ports {sw[3]}]
+set_property -dict {PACKAGE_PIN N20 IOSTANDARD LVCMOS33} [get_ports {sw[2]}]
+set_property -dict {PACKAGE_PIN N22 IOSTANDARD LVCMOS33} [get_ports {sw[1]}]
+set_property -dict {PACKAGE_PIN P21 IOSTANDARD LVCMOS33} [get_ports {sw[0]}]
+
+set_property -dict {PACKAGE_PIN Y21  IOSTANDARD LVCMOS33} [get_ports {seg[6]}]
+set_property -dict {PACKAGE_PIN AB22 IOSTANDARD LVCMOS33} [get_ports {seg[5]}]
+set_property -dict {PACKAGE_PIN AA18 IOSTANDARD LVCMOS33} [get_ports {seg[4]}]
+set_property -dict {PACKAGE_PIN AB18 IOSTANDARD LVCMOS33} [get_ports {seg[3]}]
+set_property -dict {PACKAGE_PIN AA20 IOSTANDARD LVCMOS33} [get_ports {seg[2]}]
+set_property -dict {PACKAGE_PIN AB21 IOSTANDARD LVCMOS33} [get_ports {seg[1]}]
+set_property -dict {PACKAGE_PIN AA21 IOSTANDARD LVCMOS33} [get_ports {seg[0]}]
+
+set_property CFGBVS VCCO [current_design]
+set_property CONFIG_VOLTAGE 3.3 [current_design]
+
+# 如果用非专用时钟管脚作为时钟，课程计数器实验中使用过：
+# 注意 get_nets 后的名字可能随端口名变化。若端口叫 CLK，常见为 CLK_IBUF。
+set_property CLOCK_DEDICATED_ROUTE FALSE [get_nets CLK_IBUF]</code></pre>
+<h3>11.3 常见报错与处理</h3>
+<table><tr><th>现象 / 报错</th><th>高概率原因</th><th>处理</th></tr>
+<tr><td><code>Port ... not found</code></td><td>XDC 端口名和顶层模块端口名不一致</td><td>检查大小写、数组写法 <code>{seg[0]}</code>，确认 top 模块正确</td></tr>
+<tr><td><code>multiple drivers</code></td><td>同一信号在多个 always 块或 assign 中赋值</td><td>每个 reg/logic 只在一个 always 块赋值；线网只由一个源驱动</td></tr>
+<tr><td>综合出 latch 警告</td><td><code>always_comb</code> 某些分支没赋值</td><td>给默认值；写完整 <code>else/default</code></td></tr>
+<tr><td>板上数码管乱码</td><td>seg 位序反了，或高低有效弄反</td><td>先只显示 0，确认 <code>7'b1111110</code> 是否为 0；必要时调换位序或取反</td></tr>
+<tr><td>按钮按一次跳多次</td><td>机械抖动或手动时钟不干净</td><td>用慢速按钮时先接受；若影响大，加入简单消抖或改用 1M 时钟采样 + 边沿检测</td></tr>
+<tr><td>复位后密码丢失</td><td>在 RST 分支清空了 password</td><td>明确 RST 是“回到输入初始状态”还是“恢复出厂密码”；按题目选择</td></tr>
+<tr><td>时钟相关 implementation 报错</td><td>用普通 IO 当时钟</td><td>按课程约束加 <code>CLOCK_DEDICATED_ROUTE FALSE</code>，或改用真正时钟输入 + clock enable</td></tr>
+</table>
+</section>
+
+<section id="templates">
+<h2>12. 考试模板库：复制后按题意改</h2>
+<h3>12.1 顶层模板</h3>
+<pre class="code"><code data-lang="systemverilog">module Top (
+    input  wire       CLK,
+    input  wire       RST,
+    input  wire [3:0] sw,
+    output wire [6:0] seg,
+    output wire       led0,
+    output wire       led1
+);
+    // 1. 内部信号
+    wire [3:0] hex;
+    wire err;
+
+    // 2. 核心模块
+    // YourCore u_core (...);
+
+    // 3. 显示/LED
+    Hex7Seg u_seg (.hex(hex), .seg(seg));
+    assign led0 = err;
+    assign led1 = RST; // 临时调试也可以接内部状态
+endmodule</code></pre>
+<h3>12.2 always_comb 模板</h3>
+<pre class="code"><code data-lang="systemverilog">always_comb begin
+    // 默认值：先给所有输出赋一个确定值
+    y      = 4&#x27;h0;
+    flag   = 1&#x27;b0;
+    next_s = state;
+
+    case (state)
+        S0: begin
+            y = 4&#x27;h1;
+            if (cond) next_s = S1;
+        end
+        S1: begin
+            y = 4&#x27;h2;
+            if (done) next_s = S0;
+        end
+        default: begin
+            next_s = S0;
+        end
+    endcase
+end</code></pre>
+<h3>12.3 always_ff 模板</h3>
+<pre class="code"><code data-lang="systemverilog">always_ff @(posedge clk) begin
+    if (rst) begin
+        state &lt;= S0;
+        cnt   &lt;= &#x27;0;
+        data  &lt;= &#x27;0;
+    end else begin
+        state &lt;= next_state;
+        if (en) cnt &lt;= cnt + 1&#x27;b1;
+        if (load) data &lt;= input_data;
+    end
+end</code></pre>
+<h3>12.4 函数模板：组合查表</h3>
+<pre class="code"><code data-lang="systemverilog">function automatic logic [3:0] table_lookup(input logic [2:0] key);
+    case (key)
+        3&#x27;d0: table_lookup = 4&#x27;hA;
+        3&#x27;d1: table_lookup = 4&#x27;h3;
+        3&#x27;d2: table_lookup = 4&#x27;hF;
+        default: table_lookup = 4&#x27;h0;
+    endcase
+endfunction</code></pre>
+<h3>12.5 简单消抖模板（可选）</h3>
+<p>如果按钮抖动导致一次按下触发多次，可以用一个计数器要求输入稳定若干拍后才更新。考试时间紧时，只有在确实影响结果时再加。</p>
+<pre class="code"><code data-lang="systemverilog">module Debounce #(
+    parameter int W = 16
+)(
+    input  wire clk,
+    input  wire rst,
+    input  wire noisy,
+    output reg  clean
+);
+    logic [W-1:0] cnt;
+    logic last;
+
+    always_ff @(posedge clk) begin
+        if (rst) begin
+            clean &lt;= 1&#x27;b0;
+            last  &lt;= 1&#x27;b0;
+            cnt   &lt;= &#x27;0;
+        end else begin
+            if (noisy != last) begin
+                last &lt;= noisy;
+                cnt  &lt;= &#x27;0;
+            end else begin
+                if (cnt != {W{1&#x27;b1}}) cnt &lt;= cnt + 1&#x27;b1;
+                else clean &lt;= last;
+            end
+        end
+    end
+endmodule</code></pre>
+</section>
+
+<section id="checklist">
+<h2>13. 最后检查清单：上板前逐项确认</h2>
+<div class="grid">
+<div class="card good"><h4>代码综合前</h4><ul class="checklist">
+<li>顶层模块名是否被 Vivado 识别为 top？</li>
+<li>所有端口方向、位宽是否和 XDC 一致？</li>
+<li><code>always_comb</code> 中是否所有输出都有默认值或完整分支？</li>
+<li><code>always_ff</code> 中是否使用 <code>&lt;=</code>？</li>
+<li>同一个信号是否只在一个地方赋值？</li>
+<li>所有 <code>case</code> 是否有 <code>default</code>？</li>
+<li>复位极性和题目一致吗？</li>
+</ul></div>
+<div class="card warn"><h4>上板不对时</h4><ul class="checklist">
+<li>先让数码管固定显示 0，验证段码和管脚。</li>
+<li>把 <code>state</code> 接到 LED/数码管，看状态是否推进。</li>
+<li>把按键边沿脉冲接 LED 或计数器，看是否产生事件。</li>
+<li>把错误 LED 和成功 LED 都先默认拉低，避免锁存旧值。</li>
+<li>检查 <code>RST</code> 是否一直有效，尤其高/低有效是否反了。</li>
+<li>检查输入顺序：四位密码是高位先输还是低位先输。</li>
+</ul></div>
+</div>
+<h3>13.1 期末写代码的推荐顺序</h3>
+<ol>
+<li><b>写显示译码器。</b>它几乎一定会用到，也是最容易独立验证的。</li>
+<li><b>写核心寄存器/计数器。</b>比如 BCD 计数、Morse idx/len、密码 token。</li>
+<li><b>写状态机。</b>先只让状态能跑，再填输出。</li>
+<li><b>写顶层连线。</b>把输入处理、核心、显示接起来。</li>
+<li><b>写 XDC。</b>端口名字不要临时改来改去。</li>
+<li><b>综合/实现。</b>先解决语法和多驱动，再上板看现象。</li>
+</ol>
+<div class="callout good"><b>最低可行目标：</b>先做出题目每一步的基础分功能。例如模拟题中先让拨码开关显示 0–F，再做 Morse 查表，再做长短按，最后做完整整合。不要一上来写“大一统顶层”。</div>
+</section>
+
+<section id="refs">
+<h2>参考资料与本手册依据</h2>
+<ul class="ref-list">
+<li>清华大学《数字逻辑实验》课程文档：实验 4 点亮数码管、实验 5 四位全加器、实验 6 计数器、实验 7 串行密码锁、模拟实验考试、硬件描述语言入门。</li>
+<li>SystemVerilog.dev：FSM 编码风格、常用设计模式、寄存器和同步/异步复位模板。</li>
+<li>AMD Vivado Design Suite User Guide: Synthesis (UG901)：Vivado 支持 SystemVerilog 构造和综合流程相关参考。</li>
+</ul>
+<p class="small">说明：本手册中的代码为备考用途重写的模板，不是课程文档代码的逐字复制。实际考试以题目给出的端口、管脚、复位极性、数码管高低有效为准。</p>
+</section>
+
+</main>
+</div>
+</body>
+</html>
