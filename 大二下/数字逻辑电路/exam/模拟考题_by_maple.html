@@ -165,15 +165,8 @@ window.addEventListener('load',()=>{ if(window.WaveDrom) WaveDrom.ProcessAll(); 
 <p>要求写出最简与或式。</p>
 <details class="answer"><summary>答案与解析</summary>
 <p>把 1 和无关项 $d$ 一起用于扩大圈组，可得到两个 8 格/4 格等价大圈，最简式为：</p>
-<p>$$\boxed{F=CD+\overline C\,\overline D}.$$</p>
-<p>这个结果只与 $C,D$ 有关，本质上是 $C$ 与 $D$ 的同或：$F=C\odot D$。</p>
-<table class="kmap">
-<tr><th class="axis">AB\CD</th><th>00</th><th>01</th><th>11</th><th>10</th></tr>
-<tr><th class="axis">00</th><td class="one">1<br>m0</td><td class="zero">0</td><td class="one">1<br>m3</td><td class="zero">0</td></tr>
-<tr><th class="axis">01</th><td class="one">1<br>m4</td><td class="zero">0</td><td class="one">1<br>m7</td><td class="zero">0</td></tr>
-<tr><th class="axis">11</th><td class="dc">d<br>m12</td><td class="dc">d<br>m13</td><td class="dc">d<br>m15</td><td class="dc">d<br>m14</td></tr>
-<tr><th class="axis">10</th><td class="dc">d<br>m8</td><td class="dc">d<br>m9</td><td class="one">1<br>m11</td><td class="zero">0</td></tr>
-</table>
+<p>$$\boxed{F=AB+\overline A\,\overline B}.$$</p>
+<p>本质上是同或：$F=A\odot B$。</p>
 </details>
 </div>
 
