@@ -1,0 +1,606 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>数字逻辑电路重点模拟考题｜含解析 HTML</title>
+<script>
+window.MathJax = { tex: { inlineMath: [['\\(', '\\)'], ['$', '$']], displayMath: [['$$', '$$'], ['\\[','\\]']], processEscapes: true }, svg: { fontCache: 'global' } };
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({ startOnLoad: true, theme: 'default', securityLevel: 'loose' });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/wavedrom@3.5.0/skins/default.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/wavedrom@3.5.0/wavedrom.min.js"></script>
+<style>
+:root{--bg:#f7f8fb;--paper:#fff;--ink:#172033;--muted:#5d667a;--line:#dbe1ee;--brand:#3656d4;--brand2:#6b8bff;--accent:#0f766e;--warn:#b45309;--danger:#b91c1c;--ok:#15803d;--code:#f3f5fa;--shadow:0 10px 30px rgba(20,30,50,.08)}
+*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans CJK SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",Arial,sans-serif}
+a{color:var(--brand);text-decoration:none} a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:292px minmax(0,1fr);gap:28px;max-width:1480px;margin:0 auto;padding:24px}
+nav{position:sticky;top:18px;height:calc(100vh - 36px);overflow:auto;border:1px solid var(--line);background:rgba(255,255,255,.94);backdrop-filter:blur(10px);border-radius:20px;padding:18px;box-shadow:var(--shadow)}
+nav h2{font-size:17px;margin:0 0 10px} nav a{display:block;padding:6px 8px;border-radius:10px;color:#24304a;font-size:14px} nav a:hover{background:#edf1ff;text-decoration:none}
+main{min-width:0}.hero{background:linear-gradient(135deg,#fff,#eef3ff);border:1px solid var(--line);border-radius:26px;padding:34px 38px;margin-bottom:24px;box-shadow:var(--shadow)}
+.hero h1{margin:0 0 12px;font-size:36px;line-height:1.25}.hero p{margin:8px 0;color:var(--muted)}
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}.badge{border:1px solid #cbd5ff;background:#eef3ff;color:#243b8f;border-radius:999px;padding:4px 10px;font-size:13px}
+.card,section{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:26px 30px;margin:22px 0;box-shadow:var(--shadow)}
+section h2{font-size:28px;margin:0 0 14px;border-bottom:2px solid #eef1f7;padding-bottom:8px} section h3{font-size:22px;margin:28px 0 10px} section h4{font-size:18px;margin:22px 0 8px;color:#213054}
+.small{font-size:14px;color:var(--muted)}.muted{color:var(--muted)}.lead{font-size:18px;color:#2b354d}.pill{display:inline-block;border-radius:999px;padding:2px 9px;background:#edf1ff;color:#243b8f;font-size:13px;margin:0 4px 4px 0}.hot{background:#fff4e6;color:#9a3412;border:1px solid #fed7aa}.must{background:#ecfdf5;color:#166534;border:1px solid #bbf7d0}.danger{background:#fef2f2;color:#991b1b;border:1px solid #fecaca}
+table{border-collapse:collapse;width:100%;margin:14px 0;display:table} th,td{border:1px solid var(--line);padding:9px 10px;vertical-align:top} th{background:#f1f4fb;text-align:left} tr:nth-child(even) td{background:#fbfcff}.nowrap{white-space:nowrap}.center{text-align:center}
+pre,code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace} code{background:var(--code);border:1px solid #e6eaf3;border-radius:6px;padding:1px 4px} pre{background:#101828;color:#eff6ff;border-radius:16px;padding:16px;overflow:auto;line-height:1.55}.formula{background:#f8fafc;border:1px solid #e5e7eb;border-radius:16px;padding:14px 18px;margin:12px 0}.tip{border-left:5px solid var(--brand);background:#f4f7ff;padding:12px 16px;border-radius:12px;margin:14px 0}.warning{border-left:5px solid var(--warn);background:#fff7ed;padding:12px 16px;border-radius:12px;margin:14px 0}.okbox{border-left:5px solid var(--ok);background:#f0fdf4;padding:12px 16px;border-radius:12px;margin:14px 0}.dangerbox{border-left:5px solid var(--danger);background:#fef2f2;padding:12px 16px;border-radius:12px;margin:14px 0}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.mini{padding:16px;border:1px solid var(--line);border-radius:16px;background:#fbfcff}.mini h4{margin-top:0}.checklist li{margin:6px 0}.tight li{margin:3px 0}.score{font-weight:700;color:#9a3412}.tag{font-weight:600;color:#1e40af}.source{font-size:13px;color:var(--muted)}
+.q{border:1px solid #d9e2f2;border-radius:18px;margin:18px 0;padding:18px 20px;background:#fff}.q h3{margin-top:0}.q-title{display:flex;gap:10px;align-items:flex-start;justify-content:space-between}.pts{white-space:nowrap;background:#fff7ed;color:#9a3412;border:1px solid #fed7aa;border-radius:999px;padding:2px 10px;font-size:13px;font-weight:700}.answer{border:1px solid #cfe9d8;background:#fbfffc;border-radius:14px;padding:10px 14px;margin:12px 0}.answer summary{cursor:pointer;font-weight:800;color:#166534}.answer[open]{background:#f6fff8}.blank{display:inline-block;min-width:64px;border-bottom:1px solid #334155;height:1.1em}.subq>li{margin:8px 0}.kmap{width:auto;min-width:0;margin:10px 0;border:2px solid #334155}.kmap th,.kmap td{text-align:center;min-width:48px;padding:8px}.kmap .axis{background:#e2e8f0;font-weight:700}.kmap .one{background:#dcfce7}.kmap .dc{background:#fef9c3}.kmap .zero{background:#f8fafc;color:#94a3b8}.truth td,.truth th{text-align:center}.mermaid{background:#fff;border:1px solid var(--line);border-radius:16px;padding:8px;overflow:auto}.wavebox{background:#fff;border:1px solid var(--line);border-radius:16px;padding:10px;overflow:auto}.btnrow{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0}.btn{border:1px solid #cbd5ff;background:#eef3ff;color:#243b8f;border-radius:12px;padding:8px 12px;font-weight:700;cursor:pointer}.btn:hover{background:#dfe7ff}.exam-note{background:#f8fafc;border:1px dashed #cbd5e1;border-radius:16px;padding:14px 16px;margin:16px 0}
+@media(max-width:980px){.layout{display:block;padding:12px}nav{position:static;height:auto;margin-bottom:18px}.grid2,.grid3{grid-template-columns:1fr}.hero h1{font-size:28px}section{padding:20px}.q-title{display:block}.pts{display:inline-block;margin-bottom:8px}}
+@media print{nav,.btnrow{display:none}.layout{display:block;max-width:none;padding:0}body{background:white}section,.hero,.card,.q{box-shadow:none;break-inside:avoid}.answer{display:none}.show-answers .answer{display:block}a{text-decoration:none;color:inherit}}
+
+.mjx-container[jax="SVG"][display="true"]{overflow-x:auto;overflow-y:hidden;max-width:100%;padding:.25rem 0;}
+</style>
+<script>
+function openAllAnswers(){document.querySelectorAll('details.answer').forEach(d=>d.open=true); document.body.classList.add('show-answers');}
+function closeAllAnswers(){document.querySelectorAll('details.answer').forEach(d=>d.open=false); document.body.classList.remove('show-answers');}
+window.addEventListener('load',()=>{ if(window.WaveDrom) WaveDrom.ProcessAll(); });
+</script>
+</head>
+<body>
+<div class="layout">
+<nav>
+<h2>目录</h2>
+<a href="#intro">使用说明</a>
+<a href="#score">题量与分值</a>
+<a href="#part1">一、数制和编码</a>
+<a href="#part2">二、逻辑代数与化简</a>
+<a href="#part3">三、门电路与触发器</a>
+<a href="#part4">四、组合逻辑电路</a>
+<a href="#part5">五、同步时序电路</a>
+<a href="#part6">六、可编程逻辑电路</a>
+<a href="#extra">附加挑战题</a>
+<a href="#checklist">做完后自查</a>
+</nav>
+<main>
+<header class="hero" id="intro">
+<h1>数字逻辑电路重点模拟考题</h1>
+<p class="lead">按你给出的课程大纲和历年题高频模式设计：不是只出一张随机卷，而是每个重点都给几道题，适合考前逐块练习。</p>
+<div class="badges"><span class="badge">总分 120 分</span><span class="badge">建议 150 分钟</span><span class="badge">含可折叠答案解析</span><span class="badge">适合打印</span></div>
+<div class="btnrow"><button class="btn" onclick="openAllAnswers()">展开全部解析</button><button class="btn" onclick="closeAllAnswers()">收起全部解析</button><button class="btn" onclick="window.print()">打印试卷</button></div>
+<p class="small">建议先做题，不要急着展开解析。若时间紧，优先做二、四、五部分；这些是历年题里最容易拉开分差的部分。</p>
+</header>
+
+<section id="score">
+<h2>题量与分值</h2>
+<table>
+<thead><tr><th>部分</th><th>对应大纲重点</th><th>分值</th><th>训练目标</th></tr></thead>
+<tbody>
+<tr><td>一</td><td>数制和编码</td><td>10</td><td>二进制、8421 BCD、余三码、格雷码互转。</td></tr>
+<tr><td>二</td><td>逻辑代数与逻辑函数化简</td><td>20</td><td>公式法、K 图、无关项、竞争冒险、QM 法概念。</td></tr>
+<tr><td>三</td><td>集成门电路与触发器</td><td>20</td><td>TTL 负载能力、OC/三态、触发器功能、时序参数与最高频率。</td></tr>
+<tr><td>四</td><td>组合逻辑电路</td><td>25</td><td>译码器、MUX、优先编码器、比较/检测、ALU 基本设计。</td></tr>
+<tr><td>五</td><td>同步时序电路</td><td>35</td><td>状态分析、自启动、序列检测器、循环计数器、集成计数器、移位寄存器序列发生器。</td></tr>
+<tr><td>六</td><td>可编程逻辑电路</td><td>10</td><td>PROM/PAL/PLA 对比、ROM 容量、PLA 实现码制转换。</td></tr>
+</tbody>
+</table>
+</section>
+
+<section id="part1">
+<h2>一、数制和编码（10 分）</h2>
+<div class="q">
+<div class="q-title"><h3>1. 编码互转</h3><span class="pts">4 分</span></div>
+<p>完成下表。</p>
+<table>
+<thead><tr><th>十进制数</th><th>自然二进制</th><th>8421 BCD</th><th>余三码</th><th>该自然二进制对应的格雷码</th></tr></thead>
+<tbody><tr><td>23</td><td></td><td></td><td></td><td></td></tr></tbody>
+</table>
+<details class="answer"><summary>答案与解析</summary>
+<p>$(23)_{10}=(10111)_2$。</p>
+<ul>
+<li>8421 BCD 按十进制每一位编码：2 为 0010，3 为 0011，所以为 <code>0010 0011</code>。</li>
+<li>余三码是每个十进制数位加 3 后用 8421 表示：2+3=5 为 0101，3+3=6 为 0110，所以为 <code>0101 0110</code>。</li>
+<li>二进制 10111 的格雷码：最高位不变；后续位为相邻二进制位异或，得到 <code>11100</code>。</li>
+</ul>
+</details>
+</div>
+
+<div class="q">
+<div class="q-title"><h3>2. 格雷码反求二进制</h3><span class="pts">2 分</span></div>
+<p>已知 4 位格雷码为 <code>1101</code>，求其对应的自然二进制和十进制值。</p>
+<details class="answer"><summary>答案与解析</summary>
+<p>格雷码 $G=1101$。自然二进制最高位 $B_3=G_3=1$，之后逐位累异或：</p>
+<p>$$B_2=B_3\oplus G_2=1\oplus1=0,\quad B_1=B_2\oplus G_1=0\oplus0=0,\quad B_0=B_1\oplus G_0=0\oplus1=1.$$</p>
+<p>所以二进制为 <code>1001</code>，十进制为 9。</p>
+</details>
+</div>
+
+<div class="q">
+<div class="q-title"><h3>3. 合法码判断</h3><span class="pts">2 分</span></div>
+<p>判断下列 4 位码中，哪些是合法 8421 BCD 码？哪些是合法余三码？</p>
+<p><code>0000, 0011, 1001, 1010, 1100, 1111</code></p>
+<details class="answer"><summary>答案与解析</summary>
+<ul>
+<li>合法 8421 BCD：<code>0000</code>、<code>0011</code>、<code>1001</code>。8421 BCD 只允许 0–9，即 0000–1001。</li>
+<li>合法余三码：<code>0011</code>、<code>1001</code>、<code>1010</code>、<code>1100</code>。余三码对应十进制 0–9 加 3，因此范围是 0011–1100。</li>
+</ul>
+</details>
+</div>
+
+<div class="q">
+<div class="q-title"><h3>4. 概念解释</h3><span class="pts">2 分</span></div>
+<p>为什么格雷码常用于位置编码或计数器输出过渡？请用一句话说明核心原因。</p>
+<details class="answer"><summary>答案与解析</summary>
+<p>格雷码相邻状态只改变 1 位，能减少多位同时翻转带来的瞬态错误和读数不确定性。例如自然二进制从 0111 到 1000 会有 4 位变化，而格雷码相邻状态只变 1 位。</p>
+</details>
+</div>
+</section>
+
+<section id="part2">
+<h2>二、逻辑代数与逻辑函数化简（20 分）</h2>
+<div class="q">
+<div class="q-title"><h3>5. 公式法化简（一）</h3><span class="pts">4 分</span></div>
+<p>用逻辑代数公式化简：</p>
+<p>$$F=\overline{(AB+\overline C)}+A\overline C+B.$$</p>
+<details class="answer"><summary>答案与解析</summary>
+<p>$$\overline{(AB+\overline C)}=\overline{AB}\cdot C=(\overline A+\overline B)C=\overline AC+\overline BC.$$</p>
+<p>所以</p>
+<p>$$F=\overline AC+\overline BC+A\overline C+B.$$</p>
+<p>含 $B$ 时 $F=1$；若 $B=0$，则 $F=\overline AC+A\overline C$，再结合各项可得到最简：</p>
+<p>$$\boxed{F=A+B+C}.$$</p>
+</details>
+</div>
+
+<div class="q">
+<div class="q-title"><h3>6. 公式法化简（二）</h3><span class="pts">4 分</span></div>
+<p>化简：</p>
+<p>$$F=AB\overline C+\overline ABC+A\overline B\overline C+\overline A\overline C.$$</p>
+<details class="answer"><summary>答案与解析</summary>
+<p>先把含 $\overline C$ 的项合并：</p>
+<p>$$AB\overline C+A\overline B\overline C+\overline A\overline C=\overline C(AB+A\overline B+\overline A).$$</p>
+<p>其中 $AB+A\overline B=A$，所以括号为 $A+\overline A=1$，得到 $\overline C$。剩下 $\overline ABC$ 只在 $\overline C=0$ 时补充成立，故：</p>
+<p>$$\boxed{F=\overline C+\overline AB}.$$</p>
+</details>
+</div>
+
+<div class="q">
+<div class="q-title"><h3>7. Karnaugh 图含无关项化简</h3><span class="pts">5 分</span></div>
+<p>用 K 图化简：</p>
+<p>$$F(A,B,C,D)=\Sigma m(0,3,4,7,11)+\Sigma d(8,9,12,13,14,15).$$</p>
+<p>要求写出最简与或式。</p>
+<details class="answer"><summary>答案与解析</summary>
+<p>把 1 和无关项 $d$ 一起用于扩大圈组，可得到两个 8 格/4 格等价大圈，最简式为：</p>
+<p>$$\boxed{F=AB+\overline A\,\overline B}.$$</p>
+<p>本质上是同或：$F=A\odot B$。</p>
+</details>
+</div>
+
+<div class="q">
+<div class="q-title"><h3>8. 竞争冒险判断</h3><span class="pts">4 分</span></div>
+<p>判断下面两个二级与或表达式是否存在静态 1 竞争冒险，并说明原因：</p>
+<ol class="subq">
+<li>$F_1=\overline AB+AC+BC$</li>
+<li>$F_2=\overline AB+AC$</li>
+</ol>
+<details class="answer"><summary>答案与解析</summary>
+<p>$F_1$ 不存在由 $A$ 翻转引起的静态 1 冒险，因为它包含共识项 $BC$。</p>
+<p>$F_2$ 存在静态 1 冒险：当 $B=C=1$ 时，$F_2=\overline A+A$ 理论上恒为 1，但实际电路中 $\overline AB$ 和 $AC$ 两条通路延迟不同，$A$ 翻转时可能短暂同时为 0。加入冗余项 $BC$ 可消除：</p>
+<p>$$F=\overline AB+AC+BC.$$</p>
+</details>
+</div>
+
+<div class="q">
+<div class="q-title"><h3>9. QM 表格化简法</h3><span class="pts">3 分</span></div>
+<p>简述 Quine–McCluskey（QM）表格化简法的核心思想和主要步骤。</p>
+<details class="answer"><summary>答案与解析</summary>
+<p>核心思想：把最小项按 1 的个数分组，相邻组之间只差 1 位的项可以合并，用 “–” 表示被消去的变量；反复合并直到不能再合并，得到质蕴含项，再用覆盖表选择必要质蕴含项和最少附加项。</p>
+<ol>
+<li>列出全部 1 项和可利用的无关项。</li>
+<li>按二进制中 1 的个数分组。</li>
+<li>相邻组逐轮合并，标记已合并项。</li>
+<li>未被继续合并的项为质蕴含项。</li>
+<li>建立质蕴含项覆盖表，找本质质蕴含项，完成最小覆盖。</li>
+</ol>
+</details>
+</div>
+</section>
+
+<section id="part3">
+<h2>三、集成门电路与触发器（20 分）</h2>
+<div class="q">
+<div class="q-title"><h3>10. TTL 门负载能力</h3><span class="pts">4 分</span></div>
+<p>某 TTL 与非门输出、输入电流参数为：</p>
+<p>$$I_{OL}=16\text{ mA},\quad I_{IL}=1.6\text{ mA},\quad I_{OH}=0.4\text{ mA},\quad I_{IH}=40\mu\text{A}.$$</p>
+<p>问一个输出最多能带动多少个同型号输入？</p>
+<details class="answer"><summary>答案与解析</summary>
+<p>低电平负载能力：</p>
+<p>$$N_L=\frac{I_{OL}}{I_{IL}}=\frac{16}{1.6}=10.$$</p>
+<p>高电平负载能力：</p>
+<p>$$N_H=\frac{I_{OH}}{I_{IH}}=\frac{0.4\text{mA}}{40\mu\text{A}}=10.$$</p>
+<p>取较小者，所以最多带动 $\boxed{10}$ 个同型号输入。</p>
+</details>
+</div>
+
+<div class="q">
+<div class="q-title"><h3>11. OC 门、三态门与线与</h3><span class="pts">3 分</span></div>
+<p>判断并改错：普通 TTL 与非门、OC 与非门、三态门都可以把输出端直接连在一起实现线与。</p>
+<details class="answer"><summary>答案与解析</summary>
+<p>该说法错误。</p>
+<ul>
+<li>普通 TTL 推挽输出不能直接并联，否则可能一个门输出高、另一个门输出低，形成大电流冲突。</li>
+<li>OC 门可以通过公共上拉电阻实现线与/线或逻辑。</li>
+<li>三态门可共用总线，但必须保证同一时刻最多只有一个门处于使能输出状态；它不是用来“线与”的。</li>
+</ul>
+</details>
+</div>
+
+<div class="q">
+<div class="q-title"><h3>12. 触发器次态</h3><span class="pts">4 分</span></div>
+<p>填写下列触发器在有效时钟沿后的次态。</p>
+<table class="truth">
+<thead><tr><th>触发器</th><th>输入条件</th><th>$Q_{n+1}$</th></tr></thead>
+<tbody>
+<tr><td>D</td><td>$D=0$</td><td></td></tr>
+<tr><td>D</td><td>$D=1$</td><td></td></tr>
+<tr><td>JK</td><td>$J=1,K=0$</td><td></td></tr>
+<tr><td>JK</td><td>$J=K=1$</td><td></td></tr>
+</tbody>
+</table>
+<details class="answer"><summary>答案与解析</summary>
+<table class="truth">
+<thead><tr><th>触发器</th><th>输入条件</th><th>$Q_{n+1}$</th></tr></thead>
+<tbody>
+<tr><td>D</td><td>$D=0$</td><td>0</td></tr>
+<tr><td>D</td><td>$D=1$</td><td>1</td></tr>
+<tr><td>JK</td><td>$J=1,K=0$</td><td>1</td></tr>
+<tr><td>JK</td><td>$J=K=1$</td><td>$\overline{Q_n}$，翻转</td></tr>
+</tbody>
+</table>
+<p>记忆：D 触发器“次态等于 D”；JK 触发器 00 保持，01 置 0，10 置 1，11 翻转。</p>
+</details>
+</div>
+
+<div class="q">
+<div class="q-title"><h3>13. 同步电路最高时钟频率</h3><span class="pts">6 分</span></div>
+<p>某同步时序电路中，一级触发器输出经过组合逻辑后进入下一级触发器。已知：</p>
+<p>$$t_{pdQ}^{max}=22\text{ ns},\quad t_{pdQ}^{min}=8\text{ ns},\quad t_{comb}^{max}=18\text{ ns},\quad t_{comb}^{min}=4\text{ ns},\quad t_{su}=12\text{ ns},\quad t_h=5\text{ ns}.$$</p>
+<ol class="subq">
+<li>求最高时钟频率。</li>
+<li>检查保持时间是否满足。</li>
+</ol>
+<details class="answer"><summary>答案与解析</summary>
+<p>建立时间约束：</p>
+<p>$$T_{clk}\ge t_{pdQ}^{max}+t_{comb}^{max}+t_{su}=22+18+12=52\text{ ns}.$$</p>
+<p>所以</p>
+<p>$$f_{max}=\frac{1}{52\text{ ns}}\approx \boxed{19.23\text{ MHz}}.$$</p>
+<p>保持时间约束：</p>
+<p>$$t_{pdQ}^{min}+t_{comb}^{min}=8+4=12\text{ ns}\ge t_h=5\text{ ns}.$$</p>
+<p>保持时间满足。</p>
+<div class="tip">考场要点：最高频率看最大延迟和建立时间；保持时间看最小延迟，不是拿同一套最大值去算。</div>
+</details>
+</div>
+
+<div class="q">
+<div class="q-title"><h3>14. TTL 与 CMOS 特点</h3><span class="pts">3 分</span></div>
+<p>比较 TTL 与 CMOS 在功耗、输入阻抗、速度方面的一般特点。</p>
+<details class="answer"><summary>答案与解析</summary>
+<table>
+<thead><tr><th>项目</th><th>TTL</th><th>CMOS</th></tr></thead>
+<tbody>
+<tr><td>功耗</td><td>静态功耗相对较大</td><td>静态功耗很小，动态功耗与频率、负载电容有关</td></tr>
+<tr><td>输入阻抗</td><td>相对低</td><td>很高</td></tr>
+<tr><td>速度</td><td>传统 TTL 速度较快</td><td>早期 CMOS 较慢，现代 CMOS 可很快；课程题通常按“CMOS 低功耗、TTL 较快/驱动能力强”理解</td></tr>
+</tbody>
+</table>
+</details>
+</div>
+</section>
+
+<section id="part4">
+<h2>四、组合逻辑电路（25 分）</h2>
+<div class="q">
+<div class="q-title"><h3>15. 用 3-8 译码器实现一位全加器</h3><span class="pts">5 分</span></div>
+<p>设一位全加器输入为 $A,B,C_i$，输出为 $S,C_o$。要求用 3-8 译码器和必要的门电路实现，写出 $S,C_o$ 的最小项表达式。</p>
+<details class="answer"><summary>答案与解析</summary>
+<p>全加器：</p>
+<p>$$S=A\oplus B\oplus C_i,$$</p>
+<p>$$C_o=AB+AC_i+BC_i.$$</p>
+<p>按输入顺序 $A,B,C_i$ 编号，则：</p>
+<p>$$\boxed{S=\Sigma m(1,2,4,7)},\qquad \boxed{C_o=\Sigma m(3,5,6,7)}.$$</p>
+<p>若译码器输出为高有效，分别把对应最小项输出 OR 起来即可。若用 74LS138 这类低有效译码器，则可用 NAND 门把对应低有效输出合成。</p>
+</details>
+</div>
+
+<div class="q">
+<div class="q-title"><h3>16. 用 8 选 1 MUX 实现奇校验</h3><span class="pts">5 分</span></div>
+<p>输入 $A,B,C,D$ 中 1 的个数为奇数时输出 $Y=1$，否则 $Y=0$。用一个 8 选 1 数据选择器实现。令选择端为 $S_2S_1S_0=ABC$，写出 $I_0\sim I_7$ 应接什么。</p>
+<details class="answer"><summary>答案与解析</summary>
+<p>目标函数：</p>
+<p>$$Y=A\oplus B\oplus C\oplus D.$$</p>
+<p>当 $A\oplus B\oplus C=0$ 时，$Y=D$；当 $A\oplus B\oplus C=1$ 时，$Y=\overline D$。按 $ABC=000,001,010,011,100,101,110,111$ 排列：</p>
+<table class="truth">
+<tr><th>$ABC$</th><th>000</th><th>001</th><th>010</th><th>011</th><th>100</th><th>101</th><th>110</th><th>111</th></tr>
+<tr><th>$I_i$</th><td>$D$</td><td>$\overline D$</td><td>$\overline D$</td><td>$D$</td><td>$\overline D$</td><td>$D$</td><td>$D$</td><td>$\overline D$</td></tr>
+</table>
+<p>所以：$I_0=D,I_1=\overline D,I_2=\overline D,I_3=D,I_4=\overline D,I_5=D,I_6=D,I_7=\overline D$。</p>
+</details>
+</div>
+
+<div class="q">
+<div class="q-title"><h3>17. 十进制计数器输出检测</h3><span class="pts">5 分</span></div>
+<p>某 8421 BCD 十进制计数器输出为 $A B C D$，其中 $A$ 为 8 位，$D$ 为 1 位。设计检测电路：当表示的十进制数能被 3 整除且不为 0 时，输出 $Y=1$，否则 $Y=0$。要求写出最简与或式，可把 10–15 作为无关项。</p>
+<details class="answer"><summary>答案与解析</summary>
+<p>0–9 中能被 3 整除且不为 0 的数为 3、6、9，对应最小项：</p>
+<p>$$Y=\Sigma m(3,6,9),\quad d=\Sigma d(10,11,12,13,14,15).$$</p>
+<p>利用无关项化简得到：</p>
+<p>$$\boxed{Y=AD+BC\overline D+\overline BCD}.$$</p>
+<p>其中 $AD$ 覆盖 9 并借用了 11、13、15 等无关项；$BC\overline D$ 覆盖 6；$\overline BCD$ 覆盖 3。</p>
+</details>
+</div>
+
+<div class="q">
+<div class="q-title"><h3>18. 4 输入优先编码器 / 呼叫电路</h3><span class="pts">5 分</span></div>
+<p>医院有 4 个病房呼叫输入 $R_1,R_2,R_3,R_4$，优先级 $R_1>R_2>R_3>R_4$。当有呼叫时，输出最高优先级病房的二进制编号 $Y_1Y_0$，规定 $R_1=00,R_2=01,R_3=10,R_4=11$，另有有效标志 $V$。写出 $Y_1,Y_0,V$ 的逻辑表达式。</p>
+<details class="answer"><summary>答案与解析</summary>
+<p>有效标志：</p>
+<p>$$\boxed{V=R_1+R_2+R_3+R_4}.$$</p>
+<p>$Y_1=1$ 表示最高有效请求是 $R_3$ 或 $R_4$：</p>
+<p>$$\boxed{Y_1=\overline R_1\overline R_2(R_3+R_4)}.$$</p>
+<p>$Y_0=1$ 表示最高有效请求是 $R_2$ 或 $R_4$：</p>
+<p>$$\boxed{Y_0=\overline R_1R_2+\overline R_1\overline R_2\overline R_3R_4}.$$</p>
+<p>如果题目要求的是“一灯显示哪间房”，则可写成：$L_1=R_1$，$L_2=\overline R_1R_2$，$L_3=\overline R_1\overline R_2R_3$，$L_4=\overline R_1\overline R_2\overline R_3R_4$。</p>
+</details>
+</div>
+
+<div class="q">
+<div class="q-title"><h3>19. 1 位 ALU 的 MUX 实现</h3><span class="pts">5 分</span></div>
+<p>设计一个 1 位 ALU，输入为 $a,b$，控制端为 $S_1S_0$，功能如下：</p>
+<table class="truth"><tr><th>$S_1S_0$</th><th>功能 $F$</th></tr><tr><td>00</td><td>$a$</td></tr><tr><td>01</td><td>$b$</td></tr><tr><td>10</td><td>$a\oplus b$</td></tr><tr><td>11</td><td>$ab$</td></tr></table>
+<p>用一个 4 选 1 MUX 和必要的门电路实现，说明各数据端接法。</p>
+<details class="answer"><summary>答案与解析</summary>
+<p>令 4 选 1 MUX 的选择端为 $S_1S_0$，则：</p>
+<p>$$I_0=a,\quad I_1=b,\quad I_2=a\oplus b,\quad I_3=ab.$$</p>
+<p>其中 $a\oplus b$ 可由异或门得到，$ab$ 可由与门得到。MUX 输出即 ALU 输出 $F$。</p>
+</details>
+</div>
+</section>
+
+<section id="part5">
+<h2>五、同步时序电路（35 分）</h2>
+<div class="q">
+<div class="q-title"><h3>20. 同步时序电路分析：6 进制格雷码计数器</h3><span class="pts">8 分</span></div>
+<p>某同步时序电路由 3 个 D 触发器构成，状态为 $Q_2Q_1Q_0$，激励方程为：</p>
+<p>$$D_2=Q_1,\qquad D_1=Q_0,\qquad D_0=\overline Q_2\overline Q_1+\overline Q_2Q_0.$$</p>
+<ol class="subq">
+<li>写出状态转移表。</li>
+<li>画出状态图。</li>
+<li>判断能否自启动，并说明功能。</li>
+</ol>
+<details class="answer"><summary>答案与解析</summary>
+<table class="truth">
+<thead><tr><th>现态 $Q_2Q_1Q_0$</th><th>次态 $Q_2^+Q_1^+Q_0^+$</th></tr></thead>
+<tbody>
+<tr><td>000</td><td>001</td></tr>
+<tr><td>001</td><td>011</td></tr>
+<tr><td>010</td><td>100</td></tr>
+<tr><td>011</td><td>111</td></tr>
+<tr><td>100</td><td>000</td></tr>
+<tr><td>101</td><td>010</td></tr>
+<tr><td>110</td><td>100</td></tr>
+<tr><td>111</td><td>110</td></tr>
+</tbody>
+</table>
+<div class="mermaid">
+stateDiagram-v2
+    [*] --> S000
+    S000: 000
+    S001: 001
+    S011: 011
+    S111: 111
+    S110: 110
+    S100: 100
+    S010: 010
+    S101: 101
+    S000 --> S001
+    S001 --> S011
+    S011 --> S111
+    S111 --> S110
+    S110 --> S100
+    S100 --> S000
+    S010 --> S100
+    S101 --> S010
+</div>
+<p>主循环为：</p>
+<p><code>000 → 001 → 011 → 111 → 110 → 100 → 000</code>。</p>
+<p>非工作状态 <code>010</code>、<code>101</code> 分别会进入主循环，因此可以自启动。功能是 6 进制格雷码计数器。</p>
+</details>
+</div>
+
+<div class="q">
+<div class="q-title"><h3>21. 设计 110 序列检测器</h3><span class="pts">8 分</span></div>
+<p>设计一个同步 Mealy 型序列检测器，输入为 $X$，输出为 $Z$。当输入序列中出现连续的 <code>110</code> 时，在读入最后一个 0 的同一拍输出 $Z=1$。允许重叠。要求：</p>
+<ol class="subq">
+<li>画状态图。</li>
+<li>用状态 $S_0=00,S_1=01,S_2=11$ 分配，未用状态 $10$ 进入 $00$，用 D 触发器写出 $D_1,D_0,Z$。</li>
+</ol>
+<details class="answer"><summary>答案与解析</summary>
+<p>状态含义：$S_0$ 无有效前缀；$S_1$ 已看到 1；$S_2$ 已看到 11。</p>
+<div class="mermaid">
+stateDiagram-v2
+    [*] --> S0
+    S0: S0 / no match
+    S1: S1 / seen 1
+    S2: S2 / seen 11
+    S0 --> S0: X=0 / Z=0
+    S0 --> S1: X=1 / Z=0
+    S1 --> S0: X=0 / Z=0
+    S1 --> S2: X=1 / Z=0
+    S2 --> S0: X=0 / Z=1
+    S2 --> S2: X=1 / Z=0
+</div>
+<p>按 $S_0=00,S_1=01,S_2=11$，未用状态 $10$ 对 $X=0,1$ 均转 $00$。可得：</p>
+<p>$$\boxed{D_1=Q_1Q_0X}.$$</p>
+<p>$$\boxed{D_0=X(\overline Q_1\overline Q_0+Q_1Q_0)}.$$</p>
+<p>$$\boxed{Z=Q_1Q_0\overline X}.$$</p>
+<p>检查：在 $S_2=11$ 且输入 $X=0$ 时输出 1，正好检测到 110。</p>
+</details>
+</div>
+
+<div class="q">
+<div class="q-title"><h3>22. 设计指定循环序列计数器</h3><span class="pts">8 分</span></div>
+<p>用 4 个 D 触发器设计同步时序电路，使状态 $Q_3Q_2Q_1Q_0$ 按如下序列循环：</p>
+<p><code>0000 → 0001 → 0011 → 0111 → 1111 → 1110 → 1100 → 1000 → 0000</code></p>
+<p>要求：未列出的 8 个状态全部转入 <code>0000</code>。写出 $D_3,D_2,D_1,D_0$ 的最简与或式。</p>
+<details class="answer"><summary>答案与解析</summary>
+<p>D 触发器满足 $D_i=Q_i^+$。列完整状态表，把未用状态的次态指定为 0000，然后化简可得：</p>
+<p>$$\boxed{D_3=Q_0Q_1Q_2+Q_2Q_3\overline Q_0}.$$</p>
+<p>$$\boxed{D_2=Q_1Q_2Q_3+Q_0Q_1\overline Q_3}.$$</p>
+<p>$$\boxed{D_1=Q_0Q_1Q_2+Q_0\overline Q_2\overline Q_3}.$$</p>
+<p>$$\boxed{D_0=Q_0Q_1\overline Q_3+\overline Q_1\overline Q_2\overline Q_3}.$$</p>
+<div class="mermaid">
+stateDiagram-v2
+    S0000: 0000
+    S0001: 0001
+    S0011: 0011
+    S0111: 0111
+    S1111: 1111
+    S1110: 1110
+    S1100: 1100
+    S1000: 1000
+    S0000 --> S0001
+    S0001 --> S0011
+    S0011 --> S0111
+    S0111 --> S1111
+    S1111 --> S1110
+    S1110 --> S1100
+    S1100 --> S1000
+    S1000 --> S0000
+</div>
+<div class="tip">这类题的得分点不是背答案，而是流程：状态表 → 每个 $D_i$ 的 1 项 → K 图化简 → 检查未用状态是否进入主循环。</div>
+</details>
+</div>
+
+<div class="q">
+<div class="q-title"><h3>23. 用 74LS163 改接模 12 计数器</h3><span class="pts">5 分</span></div>
+<p>设 74LS163 是 4 位同步二进制计数器，清零端 $\overline{CLR}$ 为同步低有效，计数使能均接有效，置数端保持无效。要求改接为模 12 计数器，计数序列为 0–11。请说明应译码哪个状态，并写出 $\overline{CLR}$ 的逻辑表达式。</p>
+<details class="answer"><summary>答案与解析</summary>
+<p>同步清零要在状态 11，即二进制 <code>1011</code> 时让 $\overline{CLR}=0$，使下一个有效时钟沿回到 0000。</p>
+<p>若状态输出为 $Q_3Q_2Q_1Q_0$，则状态 1011 的译码项为：</p>
+<p>$$Q_3\overline Q_2Q_1Q_0.$$</p>
+<p>清零低有效，所以：</p>
+<p>$$\boxed{\overline{CLR}=\overline{Q_3\overline Q_2Q_1Q_0}}.$$</p>
+<div class="warning">易错点：同步清零译码 $N-1$；异步清零常译码 $N$，即出现 12 = 1100 后立即清零。题目给 74LS161/163 时一定看功能表。</div>
+</details>
+</div>
+
+<div class="q">
+<div class="q-title"><h3>24. 移位寄存器序列发生器与自启动</h3><span class="pts">6 分</span></div>
+<p>用 4 位移位寄存器产生循环序列状态：</p>
+<p><code>0111 → 1111 → 1110 → 1100 → 1000 → 0000 → 0001 → 0011 → 0111</code></p>
+<p>设状态写作 $Q_3Q_2Q_1Q_0$，采用左移结构：</p>
+<p>$$D_3=Q_2,\quad D_2=Q_1,\quad D_1=Q_0,\quad D_0=F(Q_3,Q_2,Q_1,Q_0).$$</p>
+<ol class="subq">
+<li>若把未用状态作为无关项，求最简 $F$。</li>
+<li>检查是否自启动。</li>
+<li>给出一种能自启动的反馈函数。</li>
+</ol>
+<details class="answer"><summary>答案与解析</summary>
+<p>主循环中，需要 $F=1$ 的现态为：</p>
+<p><code>0000, 0001, 0011, 0111</code>。</p>
+<p>若把其他未用状态作为无关项，可化得：</p>
+<p>$$\boxed{F=\overline Q_3}.$$</p>
+<p>但此时不自启动。因为未用状态会形成另一个循环：</p>
+<p><code>0010 → 0101 → 1011 → 0110 → 1101 → 1010 → 0100 → 1001 → 0010</code>。</p>
+<p>一种可自启动的指定方式是让未用状态逐步进入主循环，可取：</p>
+<p>$$\boxed{F=Q_0\overline Q_1+Q_0\overline Q_2+Q_0\overline Q_3+\overline Q_1\overline Q_2\overline Q_3}.$$</p>
+<p>此时未用状态都会在有限步内进入主循环。</p>
+</details>
+</div>
+</section>
+
+<section id="part6">
+<h2>六、可编程逻辑电路（10 分）</h2>
+<div class="q">
+<div class="q-title"><h3>25. PROM / PLA / PAL 阵列可编程性</h3><span class="pts">3 分</span></div>
+<p>填写下表：PROM、PLA、PAL 的与阵列和或阵列是否可编程。</p>
+<table class="truth"><thead><tr><th>器件</th><th>与阵列</th><th>或阵列</th></tr></thead><tbody><tr><td>PROM</td><td></td><td></td></tr><tr><td>PLA</td><td></td><td></td></tr><tr><td>PAL</td><td></td><td></td></tr></tbody></table>
+<details class="answer"><summary>答案与解析</summary>
+<table class="truth"><thead><tr><th>器件</th><th>与阵列</th><th>或阵列</th></tr></thead><tbody><tr><td>PROM</td><td>固定</td><td>可编程</td></tr><tr><td>PLA</td><td>可编程</td><td>可编程</td></tr><tr><td>PAL</td><td>可编程</td><td>固定</td></tr></tbody></table>
+<p>记忆：PROM 是“固定译码器 + 可编程或阵列”；PLA 最灵活；PAL 用可编程与阵列配固定或阵列，速度和结构更规整。</p>
+</details>
+</div>
+
+<div class="q">
+<div class="q-title"><h3>26. ROM 容量扩展</h3><span class="pts">3 分</span></div>
+<p>已有 $32K\times 8$ 的 ROM 芯片，要构成 $2M\times 8$ 的 ROM，需要多少片？单片 $32K\times 8$ 有多少根地址线、多少根数据线？</p>
+<details class="answer"><summary>答案与解析</summary>
+<p>$32K=2^{15}$，所以单片有 15 根地址线；字长为 8，所以有 8 根数据线。</p>
+<p>$2M=2\cdot 2^{20}=2^{21}$，需要的片数：</p>
+<p>$$\frac{2M\times 8}{32K\times 8}=\frac{2^{21}}{2^{15}}=2^6=\boxed{64\text{ 片}}.$$</p>
+</details>
+</div>
+
+<div class="q">
+<div class="q-title"><h3>27. PLA 实现 8421 码到格雷码</h3><span class="pts">4 分</span></div>
+<p>输入为 4 位自然二进制/8421 码 $B_3B_2B_1B_0$，输出为格雷码 $G_3G_2G_1G_0$。写出输出方程，并说明用 PLA 实现时至少需要哪些乘积项。</p>
+<details class="answer"><summary>答案与解析</summary>
+<p>二进制转格雷码：</p>
+<p>$$\boxed{G_3=B_3},$$</p>
+<p>$$\boxed{G_2=B_3\oplus B_2=\overline B_3B_2+B_3\overline B_2},$$</p>
+<p>$$\boxed{G_1=B_2\oplus B_1=\overline B_2B_1+B_2\overline B_1},$$</p>
+<p>$$\boxed{G_0=B_1\oplus B_0=\overline B_1B_0+B_1\overline B_0}.$$</p>
+<p>若直接按与或式实现，乘积项可为：</p>
+<p>$B_3$，$\overline B_3B_2$，$B_3\overline B_2$，$\overline B_2B_1$，$B_2\overline B_1$，$\overline B_1B_0$，$B_1\overline B_0$，共 7 个乘积项。</p>
+</details>
+</div>
+</section>
+
+<section id="extra">
+<h2>附加挑战题（不计分，但很像历年题）</h2>
+<div class="q">
+<div class="q-title"><h3>A. 用 8 选 1 与 4 位 2 选 1 构成 12 选 1</h3><span class="pts">加练</span></div>
+<p>已有一个带使能端的 8 选 1 MUX，以及一个“四位 2 选 1”数据选择器。试构成 12 选 1 MUX，输入为 $D_0\sim D_{11}$，选择端为 $S_3S_2S_1S_0$。</p>
+<details class="answer"><summary>参考思路</summary>
+<p>核心想法：先用 $S_3$ 在每一对 $(D_i,D_{i+8})$ 中选择低 8 路或高 4 路中的一个，再交给 8 选 1。</p>
+<ul>
+<li>四位 2 选 1 的四组输入接 $(D_0,D_8),(D_1,D_9),(D_2,D_{10}),(D_3,D_{11})$，选择端接 $S_3$，输出为 $X_0\sim X_3$。</li>
+<li>8 选 1 的数据端接 $X_0,X_1,X_2,X_3,D_4,D_5,D_6,D_7$。</li>
+<li>8 选 1 的选择端接 $S_2S_1S_0$。</li>
+<li>当 $S_3=0$ 时，选择 $D_0\sim D_7$；当 $S_3=1$ 且 $S_2S_1S_0=000\sim011$ 时，选择 $D_8\sim D_{11}$。其余 $S_3=1$ 且 $S_2S_1S_0=100\sim111$ 为无效选择，可用使能端屏蔽或作为无关。</li>
+</ul>
+</details>
+</div>
+
+<div class="q">
+<div class="q-title"><h3>B. 画波形并标注 $t_{pdQ},t_{su}$</h3><span class="pts">加练</span></div>
+<p>给出如下理想波形骨架。请在纸上补画 D 触发器输出 $Q$，并标出 CP 上升沿到 $Q$ 变化的延迟 $t_{pdQ}$，以及下一个上升沿前数据必须稳定的建立时间 $t_{su}$。</p>
+<div class="wavebox">
+<script type="WaveDrom">
+{ signal: [
+  { name: "CP", wave: "p.....p.....p....." },
+  { name: "D",  wave: "0.1.....0..1....0" },
+  { name: "Q",  wave: "x................." }
+]}
+</script>
+</div>
+<details class="answer"><summary>参考思路</summary>
+<p>D 触发器只在有效边沿采样 D。输出 Q 不会在 D 改变时立即改变，而是在 CP 有效边沿之后经过 $t_{pdQ}$ 才改变。每个有效边沿到来之前，D 必须提前至少 $t_{su}$ 保持稳定；有效边沿之后还要满足保持时间 $t_h$。</p>
+</details>
+</div>
+</section>
+
+<section id="checklist">
+<h2>做完后自查：这 10 件事必须会</h2>
+<ol class="checklist">
+<li>看到 $\Sigma m + \Sigma d$ 能立刻画 K 图，知道无关项只能“有利时使用”。</li>
+<li>知道 $\overline AB+AC$ 的静态 1 冒险发生在 $B=C=1,A$ 翻转时，补 $BC$。</li>
+<li>能用译码器把函数写成最小项之和；能用 MUX 把一个变量留到数据端。</li>
+<li>知道普通 TTL 输出不能随便并联；OC 门要上拉；三态门共享总线必须互斥使能。</li>
+<li>最高频率会写 $T_{clk}\ge t_{pdQ}^{max}+t_{comb}^{max}+t_{su}$。</li>
+<li>保持时间会看 $t_{pdQ}^{min}+t_{comb}^{min}\ge t_h$。</li>
+<li>D 触发器设计时，直接令 $D_i=Q_i^+$。</li>
+<li>时序分析题按“激励方程 → 状态方程 → 状态表 → 状态图 → 自启动 → 功能”写，不要跳步。</li>
+<li>用 74LS163 同步清零改模时译码 $N-1$；异步清零通常译码 $N$。</li>
+<li>记住 PROM / PLA / PAL：PROM 固定与可编程或，PLA 两边可编程，PAL 可编程与固定或。</li>
+</ol>
+</section>
+
+</main>
+</div>
+</body>
+</html>

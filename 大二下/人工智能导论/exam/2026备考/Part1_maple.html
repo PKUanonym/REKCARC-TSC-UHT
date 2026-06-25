@@ -1,0 +1,1771 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>人工智能导论：非神经网络部分期末学习指南</title>
+  <style>
+    :root {
+      --bg: #f6f7fb;
+      --paper: #fff;
+      --ink: #172033;
+      --muted: #596275;
+      --line: #dfe5ef;
+      --primary: #2457d6;
+      --accent: #e85d3f;
+      --ok: #16845b;
+      --warn: #a45b00;
+      --soft: #eef3ff;
+      --code: #1d2433;
+      --codebg: #f4f6f9;
+      --yellow: #fff7df;
+      --green: #edf9f2;
+      --red: #fff1ee;
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", Arial, sans-serif;
+      line-height: 1.72;
+      font-size: 16px
+    }
+
+    a {
+      color: var(--primary);
+      text-decoration: none
+    }
+
+    a:hover {
+      text-decoration: underline
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 290px minmax(0, 1fr);
+      gap: 24px;
+      max-width: 1500px;
+      margin: 0 auto;
+      padding: 24px
+    }
+
+    nav {
+      position: sticky;
+      top: 16px;
+      align-self: start;
+      max-height: calc(100vh - 32px);
+      overflow: auto;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px 14px;
+      box-shadow: 0 8px 26px rgba(18, 28, 45, .06)
+    }
+
+    nav h2 {
+      font-size: 18px;
+      margin: 0 0 10px
+    }
+
+    nav .small {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 12px
+    }
+
+    nav a {
+      display: block;
+      padding: 6px 8px;
+      border-radius: 10px;
+      color: #263552;
+      font-size: 14px
+    }
+
+    nav a:hover {
+      background: var(--soft);
+      text-decoration: none
+    }
+
+    main {
+      min-width: 0
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #102b70, #315ef4);
+      color: white;
+      border-radius: 24px;
+      padding: 32px 34px;
+      margin-bottom: 22px;
+      box-shadow: 0 14px 40px rgba(36, 87, 214, .25)
+    }
+
+    .hero h1 {
+      font-size: 34px;
+      line-height: 1.25;
+      margin: 0 0 12px
+    }
+
+    .hero p {
+      max-width: 1000px;
+      margin: 8px 0;
+      color: #edf2ff
+    }
+
+    .hero .tag {
+      display: inline-block;
+      background: rgba(255, 255, 255, .16);
+      border: 1px solid rgba(255, 255, 255, .3);
+      padding: 4px 10px;
+      border-radius: 999px;
+      margin: 4px 8px 4px 0;
+      font-size: 13px
+    }
+
+    section {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 28px 30px;
+      margin: 20px 0;
+      box-shadow: 0 8px 24px rgba(18, 28, 45, .05)
+    }
+
+    h2 {
+      font-size: 28px;
+      margin: 0 0 18px;
+      line-height: 1.25
+    }
+
+    h3 {
+      font-size: 22px;
+      margin: 28px 0 10px;
+      color: #102b70
+    }
+
+    h4 {
+      font-size: 18px;
+      margin: 20px 0 8px;
+      color: #263552
+    }
+
+    p {
+      margin: 10px 0
+    }
+
+    .lead {
+      font-size: 18px;
+      color: #33415c
+    }
+
+    .muted {
+      color: var(--muted)
+    }
+
+    .grid2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px
+    }
+
+    .grid3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px
+    }
+
+    .grid4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 14px 16px;
+      background: #fff
+    }
+
+    .card h4 {
+      margin-top: 0
+    }
+
+    .card.good {
+      background: var(--green);
+      border-color: #c9ecd8
+    }
+
+    .card.warn {
+      background: var(--yellow);
+      border-color: #f1df9f
+    }
+
+    .card.bad {
+      background: var(--red);
+      border-color: #ffd0c7
+    }
+
+    .card.soft {
+      background: var(--soft);
+      border-color: #d7e2ff
+    }
+
+    .note,
+    .exam,
+    .trap,
+    .method {
+      border-radius: 16px;
+      padding: 14px 16px;
+      margin: 14px 0;
+      border: 1px solid
+    }
+
+    .note {
+      background: var(--soft);
+      border-color: #d7e2ff
+    }
+
+    .exam {
+      background: #f7f0ff;
+      border-color: #dac2ff
+    }
+
+    .trap {
+      background: var(--red);
+      border-color: #ffc8bd
+    }
+
+    .method {
+      background: var(--green);
+      border-color: #bfe8d0
+    }
+
+    .note strong,
+    .exam strong,
+    .trap strong,
+    .method strong {
+      display: inline-block;
+      margin-right: 4px
+    }
+
+    ul,
+    ol {
+      padding-left: 1.35em;
+      margin: 8px 0
+    }
+
+    li {
+      margin: 4px 0
+    }
+
+    .tablewrap {
+      overflow: auto;
+      margin: 12px 0;
+      border: 1px solid var(--line);
+      border-radius: 14px
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      background: #fff
+    }
+
+    th,
+    td {
+      border-bottom: 1px solid var(--line);
+      padding: 9px 10px;
+      text-align: left;
+      vertical-align: top
+    }
+
+    th {
+      background: #f1f4fb;
+      color: #24324c
+    }
+
+    tr:last-child td {
+      border-bottom: 0
+    }
+
+    .formula {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      background: var(--codebg);
+      border: 1px solid var(--line);
+      padding: 2px 6px;
+      border-radius: 7px;
+      color: #111827;
+      white-space: nowrap
+    }
+
+    .blockformula {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      background: var(--codebg);
+      border: 1px solid var(--line);
+      padding: 12px 14px;
+      border-radius: 14px;
+      overflow: auto;
+      margin: 12px 0;
+      white-space: pre-wrap;
+      color: #111827
+    }
+
+    pre {
+      background: var(--codebg);
+      border: 1px solid var(--line);
+      padding: 14px;
+      border-radius: 14px;
+      overflow: auto;
+      line-height: 1.5
+    }
+
+    svg {
+      max-width: 100%;
+      height: auto
+    }
+
+    .fig {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #fbfcff;
+      padding: 12px;
+      margin: 14px 0
+    }
+
+    .figcap {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 6px;
+      text-align: center
+    }
+
+    .kbd {
+      font-family: monospace;
+      background: #eef0f5;
+      border: 1px solid #d5dae5;
+      border-radius: 5px;
+      padding: 1px 5px
+    }
+
+    .pill {
+      display: inline-block;
+      border-radius: 999px;
+      padding: 2px 8px;
+      font-size: 12px;
+      margin: 2px;
+      background: #eef3ff;
+      color: #1f45a8
+    }
+
+    .priority {
+      font-weight: 700;
+      color: var(--accent)
+    }
+
+    details {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 10px 12px;
+      background: #fff;
+      margin: 10px 0
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 700;
+      color: #102b70
+    }
+
+    .checklist li::marker {
+      color: var(--ok)
+    }
+
+    hr {
+      border: 0;
+      border-top: 1px solid var(--line);
+      margin: 22px 0
+    }
+
+
+
+    .mathblock {
+      background: var(--codebg);
+      border: 1px solid var(--line);
+      padding: 12px 14px;
+      border-radius: 14px;
+      overflow-x: auto;
+      margin: 12px 0;
+      color: #111827;
+    }
+
+    .mjx-container {
+      overflow-x: auto;
+      overflow-y: hidden;
+      max-width: 100%;
+      padding: 2px 0;
+    }
+
+    .mathblock .mjx-container[display="true"] {
+      margin: 0.35em 0;
+    }
+
+    @media(max-width:980px) {
+      .layout {
+        grid-template-columns: 1fr;
+        padding: 12px
+      }
+
+      nav {
+        position: relative;
+        top: auto;
+        max-height: none
+      }
+
+      .grid2,
+      .grid3,
+      .grid4 {
+        grid-template-columns: 1fr
+      }
+
+      .hero {
+        padding: 24px 20px
+      }
+
+      section {
+        padding: 22px 18px
+      }
+
+      .hero h1 {
+        font-size: 28px
+      }
+    }
+
+    @media print {
+      body {
+        background: #fff
+      }
+
+      .layout {
+        display: block;
+        max-width: none;
+        padding: 0
+      }
+
+      nav {
+        display: none
+      }
+
+      section,
+      .hero {
+        box-shadow: none;
+        break-inside: avoid;
+        border-radius: 0
+      }
+
+      .hero {
+        color: #000;
+        background: #fff;
+        border-bottom: 2px solid #000
+      }
+    }
+  </style>
+
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)']],
+        displayMath: [['\\[', '\\]']],
+        processEscapes: true,
+        packages: { '[+]': ['ams'] }
+      },
+      chtml: { scale: 1.02 }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+</head>
+
+<body>
+  <div class="layout">
+    <nav>
+      <h2>目录</h2>
+      <div class="small">非神经网络部分：搜索、对抗搜索、MCTS、强化学习/AlphaGo、决策树</div>
+      <a href="#howto">0. 怎么用这份指南</a>
+      <a href="#exam-map">1. 期末题型地图</a>
+      <a href="#exam-2024">1.1 2024真题增补</a>
+      <a href="#search">2. 搜索问题总览</a>
+      <a href="#dfs-bfs">2.1 深搜、宽搜、Dijkstra</a>
+      <a href="#astar">2.2 A算法、A*、单调性</a>
+      <a href="#modified-astar">2.3 修正A*</a>
+      <a href="#astar-2024">2.3.4 2024修正A*例题</a>
+      <a href="#dp-viterbi">2.4 动态规划、Viterbi、拼音输入法</a>
+      <a href="#local-random">2.5 局部搜索、模拟退火、遗传算法</a>
+      <a href="#game">3. 对抗搜索与α-β剪枝</a>
+      <a href="#game-2024">3.7 2024α-β题型补强</a>
+      <a href="#mcts">4. 蒙特卡洛方法与MCTS</a>
+      <a href="#alphago">5. 强化学习、AlphaGo、AlphaGo Zero</a>
+      <a href="#policy-2024">5.7 2024策略网络题</a>
+      <a href="#tree-bayes">6. 决策树：ID3 与 C4.5</a>
+      <a href="#tree-2024">6.10 2024决策树例题</a>
+      <a href="#templates">7. 考场作答模板</a>
+      <a href="#practice">8. 自测与复习路线</a>
+      <a href="#source-notes">9. 来源与取舍说明</a>
+    </nav>
+    <main>
+      <div class="hero">
+        <h1>人工智能导论：非神经网络部分期末学习指南</h1>
+        <p>这份 HTML 面向“从零开始复习”的状态，覆盖课件1搜索、课件6对抗搜索、课件7蒙特卡罗、课件8强化学习/AlphaGo、决策树补充笔记，并把 2021、2024 与往年常见题型整理成可直接套用的解题步骤。本版按 2024 真题补强了第1、2、5、6题相关内容，并按你的要求跳过第3题 SVM 与第4题 GoogleNet/Inception。</p>
+        <span class="tag">搜索与A*</span><span class="tag">α-β剪枝</span><span class="tag">MCTS</span><span
+          class="tag">强化学习</span><span class="tag">ID3 / C4.5</span><span
+          class="tag">模拟退火与遗传算法</span><span class="tag">2024真题增补</span>
+      </div>
+
+      <section id="howto">
+        <h2>0. 怎么用这份指南</h2>
+        <p class="lead">如果你之前完全没听课，最重要的不是先背概念，而是先把“考试会让你做什么”看清楚。2021
+          与2024真题的共同重点非常清楚：α-β剪枝、修正A*、ID3/C4.5决策树，以及围棋策略网络/MCTS训练思路。课件里还覆盖 MCTS、AlphaGo、AlphaGo
+          Zero、Viterbi、模拟退火、遗传算法等知识点，其中有些更偏理解题或选择题。</p>
+        <div class="grid3">
+          <div class="card good">
+            <h4>第一遍：建立地图</h4>
+            <p>先看每节开头的“本节你要会什么”和图示，不纠结公式推导，只要知道算法在干什么、输入输出是什么。</p>
+          </div>
+          <div class="card soft">
+            <h4>第二遍：照模板算题</h4>
+            <p>重点练 A*/修正A*、α-β、ID3/C4.5、模拟退火、遗传算法。每种题都能被拆成固定表格或固定流程。</p>
+          </div>
+          <div class="card warn">
+            <h4>第三遍：抓坑点</h4>
+            <p>考场最容易错的是 A* 何时结束、α-β跟哪个祖先比较 的 b 怎么求、软间隔 α/ξ 怎么对应图上位置。</p>
+          </div>
+        </div>
+        <div class="exam"><strong>复习优先级。</strong><span
+            class="priority">最高优先级</span>：修正A*、α-β剪枝、ID3/C4.5、softmax策略网络与MCTS计数训练。中等优先级：MCTS、AlphaGo/强化学习概念、模拟退火/遗传算法。低优先级：旧题中的AO*、归结、专家系统等，本指南只在“来源取舍”中提醒，不作为当前部分重点展开。
+        </div>
+      </section>
+
+      <section id="exam-map">
+        <h2>1. 期末题型地图：你最终要能做什么</h2>
+        <div class="tablewrap">
+          <table>
+            <tr>
+              <th>题型</th>
+              <th>2021/往年表现</th>
+              <th>你要交出的东西</th>
+              <th>核心套路</th>
+            </tr>
+            <tr>
+              <td>α-β剪枝</td>
+              <td>2021第1题；往年几乎反复出现</td>
+              <td>每个内部节点值、剪枝位置、最终走步</td>
+              <td>叶子向上算 minimax；从左到右维护 α/β；一旦 α≥β 剪剩余兄弟；根节点选最大值分支。</td>
+            </tr>
+            <tr>
+              <td>修正A*</td>
+              <td>2021第2题；2013问 fm 的目的和理由</td>
+              <td>OPEN/CLOSED过程、扩展顺序、最终路径</td>
+              <td>维护 <span class="formula">fm</span>；若 OPEN 中存在 <span class="formula">f&lt;fm</span> 的节点，选其中 <span
+                  class="formula">g</span> 最小者；否则选 OPEN 的最小 <span class="formula">f</span> 并更新 <span
+                  class="formula">fm</span>。</td>
+            </tr>
+            <tr>
+              <td>模拟退火</td>
+              <td>2021第4题之一；旧题有固定温度表格</td>
+              <td>每一步是否接受、接受概率或接受率</td>
+              <td>更优必接受；更差按 <span class="formula">exp(-ΔE/T)</span> 与随机数比较；拒绝后当前状态不变。</td>
+            </tr>
+            <tr>
+              <td>遗传算法</td>
+              <td>2021第4题之一；旧题考轮盘赌/确定性选择</td>
+              <td>选择出的个体、概率、可能的交叉/变异过程</td>
+              <td>适应值归一化成概率；累积区间对随机数；确定性选择按期望复制数。</td>
+            </tr>
+            <tr>
+              <td>ID3/C4.5决策树</td>
+              <td>2021第5题，根节点及子节点</td>
+              <td>信息熵、信息增益、增益率、根节点选择、递归终止条件</td>
+              <td>算 \(H(D)\)，对每个特征算 \(H(D\mid A)\) 与 \(g(D,A)\)，ID3选信息增益最大特征；C4.5用信息增益比修正偏好。</td>
+            </tr>
+            <tr>
+              <td>softmax策略网络训练</td>
+              <td>2024第6题：无隐层策略网络 + MCTS访问次数</td>
+              <td>写出 net、softmax、损失函数、梯度和权重更新</td>
+              <td>把 MCTS 选择次数归一化成目标分布 \(q_j=m_j/\sum_k m_k\)，用交叉熵 \(-\sum_j q_j\log p_j\)，梯度为 \((p_j-q_j)x_i\)。</td>
+            </tr>
+            <tr>
+              <td>MCTS/AlphaGo/强化学习</td>
+              <td>2021提示近年范式含MCTS；课件6-8覆盖</td>
+              <td>通常为概念、流程、走步选择或简算</td>
+              <td>MCTS四步：选择、扩展、模拟、回传；UCT平衡探索和利用；AlphaGo把策略/估值网络接入MCTS。</td>
+            </tr>
+          </table>
+        </div>
+
+        <h3 id="exam-2024">1.1 2024真题增补：本版新增了哪些东西</h3>
+        <div class="exam"><strong>2024真题取舍。</strong>本次增补只吸收第1、2、5、6题：第1题是不齐博弈树上的 \(\alpha\)-\(\beta\) 剪枝；第2题是带重复打开节点的修正A*；第5题是两特征二分类数据集上的 ID3/C4.5；第6题是围棋策略网络用 MCTS 访问次数作为训练目标。第3题 SVM 与第4题 GoogleNet/Inception 已按要求跳过。</div>
+        <div class="tablewrap">
+          <table>
+            <tr><th>2024题号</th><th>对应章节</th><th>新增训练重点</th><th>考场得分点</th></tr>
+            <tr><td>一</td><td>3.7</td><td>不齐树、终局值与中间扩展节点混在一起时，仍然严格按层的 MAX/MIN 倒推。</td><td>每个生成节点写倒推值；剪枝处写 \(\alpha\ge\beta\) 或 \(\beta\le\alpha\)；最后写根节点走哪条边。</td></tr>
+            <tr><td>二</td><td>2.3.4</td><td>修正A*中同一节点可能多次被更优路径重新打开，扩展序列不等同于“每个点只出现一次”。</td><td>列出 \(f_m\)、NEST、OPEN、父指针；最终路径为 S-D-C-B-A-T，代价 22。</td></tr>
+            <tr><td>五</td><td>6.10</td><td>信息增益和信息增益比都要算；数据表很小但很容易把条件熵权重漏掉。</td><td>\(H(D)=1\)；A 的信息增益约 0.082，B 为 0；ID3 与 C4.5 第一步都选 A。</td></tr>
+            <tr><td>六</td><td>5.7</td><td>把 MCTS 访问次数 \(m_j\) 转为训练目标分布 \(q_j\)，再推 softmax + 交叉熵梯度。</td><td>写出 \(net_j\)、\(p_j\)、\(L\)、\(\partial L/\partial w_{ji}\) 与更新式。</td></tr>
+          </table>
+        </div>
+      </section>
+
+      <section id="search">
+        <h2>2. 搜索问题总览</h2>
+        <p class="lead">搜索问题的本质：在一个巨大的状态空间里，从初始状态 <span class="formula">S₀</span> 找到目标状态 <span
+            class="formula">Sg</span>，最好还能找到代价最小的解路径。课件1从导航、机器证明、大模型解码引入搜索，强调关键问题是“如何利用知识，尽可能有效地找到解或最佳解”。</p>
+        <div class="fig">
+          <svg viewBox="0 0 760 210" role="img" aria-label="状态空间搜索示意图">
+            <defs>
+              <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"
+                markerUnits="strokeWidth">
+                <path d="M0,0 L0,6 L9,3 z" fill="#2457d6" />
+              </marker>
+            </defs>
+            <rect x="30" y="25" width="700" height="150" rx="22" fill="#f4f7ff" stroke="#d6e0ff" />
+            <circle cx="95" cy="100" r="24" fill="#2457d6" /><text x="95" y="106" text-anchor="middle" fill="white"
+              font-weight="700">S₀</text>
+            <circle cx="660" cy="100" r="24" fill="#16a36a" /><text x="660" y="106" text-anchor="middle" fill="white"
+              font-weight="700">Sg</text>
+            <path d="M120,100 C210,40 280,160 360,100 S520,55 635,100" fill="none" stroke="#2457d6" stroke-width="4"
+              marker-end="url(#arrow)" />
+            <circle cx="230" cy="72" r="10" fill="#fff" stroke="#2457d6" />
+            <circle cx="330" cy="118" r="10" fill="#fff" stroke="#2457d6" />
+            <circle cx="460" cy="80" r="10" fill="#fff" stroke="#2457d6" />
+            <circle cx="555" cy="86" r="10" fill="#fff" stroke="#2457d6" />
+            <text x="380" y="190" text-anchor="middle" fill="#596275">问题全状态空间很大，搜索算法只展开其中一部分，形成搜索树/搜索图。</text>
+          </svg>
+          <div class="figcap">图1：状态空间、搜索空间与解路径。考试中的“画搜索树”就是把被扩展的那部分画出来。</div>
+        </div>
+        <h3>2.0.1 搜索算法的共同语言</h3>
+        <div class="tablewrap">
+          <table>
+            <tr>
+              <th>符号</th>
+              <th>含义</th>
+              <th>考场用法</th>
+            </tr>
+            <tr>
+              <td><span class="formula">OPEN</span></td>
+              <td>待扩展节点表</td>
+              <td>每一步从 OPEN 中按规则取一个节点扩展；A/A*通常按 f 从小到大排序。</td>
+            </tr>
+            <tr>
+              <td><span class="formula">CLOSED</span></td>
+              <td>已扩展节点表</td>
+              <td>防止重复扩展；但一般A算法中若发现 CLOSED 节点更优路径，可能要重新放回 OPEN。</td>
+            </tr>
+            <tr>
+              <td><span class="formula">g(n)</span></td>
+              <td>从起点到 n 的已知路径代价估计</td>
+              <td>沿父指针累加边权；Dijkstra只看 g。</td>
+            </tr>
+            <tr>
+              <td><span class="formula">h(n)</span></td>
+              <td>从 n 到目标的启发式估计</td>
+              <td>A/A*根据它少走弯路；题目通常给出 h 或让你设计 h。</td>
+            </tr>
+            <tr>
+              <td><span class="formula">f(n)=g(n)+h(n)</span></td>
+              <td>经过 n 到目标的总代价估计</td>
+              <td>A/A*从 OPEN 中选 f 最小的点。</td>
+            </tr>
+            <tr>
+              <td>父指针</td>
+              <td>记录一个节点从哪个节点来</td>
+              <td>到达目标后，从目标沿父指针倒推得到解路径。</td>
+            </tr>
+          </table>
+        </div>
+        <div class="method">
+          <strong>画搜索过程的通用表格。</strong>每扩展一个节点，就写一行：第几步、扩展节点、产生/更新的后继、OPEN表、CLOSED表、父指针变化。这个表比单纯画树更不容易漏分。
+        </div>
+      </section>
+
+      <section id="dfs-bfs">
+        <h2>2.1 深度优先、宽度优先、Dijkstra</h2>
+        <h3>2.1.1 深度优先搜索 DFS</h3>
+        <p>深度优先搜索优先扩展深度更深的节点，像“沿着一条路走到底，不行再退回来”。课件用八皇后展示了它的状态空间：每放一个皇后，状态就多一行皇后位置；若冲突则回溯。</p>
+        <div class="grid2">
+          <div class="card">
+            <h4>性质</h4>
+            <ul>
+              <li>找到的第一个解不保证最优。</li>
+              <li>深度限制不合理时可能找不到解。</li>
+              <li>最坏情况等同穷举。</li>
+              <li>优点是节省内存，只需存当前路径和少量备选。</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h4>适用</h4>
+            <ul>
+              <li>解很深但分支不太多，或者只要任意解。</li>
+              <li>约束满足问题，如八皇后、数独，常配合回溯。</li>
+              <li>不适合求最短路，除非额外剪枝或迭代加深。</li>
+            </ul>
+          </div>
+        </div>
+        <h3>2.1.2 宽度优先搜索 BFS</h3>
+        <p>宽度优先搜索优先扩展深度浅的节点，像“先看一步能到哪里，再看两步能到哪里”。</p>
+        <div class="method"><strong>BFS保证最优的条件。</strong>如果每条边代价都是单位耗散值，并且问题有解，那么 BFS
+          第一次找到目标时就是最短步数解。若边权不同，BFS只看层数，不看真实代价，就可能错。</div>
+        <h3>2.1.3 Dijkstra算法</h3>
+        <p>Dijkstra 弥补 BFS 不看边权的问题：每次优先扩展当前离起点最近的节点，也就是 <span class="formula">g(n)</span>
+          最小的节点。它不使用目标方向信息，因此能保证最短路，但可能在目标反方向也扩展很多节点。</p>
+        <div class="fig">
+          <svg viewBox="0 0 760 260" role="img" aria-label="BFS Dijkstra A星对比">
+            <defs>
+              <marker id="arr2" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L9,3 z" fill="#33415c" />
+              </marker>
+            </defs>
+            <rect x="20" y="20" width="220" height="210" rx="16" fill="#fff7df" stroke="#f1df9f" /><text x="130" y="48"
+              text-anchor="middle" font-weight="700">BFS</text><text x="130" y="80" text-anchor="middle"
+              font-size="14">按层数扩展</text><text x="130" y="110" text-anchor="middle" font-size="14">只适合单位边权最短路</text>
+            <rect x="270" y="20" width="220" height="210" rx="16" fill="#eef3ff" stroke="#d7e2ff" /><text x="380" y="48"
+              text-anchor="middle" font-weight="700">Dijkstra</text><text x="380" y="80" text-anchor="middle"
+              font-size="14">按 g(n) 扩展</text><text x="380" y="110" text-anchor="middle" font-size="14">考虑起点到当前点距离</text>
+            <rect x="520" y="20" width="220" height="210" rx="16" fill="#edf9f2" stroke="#bfe8d0" /><text x="630" y="48"
+              text-anchor="middle" font-weight="700">A / A*</text><text x="630" y="80" text-anchor="middle"
+              font-size="14">按 f=g+h 扩展</text><text x="630" y="110" text-anchor="middle"
+              font-size="14">既看已走代价又看目标方向</text>
+            <path d="M240,125 L268,125" stroke="#33415c" stroke-width="2" marker-end="url(#arr2)" />
+            <path d="M490,125 L518,125" stroke="#33415c" stroke-width="2" marker-end="url(#arr2)" />
+            <text x="380" y="190" text-anchor="middle" font-size="14" fill="#596275">关系：Dijkstra 是 h(n)=0 的 A 算法；单位边权时
+              BFS 可以看作更简单的最短路搜索。</text>
+          </svg>
+          <div class="figcap">图2：三类搜索的扩展准则。</div>
+        </div>
+        <div class="exam"><strong>旧题常考判断。</strong>“对单位耗散值，宽搜不一定找到最优解”是错的；“边权不同的图上，宽搜一定最优”才是错的。</div>
+      </section>
+
+      <section id="astar">
+        <h2>2.2 A算法、A*算法、启发函数与单调性</h2>
+        <h3>2.2.1 A算法</h3>
+        <p>A算法引入启发知识，用 <span class="formula">f(n)=g(n)+h(n)</span> 对 OPEN 中的节点排序。<span class="formula">g(n)</span>
+          表示已经走了多远，<span class="formula">h(n)</span> 猜还要走多远。每次扩展 <span class="formula">f</span> 最小的节点。</p>
+        <pre>OPEN = {s}, CLOSED = {}
+while OPEN 非空:
+    n = OPEN 中 f 最小的节点
+    if n 是目标: 返回路径
+    从 OPEN 删除 n，加入 CLOSED
+    扩展 n 的后继 m
+    计算经 n 到 m 的新 g 和 f = g + h
+    如果 m 新发现: 加入 OPEN，父指针指向 n
+    如果 m 已在 OPEN 且新 f 更小: 更新 f 和父指针
+    如果 m 已在 CLOSED 且新 f 更小: 重新放回 OPEN，更新父指针
+</pre>
+        <div class="trap"><strong>A算法的结束坑。</strong>不是“目标节点一生成就结束”，而是“目标节点被选作当前扩展节点”才结束。因为刚生成的目标可能 f 值不是 OPEN
+          中最小，还可能存在更短路径。</div>
+        <h3>2.2.2 A*算法：可采纳的A算法</h3>
+        <p>如果启发函数满足 <span class="formula">h(n) ≤ h*(n)</span>，其中 <span class="formula">h*(n)</span> 是 n 到目标的真实最短代价，那么这个
+          A 算法叫 A*。直观理解：启发函数要“乐观”，可以低估剩余距离，但不能高估。</p>
+        <div class="grid2">
+          <div class="card good">
+            <h4>可采纳性定理</h4>
+            <p>若从初始节点到目标存在路径，A* 必能找到最佳解。</p>
+          </div>
+          <div class="card warn">
+            <h4>启发函数设计原则</h4>
+            <p>放宽原问题限制，在更容易的问题上求一个下界。8数码中“不在位块数”和“曼哈顿距离和”都是典型例子。</p>
+          </div>
+        </div>
+        <h3>2.2.3 8数码的两个典型 h</h3>
+        <div class="tablewrap">
+          <table>
+            <tr>
+              <th>启发函数</th>
+              <th>定义</th>
+              <th>为什么可采纳</th>
+              <th>强弱</th>
+            </tr>
+            <tr>
+              <td><span class="formula">h₁(n)</span></td>
+              <td>不在目标位置的牌数</td>
+              <td>每次移动最多让一个牌归位，因此真实剩余步数至少是不在位牌数的某种下界。</td>
+              <td>较弱，扩展节点较多。</td>
+            </tr>
+            <tr>
+              <td><span class="formula">h₂(n)</span></td>
+              <td>所有牌到目标位置的曼哈顿距离和</td>
+              <td>每移动一步只让某个牌的曼哈顿距离改变1，因此真实步数至少为距离和。</td>
+              <td>较强，通常扩展节点更少。</td>
+            </tr>
+          </table>
+        </div>
+        <div class="note"><strong>“h越大越好”不是无条件成立。</strong>在满足 A* 条件的前提下，h 越接近真实距离通常越好；但 h 不能超过真实距离，否则可能破坏最优性。</div>
+        <h3>2.2.4 启发信息越多，扩展节点越少？</h3>
+        <p>课件给出定理：同一问题上两个A*算法 A₁、A₂，若对所有非目标节点都有 <span class="formula">h₂(n)&gt;h₁(n)</span>，则 A₁ 扩展的节点数至少与 A₂
+          一样多。注意这里是严格大于，且评价指标是“扩展过的不同节点数”，同一节点重复扩展多次只算一次。</p>
+        <div class="trap"><strong>为什么不能随便改成 ≥？</strong>如果存在大量 <span class="formula">f(n)=f*(s)</span> 的边界节点，两个启发函数相等处的
+          tie-breaking 可能让扩展集合出现差别。旧题常问“h₂≥h₁时原定理不一定成立，哪类点出问题”，答案就是这些处在最优解代价边界上的节点。</div>
+        <h3>2.2.5 单调性：让A*不必反复重开节点</h3>
+        <p>启发函数 <span class="formula">h</span> 如果对每条边 <span class="formula">nᵢ→nⱼ</span> 都满足：</p>
+        <div class="blockformula">h(nᵢ) - h(nⱼ) ≤ c(nᵢ,nⱼ)，并且 h(t)=0
+          等价写法：h(nᵢ) ≤ c(nᵢ,nⱼ) + h(nⱼ)</div>
+        <p>就叫单调启发函数，也叫一致启发函数。它的含义类似三角不等式：从 nᵢ 到目标的估计，不应大于“先走到 nⱼ 的代价 + 从 nⱼ 到目标的估计”。</p>
+        <div class="method"><strong>单调性的结论。</strong>若 h 单调，则 A* 每次扩展节点 n 时，已经找到了从起点到 n 的最佳路径，即 <span
+            class="formula">g(n)=g*(n)</span>。因此不需要因为更优路径再把 CLOSED 节点放回 OPEN。单调一定推出可采纳，可从目标节点向上归纳证明。</div>
+        <div class="exam"><strong>考试怎么答“h单调的目的”。</strong>目的不是让解更短，A*本来就最优；目的是减少或避免同一节点被多次扩展，提高搜索效率，同时不破坏可采纳性。</div>
+        <h3>2.2.6 A*考场流程</h3>
+        <ol class="checklist">
+          <li>先在图上标出每个节点的 <span class="formula">h</span> 和每条边代价。</li>
+          <li>建立表格：步骤、扩展节点、g、h、f、OPEN、CLOSED、父指针。</li>
+          <li>每扩展一个节点，计算后继的 <span class="formula">g_new=g(parent)+cost</span>，再算 <span
+              class="formula">f_new=g_new+h</span>。</li>
+          <li>如果后继已出现，比较新旧 g 或 f；若新路径更优，更新父指针。</li>
+          <li>只在目标成为下一次扩展节点时停止。</li>
+          <li>从目标沿父指针回溯到起点，写出路径和总代价。</li>
+        </ol>
+
+        <h3>2.2.7 一个可手算的A*小例子</h3>
+        <p>假设图如下：S 到 A 代价2，S 到 B 代价5；A 到 C 代价2，B 到 C 代价1；C 到 G 代价3，A 到 G 代价8。启发函数为 <span
+            class="formula">h(S)=5,h(A)=4,h(B)=3,h(C)=2,h(G)=0</span>。</p>
+        <div class="tablewrap">
+          <table>
+            <tr>
+              <th>步</th>
+              <th>扩展</th>
+              <th>新生成/更新</th>
+              <th>OPEN（按f排序）</th>
+              <th>CLOSED</th>
+            </tr>
+            <tr>
+              <td>0</td>
+              <td>无</td>
+              <td>S: g=0, f=5</td>
+              <td>S(0+5=5)</td>
+              <td>空</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>S</td>
+              <td>A: g=2,f=6；B:g=5,f=8</td>
+              <td>A(6), B(8)</td>
+              <td>S</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>A</td>
+              <td>C:g=4,f=6；G:g=10,f=10</td>
+              <td>C(6), B(8), G(10)</td>
+              <td>S,A</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>C</td>
+              <td>G 经C更新为 g=7,f=7</td>
+              <td>G(7), B(8)</td>
+              <td>S,A,C</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>G</td>
+              <td>目标被选中，结束</td>
+              <td>B(8)</td>
+              <td>S,A,C,G</td>
+            </tr>
+          </table>
+        </div>
+        <p>解路径由父指针回溯为 <span class="formula">S→A→C→G</span>，总代价7。注意第2步生成 G 时不能立刻停，因为当时 OPEN 中有 C 的 f=6 小于 G 的 f=10。</p>
+        <h3>2.2.8 启发函数设计与评价</h3>
+        <p>课件用“传教士与野人”说明启发函数设计：放宽安全约束，只保留船容量约束，估计至少还需摆渡多少次。这样得到的是宽松问题下的最少次数，因此不会高估真实问题的剩余代价，满足A*条件。课件中还给出一种状态表示下的估计
+          <span class="formula">h=M+C-2B</span>，其中 M、C 是左岸剩余人数，B 表示船是否在左岸。
+        </p>
+        <p>启发函数的效果可用平均分叉数 <span class="formula">b*</span> 评价。若解深度为 d、总搜索节点数为 N，则近似满足：</p>
+        <div class="blockformula">N ≈ 1 + b* + (b*)² + … + (b*)ᵈ</div>
+        <p><span class="formula">b*</span> 越小，说明启发函数越有效。课件的8数码实验中，曼哈顿距离和通常比“不在位牌数”有更小的平均分叉数。</p>
+
+      </section>
+
+      <section id="modified-astar">
+        <h2>2.3 修正的A*算法：fm 与 NEST</h2>
+        <p class="lead">修正A*是2021明确出现的题型。它的目标是：在保持可采纳性的前提下，减少普通A*由于重新打开 CLOSED 节点造成的重复扩展，而且不比普通A*扩展更多节点。</p>
+        <h3>2.3.1 为什么要改</h3>
+        <p>普通 A 算法中，如果某个已经扩展过的节点后来发现更短路径，就要把它重新放回 OPEN，这会导致重复扩展。课件提出两个途径：一是限制 h，使它单调；二是改算法，用 <span
+            class="formula">fm</span> 和 <span class="formula">NEST</span> 控制扩展顺序。</p>
+        <p>NEST 不为空时，为什么选 g 最小的节点？<br>
+          答：g
+          最小意味着该节点在搜索树中最靠近起点（处于上游）。这样做是为了“先把靠近起点的基础夯实，把真实的代价确定下来”，再去探索深处的节点。这样就能极大程度上避免“深层的节点被扩展完后，因为浅层节点找到更优路径而被迫重算”。
+        </p>
+        <h3>2.3.2 修正A*规则</h3>
+        <div class="blockformula">fm：到目前为止已扩展节点中的最大 f 值。
+          NEST = { n | n ∈ OPEN 且 f(n) &lt; fm }
+          若 NEST 非空：从 NEST 中选择 g(n) 最小的节点扩展。
+          若 NEST 为空：选择 OPEN 中 f 最小的节点扩展，并令 fm = f(n)。</div>
+        <pre>Modified-A*(s):
+    OPEN = {s}; CLOSED = {}; f(s)=g(s)+h(s); fm=0
+    while OPEN 非空:
+        NEST = { n in OPEN | f(n) &lt; fm }
+        if NEST 非空:
+            n = NEST 中 g 最小的节点
+        else:
+            n = OPEN 中 f 最小的节点
+            fm = f(n)
+        if n 是目标: 返回路径
+        扩展 n，更新 OPEN/CLOSED/父指针
+</pre>
+        <div class="fig">
+          <svg viewBox="0 0 760 230" role="img" aria-label="修正A星选择规则">
+            <line x1="70" y1="120" x2="690" y2="120" stroke="#c4cbd8" stroke-width="4" />
+            <line x1="430" y1="70" x2="430" y2="170" stroke="#e85d3f" stroke-width="3" stroke-dasharray="8 6" />
+            <text x="430" y="58" text-anchor="middle" fill="#e85d3f" font-weight="700">fm</text>
+            <circle cx="130" cy="120" r="18" fill="#dff7eb" stroke="#16845b" /><text x="130" y="126"
+              text-anchor="middle">A</text><text x="130" y="156" text-anchor="middle" font-size="12">f&lt;fm</text>
+            <circle cx="250" cy="120" r="18" fill="#dff7eb" stroke="#16845b" /><text x="250" y="126"
+              text-anchor="middle">B</text><text x="250" y="156" text-anchor="middle" font-size="12">f&lt;fm</text>
+            <circle cx="360" cy="120" r="18" fill="#dff7eb" stroke="#16845b" /><text x="360" y="126"
+              text-anchor="middle">C</text><text x="360" y="156" text-anchor="middle" font-size="12">f&lt;fm</text>
+            <circle cx="520" cy="120" r="18" fill="#eef3ff" stroke="#2457d6" /><text x="520" y="126"
+              text-anchor="middle">D</text><text x="520" y="156" text-anchor="middle" font-size="12">f≥fm</text>
+            <circle cx="640" cy="120" r="18" fill="#eef3ff" stroke="#2457d6" /><text x="640" y="126"
+              text-anchor="middle">E</text><text x="640" y="156" text-anchor="middle" font-size="12">f≥fm</text>
+            <text x="250" y="35" text-anchor="middle" fill="#16845b">NEST：在这些 f&lt;fm 的节点中选 g 最小者</text>
+            <text x="580" y="35" text-anchor="middle" fill="#2457d6">NEST为空时才回到最小 f</text>
+          </svg>
+          <div class="figcap">图3：修正A*不是简单“总选最小 f”，要先检查 NEST。</div>
+        </div>
+        <h3>2.3.3 这道题怎么写才稳</h3>
+        <div class="method"><strong>固定表头。</strong>建议表格写成：步骤、OPEN、CLOSED、fm、NEST、选择节点、扩展后更新。只要 NEST 写清楚，老师能看出你确实在用修正A*。
+        </div>
+        <div class="trap"><strong>常见错误。</strong>把 <span class="formula">fm</span> 当成目标最优代价 <span
+            class="formula">f*(s)</span>。实际 <span class="formula">f*(s)</span> 不知道，<span class="formula">fm</span>
+          只是当前已扩展节点最大 f 的可获得替代。</div>
+
+
+        <h3 id="astar-2024">2.3.4 2024真题同型例题：修正A*完整表</h3>
+        <p>2024第2题给的是一个有向图，弧线边数字为代价，启发值为：\(h(S)=14,h(E)=8,h(A)=1,h(B)=4,h(C)=8,h(D)=14,h(T)=0\)。可读出的关键有向边如下：</p>
+        <div class="mathblock">
+          \[
+          S\to E:15,\quad S\to A:11,\quad S\to B:9,\quad S\to C:6,\quad S\to D:1,
+          \]
+          \[
+          E\to A:10,\quad D\to B:4,\quad D\to A:6,\quad D\to C:1,
+          \]
+          \[
+          C\to A:3,\quad C\to B:1,\quad B\to A:1,\quad A\to T:18.
+          \]
+        </div>
+        <div class="trap"><strong>这题最容易错的地方。</strong>一开始 \(S\to A\) 似乎让 A 的 \(f=12\) 很小，但后来 D、C、B 会不断给 A 找到更短路径，所以 A、B、C 都会出现“已扩展后被重新打开”的情况。修正A*不是 Dijkstra，也不是普通A*的“每点一次”。</div>
+        <div class="tablewrap">
+          <table>
+            <tr><th>步</th><th>选出/扩展节点</th><th>选择理由</th><th>主要生成或更新</th></tr>
+            <tr><td>0</td><td>S</td><td>OPEN 只有 S，置 \(f_m=14\)</td><td>E(15,23), A(11,12), B(9,13), C(6,14), D(1,15)</td></tr>
+            <tr><td>1</td><td>B</td><td>NEST={A,B}，取其中 \(g\) 最小的 B</td><td>A 由 g=11 改为 g=10，父指针 B</td></tr>
+            <tr><td>2</td><td>A</td><td>NEST={A}</td><td>生成 T: g=28, f=28</td></tr>
+            <tr><td>3</td><td>C</td><td>NEST 为空，OPEN 中最小 \(f=14\)</td><td>重新打开 A(g=9,f=10), B(g=7,f=11)</td></tr>
+            <tr><td>4</td><td>B</td><td>NEST={A,B}，取 \(g\) 更小的 B</td><td>A 更新为 g=8, f=9</td></tr>
+            <tr><td>5</td><td>A</td><td>NEST={A}</td><td>T 更新为 g=26</td></tr>
+            <tr><td>6</td><td>D</td><td>NEST 为空，OPEN 中最小 \(f=15\)，置 \(f_m=15\)</td><td>A(g=7,f=8), B(g=5,f=9), C(g=2,f=10) 全部被重新打开</td></tr>
+            <tr><td>7</td><td>C</td><td>NEST={A,B,C}，取 \(g\) 最小的 C</td><td>B 更新为 g=3, f=7；A 更新为 g=5, f=6</td></tr>
+            <tr><td>8</td><td>B</td><td>NEST={A,B}，取 \(g\) 更小的 B</td><td>A 更新为 g=4, f=5</td></tr>
+            <tr><td>9</td><td>A</td><td>NEST={A}</td><td>T 更新为 g=22, f=22</td></tr>
+            <tr><td>10</td><td>T</td><td>NEST 为空，目标被选出</td><td>停止，沿父指针回溯路径</td></tr>
+          </table>
+        </div>
+        <p>因此扩展/选出顺序可写为 <span class="formula">S, B, A, C, B, A, D, C, B, A, T</span>；若只写“真正展开后继”的节点，则最后的 T 可单独说明为“目标被选出，停止”。最终路径为：</p>
+        <div class="mathblock">
+          \[
+          S\to D\to C\to B\to A\to T,
+          \qquad cost=1+1+1+1+18=22.
+          \]
+        </div>
+
+      </section>
+
+      <section id="dp-viterbi">
+        <h2>2.4 动态规划、Viterbi 与拼音输入法</h2>
+        <p>课件1后半部分把搜索用于拼音输入法。一个拼音串可能对应海量汉字序列，例如每个音平均10个候选，11个音就有约 <span class="formula">10¹¹</span> 个句子，穷举不可行。</p>
+        <h3>2.4.1 从概率到最短路径</h3>
+        <p>输入拼音 <span class="formula">O</span>，候选汉字句子 <span class="formula">S=w₁…wₙ</span>。目标是找最大后验概率的句子：</p>
+        <div class="blockformula">argmax_S P(S | O) = argmax_S P(O | S) P(S) / P(O)</div>
+        <p>如果简化地忽略多音字，<span class="formula">P(O|S)</span> 近似常量，问题变成最大化语言模型概率 <span class="formula">P(S)</span>。二元语法下：
+        </p>
+        <div class="blockformula">P(S) = ∏ᵢ P(wᵢ | wᵢ₋₁)
+          最大化 ∏ᵢ P(wᵢ | wᵢ₋₁) 等价于 最小化 -Σᵢ log P(wᵢ | wᵢ₋₁)</div>
+        <p>于是每个候选字是图中的节点，相邻拼音位置之间的边权是 <span class="formula">-log P(wᵢ|wᵢ₋₁)</span>，找最小代价路径就是找最可能句子。</p>
+        <h3>2.4.2 Viterbi动态规划</h3>
+        <div class="blockformula">Q(Wᵢⱼ) = 从起点到第 i 层第 j 个候选 Wᵢⱼ 的最小代价
+          Q(Wᵢⱼ) = min_k [ Q(Wᵢ₋₁,k) + D(Wᵢ₋₁,k, Wᵢⱼ) ]</div>
+        <p>这就是有限宽度分层图上的最短路径。若每一层只保留前 K 个候选，就变成 beam search。</p>
+        <div class="fig">
+          <svg viewBox="0 0 780 270" role="img" aria-label="拼音输入法Viterbi">
+            <defs>
+              <marker id="arr3" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L9,3 z" fill="#718096" />
+              </marker>
+            </defs>
+            <text x="110" y="28" text-anchor="middle" font-weight="700">ji</text><text x="250" y="28"
+              text-anchor="middle" font-weight="700">qi</text><text x="390" y="28" text-anchor="middle"
+              font-weight="700">xue</text><text x="530" y="28" text-anchor="middle" font-weight="700">xi</text><text
+              x="670" y="28" text-anchor="middle" font-weight="700">ying</text>
+            <g font-size="15" text-anchor="middle">
+              <circle cx="110" cy="70" r="22" fill="#fff" stroke="#2457d6" /><text x="110" y="75">机</text>
+              <circle cx="110" cy="135" r="22" fill="#fff" stroke="#2457d6" /><text x="110" y="140">及</text>
+              <circle cx="110" cy="200" r="22" fill="#fff" stroke="#2457d6" /><text x="110" y="205">计</text>
+              <circle cx="250" cy="70" r="22" fill="#fff" stroke="#2457d6" /><text x="250" y="75">器</text>
+              <circle cx="250" cy="135" r="22" fill="#fff" stroke="#2457d6" /><text x="250" y="140">期</text>
+              <circle cx="250" cy="200" r="22" fill="#fff" stroke="#2457d6" /><text x="250" y="205">其</text>
+              <circle cx="390" cy="70" r="22" fill="#fff" stroke="#2457d6" /><text x="390" y="75">学</text>
+              <circle cx="390" cy="135" r="22" fill="#fff" stroke="#2457d6" /><text x="390" y="140">雪</text>
+              <circle cx="390" cy="200" r="22" fill="#fff" stroke="#2457d6" /><text x="390" y="205">薛</text>
+              <circle cx="530" cy="70" r="22" fill="#fff" stroke="#2457d6" /><text x="530" y="75">习</text>
+              <circle cx="530" cy="135" r="22" fill="#fff" stroke="#2457d6" /><text x="530" y="140">系</text>
+              <circle cx="530" cy="200" r="22" fill="#fff" stroke="#2457d6" /><text x="530" y="205">西</text>
+              <circle cx="670" cy="70" r="22" fill="#fff" stroke="#2457d6" /><text x="670" y="75">英</text>
+              <circle cx="670" cy="135" r="22" fill="#fff" stroke="#2457d6" /><text x="670" y="140">应</text>
+              <circle cx="670" cy="200" r="22" fill="#fff" stroke="#2457d6" /><text x="670" y="205">营</text>
+            </g>
+            <path d="M132,70 L228,70 L368,70 L508,70 L648,70" fill="none" stroke="#16a36a" stroke-width="4"
+              marker-end="url(#arr3)" />
+            <path
+              d="M132,135 L228,70 M132,200 L228,135 M272,70 L368,135 M272,200 L368,70 M412,70 L508,135 M552,135 L648,70"
+              fill="none" stroke="#c4cbd8" stroke-width="1.5" />
+            <text x="390" y="252" text-anchor="middle" fill="#596275">Viterbi只保留到每个候选的最优前驱，避免枚举所有句子。</text>
+          </svg>
+          <div class="figcap">图4：拼音输入法可以看成分层图最短路径问题。</div>
+        </div>
+        <h3>2.4.3 平滑与识别后处理</h3>
+        <p>二元概率常用最大似然估计：</p>
+        <div class="blockformula">P(wᵢ | wᵢ₋₁) = count(wᵢ₋₁,wᵢ) / count(wᵢ₋₁)</div>
+        <p>若语料中没见过某个搭配，概率可能为0，所以要平滑。课件给出一种线性插值形式：</p>
+        <div class="blockformula">P_smooth(wᵢ | wᵢ₋₁) = λ P_bigram(wᵢ | wᵢ₋₁) + (1-λ) P_unigram(wᵢ)</div>
+        <p>汉字识别后处理也类似：每个位置有多个识别候选及识别信度，用语言模型概率和识别信度共同决定最优汉字序列。</p>
+      </section>
+
+      <section id="local-random">
+        <h2>2.5 局部搜索、模拟退火、遗传算法</h2>
+        <p class="lead">课件1提到爬山法、随机搜索；2021和旧题明确考模拟退火与遗传算法。它们都属于“不系统展开整棵搜索树，而是在候选解空间中移动”的方法。</p>
+        <h3>2.5.1 爬山法与局部最优</h3>
+        <p>爬山法每次选择邻域中更优的状态，优点是简单，缺点是容易卡在局部最优或平台。模拟退火就是为了解决“偶尔需要走差一步才能跳出坑”的问题。</p>
+        <h3>2.5.2 模拟退火 SA</h3>
+        <p>如果目标是最小化能量 <span class="formula">E</span>，从当前状态到候选状态的能量变化为 <span class="formula">ΔE=E_new-E_current</span>：
+        </p>
+        <div class="blockformula">若 ΔE ≤ 0：新状态更好，必接受。
+          若 ΔE &gt; 0：新状态更差，以概率 p = exp(-ΔE / T) 接受。
+          给随机数 r∈[0,1]，若 r &lt; p，则接受；否则拒绝。</div>
+        <div class="grid2">
+          <div class="card good">
+            <h4>温度 T 高</h4>
+            <p>差解也有较大概率被接受，探索更强，容易跳出局部最优。</p>
+          </div>
+          <div class="card warn">
+            <h4>温度 T 低</h4>
+            <p>更像贪心爬山，差解很难被接受，收敛更稳定但更容易被困住。</p>
+          </div>
+        </div>
+        <div class="trap"><strong>旧题表格最常见坑。</strong>如果某一步候选状态被拒绝，下一步的 ΔE 要用“上一次被接受的当前状态”来算，不是简单用表格相邻两列能量相减。</div>
+        <details>
+          <summary>模拟退火小例子</summary>
+          <p>当前能量50，候选能量40，<span class="formula">ΔE=-10</span>，必接受。当前变为40。下一候选能量43，<span class="formula">ΔE=3</span>。温度
+            <span class="formula">T=20</span> 时 <span
+              class="formula">p=exp(-3/20)≈0.861</span>。若随机数0.90，则拒绝，当前仍为40。再下一候选能量42时，<span
+              class="formula">ΔE=2</span>，不是 <span class="formula">42-43=-1</span>。
+          </p>
+        </details>
+        <h3>2.5.3 遗传算法 GA</h3>
+        <p>遗传算法把候选解看作个体，多个个体组成种群。基本流程是：编码、初始化种群、计算适应值、选择、交叉、变异、形成新一代。</p>
+        <div class="fig">
+          <svg viewBox="0 0 760 190" role="img" aria-label="遗传算法流程">
+            <defs>
+              <marker id="arr4" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L9,3 z" fill="#2457d6" />
+              </marker>
+            </defs>
+            <g font-size="15" text-anchor="middle">
+              <rect x="30" y="70" width="105" height="44" rx="12" fill="#eef3ff" stroke="#2457d6" /><text x="82"
+                y="98">编码/初始化</text>
+              <rect x="165" y="70" width="105" height="44" rx="12" fill="#eef3ff" stroke="#2457d6" /><text x="217"
+                y="98">适应值</text>
+              <rect x="300" y="70" width="105" height="44" rx="12" fill="#eef3ff" stroke="#2457d6" /><text x="352"
+                y="98">选择</text>
+              <rect x="435" y="70" width="105" height="44" rx="12" fill="#eef3ff" stroke="#2457d6" /><text x="487"
+                y="98">交叉</text>
+              <rect x="570" y="70" width="105" height="44" rx="12" fill="#eef3ff" stroke="#2457d6" /><text x="622"
+                y="98">变异/新代</text>
+            </g>
+            <path d="M135,92 L164,92 M270,92 L299,92 M405,92 L434,92 M540,92 L569,92" stroke="#2457d6" stroke-width="2"
+              marker-end="url(#arr4)" />
+            <path d="M622,118 C622,165 82,165 82,118" fill="none" stroke="#c4cbd8" stroke-width="2"
+              marker-end="url(#arr4)" />
+            <text x="380" y="40" text-anchor="middle" font-weight="700">遗传算法是“保留好基因 + 随机探索”的迭代优化</text>
+          </svg>
+          <div class="figcap">图5：遗传算法的基本循环。</div>
+        </div>
+        <h4>轮盘赌选择</h4>
+        <p>若种群 A、B、C、D 适应值分别为 4、6、2、8，总适应值20，则选择概率和累积区间为：</p>
+        <div class="tablewrap">
+          <table>
+            <tr>
+              <th>个体</th>
+              <th>适应值</th>
+              <th>概率</th>
+              <th>累积区间</th>
+            </tr>
+            <tr>
+              <td>A</td>
+              <td>4</td>
+              <td>0.20</td>
+              <td>[0,0.20)</td>
+            </tr>
+            <tr>
+              <td>B</td>
+              <td>6</td>
+              <td>0.30</td>
+              <td>[0.20,0.50)</td>
+            </tr>
+            <tr>
+              <td>C</td>
+              <td>2</td>
+              <td>0.10</td>
+              <td>[0.50,0.60)</td>
+            </tr>
+            <tr>
+              <td>D</td>
+              <td>8</td>
+              <td>0.40</td>
+              <td>[0.60,1.00]</td>
+            </tr>
+          </table>
+        </div>
+        <p>随机数 0.15、0.55、0.25、0.45 对应选择 A、C、B、B。</p>
+        <h4>确定性选择</h4>
+        <p>一种常见做法是计算期望复制数 <span class="formula">N·fitness_i / Σfitness</span>，先取整数部分，再按小数部分从大到小补足种群规模。例如上例种群大小4，期望复制数
+          A=0.8、B=1.2、C=0.4、D=1.6，整数部分给 B、D 各1个，还差2个，按小数部分 A=0.8、D=0.6 最大，补 A 和 D，因此新种群可为
+          A、B、D、D。不同课件若指定了确定性采样方式，以题目给定规则为准。</p>
+      </section>
+
+      <section id="game">
+        <h2>3. 对抗搜索与 \(\alpha\)-\(\beta\) 剪枝</h2>
+        <p class="lead">对抗搜索处理的是“我走一步、对手走一步”的博弈。课件里的典型前提是：双人、轮流行动、信息完备、零和。零和的意思是：一个局面对我越好，对对手就越坏，所以一棵博弈树可以只用一个效用值来描述。</p>
+
+        <h3>3.1 先把博弈树看懂：状态、行动、效用</h3>
+        <div class="grid3">
+          <div class="card soft"><h4>节点</h4><p>一个节点就是一个局面。例如棋盘上已经下了若干步后的状态。</p></div>
+          <div class="card soft"><h4>边</h4><p>一条边就是一个合法行动。例如某个可落子点或一步棋。</p></div>
+          <div class="card soft"><h4>叶子值</h4><p>终局时是胜负收益；非终局但搜索深度到达上限时，用估值函数近似。</p></div>
+        </div>
+        <p>如果轮到我方行动，这一层叫 MAX 层，因为我会选择让局面对我最好的孩子；如果轮到对手行动，这一层叫 MIN 层，因为对手会选择让我最难受的孩子。于是博弈树的值递归定义为：</p>
+        <div class="mathblock">
+          \[
+          V(n)=
+          \begin{cases}
+          U(n), & n\text{ 是终局或截断叶节点},\\
+          \max_{c\in Children(n)} V(c), & n\text{ 是 MAX 节点},\\
+          \min_{c\in Children(n)} V(c), & n\text{ 是 MIN 节点}.
+          \end{cases}
+          \]
+        </div>
+        <div class="note"><strong>从零理解。</strong>MAX 不是“节点值一定大”，MIN 也不是“节点值一定小”。MAX/MIN 指的是<strong>轮到谁选择</strong>，节点值是“双方都最优时，从这个局面往后走，我方最终能保证的收益”。</div>
+
+        <h3>3.2 Minimax 手算模板：先叶子、后内部、最后根</h3>
+        <div class="fig">
+          <svg viewBox="0 0 820 380" role="img" aria-label="minimax 示例树">
+            <g stroke="#718096" stroke-width="2" fill="none">
+              <path d="M410,55 L210,145 M410,55 L610,145" />
+              <path d="M210,145 L105,260 M210,145 L215,260 M210,145 L315,260" />
+              <path d="M610,145 L505,260 M610,145 L615,260 M610,145 L715,260" />
+            </g>
+            <g text-anchor="middle" font-size="15">
+              <rect x="372" y="28" width="76" height="54" rx="12" fill="#eef3ff" stroke="#2457d6" />
+              <text x="410" y="51" font-weight="700">MAX</text><text x="410" y="72" fill="#2457d6">值=4</text>
+              <circle cx="210" cy="145" r="34" fill="#fff7df" stroke="#a45b00" />
+              <text x="210" y="140" font-weight="700">MIN</text><text x="210" y="162" fill="#a45b00">值=3</text>
+              <circle cx="610" cy="145" r="34" fill="#fff7df" stroke="#a45b00" />
+              <text x="610" y="140" font-weight="700">MIN</text><text x="610" y="162" fill="#a45b00">值=4</text>
+              <g fill="#edf9f2" stroke="#16845b">
+                <rect x="80" y="240" width="50" height="42" rx="10" /><rect x="190" y="240" width="50" height="42" rx="10" /><rect x="290" y="240" width="50" height="42" rx="10" />
+                <rect x="480" y="240" width="50" height="42" rx="10" /><rect x="590" y="240" width="50" height="42" rx="10" /><rect x="690" y="240" width="50" height="42" rx="10" />
+              </g>
+              <text x="105" y="266">8</text><text x="215" y="266">3</text><text x="315" y="266">5</text>
+              <text x="505" y="266">4</text><text x="615" y="266">7</text><text x="715" y="266">6</text>
+              <text x="410" y="345" fill="#596275">左 MIN 取 min(8,3,5)=3；右 MIN 取 min(4,7,6)=4；根 MAX 取 max(3,4)=4。</text>
+            </g>
+          </svg>
+          <div class="figcap">图：Minimax 的值是“备份”出来的，不是从上往下猜出来的。</div>
+        </div>
+        <ol class="checklist">
+          <li>先标层：根节点是 MAX 还是 MIN，下一层交替。</li>
+          <li>把所有叶子估值写清楚；如果题目只给叶子值，不要自己改。</li>
+          <li>从倒数第二层开始往上算：MAX 取最大，MIN 取最小。</li>
+          <li>根节点的孩子中，哪个给出根值，哪个就是当前应选择的走法。</li>
+        </ol>
+
+        <h3>3.3 为什么需要 \(\alpha\)-\(\beta\) 剪枝</h3>
+        <p>Minimax 的问题是爆炸式增长。若每个局面平均有 \(b\) 个合法行动，向前看 \(d\) 层，叶节点数量约为 \(b^d\)。围棋、象棋一类游戏不可能完整搜完，于是我们希望：不改变 minimax 结果，但少看一些分支。</p>
+        <p>\(\alpha\)-\(\beta\) 剪枝的核心判断是：有些分支即使继续算完，也不可能改变祖先节点已经能做出的选择，因此可以提前不看。</p>
+
+        <h3>3.4 \(\alpha\) 和 \(\beta\) 到底是什么</h3>
+        <div class="grid2">
+          <div class="card good"><h4>\(\alpha\)：MAX 的下界</h4><p>在某个搜索路径上，MAX 祖先已经找到的最好保证值。也就是“我至少能拿到这么多”。</p></div>
+          <div class="card warn"><h4>\(\beta\)：MIN 的上界</h4><p>在某个搜索路径上，MIN 祖先已经找到的最好压制值。也就是“对手至多愿意让我拿到这么多”。</p></div>
+        </div>
+        <div class="mathblock">
+          \[
+          \text{在任意搜索路径上，一旦 } \alpha \ge \beta,\text{ 当前节点剩余兄弟分支就不会影响最终决策，可以剪去。}
+          \]
+        </div>
+        <p>更贴近笔记的说法是：极大节点维护下界 \(\alpha\)，极小节点维护上界 \(\beta\)；后辈节点的 \(\beta\) 值不超过祖先的 \(\alpha\) 值时可剪，后辈节点的 \(\alpha\) 值不小于祖先的 \(\beta\) 值时也可剪。注意比较对象可以是祖先，不只是父节点。</p>
+
+        <h3>3.5 从左到右剪枝例题</h3>
+        <p>设根为 MAX，按从左到右访问叶子。左子树是 MIN，叶值为 \(3,5\)；右子树是 MIN，叶值为 \(2,9\)。</p>
+        <div class="tablewrap"><table>
+            <tr><th>步骤</th><th>看到的值</th><th>当前结论</th><th>能否剪枝</th></tr>
+            <tr><td>1</td><td>左 MIN 看到 3 和 5</td><td>左 MIN 值为 \(\min(3,5)=3\)，根 MAX 的 \(\alpha=3\)</td><td>不能，左子树已算完</td></tr>
+            <tr><td>2</td><td>右 MIN 先看到 2</td><td>右 MIN 的当前 \(\beta=2\)</td><td>因为 \(\beta=2\le \alpha=3\)，右 MIN 剩余孩子无需再看</td></tr>
+            <tr><td>3</td><td>右叶子 9 被剪</td><td>右子树最终值至多为 2，不可能超过左子树的 3</td><td>剪枝不改变根的选择</td></tr>
+          </table></div>
+        <div class="method"><strong>口头解释模板。</strong>根节点已经有一个选择能保证值为 3。现在右侧 MIN 节点已经出现一个孩子值为 2；对手在右侧至少可以把我压到 2，所以右侧不可能成为根节点更好的选择。剩余孩子无需计算。</div>
+
+        <h3>3.6 考场最容易错的四件事</h3>
+        <div class="grid2">
+          <div class="card bad"><h4>只跟父节点比较</h4><p>错。\(\alpha\) 和 \(\beta\) 是沿路径继承的边界，可能来自更高的祖先。</p></div>
+          <div class="card bad"><h4>剪枝后还给被剪节点赋值</h4><p>错。被剪分支没有访问，不能假装知道它的 minimax 值；图上画叉即可。</p></div>
+          <div class="card bad"><h4>以为剪枝改变答案</h4><p>错。\(\alpha\)-\(\beta\) 只减少计算，不改变完整 minimax 的最终选择。</p></div>
+          <div class="card bad"><h4>忽略访问顺序</h4><p>错。题目默认从左到右时必须按左到右；换顺序可能剪枝数量不同。</p></div>
+        </div>
+        <div class="exam"><strong>考试写法。</strong>每个内部节点旁写当前 \(\alpha,\beta\) 或至少写节点值；发生剪枝处写清“因为 \(\beta\le\alpha\)”或“因为 \(\alpha\ge\beta\)”并画叉。最后用一句话说明根节点选哪条分支。</div>
+
+
+        <h3 id="game-2024">3.7 2024真题补强：不齐博弈树怎么做</h3>
+        <p>2024第1题的树有一个重要变化：有些“看起来像叶子”的方框下面还接着一层后继，说明它不是终局叶节点，而是一个需要继续倒推的生成节点。做这种题时，不要按外观把所有底层方框都当成叶子；只要某个节点还有孩子，就必须继续按 MAX/MIN 规则向下算。</p>
+        <div class="method"><strong>不齐树三步法。</strong>第一，先按题目标注根为极大节点、下一层为极小节点，并沿每条边交替标出 MAX/MIN；第二，从最深的真实叶子开始向上倒推，局部子树先算完；第三，再从左到右做 \(\alpha\)-\(\beta\) 剪枝，访问到的节点才写值，被剪掉的分支只画叉，不补算。</div>
+        <div class="tablewrap">
+          <table>
+            <tr><th>场景</th><th>你该怎么写</th><th>为什么</th></tr>
+            <tr><td>MAX 节点看到一个孩子值为 6</td><td>当前 \(\alpha\leftarrow\max(\alpha,6)\)</td><td>MAX 至少可以保证 6。</td></tr>
+            <tr><td>MIN 节点看到一个孩子值为 -2</td><td>当前 \(\beta\leftarrow\min(\beta,-2)\)</td><td>MIN 至多会让 MAX 得到 -2。</td></tr>
+            <tr><td>在 MIN 节点已有 \(\beta\le\alpha\)</td><td>剪去该 MIN 节点剩余未访问孩子</td><td>MAX 的祖先已经有更好选择，这个分支不可能被选。</td></tr>
+            <tr><td>在 MAX 节点已有 \(\alpha\ge\beta\)</td><td>剪去该 MAX 节点剩余未访问孩子</td><td>MIN 的祖先已经能把结果压得更低，这个分支也不可能改变决策。</td></tr>
+          </table>
+        </div>
+        <div class="exam"><strong>2024题型作答提醒。</strong>题干明确“按从左到右的生成顺序”，所以不能为了多剪枝而擅自调整访问顺序。剪枝数量不是唯一目标；先保证每一步倒推值和剪枝理由符合从左到右顺序，最后再写“根节点选择第几个子分支”。</div>
+        <details>
+          <summary>练习：一个与2024相似的不齐树小例子</summary>
+          <p>根为 MAX，有两个 MIN 子树。左 MIN 的两个孩子值分别为 4、7，所以左 MIN 值为 4，根当前 \(\alpha=4\)。右 MIN 的第一个孩子是一个 MAX 子树，其两个叶值为 1、3，所以该 MAX 值为 3。于是右 MIN 当前 \(\beta=3\)。因为 \(\beta=3\le\alpha=4\)，右 MIN 的剩余孩子全部剪去。根最终选择左分支，值为 4。</p>
+        </details>
+
+      </section>
+
+
+      <section id="mcts">
+        <h2>4. 蒙特卡洛方法与蒙特卡洛树搜索 MCTS</h2>
+        <p class="lead">蒙特卡洛方法的思想很朴素：如果一个量精确算不出来，就随机试很多次，用平均结果估计它。在博弈里，一个落子点到底好不好，可能难以用公式直接判断，于是可以从这个落子点开始随机模拟很多盘，看最后赢的比例。</p>
+
+        <h3>4.1 从“随机试很多次”到期望估计</h3>
+        <p>设随机变量 \(X\) 表示一次模拟的收益，例如赢为 \(1\)，输为 \(0\)，或者赢为 \(1\)、输为 \(-1\)。真实期望 \(\mathbb E[X]\) 不容易直接求，但可以做 \(N\) 次独立模拟：</p>
+        <div class="mathblock">\[
+          \widehat{\mathbb E[X]}=\frac{1}{N}\sum_{i=1}^{N}X_i.
+        \]</div>
+        <p>模拟次数越多，样本平均通常越接近真实期望。放到棋局里，如果某个行动经过 100 次随机模拟赢了 63 次，就可以暂时估计它的胜率为 \(0.63\)。</p>
+        <div class="trap"><strong>关键限制。</strong>纯随机模拟很浪费：它不会记住哪些局面已经试过，也不会把模拟次数集中到更有希望的分支上。MCTS 就是为了解决这个问题。</div>
+
+        <h3>4.2 MCTS 的四步循环</h3>
+        <div class="fig">
+          <svg viewBox="0 0 820 220" role="img" aria-label="MCTS四步">
+            <defs><marker id="mctsArrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#2457d6" /></marker></defs>
+            <g text-anchor="middle" font-size="16">
+              <rect x="40" y="72" width="135" height="60" rx="16" fill="#eef3ff" stroke="#2457d6" /><text x="107" y="98" font-weight="700">选择</text><text x="107" y="121" font-size="13">Selection</text>
+              <rect x="235" y="72" width="135" height="60" rx="16" fill="#eef3ff" stroke="#2457d6" /><text x="302" y="98" font-weight="700">扩展</text><text x="302" y="121" font-size="13">Expansion</text>
+              <rect x="430" y="72" width="135" height="60" rx="16" fill="#eef3ff" stroke="#2457d6" /><text x="497" y="98" font-weight="700">模拟</text><text x="497" y="121" font-size="13">Simulation</text>
+              <rect x="625" y="72" width="135" height="60" rx="16" fill="#eef3ff" stroke="#2457d6" /><text x="692" y="98" font-weight="700">回传</text><text x="692" y="121" font-size="13">Backprop</text>
+              <path d="M177,102 L232,102" stroke="#2457d6" stroke-width="3" marker-end="url(#mctsArrow)" />
+              <path d="M372,102 L427,102" stroke="#2457d6" stroke-width="3" marker-end="url(#mctsArrow)" />
+              <path d="M567,102 L622,102" stroke="#2457d6" stroke-width="3" marker-end="url(#mctsArrow)" />
+              <path d="M692,135 C665,190 135,190 107,135" fill="none" stroke="#2457d6" stroke-width="2" stroke-dasharray="7 5" marker-end="url(#mctsArrow)" />
+              <text x="410" y="38" fill="#596275">每轮只新增少量信息，但重复很多轮后，搜索树统计量越来越可靠。</text>
+            </g>
+          </svg>
+          <div class="figcap">图：MCTS 的一轮不是一次完整穷举，而是沿树走一条路径、模拟、再把收益传回去。</div>
+        </div>
+        <div class="tablewrap"><table>
+            <tr><th>步骤</th><th>做什么</th><th>从零理解</th></tr>
+            <tr><td>选择</td><td>从根节点出发，根据 UCB/UCT 一路选择子节点</td><td>在“看起来好”和“没怎么试过”之间平衡。</td></tr>
+            <tr><td>扩展</td><td>遇到还没完全展开的节点，添加一个或多个新孩子</td><td>搜索树逐渐长大，而不是一开始就生成全部分支。</td></tr>
+            <tr><td>模拟</td><td>从新节点开始用默认策略走到终局，得到收益</td><td>默认策略可以是随机策略，也可以是较快的启发式策略。</td></tr>
+            <tr><td>回传</td><td>把这次收益更新到路径上的每个节点</td><td>访问次数加一，胜利次数或累计收益更新。</td></tr>
+        </table></div>
+
+        <h3>4.3 节点上到底存什么</h3>
+        <p>一个 MCTS 节点通常至少保存两个统计量：访问次数和累计收益。若从节点 \(s\) 选择行动 \(a\) 到达子节点，则常写作：</p>
+        <div class="mathblock">\[
+          N(s,a)=\text{行动 }a\text{ 被访问的次数},\qquad
+          W(s,a)=\text{行动 }a\text{ 的累计收益},
+          \]
+          \[
+          Q(s,a)=\frac{W(s,a)}{N(s,a)}.
+        \]</div>
+        <p>如果收益记为胜利次数，\(Q\) 就是胜率；如果收益记为 \(-1,0,1\)，\(Q\) 就是平均局面价值。笔记中特别提醒：节点写成“获胜次数/模拟总次数”时，获胜次数是从该节点角度说的；如果题目约定从根节点玩家角度统计，就按题目约定来。</p>
+
+        <h3>4.4 UCB / UCT：为什么不是永远选胜率最高</h3>
+        <p>如果永远选当前胜率最高的孩子，早期随机好运的分支会被过度利用，其他潜在好分支没有机会被探索。UCB 用一个“利用项 + 探索项”解决这个问题：</p>
+        <div class="mathblock">\[
+          I_j = \overline{X}_j + \sqrt{\frac{2\ln n}{T_j(n)}}.
+        \]</div>
+        <ul>
+          <li>\(\overline{X}_j\)：第 \(j\) 个拉杆/子节点目前获得回报的均值，也就是利用项。</li>
+          <li>\(n\)：到当前时刻为止，总访问次数。</li>
+          <li>\(T_j(n)\)：第 \(j\) 个拉杆/子节点已经被访问的次数。</li>
+          <li>\(\sqrt{2\ln n/T_j(n)}\)：探索项。访问越少，探索奖励越大；总访问越多，仍会给没试够的分支机会。</li>
+        </ul>
+        <p>把 UCB 用到树上就常称为 UCT。选择阶段在每个内部节点都计算孩子的 \(I_j\)，选 \(I_j\) 最大的孩子向下走。</p>
+
+        <h3>4.5 UCT 计算小例子</h3>
+        <p>某节点总访问次数 \(n=20\)。三个孩子的“胜利次数/访问次数”分别为 A: \(6/10\)，B: \(2/5\)，C: \(1/1\)。按笔记公式：</p>
+        <div class="mathblock">\[
+          I_A=0.6+\sqrt{\frac{2\ln20}{10}}\approx1.374,
+          \]
+          \[
+          I_B=0.4+\sqrt{\frac{2\ln20}{5}}\approx1.495,
+          \]
+          \[
+          I_C=1.0+\sqrt{\frac{2\ln20}{1}}\approx3.448.
+        \]</div>
+        <p>所以本轮会优先选 C。它不只是因为目前胜率高，还因为访问次数太少，探索项很大。</p>
+        <div class="exam"><strong>考场常考。</strong>题目给一棵树，每个节点写着 \(w/n\) 时，先确认 \(w\) 是胜利次数还是累计收益，再代入 UCB。未访问节点通常视为优先探索，或按题目规定处理。</div>
+
+        <h3>4.6 MCTS 与 \(\alpha\)-\(\beta\) 的区别</h3>
+        <div class="tablewrap"><table>
+            <tr><th>维度</th><th>\(\alpha\)-\(\beta\)</th><th>MCTS</th></tr>
+            <tr><td>基础</td><td>确定性 minimax 搜索</td><td>随机采样 + 统计估计</td></tr>
+            <tr><td>节点值</td><td>由叶子估值精确备份得到</td><td>由多次模拟的平均收益估计</td></tr>
+            <tr><td>剪枝/选择</td><td>用上下界剪去不影响结果的分支</td><td>用 UCB 在利用和探索之间分配模拟次数</td></tr>
+            <tr><td>适合</td><td>分支较可控、估值函数较可靠的棋类</td><td>分支巨大、难以手写估值函数、可用模拟评估的任务</td></tr>
+          </table></div>
+      </section>
+
+
+      <section id="alphago">
+        <h2>5. 强化学习、AlphaGo 与 AlphaGo Zero</h2>
+        <p class="lead">这一节按补充笔记中的 AlphaGo 公式重新整理：AlphaGo 不是“单纯一个神经网络下棋”，也不是“普通 UCT 直接套用”。它把策略网络、估值网络、快速 rollout 和 MCTS 结合起来，用神经网络减少盲目搜索，用树搜索修正神经网络的一步判断。</p>
+
+        <h3>5.1 强化学习先抓三句话</h3>
+        <div class="grid3">
+          <div class="card soft"><h4>状态 \(s\)</h4><p>当前环境情况。在围棋中就是当前棋盘局面。</p></div>
+          <div class="card soft"><h4>动作 \(a\)</h4><p>智能体可采取的行为。在围棋中就是选择某个位置落子。</p></div>
+          <div class="card soft"><h4>回报 \(R\)</h4><p>动作带来的长期收益。围棋往往到终局才知道胜负。</p></div>
+        </div>
+        <p>强化学习学习策略 \(\pi(a\mid s)\)：在状态 \(s\) 下应选择动作 \(a\) 的概率或规则。它与监督学习不同：监督学习通常给出“这一步标准答案”，强化学习更多依靠试错和最终回报。</p>
+
+        <h3>5.2 AlphaGo 中 MCTS 的节点收益：价值网络与 rollout 的混合</h3>
+        <p>在普通 MCTS 中，一次模拟的收益可以直接来自随机走到终局的胜负。AlphaGo 的笔记公式把节点 \(s\) 的第 \(i\) 次模拟收益写成：</p>
+        <div class="mathblock">\[
+          v_i(s)=\lambda\, value(s)+(1-\lambda)\, rollout(s).
+        \]</div>
+        <ul>
+          <li>\(value(s)\)：估值网络对局面 \(s\) 的输出，表示这个局面最终胜负倾向。</li>
+          <li>\(rollout(s)\)：从 \(s\) 出发快速模拟一次得到的结果。</li>
+          <li>\(\lambda\)：混合系数，用来平衡“神经网络估值”和“快速模拟结果”。</li>
+        </ul>
+        <p>因此，AlphaGo 并不是只相信价值网络，也不是只相信随机模拟，而是把两者合成一次模拟收益。</p>
+
+        <h3>5.3 平均收益 \(Q\)：走到某个子局面后平均有多好</h3>
+        <p>设 \(s_a\) 表示在局面 \(s\) 的位置/动作 \(a\) 落子后的新局面。补充笔记中的平均收益为：</p>
+        <div class="mathblock">\[
+          Q(s_a)=\frac{\sum_{i=1}^{n}v_i(s_a)}{n}.
+        \]</div>
+        <p>这就是“这个落子点已经被模拟过的平均效果”。若某个子局面被模拟很多次且收益高，它的 \(Q\) 会高；但如果只看 \(Q\)，仍然可能过早陷入某个看起来好的分支。</p>
+
+        <h3>5.4 探索项 \(u\)：策略网络告诉搜索应该往哪里看</h3>
+        <p>普通 UCT 的探索项是 \(\sqrt{2\ln n/T_j(n)}\)。AlphaGo 的笔记公式改成带策略先验的探索项：</p>
+        <div class="mathblock">\[
+          u(s_a)=c\,p(s_a)\frac{\sqrt{N(s)}}{N(s_a)+1}.
+        \]</div>
+        <ul>
+          <li>\(p(s_a)\)：策略网络认为在 \(a\) 处落子的概率。概率越高，越值得探索。</li>
+          <li>\(N(s)\)：父局面 \(s\) 的模拟次数。</li>
+          <li>\(N(s_a)\)：子局面 \(s_a\) 已被访问的次数。访问越多，探索奖励越小。</li>
+          <li>\(c\)：加权系数，控制探索强度。</li>
+        </ul>
+        <p>实际选择时，可以理解为选择使下面分数最大的动作：</p>
+        <div class="mathblock">\[
+          a^*=\arg\max_a\bigl(Q(s_a)+u(s_a)\bigr).
+        \]</div>
+        <div class="trap"><strong>和普通 UCT 不要混。</strong>普通 MCTS 常写 \(\overline X_j+\sqrt{2\ln n/T_j(n)}\)；AlphaGo 笔记里强调的是 \(Q(s_a)\) 加上由策略网络概率 \(p(s_a)\) 调制的探索项 \(u(s_a)\)。这正是你感觉旧版与笔记不一致的核心点。</div>
+
+        <h3>5.5 AlphaGo 的整体流程</h3>
+        <div class="fig">
+          <svg viewBox="0 0 860 330" role="img" aria-label="AlphaGo流程">
+            <defs><marker id="agArrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#2457d6" /></marker></defs>
+            <g text-anchor="middle" font-size="15">
+              <rect x="40" y="55" width="150" height="70" rx="16" fill="#eef3ff" stroke="#2457d6"/><text x="115" y="84" font-weight="700">当前局面</text><text x="115" y="108" font-size="13">棋盘状态 s</text>
+              <rect x="255" y="30" width="170" height="80" rx="16" fill="#edf9f2" stroke="#16845b"/><text x="340" y="62" font-weight="700">策略网络</text><text x="340" y="88" font-size="13">输出 p(s_a)</text>
+              <rect x="255" y="145" width="170" height="80" rx="16" fill="#fff7df" stroke="#a45b00"/><text x="340" y="177" font-weight="700">估值网络</text><text x="340" y="203" font-size="13">输出 value(s)</text>
+              <rect x="500" y="90" width="160" height="90" rx="16" fill="#f7f0ff" stroke="#8a5cf6"/><text x="580" y="120" font-weight="700">MCTS</text><text x="580" y="145" font-size="13">用 Q+u 选路</text><text x="580" y="168" font-size="13">rollout 补充模拟</text>
+              <rect x="720" y="105" width="110" height="60" rx="16" fill="#eef3ff" stroke="#2457d6"/><text x="775" y="140" font-weight="700">最终落子</text>
+              <path d="M190,90 L252,70" stroke="#2457d6" stroke-width="3" marker-end="url(#agArrow)"/>
+              <path d="M190,100 L252,180" stroke="#2457d6" stroke-width="3" marker-end="url(#agArrow)"/>
+              <path d="M425,70 C470,70 470,115 498,120" stroke="#2457d6" stroke-width="3" fill="none" marker-end="url(#agArrow)"/>
+              <path d="M425,185 C470,185 470,160 498,150" stroke="#2457d6" stroke-width="3" fill="none" marker-end="url(#agArrow)"/>
+              <path d="M662,135 L717,135" stroke="#2457d6" stroke-width="3" marker-end="url(#agArrow)"/>
+              <text x="430" y="285" fill="#596275">一句话：策略网络缩小候选范围，估值网络减少纯随机模拟误差，MCTS 负责多步搜索和统计修正。</text>
+            </g>
+          </svg>
+          <div class="figcap">图：按笔记公式理解 AlphaGo：\(Q\) 表示平均收益，\(u\) 表示带策略先验的探索奖励。</div>
+        </div>
+
+        <h3>5.6 AlphaGo 与 AlphaGo Zero 的区别</h3>
+        <div class="tablewrap"><table>
+            <tr><th>项目</th><th>AlphaGo</th><th>AlphaGo Zero</th></tr>
+            <tr><td>训练来源</td><td>先用人类棋谱做监督学习，再通过自我对弈强化</td><td>从零开始自我对弈，不依赖人类棋谱</td></tr>
+            <tr><td>网络结构</td><td>策略网络、估值网络、rollout policy 等模块较分散</td><td>一个策略-价值网络同时输出 \(\mathbf p\) 和 \(v\)</td></tr>
+            <tr><td>rollout</td><td>使用快速 rollout 参与收益估计</td><td>通常不再使用传统快速 rollout，更多依赖价值网络与 MCTS</td></tr>
+            <tr><td>MCTS作用</td><td>结合策略先验、估值网络和 rollout 修正落子</td><td>MCTS 产生更强的搜索策略 \(\pi\)，反过来训练网络</td></tr>
+          </table></div>
+        <div class="exam"><strong>考试记忆版。</strong>AlphaGo：\(v_i=\lambda value+(1-\lambda)rollout\)，\(Q\) 是平均收益，\(u=c p\sqrt{N}/(N+1)\) 是探索项，最终看 \(Q+u\)。AlphaGo Zero：自我对弈、无人工棋谱、策略价值一体网络。</div>
+
+
+        <h3 id="policy-2024">5.7 2024真题补强：softmax策略网络如何用 MCTS 次数训练</h3>
+        <p>2024第6题把围棋策略网络简化成“没有隐藏层的 softmax 分类器”。输入 \(x_i(i=1,\ldots,N)\) 表示当前棋局特征；输出 \(p_j(j=1,\ldots,N)\) 表示在第 \(j\) 个点落子的概率；\(m_j\) 是 MCTS 结束后第 \(j\) 个后继局面被选中的次数。题目希望 \(m_j\) 越大，网络输出 \(p_j\) 越大。</p>
+        <h4>第一步：写出前向传播</h4>
+        <div class="mathblock">
+          \[
+          net_j=\sum_{i=1}^{N}w_{ji}x_i+b_j,
+          \qquad
+          p_j=\frac{e^{net_j}}{\sum_{k=1}^{N}e^{net_k}}.
+          \]
+        </div>
+        <h4>第二步：把 MCTS 次数变成目标分布</h4>
+        <p>令总访问次数 \(M=\sum_{k=1}^{N}m_k\)，目标概率为：</p>
+        <div class="mathblock">
+          \[
+          q_j=\frac{m_j}{M}.
+          \]
+        </div>
+        <p>这样 \(q_j\) 就是“搜索认为第 \(j\) 个动作应该被选的比例”。这一步和 AlphaGo Zero 里用 MCTS 搜索策略 \(\pi\) 训练策略头的思想是一致的。</p>
+        <h4>第三步：定义损失函数</h4>
+        <div class="mathblock">
+          \[
+          L(w,b)=-\sum_{j=1}^{N}q_j\log p_j.
+          \]
+        </div>
+        <p>这是交叉熵。若某个动作的 MCTS 比例 \(q_j\) 很大，而网络给的 \(p_j\) 很小，\(-q_j\log p_j\) 就会变大，迫使网络提高该动作概率。</p>
+        <h4>第四步：推导梯度和更新式</h4>
+        <div class="mathblock">
+          \[
+          \frac{\partial L}{\partial net_j}=p_j-q_j,
+          \qquad
+          \frac{\partial net_j}{\partial w_{ji}}=x_i.
+          \]
+          \[
+          \frac{\partial L}{\partial w_{ji}}=(p_j-q_j)x_i,
+          \qquad
+          \frac{\partial L}{\partial b_j}=p_j-q_j.
+          \]
+          \[
+          w_{ji}\leftarrow w_{ji}-\eta(p_j-q_j)x_i,
+          \qquad
+          b_j\leftarrow b_j-\eta(p_j-q_j).
+          \]
+        </div>
+        <div class="note"><strong>不归一化写法也可以。</strong>若直接定义 \(L=-\sum_j m_j\log p_j\)，则 \(\partial L/\partial w_{ji}=(Mp_j-m_j)x_i\)。这与归一化写法只差一个常数倍 \(M\)，可以吸收到学习率里。考场建议先归一化成 \(q_j\)，表达更清楚。</div>
+        <div class="exam"><strong>答题模板。</strong>“MCTS 给出了更强搜索后的动作分布，策略网络输出 softmax 分布。用交叉熵使 \(p\) 拟合 \(q=m/M\)，梯度为预测概率减目标概率，再乘输入特征。”这句话基本覆盖了第6题的核心解释。</div>
+
+      </section>
+
+      <section id="tree-bayes">
+        <h2>6. 决策树：ID3 与 C4.5</h2>
+        <p class="lead">决策树学习就是从训练集中归纳出一组分类规则，得到一棵与训练集矛盾较小、同时尽量能泛化到新样本的树。它的直观形式是“先问哪个问题，再根据答案继续问”，直到给出类别。</p>
+
+        <h3>6.1 决策树在学什么</h3>
+        <p>训练集 \(D\) 由很多样本组成，每个样本有若干特征和一个类别。决策树的内部节点是特征测试，边是特征取值，叶节点是类别标记。例如先问“天气=晴/阴/雨”，再问“湿度=高/正常”，最后判断是否打球。</p>
+        <div class="grid3">
+          <div class="card soft"><h4>内部节点</h4><p>选择一个特征，例如 \(A=\) 天气。</p></div>
+          <div class="card soft"><h4>分支</h4><p>特征的不同取值，例如晴、阴、雨。</p></div>
+          <div class="card soft"><h4>叶节点</h4><p>最终类别，例如“是”或“否”。</p></div>
+        </div>
+
+        <h3>6.2 熵：当前数据集有多不确定</h3>
+        <p>若训练集 \(D\) 中有 \(K\) 个类别 \(C_1,\ldots,C_K\)，类别 \(C_k\) 的样本数为 \(|C_k|\)，总样本数为 \(|D|\)，则熵为：</p>
+        <div class="mathblock">\[
+          H(D)=-\sum_{k=1}^{K}\frac{|C_k|}{|D|}\log_2\frac{|C_k|}{|D|}.
+        \]</div>
+        <p>熵越大，类别越混杂；熵越小，类别越纯。如果所有样本都属于同一类，熵为 \(0\)。计算时约定 \(0\log 0=0\)。</p>
+
+        <h3>6.3 条件熵：按某个特征划分后还剩多少不确定</h3>
+        <p>设特征 \(A\) 有 \(n\) 个可能取值 \(a_1,\ldots,a_n\)。按 \(A\) 的取值把 \(D\) 划分为 \(D_1,\ldots,D_n\)。其中 \(D_{ik}\) 表示子集 \(D_i\) 中属于类别 \(C_k\) 的样本集合。笔记中的条件熵公式可写为：</p>
+        <div class="mathblock">\[
+          H(D\mid A)=\sum_{i=1}^{n}\frac{|D_i|}{|D|}H(D_i)
+          =-\sum_{i=1}^{n}\frac{|D_i|}{|D|}\sum_{k=1}^{K}\frac{|D_{ik}|}{|D_i|}\log_2\frac{|D_{ik}|}{|D_i|}.
+        \]</div>
+        <p>它是“先按特征 \(A\) 分组，再看每组内部还乱不乱”的加权平均。权重 \(|D_i|/|D|\) 不能漏，因为大分支比小分支影响更大。</p>
+
+        <h3>6.4 信息增益：这个特征让不确定性减少了多少</h3>
+        <div class="mathblock">\[
+          g(D,A)=H(D)-H(D\mid A).
+        \]</div>
+        <p>信息增益越大，说明用特征 \(A\) 划分后，不确定性减少越多。ID3 每一步都选择当前信息增益最大的特征作为当前节点。</p>
+        <div class="method"><strong>一句话理解 ID3。</strong>每次都问“最能把类别分开的那个问题”。问完后，对每个分支里的子数据集重复同样过程。</div>
+
+        <h3>6.5 ID3 算法：按笔记整理的递归流程</h3>
+        <div class="tablewrap"><table>
+            <tr><th>步骤</th><th>规则</th><th>考场写法</th></tr>
+            <tr><td>输入</td><td>训练集 \(D\)、特征集 \(A\)、阈值 \(\varepsilon&gt;0\)</td><td>先写清候选特征，不要把类别列当特征。</td></tr>
+            <tr><td>1</td><td>若 \(D\) 中所有样本属于同一类 \(C_k\)</td><td>直接标记叶节点为 \(C_k\)，停止递归。</td></tr>
+            <tr><td>2</td><td>若特征集 \(A\) 为空</td><td>标记为 \(D\) 中样本数最多的类别。</td></tr>
+            <tr><td>3</td><td>计算每个特征对 \(D\) 的信息增益</td><td>选 \(g(D,A)\) 最大的特征 \(A_g\)。</td></tr>
+            <tr><td>4</td><td>若最大信息增益 \(g(D,A_g)&lt;\varepsilon\)</td><td>不再划分，标记为 \(D\) 中多数类。</td></tr>
+            <tr><td>5</td><td>否则按 \(A_g\) 的每个取值 \(a_i\) 划分子集 \(D_i\)</td><td>为每个取值生成一个分支。</td></tr>
+            <tr><td>6</td><td>若某个 \(D_i\) 为空</td><td>该分支标记为父节点数据集 \(D\) 中多数类。</td></tr>
+            <tr><td>7</td><td>若 \(D_i\) 非空</td><td>以 \(D_i\) 为训练集、以 \(A-\{A_g\}\) 为特征集递归建树。</td></tr>
+          </table></div>
+
+        <h3>6.6 完整手算例子：选根节点</h3>
+        <p>考虑 8 条训练样本，类别为“打球=是/否”。候选特征有天气、湿度、风。</p>
+        <div class="tablewrap"><table>
+            <tr><th>编号</th><th>天气</th><th>湿度</th><th>风</th><th>打球</th></tr>
+            <tr><td>1</td><td>晴</td><td>高</td><td>弱</td><td>否</td></tr>
+            <tr><td>2</td><td>晴</td><td>高</td><td>强</td><td>否</td></tr>
+            <tr><td>3</td><td>阴</td><td>高</td><td>弱</td><td>是</td></tr>
+            <tr><td>4</td><td>雨</td><td>高</td><td>弱</td><td>是</td></tr>
+            <tr><td>5</td><td>雨</td><td>正常</td><td>弱</td><td>是</td></tr>
+            <tr><td>6</td><td>雨</td><td>正常</td><td>强</td><td>否</td></tr>
+            <tr><td>7</td><td>阴</td><td>正常</td><td>强</td><td>是</td></tr>
+            <tr><td>8</td><td>晴</td><td>正常</td><td>弱</td><td>是</td></tr>
+          </table></div>
+        <p>总数据集中“是”有 5 个，“否”有 3 个：</p>
+        <div class="mathblock">\[
+          H(D)=-\frac58\log_2\frac58-\frac38\log_2\frac38\approx0.954.
+        \]</div>
+        <div class="tablewrap"><table>
+            <tr><th>特征</th><th>划分情况</th><th>条件熵</th><th>信息增益</th></tr>
+            <tr><td>天气</td><td>晴: 1是2否；阴: 2是0否；雨: 2是1否</td><td>\(\frac38\cdot0.918+\frac28\cdot0+\frac38\cdot0.918\approx0.689\)</td><td>\(0.954-0.689=0.265\)</td></tr>
+            <tr><td>湿度</td><td>高: 2是2否；正常: 3是1否</td><td>\(\frac48\cdot1+\frac48\cdot0.811\approx0.906\)</td><td>\(0.048\)</td></tr>
+            <tr><td>风</td><td>弱: 4是1否；强: 1是2否</td><td>\(\frac58\cdot0.722+\frac38\cdot0.918\approx0.795\)</td><td>\(0.159\)</td></tr>
+          </table></div>
+        <p>最大信息增益来自“天气”，所以 ID3 选择“天气”作为根节点。接着每个分支继续递归：例如“阴”分支全是“是”，可直接成为叶节点；“晴”和“雨”分支仍有混杂，需要继续选剩余特征。</p>
+
+        <h3>6.7 C4.5：为什么要从信息增益改成信息增益比</h3>
+        <p>ID3 的一个重要问题是：它偏爱取值很多的属性。极端地说，如果有一个“编号”特征，每个样本编号都不同，那么按编号划分后每个子集只有一个样本，条件熵为 0，信息增益会非常大，但这显然只是记住训练集，不能泛化。</p>
+        <p>C4.5 用信息增益比来惩罚这种“分支过多”的属性。先定义属性 \(A\) 自身造成的划分熵：</p>
+        <div class="mathblock">\[
+          H_A(D)=-\sum_{i=1}^{n}\frac{|D_i|}{|D|}\log_2\frac{|D_i|}{|D|}.
+          \]
+          \[
+          g_R(D,A)=\frac{g(D,A)}{H_A(D)}.
+        \]</div>
+        <p>\(H_A(D)\) 越大，说明这个属性把数据切得越碎；除以它之后，可以降低多取值属性的虚高优势。</p>
+        <div class="note"><strong>C4.5 相对 ID3 的改进。</strong>笔记中列出的两点是：ID3 倾向于选择分支数较多的属性，且不能处理连续性属性；C4.5 引入信息增益比，并可通过连续属性阈值划分处理数值特征。</div>
+
+        <h3>6.8 连续属性怎么处理</h3>
+        <p>如果特征是连续值，例如“年龄”“收入”，不能像离散属性那样直接按每个数值开分支。常见做法是把连续属性转成二分测试：</p>
+        <div class="mathblock">\[
+          A\le t \quad \text{和}\quad A&gt;t.
+        \]</div>
+        <ol class="checklist">
+          <li>把样本按该连续特征从小到大排序。</li>
+          <li>在相邻不同取值之间取候选阈值，例如 \(t=(a_i+a_{i+1})/2\)。</li>
+          <li>对每个候选阈值计算划分后的信息增益或增益比。</li>
+          <li>选择最好的阈值作为该节点的测试条件。</li>
+        </ol>
+
+        <h3>6.9 剪枝：防止过拟合</h3>
+        <p>树长得太深时，可能把训练集里的偶然噪声也记住，导致新样本表现变差。C4.5 常配合后向剪枝：先长出较完整的树，再自底向上检查某些子树是否应替换为叶节点。如果替换后验证误差或估计泛化误差更好，就剪掉该子树。</p>
+        <div class="exam"><strong>考试作答重点。</strong>ID3 计算题优先写清 \(H(D)\)、\(H(D\mid A)\)、\(g(D,A)\) 三步；C4.5 简答题优先写“信息增益比、多值属性偏好、连续属性、后向剪枝”。</div>
+
+
+        <h3 id="tree-2024">6.10 2024真题同型例题：两特征数据集完整计算</h3>
+        <p>2024第5题的数据集如下。类别 Y 有3个，N 有3个，所以总体最混杂：</p>
+        <div class="tablewrap">
+          <table>
+            <tr><th>序号</th><th>特征 A</th><th>特征 B</th><th>类别</th></tr>
+            <tr><td>1</td><td>T</td><td>T</td><td>N</td></tr>
+            <tr><td>2</td><td>T</td><td>T</td><td>N</td></tr>
+            <tr><td>3</td><td>T</td><td>F</td><td>Y</td></tr>
+            <tr><td>4</td><td>F</td><td>F</td><td>N</td></tr>
+            <tr><td>5</td><td>F</td><td>T</td><td>Y</td></tr>
+            <tr><td>6</td><td>F</td><td>T</td><td>Y</td></tr>
+          </table>
+        </div>
+        <h4>第一步：总体熵</h4>
+        <div class="mathblock">
+          \[
+          H(D)=-\frac36\log_2\frac36-\frac36\log_2\frac36=1.
+          \]
+        </div>
+        <h4>第二步：按特征 A 划分</h4>
+        <p>\(A=T\) 子集有 N,N,Y；\(A=F\) 子集有 N,Y,Y。两个子集都是 2:1 混合，熵相同：</p>
+        <div class="mathblock">
+          \[
+          H(A=T)=H(A=F)=-\frac23\log_2\frac23-\frac13\log_2\frac13\approx0.918.
+          \]
+          \[
+          H(D\mid A)=\frac36\cdot0.918+\frac36\cdot0.918=0.918.
+          \]
+          \[
+          g(D,A)=1-0.918=0.082.
+          \]
+        </div>
+        <p>A 的取值比例是 3:3，所以划分熵为 \(H_A(D)=1\)，信息增益比约为 \(0.082\)。</p>
+        <h4>第三步：按特征 B 划分</h4>
+        <p>\(B=T\) 子集有 N,N,Y,Y，熵为1；\(B=F\) 子集有 Y,N，熵也为1：</p>
+        <div class="mathblock">
+          \[
+          H(D\mid B)=\frac46\cdot1+\frac26\cdot1=1,
+          \qquad
+          g(D,B)=1-1=0.
+          \]
+          \[
+          H_B(D)=-\frac46\log_2\frac46-\frac26\log_2\frac26\approx0.918,
+          \qquad
+          g_R(D,B)=0.
+          \]
+        </div>
+        <div class="method"><strong>结论。</strong>ID3 比较信息增益，选 A；C4.5 比较信息增益比，A 的比值约 0.082，B 为 0，也选 A。因此第一步根节点都是特征 A。</div>
+        <h4>如果题目继续要求画树</h4>
+        <p>根节点选 A 后，两个分支都可以继续用 B 完全分开：</p>
+        <div class="mathblock">
+          \[
+          A=T:\quad B=T\Rightarrow N,\quad B=F\Rightarrow Y.
+          \]
+          \[
+          A=F:\quad B=F\Rightarrow N,\quad B=T\Rightarrow Y.
+          \]
+        </div>
+        <p>也就是说这个训练集的类别规律等价于“\(A\) 与 \(B\) 不同时为 Y，相同时为 N”。但考试第一问通常只要求第一步选哪个特征，别忘了把信息增益和信息增益比都列出来。</p>
+
+      </section>
+
+
+      <section id="templates">
+        <h2>7. 考场作答模板</h2>
+        <h3>7.1 \(\alpha\)-\(\beta\) 剪枝模板</h3>
+        <pre>1. 标层：根为 MAX / MIN，后续交替。
+2. 从左到右访问叶子，不要擅自换顺序。
+3. MAX 节点维护下界 alpha：已看孩子的最大值。
+4. MIN 节点维护上界 beta：已看孩子的最小值。
+5. 继承祖先边界；比较对象不只父节点。
+6. 若 alpha >= beta：剪去当前节点剩余未访问孩子，并在图上画叉。
+7. 所有未剪部分算完后，在每个内部节点旁写最终值。
+8. 根节点按 MAX / MIN 规则选最终走步。</pre>
+        <h3>7.2 A*/修正A*模板</h3>
+        <pre>表格列：step | OPEN | CLOSED | fm | NEST | expand | generated/updated | parent
+普通 A*: 每步选 OPEN 中 f=g+h 最小节点。
+修正 A*: 先找 NEST={n in OPEN | f(n)&lt;fm};
+          NEST 非空选其中 g 最小，否则选 OPEN 最小 f 并更新 fm。
+结束：被选中的节点是目标，而不是目标刚生成。
+路径：目标沿父指针回溯到起点。</pre>
+        <h3>7.3 MCTS / UCT模板</h3>
+        <pre>四步：选择 -&gt; 扩展 -&gt; 模拟 -&gt; 回传。
+节点统计：访问次数 N，累计收益 W，平均收益 Q=W/N。
+UCT：I_j = Xbar_j + sqrt(2 ln n / T_j(n))。
+含义：第一项是利用，第二项是探索。
+做题：对每个候选孩子算 I_j，选最大的继续向下。</pre>
+        <h3>7.4 AlphaGo模板</h3>
+        <pre>一次模拟收益：v_i(s)=lambda*value(s)+(1-lambda)*rollout(s)。
+平均收益：Q(s_a)=sum_i v_i(s_a)/n。
+探索项：u(s_a)=c*p(s_a)*sqrt(N(s))/(N(s_a)+1)。
+选择：比较 Q(s_a)+u(s_a)。
+解释：value 来自估值网络；rollout 是快速模拟；p 来自策略网络。</pre>
+        <h3>7.5 模拟退火模板</h3>
+        <pre>当前能量 Ecur。
+对每个候选 Enew:
+    Delta = Enew - Ecur。
+    若 Delta &lt;= 0: 接受，Ecur = Enew。
+    若 Delta &gt; 0: p = exp(-Delta/T)。若随机数 r &lt; p 接受，否则拒绝。
+接受率 = 接受次数 / 尝试次数。
+注意：拒绝后 Ecur 不变。</pre>
+        <h3>7.6 遗传算法模板</h3>
+        <pre>轮盘赌：
+1. 求总适应值 F。
+2. 每个个体概率 p_i=f_i/F。
+3. 写累积区间。
+4. 每个随机数落在哪个区间，就选择哪个个体。
+
+确定性：
+1. 期望复制数 e_i=N f_i/F。
+2. 先取整数部分。
+3. 剩余名额按小数部分从大到小补足。
+4. 后续按题目给定交叉/变异规则操作。</pre>
+        <h3>7.7 ID3 / C4.5模板</h3>
+        <pre>ID3：
+1. 统计总数据集 D 的类别数量，算 H(D)。
+2. 对每个特征 A，按取值分组 D_i。
+3. 每组算 H(D_i)，加权得 H(D|A)。
+4. 信息增益 g(D,A)=H(D)-H(D|A)。
+5. 选 g 最大的特征作为当前节点。
+6. 分支纯净则标叶；不纯则递归。
+7. 若特征用完、子集为空或增益低于阈值，标多数类。
+
+C4.5：
+1. ID3 的问题：偏好多取值属性，不能直接处理连续属性。
+2. 信息增益比 g_R(D,A)=g(D,A)/H_A(D)。
+3. 连续属性用阈值 A&lt;=t / A&gt;t 划分。
+4. 防止过拟合：后向剪枝。</pre>
+
+        <h3>7.8 2024策略网络/softmax模板</h3>
+        <pre>输入：棋局特征 x_i；输出：每个候选落子点概率 p_j；MCTS 次数 m_j。
+1. net_j = sum_i w_ji x_i + b_j。
+2. p_j = exp(net_j) / sum_k exp(net_k)。
+3. M = sum_k m_k，q_j = m_j / M。
+4. L = - sum_j q_j log p_j。
+5. softmax + 交叉熵结论：dL/dnet_j = p_j - q_j。
+6. dL/dw_ji = (p_j - q_j) x_i；dL/db_j = p_j - q_j。
+7. 梯度下降：w_ji &lt;- w_ji - eta (p_j - q_j)x_i。</pre>
+      </section>
+
+
+      <section id="practice">
+        <h2>8. 自测题与复习路线</h2>
+        <h3>8.1 一天速成路线</h3>
+        <ol>
+          <li>1小时：读第1节题型地图，知道每题交什么。</li>
+          <li>2小时：练 A*/修正A*，至少手算2个图。</li>
+          <li>2小时：练 \(\alpha\)-\(\beta\) 剪枝，重点是不齐树、从左到右、祖先边界。</li>
+          <li>1小时：练 MCTS/UCT，至少会代入 \(\overline X_j+\sqrt{2\ln n/T_j(n)}\)。</li>
+          <li>1小时：背 AlphaGo 的 \(v_i\)、\(Q\)、\(u\) 三个公式，以及 2024 softmax策略网络的 \(p_j-q_j\) 梯度。</li>
+          <li>2小时：练 ID3/C4.5，至少完整算一次信息增益并能解释信息增益比。</li>
+          <li>30分钟：背模拟退火、遗传算法模板。</li>
+        </ol>
+        <h3>8.2 三天稳妥路线</h3>
+        <div class="grid3">
+          <div class="card"><h4>第1天：图搜索</h4><p>DFS/BFS/Dijkstra/A/A*/修正A*；重点练 OPEN/CLOSED 表、父指针、NEST 与 \(f_m\)。</p></div>
+          <div class="card"><h4>第2天：博弈与随机搜索</h4><p>\(\alpha\)-\(\beta\)、MCTS、AlphaGo；重点练上下界剪枝、UCT 计算、\(Q+u\) 解释。</p></div>
+          <div class="card"><h4>第3天：机器学习与随机优化</h4><p>ID3/C4.5、模拟退火、遗传算法；重点练熵、条件熵、信息增益、增益率和概率接受。</p></div>
+        </div>
+        <h3>8.3 考前检查清单</h3>
+        <ul class="checklist">
+          <li>我能解释 \(g,h,f\)，并知道A*何时结束。</li>
+          <li>我能写出单调性条件，并说明单调推出A*条件、避免重复扩展。</li>
+          <li>我能按修正A*规则计算 NEST 和 \(f_m\)。</li>
+          <li>我能独立做一棵不齐树的 \(\alpha\)-\(\beta\) 剪枝，并说明剪枝依据来自祖先边界。</li>
+          <li>我能写出 MCTS 四步和 UCT 中探索/利用两项。</li>
+          <li>我能说清 AlphaGo 中 \(value(s)\)、\(rollout(s)\)、\(Q(s_a)\)、\(u(s_a)\)、\(p(s_a)\) 的作用，并能把 MCTS 次数 \(m_j\) 转为策略网络目标 \(q_j\)。</li>
+          <li>我能从数据表中算出 \(H(D)\)、\(H(D\mid A)\)、\(g(D,A)\)，并选出 ID3 根节点。</li>
+          <li>我能解释 C4.5 为什么使用信息增益比，以及如何处理连续属性和过拟合。</li>
+          <li>我能根据温度、能量差和随机数判断模拟退火是否接受。</li>
+          <li>我能根据适应值和随机数完成遗传算法选择步骤。</li>
+        </ul>
+        <h3>8.4 最小自测题</h3>
+        <details><summary>题1：为什么 \(\alpha\)-\(\beta\) 剪枝不改变 minimax 结果？</summary><p>因为被剪掉的分支已经不可能改变某个祖先的选择。例如 MAX 祖先已经能保证 \(\alpha\)，当前 MIN 后辈已经有 \(\beta\le\alpha\)，则 MIN 会让该分支值不超过 \(\beta\)，根本不会让 MAX 得到更好选择。</p></details>
+        <details><summary>题2：UCT 公式里为什么访问次数少的子节点更容易被选？</summary><p>探索项 \(\sqrt{2\ln n/T_j(n)}\) 中，\(T_j(n)\) 在分母。访问次数越少，探索项越大，算法会给不确定分支更多机会。</p></details>
+        <details><summary>题3：ID3 为什么偏好多取值属性？C4.5 怎么修正？</summary><p>多取值属性容易把数据切得很碎，使每个子集熵很低，从而信息增益虚高。C4.5 用信息增益比 \(g_R(D,A)=g(D,A)/H_A(D)\) 惩罚划分过碎的属性。</p></details>
+      </section>
+
+
+      <section id="source-notes">
+        <h2>9. 来源与取舍说明</h2>
+        <p>本版在原 HTML 的基础上重写和扩充了“对抗搜索与 \(\alpha\)-\(\beta\) 剪枝”“蒙特卡洛方法与 MCTS”“AlphaGo”三节，并按补充笔记替换为“决策树：ID3 与 C4.5”内容。本次又根据 2024 真题第1、2、5、6题补充了不齐 \(\alpha\)-\(\beta\) 树、修正A*完整表、决策树小数据集计算、softmax策略网络训练推导；按要求未纳入第3题 SVM 与第4题 GoogleNet/Inception。</p>
+        <p>2013年及以前的旧题包含 AO*、专家系统、归结、逆向演绎、SOM 等内容。根据当前复习重点，本指南优先保留 A/A*/修正A*、\(\alpha\)-\(\beta\) 剪枝、MCTS、AlphaGo、模拟退火、遗传算法、ID3/C4.5。已单独整理的内容没有再放入本文件，以免挤占核心题型复习时间。</p>
+        <p>AlphaGo 部分采用补充笔记中的写法：一次模拟收益 \(v_i(s)=\lambda value(s)+(1-\lambda)rollout(s)\)，平均收益 \(Q(s_a)\)，以及带策略先验的探索项 \(u(s_a)=c p(s_a)\sqrt{N(s)}/(N(s_a)+1)\)。决策树部分采用笔记中的熵、条件熵、信息增益、ID3递归终止条件、C4.5信息增益比和后向剪枝框架。</p>
+      </section>
+
+    </main>
+  </div>
+</body>
+
+</html>

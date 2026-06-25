@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>课件9 · 统计机器学习（SVM）零基础学习指南</title>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script>
+<style>
+:root{
+  --ink:#1a1714;
+  --paper:#f6f1e7;
+  --paper2:#efe7d6;
+  --rule:#d8ccb3;
+  --accent:#9c2b1b;      /* 朱红 */
+  --accent2:#1f5e54;     /* 墨绿 */
+  --gold:#b08838;
+  --blue:#2f4b7c;
+  --shadow:rgba(60,40,20,.12);
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:
+    radial-gradient(circle at 12% 8%, rgba(176,136,56,.07), transparent 40%),
+    radial-gradient(circle at 88% 92%, rgba(31,94,84,.06), transparent 45%),
+    var(--paper);
+  color:var(--ink);
+  font-family:"Songti SC","STSong","SimSun",Georgia,"Noto Serif SC",serif;
+  line-height:1.85;
+  font-size:17px;
+}
+.wrap{max-width:920px;margin:0 auto;padding:0 22px 120px;}
+/* ---------- header ---------- */
+header.hero{
+  padding:64px 22px 44px;
+  text-align:center;
+  border-bottom:3px double var(--rule);
+  max-width:920px;margin:0 auto;
+}
+.kicker{
+  font-family:"Courier New",monospace;
+  letter-spacing:.32em;
+  text-transform:uppercase;
+  font-size:12px;
+  color:var(--accent2);
+  margin-bottom:18px;
+}
+header.hero h1{
+  font-size:2.55rem;
+  margin:.1em 0 .25em;
+  font-weight:800;
+  letter-spacing:.02em;
+  color:var(--ink);
+}
+header.hero h1 .red{color:var(--accent);}
+.subtitle{font-size:1.02rem;color:#6a5d49;max-width:640px;margin:14px auto 0;font-style:italic;}
+.meta-pills{margin-top:26px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+.pill{font-family:"Courier New",monospace;font-size:11px;letter-spacing:.08em;background:var(--paper2);border:1px solid var(--rule);padding:5px 13px;border-radius:30px;color:#5a4d3a;}
+/* ---------- TOC ---------- */
+nav.toc{
+  margin:42px auto;max-width:920px;
+  background:linear-gradient(180deg,#fbf7ee,#f1e9d8);
+  border:1px solid var(--rule);
+  border-radius:10px;
+  padding:26px 30px;
+  box-shadow:0 8px 30px var(--shadow);
+}
+nav.toc h2{margin:0 0 14px;font-size:1.05rem;letter-spacing:.18em;color:var(--accent2);text-transform:uppercase;font-family:"Courier New",monospace;}
+nav.toc ol{margin:0;padding-left:0;counter-reset:toc;list-style:none;column-count:2;column-gap:34px;}
+nav.toc li{counter-increment:toc;margin:7px 0;break-inside:avoid;}
+nav.toc li a{text-decoration:none;color:var(--ink);border-bottom:1px dotted var(--rule);padding-bottom:1px;}
+nav.toc li a:hover{color:var(--accent);}
+nav.toc li::before{content:counter(toc,decimal-leading-zero);font-family:"Courier New",monospace;color:var(--gold);font-size:.8em;margin-right:9px;}
+/* ---------- sections ---------- */
+section{margin:60px 0 0;scroll-margin-top:20px;}
+.sec-num{font-family:"Courier New",monospace;color:var(--gold);font-size:.9rem;letter-spacing:.2em;}
+h2.sec{font-size:1.85rem;margin:.15em 0 .1em;color:var(--ink);border-bottom:2px solid var(--accent);display:inline-block;padding-bottom:5px;}
+h3{font-size:1.3rem;margin:2em 0 .4em;color:var(--accent2);}
+h4{font-size:1.08rem;margin:1.5em 0 .3em;color:var(--blue);}
+p{margin:.7em 0;}
+strong{color:var(--accent);font-weight:700;}
+em.term{font-style:normal;color:var(--accent2);font-weight:700;}
+a.ref{color:var(--blue);text-decoration:none;border-bottom:1px dotted var(--blue);}
+ul,ol{padding-left:1.4em;}
+li{margin:.35em 0;}
+/* callouts */
+.box{border-radius:9px;padding:18px 22px;margin:20px 0;border:1px solid var(--rule);}
+.note{background:#fbf4e3;border-left:5px solid var(--gold);}
+.intuit{background:#eaf3f0;border-left:5px solid var(--accent2);}
+.warn{background:#fbeae6;border-left:5px solid var(--accent);}
+.exam{background:#eef1f8;border-left:5px solid var(--blue);}
+.box .tag{font-family:"Courier New",monospace;font-size:11px;letter-spacing:.15em;text-transform:uppercase;font-weight:700;display:block;margin-bottom:6px;}
+.note .tag{color:var(--gold);}
+.intuit .tag{color:var(--accent2);}
+.warn .tag{color:var(--accent);}
+.exam .tag{color:var(--blue);}
+/* formula block */
+.fml{background:#fdfaf2;border:1px solid var(--rule);border-radius:8px;padding:6px 16px;margin:16px 0;overflow-x:auto;box-shadow:inset 0 1px 0 #fff;}
+/* steps */
+.steps{counter-reset:step;list-style:none;padding-left:0;}
+.steps>li{counter-increment:step;position:relative;padding-left:52px;margin:18px 0;}
+.steps>li::before{content:counter(step);position:absolute;left:0;top:0;width:34px;height:34px;border-radius:50%;background:var(--accent);color:#fff;font-family:"Courier New",monospace;font-weight:700;display:flex;align-items:center;justify-content:center;font-size:1rem;}
+/* table */
+table{border-collapse:collapse;width:100%;margin:18px 0;font-size:.95rem;background:#fdfaf2;}
+th,td{border:1px solid var(--rule);padding:9px 12px;text-align:center;}
+th{background:var(--paper2);color:var(--accent2);font-family:"Courier New",monospace;letter-spacing:.05em;}
+caption{caption-side:top;text-align:left;font-style:italic;color:#6a5d49;margin-bottom:6px;}
+/* figure */
+figure{margin:24px 0;text-align:center;}
+figure svg{max-width:100%;height:auto;border:1px solid var(--rule);border-radius:8px;background:#fffdf7;box-shadow:0 6px 22px var(--shadow);}
+figcaption{font-size:.88rem;color:#6a5d49;margin-top:8px;font-style:italic;}
+code{background:#ece3d0;padding:1px 6px;border-radius:4px;font-family:"Courier New",monospace;font-size:.9em;color:#7a3b1f;}
+hr.fancy{border:none;border-top:1px solid var(--rule);margin:50px 0;position:relative;}
+hr.fancy::after{content:"❧";position:absolute;top:-15px;left:50%;transform:translateX(-50%);background:var(--paper);padding:0 14px;color:var(--gold);}
+.back{display:inline-block;margin-top:14px;font-size:.82rem;font-family:"Courier New",monospace;color:var(--accent2);text-decoration:none;letter-spacing:.1em;}
+.back:hover{color:var(--accent);}
+.lead{font-size:1.08rem;color:#4a4035;}
+details{background:#fdfaf2;border:1px solid var(--rule);border-radius:8px;padding:10px 18px;margin:14px 0;}
+summary{cursor:pointer;font-weight:700;color:var(--accent2);}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 18px;margin:14px 0;}
+.kv dt{font-weight:700;color:var(--blue);font-family:"Courier New",monospace;}
+.kv dd{margin:0;}
+@media(max-width:640px){
+  nav.toc ol{column-count:1;}
+  header.hero h1{font-size:1.9rem;}
+  body{font-size:16px;}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="kicker">人工智能导论 · 第四章 · 课件 9</div>
+  <h1>统计机器学习 · <span class="red">支持向量机</span> 全解</h1>
+  <p class="subtitle">从「我完全没听过课」到「能看懂、能推导、能算对期末题」——一份逐步拆解的零基础学习指南。</p>
+  <div class="meta-pills">
+    <span class="pill">SVM 间隔最大化</span>
+    <span class="pill">对偶 / KKT</span>
+    <span class="pill">核技巧</span>
+    <span class="pill">2021 真题逐步求解</span>
+    <span class="pill">+ID3 / 朴素贝叶斯附录</span>
+  </div>
+</header>
+
+<nav class="toc">
+  <h2>目录</h2>
+  <ol>
+    <li><a href="#s0">这门课在学什么（大局观）</a></li>
+    <li><a href="#s1">机器学习与统计学习三要素</a></li>
+    <li><a href="#s2">SVM 直觉：为什么是「最大间隔」</a></li>
+    <li><a href="#s3">数学准备：点到直线的距离</a></li>
+    <li><a href="#s4">线性可分 SVM 的优化问题</a></li>
+    <li><a href="#s5">拉格朗日 / 对偶 / KKT（核心机制）</a></li>
+    <li><a href="#s6">对偶问题怎么用 & 支持向量</a></li>
+    <li><a href="#s7">经典例题：(3,3)(4,3)(1,1)</a></li>
+    <li><a href="#s8">线性 SVM（软间隔，松弛变量与 C）</a></li>
+    <li><a href="#s9">非线性 SVM 与核技巧</a></li>
+    <li><a href="#s10">常用核函数与过/欠拟合</a></li>
+    <li><a href="#s11">★ 2021 真题第 3 题 全程求解</a></li>
+    <li><a href="#s12">SMO / 多分类 / 文本分类 / tf-idf</a></li>
+    <li><a href="#s13">附录 A：决策树 ID3</a></li>
+    <li><a href="#s14">附录 B：朴素贝叶斯</a></li>
+    <li><a href="#s15">考前速查表 & 做题模板</a></li>
+  </ol>
+</nav>
+
+<div class="wrap">
+
+<!-- ============ 0 ============ -->
+<section id="s0">
+  <div class="sec-num">SECTION 00</div>
+  <h2 class="sec">这门课在学什么（先建立大局观）</h2>
+  <p class="lead">在钻进公式之前，先用一句话把整章串起来：<strong>这一章只讲一件事——怎么造一个「分类器」，把两类点用一条线（面）分开，并且这条线要分得「最稳」。</strong></p>
+  <p>课件 9 属于第四章「统计机器学习方法」。整章的主角是 <em class="term">支持向量机（SVM, Support Vector Machine）</em>。它按难度分成三层，而这三层是层层递进的：</p>
+  <table>
+    <caption>SVM 的三层结构（难度递增，但骨架完全相同）</caption>
+    <tr><th>层次</th><th>数据长什么样</th><th>新增的概念</th></tr>
+    <tr><td>线性可分 SVM</td><td>两类点能被一条直线干净分开</td><td>间隔最大化、对偶、KKT</td></tr>
+    <tr><td>线性 SVM（软间隔）</td><td>大体能分，但有几个点「越界」</td><td>松弛变量 $\xi$、惩罚参数 $C$</td></tr>
+    <tr><td>非线性 SVM</td><td>怎么画直线都分不开（如同心圆）</td><td>映射 $\phi$、核函数 $K$（核技巧）</td></tr>
+  </table>
+  <div class="box exam">
+    <span class="tag">期末考点定位</span>
+    根据你给的 2021 真题和考试范式，本章必考的是 <strong>第 3 题：非线性 SVM 求解 + 分类一个新点</strong>。它考的就是「写出对偶问题 → 解出 $\alpha$ → 求 $b$ → 代入决策函数判正负」这条流水线。本指南第 4~7、9、11 节就是为打通这条流水线而写。决策树 ID3（第 5 题）也属第四章，放在<a class="ref" href="#s13">附录 A</a>。
+  </div>
+</section>
+
+<!-- ============ 1 ============ -->
+<section id="s1">
+  <div class="sec-num">SECTION 01</div>
+  <h2 class="sec">机器学习与统计学习三要素</h2>
+  <p>这几页是「概念题」素材，理解即可，不用计算。</p>
+
+  <h3>1.1 什么是机器学习</h3>
+  <p>赫伯特·西蒙的定义：<strong>「如果一个系统能够通过执行某个过程改进它的性能，这就是学习。」</strong> 统计机器学习，就是计算机系统<strong>运用数据 + 统计方法</strong>来提高性能。</p>
+
+  <h3>1.2 把「学习」形式化</h3>
+  <p>课件用一套符号把学习写清楚，请记住这几个字母：</p>
+  <dl class="kv">
+    <dt>输入 x ∈ X</dt><dd>样本的特征（比如一封邮件的词频向量）。</dd>
+    <dt>输出 y ∈ Y</dt><dd>标签（比如「垃圾邮件 / 正常」）。</dd>
+    <dt>真实映射 f: X→Y</dt><dd>老天爷手里那个「正确答案函数」，<strong>我们看不到</strong>。</dd>
+    <dt>训练集 T</dt><dd>$T=\{(x_1,y_1),\dots,(x_n,y_n)\}$，由 $f$ 产生（可能带噪音）。</dd>
+    <dt>假设空间 H</dt><dd>我们允许的所有候选函数的集合 $H=\{h_k\}$。</dd>
+    <dt>学到的函数 g ∈ H</dt><dd>算法最终挑出的那个，希望 $g\approx f$。</dd>
+    <dt>学习算法 A</dt><dd>负责从 $H$ 里挑 $g$ 的程序。</dd>
+  </dl>
+  <p>一句话总览：<strong>学习算法 A 根据训练集 T，从假设空间 H 中挑一个最好的 $g\approx f$。</strong></p>
+
+  <figure>
+  <svg viewBox="0 0 700 200" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="ar" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#9c2b1b"/></marker></defs>
+    <rect x="20" y="70" width="170" height="60" rx="8" fill="#efe7d6" stroke="#d8ccb3"/>
+    <text x="105" y="95" text-anchor="middle" font-size="15" fill="#1a1714">训练集 T</text>
+    <text x="105" y="116" text-anchor="middle" font-size="12" fill="#6a5d49">{(x₁,y₁),…,(xₙ,yₙ)}</text>
+    <ellipse cx="350" cy="100" rx="78" ry="42" fill="#eaf3f0" stroke="#1f5e54"/>
+    <text x="350" y="96" text-anchor="middle" font-size="15" fill="#1f5e54">学习算法 A</text>
+    <text x="350" y="116" text-anchor="middle" font-size="11" fill="#6a5d49">从 H 中挑选</text>
+    <rect x="510" y="70" width="170" height="60" rx="8" fill="#fbf4e3" stroke="#b08838"/>
+    <text x="595" y="95" text-anchor="middle" font-size="15" fill="#1a1714">学到的函数</text>
+    <text x="595" y="116" text-anchor="middle" font-size="14" fill="#9c2b1b">g ≈ f</text>
+    <ellipse cx="350" cy="185" rx="62" ry="12" fill="#efe7d6" stroke="#d8ccb3"/>
+    <text x="350" y="189" text-anchor="middle" font-size="13" fill="#1a1714">假设空间 H</text>
+    <line x1="192" y1="100" x2="268" y2="100" stroke="#9c2b1b" stroke-width="2" marker-end="url(#ar)"/>
+    <line x1="430" y1="100" x2="506" y2="100" stroke="#9c2b1b" stroke-width="2" marker-end="url(#ar)"/>
+    <line x1="350" y1="172" x2="350" y2="146" stroke="#9c2b1b" stroke-width="2" marker-end="url(#ar)"/>
+  </svg>
+  <figcaption>机器学习的基本框架：数据进，模型出。</figcaption>
+  </figure>
+
+  <h3>1.3 PAC 学习（可能近似正确）—— 了解即可</h3>
+  <p><em class="term">PAC（Probably Approximately Correct）</em> 是「学得好」的严格定义。直白翻译：</p>
+  <div class="box intuit">
+    <span class="tag">人话翻译</span>
+    给两个小数 $\epsilon,\delta\in(0,1)$。如果存在算法 $A$ 和一个样本量函数 $n(\epsilon,\delta)$，使得：只要喂给 $A$ 这么多<strong>独立同分布(i.i.d.)</strong>样本，它输出的 $g$ 能做到——「犯错概率 $\mathbb{E}[f(x)\ne g(x)]\le\epsilon$（<strong>近似正确</strong>），而且这件好事至少以 $1-\delta$ 的概率发生（<strong>可能</strong>）」——那就说这个假设类 $H$ 是「PAC 可学习」的。两个词组合起来：「<strong>很可能</strong>（$1-\delta$）<strong>大致正确</strong>（$\le\epsilon$）」。
+  </div>
+
+  <h3>1.4 统计学习三要素（高频概念题）</h3>
+  <table>
+    <tr><th>要素</th><th>回答什么问题</th><th>具体内容</th></tr>
+    <tr><td><strong>模型</strong></td><td>学什么样的模型？</td><td>条件概率分布 $P(y|x)$ 或 决策函数 $y=f(x)$</td></tr>
+    <tr><td><strong>策略</strong></td><td>用什么准则挑模型？</td><td>经验风险最小化、结构风险最小化</td></tr>
+    <tr><td><strong>算法</strong></td><td>怎么把模型学出来？</td><td>一般归结为一个最优化问题</td></tr>
+  </table>
+  <div class="box note">
+    <span class="tag">两个风险的区别</span>
+    <strong>经验风险</strong>＝模型在训练集上的平均损失（追求「背熟」）；<strong>结构风险</strong>＝经验风险 ＋ 正则项（再加一句「别太复杂」，防止过拟合）。SVM 里 $\tfrac12\|w\|^2$ 就是结构风险中的正则项，而软间隔的 $C\sum\xi_i$ 就是经验风险部分——你看，三要素其实就藏在 SVM 的目标函数里。
+  </div>
+  <p>分类维度还要记：<strong>监督学习</strong>（有标签）、<strong>无监督学习</strong>（无标签，如聚类）、<strong>半监督</strong>（少量标签）、<strong>弱监督</strong>（标签粗糙/带噪）。SVM 属于监督学习里的<strong>分类模型</strong>。</p>
+  <a class="back" href="#s0">↑ 回目录</a>
+</section>
+
+<hr class="fancy">
+
+<!-- ============ 2 ============ -->
+<section id="s2">
+  <div class="sec-num">SECTION 02</div>
+  <h2 class="sec">SVM 的直觉：为什么偏偏要「最大间隔」</h2>
+  <p>想象黑板上有一堆🔴红点（正类）和🟡黄点（负类），它们能被一条直线分开。问题是：<strong>能分开的直线有无数条</strong>（课件里画的 A、B、C、D 都行），到底选哪条？</p>
+
+  <figure>
+  <svg viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg">
+    <!-- axes -->
+    <line x1="40" y1="290" x2="660" y2="290" stroke="#888" stroke-width="1.5"/>
+    <line x1="60" y1="20" x2="60" y2="290" stroke="#888" stroke-width="1.5"/>
+    <!-- yellow (neg) lower-left -->
+    <g fill="#e6a817" stroke="#9c6b00">
+      <circle cx="120" cy="220" r="9"/><circle cx="160" cy="255" r="9"/><circle cx="200" cy="200" r="9"/>
+      <circle cx="170" cy="190" r="9"/><circle cx="230" cy="240" r="9"/><circle cx="135" cy="175" r="9"/>
+    </g>
+    <!-- red (pos) upper-right -->
+    <g fill="#c0392b" stroke="#7a1d12">
+      <rect x="450" y="90" width="16" height="16"/><rect x="520" y="120" width="16" height="16"/>
+      <rect x="500" y="60" width="16" height="16"/><rect x="560" y="160" width="16" height="16"/>
+      <rect x="430" y="150" width="16" height="16"/><rect x="590" y="110" width="16" height="16"/>
+    </g>
+    <!-- candidate lines -->
+    <line x1="250" y1="40" x2="330" y2="290" stroke="#bbb" stroke-width="2"/>
+    <text x="248" y="34" font-size="13" fill="#888">A</text>
+    <line x1="300" y1="40" x2="420" y2="290" stroke="#bbb" stroke-width="2"/>
+    <text x="298" y="34" font-size="13" fill="#888">B（歪，离黄点太近）</text>
+    <!-- best line -->
+    <line x1="370" y1="40" x2="300" y2="290" stroke="#9c2b1b" stroke-width="3.5"/>
+    <!-- margins -->
+    <line x1="320" y1="40" x2="250" y2="290" stroke="#9c2b1b" stroke-width="1.5" stroke-dasharray="6 5"/>
+    <line x1="420" y1="40" x2="350" y2="290" stroke="#9c2b1b" stroke-width="1.5" stroke-dasharray="6 5"/>
+    <text x="378" y="34" font-size="13" fill="#9c2b1b" font-weight="bold">最大间隔分类器 ✓</text>
+    <!-- margin arrow -->
+    <line x1="300" y1="200" x2="372" y2="200" stroke="#1f5e54" stroke-width="2"/>
+    <text x="336" y="193" text-anchor="middle" font-size="12" fill="#1f5e54">间隔</text>
+  </svg>
+  <figcaption>同样能分开，SVM 选「两侧空地最宽」的那条红线——离最近的点最远。</figcaption>
+  </figure>
+
+  <div class="box intuit">
+    <span class="tag">核心直觉</span>
+    SVM 的答案是：<strong>选那条「两边留白最宽」的线</strong>。两边留白越宽，意味着这条线离两类点都「绰绰有余」，将来来一个新点，哪怕有点噪声抖动，也不容易被分错——<strong>泛化能力最好</strong>。这条「留白宽度」就叫 <em class="term">间隔（margin）</em>。SVM ＝ 间隔最大化的线性分类器。
+  </div>
+  <p>那些<strong>恰好压在留白边界上、决定了这条线位置的点</strong>，就叫 <em class="term">支持向量（support vector）</em>。神奇之处在于：只有支持向量起作用，把其它点删掉，最优线纹丝不动。这就是「支持」二字的由来。</p>
+  <a class="back" href="#s2">↑ 回目录</a>
+</section>
+
+<!-- ============ 3 ============ -->
+<section id="s3">
+  <div class="sec-num">SECTION 03</div>
+  <h2 class="sec">数学准备：点到直线（超平面）的距离</h2>
+  <p>这是后面所有推导的地基，务必弄懂。</p>
+  <p>一条分界线（高维叫<em class="term">超平面</em>）写成：</p>
+  <div class="fml">$$ w\cdot x + b = 0 $$</div>
+  <p>这里 $w$ 是法向量（垂直于这条线的方向），$b$ 是偏置。$w\cdot x$ 表示<strong>内积</strong>（对应分量相乘再相加）。</p>
+  <p>任意一点 $x$ 到这条线的<strong>几何距离</strong>是：</p>
+  <div class="fml">$$ \text{距离} = \frac{|w\cdot x + b|}{\|w\|} $$</div>
+  <p>其中 $\|w\|=\sqrt{w\cdot w}$ 是向量长度。分子的绝对值带不带号，决定了点在线的哪一侧。</p>
+
+  <h3>3.1 用标签 y 巧妙去掉绝对值</h3>
+  <p>规定正类 $y=+1$、负类 $y=-1$。若分类正确，正类点满足 $w\cdot x+b>0$，负类点满足 $w\cdot x+b<0$。于是<strong>「标签 × 分数」总是正的</strong>：</p>
+  <div class="fml">$$ y(w\cdot x+b) > 0 \quad(\text{分类正确时}) $$</div>
+  <p>因此可以用 $y(w\cdot x+b)$ 代替 $|w\cdot x+b|$。我们定义：</p>
+  <div class="kv">
+    <dt>函数间隔</dt><dd>$\hat\gamma_i = y_i(w\cdot x_i+b)$（没除以 $\|w\|$，会随 $w,b$ 放大缩小）</dd>
+    <dt>几何间隔</dt><dd>$\gamma_i = \dfrac{y_i(w\cdot x_i+b)}{\|w\|}$（真实物理距离，不受缩放影响）</dd>
+  </div>
+  <p>整个数据集的间隔 ＝ 离线最近那个点的间隔：$\gamma=\min_i \gamma_i$。SVM 要做的就是 <strong>最大化这个 $\gamma$</strong>。</p>
+  <a class="back" href="#s3">↑ 回目录</a>
+</section>
+
+<!-- ============ 4 ============ -->
+<section id="s4">
+  <div class="sec-num">SECTION 04</div>
+  <h2 class="sec">线性可分 SVM 的优化问题（从间隔到二次规划）</h2>
+  <p>这一节把「最大化间隔」这句话，一步步翻译成一个可以求解的数学问题。跟着走五步：</p>
+
+  <ol class="steps">
+    <li><strong>原始目标：</strong>最大化几何间隔 $\gamma$，并要求每个点的几何间隔都 $\ge\gamma$。
+      <div class="fml">$$\max_{w,b}\ \gamma\qquad \text{s.t.}\ \ y_i\!\left(\tfrac{w}{\|w\|}\cdot x_i+\tfrac{b}{\|w\|}\right)\ge\gamma$$</div>
+    </li>
+    <li><strong>换成函数间隔：</strong>注意 $\gamma=\hat\gamma/\|w\|$，代入后目标变成 $\max\ \hat\gamma/\|w\|$。
+    </li>
+    <li><strong>利用「可缩放」：</strong>函数间隔 $\hat\gamma$ 可以随意按比例缩放 $w,b$ 而不改变那条线本身。所以干脆<strong>令 $\hat\gamma=1$</strong>（把尺子标准化）。此时支持向量恰好满足 $y_i(w\cdot x_i+b)=1$。
+    </li>
+    <li><strong>翻转目标：</strong>最大化 $\dfrac{1}{\|w\|}$ ⟺ 最小化 $\|w\|$ ⟺ 最小化 $\dfrac12\|w\|^2$（加平方和 $\tfrac12$ 是为了求导方便，不影响最优解）。
+    </li>
+    <li><strong>得到标准形（原始问题 / Primal）：</strong>
+      <div class="fml">$$\min_{w,b}\ \frac12\|w\|^2 \qquad \text{s.t.}\ \ y_i(w\cdot x_i+b)\ge 1,\ \ i=1,\dots,N$$</div>
+    </li>
+  </ol>
+
+  <div class="box note">
+    <span class="tag">这是什么类型的问题</span>
+    目标 $\tfrac12\|w\|^2$ 是二次的、凸的；约束是线性不等式。所以这是一个 <strong>凸二次规划（convex QP）</strong>问题，<strong>有唯一的全局最优解</strong>。这点很重要：SVM 不会像神经网络那样陷入局部最优。
+  </div>
+  <p>几何上，间隔的宽度恰好是 $\dfrac{2}{\|w\|}$（两条边界线 $w\cdot x+b=\pm1$ 之间的距离），所以「最小化 $\|w\|$」＝「最大化间隔 $\tfrac{2}{\|w\|}$」。</p>
+
+  <figure>
+  <svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg">
+    <line x1="40" y1="270" x2="660" y2="270" stroke="#888"/>
+    <line x1="60" y1="20" x2="60" y2="270" stroke="#888"/>
+    <line x1="200" y1="30" x2="420" y2="270" stroke="#9c2b1b" stroke-width="3"/>
+    <text x="150" y="40" font-size="14" fill="#9c2b1b">w·x+b=0</text>
+    <line x1="290" y1="30" x2="510" y2="270" stroke="#666" stroke-width="1.5" stroke-dasharray="7 5"/>
+    <text x="520" y="60" font-size="13" fill="#444">w·x+b=+1</text>
+    <line x1="110" y1="30" x2="330" y2="270" stroke="#666" stroke-width="1.5" stroke-dasharray="7 5"/>
+    <text x="70" y="60" font-size="13" fill="#444">w·x+b=−1</text>
+    <g fill="#e6a817" stroke="#9c6b00">
+      <circle cx="150" cy="170" r="9"/><circle cx="130" cy="220" r="9"/><circle cx="200" cy="240" r="9"/>
+      <circle cx="220" cy="140" r="9" stroke="#9c2b1b" stroke-width="2.5"/>
+      <circle cx="248" cy="205" r="9" stroke="#9c2b1b" stroke-width="2.5"/>
+    </g>
+    <g fill="#c0392b" stroke="#7a1d12">
+      <rect x="470" y="100" width="16" height="16"/><rect x="540" y="150" width="16" height="16"/>
+      <rect x="372" y="118" width="16" height="16" stroke="#1f5e54" stroke-width="2.5"/>
+      <rect x="430" y="178" width="16" height="16" stroke="#1f5e54" stroke-width="2.5"/>
+    </g>
+    <line x1="330" y1="170" x2="420" y2="170" stroke="#1f5e54" stroke-width="2.5"/>
+    <text x="375" y="162" text-anchor="middle" font-size="13" fill="#1f5e54">2/‖w‖</text>
+    <text x="245" y="125" font-size="11" fill="#9c2b1b">支持向量</text>
+  </svg>
+  <figcaption>圈出来的点压在虚线（间隔边界）上，就是支持向量；中间实线是最终分界面。</figcaption>
+  </figure>
+  <a class="back" href="#s4">↑ 回目录</a>
+</section>
+
+<!-- ============ 5 ============ -->
+<section id="s5">
+  <div class="sec-num">SECTION 05</div>
+  <h2 class="sec">拉格朗日 → 对偶 → KKT（全章最核心的机制）</h2>
+  <p class="lead">直接解上面那个带约束的问题不方便。SVM 用了一招「乾坤大挪移」，把它变成另一个等价、但更好解、还能引入核函数的<strong>对偶问题</strong>。这一节是理解全章的钥匙，慢慢看。</p>
+
+  <h3>5.1 第一步：拉格朗日函数（把约束「吸收」进目标）</h3>
+  <p>对每个不等式约束 $1-y_i(w\cdot x_i+b)\le 0$，配一个非负的<em class="term">拉格朗日乘子</em> $\alpha_i\ge0$，把约束揉进目标函数：</p>
+  <div class="fml">$$ L(w,b,\alpha)=\frac12\|w\|^2+\sum_{i=1}^{N}\alpha_i\big[\,1-y_i(w\cdot x_i+b)\,\big] $$</div>
+  <p>直觉：$\alpha_i$ 像一个「罚款管理员」。如果某点违反约束（$1-y_i(\cdot)>0$），管理员就把 $\alpha_i$ 调大来加重惩罚。</p>
+
+  <h3>5.2 第二步：为什么 $\min_{w,b}\max_\alpha L$ 等价于原问题</h3>
+  <p>先固定 $w,b$，对 $\alpha$ 求最大：</p>
+  <ul>
+    <li>若<strong>满足</strong>约束（$1-y_i(\cdot)\le0$）：括号是负的，乘以 $\alpha_i\ge0$ 后最大值在 $\alpha_i=0$ 取得，此时 $\max_\alpha L=\tfrac12\|w\|^2$。</li>
+    <li>若<strong>违反</strong>约束（括号为正）：把 $\alpha_i$ 调到 $+\infty$，$L$ 也飙到 $+\infty$。</li>
+  </ul>
+  <p>所以 $\max_\alpha L = \begin{cases}\tfrac12\|w\|^2,&\text{满足约束}\\ +\infty,&\text{违反约束}\end{cases}$。再对它求 $\min_{w,b}$，违反约束的 $+\infty$ 自动被淘汰——于是 $\min_{w,b}\max_\alpha L$ 与原始问题<strong>完全等价</strong>。</p>
+
+  <h3>5.3 第三步：交换 min/max，得到对偶问题</h3>
+  <p>把 $\min\max$ 换成 $\max\min$，得到<em class="term">对偶问题</em>：</p>
+  <div class="fml">$$ \min_{w,b}\max_{\alpha}L \ \xrightarrow{\text{对偶}}\ \max_{\alpha}\min_{w,b}L $$</div>
+  <p>一般地总有 $\max_\alpha\min_{w,b}L \le \min_{w,b}\max_\alpha L$（弱对偶，min-max 不等式）。但当问题是凸的、且满足 <em class="term">KKT 条件</em>时，<strong>等号成立</strong>（强对偶），两个问题答案相同。SVM 恰好满足，所以我们可以放心地<strong>转去解更简单的对偶问题</strong>。</p>
+
+  <div class="box note">
+    <span class="tag">KKT 条件（求解的总开关）</span>
+    在最优点，下面几条必须同时成立（$i=1,\dots,N$）：
+    <div class="fml">$$\begin{aligned}
+    &\nabla_{w,b}\,L=0 &&\text{(梯度为零)}\\
+    &\alpha_i\big[\,1-y_i(w\cdot x_i+b)\,\big]=0 &&\text{(互补松弛 ★最关键)}\\
+    &1-y_i(w\cdot x_i+b)\le0 &&\text{(原约束)}\\
+    &\alpha_i\ge0 &&\text{(乘子非负)}
+    \end{aligned}$$</div>
+    带★那条「互补松弛」是判定支持向量的依据，见 6.3。
+  </div>
+
+  <h3>5.4 第四步：对 w、b 求偏导，消掉它们</h3>
+  <p>解内层 $\min_{w,b}$：令 $L$ 对 $w,b$ 的偏导为 0：</p>
+  <div class="fml">$$ \frac{\partial L}{\partial w}=0\Rightarrow w=\sum_{i=1}^N\alpha_i y_i x_i,\qquad \frac{\partial L}{\partial b}=0\Rightarrow \sum_{i=1}^N\alpha_i y_i=0 $$</div>
+  <p>把这两个结果代回 $L$，神奇的事发生了：$w,b$ 全部消失，只剩下 $\alpha$。整理后得到<strong>对偶问题的最终形式</strong>（已把求极大加负号转成求极小）：</p>
+  <div class="fml">$$ \boxed{\ \min_{\alpha}\ \frac12\sum_{i=1}^N\sum_{j=1}^N \alpha_i\alpha_j y_i y_j (x_i\cdot x_j)\;-\;\sum_{i=1}^N\alpha_i\ }$$</div>
+  <div class="fml">$$ \text{s.t.}\quad \sum_{i=1}^N\alpha_i y_i=0,\qquad \alpha_i\ge0,\ i=1,\dots,N $$</div>
+
+  <div class="box intuit">
+    <span class="tag">为什么要费这么大劲转对偶</span>
+    三大好处，每条都要会背：<br>
+    ① 原问题变量是 $w$（维度 = 特征数），对偶问题变量是 $\alpha$（维度 = 样本数），<strong>把对维度的依赖换成了对样本数的依赖</strong>；<br>
+    ② 目标函数里样本只以<strong>内积 $x_i\cdot x_j$</strong> 的形式出现——这正是后面<strong>核技巧</strong>能插进来的入口；<br>
+    ③ 解出来后，只有支持向量的 $\alpha_i>0$，模型<strong>稀疏</strong>，预测只需用到少数几个点。
+  </div>
+  <a class="back" href="#s5">↑ 回目录</a>
+</section>
+
+<!-- ============ 6 ============ -->
+<section id="s6">
+  <div class="sec-num">SECTION 06</div>
+  <h2 class="sec">解出 α 之后：怎么算 w*、b*，谁是支持向量</h2>
+
+  <h3>6.1 求 $w^*$</h3>
+  <div class="fml">$$ w^*=\sum_{i=1}^N \alpha_i^* y_i x_i $$</div>
+  <p>只有 $\alpha_i^*>0$ 的项有贡献，所以 $w^*$ 实际上只是<strong>支持向量的加权和</strong>。</p>
+
+  <h3>6.2 求 $b^*$</h3>
+  <p>挑任意一个 $\alpha_j^*>0$ 的支持向量 $x_j$，它满足 $y_j(w^*\cdot x_j+b^*)=1$。两边乘 $y_j$（注意 $y_j^2=1$）解出：</p>
+  <div class="fml">$$ b^*=y_j-w^*\cdot x_j=y_j-\sum_{i=1}^N\alpha_i^* y_i\,(x_i\cdot x_j) $$</div>
+  <div class="box note"><span class="tag">小技巧</span>理论上用任一支持向量算 $b^*$ 结果都一样；考试时可以用<strong>两个不同支持向量各算一次，互相验证</strong>，对上了说明前面没算错。</div>
+
+  <h3>6.3 谁是支持向量（互补松弛的威力）</h3>
+  <p>由 KKT 的互补松弛 $\alpha_i[1-y_i(w\cdot x_i+b)]=0$：</p>
+  <ul>
+    <li>若 $\alpha_i=0$：该点对 $w$ 没贡献，是「路人」，离边界远。</li>
+    <li>若 $\alpha_i>0$：必有 $1-y_i(w\cdot x_i+b)=0$，即该点<strong>恰好压在间隔边界上</strong>。这就是<strong>支持向量</strong>。</li>
+  </ul>
+  <p>结论一句话：<strong>$\alpha_i>0$ 对应的样本 $x_i$ 就是支持向量。</strong></p>
+
+  <h3>6.4 最终分类器</h3>
+  <div class="fml">$$ \text{超平面}:\ w^*\cdot x+b^*=0,\qquad \text{决策函数}:\ f(x)=\operatorname{sign}(w^*\cdot x+b^*) $$</div>
+  <p>$\operatorname{sign}$ 取符号：算出来 $>0$ 判为 $+1$（正类），$<0$ 判为 $-1$（负类）。<strong>这就是给新点分类的最后一步。</strong></p>
+  <a class="back" href="#s6">↑ 回目录</a>
+</section>
+
+<hr class="fancy">
+
+<!-- ============ 7 ============ -->
+<section id="s7">
+  <div class="sec-num">SECTION 07</div>
+  <h2 class="sec">把流程走一遍：课件经典例题 (3,3)(4,3)(1,1)</h2>
+  <p>这是课件原题，也是<strong>线性可分</strong> SVM 的模板题。把它完整算一遍，第 11 节的真题就水到渠成。</p>
+  <div class="box exam"><span class="tag">题目</span>正例 $x_1=(3,3)^T,\ x_2=(4,3)^T$；负例 $x_3=(1,1)^T$。用对偶问题求线性可分 SVM。（$y_1=y_2=+1,\ y_3=-1$）</div>
+
+  <ol class="steps">
+    <li><strong>写出对偶目标。</strong>先算各内积 $x_i\cdot x_j$，代入 $\tfrac12\sum\sum\alpha_i\alpha_j y_i y_j(x_i\cdot x_j)-\sum\alpha_i$，展开得：
+      <div class="fml">$$\tfrac12\big(18\alpha_1^2+25\alpha_2^2+2\alpha_3^2+42\alpha_1\alpha_2-12\alpha_1\alpha_3-14\alpha_2\alpha_3\big)-\alpha_1-\alpha_2-\alpha_3$$</div>
+      约束：$\alpha_1+\alpha_2-\alpha_3=0$（即 $\sum\alpha_iy_i=0$），$\alpha_i\ge0$。
+    </li>
+    <li><strong>用约束消元。</strong>由 $\alpha_3=\alpha_1+\alpha_2$ 代入，记为
+      <div class="fml">$$s(\alpha_1,\alpha_2)=4\alpha_1^2+\tfrac{13}{2}\alpha_2^2+10\alpha_1\alpha_2-2\alpha_1-2\alpha_2$$</div>
+    </li>
+    <li><strong>求无约束极值。</strong>对 $\alpha_1,\alpha_2$ 求偏导置零，解得极值点 $(\tfrac32,-1)$。<strong>但 $\alpha_2=-1<0$ 违反 $\alpha_2\ge0$！</strong>说明最小值不在内部，<strong>必在边界上</strong>。
+    </li>
+    <li><strong>查边界。</strong>分别令 $\alpha_1=0$、$\alpha_2=0$：
+      <ul>
+        <li>$\alpha_1=0$：$s$ 在 $\alpha_2=\tfrac{2}{13}$ 取最小 $-\tfrac{2}{13}\approx-0.154$；</li>
+        <li>$\alpha_2=0$：$s$ 在 $\alpha_1=\tfrac14$ 取最小 $-\tfrac14=-0.25$。</li>
+      </ul>
+      比较：$-\tfrac14<-\tfrac{2}{13}$，所以最小在 $\alpha_1=\tfrac14,\ \alpha_2=0$。此时 $\alpha_3=\alpha_1+\alpha_2=\tfrac14$。
+    </li>
+    <li><strong>回代求参数。</strong> $\alpha_2=0$ 说明 $x_2$ 不是支持向量；$\alpha_1,\alpha_3>0$ 说明 $x_1,x_3$ 是支持向量。
+      <div class="fml">$$w^*=\alpha_1y_1x_1+\alpha_3y_3x_3=\tfrac14(3,3)-\tfrac14(1,1)=\left(\tfrac12,\tfrac12\right)$$</div>
+      用支持向量 $x_1$（$y_1=1$）求 $b^*$：$b^*=y_1-w^*\cdot x_1=1-(\tfrac12\cdot3+\tfrac12\cdot3)=1-3=-2$。
+    </li>
+  </ol>
+  <p><strong>结果：</strong>分离超平面 $\tfrac12 x^{(1)}+\tfrac12 x^{(2)}-2=0$，决策函数 $f(x)=\operatorname{sign}\!\big(\tfrac12 x^{(1)}+\tfrac12 x^{(2)}-2\big)$。</p>
+  <div class="box warn"><span class="tag">本题最值得记的套路</span>三个点时，对偶目标只剩 1~2 个变量，<strong>求偏导得到的内部极值点常常违反 $\alpha\ge0$</strong>，这时一定要<strong>转到边界（令某个 $\alpha=0$）逐个比较</strong>。这正是 2021 真题的考点核心。</div>
+  <a class="back" href="#s7">↑ 回目录</a>
+</section>
+
+<!-- ============ 8 ============ -->
+<section id="s8">
+  <div class="sec-num">SECTION 08</div>
+  <h2 class="sec">线性 SVM：软间隔（松弛变量 ξ 与惩罚参数 C）</h2>
+  <p>现实里数据常常<strong>大体可分，但混进几个「捣乱」的点</strong>，硬要画一条线 100% 分对反而会被噪声带歪。解决办法：允许少数点「越界」，但要付出代价。</p>
+
+  <h3>8.1 引入松弛变量 ξ</h3>
+  <p>给每个点配一个 $\xi_i\ge0$，把硬约束放松成：</p>
+  <div class="fml">$$ y_i(w\cdot x_i+b)\ge 1-\xi_i,\qquad \xi_i\ge0 $$</div>
+  <p>$\xi_i$ 衡量「这个点越界了多少」：$\xi_i=0$ 表示老实待在边界外；$\xi_i>0$ 表示越了界。</p>
+
+  <h3>8.2 加惩罚项，得到软间隔目标</h3>
+  <div class="fml">$$ \min_{w,b,\xi}\ \frac12\|w\|^2+C\sum_{i=1}^N\xi_i \qquad \text{s.t.}\ \ y_i(w\cdot x_i+b)\ge1-\xi_i,\ \xi_i\ge0 $$</div>
+  <p>这叫<em class="term">软间隔最大化</em>。$C>0$ 是<strong>惩罚参数</strong>，调和「间隔尽量大」与「错分尽量少」两个目标：</p>
+  <table>
+    <tr><th>C 取值</th><th>含义</th><th>后果</th></tr>
+    <tr><td>C 大</td><td>对错分惩罚重</td><td>尽量分对每个点 → 间隔窄，易过拟合</td></tr>
+    <tr><td>C 小</td><td>对错分惩罚轻</td><td>容忍更多错分 → 间隔宽，易欠拟合</td></tr>
+  </table>
+
+  <h3>8.3 软间隔的对偶问题（只改一处）</h3>
+  <p>推导几乎和硬间隔一样，结果只是把 $\alpha_i\ge0$ 变成了<strong>有上界</strong>：</p>
+  <div class="fml">$$ \min_{\alpha}\ \frac12\sum_i\sum_j\alpha_i\alpha_j y_iy_j(x_i\cdot x_j)-\sum_i\alpha_i,\quad \text{s.t.}\ \sum_i\alpha_iy_i=0,\ \boxed{0\le\alpha_i\le C} $$</div>
+  <p>求 $b^*$ 时要挑一个<strong>严格在内部</strong>的支持向量（$0<\alpha_j^*<C$）。软间隔的支持向量按位置分几类（概念题可能问）：</p>
+  <ul>
+    <li>$\alpha_i^*<C$（$\xi_i=0$）：恰在间隔边界上；</li>
+    <li>$\alpha_i^*=C,\ 0<\xi_i<1$：分类正确，但落在边界与超平面之间；</li>
+    <li>$\alpha_i^*=C,\ \xi_i=1$：正好落在超平面上；</li>
+    <li>$\alpha_i^*=C,\ \xi_i>1$：被分错，落在超平面另一侧。</li>
+  </ul>
+  <a class="back" href="#s8">↑ 回目录</a>
+</section>
+
+<!-- ============ 9 ============ -->
+<section id="s9">
+  <div class="sec-num">SECTION 09</div>
+  <h2 class="sec">非线性 SVM 与核技巧（真题的主战场）</h2>
+  <p class="lead">有些数据怎么画直线都分不开（比如一类点围成圈，另一类在圈内）。思路：<strong>先把点映射到更高维空间，在那里它们就线性可分了</strong>，再用前面的线性 SVM 去分。</p>
+
+  <figure>
+  <svg viewBox="0 0 700 230" xmlns="http://www.w3.org/2000/svg">
+    <!-- 1D not separable -->
+    <line x1="40" y1="120" x2="300" y2="120" stroke="#888"/>
+    <text x="290" y="140" font-size="13" fill="#888">x₁</text>
+    <circle cx="80" cy="120" r="8" fill="#e6743a"/><rect x="130" y="112" width="16" height="16" fill="#7a2b1a"/>
+    <rect x="165" y="112" width="16" height="16" fill="#7a2b1a"/><rect x="200" y="112" width="16" height="16" fill="#7a2b1a"/>
+    <circle cx="255" cy="120" r="8" fill="#e6743a"/>
+    <text x="50" y="170" font-size="13" fill="#444">一维：圆点夹着方点，无法用一个点分开</text>
+    <!-- arrow -->
+    <text x="335" y="115" font-size="30" fill="#9c2b1b">⇒</text>
+    <text x="320" y="145" font-size="11" fill="#9c2b1b">x₂=x₁²</text>
+    <!-- 2D separable -->
+    <line x1="430" y1="200" x2="680" y2="200" stroke="#888"/><line x1="450" y1="30" x2="450" y2="200" stroke="#888"/>
+    <text x="670" y="220" font-size="13" fill="#888">x₁</text><text x="430" y="40" font-size="13" fill="#888">x₂</text>
+    <circle cx="490" cy="60" r="8" fill="#e6743a"/><circle cx="650" cy="60" r="8" fill="#e6743a"/>
+    <rect x="530" y="130" width="16" height="16" fill="#7a2b1a"/><rect x="600" y="130" width="16" height="16" fill="#7a2b1a"/>
+    <rect x="565" y="172" width="16" height="16" fill="#7a2b1a"/>
+    <line x1="455" y1="105" x2="680" y2="105" stroke="#1f9e6b" stroke-width="3" stroke-dasharray="9 6"/>
+    <text x="470" y="100" font-size="11" fill="#1f9e6b">升维后一条直线就分开了</text>
+  </svg>
+  <figcaption>把一维点按 $x_2=x_1^2$ 抬到二维，原本分不开的点变得线性可分。</figcaption>
+  </figure>
+
+  <h3>9.1 映射 φ 与「维度爆炸」难题</h3>
+  <p>记映射 $\phi(x):X\to H$（把低维点送到高维特征空间）。在新空间做线性 SVM，对偶目标里出现的就是 $\phi(x_i)\cdot\phi(x_j)$。<strong>问题：</strong>高维空间维度可能极大甚至无穷，直接算 $\phi$ 再做内积会「维度爆炸」。</p>
+
+  <h3>9.2 核技巧：绕开 φ，直接算内积</h3>
+  <p><strong>核函数定义：</strong>若存在映射 $\phi$，使对所有 $x,z$ 都有</p>
+  <div class="fml">$$ K(x,z)=\phi(x)\cdot\phi(z) $$</div>
+  <p>则称 $K$ 为<em class="term">核函数</em>。妙处在于：<strong>我们只需要内积的结果 $K(x,z)$，根本不必真的求出 $\phi$！</strong> 把对偶问题里所有 $x_i\cdot x_j$ 换成 $K(x_i,x_j)$ 即可，计算量回到低维。</p>
+
+  <details>
+    <summary>展开看：为什么 $K(x,z)=(x\cdot z)^2$ 暗含一个二维→三维映射</summary>
+    <p>设 $x=(x^{(1)},x^{(2)}),\ z=(z^{(1)},z^{(2)})$，则</p>
+    <div class="fml">$$(x\cdot z)^2=(x^{(1)}z^{(1)}+x^{(2)}z^{(2)})^2=(x^{(1)}z^{(1)})^2+2x^{(1)}z^{(1)}x^{(2)}z^{(2)}+(x^{(2)}z^{(2)})^2$$</div>
+    <p>它正好等于 $\phi(x)\cdot\phi(z)$，其中 $\phi(x)=\big((x^{(1)})^2,\ \sqrt2\,x^{(1)}x^{(2)},\ (x^{(2)})^2\big)^T$。可见 $\phi$ 并不唯一（也可取四维版本），但内积结果都一样——所以我们干脆只关心 $K$。</p>
+  </details>
+
+  <h3>9.3 非线性 SVM 算法（把内积全换成 K）</h3>
+  <div class="fml">$$ \min_{\alpha}\ \frac12\sum_i\sum_j\alpha_i\alpha_j y_iy_j\,K(x_i,x_j)-\sum_i\alpha_i,\quad \text{s.t.}\ \sum_i\alpha_iy_i=0,\ 0\le\alpha_i\le C $$</div>
+  <p>解得 $\alpha^*$ 后，选一个 $0<\alpha_j^*<C$（硬间隔时只要 $\alpha_j^*>0$）计算：</p>
+  <div class="fml">$$ b^*=y_j-\sum_{i=1}^N\alpha_i^* y_i\,K(x_i,x_j) $$</div>
+  <p>最终<strong>决策函数（注意：用 $K$，不需要显式 $w$）</strong>：</p>
+  <div class="fml">$$ \boxed{\ f(x)=\operatorname{sign}\!\Big(\sum_{i=1}^N \alpha_i^* y_i\,K(x_i,x)+b^*\Big)\ } $$</div>
+  <div class="box warn"><span class="tag">易错点</span>非线性情形下，给新点分类要用<strong>上面这个核展开式</strong>，<strong>不要</strong>去算 $w^*\cdot x+b^*$（因为 $w^*$ 活在高维空间，一般写不出来）。这是真题第 3 题最后一步的关键。</div>
+  <a class="back" href="#s9">↑ 回目录</a>
+</section>
+
+<!-- ============ 10 ============ -->
+<section id="s10">
+  <div class="sec-num">SECTION 10</div>
+  <h2 class="sec">常用核函数 & σ 对拟合的影响</h2>
+  <table>
+    <tr><th>核函数</th><th>公式</th><th>特点</th></tr>
+    <tr><td>多项式核</td><td>$K(x,z)=(x\cdot z+1)^p$</td><td>$p$ 越大越能拟合复杂边界（真题用的 $(1+x^Ty)^2$ 就是 $p=2$ 版本）</td></tr>
+    <tr><td>高斯核 (RBF)</td><td>$K(x,z)=\exp\!\big(-\dfrac{\|x-z\|^2}{2\sigma^2}\big)$</td><td>最常用；隐含无穷维映射</td></tr>
+  </table>
+  <p>高斯核里的 $\sigma$ 控制「每个点的影响半径」，直接决定拟合程度：</p>
+  <ul>
+    <li><strong>σ 大</strong> → 边界过于平滑 → <strong>欠拟合</strong>（连训练点都分不准）；</li>
+    <li><strong>σ 小</strong> → 每个点自成一圈 → <strong>过拟合</strong>（把噪声也学进去了）；</li>
+    <li><strong>σ 合适</strong> → <strong>恰拟合</strong>，边界平滑又准确。</li>
+  </ul>
+  <div class="box note"><span class="tag">类比记忆</span>$\sigma$ 之于高斯核，就像软间隔里的 $C$——都是控制「模型复杂度 / 拟合程度」的旋钮，调过头就过拟合或欠拟合。</div>
+  <a class="back" href="#s10">↑ 回目录</a>
+</section>
+
+<hr class="fancy">
+
+<!-- ============ 11 ============ -->
+<section id="s11">
+  <div class="sec-num">SECTION 11 · ★必考</div>
+  <h2 class="sec">2021 真题第 3 题：非线性 SVM 全程求解</h2>
+  <div class="box exam"><span class="tag">原题</span>
+    正例 $x_1=(0,0)^T$；负例 $x_2=(1,1)^T,\ x_3=(-1,-1)^T$。核函数 $K(x,y)=(1+x^T y)^2$。求 SVM 参数，并给出 $(0,1)^T$ 的分类。<br>（标签：$y_1=+1,\ y_2=-1,\ y_3=-1$）
+  </div>
+  <p>这就是第 9 节流水线的实战。一步步来，每一步都给出数字。</p>
+
+  <ol class="steps">
+    <li><strong>算核矩阵 $K(x_i,x_j)$。</strong>先算内积 $x_i^Tx_j$，再套 $(1+\cdot)^2$：
+      <div class="fml">$$\begin{aligned}
+      &K_{11}=(1+0)^2=1,\quad K_{12}=(1+0)^2=1,\quad K_{13}=(1+0)^2=1\\
+      &K_{22}=(1+2)^2=9,\quad K_{23}=(1+(-2))^2=1,\quad K_{33}=(1+2)^2=9
+      \end{aligned}$$</div>
+      （例如 $x_2^Tx_2=1\!\cdot\!1+1\!\cdot\!1=2$，故 $K_{22}=(1+2)^2=9$；$x_2^Tx_3=1\!\cdot\!(-1)+1\!\cdot\!(-1)=-2$，故 $K_{23}=(1-2)^2=1$。）
+    </li>
+    <li><strong>写对偶目标。</strong>代入 $\tfrac12\sum_i\sum_j\alpha_i\alpha_j y_iy_jK_{ij}-\sum_i\alpha_i$。注意 $y_1y_2=y_1y_3=-1,\ y_2y_3=+1$：
+      <div class="fml">$$W=\tfrac12\big(\alpha_1^2+9\alpha_2^2+9\alpha_3^2-2\alpha_1\alpha_2-2\alpha_1\alpha_3+2\alpha_2\alpha_3\big)-(\alpha_1+\alpha_2+\alpha_3)$$</div>
+      约束：$\alpha_1y_1+\alpha_2y_2+\alpha_3y_3=0\Rightarrow \alpha_1-\alpha_2-\alpha_3=0\Rightarrow \boxed{\alpha_1=\alpha_2+\alpha_3}$，且 $\alpha_i\ge0$。
+    </li>
+    <li><strong>消元代入。</strong>把 $\alpha_1=\alpha_2+\alpha_3$ 代进去（含 $\alpha_1$ 的项全部展开）。逐项合并后，交叉项 $\alpha_2\alpha_3$ 的系数恰好抵消为 0，只剩平方项：
+      <div class="fml">$$W(\alpha_2,\alpha_3)=4\alpha_2^2+4\alpha_3^2-2\alpha_2-2\alpha_3$$</div>
+      <details><summary>展开看这步的合并细节</summary>
+      <p>方括号内代入后：$\alpha_1^2=\alpha_2^2+2\alpha_2\alpha_3+\alpha_3^2$；$-2\alpha_1\alpha_2=-2\alpha_2^2-2\alpha_2\alpha_3$；$-2\alpha_1\alpha_3=-2\alpha_2\alpha_3-2\alpha_3^2$。把这些和 $+9\alpha_2^2+9\alpha_3^2+2\alpha_2\alpha_3$ 相加：$\alpha_2^2$ 系数 $=1+9-2=8$；$\alpha_3^2$ 系数 $=1+9-2=8$；$\alpha_2\alpha_3$ 系数 $=2-2-2+2=0$。所以方括号 $=8\alpha_2^2+8\alpha_3^2$，乘 $\tfrac12$ 得 $4\alpha_2^2+4\alpha_3^2$。线性项 $\alpha_1+\alpha_2+\alpha_3=2\alpha_2+2\alpha_3$。合起来即上式。</p>
+      </details>
+    </li>
+    <li><strong>求极小。</strong>这次两变量解耦，分别求偏导置零：
+      <div class="fml">$$\frac{\partial W}{\partial\alpha_2}=8\alpha_2-2=0\Rightarrow\alpha_2=\tfrac14,\qquad \frac{\partial W}{\partial\alpha_3}=8\alpha_3-2=0\Rightarrow\alpha_3=\tfrac14$$</div>
+      两者都 $\ge0$，满足约束（不像课件例题那样跑到边界），可直接采用。再由约束 $\alpha_1=\alpha_2+\alpha_3=\tfrac12$。
+      <div class="fml">$$\boxed{\ \alpha^*=\left(\tfrac12,\ \tfrac14,\ \tfrac14\right)\ }\quad\text{三个点 }\alpha_i^*>0\text{，全是支持向量。}$$</div>
+    </li>
+    <li><strong>求 $b^*$。</strong>用支持向量 $x_1$（$y_1=+1$）：$b^*=y_1-\sum_i\alpha_i^* y_i K(x_i,x_1)$。
+      <div class="fml">$$\sum_i\alpha_i^*y_iK(x_i,x_1)=\tfrac12(1)(1)+\tfrac14(-1)(1)+\tfrac14(-1)(1)=\tfrac12-\tfrac14-\tfrac14=0$$</div>
+      所以 $b^*=1-0=\boxed{1}$。
+      <div class="box note"><span class="tag">验算</span>用 $x_2$（$y_2=-1$）：$\sum=\tfrac12(1)(1)+\tfrac14(-1)(9)+\tfrac14(-1)(1)=\tfrac12-\tfrac94-\tfrac14=-2$，则 $b^*=-1-(-2)=1$。一致，✓。</div>
+    </li>
+    <li><strong>对新点 $x=(0,1)^T$ 分类。</strong>先算它与三个支持向量的核：
+      <div class="fml">$$\begin{aligned}
+      K(x_1,x)&=(1+(0,0)\!\cdot\!(0,1))^2=(1+0)^2=1\\
+      K(x_2,x)&=(1+(1,1)\!\cdot\!(0,1))^2=(1+1)^2=4\\
+      K(x_3,x)&=(1+(-1,-1)\!\cdot\!(0,1))^2=(1+(-1))^2=0
+      \end{aligned}$$</div>
+      代入决策函数：
+      <div class="fml">$$g(x)=\sum_i\alpha_i^*y_iK(x_i,x)+b^*=\tfrac12(1)(1)+\tfrac14(-1)(4)+\tfrac14(-1)(0)+1=\tfrac12-1+0+1=\tfrac12$$</div>
+      $g(x)=\tfrac12>0$，故 $f(x)=\operatorname{sign}(\tfrac12)=+1$。
+    </li>
+  </ol>
+
+  <div class="box exam"><span class="tag">最终答案</span>
+    $\alpha^*=(\tfrac12,\tfrac14,\tfrac14)$，$b^*=1$，三点均为支持向量。决策函数
+    $f(x)=\operatorname{sign}\!\big(\sum_{i=1}^3\alpha_i^*y_iK(x_i,x)+1\big)$。新点 $(0,1)^T$ 的判别值 $g=\tfrac12>0$，<strong>分类为正类 (+1)</strong>。
+  </div>
+  <div class="box intuit"><span class="tag">检查训练点也都分对</span>
+    $x_1$：$g=0+1=1>0$ → +1 ✓；$x_2$：$g=-2+1=-1<0$ → −1 ✓；$x_3$（对称）：$g=-2+1=-1<0$ → −1 ✓。三个训练点全部正确，答案可信。
+  </div>
+  <a class="back" href="#s11">↑ 回目录</a>
+</section>
+
+<hr class="fancy">
+
+<!-- ============ 12 ============ -->
+<section id="s12">
+  <div class="sec-num">SECTION 12</div>
+  <h2 class="sec">SMO / 多分类 / 文本分类 / tf-idf（概念题素材）</h2>
+
+  <h3>12.1 SMO 算法</h3>
+  <p>SVM 的对偶问题是凸二次规划，有全局最优解；但样本多时通用解法太慢。<strong>SMO（序列最小最优化）</strong>由微软的 Platt 于 1998 年提出，当时最快。核心思想：<strong>每次只挑两个 $\alpha$ 来优化、固定其余</strong>（因为约束 $\sum\alpha_iy_i=0$ 至少要动两个才能保持成立），不断迭代直到收敛。考试一般只问「是谁提的、解决什么、基本思想」。</p>
+
+  <h3>12.2 SVM 做多分类</h3>
+  <table>
+    <tr><th>策略</th><th>做法</th></tr>
+    <tr><td>一对多 (OvR)</td><td>每个类训一个「本类 vs 其余」SVM；预测取分类函数值最大的类</td></tr>
+    <tr><td>一对一 (OvO)</td><td>任意两类训一个 SVM，共 $\binom{k}{2}$ 个；预测时投票，得票多者胜</td></tr>
+    <tr><td>层次法</td><td>先把所有类分成两大组，每组再二分，逐层下去</td></tr>
+  </table>
+
+  <h3>12.3 文本分类与 tf-idf</h3>
+  <p><strong>向量空间模型：</strong>把一篇文档表示成向量 $(w_{1j},w_{2j},\dots,w_{nj})^T$，$w_{ij}$ 是词项 $i$ 在文档 $j$ 中的权重。权重常见两种：</p>
+  <ul>
+    <li><strong>词频权重：</strong>$w_{ij}=tf_{ij}$（词 $i$ 在文档 $j$ 出现的次数）。</li>
+    <li><strong>tf-idf 权重：</strong>$w_{ij}=tf_{ij}\times idf_i$，其中
+      <div class="fml">$$ df_i=\frac{\text{出现词 }i\text{ 的文档数}}{N},\qquad idf_i=\log\frac{1}{df_i} $$</div>
+      直觉：一个词在<strong>当前文档出现得多（tf 高）</strong>、又在<strong>整个语料里很罕见（idf 高）</strong>，才最能代表这篇文档的主题（比如「量子」比「的」有用）。</li>
+  </ul>
+  <p>实际流程概念：分类体系建立 → 数据收集 → 预处理（分词、去停用词、词干化 Stemming、特征选择）→ 训练 SVM。</p>
+  <a class="back" href="#s12">↑ 回目录</a>
+</section>
+
+<hr class="fancy">
+
+<!-- ============ 13 ============ -->
+<section id="s13">
+  <div class="sec-num">APPENDIX A</div>
+  <h2 class="sec">附录 A：决策树 ID3（第 5 题用得上）</h2>
+  <p>真题第 5 题要求用 ID3 建决策树、给出根节点及其子节点、标出叶节点类别。ID3 的核心就一句话：<strong>每次选「信息增益最大」的特征来分裂。</strong></p>
+
+  <h3>A.1 三个公式</h3>
+  <div class="kv">
+    <dt>经验熵</dt><dd>$H(D)=-\sum_{k}\dfrac{|C_k|}{|D|}\log_2\dfrac{|C_k|}{|D|}$　（数据集 $D$ 按类别 $C_k$ 的混乱程度，越大越乱）</dd>
+    <dt>条件熵</dt><dd>$H(D|A)=\sum_{v}\dfrac{|D_v|}{|D|}H(D_v)$　（用特征 $A$ 把 $D$ 切成若干子集 $D_v$ 后的平均熵）</dd>
+    <dt>信息增益</dt><dd>$g(D,A)=H(D)-H(D|A)$　（用 $A$ 分裂后「混乱减少了多少」，越大越好）</dd>
+  </div>
+
+  <h3>A.2 解题步骤</h3>
+  <ol class="steps">
+    <li>算总体经验熵 $H(D)$（按正负例比例）。</li>
+    <li>对<strong>每个</strong>候选特征 $A$，算条件熵 $H(D|A)$，再得信息增益 $g(D,A)=H(D)-H(D|A)$。</li>
+    <li>选 $g$ 最大的特征作<strong>根节点</strong>，按它的取值长出分支。</li>
+    <li>对每个分支的子集递归。若某子集已<strong>全是同一类</strong>，停下来标成<strong>叶节点</strong>（类别即该类）。</li>
+  </ol>
+  <div class="box note"><span class="tag">考试小贴士</span>$\log_2$ 常用值背一下：$\log_2 2=1$，$\log_2 3\approx1.585$，$\log_2\tfrac13\approx-1.585$。题目往往只要根节点和它的子节点，算 1~2 层即可，别被吓到。比较信息增益时，因为 $H(D)$ 对所有特征相同，<strong>谁的条件熵 $H(D|A)$ 最小，谁的信息增益就最大</strong>，可省一步。</div>
+  <a class="back" href="#s13">↑ 回目录</a>
+</section>
+
+<!-- ============ 14 ============ -->
+<section id="s14">
+  <div class="sec-num">APPENDIX B</div>
+  <h2 class="sec">附录 B：朴素贝叶斯（范式里提到，比较简单）</h2>
+  <p>「朴素」＝假设各特征<strong>相互独立</strong>。对新样本 $x=(x^{(1)},\dots,x^{(n)})$，比较每个类别 $c_k$ 的「后验」大小，取最大者：</p>
+  <div class="fml">$$ \hat y=\arg\max_{c_k}\ P(y=c_k)\prod_{j=1}^{n}P\big(x^{(j)}\mid y=c_k\big) $$</div>
+  <p>其中先验 $P(y=c_k)=\dfrac{\text{类 }c_k\text{ 的样本数}}{N}$，条件概率 $P(x^{(j)}|c_k)=\dfrac{\text{类 }c_k\text{ 中第 }j\text{ 特征取该值的数}}{\text{类 }c_k\text{ 的样本数}}$。</p>
+  <div class="box note"><span class="tag">拉普拉斯平滑</span>若某条件概率为 0 会让整个乘积归零。修正：分子 $+\lambda$、分母 $+\lambda\times(\text{该特征取值个数})$，常取 $\lambda=1$。</div>
+  <p><strong>套路：</strong>① 数出各类先验；② 对新样本每个特征，分别算两类的条件概率；③ 两条乘积线各乘一遍，比大小，大的那类就是答案。纯数数，不难。</p>
+  <a class="back" href="#s14">↑ 回目录</a>
+</section>
+
+<hr class="fancy">
+
+<!-- ============ 15 ============ -->
+<section id="s15">
+  <div class="sec-num">SECTION 15</div>
+  <h2 class="sec">考前速查表 & 做题模板</h2>
+
+  <h3>15.1 必背公式一页纸</h3>
+  <table>
+    <tr><th>名称</th><th>公式</th></tr>
+    <tr><td>原始问题(硬)</td><td>$\min \tfrac12\|w\|^2$, s.t. $y_i(w\cdot x_i+b)\ge1$</td></tr>
+    <tr><td>原始问题(软)</td><td>$\min \tfrac12\|w\|^2+C\sum\xi_i$, s.t. $y_i(w\cdot x_i+b)\ge1-\xi_i,\ \xi_i\ge0$</td></tr>
+    <tr><td>对偶(线性)</td><td>$\min_\alpha \tfrac12\sum\sum\alpha_i\alpha_jy_iy_j(x_i\cdot x_j)-\sum\alpha_i$, s.t. $\sum\alpha_iy_i=0$，硬:$\alpha_i\ge0$／软:$0\le\alpha_i\le C$</td></tr>
+    <tr><td>对偶(核)</td><td>把 $(x_i\cdot x_j)$ 换成 $K(x_i,x_j)$</td></tr>
+    <tr><td>$w^*$</td><td>$\sum\alpha_i^*y_ix_i$（核情形不显式求）</td></tr>
+    <tr><td>$b^*$</td><td>$y_j-\sum\alpha_i^*y_iK(x_i,x_j)$，取 $0<\alpha_j^*(<C)$ 的支持向量</td></tr>
+    <tr><td>决策函数</td><td>$f(x)=\operatorname{sign}\!\big(\sum\alpha_i^*y_iK(x_i,x)+b^*\big)$</td></tr>
+    <tr><td>支持向量</td><td>$\alpha_i^*>0$ 的样本</td></tr>
+  </table>
+
+  <h3>15.2 SVM 计算题通用模板（照抄即可）</h3>
+  <ol class="steps">
+    <li>列出样本、标签 $y$；线性题算内积矩阵，核题算核矩阵 $K_{ij}$。</li>
+    <li>写对偶目标 $\tfrac12\sum\sum\alpha_i\alpha_jy_iy_jK_{ij}-\sum\alpha_i$，写约束 $\sum\alpha_iy_i=0$。</li>
+    <li>用约束<strong>消去一个 $\alpha$</strong>，目标变成 1~2 元二次函数。</li>
+    <li>求偏导置零找极值点。<strong>检查 $\alpha\ge0$（及 $\le C$）</strong>：满足就用；<strong>违反就转边界</strong>（令某 $\alpha=0$）逐个比较取最小。</li>
+    <li>得 $\alpha^*$，$\alpha_i^*>0$ 的是支持向量；用某支持向量求 $b^*$，再用另一个验算。</li>
+    <li>写决策函数；要分类新点就代入算 $g(x)$，看符号定正负。</li>
+  </ol>
+
+  <div class="box exam"><span class="tag">易错清单（考前再扫一眼）</span>
+    ① 标签务必用 $\pm1$，正负别搞反；<br>
+    ② 核题里 $w^*$ 不显式求，分类<strong>用核展开式</strong>；<br>
+    ③ 内部极值点违反 $\alpha\ge0$ 时<strong>一定要查边界</strong>；<br>
+    ④ 求 $b^*$ 要挑支持向量（$\alpha_j^*>0$；软间隔取 $0<\alpha_j^*<C$）；<br>
+    ⑤ $\operatorname{sign}$ 看的是符号，不是数值大小；<br>
+    ⑥ 概念题记牢：三要素、对偶三大好处、C 与 σ 对过/欠拟合的方向。
+  </div>
+
+  <div class="box intuit"><span class="tag">一句话收尾</span>
+    整章的灵魂只有两件事：<strong>「最大间隔」的几何直觉</strong> + <strong>「对偶 + 核」的求解机制</strong>。把第 11 节的真题闭卷默写两遍，再用 15.2 的模板把课件 (3,3)(4,3)(1,1) 例题独立做对，这门课的计算部分就稳了。祝考试顺利！
+  </div>
+  <a class="back" href="#s0">↑ 回到顶部</a>
+</section>
+
+</div>
+</body>
+</html>
